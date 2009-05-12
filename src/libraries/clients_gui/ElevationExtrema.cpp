@@ -154,8 +154,8 @@ std::pair< short, short > ElevationExtrema::AddExtrema( unsigned level, int x, i
     }
     else
     {
-        for( unsigned i = x; i < x+w; ++i )
-            for( unsigned j = y; j < y+h; ++j )
+        for( unsigned int i = x; i < unsigned int( x + w ); ++i )
+            for( unsigned int j = y; j < unsigned int( y + h ); ++j )
             {
                 const short elevation = *map_.Data( i, j );
                 result.first  = std::min( result.first,  elevation );

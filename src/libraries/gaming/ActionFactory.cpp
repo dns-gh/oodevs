@@ -28,6 +28,8 @@
 #include "Tools.h"
 #include <xeumeuleu/xml.h>
 
+#pragma warning( disable : 4706 )
+
 using namespace kernel;
 using namespace xml;
 

@@ -45,8 +45,8 @@ namespace
             current.setTop( current.top() + topMargin_ );
             for( unsigned int i = 0; i < colors_.size() - 1; ++i )
             {
-                current.setLeft ( area.left() + colors_.at( i )->GetPercentage() * xStep );
-                current.setRight( current.left() + ( colors_.at( i + 1 )->GetPercentage() - colors_.at( i )->GetPercentage() ) * xStep );
+                current.setLeft ( area.left() + int( colors_.at( i )->GetPercentage() * xStep ) );
+                current.setRight( current.left() + int( ( colors_.at( i + 1 )->GetPercentage() - colors_.at( i )->GetPercentage() ) * xStep ) );
                 DrawGradient( painter, current, i, i + 1 );
             }
         }
@@ -77,8 +77,8 @@ namespace
             for( unsigned int i = 0; i < unsigned int( range ); ++i )
             {
                 color.setRgb( item1->GetColor().red() + rStep * i, item1->GetColor().green() + gStep * i, item1->GetColor().blue() + bStep * i );
-                region.setLeft ( rect.left() + xStep * i );
-                region.setRight( rect.left() + xStep * ( i + 1 ) );
+                region.setLeft ( rect.left() + int( xStep * i ) );
+                region.setRight( rect.left() + int( xStep * ( i + 1 ) ) );
                 painter.fillRect( region, color );
             }
         }
@@ -159,7 +159,7 @@ void GradientButton::mouseReleaseEvent( QMouseEvent* event )
         return;
     if( !selected_ )
     {
-        GradientItem* item = AddItem( event->pos().x() * 100 / canvas()->rect().width(), Qt::red );
+        GradientItem* item = AddItem( unsigned short( event->pos().x() * 100 / canvas()->rect().width() ), Qt::red );
         SetSelected( *item );
         Update();
     }
@@ -176,7 +176,7 @@ void GradientButton::mouseMoveEvent( QMouseEvent* event )
         return;
     if( event->state() | Qt::LeftButton )
     {
-        selected_->SetPercentage( event->pos().x() * 100 / canvas()->rect().width() );
+        selected_->SetPercentage( unsigned short( event->pos().x() * 100 / canvas()->rect().width() ) );
         std::sort( colors_.begin(), colors_.end(), sComparator() );
         Update();
     }
@@ -213,7 +213,7 @@ namespace
 
         virtual void Visit( float position, const QColor& color )
         {
-            gradient_->AddItem( position * 100, color );
+            gradient_->AddItem( unsigned short( position * 100 ), color );
         }
 
     private:
@@ -295,7 +295,7 @@ void GradientButton::Update()
 // Name: GradientButton::AddItem
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-GradientItem* GradientButton::AddItem( unsigned int percentage, const QColor& color )
+GradientItem* GradientButton::AddItem( unsigned short percentage, const QColor& color )
 {
     GradientItem* item = new GradientItem( canvas(), percentage, color );
     colors_.push_back( item );

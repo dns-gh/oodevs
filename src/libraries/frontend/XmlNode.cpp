@@ -9,9 +9,12 @@
 
 #include "frontend_pch.h"
 #include "XmlNode.h"
+#pragma warning( push )
+#pragma warning( disable: 4702 4800 )
 #include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 #include <xeumeuleu/xml.h>
 #include <cctype>
 

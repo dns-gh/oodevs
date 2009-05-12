@@ -101,7 +101,7 @@ float Profiling::EffectiveSpeed() const
     unsigned count = std::min( meanCount, ticks_.size() );
     if( count )
     {
-        const float mean = tickSum_ / count;
+        const float mean = float( tickSum_ ) / count;
         return 1.f / mean;
     }
     return -1.f;

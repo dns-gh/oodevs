@@ -9,9 +9,11 @@
 
 #include "indicators_pch.h"
 #include "Primitive.h"
+#include "DataTypeFactory.h"
+#include "ElementTypeResolver.h"
+#include "Function.h"
 #include "PrimitiveParameter.h"
-#include "Element_ABC.h"
-#include "ElementType.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
@@ -33,15 +35,17 @@ namespace
 // Name: Primitive constructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-Primitive::Primitive( xml::xistream& xis )
+Primitive::Primitive( xml::xistream& xis, const DataTypeFactory& types )
     : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
     , category_( xml::attribute< std::string >( xis, "category" ) )
     , comment_( ReadComment( xis ) )
-    , type_( new ElementType( xis ) )
+    , type_( xml::attribute< std::string >( xis, "type" ) )
+    , types_( types )
 {
     xis >> xml::optional() >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &Primitive::ReadParameter )
         >> xml::end();
+    prototype_ = QString( "%1(%2)" ).arg( name_ ).arg( BuildParameterList() );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +64,7 @@ Primitive::~Primitive()
 // -----------------------------------------------------------------------------
 void Primitive::ReadParameter( xml::xistream& xis )
 {
-    parameters_.push_back( new PrimitiveParameter( xis ) );
+    parameters_.push_back( new PrimitiveParameter( xis, types_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,39 +86,12 @@ std::string Primitive::GetCategory() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Primitive::GetComment
-// Created: SBO 2009-04-24
-// -----------------------------------------------------------------------------
-QString Primitive::GetComment() const
-{
-    return comment_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Primitive::GetPrototype
-// Created: SBO 2009-04-20
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
 QString Primitive::GetPrototype() const
 {
-    return QString( "%1(%2)" ).arg( name_ ).arg( BuildParameterList() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Primitive::GetType
-// Created: SBO 2009-04-09
-// -----------------------------------------------------------------------------
-const ElementType& Primitive::GetType() const
-{
-    return *type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Primitive::FindParameter
-// Created: SBO 2009-04-15
-// -----------------------------------------------------------------------------
-const PrimitiveParameter* Primitive::FindParameter( unsigned int index ) const
-{
-    return index < parameters_.size() ? parameters_.at( index ) : 0;
+    return prototype_;
 }
 
 // -----------------------------------------------------------------------------
@@ -130,10 +107,23 @@ QString Primitive::BuildParameterList() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Primitive::ParameterCount
-// Created: SBO 2009-04-28
+// Name: Primitive::DisplayInTooltip
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
-unsigned int Primitive::ParameterCount() const
+void Primitive::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    return parameters_.size();
+    displayer.Display( QString( "<b>%1</b><br><i>%2</i><br>%3" ).arg( name_ ).arg( prototype_ ).arg( comment_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Primitive::Instanciate
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Element_ABC > Primitive::Instanciate( const std::string& input ) const
+{
+    boost::shared_ptr< ElementTypeResolver > resolver( new ElementTypeResolver() );
+    Function* element = new Function( input, name_, category_, types_.Instanciate( type_, resolver ) );
+    BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
+        parameter->Declare( *element, resolver );
+    return boost::shared_ptr< Element_ABC >( element );
 }

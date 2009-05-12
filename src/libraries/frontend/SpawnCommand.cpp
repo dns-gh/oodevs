@@ -92,7 +92,7 @@ void SpawnCommand::Start()
                 0, 0, TRUE, CREATE_NEW_CONSOLE, 0,
                 ".", &startupInfo, &internal_->pid_) )
     {
-        DWORD errCode = GetLastError();     
+        DWORD errCode = GetLastError();
         throw std::runtime_error( "Could not start process" );
     }
 }

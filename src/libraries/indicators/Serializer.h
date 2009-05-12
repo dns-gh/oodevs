@@ -22,7 +22,6 @@ namespace indicators
 {
     class ElementFactory_ABC;
     class Element_ABC;
-    class Variables;
 
 // =============================================================================
 /** @class  GrammarHandler
@@ -36,7 +35,7 @@ class Serializer : public GrammarHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Serializer( const ElementFactory_ABC& factory, const Variables& variables );
+    explicit Serializer( const ElementFactory_ABC& factory );
     virtual ~Serializer();
     //@}
 
@@ -60,7 +59,6 @@ private:
     //! @name Member data
     //@{
     const ElementFactory_ABC& factory_;
-    const Variables& variables_;
     std::vector< boost::shared_ptr< Element_ABC > > stack_;
     //@}
 };

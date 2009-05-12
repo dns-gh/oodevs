@@ -115,7 +115,7 @@ void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 unsigned int PopulationFlow::GetDensity() const
 {
-    return rDensity_;
+    return unsigned int( rDensity_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -105,7 +105,7 @@ void Troops::Update( const T_Differences& differences )
 void Troops::SetSuperior( const kernel::Entity_ABC& superior )
 {
     T_Differences differences;
-    for( unsigned int i = 0; i < (unsigned int)kernel::eTroopHealthStateNbrStates; ++i )
+    for( unsigned int i = 0; i < unsigned int( kernel::eTroopHealthStateNbrStates ); ++i )
     {
         differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::officier )]     = int( humans_[i].officers_ );
         differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::sous_officer )] = int( humans_[i].subOfficers_ );
@@ -118,7 +118,7 @@ void Troops::SetSuperior( const kernel::Entity_ABC& superior )
         if( Troops* troops = const_cast< Troops* >( superior->Retrieve< Troops >() ) )
         {
             differences.clear();
-            for( unsigned int i = 0; i < (unsigned int)kernel::eTroopHealthStateNbrStates; ++i )
+            for( unsigned int i = 0; i < unsigned int( kernel::eTroopHealthStateNbrStates ); ++i )
             {
                 differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::officier )]     = -int( humans_[i].officers_ );
                 differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::sous_officer )] = -int( humans_[i].subOfficers_ );

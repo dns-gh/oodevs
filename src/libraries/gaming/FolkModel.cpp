@@ -141,7 +141,7 @@ namespace
         template< typename Array, typename Config  >
         float operator()( const Array& array, const Config& )
         {
-            return array;
+            return float( array );
         }
     };
 

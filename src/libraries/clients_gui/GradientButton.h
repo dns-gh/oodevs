@@ -38,7 +38,7 @@ public:
     //@{
     void LoadGradient( const Gradient& gradient );
     void SetSelectedColor( const QColor& color );
-    GradientItem* AddItem( unsigned int percentage, const QColor& color );
+    GradientItem* AddItem( unsigned short percentage, const QColor& color );
     //@}
 
 signals:

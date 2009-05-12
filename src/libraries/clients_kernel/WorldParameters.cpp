@@ -11,7 +11,10 @@
 #include "WorldParameters.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.h>
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace kernel;
 using namespace xml;

@@ -125,11 +125,11 @@ void ProfilingPanel::NotifyUpdated( const Simulation::sEndTick& )
     previousTotalSent_ = sent;
 
     unsigned long memory = simulation_.GetMemory();
-    memory_->AddValue( ticks_, memory / 1048576. );
+    memory_->AddValue( ticks_, unsigned long( memory / 1048576. ) );
     memoryUsage_->setText( ToUSI( memory ) );
 
     unsigned long vm = simulation_.GetVirtualMemory();
-    virtualMemory_->AddValue( ticks_, vm / 1048576. );
+    virtualMemory_->AddValue( ticks_, unsigned long( vm / 1048576. ) );
     virtualMemoryUsage_->setText( ToUSI( vm ) );
 
     unsigned long shortPathfinds = simulation_.GetShortPathfinds();

@@ -10,13 +10,17 @@
 #include "indicators_pch.h"
 #include "ElementFactory.h"
 #include "Constant.h"
-#include "ElementType.h"
-#include "Function.h"
+#include "DataTypeFactory.h"
+#include "ElementTypeResolver.h"
+#include "Primitive.h"
 #include "Primitives.h"
 #include "Variables.h"
 #include "clients_kernel/Tools.h"
+#pragma warning( push )
+#pragma warning( disable : 4512 4702 )
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace indicators;
 
@@ -27,6 +31,8 @@ using namespace indicators;
 ElementFactory::ElementFactory( const Primitives& primitives, const Variables& variables )
     : primitives_( primitives )
     , variables_( variables )
+    , types_( new DataTypeFactory() )
+    , resolver_( new ElementTypeResolver() )
     , id_( 0 )
 {
     // NOTHING
@@ -47,7 +53,7 @@ ElementFactory::~ElementFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Element_ABC > ElementFactory::CreateNumber( double value ) const
 {
-    return boost::shared_ptr< Element_ABC >( new Constant< double >( NextId(), "float", value ) );
+    return boost::shared_ptr< Element_ABC >( new Constant< double >( NextId(), types_->Instanciate( "float", resolver_ ), value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +62,7 @@ boost::shared_ptr< Element_ABC > ElementFactory::CreateNumber( double value ) co
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Element_ABC > ElementFactory::CreateString( const std::string& value ) const
 {
-    return boost::shared_ptr< Element_ABC >( new Constant< std::string >( value, "string", value ) );
+    return boost::shared_ptr< Element_ABC >( new Constant< std::string >( value, types_->Instanciate( "string", resolver_ ), value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,10 +83,9 @@ boost::shared_ptr< Element_ABC > ElementFactory::CreateVariable( const std::stri
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Element_ABC > ElementFactory::CreateFunction( const std::string& name ) const
 {
-    const Primitive* primitive = primitives_.Find( boost::algorithm::to_lower_copy( name ).c_str() );
-    if( !primitive )
-        throw std::exception( tools::translate( "Indicators", "Undefined function: %1." ).arg( name.c_str() ).ascii() );
-    return boost::shared_ptr< Element_ABC >( new Function( NextId(), *primitive ) );
+    if( const Primitive* primitive = primitives_.Find( boost::algorithm::to_lower_copy( name ).c_str() ) )
+        return primitive->Instanciate( NextId() );
+    throw std::exception( tools::translate( "Indicators", "Undefined function: %1." ).arg( name.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

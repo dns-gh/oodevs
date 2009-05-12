@@ -109,7 +109,7 @@ unsigned int PopulationConcentration::GetDeadHumans() const
 // -----------------------------------------------------------------------------
 unsigned int PopulationConcentration::GetDensity() const
 {
-    return density_;
+    return unsigned int( density_ );
 }
 
 // -----------------------------------------------------------------------------

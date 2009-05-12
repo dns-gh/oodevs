@@ -9,7 +9,10 @@
 
 #include "tools_pch.h"
 #include "ObjectMessageService.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace tools;
 

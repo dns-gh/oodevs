@@ -9,6 +9,7 @@
 
 #include "indicators_pch.h"
 #include "Primitives.h"
+#include "DataTypeFactory.h"
 #include "Primitive.h"
 #include <xeumeuleu/xml.h>
 
@@ -19,6 +20,7 @@ using namespace indicators;
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
 Primitives::Primitives()
+    : types_( new DataTypeFactory() )
 {
     // NOTHING
 }
@@ -50,7 +52,7 @@ void Primitives::Load( const std::string& file )
 // -----------------------------------------------------------------------------
 void Primitives::ReadPrimitive( xml::xistream& xis )
 {
-    Primitive* primitive = new Primitive( xis );
+    Primitive* primitive = new Primitive( xis, *types_ );
     Register( primitive->GetName(), *primitive );
 }
 

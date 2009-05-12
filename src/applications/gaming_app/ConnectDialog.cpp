@@ -76,7 +76,7 @@ void ConnectDialog::Validate()
 {
     try
     {
-        network_.Connect( std::string( pHostNameComboBox_->currentText() ), pPortSpinBox_->value() );
+        network_.Connect( std::string( pHostNameComboBox_->currentText() ), unsigned short( pPortSpinBox_->value() ) );
         SaveConfig();
     }
     catch ( std::exception& e )

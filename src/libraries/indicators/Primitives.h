@@ -19,6 +19,7 @@ namespace xml
 
 namespace indicators
 {
+    class DataTypeFactory;
     class Primitive;
 
 // =============================================================================
@@ -53,6 +54,12 @@ private:
     //! @name Helpers
     //@{
     void ReadPrimitive( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::auto_ptr< DataTypeFactory > types_;
     //@}
 };
 

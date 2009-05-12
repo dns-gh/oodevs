@@ -54,7 +54,7 @@ public:
     virtual QString GetName() const;
     virtual QString GetFormula() const;
     virtual const indicators::Gauge& GetGauge() const;
-    virtual void Accept( indicators::VariablesVisitor_ABC& visitor ) const;
+    virtual const indicators::Variables& GetVariables() const;
     //@}
 
     //! @name Setters

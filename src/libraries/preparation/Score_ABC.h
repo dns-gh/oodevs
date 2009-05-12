@@ -13,7 +13,7 @@
 namespace indicators
 {
     class Gauge;
-    class VariablesVisitor_ABC;
+    class Variables;
 }
 
 namespace xml
@@ -42,7 +42,7 @@ public:
     virtual QString GetName() const = 0;
     virtual QString GetFormula() const = 0;
     virtual const indicators::Gauge& GetGauge() const = 0;
-    virtual void Accept( indicators::VariablesVisitor_ABC& visitor ) const = 0;
+    virtual const indicators::Variables& GetVariables() const = 0;
     //@}
 
     //! @name Operations

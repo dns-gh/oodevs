@@ -31,7 +31,7 @@ namespace
     void Populate( Enum size, Combo& combo )
     {
         combo.Clear();
-        for( unsigned int i = 0; i < (unsigned int)size; ++i )
+        for( unsigned int i = 0; i < unsigned int( size ); ++i )
             combo.AddItem( tools::ToString( (Enum)i ), (Enum)i );
     }
 }

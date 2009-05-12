@@ -22,7 +22,7 @@ TimelineRuler::TimelineRuler( QWidget* parent, kernel::Controllers& controllers,
     : QWidget         ( parent )
     , controllers_    ( controllers )
     , initialDateTime_()
-    , tickHeight_     ( (unsigned short)( height / 2 ) )
+    , tickHeight_     ( unsigned short( height / 2 ) )
     , tickStep_       ( 40 ) // default: 1h => 40px
     , startX_         ( 0 )
 {

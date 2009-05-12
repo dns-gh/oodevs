@@ -12,7 +12,10 @@
 
 #include <map>
 #include <sstream>
+#pragma warning( push )
+#pragma warning( disable: 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 namespace xml
 {

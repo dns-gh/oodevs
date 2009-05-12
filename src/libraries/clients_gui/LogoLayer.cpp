@@ -56,7 +56,7 @@ void LogoLayer::Paint( kernel::Viewport_ABC& )
     gluUnProject( 1, viewport[3] - 1, 0.5, modelViewMatrix, projectionMatrix, viewport, &rX, &rY, &rZ );
 
     glRasterPos3d( rX, rY, rZ );
-    glBitmap( 0, 0, 0, 0, 0, - image_.height(), 0 );
+    glBitmap( 0, 0, 0, 0, 0, float( - image_.height() ), 0 );
     glDrawPixels( image_.width(), image_.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image_.bits() );
 }
 

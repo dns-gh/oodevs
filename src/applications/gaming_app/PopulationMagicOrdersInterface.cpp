@@ -101,7 +101,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     AddValuedMagic( magicMenu, menu, tr( "Resurect people:" ), SLOT( ResurectSomePopulation() ) );
 
     QPopupMenu* choiceMenu = new QPopupMenu( magicMenu );
-    for( unsigned int i = 0; i < (unsigned int)eNbrPopulationAttitude; ++i )
+    for( unsigned int i = 0; i < unsigned int( eNbrPopulationAttitude ); ++i )
         choiceMenu->insertItem( tools::ToString( (E_PopulationAttitude)i ), 0, i );
     magicMenu->insertItem( tr( "Change population attitude" ), choiceMenu );
 }

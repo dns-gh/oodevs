@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ScoreVariableCreationWizard.h"
 #include "moc_ScoreVariableCreationWizard.cpp"
+#include "indicators/DataTypeFactory.h"
 #include "indicators/Variable.h"
 
 // -----------------------------------------------------------------------------
@@ -79,7 +80,8 @@ void ScoreVariableCreationWizard::OnAccept()
     if( name_->text().isEmpty() || value_->text().isEmpty() )
         return;
     // $$$$ SBO 2009-04-21: TODO: use variable factory, value definition helpers and validators...
-    indicators::Variable* var = new indicators::Variable( name_->text().ascii(), type_->currentText().ascii(), value_->text().ascii() );
+    indicators::DataTypeFactory types;
+    indicators::Variable* var = new indicators::Variable( name_->text().ascii(), types.Instanciate( type_->currentText().ascii() ), value_->text().ascii() );
     emit VariableCreated( *var );
     accept();
 }

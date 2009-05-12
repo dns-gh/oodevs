@@ -34,7 +34,7 @@ using namespace kernel;
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
 PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_FlowPart& asn, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
-     : relevance_ ( (unsigned short)asn.pertinence )
+     : relevance_ ( unsigned short( asn.pertinence ) )
 {
     for( uint i = 0; i < asn.forme.coordinates.n; ++i )
     {

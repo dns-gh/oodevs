@@ -59,8 +59,8 @@ namespace
 	            return;
             }
             int para = 0;
-            int findex = charAt( e->pos(), &para );
-            int bindex = findex;
+            unsigned int findex = charAt( e->pos(), &para );
+            unsigned int bindex = findex;
             const QString str = text( para );
             while( bindex > 0 && ! isBoundary( str.at( bindex - 1 ) ) ) --bindex;
             while( findex < str.length() && ! isBoundary( str.at( findex ) ) ) ++findex;
@@ -150,7 +150,7 @@ void ScoreEditor::StartEdit( Score_ABC& score )
     current_ = &score;
     setCaption( tr( "Score edition - %1 " ).arg( score.GetName() ) );
     name_->setText( score.GetName() );
-    variables_->StartEdit( score );
+    variables_->StartEdit( score.GetVariables() );
     gauge_->StartEdit( score.GetGauge() );
     formula_->setText( score.GetFormula() );
     show();
@@ -188,16 +188,42 @@ void ScoreEditor::OnInsert( const QString& text )
     formula_->insert( text );
 }
 
+namespace
+{
+    class HelpDisplayer : public kernel::Displayer_ABC
+    {
+    public:
+        explicit HelpDisplayer( QLabel* help ) : help_( help ) {}
+        virtual void Hide() {}
+        virtual void Clear() {}
+        virtual kernel::Displayer_ABC& SubItem( const QString& ) { return *this; }
+        virtual void StartDisplay()
+        {
+            text_ = "";
+        }
+        virtual void DisplayFormatted( const QString& formatted )
+        {
+            text_ = formatted;
+        }
+        virtual void EndDisplay()
+        {
+            help_->setText( text_ );
+        }
+
+    private:
+        QLabel* help_;
+        QString text_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ScoreEditor::OnSelectPrimitive
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
 void ScoreEditor::OnSelectPrimitive( const indicators::Primitive& indicator )
 {
-    help_->setText( QString( "<b>%1</b><br><i>%2</i><br>%3" )
-                            .arg( indicator.GetName() )
-                            .arg( indicator.GetPrototype() )
-                            .arg( indicator.GetComment() ) );
+    HelpDisplayer displayer( help_ );
+    indicator.DisplayInTooltip( displayer );
 }
 
 // -----------------------------------------------------------------------------

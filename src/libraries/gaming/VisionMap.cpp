@@ -56,9 +56,9 @@ void VisionMap::Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) c
     if( !vision_ || ! viewport.IsVisible( boundingBox_ ) )
         return;
 
-    const float translation = map_.GetCellSize() * 0.5;
+    const double translation = map_.GetCellSize() * 0.5;
     glPushMatrix();
-    glTranslatef( translation, translation, 0 );
+    glTranslated( translation, translation, 0 );
     glPushAttrib( GL_CURRENT_BIT );
     glPointSize( std::ceil( map_.GetCellSize() / tools.Pixels() ) );
 
@@ -127,8 +127,8 @@ void VisionMap::Initialize()
 char VisionMap::DataAt( const std::pair< unsigned, unsigned >& cell )
 {
     if( vision_ 
-     && cell.first  >= left_   && cell.first  <= right_
-     && cell.second >= bottom_ && cell.second <= top_ )
+     && int( cell.first  ) >= left_   && int( cell.first  ) <= right_
+     && int( cell.second ) >= bottom_ && int( cell.second ) <= top_ )
     {
         const unsigned x = cell.first  - left_;
         const unsigned y = cell.second - bottom_;
@@ -153,7 +153,8 @@ bool VisionMap::ShouldUpdate( const std::pair< unsigned, unsigned >& cell )
 // -----------------------------------------------------------------------------
 void VisionMap::Update( const std::pair< unsigned, unsigned >& cell, E_PerceptionResult perception )
 {
-    if( perception && cell.first  >= left_ && cell.first  <= right_ && cell.second >= bottom_ && cell.second <= top_ )
+    if( perception && int( cell.first  ) >= left_   && int( cell.first  ) <= right_ 
+                   && int( cell.second ) >= bottom_ && int( cell.second ) <= top_ )
     {
         const unsigned x = cell.first  - left_;
         const unsigned y = cell.second - bottom_;

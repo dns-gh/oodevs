@@ -44,10 +44,10 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
     RegisterSelf( *this );
     if( message.attributes.m.obstaclePresent )
     {
-        if( message.attributes.obstacle.type == ASN1T_EnumDemolitionTargetType::reserved )
+        if( message.attributes.obstacle.type == EnumDemolitionTargetType::reserved )
         {
             obstacleType_ = eDemolitionTargetType_Reserved;
-            reservedObstacleActivated_ = message.attributes.obstacle.activated;
+            reservedObstacleActivated_ = message.attributes.obstacle.activated ? true : false;
         }
         else
             obstacleType_ = eDemolitionTargetType_Preliminary;

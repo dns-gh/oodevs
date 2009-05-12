@@ -73,7 +73,7 @@ void AgentPositions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.positionPresent )
         position_ = converter_.ConvertToXY( message.position );
     if( message.m.hauteurPresent )
-        height_ = message.hauteur;
+        height_ = float( message.hauteur );
     if( message.m.mortPresent )
         dead_ = message.mort != 0;
 }

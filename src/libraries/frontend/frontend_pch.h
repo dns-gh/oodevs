@@ -13,5 +13,9 @@
 #include <exception>
 #include <string>
 #include <memory>
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+#include <qstring.h>
+#pragma warning( pop )
 
 #endif // __frontend_pch_h_

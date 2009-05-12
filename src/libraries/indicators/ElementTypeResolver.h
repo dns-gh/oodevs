@@ -10,9 +10,11 @@
 #ifndef __ElementTypeResolver_h_
 #define __ElementTypeResolver_h_
 
+#include <boost/shared_ptr.hpp>
+
 namespace indicators
 {
-    class ElementType;
+    class DataType_ABC;
 
 // =============================================================================
 /** @class  ElementTypeResolver
@@ -33,8 +35,9 @@ public:
     //! @name Operations
     //@{
     std::string Resolve( const std::string& type ) const;
-    void AddElement( const ElementType& instance, const ElementType& definition );
+    void AddElement( const DataType_ABC& definition, const DataType_ABC& instance );
     static std::string ToSimpleType( const std::string& type );
+    static bool IsCompatible( const std::string& lhs, const std::string& rhs );
     //@}
 
 private:
@@ -50,11 +53,16 @@ private:
     void ConvertElementTypes( std::vector< std::string >& type1, std::vector< std::string >& type2 ) const;
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, const DataType_ABC* > T_Instances;
+    //@}
+
 private:
     //! @name Member data
     //@{
     std::map< std::string, std::string > dictionary_;
-    std::map< const ElementType*, const ElementType* > instances_;
+    T_Instances instances_;
     //@}
 };
 

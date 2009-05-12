@@ -102,6 +102,6 @@ QPointArray GradientItem::areaPoints() const
 // -----------------------------------------------------------------------------
 void GradientItem::UpdatePosition()
 {
-    const unsigned short x = 0.01f * float( percentage_ ) * float( canvas()->rect().width() );
+    const unsigned short x = unsigned short( 0.01f * float( percentage_ ) * float( canvas()->rect().width() ) );
     setPoints( x, 0, x, canvas()->rect().height() );
 }

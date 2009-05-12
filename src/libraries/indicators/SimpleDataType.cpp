@@ -8,79 +8,82 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "ElementType.h"
+#include "SimpleDataType.h"
 #include "ElementTypeResolver.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/regex.hpp>
-#include <xeumeuleu/xml.h>
 
 using namespace indicators;
 
 // -----------------------------------------------------------------------------
-// Name: ElementType constructor
-// Created: SBO 2009-04-06
+// Name: SimpleDataType constructor
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
-ElementType::ElementType( xml::xistream& xis )
-    : type_( xml::attribute< std::string >( xis, "type" ) )
-    , resolver_( boost::shared_ptr< ElementTypeResolver >( new ElementTypeResolver() ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ElementType constructor
-// Created: SBO 2009-04-09
-// -----------------------------------------------------------------------------
-ElementType::ElementType( const std::string& type )
+SimpleDataType::SimpleDataType( const std::string& type, boost::shared_ptr< ElementTypeResolver > resolver )
     : type_( type )
-    , resolver_( boost::shared_ptr< ElementTypeResolver >( new ElementTypeResolver() ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ElementType constructor
-// Created: SBO 2009-04-10
-// -----------------------------------------------------------------------------
-ElementType::ElementType( const ElementType& type, boost::shared_ptr< ElementTypeResolver > resolver )
-    : type_( type.type_ )
     , resolver_( resolver )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElementType destructor
-// Created: SBO 2009-04-06
+// Name: SimpleDataType destructor
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
-ElementType::~ElementType()
+SimpleDataType::~SimpleDataType()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElementType::ToString
-// Created: SBO 2009-04-09
+// Name: SimpleDataType::Resolve
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
-std::string ElementType::ToString() const
-{
-    return type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ElementType::Resolve
-// Created: SBO 2009-04-15
-// -----------------------------------------------------------------------------
-std::string ElementType::Resolve() const
+std::string SimpleDataType::Resolve() const
 {
     return resolver_->Resolve( type_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElementType::operator
-// Created: SBO 2009-04-09
+// Name: SimpleDataType::AddParameter
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
-bool ElementType::operator!=( const ElementType& rhs ) const
+void SimpleDataType::AddParameter( const DataType_ABC& definition, const DataType_ABC& instance )
 {
-    return false; //ToString() != rhs.ToString(); // $$$$ SBO 2009-04-15: TODO, check type compatibility
+    resolver_->AddElement( definition, instance );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimpleDataType::ToString
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+std::string SimpleDataType::ToString() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimpleDataType::operator==
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+bool SimpleDataType::operator==( const DataType_ABC& rhs ) const
+{
+    return IsCompatible( rhs.ToString() ) || rhs.IsCompatible( type_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimpleDataType::operator!=
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+bool SimpleDataType::operator!=( const DataType_ABC& rhs ) const
+{
+    return ! ( *this == rhs );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimpleDataType::IsCompatible
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+bool SimpleDataType::IsCompatible( const std::string& type ) const
+{
+    return ElementTypeResolver::IsCompatible( type_, type );
 }

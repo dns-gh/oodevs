@@ -9,8 +9,10 @@
 
 #include "frontend_pch.h"
 #include "StartReplay.h"
-#pragma warning( disable: 4127 4511 4512 )
+#pragma warning( push )
+#pragma warning( disable: 4127 4511 4512 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace frontend;
 

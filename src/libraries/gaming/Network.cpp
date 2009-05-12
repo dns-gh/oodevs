@@ -19,8 +19,11 @@
 #include "Tools.h"
 #include "Services.h"
 
-#pragma warning( disable: 4127 4355 4511 4512 )
+#pragma warning( disable : 4127 4355 4511 4512 )
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace kernel;
 using namespace tools;
@@ -34,7 +37,7 @@ Network::Network( Services& services, Simulation& simu, kernel::Logger_ABC& logg
     , simu_    ( simu )
     , logger_  ( logger )
     , commands_( new CommandHandler() )
-    , manager_  ( new AgentServerMsgMgr( *this, *this, services_, simu_, logger_, *commands_ ) )
+    , manager_ ( new AgentServerMsgMgr( *this, *this, services_, simu_, logger_, *commands_ ) )
 {
     // NOTHING
 }

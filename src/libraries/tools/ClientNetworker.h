@@ -14,7 +14,7 @@
 #include "MessageSender_ABC.h"
 #include "MessageDispatcher_ABC.h"
 #pragma warning( push )
-#pragma warning( disable : 4512 )
+#pragma warning( disable : 4512 4244 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <string>

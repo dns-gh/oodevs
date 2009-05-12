@@ -12,7 +12,10 @@
 #include "clients_kernel/Options.h"
 #include "graphics/extensions.h"
 #include <xeumeuleu/xml.h>
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace gui;
 

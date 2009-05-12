@@ -9,11 +9,12 @@
 
 #include "clients_test_pch.h"
 #include "XmlChecks.h"
-#include "indicators/FormulaParser.h"
-#include "indicators/Serializer.h"
+#include "indicators/DataTypeFactory.h"
 #include "indicators/Element_ABC.h"
 #include "indicators/ElementFactory.h"
+#include "indicators/FormulaParser.h"
 #include "indicators/Primitives.h"
+#include "indicators/Serializer.h"
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
 #include "tools/GeneralConfig.h"
@@ -35,7 +36,7 @@ namespace
         void ParseAndCheck( const std::string& text, const std::string& expected )
         {
             xml::xostringstream xos;
-            indicators::Serializer handler( factory_, variables_ );
+            indicators::Serializer handler( factory_ );
             indicators::FormulaParser parser( handler );
             parser.Parse( text );
             handler.Serialize( xos );
@@ -44,13 +45,14 @@ namespace
 
         void RegisterVariable( const std::string& name, const std::string& type, const std::string& value )
         {
-            variables_.Register( name, boost::shared_ptr< indicators::Element_ABC >( new indicators::Variable( name, type, value ) ) );
+            variables_.Register( name, boost::shared_ptr< indicators::Element_ABC >( new indicators::Variable( name, types_.Instanciate( type ), value ) ) );
         }
 
     private:
         indicators::Primitives primitives_;
         indicators::Variables variables_;
         indicators::ElementFactory factory_;
+        indicators::DataTypeFactory types_;
     };
 }
 

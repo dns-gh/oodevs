@@ -61,7 +61,7 @@ private:
     //@{
     clock_t lastCall_;
     T_History ticks_;
-    float tickSum_;
+    double tickSum_;
 
     T_History perception_;
     T_History decision_;

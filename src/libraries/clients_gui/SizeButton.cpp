@@ -85,7 +85,7 @@ void SizeButton::EnableValueLabel( const QString& prefix /*= ""*/ )
 // -----------------------------------------------------------------------------
 void SizeButton::SetSize( float value )
 {
-    slider_->setValue( value * 2.f );
+    slider_->setValue( int( value * 2.f ) );
 }
 
 // -----------------------------------------------------------------------------

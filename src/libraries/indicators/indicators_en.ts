@@ -26,15 +26,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Parameter mismatch in function &apos;%1&apos;.</source>
+        <source>Expected &apos;%1&apos; got &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Parameter type mismatch in function &apos;%1&apos;: %2 != %3.</source>
+        <source>too many parameters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Too few parameters in function &apos;%1&apos;.</source>
+        <source>Parameter type mismatch in function &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter type mismatch in function &apos;%1&apos;: too few parameters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

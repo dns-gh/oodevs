@@ -181,11 +181,15 @@ void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::Notify
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
 void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::NotifyUpdated( const Consign& consign )
 {
-    gui::ValuedListItem* item = 0;
-    if( item = gui::FindItem( &consign, pConsignListView_->firstChild() ) )
+    gui::ValuedListItem* item = gui::FindItem( &consign, pConsignListView_->firstChild() );
+    if( item )
         consign.Display( pConsignListView_->GetItemDisplayer( item ), (*logDisplay_)( item ) );
-    else if( item = gui::FindItem( &consign, pConsignHandledListView_->firstChild() ) )
-        consign.Display( pConsignHandledListView_->GetItemDisplayer( item ), (*logDisplay_)( item ) );
+    else
+    {
+        item = gui::FindItem( &consign, pConsignHandledListView_->firstChild() );
+        if( item )
+            consign.Display( pConsignHandledListView_->GetItemDisplayer( item ), (*logDisplay_)( item ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

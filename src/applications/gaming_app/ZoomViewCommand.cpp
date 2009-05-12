@@ -13,7 +13,10 @@
 #include "gaming/CommandHandler.h"
 #include "clients_gui/View_ABC.h"
 #include "clients_gui/XyParser.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: ZoomViewCommand constructor

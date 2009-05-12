@@ -12,10 +12,12 @@
 #include "CommandLineTools.h"
 #include "tools/GeneralConfig.h"
 
-#pragma warning( disable: 4127 4244 4245 4511 4512 )
+#pragma warning( push )
+#pragma warning( disable: 4127 4244 4245 4511 4512 4702 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 

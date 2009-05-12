@@ -116,7 +116,7 @@ void ConstructionAttribute::UpdateData( const T& message )
         if ( message.construction.m.dotation_nbrPresent )
             nDotationConstruction_ = message.construction.dotation_nbr;
         if ( message.construction.m.percentagePresent )
-            rConstructionPercentage_ = message.construction.percentage;
+            rConstructionPercentage_ = float( message.construction.percentage );
         controller_.Update( *(ConstructionAttribute_ABC*)this );
     }
 }

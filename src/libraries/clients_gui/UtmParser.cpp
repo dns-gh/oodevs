@@ -13,7 +13,11 @@
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/WorldParameters.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
+
 using namespace gui;
 
 // -----------------------------------------------------------------------------

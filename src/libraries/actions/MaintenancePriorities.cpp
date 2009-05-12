@@ -10,11 +10,11 @@
 #include "actions_pch.h"
 #include "MaintenancePriorities.h"
 #include "clients_kernel/EquipmentType.h"
-#include <xeumeuleu/xml.h>
-#pragma warning (push)
-#pragma warning (disable : 4127 4511 4512 )
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
-#pragma warning (pop)
+#pragma warning( pop )
+#include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;

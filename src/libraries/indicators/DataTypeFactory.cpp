@@ -8,51 +8,57 @@
 // *****************************************************************************
 
 #include "indicators_pch.h"
-#include "Variable.h"
-#include "DataType_ABC.h"
 #include "DataTypeFactory.h"
+#include "CollectionDataType.h"
+#include "ElementTypeResolver.h"
+#include "SimpleDataType.h"
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace indicators;
 
 // -----------------------------------------------------------------------------
-// Name: Variable constructor
-// Created: SBO 2009-03-17
+// Name: DataTypeFactory constructor
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
-Variable::Variable( const std::string& name, boost::shared_ptr< DataType_ABC > type, const std::string& value )
-    : Constant< std::string >( std::string( "$" ) + name, type, value )
+DataTypeFactory::DataTypeFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Variable constructor
+// Name: DataTypeFactory destructor
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+DataTypeFactory::~DataTypeFactory()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DataType_ABC > DataTypeFactory::Instanciate
 // Created: SBO 2009-05-12
 // -----------------------------------------------------------------------------
-Variable::Variable( const Element_ABC& element, const DataTypeFactory& types )
-    : Constant< std::string >( element.GetInput(), types.Instanciate( element.GetType().ToString() ), element.GetValue() )
+boost::shared_ptr< DataType_ABC > DataTypeFactory::Instanciate( const std::string& type ) const
 {
-    // NOTHING
+    return Instanciate( type, boost::shared_ptr< ElementTypeResolver >( new ElementTypeResolver() ) );
+}
+
+namespace
+{
+    bool IsCollection( const std::string& type )
+    {
+        return boost::starts_with( type, "list(" );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Variable constructor
-// Created: SBO 2009-04-17
+// Name: DataTypeFactory::Instanciate
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
-Variable::Variable( xml::xistream& xis, const DataTypeFactory& types )
-    : Constant< std::string >( xml::attribute< std::string >( xis, "id" )
-                             , types.Instanciate( xml::attribute< std::string >( xis, "type" ) )
-                             , xml::attribute< std::string >( xis, "value" ) )
+boost::shared_ptr< DataType_ABC > DataTypeFactory::Instanciate( const std::string& type, boost::shared_ptr< ElementTypeResolver > resolver ) const
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Variable destructor
-// Created: SBO 2009-03-17
-// -----------------------------------------------------------------------------
-Variable::~Variable()
-{
-    // NOTHING
+    if( IsCollection( type ) )
+        return boost::shared_ptr< DataType_ABC >( new CollectionDataType( type, resolver ) );
+    return boost::shared_ptr< DataType_ABC >( new SimpleDataType( type, resolver ) );
 }

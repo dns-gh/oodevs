@@ -73,7 +73,7 @@ QString ScoreDefinition::GetName() const
 // -----------------------------------------------------------------------------
 std::string ScoreDefinition::Commit( const T_Parameters& /*parameters*/ ) const
 {
-    indicators::Serializer serializer( *elementFactory_, *variables_ );
+    indicators::Serializer serializer( *elementFactory_ );
     indicators::FormulaParser parser( serializer );
     parser.Parse( QString( "plot( %1 )" ).arg( formula_.c_str() ).ascii() );
     xml::xostringstream xos;

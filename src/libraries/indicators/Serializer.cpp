@@ -21,9 +21,8 @@ using namespace indicators;
 // Name: Serializer constructor
 // Created: SBO 2009-03-16
 // -----------------------------------------------------------------------------
-Serializer::Serializer( const ElementFactory_ABC& factory, const Variables& variables )
+Serializer::Serializer( const ElementFactory_ABC& factory )
     : factory_( factory )
-    , variables_( variables )
 {
     // NOTHING
 }

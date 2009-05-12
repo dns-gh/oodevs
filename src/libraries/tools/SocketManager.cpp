@@ -11,7 +11,6 @@
 #include "SocketManager.h"
 #include "Socket.h"
 #include "ConnectionCallback_ABC.h"
-#include <boost/lexical_cast.hpp>
 
 using namespace tools;
 

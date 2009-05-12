@@ -149,7 +149,7 @@ namespace
             {
                 previousWidth_  = width;
                 previousHeight_ = height;
-                shader_->SetTextureSize( width, height );
+                shader_->SetTextureSize( unsigned short( width ), unsigned short( height ) );
                 shader_->UpdateParameters();
             }
             Visitor2d::Visit( extent, width, height );
@@ -235,7 +235,7 @@ void Elevation2dLayer::SetGradient()
         glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
         gradient_.MakeGlTexture( GetAlpha() );
         if( shader_.get() )
-            shader_->SetGradientSize( gradient_.Length(), gradient_.UsedRatio() );
+            shader_->SetGradientSize( unsigned short( gradient_.Length() ), gradient_.UsedRatio() );
         updateGradient_ = false;
     }
     glBindTexture( GL_TEXTURE_1D, gradientTexture_ );

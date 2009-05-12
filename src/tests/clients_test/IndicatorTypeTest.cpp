@@ -8,11 +8,12 @@
 // *****************************************************************************
 
 #include "clients_test_pch.h"
-#include "indicators/ElementType.h"
+#include "indicators/DataType_ABC.h"
 #include "indicators/ElementTypeResolver.h"
-#include "indicators/PrimitiveParameter.h"
+#include "indicators/DataTypeFactory.h"
 #include <xeumeuleu/xml.h>
 
+using namespace indicators;
 using namespace mockpp;
 
 // -----------------------------------------------------------------------------
@@ -21,7 +22,7 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveNoTemplate )
 {
-    indicators::ElementTypeResolver resolver;
+    ElementTypeResolver resolver;
     BOOST_CHECK_EQUAL( "float", resolver.Resolve( "float" ) );
 }
 
@@ -31,8 +32,16 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveNoTemplate )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveUndefined )
 {
-    indicators::ElementTypeResolver resolver;
+    ElementTypeResolver resolver;
     BOOST_CHECK_THROW( resolver.Resolve( "_1" ), std::exception );
+}
+
+namespace
+{
+    boost::shared_ptr< ElementTypeResolver > NewResolver()
+    {
+        return boost::shared_ptr< ElementTypeResolver >( new ElementTypeResolver() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -41,11 +50,13 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveUndefined )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameter )
 {
-    indicators::ElementTypeResolver resolver;
-    const indicators::ElementType instance( "float" );
-    const indicators::ElementType definition( "_1" );
-    resolver.AddElement( instance, definition );
-    BOOST_CHECK_EQUAL( "float", resolver.Resolve( "_1" ) );
+    boost::shared_ptr< ElementTypeResolver > resolver( NewResolver() );
+    DataTypeFactory factory;
+    boost::shared_ptr< DataType_ABC > function( factory.Instanciate( "_1", NewResolver() ) );
+    boost::shared_ptr< DataType_ABC > definition( factory.Instanciate( "_1", resolver ) );
+    boost::shared_ptr< DataType_ABC > instance( factory.Instanciate( "float", resolver ) );
+    function->AddParameter( *definition, *instance );
+    BOOST_CHECK_EQUAL( "float", function->Resolve() );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,11 +65,13 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterList )
 {
-    indicators::ElementTypeResolver resolver;
-    const indicators::ElementType instance( "list(float)" );
-    const indicators::ElementType definition( "list(_1)" );
-    resolver.AddElement( instance, definition );
-    BOOST_CHECK_EQUAL( "float", resolver.Resolve( "_1" ) );
+    boost::shared_ptr< ElementTypeResolver > resolver( NewResolver() );
+    DataTypeFactory factory;
+    boost::shared_ptr< DataType_ABC > function( factory.Instanciate( "_1", NewResolver() ) );
+    boost::shared_ptr< DataType_ABC > definition( factory.Instanciate( "list(_1)", resolver ) );
+    boost::shared_ptr< DataType_ABC > instance( factory.Instanciate( "list(float)", resolver ) );
+    function->AddParameter( *definition, *instance );
+    BOOST_CHECK_EQUAL( "float", function->Resolve() );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,11 +80,13 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterList )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterListToList )
 {
-    indicators::ElementTypeResolver resolver;
-    const indicators::ElementType instance( "list(float)" );
-    const indicators::ElementType definition( "list(_1)" );
-    resolver.AddElement( instance, definition );
-    BOOST_CHECK_EQUAL( "list(float)", resolver.Resolve( "list(_1)" ) );
+    boost::shared_ptr< ElementTypeResolver > resolver( NewResolver() );
+    DataTypeFactory factory;
+    boost::shared_ptr< DataType_ABC > function( factory.Instanciate( "list(_1)", NewResolver() ) );
+    boost::shared_ptr< DataType_ABC > definition( factory.Instanciate( "list(_1)", resolver ) );
+    boost::shared_ptr< DataType_ABC > instance( factory.Instanciate( "list(float)", resolver ) );
+    function->AddParameter( *definition, *instance );
+    BOOST_CHECK_EQUAL( "list(float)", function->Resolve() );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,9 +95,136 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterListToLi
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestResolveTemplateParameterMap )
 {
-    indicators::ElementTypeResolver resolver;
-    const indicators::ElementType instance( "list(key,float)" );
-    const indicators::ElementType definition( "list(key,_1)" );
-    resolver.AddElement( instance, definition );
-    BOOST_CHECK_EQUAL( "float", resolver.Resolve( "_1" ) );
+    boost::shared_ptr< ElementTypeResolver > resolver( NewResolver() );
+    DataTypeFactory factory;
+    boost::shared_ptr< DataType_ABC > function( factory.Instanciate( "_1", NewResolver() ) );
+    boost::shared_ptr< DataType_ABC > definition( factory.Instanciate( "list(key,_1)", resolver ) );
+    boost::shared_ptr< DataType_ABC > instance( factory.Instanciate( "list(key,float)", resolver ) );
+    function->AddParameter( *definition, *instance );
+    BOOST_CHECK_EQUAL( "float", function->Resolve() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorTypeResolver_TestSimpleTypesEquality
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestSimpleTypesEquality )
+{
+    boost::shared_ptr< ElementTypeResolver > resolver( NewResolver() );
+    DataTypeFactory factory;
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "float", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "float", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "_1", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "float", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "float", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "_1", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorTypeResolver_TestListTypesEquality
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestListTypesEquality )
+{
+    boost::shared_ptr< ElementTypeResolver > resolver( NewResolver() );
+    DataTypeFactory factory;
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(float)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(float)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(_1)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(float)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(float)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(_1)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(_1)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(_1)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorTypeResolver_TestMapTypesEquality
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestMapTypesEquality )
+{
+    boost::shared_ptr< ElementTypeResolver > resolver( NewResolver() );
+    DataTypeFactory factory;
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(key,float)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key,float)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(key,_1)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key,float)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(key,float)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key,_1)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(float)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key,float)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(float)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key,_1)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(_1)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key,float)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(_1)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key,_1)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorTypeResolver_TestTypesInEquality
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestTypesInEquality )
+{
+    boost::shared_ptr< ElementTypeResolver > resolver( NewResolver() );
+    DataTypeFactory factory;
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "string", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "float", resolver ) );
+        BOOST_CHECK( *lhs != *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(string)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(float)", resolver ) );
+        BOOST_CHECK( *lhs != *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "list(key,string)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key,float)", resolver ) );
+        BOOST_CHECK( *lhs != *rhs );
+    }
 }

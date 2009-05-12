@@ -11,11 +11,10 @@
 #include "ScoreVariablesList.h"
 #include "moc_ScoreVariablesList.cpp"
 #include "ScoreVariableCreationWizard.h"
+#include "indicators/DataTypeFactory.h"
 #include "indicators/Element_ABC.h"
-#include "indicators/ElementType.h"
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
-#include "preparation/Score_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ScoreVariablesList constructor
@@ -55,32 +54,16 @@ ScoreVariablesList::~ScoreVariablesList()
     // NOTHING
 }
 
-namespace
-{
-    class VariablesCollector : public indicators::VariablesVisitor_ABC
-    {
-    public:
-        explicit VariablesCollector( ScoreVariablesList& editor ) : editor_( &editor ) {}
-        virtual ~VariablesCollector() {}
-
-        virtual void Visit( indicators::Element_ABC& variable )
-        {
-            editor_->AddVariable( variable );
-        }
-    private:
-        ScoreVariablesList* editor_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ScoreVariablesList::StartEdit
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-void ScoreVariablesList::StartEdit( const Score_ABC& score )
+void ScoreVariablesList::StartEdit( const indicators::Variables& variables )
 {
     list_->clear();
-    VariablesCollector collector( *this );
-    score.Accept( collector );
+    kernel::Iterator< const indicators::Element_ABC& > it = variables.CreateIterator();
+    while( it.HasMoreElements() )
+        AddVariable( it.NextElement() );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,13 +84,14 @@ void ScoreVariablesList::AddVariable( const indicators::Element_ABC& variable )
 indicators::Variables ScoreVariablesList::GetValue() const
 {
     indicators::Variables result;
+    indicators::DataTypeFactory types;
     for( QListViewItemIterator it( list_ ); it.current(); ++it )
         if( const gui::ValuedListItem* item = static_cast< const gui::ValuedListItem* >( *it ) )
         {
             const QString name  = item->text( 0 ).remove( 0, 1 );
             const QString type  = item->text( 1 );
             const QString value = item->text( 2 );
-            boost::shared_ptr< indicators::Element_ABC > variable( new indicators::Variable( name.ascii(), type.ascii(), value.ascii() ) );
+            boost::shared_ptr< indicators::Element_ABC > variable( new indicators::Variable( name.ascii(), types.Instanciate( type.ascii() ), value.ascii() ) );
             result.Register( name.ascii(), variable );
         }
     return result;
@@ -119,7 +103,7 @@ indicators::Variables ScoreVariablesList::GetValue() const
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::Display( const indicators::Element_ABC& variable, gui::ValuedListItem* item )
 {
-    // $$$$ SBO 2009-04-24: use a displayer
+    // $$$$ SBO 2009-04-24: TODO use a displayer
     item->setText( 0, variable.GetInput().c_str() );
     item->setText( 1, variable.GetType().ToString().c_str() );
     item->setText( 2, variable.GetValue().c_str() );

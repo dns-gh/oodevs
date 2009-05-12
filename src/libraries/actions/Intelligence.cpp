@@ -139,9 +139,9 @@ void Intelligence::CommitTo( ASN1T_Intelligence& asn ) const
 // Name: Intelligence::Clean
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::Clean( ASN1T_Intelligence& asn ) const
+void Intelligence::Clean( ASN1T_Intelligence& /*asn*/ ) const
 {
-    // NOTHING  // $$$$ SBO 2007-10-23: too good to be true!
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

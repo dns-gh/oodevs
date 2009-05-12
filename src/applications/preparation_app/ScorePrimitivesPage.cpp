@@ -28,7 +28,7 @@ ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& 
     {
         list_->AddColumn( tr( "Name" ) );
         list_->header()->hide();
-        connect( list_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );
+        connect( list_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged() ) );
         connect( list_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnInsert() ) );
     }
     {
@@ -97,7 +97,7 @@ void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelUnLoaded& )
 // Name: ScorePrimitivesPage::OnSelectionChanged
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
-void ScorePrimitivesPage::OnSelectionChanged( QListViewItem* item )
+void ScorePrimitivesPage::OnSelectionChanged()
 {
     if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
         if( const indicators::Primitive* primitive = item->GetValue< indicators::Primitive >() )

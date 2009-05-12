@@ -73,20 +73,14 @@ void SmartGridWidget::Reorganize()
     std::vector< QWidget* > widgets;
     widgets.reserve( childCount_ );
     QLayoutIterator it = layout_->iterator();
-    QLayoutItem* item;
-    
-    while( ( item = it.current() ) )
-    {
-        QWidget* widget = item->widget();
-        if( widget )
+    for( QLayoutItem* item = it.current(); item; item = it.current() )
+        if( QWidget* widget = item->widget() )
         {
             widgets.push_back( widget );
             it.takeCurrent();
         }
         else
             ++it;
-    }
-
     childCount_ = 0;
     for( std::vector< QWidget* >::iterator it = widgets.begin(); it != widgets.end(); ++it )
         AddChild( *it );

@@ -36,7 +36,7 @@ IconLayout::~IconLayout()
 // -----------------------------------------------------------------------------
 void IconLayout::AddIcon( const char** xpm, int x, int y )
 {
-    iconLocations_[ xpm ] = geometry::Point2f( x, y );
+    iconLocations_[ xpm ] = geometry::Point2f( float( x ), float( y ) );
 }
 
 // -----------------------------------------------------------------------------

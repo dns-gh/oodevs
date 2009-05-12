@@ -19,7 +19,7 @@ namespace xml
 
 namespace indicators
 {
-    class ElementType;
+    class DataTypeFactory;
 
 // =============================================================================
 /** @class  Variable
@@ -33,14 +33,10 @@ class Variable : public Constant< std::string >
 public:
     //! @name Constructors/Destructor
     //@{
-             Variable( const std::string& name, const std::string& type, const std::string& value );
-    explicit Variable( xml::xistream& xis );
+             Variable( const std::string& name, boost::shared_ptr< DataType_ABC > type, const std::string& value );
+             Variable( const Element_ABC& element, const DataTypeFactory& types );
+             Variable( xml::xistream& xis, const DataTypeFactory& types );
     virtual ~Variable();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual Element_ABC& Clone() const;
     //@}
 
 private:

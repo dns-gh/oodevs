@@ -7,29 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef __Function_h_
-#define __Function_h_
+#ifndef __FunctionParameter_h_
+#define __FunctionParameter_h_
 
 #include "Element_ABC.h"
-#include <boost/shared_ptr.hpp>
 
 namespace indicators
 {
 
 // =============================================================================
-/** @class  Function
-    @brief  Function
+/** @class  FunctionParameter
+    @brief  FunctionParameter
 */
-// Created: SBO 2009-03-17
+// Created: SBO 2009-05-11
 // =============================================================================
-class Function : public Element_ABC
+class FunctionParameter : public Element_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Function( const std::string& id, const QString& name, const std::string& category, boost::shared_ptr< DataType_ABC > type );
-    virtual ~Function();
+             FunctionParameter( const QString& name, const std::string& attribute, boost::shared_ptr< DataType_ABC > type );
+    virtual ~FunctionParameter();
     //@}
 
     //! @name Accessors
@@ -40,7 +39,6 @@ public:
 
     //! @name Operations
     //@{
-    void DeclareParameter( const std::string& attribute, boost::shared_ptr< Element_ABC > element );
     virtual void AddParameter( boost::shared_ptr< Element_ABC > element );
     virtual void Serialize( xml::xostream& xos, ElementDeclarator_ABC& declarator ) const;
     //@}
@@ -48,33 +46,23 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    Function( const Function& );            //!< Copy constructor
-    Function& operator=( const Function& ); //!< Assignment operator
+    FunctionParameter( const FunctionParameter& );            //!< Copy constructor
+    FunctionParameter& operator=( const FunctionParameter& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void SerializeDeclarations( ElementDeclarator_ABC& declarator ) const;
-    void SerializeType( xml::xostream& xos ) const;
-    void SerializeParameters( xml::xostream& xos ) const;
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< std::string, boost::shared_ptr< Element_ABC > > > T_Parameters;
     //@}
 
 private:
     //! @name Member data
     //@{
     const QString name_;
-    const std::string category_;
+    const std::string attribute_;
     boost::shared_ptr< DataType_ABC > type_;
-    T_Parameters parameters_;
-    unsigned int parameterSet_;
     //@}
 };
 
 }
 
-#endif // __Function_h_
+#endif // __FunctionParameter_h_

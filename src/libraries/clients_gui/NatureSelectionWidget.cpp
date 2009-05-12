@@ -51,7 +51,7 @@ NatureSelectionWidget::~NatureSelectionWidget()
 // Name: NatureSelectionWidget::StartCategory
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-void NatureSelectionWidget::StartCategory( const std::string& title )
+void NatureSelectionWidget::StartCategory( const std::string& /*title*/ )
 {
     category_ = current_;
 }
@@ -60,7 +60,7 @@ void NatureSelectionWidget::StartCategory( const std::string& title )
 // Name: NatureSelectionWidget::AddChoice
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-void NatureSelectionWidget::AddChoice( kernel::SymbolRule* rule, const std::string& name, const std::string& value )
+void NatureSelectionWidget::AddChoice( kernel::SymbolRule* rule, const std::string& name, const std::string& /*value*/ )
 {
     if( !category_ )
         current_ = new QListViewItem( this );

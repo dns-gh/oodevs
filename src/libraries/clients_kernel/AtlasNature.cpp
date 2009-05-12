@@ -89,6 +89,6 @@ void AtlasNature::Toggle( const AtlasNature& nature )
 void AtlasNature::CommitTo( unsigned int& n, unsigned char* bits ) const
 {
     n = 11;
-    bits[0] = value_ >> 8;
-    bits[1] = value_ & 0x00FF;
+    bits[0] = unsigned char( value_ >> 8 );
+    bits[1] = unsigned char( value_ & 0x00FF );
 }

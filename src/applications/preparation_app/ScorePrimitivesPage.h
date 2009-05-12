@@ -69,7 +69,7 @@ private slots:
     //! @name Slots
     //@{
     void OnInsert();
-    void OnSelectionChanged( QListViewItem* item );
+    void OnSelectionChanged();
     //@}
 
 private:

@@ -67,7 +67,7 @@ void PopulationConcentrationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcen
     if( asnMsg.m.oid_concentration_reellePresent )
         pConcentration_ = resolver_.FindConcentration( asnMsg.oid_concentration_reelle );
     if( asnMsg.m.pertinencePresent )
-        rRelevance_ = asnMsg.pertinence;
+        rRelevance_ = float( asnMsg.pertinence );
 
     const float density = pConcentration_ ? pConcentration_->GetDensity() : 0.f;
     if( density > 0.f && nNbrAliveHumans_.IsSet() )

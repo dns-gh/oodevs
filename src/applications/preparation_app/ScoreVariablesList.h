@@ -18,7 +18,6 @@ namespace indicators
     class Variables;
 }
 
-class Score_ABC;
 class ScoreVariableCreationWizard;
 
 // =============================================================================
@@ -40,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void StartEdit( const Score_ABC& score );
+    void StartEdit( const indicators::Variables& variables );
     indicators::Variables GetValue() const;
     //@}
 

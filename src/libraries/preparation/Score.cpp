@@ -124,6 +124,17 @@ const indicators::Gauge& Score::GetGauge() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Score::GetVariables
+// Created: SBO 2009-05-12
+// -----------------------------------------------------------------------------
+const indicators::Variables& Score::GetVariables() const
+{
+    if( !variables_.get() )
+        throw std::runtime_error( __FUNCTION__ );
+    return *variables_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Score::Serialize
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
@@ -158,19 +169,10 @@ void Score::SerializeIndicators( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Score::SerializeIndicator( xml::xostream& xos, const QString& formula ) const
 {
-    indicators::Serializer serializer( *elementFactory_, *variables_ );
+    indicators::Serializer serializer( *elementFactory_ );
     indicators::FormulaParser parser( serializer );
     parser.Parse( formula.ascii() );
     serializer.Serialize( xos );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Score::Accept
-// Created: SBO 2009-04-21
-// -----------------------------------------------------------------------------
-void Score::Accept( indicators::VariablesVisitor_ABC& visitor ) const
-{
-    variables_->Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------

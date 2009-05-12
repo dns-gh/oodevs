@@ -21,7 +21,7 @@ namespace indicators
 {
     class ElementDeclarator_ABC;
     class PrimitiveParameter;
-    class ElementType;
+    class DataType_ABC;
 
 // =============================================================================
 /** @class  Element_ABC
@@ -43,7 +43,7 @@ public:
     //@{
     virtual std::string GetInput() const { return id_; }
     virtual std::string GetValue() const = 0;
-    virtual const ElementType& GetType() const = 0;
+    virtual const DataType_ABC& GetType() const = 0;
     //@}
 
     //! @name Operations
@@ -51,7 +51,6 @@ public:
     virtual void AddParameter( boost::shared_ptr< Element_ABC > element ) = 0;
     virtual void Serialize( xml::xostream& xos, ElementDeclarator_ABC& declarator ) const = 0;
     virtual void SerializeDeclaration( xml::xostream& ) const {}
-    virtual Element_ABC& Clone() const = 0;
     //@}
 
 private:

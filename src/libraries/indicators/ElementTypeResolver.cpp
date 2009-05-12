@@ -9,8 +9,9 @@
 
 #include "indicators_pch.h"
 #include "ElementTypeResolver.h"
+#include "DataType_ABC.h"
+#include "Element_ABC.h"
 #include "PrimitiveParameter.h"
-#include "ElementType.h"
 #include "clients_kernel/Tools.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/regex.hpp>
@@ -61,24 +62,35 @@ namespace
 // Name: ElementTypeResolver::AddElement
 // Created: SBO 2009-04-15
 // -----------------------------------------------------------------------------
-void ElementTypeResolver::AddElement( const ElementType& instance, const ElementType& definition )
+void ElementTypeResolver::AddElement( const DataType_ABC& definition, const DataType_ABC& instance )
 {
-    if( IsAbstract( definition.ToString() ) )
+    if( definition != instance )
+        throw std::exception( tools::translate( "Indicators", "Expected '%1' got '%2'." ).arg( definition.ToString().c_str() ).arg( instance.ToString().c_str() ) );
+    const std::string def = definition.ToString();
+    if( IsAbstract( def ) )
     {
-        AddPlaceholders( definition.ToString(), dictionary_ );
-        instances_[ &definition ] = &instance;
+        AddPlaceholders( def, dictionary_ );
+        instances_[ def ] = &instance;
     }
 }
 
 namespace
 {
-    std::string& ReplaceBaseElementTypes( std::string& type )
+    std::string ReplaceBaseElementTypes( const std::string& type )
     {
-        boost::replace_all( type, "key", "unsigned long" );
-        boost::replace_all( type, "damage", "float" );
-        boost::replace_all( type, "resources", "int" );
-        // $$$$ SBO 2009-04-15: TODO: add resources, equiments...
-        return type;
+        std::string result( type );
+        // $$$$ SBO 2009-05-12: Variable types
+        boost::replace_all( result, "unit", "unsigned long" );
+        // $$$$ SBO 2009-05-12: Extractor types
+        boost::replace_all( result, "key", "unsigned long" );
+        boost::replace_all( result, "equipment-type", "unsigned long" );
+        boost::replace_all( result, "resource-type", "unsigned long" );
+        boost::replace_all( result, "damage", "float" );
+        boost::replace_all( result, "resources", "int" );
+        // $$$$ SBO 2009-05-12: Function parameter types
+        boost::replace_all( result, "operator", "string" );
+        // $$$$ SBO 2009-04-15: TODO: put this into a config file...
+        return result;
     }
 }
 
@@ -115,9 +127,9 @@ namespace
 // -----------------------------------------------------------------------------
 void ElementTypeResolver::Update()
 {
-    for( std::map< const ElementType*, const ElementType* >::const_iterator itI = instances_.begin(); itI != instances_.end(); ++itI )
+    for( T_Instances::const_iterator itI = instances_.begin(); itI != instances_.end(); ++itI )
     {
-        std::vector< std::string > def = Split( itI->first->ToString() );
+        std::vector< std::string > def = Split( itI->first );
         std::vector< std::string > val = Split( itI->second->Resolve() );
         if( def.size() != val.size() )
             ConvertElementTypes( def, val );
@@ -155,4 +167,13 @@ std::string ElementTypeResolver::ToSimpleType( const std::string& type )
     if( list.empty() )
         throw std::exception( tools::translate( "Indicators", " has no type." ).ascii() );
     return list.back();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ElementTypeResolver::IsCompatible
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+bool ElementTypeResolver::IsCompatible( const std::string& lhs, const std::string& rhs )
+{
+    return IsAbstract( lhs ) || IsAbstract( rhs ) || ReplaceBaseElementTypes( lhs ) == ReplaceBaseElementTypes( rhs );
 }

@@ -9,12 +9,23 @@
 
 #include "indicators_pch.h"
 #include "Variables.h"
+#include "DataTypeFactory.h"
+#include "ElementTypeResolver.h"
 #include "Variable.h"
+#include "clients_kernel/Iterator.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace indicators;
+
+namespace
+{
+    std::string StripPrefix( const std::string& name )
+    {
+        return boost::erase_first_copy( name, "$" );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Variables constructor
@@ -27,23 +38,28 @@ Variables::Variables()
 
 // -----------------------------------------------------------------------------
 // Name: Variables constructor
-// Created: SBO 2009-05-07
-// -----------------------------------------------------------------------------
-Variables::Variables( const Variables& variables )
-    : variables_( variables.variables_ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Variables constructor
 // Created: SBO 2009-04-17
 // -----------------------------------------------------------------------------
 Variables::Variables( xml::xistream& xis )
 {
+    DataTypeFactory types;
     xis >> xml::start( "constants" )
-            >> xml::list( "constant", *this, &Variables::ReadVariable )
+            >> xml::list( "constant", *this, &Variables::ReadVariable, types )
         >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Variables constructor
+// Created: SBO 2009-05-12
+// -----------------------------------------------------------------------------
+Variables::Variables( const Variables& variables )
+{
+    DataTypeFactory types;
+    BOOST_FOREACH( const T_Elements::value_type& variable, variables.elements_ )
+    {
+        boost::shared_ptr< Element_ABC > element( new Variable( *variable.second, types ) );
+        Register( variable.first, element );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -56,34 +72,34 @@ Variables::~Variables()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Variables::ReadVariable
+// Created: SBO 2009-04-17
+// -----------------------------------------------------------------------------
+void Variables::ReadVariable( xml::xistream& xis, const DataTypeFactory& types )
+{
+    boost::shared_ptr< Element_ABC > element( new Variable( xis, types ) );
+    Register( StripPrefix( element->GetInput() ), element );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Variables::Register
-// Created: SBO 2009-04-10
+// Created: SBO 2009-05-12
 // -----------------------------------------------------------------------------
 void Variables::Register( const std::string& name, boost::shared_ptr< Element_ABC > element )
 {
-    variables_[ name ] = element;
+    elements_[ name ] = element;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Variables::Find
-// Created: SBO 2009-04-10
+// Created: SBO 2009-05-12
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Element_ABC > Variables::Find( const std::string& name ) const
 {
-    T_Variables::const_iterator it = variables_.find( name );
-    if( it != variables_.end() )
+    T_Elements::const_iterator it = elements_.find( name );
+    if( it != elements_.end() )
         return it->second;
     return boost::shared_ptr< Element_ABC >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Variables::ReadVariable
-// Created: SBO 2009-04-17
-// -----------------------------------------------------------------------------
-void Variables::ReadVariable( xml::xistream& xis )
-{
-    boost::shared_ptr< Element_ABC > element( new Variable( xis ) );
-    Register( boost::erase_first_copy( element->GetInput(), "$" ), element );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,41 +109,32 @@ void Variables::ReadVariable( xml::xistream& xis )
 void Variables::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "constants" );
-    BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
+    BOOST_FOREACH( const T_Elements::value_type& variable, elements_ )
         variable.second->SerializeDeclaration( xos );
     xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Variables::Accept
-// Created: SBO 2009-04-21
+// Name: Variables::CreateIterator
+// Created: SBO 2009-05-12
 // -----------------------------------------------------------------------------
-void Variables::Accept( VariablesVisitor_ABC& visitor ) const
+kernel::Iterator< const Element_ABC& > Variables::CreateIterator() const
 {
-    BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
-        visitor.Visit( *variable.second );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Variables::Clone
-// Created: SBO 2009-04-24
-// -----------------------------------------------------------------------------
-Variables& Variables::Clone() const
-{
-    Variables* clone = new Variables();
-    BOOST_FOREACH( const T_Variables::value_type& variable, variables_ )
-        clone->Register( variable.first, boost::shared_ptr< Element_ABC >( & variable.second->Clone() ) );
-    return *clone;
+    return new kernel::AssociativeIterator< const Element_ABC&, T_Elements >( elements_ ); 
 }
 
 // -----------------------------------------------------------------------------
 // Name: Variables::operator=
-// Created: SBO 2009-04-24
+// Created: SBO 2009-05-12
 // -----------------------------------------------------------------------------
-Variables& Variables::operator=( const Variables& rhs )
+Variables& Variables::operator=( const Variables& variables )
 {
-    variables_.clear();
-    BOOST_FOREACH( const T_Variables::value_type& variable, rhs.variables_ )
-        Register( variable.first, variable.second );
+    elements_.clear();
+    DataTypeFactory types;
+    BOOST_FOREACH( const T_Elements::value_type& variable, variables.elements_ )
+    {
+        boost::shared_ptr< Element_ABC > element( new Variable( *variable.second, types ) );
+        Register( variable.first, element );
+    }
     return *this;
 }

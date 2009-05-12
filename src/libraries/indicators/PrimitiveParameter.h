@@ -10,16 +10,19 @@
 #ifndef __PrimitiveParameter_h_
 #define __PrimitiveParameter_h_
 
+#include <boost/shared_ptr.hpp>
+
 namespace xml
 {
     class xistream;
-    class xostream;
 }
 
 namespace indicators
 {
-    class ElementType;
+    class DataTypeFactory;
     class Element_ABC;
+    class ElementTypeResolver;
+    class Function;
 
 // =============================================================================
 /** @class  PrimitiveParameter
@@ -33,15 +36,15 @@ class PrimitiveParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PrimitiveParameter( xml::xistream& xis );
+             PrimitiveParameter( xml::xistream& xis, const DataTypeFactory& types );
     virtual ~PrimitiveParameter();
     //@}
 
     //! @name Operations
     //@{
-    std::string GetAttribute() const;
     QString GetName() const;
-    const ElementType& GetType() const;
+    void Declare( Function& function, boost::shared_ptr< ElementTypeResolver > resolver ) const;
+    boost::shared_ptr< Element_ABC > Instanciate( boost::shared_ptr< ElementTypeResolver > resolver ) const;
     //@}
 
 private:
@@ -56,7 +59,8 @@ private:
     //@{
     const QString name_;
     const std::string attribute_;
-    std::auto_ptr< ElementType > type_;
+    const std::string type_;
+    const DataTypeFactory& types_;
     //@}
 };
 

@@ -21,7 +21,7 @@ using namespace kernel;
 VisionLine::VisionLine( const DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height )
     : DetectionMapIterator( map, from, to )
     , fromAltitude_( map.ElevationAt( from ) + height )
-    , toAltitude_( map.ElevationAt( to ) + 2 )
+    , toAltitude_( map.ElevationAt( to ) + 2.f )
     , totalDistance_( from.Distance( to ) + 0.1f )
     , advancedDistance_( 0 )
     , length_( 0 )

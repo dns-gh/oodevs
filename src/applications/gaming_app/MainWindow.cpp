@@ -619,7 +619,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 // Name: MainWindow::NotifyUpdated
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void MainWindow::NotifyUpdated( const Services& services )
+void MainWindow::NotifyUpdated( const Services& /*services*/ )
 {
     Load();
 }

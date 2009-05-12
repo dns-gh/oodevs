@@ -16,7 +16,10 @@
 #include "clients_kernel/Settings_ABC.h"
 #include "clients_kernel/TriStateOption.h"
 #include "clients_kernel/FourStateOption.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace kernel;
 

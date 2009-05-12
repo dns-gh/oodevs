@@ -10,6 +10,7 @@
 #ifndef __Variables_h_
 #define __Variables_h_
 
+#include "clients_kernel/Iterator.h"
 #include <boost/shared_ptr.hpp>
 
 namespace xml
@@ -20,15 +21,8 @@ namespace xml
 
 namespace indicators
 {
+    class DataTypeFactory;
     class Element_ABC;
-
-class VariablesVisitor_ABC
-{
-public:
-             VariablesVisitor_ABC() {}
-    virtual ~VariablesVisitor_ABC() {}
-    virtual void Visit( Element_ABC& element ) = 0;
-};
 
 // =============================================================================
 /** @class  Variables
@@ -48,35 +42,30 @@ public:
     virtual ~Variables();
     //@}
 
-    //! @name Accessors
-    //@{
-    void Accept( VariablesVisitor_ABC& visitor ) const;
-    boost::shared_ptr< Element_ABC > Find( const std::string& name ) const;
-    //@}
-
     //! @name Operations
     //@{
     void Register( const std::string& name, boost::shared_ptr< Element_ABC > element );
+    boost::shared_ptr< Element_ABC > Find( const std::string& name ) const;
+    kernel::Iterator< const Element_ABC& > CreateIterator() const;
     void Serialize( xml::xostream& xos ) const;
-    Variables& Clone() const;
     Variables& operator=( const Variables& );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ReadVariable( xml::xistream& xis );
+    void ReadVariable( xml::xistream& xis, const DataTypeFactory& types );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< std::string, boost::shared_ptr< Element_ABC > > T_Variables;
+    typedef std::map< std::string, boost::shared_ptr< Element_ABC > > T_Elements;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Variables variables_;
+    T_Elements elements_;
     //@}
 };
 

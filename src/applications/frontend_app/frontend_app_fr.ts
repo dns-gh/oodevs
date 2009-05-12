@@ -93,7 +93,7 @@
     </message>
     <message>
         <source>SWORD Officer Training</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">SCALPED</translation>
     </message>
 </context>
 <context>

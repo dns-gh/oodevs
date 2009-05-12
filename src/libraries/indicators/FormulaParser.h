@@ -79,7 +79,7 @@ public:
     class definition
     {
     public:
-        explicit definition( const FormulaParser& parser )
+        explicit definition( const FormulaParser& /*parser*/ )
         {
             number_ = bs::leaf_node_d[ bs::real_p ];
             string_ = bs::no_node_d[ bs::ch_p( '\'' ) ] >> bs::leaf_node_d[ *( bs::anychar_p - bs::ch_p( '\'' ) ) ] >> bs::no_node_d[ bs::ch_p( '\'' ) ];

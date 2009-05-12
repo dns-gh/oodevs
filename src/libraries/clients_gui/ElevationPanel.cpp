@@ -112,7 +112,7 @@ void ElevationPanel::Reset()
     gradient_->Reset();
     enableHs_    = previousEnableHs_;    hsBox_->setChecked( enableHs_ );
     directionHs_ = previousDirectionHs_; hsDial_->setValue( directionHs_ );
-    strengthHs_  = previousStrengthHs_;  hillShadeStrength_->setValue( strengthHs_ ); OnEnableHillshade( enableHs_ );
+    strengthHs_  = previousStrengthHs_;  hillShadeStrength_->setValue( int( strengthHs_ ) ); OnEnableHillshade( enableHs_ );
 }
 
 // -----------------------------------------------------------------------------

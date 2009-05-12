@@ -9,12 +9,16 @@
 
 #include "frontend_pch.h"
 #include "ExerciseListener.h"
-#include <string.h> 
-#pragma warning( push, 0 )
-#include <boost/asio.hpp> 
+#pragma warning( push )
+#pragma warning( disable : 4100 4510 4610 4702 )
+#ifndef _WIN32_WINNT
+#   define _WIN32_WINNT 0x0501
+#endif
+#include <boost/asio.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
 #pragma warning( pop )
+#include <string.h> 
 
 const size_t max_length = 1024;
 

@@ -14,6 +14,8 @@
 
 namespace indicators
 {
+    class DataTypeFactory;
+    class ElementTypeResolver;
     class Primitives;
     class Variables;
 
@@ -58,6 +60,8 @@ private:
     //@{
     const Primitives& primitives_;
     const Variables& variables_;
+    std::auto_ptr< DataTypeFactory > types_;
+    boost::shared_ptr< ElementTypeResolver > resolver_;
     mutable unsigned long id_;
     //@}
 };

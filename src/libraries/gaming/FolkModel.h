@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #pragma warning( push )
-#pragma warning( disable : 4100 )
+#pragma warning( disable : 4100 4996 )
 #include <boost/multi_array.hpp>
 #pragma warning( pop )
 

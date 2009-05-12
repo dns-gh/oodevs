@@ -17,7 +17,10 @@
 #include "indicators/GaugeType.h"
 #include "indicators/GaugeTypes.h"
 #include <boost/foreach.hpp>
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 #include <qimage.h>
 
 namespace

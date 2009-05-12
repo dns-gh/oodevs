@@ -39,19 +39,6 @@ ToxicCloudAttribute::~ToxicCloudAttribute()
     // NOTHING
 }
 
-namespace
-{
-    class ToxicMap
-    {
-    public:
-        //! @name Constructors/Destructor
-        //@{
-        explicit ToxicMap();
-        virtual ~ToxicMap();
-        //@}
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ToxicCloudAttribute::CreateTexture()
 // Created: SBO 2008-04-14
@@ -77,7 +64,7 @@ void ToxicCloudAttribute::UpdateTexture() const
     for ( CIT_QuantityCloud it = cloud_.begin(); it != cloud_.end(); ++it )
     {
         const geometry::Point2f& p = it->first;
-        glColor4f( std::min( 1., 2. * it->second * range ), std::max( 0., 2. * ( 1.f - it->second * range ) ) /*- it->first*/, 0.f, 0.5f );
+        glColor4d( std::min( 1., 2. * it->second * range ), std::max( 0., 2. * ( 1.f - it->second * range ) ), 0., 0.5f );
         glBegin( GL_QUADS );
             glTexCoord1f( 0.125f );
             glVertex3f( p.X(), p.Y(), 200 );
@@ -97,10 +84,10 @@ void ToxicCloudAttribute::UpdateToxicCloud( const ASN1T_LocatedQuantityList& clo
     cloud_.resize( cloud.n );
     boundaries_ = QuantityBoundaries();
     boundingBox_ = geometry::Rectangle2f();
-    for ( int i = 0; i < cloud.n; ++i )
+    for( unsigned int i = 0; i < cloud.n; ++i )
     {
         ASN1T_LocatedQuantity& quantity = cloud.elem[ i ];        
-        const geometry::Point2f position( quantity.coordinate.longitude, quantity.coordinate.latitude );
+        const geometry::Point2f position( float( quantity.coordinate.longitude ), float( quantity.coordinate.latitude ) );
         boundingBox_.Incorporate( position );
         boundaries_.Incorporate( quantity.quantity );
         cloud_[ i ] = std::make_pair( position, quantity.quantity );
@@ -117,7 +104,6 @@ void ToxicCloudAttribute::UpdateData( const T& message )
     if ( message.m.toxic_cloudPresent )    
     {
         UpdateToxicCloud( message.toxic_cloud.quantities );
-//        UpdateTexture();
         controller_.Update( *(ToxicCloudAttribute_ABC*)this );        
     }
 }
@@ -140,66 +126,13 @@ void ToxicCloudAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
     UpdateData( message.attributes );
 }
 
-/*
-void VisionMap::Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
-{
-    static const float colors[3][4] =
-    {
-        { COLOR_VISION_DETECTED  },
-        { COLOR_VISION_RECO      },
-        { COLOR_VISION_IDENTIED  }
-    };
-
-    if( !vision_ || ! viewport.IsVisible( boundingBox_ ) )
-        return;
-
-    const float translation = map_.GetCellSize() * 0.5;
-    glPushMatrix();
-    glTranslatef( translation, translation, 0 );
-    glPushAttrib( GL_CURRENT_BIT );
-    glPointSize( std::ceil( map_.GetCellSize() / tools.Pixels() ) );
-
-    glBegin( GL_POINTS );
-    for( char color = 1; color <= 3; ++color )
-    {
-        glColor4fv( colors[ color-1 ] );
-        for( int y = 0; y < height_; ++y )
-            for( int x = 0; x < width_; ++x )
-                if( vision_[ y * width_ + x ] == color )
-                {
-                    const unsigned realX = left_   + x;
-                    const unsigned realY = bottom_ + y;
-                    const geometry::Point2f p = map_.Map( realX, realY );
-                    tools.DrawCell( p );
-                }
-    }
-    glEnd();
-    glPopAttrib();
-    glPopMatrix();
-}
-*/
-
 // -----------------------------------------------------------------------------
 // Name: ToxicCloudAttribute::Draw
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ToxicCloudAttribute::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& /*tools*/ ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || cloud_.empty() )
         return;
-
-//    glBindTexture( GL_TEXTURE_2D, texture_ );
-//    glCopyTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, Width(), Height(), 0 );
-
     UpdateTexture();
-
-//    glPushMatrix();
-//    glTranslatef( translation, translation, 0 );
-//    glPushAttrib( GL_CURRENT_BIT );
-//    glPointSize( std::ceil( map_.GetCellSize() / tools.Pixels() ) );
-//    
-//    
-//    glEnd();
-//    glPopAttrib();
-//    glPopMatrix();
 }

@@ -10,6 +10,13 @@
 #ifndef __Primitive_h_
 #define __Primitive_h_
 
+#include <boost/shared_ptr.hpp>
+
+namespace kernel
+{
+    class Displayer_ABC;
+}
+
 namespace xml
 {
     class xistream;
@@ -18,14 +25,13 @@ namespace xml
 
 namespace indicators
 {
+    class DataTypeFactory;
     class Element_ABC;
     class PrimitiveParameter;
-    class ElementType;
 
 // =============================================================================
 /** @class  Primitive
     @brief  Primitive
-    // $$$$ SBO 2009-04-15: TODO: reverse dependency between Primitive and Instance (Element)
 */
 // Created: SBO 2009-04-06
 // =============================================================================
@@ -35,7 +41,7 @@ class Primitive
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Primitive( xml::xistream& xis );
+             Primitive( xml::xistream& xis, const DataTypeFactory& types );
     virtual ~Primitive();
     //@}
 
@@ -44,10 +50,12 @@ public:
     QString GetName() const;
     std::string GetCategory() const;
     QString GetPrototype() const;
-    QString GetComment() const;
-    const ElementType& GetType() const;
-    const PrimitiveParameter* FindParameter( unsigned int index ) const;
-    unsigned int ParameterCount() const;
+    //@}
+
+    //! @name Operations
+    //@{
+    boost::shared_ptr< Element_ABC > Instanciate( const std::string& input ) const;
+    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -65,7 +73,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< PrimitiveParameter* > T_Parameters;
+    typedef std::vector< const PrimitiveParameter* > T_Parameters;
     //@}
 
 private:
@@ -74,7 +82,9 @@ private:
     const QString name_;
     const std::string category_;
     const QString comment_;
-    std::auto_ptr< ElementType > type_;
+    const std::string type_;
+    const DataTypeFactory& types_;
+    QString prototype_;
     T_Parameters parameters_;
     //@}
 };

@@ -84,7 +84,7 @@ void SpinBoxDisplayer::EndDisplay()
 // -----------------------------------------------------------------------------
 void SpinBoxDisplayer::Call( const double& value )
 {
-    edit_->setValue( value );
+    edit_->setValue( int( value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ void SpinBoxDisplayer::Call( const double& value )
 // -----------------------------------------------------------------------------
 void SpinBoxDisplayer::Call( const float& value )
 {
-    edit_->setValue( value );
+    edit_->setValue( int( value ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,8 +12,12 @@
 #include "GrammarHandler_ABC.h"
 #include "clients_kernel/Tools.h"
 #include <boost/bind.hpp>
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 #include <boost/spirit/include/classic_ast.hpp>
+#pragma warning( disable: 4503 4512 )
 
 namespace bs = boost::spirit::classic;
 

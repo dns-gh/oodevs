@@ -10,10 +10,11 @@
 #ifndef __indicators_pch_h_
 #define __indicators_pch_h_
 
+#pragma warning( push, 0 )
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
-
 #include <qstring.h>
+#pragma warning( pop )
 
 #endif // __indicators_pch_h_

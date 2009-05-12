@@ -176,7 +176,8 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
     Entity_ABC* agent = Resolver< Automat_ABC >::Find( id );
     if( agent )
         return agent;
-    if( agent = Resolver< Agent_ABC >::Find( id ) )
+    agent = Resolver< Agent_ABC >::Find( id );
+    if( agent )
         return agent;
     return Resolver< Population_ABC >::Find( id );
 }

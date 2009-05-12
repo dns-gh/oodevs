@@ -9,8 +9,9 @@
 
 #include "indicators_pch.h"
 #include "PrimitiveParameter.h"
-#include "ElementType.h"
-#include "Element_ABC.h"
+#include "DataTypeFactory.h"
+#include "Function.h"
+#include "FunctionParameter.h"
 #include <xeumeuleu/xml.h>
 
 using namespace indicators;
@@ -19,10 +20,11 @@ using namespace indicators;
 // Name: PrimitiveParameter constructor
 // Created: SBO 2009-04-06
 // -----------------------------------------------------------------------------
-PrimitiveParameter::PrimitiveParameter( xml::xistream& xis )
+PrimitiveParameter::PrimitiveParameter( xml::xistream& xis, const DataTypeFactory& types )
     : name_( xml::attribute< std::string >( xis, "name" ).c_str() )
     , attribute_( xml::attribute< std::string >( xis, "attribute", "input" ) )
-    , type_( new ElementType( xis ) )
+    , type_( xml::attribute< std::string >( xis, "type" ) )
+    , types_( types )
 {
     // NOTHING
 }
@@ -37,17 +39,8 @@ PrimitiveParameter::~PrimitiveParameter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PrimitiveParameter::GetAttribute
-// Created: SBO 2009-04-09
-// -----------------------------------------------------------------------------
-std::string PrimitiveParameter::GetAttribute() const
-{
-    return attribute_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PrimitiveParameter::GetName
-// Created: SBO 2009-04-20
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
 QString PrimitiveParameter::GetName() const
 {
@@ -55,10 +48,20 @@ QString PrimitiveParameter::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PrimitiveParameter::GetType
-// Created: SBO 2009-04-06
+// Name: PrimitiveParameter::Declare
+// Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
-const ElementType& PrimitiveParameter::GetType() const
+void PrimitiveParameter::Declare( Function& function, boost::shared_ptr< ElementTypeResolver > resolver ) const
 {
-    return *type_;
+    function.DeclareParameter( attribute_, Instanciate( resolver ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PrimitiveParameter::Instanciate
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Element_ABC > PrimitiveParameter::Instanciate( boost::shared_ptr< ElementTypeResolver > resolver ) const
+{
+    boost::shared_ptr< Element_ABC > element( new FunctionParameter( name_, attribute_, types_.Instanciate( type_, resolver ) ) );
+    return element;
 }

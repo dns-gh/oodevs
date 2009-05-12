@@ -10,12 +10,13 @@
 #include "frontend_pch.h"
 #include "commands.h"
 #include "tools/GeneralConfig.h"
-
-#pragma warning( disable: 4127 4244 4245 )
+#pragma warning( push )
+#pragma warning( disable: 4127 4244 4245 4996 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
-#include <xeumeuleu/xml.h>
 #include <zipstream/zipstream.h>
+#pragma warning( pop )
+#include <xeumeuleu/xml.h>
 #include <qstringlist.h>
 
 namespace bfs = boost::filesystem;

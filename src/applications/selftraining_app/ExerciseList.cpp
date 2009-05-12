@@ -22,7 +22,10 @@
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp>
+#pragma warning( push )
+#pragma warning( disable: 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 #include <xeumeuleu/xml.h>
 
 namespace bfs = boost::filesystem;

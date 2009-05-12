@@ -11,8 +11,12 @@
 #define __Constant_h_
 
 #include "Element_ABC.h"
-#include "ElementType.h"
+#include "DataType_ABC.h"
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
+#include <boost/shared_ptr.hpp>
 #include <xeumeuleu/xml.h>
 
 namespace indicators
@@ -31,14 +35,14 @@ class Constant : public Element_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Constant( const std::string& id, const std::string& type, const T& value )
+             Constant( const std::string& id, boost::shared_ptr< const DataType_ABC > type, const T& value )
                  : Element_ABC( id ), type_( type ), value_( value ) {}
     virtual ~Constant() {}
     //@}
 
     //! @name Accessors
     //@{
-    virtual const ElementType& GetType() const;
+    virtual const DataType_ABC& GetType() const;
     virtual std::string GetValue() const;
     //@}
 
@@ -47,7 +51,6 @@ public:
     virtual void AddParameter( boost::shared_ptr< Element_ABC > element );
     virtual void Serialize( xml::xostream& xos, ElementDeclarator_ABC& declarator ) const;
     virtual void SerializeDeclaration( xml::xostream& xos ) const;
-    virtual Element_ABC& Clone() const;
     //@}
 
 private:
@@ -60,7 +63,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const ElementType type_;
+    boost::shared_ptr< const DataType_ABC > type_;
     const T value_;
     //@}
 };
@@ -70,9 +73,9 @@ protected:
 // Created: SBO 2009-04-09
 // -----------------------------------------------------------------------------
 template< typename T >
-const ElementType& Constant< T >::GetType() const
+const DataType_ABC& Constant< T >::GetType() const
 {
-    return type_;
+    return *type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,18 +118,8 @@ void Constant< T >::SerializeDeclaration( xml::xostream& xos ) const
     xos << xml::start( "constant" )
             << xml::attribute( "id", GetInput() )
             << xml::attribute< T >( "value", value_ )
-            << xml::attribute( "type", type_.ToString() )
+            << xml::attribute( "type", type_->ToString() )
         << xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Constant::Clone
-// Created: SBO 2009-04-24
-// -----------------------------------------------------------------------------
-template< typename T >
-Element_ABC& Constant< T >::Clone() const
-{
-    throw std::runtime_error( __FUNCTION__ " not implemented." );
 }
 
 }

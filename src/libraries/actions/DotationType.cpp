@@ -12,10 +12,10 @@
 #include "clients_kernel/DotationType.h"
 #include "ParameterVisitor_ABC.h"
 #include <xeumeuleu/xml.h>
-#pragma warning (push)
-#pragma warning (disable : 4127 4511 4512 )
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
-#pragma warning (pop)
+#pragma warning( pop )
 
 using namespace xml;
 using namespace actions;

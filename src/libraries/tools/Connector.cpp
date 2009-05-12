@@ -11,6 +11,7 @@
 #include "Connector.h"
 #include "SocketManager.h"
 #include "ConnectionCallback_ABC.h"
+#pragma warning( disable : 4503 )
 #include <boost/bind.hpp>
 
 using namespace tools;

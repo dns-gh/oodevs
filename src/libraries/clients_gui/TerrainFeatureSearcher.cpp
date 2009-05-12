@@ -16,7 +16,7 @@
 #include "clients_kernel/ApproximativeMap.h"
 #include "graphics/NoVBOShapeLayer.h"
 #include "graphics/GraphicSetup_ABC.h"
-#pragma warning( disable : 4512 )
+#pragma warning( disable : 4355 4512 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
 
