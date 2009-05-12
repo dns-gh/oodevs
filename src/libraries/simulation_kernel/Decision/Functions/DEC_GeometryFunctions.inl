@@ -233,24 +233,33 @@ namespace
 template< typename T >
 void DEC_GeometryFunctions::ComputeObstaclePosition( DIA_Call_ABC& call, const T& caller )
 {
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypePoint( call[ 0 ] ) );
 
-    MT_Vector2D*        pCenter = call.GetParameter( 0 ).ToUserPtr( pCenter );
-    MT_Float            rRadius = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
+    MT_Vector2D*        pCenter = call[ 0 ].ToUserPtr( pCenter );
+    const std::string&  type = call[ 1 ].ToString();
+    MT_Float            rRadius = MIL_Tools::ConvertMeterToSim( call[ 2 ].ToFloat() );
 
     assert( pCenter );
     
     MT_Vector2D* pResultPos = new MT_Vector2D();
     call.GetResult().SetValue( (void*)pResultPos, &DEC_Tools::GetTypePoint() );
 
-    TerrainHeuristicCapacity* pCapacity = 0;
     *pResultPos = *pCenter;
-    if ( pCapacity )
+    try 
     {
-        sBestNodeForObstacle  costEvaluationFunctor( caller.GetFuseau(), *pCapacity, *pCenter, rRadius );
-        TER_World::GetWorld().GetPathFindManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );        
-        if( costEvaluationFunctor.FoundAPoint() )
-            *pResultPos = costEvaluationFunctor.BestPosition();
+        const MIL_ObjectType_ABC& object = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( type );
+        const TerrainHeuristicCapacity* pCapacity = object.GetCapacity< TerrainHeuristicCapacity >();
+        if ( pCapacity )
+        {
+            sBestNodeForObstacle  costEvaluationFunctor( caller.GetFuseau(), *pCapacity, *pCenter, rRadius );
+            TER_World::GetWorld().GetPathFindManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );        
+            if( costEvaluationFunctor.FoundAPoint() )
+                *pResultPos = costEvaluationFunctor.BestPosition();
+        }
+    }
+    catch ( std::exception& e )
+    {
+        // object not found
     }
 }
 
