@@ -1,11 +1,11 @@
 //*****************************************************************************
 //
 // $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Path.inl $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Population_Path.inl $
 // $Author: Age $
 // $Modtime: 13/04/05 18:34 $
 // $Revision: 3 $
-// $Workfile: DEC_Path.inl $
+// $Workfile: DEC_Population_Path.inl $
 //
 //*****************************************************************************
 

@@ -18,7 +18,7 @@
 #include "Decision/DEC_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
 
-class DEC_Path;
+class DEC_Path_ABC;
 
 // =============================================================================
 // DEBUG
@@ -60,7 +60,7 @@ void DEC_DIAFunctions::PathToString( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
 
-    DEC_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
+    DEC_Path_ABC* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
     assert( pPath != 0 );
     std::stringstream strTmp;
     strTmp << "0x" << pPath;

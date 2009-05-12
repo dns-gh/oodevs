@@ -17,7 +17,6 @@
 
 class MIL_Mission_ABC;
 class NET_ASN_MsgUnitAttributes;
-class DEC_Path;
 class PHY_RoePopulation;
 class DEC_AutomateDecision;
 

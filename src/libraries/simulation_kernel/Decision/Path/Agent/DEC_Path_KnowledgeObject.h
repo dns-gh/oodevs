@@ -17,7 +17,6 @@
 #include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Knowledge_Object;
-class DEC_Path;
 class DEC_Agent_PathClass;
 
 // =============================================================================

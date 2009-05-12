@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 
-class DEC_Path;
 class DEC_PathPoint;
 class DEC_Representations;
 
