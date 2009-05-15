@@ -99,11 +99,8 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     SetLowFragmentationHeapAlgorithm();
 
     // Float exceptions
-#ifdef _DEBUG
-    _controlfp( _EM_OVERFLOW | _EM_UNDERFLOW | _EM_INEXACT, _MCW_EM ); // Exception raised for _EM_DENORMAL and _EM_ZERODIVIDE and _EM_INVALID
-#else
-    _controlfp( _EM_OVERFLOW | _EM_UNDERFLOW | _EM_INEXACT | _EM_INVALID, _MCW_EM ); // Exception raised for _EM_DENORMAL and _EM_ZERODIVIDE and _EM_INVALID
-#endif
+    unsigned int control_word;
+    _controlfp_s( &control_word, _EM_OVERFLOW | _EM_UNDERFLOW | _EM_INEXACT | _EM_INVALID, _MCW_EM ); // Exception raised for _EM_DENORMAL and _EM_ZERODIVIDE
 
     // Memory handlers
     _set_new_mode   ( 1 );
