@@ -51,13 +51,6 @@ public:
 
     virtual void Execute() const;
     //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    HLA_Neutralization( const HLA_Neutralization& );            //!< Copy constructor
-    HLA_Neutralization& operator=( const HLA_Neutralization& ); //!< Assignement operator
-    //@}
 };
 
 #endif // __HLA_Neutralization_h_

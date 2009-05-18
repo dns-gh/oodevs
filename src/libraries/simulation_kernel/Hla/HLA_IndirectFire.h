@@ -52,13 +52,6 @@ public:
 
     virtual void Execute() const;
     //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    HLA_IndirectFire( const HLA_IndirectFire& );            //!< Copy constructor
-    HLA_IndirectFire& operator=( const HLA_IndirectFire& ); //!< Assignement operator
-    //@}
 };
 
 #endif // __HLA_IndirectFire_h_
