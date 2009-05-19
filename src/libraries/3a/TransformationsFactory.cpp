@@ -47,7 +47,7 @@ TransformationsFactory::~TransformationsFactory()
 template< typename T >
 void TransformationsFactory::Compose( const std::string& name, xml::xistream& , Task& result ) const
 {
-    typedef Composer< unsigned long, unsigned long, T > C;
+    typedef Composer< NumericValue, NumericValue, T > C;
     typedef FunctionConnector< typename C::Key_Type, typename C::Result_Type > Connector;
     boost::shared_ptr< Connector > connector( new Connector() );
     boost::shared_ptr< C > function( new C( *connector ) );
@@ -62,23 +62,24 @@ void TransformationsFactory::Compose( const std::string& name, xml::xistream& , 
 template< typename T >
 void TransformationsFactory::Transform( const std::string& name, xml::xistream& xis, Task& result ) const
 {
+    typedef NumericValue K;
     const std::string function = xml::attribute< std::string >( xis, "function" );
     if( function == "distance" )
-        Transform2< Distance< unsigned long > >( name, xis, result );
+        Transform2< Distance< K > >( name, xis, result );
     else if( function == "contains" )
-        Transform2< ::Contains< unsigned long > >( name, xis, result );
+        Transform2< ::Contains< K > >( name, xis, result );
     else if( function == "filter" )
-        Transform2< Filter< unsigned long, T > >( name, xis, result );
+        Transform2< Filter< K, T > >( name, xis, result );
     else if( function == "is-one-of" )
-        Transform1< IsOneOf< unsigned long, T > >( name, xis, result );
+        Transform1< IsOneOf< K, T > >( name, xis, result );
     else if( function == "derivate" )
-        Transform1< Derivate< unsigned long, T > >( name, xis, result );
+        Transform1< Derivate< K, T > >( name, xis, result );
     else if( function == "integrate" )
-        Transform1< Integrate< unsigned long, T > >( name, xis, result );
+        Transform1< Integrate< K, T > >( name, xis, result );
     else if( function == "domain" )
-        Transform1< Domain< unsigned long, T > >( name, xis, result );
+        Transform1< Domain< K, T > >( name, xis, result );
     else if( function == "compare" )
-        Transform2< Compare< unsigned long, T > >( name, xis, result );
+        Transform2< Compare< K, T > >( name, xis, result );
     else if( function == "compose" )
         Compose< T >( name, xis, result );
     else

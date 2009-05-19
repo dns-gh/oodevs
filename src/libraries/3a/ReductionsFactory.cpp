@@ -44,7 +44,7 @@ ReductionsFactory::~ReductionsFactory()
 template< typename T >
 void ReductionsFactory::Reduce( const std::string& name, xml::xistream& xis, Task& result ) const
 {
-    typedef unsigned long K;
+    typedef NumericValue K;
     const std::string functionName = xml::attribute< std::string >( xis, "function" );
 
     if( functionName == "select" )

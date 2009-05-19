@@ -26,13 +26,13 @@ class Distance : public Function2_ABC< K, Position, Position >
 public:
     //! @name Types
     //@{
-    typedef float Result_Type;
+    typedef NumericValue Result_Type;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    Distance( xml::xistream&, Function1_ABC< K, float >& next )
+    Distance( xml::xistream&, Function1_ABC< K, NumericValue >& next )
         : next_( next ) {}
     //@}
 
@@ -72,7 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Function1_ABC< K, float >& next_;
+    Function1_ABC< K, NumericValue >& next_;
     //@}
 };
 

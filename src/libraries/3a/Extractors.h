@@ -11,6 +11,7 @@
 #define __Extractors_h_
 
 #include "Position.h"
+#include "Types.h"
 
 // =============================================================================
 /** @namespace Extractors
@@ -28,12 +29,12 @@ namespace extractors
     };
 
     // Attributes
-    struct OperationalState : public Extractor< float >
+    struct OperationalState : public Extractor< NumericValue >
     {
         bool  HasFlag( const ASN1T_MsgUnitAttributes& attributes ) const
         { return attributes.m.etat_operationnel_brutPresent; }
-        float Extract( const ASN1T_MsgUnitAttributes& attributes ) const
-        { return float( attributes.etat_operationnel_brut ) * 0.01f; }
+        NumericValue Extract( const ASN1T_MsgUnitAttributes& attributes ) const
+        { return NumericValue( attributes.etat_operationnel_brut * 0.01f ); }
     };
 
     struct Position : public Extractor< ::Position >
@@ -45,34 +46,34 @@ namespace extractors
     };
 
     // Existences
-    struct MaintenanceHandlingUnitId : public Extractor< unsigned long >
+    struct MaintenanceHandlingUnitId : public Extractor< NumericValue >
     {
         bool IsCreation( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.t == T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation; }
-        unsigned long Extract( const ASN1T_MsgsSimToClient& message ) const
-        { return message.msg.u.msg_log_maintenance_handling_creation->oid_pion; }
+        NumericValue Extract( const ASN1T_MsgsSimToClient& message ) const
+        { return NumericValue( message.msg.u.msg_log_maintenance_handling_creation->oid_pion ); }
         bool IsDestruction( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.t == T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction; }
     };
 
-    struct DirectFireUnitId : public Extractor< unsigned long >
+    struct DirectFireUnitId : public Extractor< NumericValue >
     {
         bool IsCreation( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.t == T_MsgsSimToClient_msg_msg_start_unit_fire
               && message.msg.u.msg_start_unit_fire->type == MsgStartUnitFire_type::direct; }
-        unsigned long Extract( const ASN1T_MsgsSimToClient& message ) const
-        { return message.msg.u.msg_start_unit_fire->firer_oid; }
+        NumericValue Extract( const ASN1T_MsgsSimToClient& message ) const
+        { return NumericValue( message.msg.u.msg_start_unit_fire->firer_oid ); }
         bool IsDestruction( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.t == T_MsgsSimToClient_msg_msg_stop_unit_fire; }
     };
 
-    struct IndirectFireUnitId : public Extractor< unsigned long >
+    struct IndirectFireUnitId : public Extractor< NumericValue >
     {
         bool IsCreation( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.t == T_MsgsSimToClient_msg_msg_start_unit_fire
               && message.msg.u.msg_start_unit_fire->type == MsgStartUnitFire_type::indirect; }
-        unsigned long Extract( const ASN1T_MsgsSimToClient& message ) const
-        { return message.msg.u.msg_start_unit_fire->firer_oid; }
+        NumericValue Extract( const ASN1T_MsgsSimToClient& message ) const
+        { return NumericValue( message.msg.u.msg_start_unit_fire->firer_oid ); }
         bool IsDestruction( const ASN1T_MsgsSimToClient& message ) const
         { return message.msg.t == T_MsgsSimToClient_msg_msg_stop_unit_fire; }
     };

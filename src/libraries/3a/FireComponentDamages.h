@@ -23,7 +23,7 @@ namespace extractors
 */
 // Created: AGE 2007-10-24
 // =============================================================================
-class FireComponentDamages: public Extractor< float >
+class FireComponentDamages: public Extractor< NumericValue >
 {
 public:
     //! @name Types

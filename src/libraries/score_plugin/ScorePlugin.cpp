@@ -15,6 +15,7 @@
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
 #include "game_asn/AarSenders.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include <boost/algorithm/string.hpp>
@@ -131,8 +132,15 @@ void ScorePlugin::LoadIndicators( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ScorePlugin::LoadIndicator( xml::xistream& xis )
 {
-    AarFacade facade( clients_, tasks_.size() );
-    tasks_.push_back( facade.CreateTask( xis ) );
+    try
+    {
+        AarFacade facade( clients_, tasks_.size() );
+        tasks_.push_back( facade.CreateTask( xis ) );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error loading score indicators: " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

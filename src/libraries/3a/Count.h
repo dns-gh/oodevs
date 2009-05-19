@@ -30,16 +30,16 @@ class Count : public Reductor_ABC< K, T >
 public:
     //! @name Types
     //@{
-    typedef unsigned Result_Type;
+    typedef NumericValue Result_Type;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Count( xml::xistream&, Function1_ABC< K, unsigned >& handler )
+             Count( xml::xistream&, Function1_ABC< K, NumericValue >& handler )
                 : handler_( handler )
                 , set_( false ){}
-    explicit Count( Function1_ABC< K, unsigned >& handler )
+    explicit Count( Function1_ABC< K, NumericValue >& handler )
                 : handler_( handler )
                 , set_( false ){}
     //@}
@@ -79,7 +79,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Function1_ABC< K, unsigned >& handler_;
+    Function1_ABC< K, NumericValue >& handler_;
     std::set< K > keys_;
     K current_; bool set_;
     //@}

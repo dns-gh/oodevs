@@ -12,6 +12,7 @@
 #include "Task.h"
 #include "Plotter.h"
 #include "Indicator.h"
+#include "Types.h"
 
 // -----------------------------------------------------------------------------
 // Name: ResultsFactory constructor
@@ -43,9 +44,9 @@ void ResultsFactory::Result( const std::string& , xml::xistream& xis, Task& resu
     const std::string function = xml::attribute< std::string >( xis, "function" );
     boost::shared_ptr< Result_ABC > f;
     if( function == "plot" )
-        f.reset( new Plotter< unsigned long, T >( publisher_, context_ ) );
+        f.reset( new Plotter< NumericValue, T >( publisher_, context_ ) );
     else if( function == "indicator" )
-        f.reset( new Indicator< unsigned long, T >( publisher_, xml::attribute< std::string >( xis, "name" ) ) );
+        f.reset( new Indicator< NumericValue, T >( publisher_, xml::attribute< std::string >( xis, "name" ) ) );
     else
         Error( function );
     result.SetResult( f );

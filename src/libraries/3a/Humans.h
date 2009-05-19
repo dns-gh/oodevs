@@ -28,7 +28,7 @@ namespace extractors
 */
 // Created: AGE 2007-10-29
 // =============================================================================
-class Humans : public Extractor< int >
+class Humans : public Extractor< NumericValue >
 {
 public:
     //! @name Types

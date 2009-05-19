@@ -13,8 +13,10 @@
 #include <xeumeuleu/xml.h>
 #include "dispatcher/ClientPublisher_ABC.h"
 #include "dispatcher/MessageLoader_ABC.h"
-#pragma warning( disable : 4512 )
+#pragma warning( push )
+#pragma warning( disable : 4512 4996 )
 #include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: Task constructor

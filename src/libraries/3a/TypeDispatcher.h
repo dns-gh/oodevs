@@ -13,6 +13,8 @@
 #include <xeumeuleu/xml.h>
 #include "Position.h"
 #include "Zone.h"
+#include "Types.h"
+
 class Task;
 
 // =============================================================================
@@ -59,7 +61,7 @@ public:
     void Dispatch( Functor& functor, const std::string& type )
     {
         if( type == "float" )
-            functor.operator()< float >( name_, xis_, result_ );
+            functor.operator()< NumericValue >( name_, xis_, result_ );
         else if( type == "position" )
             functor.operator()< ::Position >( name_, xis_, result_ );
         else if( type == "zone" )
@@ -67,11 +69,11 @@ public:
         else if( type == "bool" )
             functor.operator()< bool >( name_, xis_, result_ );
         else if( type == "int" ) 
-            functor.operator()< int >( name_, xis_, result_ );
+            functor.operator()< NumericValue >( name_, xis_, result_ );
         else if( type == "unsigned" || type == "unsigned int" ) 
-            functor.operator()< unsigned >( name_, xis_, result_ );
+            functor.operator()< NumericValue >( name_, xis_, result_ );
         else if( type == "unsigned long" || type == "unit" )
-            functor.operator()< unsigned long >( name_, xis_, result_ );
+            functor.operator()< NumericValue >( name_, xis_, result_ );
         else if( type.empty() && allowNullType_ )
             functor.operator()< NullType >( name_, xis_, result_ );
         else

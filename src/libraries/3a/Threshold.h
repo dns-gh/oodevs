@@ -15,11 +15,11 @@
 #include <set>
 #include <map>
 #include <xeumeuleu/xml.h>
+#pragma warning( push )
+#pragma warning( disable : 4800 4804 4996 )
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
-
-#pragma warning( push )
-#pragma warning( disable : 4800 4804 )
+#pragma warning( pop )
 
 namespace xml { class xistream; }
 
@@ -76,15 +76,15 @@ private:
 
     //! @name Helpers
     //@{
-    std::map< T, T > ReadThresholds( xml::xistream& xis )
+    std::map< double, double > ReadThresholds( xml::xistream& xis )
     {
         std::vector< std::string > split;
         std::string list( xml::attribute< std::string >( xis, "thresholds" ) );
         boost::algorithm::split( split, list, boost::algorithm::is_any_of( "," ) );
-        std::set< T > ranges;
+        std::set< double > ranges;
         for( std::vector< std::string >::const_iterator it = split.begin(); it != split.end(); ++it )
-            ranges.insert( boost::lexical_cast< T, std::string >( *it ) );
-        ranges.insert( std::numeric_limits< T >::max() );
+            ranges.insert( boost::lexical_cast< double, std::string >( *it ) );
+        ranges.insert( std::numeric_limits< double >::max() );
         
         list = xml::attribute< std::string >( xis, "values" );
         boost::algorithm::split( split, list, boost::algorithm::is_any_of( "," ) );
@@ -94,17 +94,17 @@ private:
             std::fill_n( std::back_inserter( split ), ranges.size() - split.size(), lastValue );
         }
        
-        std::map< T, T > thresholds;
+        std::map< double, double > thresholds;
         std::vector< std::string >::iterator valuesIt = split.begin();
-        for( std::set< T >::const_iterator it = ranges.begin(); it != ranges.end(); ++it )
-            thresholds.insert( std::make_pair( *it, boost::lexical_cast< T, std::string >( *valuesIt++ ) ) );
+        for( std::set< double >::const_iterator it = ranges.begin(); it != ranges.end(); ++it )
+            thresholds.insert( std::make_pair( *it, boost::lexical_cast< double, std::string >( *valuesIt++ ) ) );
         return thresholds;
     }
 
     T ApplyThreshold( const T& value )
     {
-        std::map< T, T >::const_iterator it = thresholds_.lower_bound( value );
-        return it != thresholds_.end() ? it->second : T();
+        std::map< double, double >::const_iterator it = thresholds_.lower_bound( double( value ) );
+        return it != thresholds_.end() ? T( it->second ) : T();
     }
     //@}
 
@@ -112,7 +112,7 @@ private:
     //! @name Member data
     //@{
     Function1_ABC< K, T >& handler_;
-    const std::map< T, T > thresholds_;
+    const std::map< double, double > thresholds_;
     //@}
 };
 

@@ -28,7 +28,7 @@ namespace extractors
 */
 // Created: AGE 2007-10-29
 // =============================================================================
-class Equipments : public Extractor< int >
+class Equipments : public Extractor< NumericValue >
 {
 public:
     //! @name Types

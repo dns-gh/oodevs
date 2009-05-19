@@ -57,7 +57,7 @@ public:
     virtual void Apply( const T& arg )
     {
         T& previous = previous_[ currentKey_ ];
-        next_.Apply( T( arg - previous ) );
+        next_.Apply( arg - previous );
         previous = arg;
     }
     virtual void EndTick()

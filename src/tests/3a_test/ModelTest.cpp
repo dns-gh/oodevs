@@ -12,6 +12,7 @@
 #include "3a/Attributes.h"
 #include "3a/Zone.h"
 #include "3a/IdentifierValue.h"
+#include "3a/Types.h"
 #include "MockValueHandler.h"
 
 using namespace mockpp;
@@ -33,8 +34,8 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Model_TestInstanciation )
 {
-    NullValueHandler< float >         valueHandler;
-    NullValueHandler< unsigned long > keyHandler;
+    NullValueHandler< NumericValue > valueHandler;
+    NullValueHandler< NumericValue > keyHandler;
     {
         std::auto_ptr< ModelFunction_ABC > function( new ModelFunction< attributes::OperationalState >( valueHandler ) );
     }
@@ -69,12 +70,13 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
 {
-    MockValueHandler< float > handler;
+    static const NumericValue epsilon( 0.001f );
+    MockValueHandler< NumericValue > handler;
 
     std::auto_ptr< ModelFunction_ABC > function( new ModelFunction< attributes::OperationalState >( handler ) );
     handler.BeginTick_mocker.expects( exactly( 4 ) );
-    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( 0.25f ) );
-    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( unsigned( 30 ) * 0.01f ) );
+    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( NumericValue( 0.25f ), epsilon ) );
+    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( NumericValue( 0.3f ), epsilon ) );
     handler.EndTick_mocker.expects( exactly( 4 ) );
 
 
@@ -104,20 +106,21 @@ BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
 {
-    MockValueHandler< float >         handler;
-    MockValueHandler< unsigned long > keyHandler;
+    static const NumericValue epsilon( 0.001f );
+    MockValueHandler< NumericValue > handler;
+    MockValueHandler< NumericValue > keyHandler;
 
     DispatcherFactory< IdentifierValue, attributes::OperationalState > factory;
     boost::shared_ptr< ModelFunction_ABC > function( factory( keyHandler, handler ) );
 
     handler.BeginTick_mocker.expects( exactly( 4 ) );
     keyHandler.BeginTick_mocker.expects( exactly( 4 ) );
-    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( 0.25f ) );
-    keyHandler.Handle_mocker.expects( once() ).with( eq( unsigned long( 1 ) ) );
-    keyHandler.Handle_mocker.expects( once() ).with( eq( unsigned long( 2 ) ) );
-    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( unsigned( 30 ) * 0.01f ) );
-    keyHandler.Handle_mocker.expects( once() ).with( eq( unsigned long( 1 ) ) );
-    keyHandler.Handle_mocker.expects( once() ).with( eq( unsigned long( 2 ) ) );
+    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( NumericValue( 0.25f ), epsilon ) );
+    keyHandler.Handle_mocker.expects( once() ).with( eq( NumericValue( 1 ) ) );
+    keyHandler.Handle_mocker.expects( once() ).with( eq( NumericValue( 2 ) ) );
+    handler.Handle_mocker.expects( exactly( 2 ) ).with( eq( NumericValue( 0.3f ), epsilon ) );
+    keyHandler.Handle_mocker.expects( once() ).with( eq( NumericValue( 1 ) ) );
+    keyHandler.Handle_mocker.expects( once() ).with( eq( NumericValue( 2 ) ) );
     handler.EndTick_mocker.expects( exactly( 4 ) );
     keyHandler.EndTick_mocker.expects( exactly( 4 ) );
 

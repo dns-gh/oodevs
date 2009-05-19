@@ -13,6 +13,7 @@
 #include <boost/type_traits/integral_constant.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <stdexcept>
+#include "Types.h"
 
 #pragma warning( push )
 #pragma warning( disable : 4702 )
@@ -52,6 +53,12 @@ struct Arithmetic
     {
         check< boost::is_arithmetic< T > >( "Type must be arithmetic" );
     }
+};
+
+template<>
+struct Arithmetic< NumericValue >
+{           
+    Arithmetic() {}
 };
 
 }

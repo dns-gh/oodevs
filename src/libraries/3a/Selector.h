@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Selector( xml::xistream& xis, Function1_ABC< K, T >& handler )
-                 : key_( xml::attribute< K >( xis, "key" ) )
+                 : key_( xml::attribute< double >( xis, "key" ) ) // $$$$ SBO 2009-05-15: should be K
                  , handler_( handler ), found_( false ) {}
              Selector( const K& key, Function1_ABC< K, T >& handler )
                  : key_( key )

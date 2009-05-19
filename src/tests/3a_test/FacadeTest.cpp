@@ -18,6 +18,7 @@
 #include "game_asn/Simulation.h"
 #include <geocoord/geodetic.h>
 #include <geocoord/mgrs.h>
+#include <boost/lexical_cast.hpp>
 
 using namespace mockpp;
 
@@ -789,6 +790,63 @@ BOOST_AUTO_TEST_CASE( Facade_TestHumans )
 //    task->Commit( publisher );
 //    publisher.verify();
 }
+
+BOOST_AUTO_TEST_CASE( Facade_TestTypeAdaptation )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='operational-state' id='opstate'/>"
+        "<reduce type='int' function='select' input='opstate' key='2' id='myopstate'/>"
+        "<result function='plot' input='myopstate' type='int'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+}
+
+BOOST_AUTO_TEST_CASE( Facade_TestConflicts )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='direct-fire-unit' id='1'/>"
+        "<transform function='is-one-of' id='2' input='1' select='55,56' type='unsigned long'/>"
+        "<extract function='direct-fire-unit' id='3'/>"
+        "<transform function='filter' id='4' input='2,3' type='unsigned long'/>"
+        "<reduce function='count' id='5' input='4' type='unsigned long'/>"
+        "<transform function='integrate' id='6' input='5' type='unsigned long'/>"
+        "<result function='plot' input='6' type='int'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 12, 55 ) );
+    task->Receive( CreateDirectFire( 13, 56 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 12 ) );
+    task->Receive( StopFire( 13 ) );
+    task->Receive( CreateDirectFire( 14, 55 ) );
+    task->Receive( CreateDirectFire( 15, 56 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 14 ) );
+    task->Receive( StopFire( 15 ) );
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 2, 4, 8, 10 };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit();
+    publisher.verify();
+}
+
 
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]

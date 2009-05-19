@@ -11,6 +11,7 @@
 #define __IdentifierValue_h_
 
 #include "Values.h"
+#include "Types.h"
 
 // =============================================================================
 /** @class  IdentifierValue
@@ -18,7 +19,7 @@
 */
 // Created: AGE 2007-08-28
 // =============================================================================
-struct IdentifierValue : public InstantValue< unsigned long >
+struct IdentifierValue : public InstantValue< NumericValue >
 {
 
     enum { has_parameter = false };

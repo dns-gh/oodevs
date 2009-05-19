@@ -76,17 +76,17 @@ BOOST_AUTO_TEST_CASE( Reduction_TestAdder )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Reduction_TestCount )
 {
-    MockFunction1< unsigned long, unsigned > handler;
-    std::auto_ptr< Function1_ABC< unsigned long, float > > counter( new Count< unsigned long, float >( handler ) );
+    MockFunction1< NumericValue, NumericValue > handler;
+    std::auto_ptr< Function1_ABC< NumericValue, NumericValue > > counter( new Count< NumericValue, NumericValue >( handler ) );
     {
         handler.BeginTick_mocker.expects( once() );
-        handler.Apply_mocker.expects( once() ).with( eq( 2u ) );
+        handler.Apply_mocker.expects( once() ).with( eq( NumericValue( 2u ) ) );
         handler.EndTick_mocker.expects( once() );
         ReduceSimple( *counter );
     }
     {
         handler.BeginTick_mocker.expects( exactly( 2 ) );
-        handler.Apply_mocker.expects( exactly( 2 ) ).with( eq( 1u ) );
+        handler.Apply_mocker.expects( exactly( 2 ) ).with( eq( NumericValue( 1u ) ) );
         handler.EndTick_mocker.expects( exactly( 2 ) );
         ReduceTwoTicks( *counter );
     }

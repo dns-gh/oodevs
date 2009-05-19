@@ -18,7 +18,10 @@
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "pathfind/TerrainData.h"
+#pragma warning( push, 0 )
+#pragma warning( disable : 4180 )
 #include <boost/bind.hpp>
+#pragma warning( pop )
 
 using namespace plugins::tic;
 using namespace kernel;
