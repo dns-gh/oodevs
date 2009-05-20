@@ -14,6 +14,7 @@
 
 #include "Decision/DEC_Decision.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 
 class MIL_Mission_ABC;
 

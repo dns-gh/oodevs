@@ -34,7 +34,7 @@ const MIL_Report* MIL_Report::Find( uint nID )
 template< typename T > inline
 void MIL_Report::Send( const T& sender, E_Type nType, const DIA_Parameters& diaParameters ) const
 {
-    Send( sender.GetID(), nType, sender.GetKnowledge(), diaParameters );
+    DoSend( sender.GetID(), nType, sender.GetKnowledge(), diaParameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,10 +47,14 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, DIA_Param
     if( diaEvents_.size() <= (uint)nReport )
         return;
 
-    const DEC_Decision_ABC& engine = receiver.GetDecision();
-    DIA_Variable_ABC* pResult = const_cast< DEC_Decision_ABC& >( engine ).ExecuteFunction( diaEvents_[ nReport ], parameters );
-    if( pResult ) 
-        delete pResult;
+//    const DEC_Decision_ABC& engine = receiver.GetDecision();
+//    DIA_Variable_ABC* pResult = const_cast< DEC_Decision_ABC& >( engine ).ExecuteFunction( diaEvents_[ nReport ], parameters );
+//    if( pResult ) 
+//        delete pResult;
+    
+    const MIL_Report* pReport = MIL_Report::Find( diaEvents_[ nReport ] );
+    if( pReport )
+        pReport->Send< T >( receiver, MIL_Report::eRcTypeOperational, parameters );
 }
 
 // -----------------------------------------------------------------------------

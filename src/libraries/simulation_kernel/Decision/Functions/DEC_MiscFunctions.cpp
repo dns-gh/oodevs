@@ -146,7 +146,7 @@ void DEC_MiscFunctions::DeleteRepresentation( DIA_Call_ABC& call, MIL_Entity_ABC
 // Name: DEC_MiscFunctions::GetMission
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::GetMission( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+void DEC_MiscFunctions::GetMission( DIA_Call_ABC& call, MIL_Entity_ABC& /*callerAgent*/ )
 {
     call.GetResult().SetValue( *dynamic_cast<DEC_Decision_ABC*>( call.GetParameter( 0 ).ToObject() )->GetMission() );
 }

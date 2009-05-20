@@ -14,6 +14,7 @@
 
 #include "Decision/DEC_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 
 class MIL_Mission_ABC;
 class NET_ASN_MsgUnitAttributes;

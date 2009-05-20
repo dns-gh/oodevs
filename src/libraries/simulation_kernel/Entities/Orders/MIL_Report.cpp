@@ -27,7 +27,7 @@
 // =============================================================================
 
 MIL_Report::T_ReportMap      MIL_Report::reports_;
-MIL_Report::T_DiaEventVector MIL_Report::diaEvents_( MIL_Report::eNbrReport, "" );
+MIL_Report::T_DiaEventVector MIL_Report::diaEvents_( MIL_Report::eNbrReport );
 MT_IdentifierManager         MIL_Report::ids_;
 
 struct MIL_Report::LoadingWrapper
@@ -51,65 +51,65 @@ void MIL_Report::Initialize( xml::xistream& xis )
             >> xml::list( "report", loader, &LoadingWrapper::ReadReport )
         >> xml::end();
 
-    diaEvents_[ eReport_ReAvailableAfterRepairation                 ] = "EVT_RC_ANouveauDisponibleApresReparation";                
-    diaEvents_[ eReport_EquipementRepairedInPlace                   ] = "EVT_RC_MaterielRepareSurPlace";                           
-    diaEvents_[ eReport_EquipementBackFromMaintenance               ] = "EVT_RC_MaterielRetourDeMaintenance";                      
-    diaEvents_[ eReport_IndirectFireObservation                     ] = "EVT_RC_ObservationTirIndirect";                           
-    diaEvents_[ eReport_StockSupplyRequest                          ] = "EVT_RC_DemandeRavitaillementStocks";                      
-    diaEvents_[ eReport_DotationSupplyRequest                       ] = "EVT_RC_DemandeRavitaillementDotations";                   
-    diaEvents_[ eReport_MedicalEvacuationRequest                    ] = "EVT_RC_DemandeEvacuationSanitaire";                       
-    diaEvents_[ eReport_EquipementEvacuationRequest                 ] = "EVT_RC_DemandeEvacuationMateriel";                        
-    diaEvents_[ eReport_DotationSupplyDone                          ] = "EVT_RC_RavitaillementDotationsEffectue";                  
-    diaEvents_[ eReport_StockSupplyDone                             ] = "EVT_RC_RavitaillementStockEffectue";                      
-    diaEvents_[ eReport_DotationSupplyCanceled                      ] = "EVT_RC_RavitaillementDotationsAnnule";                    
-    diaEvents_[ eReport_StockSupplyCanceled                         ] = "EVT_RC_RavitaillementStockAnnule";                        
-    diaEvents_[ eReport_LogisticStockThresholdExceeded              ] = "EVT_RC_SeuilLogistiqueStockDepasse";                      
-    diaEvents_[ eReport_LogisticDotationThresholdExceeded           ] = "EVT_RC_SeuilLogistiqueDotationDepasse";                   
-    diaEvents_[ eReport_HumanBackFromMedical                        ] = "EVT_RC_HumainRetourDeSante";                              
-    diaEvents_[ eReport_WoundedManDeath                             ] = "EVT_RC_DecesBlesse";                                      
-    diaEvents_[ eReport_WoundedManDeathDuringTransport              ] = "EVT_RC_DecesBlessePendantTransport";                      
-    diaEvents_[ eReport_WoundedManDeathDuringHospitalization        ] = "EVT_RC_DecesBlessePendantHospitalisation";                
-    diaEvents_[ eReport_FireInForbiddenArea                         ] = "EVT_RC_TirDansZoneInterdite";                             
-    diaEvents_[ eReport_FratricideIndirectFire                      ] = "EVT_RC_TirIndirectFratricide";                            
-    diaEvents_[ eReport_IndirectFireOnPopulation                    ] = "EVT_RC_TirIndirectSurPopulation";                         
-    diaEvents_[ eReport_FireOnFriendSide                            ] = "EVT_RC_TirSurCampAmi";                                    
-    diaEvents_[ eReport_FiredByFriendSide                           ] = "EVT_RC_TireParCampAmi";                                   
-    diaEvents_[ eReport_FireOnNeutralSide                           ] = "EVT_RC_TirSurCampNeutre";                                 
-    diaEvents_[ eReport_FiredByNeutralSide                          ] = "EVT_RC_TireParCampNeutre";                                
-    diaEvents_[ eReport_FireOnCivilian                              ] = "EVT_RC_TirSurCivil";                                      
-    diaEvents_[ eReport_FiredByCivilian                             ] = "EVT_RC_TireParCivil";                                     
-    diaEvents_[ eReport_CommandPostDestruction                      ] = "EVT_RC_DestructionPC";                                    
-    diaEvents_[ eReport_QuotaAlmostConsumed                         ] = "EVT_RC_AllocationConsentieBientotEpuisee";                
-    diaEvents_[ eReport_StockCapacityExceeded                       ] = "EVT_RC_DepassementCapaciteStockage";                      
-    diaEvents_[ eReport_MissionImpossible_                          ] = "EVT_RC_MissionImpossible";                                
-    diaEvents_[ eReport_UnitDecontaminated                          ] = "EVT_RC_UniteDecontaminee";                                
-    diaEvents_[ eReport_OutOfGas                                    ] = "EVT_RC_PlusDeCarburant";                                  
-    diaEvents_[ eReport_DifficultTerrain                            ] = "EVT_RC_TerrainDifficile";                                 
-    diaEvents_[ eReport_Surrendered                                 ] = "EVT_RC_Rendu";                                            
-    diaEvents_[ eReport_CancelSurrender                             ] = "EVT_RC_RedditionAnnulee";    
-    diaEvents_[ eReport_MaintenanceWorkRateExceeded                 ] = "EVT_RC_RegimeMaintenanceDelaiDepasse";                    
-    diaEvents_[ eReport_EquipmentLoanInProgress                     ] = "EVT_RC_PretMaterielEnCours";                              
-    diaEvents_[ eReport_EquipmentLoanCanceled                       ] = "EVT_RC_PretMaterielAnnule";                               
-    diaEvents_[ eReport_EquipmentLoanDone                           ] = "EVT_RC_PretMaterielEffectue";                             
-    diaEvents_[ eReport_EquipmentLoanPartiallyDone                  ] = "EVT_RC_PretMaterielPartiellementEffectue";                
-    diaEvents_[ eReport_EquipmentLoanImpossible                     ] = "EVT_RC_PretMaterielImpossible";                           
-    diaEvents_[ eReport_EquipmentLoanRetrievingDone                 ] = "EVT_RC_RecuperationMaterielPreteEffectuee";               
-    diaEvents_[ eReport_EquipmentLoanRetrievingPartiallyDone        ] = "EVT_RC_RecuperationMaterielPretePartiellementEffectuee";  
-    diaEvents_[ eReport_EquipmentLoanRetrievingImpossible           ] = "EVT_RC_RecuperationMaterielPreteImpossible";              
-    diaEvents_[ eReport_EquipmentLent                               ] = "EVT_RC_MaterielPrete";                                    
-    diaEvents_[ eReport_EquipmentLoanGivenBack                      ] = "EVT_RC_MaterielRendu";                                    
-    diaEvents_[ eReport_InterventionAgainstPopulationStarted        ] = "EVT_RC_DebutInterventionFaceAPopulation";                 
-    diaEvents_[ eReport_MineExplosionOnPopulation                   ] = "EVT_RC_PopulationVictimeExplosionMines";                  
-    diaEvents_[ eReport_ConfrontationWithPopulation                 ] = "EVT_RC_PopulationVictimeAffrontements";                   
-    diaEvents_[ eReport_Blocked                                     ] = "EVT_RC_Bloquee";                                          
-    diaEvents_[ eReport_Filtered                                    ] = "EVT_RC_Filtree";                                          
-    diaEvents_[ eReport_TerroristAttackAgainstPopulation            ] = "EVT_RC_AttentatTerroristeDansPopulation";                 
-    diaEvents_[ eReport_EvacuationResourcesLevelReached             ] = "EVT_RC_AlerteDisponibiliteMoyensReleve";                  
-    diaEvents_[ eReport_CollectionResourcesLevelReached             ] = "EVT_RC_AlerteDisponibiliteMoyensRamassage";               
-    diaEvents_[ eReport_DoctorResourcesLevelReached                 ] = "EVT_RC_AlerteDisponibiliteMedecins";                      
-    diaEvents_[ eReport_RepairerResourcesLevelReached               ] = "EVT_RC_AlerteDisponibiliteRemorqueurs";                   
-    diaEvents_[ eReport_HaulerResourcesLevelReached                 ] = "EVT_RC_AlerteDisponibiliteReparateurs";                   
-    diaEvents_[ eReport_ConvoyTransporterResourcesLevelReached      ] = "EVT_RC_AlerteDisponibiliteVecteurs";                      
+    diaEvents_[ eReport_ReAvailableAfterRepairation                 ] = eRC_ANouveauDisponibleApresReparation;                
+    diaEvents_[ eReport_EquipementRepairedInPlace                   ] = eRC_MaterielRepareSurPlace;                           
+    diaEvents_[ eReport_EquipementBackFromMaintenance               ] = eRC_MaterielRetourDeMaintenance;                      
+    diaEvents_[ eReport_IndirectFireObservation                     ] = eRC_ObservationTirIndirect;                           
+    diaEvents_[ eReport_StockSupplyRequest                          ] = eRC_DemandeRavitaillementStocks;                      
+    diaEvents_[ eReport_DotationSupplyRequest                       ] = eRC_DemandeRavitaillementDotations;                   
+    diaEvents_[ eReport_MedicalEvacuationRequest                    ] = eRC_DemandeEvacuationSanitaire;                       
+    diaEvents_[ eReport_EquipementEvacuationRequest                 ] = eRC_DemandeEvacuationMateriel;                        
+    diaEvents_[ eReport_DotationSupplyDone                          ] = eRC_RavitaillementDotationsEffectue;                  
+    diaEvents_[ eReport_StockSupplyDone                             ] = eRC_RavitaillementStockEffectue;                      
+    diaEvents_[ eReport_DotationSupplyCanceled                      ] = eRC_RavitaillementDotationsAnnule;                    
+    diaEvents_[ eReport_StockSupplyCanceled                         ] = eRC_RavitaillementStockAnnule;                        
+    diaEvents_[ eReport_LogisticStockThresholdExceeded              ] = eRC_SeuilLogistiqueStockDepasse;                      
+    diaEvents_[ eReport_LogisticDotationThresholdExceeded           ] = eRC_SeuilLogistiqueDotationDepasse;                   
+    diaEvents_[ eReport_HumanBackFromMedical                        ] = eRC_HumainRetourDeSante;                              
+    diaEvents_[ eReport_WoundedManDeath                             ] = eRC_DecesBlesse;                                      
+    diaEvents_[ eReport_WoundedManDeathDuringTransport              ] = eRC_DecesBlessePendantTransport;                      
+    diaEvents_[ eReport_WoundedManDeathDuringHospitalization        ] = eRC_DecesBlessePendantHospitalisation;                
+    diaEvents_[ eReport_FireInForbiddenArea                         ] = eRC_TirDansZoneInterdite;                             
+    diaEvents_[ eReport_FratricideIndirectFire                      ] = eRC_TirIndirectFratricide;                            
+    diaEvents_[ eReport_IndirectFireOnPopulation                    ] = eRC_TirIndirectSurPopulation;                         
+    diaEvents_[ eReport_FireOnFriendSide                            ] = eRC_TirSurCampAmi;                                    
+    diaEvents_[ eReport_FiredByFriendSide                           ] = eRC_TireParCampAmi;                                   
+    diaEvents_[ eReport_FireOnNeutralSide                           ] = eRC_TirSurCampNeutre;                                 
+    diaEvents_[ eReport_FiredByNeutralSide                          ] = eRC_TireParCampNeutre;                                
+    diaEvents_[ eReport_FireOnCivilian                              ] = eRC_TirSurCivil;                                      
+    diaEvents_[ eReport_FiredByCivilian                             ] = eRC_TireParCivil;                                     
+    diaEvents_[ eReport_CommandPostDestruction                      ] = eRC_DestructionPC;                                    
+    diaEvents_[ eReport_QuotaAlmostConsumed                         ] = eRC_AllocationConsentieBientotEpuisee;                
+    diaEvents_[ eReport_StockCapacityExceeded                       ] = eRC_DepassementCapaciteStockage;                      
+    diaEvents_[ eReport_MissionImpossible_                          ] = eRC_MissionImpossible;                                
+    diaEvents_[ eReport_UnitDecontaminated                          ] = eRC_UniteDecontaminee;                                
+    diaEvents_[ eReport_OutOfGas                                    ] = eRC_PlusDeCarburant;                                  
+    diaEvents_[ eReport_DifficultTerrain                            ] = eRC_TerrainDifficile;                                 
+    diaEvents_[ eReport_Surrendered                                 ] = eRC_Rendu;                                            
+    diaEvents_[ eReport_CancelSurrender                             ] = eRC_RedditionAnnulee;    
+    diaEvents_[ eReport_MaintenanceWorkRateExceeded                 ] = eRC_RegimeMaintenanceDelaiDepasse;                    
+    diaEvents_[ eReport_EquipmentLoanInProgress                     ] = eRC_PretMaterielEnCours;                              
+    diaEvents_[ eReport_EquipmentLoanCanceled                       ] = eRC_PretMaterielAnnule;                               
+    diaEvents_[ eReport_EquipmentLoanDone                           ] = eRC_PretMaterielEffectue;                             
+    diaEvents_[ eReport_EquipmentLoanPartiallyDone                  ] = eRC_PretMaterielPartiellementEffectue;                
+    diaEvents_[ eReport_EquipmentLoanImpossible                     ] = eRC_PretMaterielImpossible;                           
+    diaEvents_[ eReport_EquipmentLoanRetrievingDone                 ] = eRC_RecuperationMaterielPreteEffectuee;               
+    diaEvents_[ eReport_EquipmentLoanRetrievingPartiallyDone        ] = eRC_RecuperationMaterielPretePartiellementEffectuee;  
+    diaEvents_[ eReport_EquipmentLoanRetrievingImpossible           ] = eRC_RecuperationMaterielPreteImpossible;              
+    diaEvents_[ eReport_EquipmentLent                               ] = eRC_MaterielPrete;                                    
+    diaEvents_[ eReport_EquipmentLoanGivenBack                      ] = eRC_MaterielRendu;                                    
+    diaEvents_[ eReport_InterventionAgainstPopulationStarted        ] = eRC_DebutInterventionFaceAPopulation;                 
+    diaEvents_[ eReport_MineExplosionOnPopulation                   ] = eRC_PopulationVictimeExplosionMines;                  
+    diaEvents_[ eReport_ConfrontationWithPopulation                 ] = eRC_PopulationVictimeAffrontements;                   
+    diaEvents_[ eReport_Blocked                                     ] = eRC_Bloquee;                                          
+    diaEvents_[ eReport_Filtered                                    ] = eRC_Filtree;                                          
+    diaEvents_[ eReport_TerroristAttackAgainstPopulation            ] = eRC_AttentatTerroristeDansPopulation;                 
+    diaEvents_[ eReport_EvacuationResourcesLevelReached             ] = eRC_AlerteDisponibiliteMoyensReleve;                  
+    diaEvents_[ eReport_CollectionResourcesLevelReached             ] = eRC_AlerteDisponibiliteMoyensRamassage;               
+    diaEvents_[ eReport_DoctorResourcesLevelReached                 ] = eRC_AlerteDisponibiliteMedecins;                      
+    diaEvents_[ eReport_RepairerResourcesLevelReached               ] = eRC_AlerteDisponibiliteRemorqueurs;                   
+    diaEvents_[ eReport_HaulerResourcesLevelReached                 ] = eRC_AlerteDisponibiliteReparateurs;                   
+    diaEvents_[ eReport_ConvoyTransporterResourcesLevelReached      ] = eRC_AlerteDisponibiliteVecteurs;                      
 }
 
 // -----------------------------------------------------------------------------
@@ -171,10 +171,10 @@ MIL_Report::~MIL_Report()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Report::Send
+// Name: MIL_Report::DoSend
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
-bool MIL_Report::Send( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const DIA_Parameters& diaParameters ) const
+bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const DIA_Parameters& diaParameters ) const
 {
     // DIA parameter 0 : Report ID
     if( ( diaParameters.GetParameters().size() - 1 ) != parameters_.size() )

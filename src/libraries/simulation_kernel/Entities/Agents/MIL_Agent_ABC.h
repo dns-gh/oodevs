@@ -22,6 +22,7 @@ class MIL_AgentPion;
 class MIL_Population;
 class DEC_Knowledge_Agent;
 class DEC_RolePion_Decision;
+class DEC_KnowledgeBlackBoard_AgentPion;
 
 // =============================================================================
 // @class  MIL_Agent_ABC
@@ -70,6 +71,7 @@ public:
     //@{
     virtual DEC_Knowledge_Agent& CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup ) = 0;
     virtual bool                 IsPerceived    ( const MIL_Agent_ABC& target ) const = 0; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
+    virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const = 0; 
     //@}
 
     //! @name Operators

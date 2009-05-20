@@ -62,6 +62,7 @@ public:
     //@{
     virtual DEC_Knowledge_Agent& CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup );
     virtual bool                 IsPerceived    ( const MIL_Agent_ABC& agent ) const;
+    virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const;
     //@}
 
     //! @name Accessors

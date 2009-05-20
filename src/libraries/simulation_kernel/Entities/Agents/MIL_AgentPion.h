@@ -66,11 +66,11 @@ public:
 
     //! @name Accessors
     //@{
-          DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const;        
-    const MIL_PionOrderManager&              GetOrderManager() const;
-          MIL_PionOrderManager&              GetOrderManager();
-          DEC_RolePion_Decision&             GetDecision    (); //$$$ Dérolifier DEC_RolePion_Decision
-    const DEC_RolePion_Decision&             GetDecision    () const; //$$$ Dérolifier DEC_RolePion_Decision
+    virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const;        
+    const   MIL_PionOrderManager&              GetOrderManager() const;
+            MIL_PionOrderManager&              GetOrderManager();
+            DEC_RolePion_Decision&             GetDecision    (); //$$$ Dérolifier DEC_RolePion_Decision
+    const   DEC_RolePion_Decision&             GetDecision    () const; //$$$ Dérolifier DEC_RolePion_Decision
 
     virtual       MIL_Army_ABC&       GetArmy            () const;
                   MIL_KnowledgeGroup& GetKnowledgeGroup  () const;

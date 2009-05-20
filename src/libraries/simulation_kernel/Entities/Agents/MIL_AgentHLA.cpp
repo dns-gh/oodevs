@@ -232,3 +232,12 @@ const DEC_RolePion_Decision& MIL_AgentHLA::GetDecision() const
 {
     throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::GetKnowledge
+// Created: LDC 2009-05-19
+// -----------------------------------------------------------------------------
+DEC_KnowledgeBlackBoard_AgentPion& MIL_AgentHLA::GetKnowledge() const
+{
+    throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
+}
