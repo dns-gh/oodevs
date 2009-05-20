@@ -1533,6 +1533,18 @@
         <source>&amp;Exercise</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Units toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistics toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>

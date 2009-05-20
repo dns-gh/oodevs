@@ -91,6 +91,10 @@
         <source>3D</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fog of war</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DrawerLayer</name>

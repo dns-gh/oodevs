@@ -144,6 +144,10 @@
         <source>3D</source>
         <translation>3D</translation>
     </message>
+    <message>
+        <source>Fog of war</source>
+        <translation type="unfinished">Brouillard de guerre</translation>
+    </message>
 </context>
 <context>
     <name>DrawerLayer</name>
