@@ -58,6 +58,10 @@ public:
     {
         return *CreateKnowledgeShadow( knowledgeGroup );
     }
+    virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const
+    {
+        throw;
+    }
     
     virtual       DEC_RolePion_Decision& GetDecision   () { throw;}
     virtual const DEC_RolePion_Decision& GetDecision   () const { throw; }
