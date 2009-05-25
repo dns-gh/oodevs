@@ -4,7 +4,7 @@
     <unit-knowledge max-lifetime="3h" max-unit-to-knowledge-distance="60000"/>
     <population-knowledge max-lifetime="30m"/>
   </knowledge-group>
-  <knowledge-group name="Rens">
+  <knowledge-group name="Intel">
     <unit-knowledge interpolation-time="120s" max-lifetime="12h"/>
     <population-knowledge max-lifetime="1800s"/>
   </knowledge-group>

@@ -36,11 +36,11 @@
         <dotation capacity="50" logistic-threshold="50" name="Air Bomb" normalized-consumption="50"/>
       </category>
       <category name="carburant">
-        <dotation capacity="5000" logistic-threshold="30" name="F35 Kerosene" normalized-consumption="5000"/>
+        <dotation capacity="5000" logistic-threshold="30" name="Kerosene" normalized-consumption="5000"/>
       </category>
       <category name="ration">
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
       </category>
     </composition>
     <sensors>
@@ -50,14 +50,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F35 Kerosene" value="1000"/>
+        <dotation category="carburant" name="Kerosene" value="1000"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F35 Kerosene" value="1000"/>
+        <dotation category="carburant" name="Kerosene" value="1000"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -106,11 +106,11 @@
         <dotation capacity="7200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="900"/>
       </category>
       <category name="carburant">
-        <dotation capacity="7200" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="900"/>
+        <dotation capacity="7200" logistic-threshold="30" name="Gasoil" normalized-consumption="900"/>
       </category>
       <category name="ration">
-        <dotation capacity="90" logistic-threshold="30" name="Vivre" normalized-consumption="30"/>
-        <dotation capacity="540" logistic-threshold="30" name="Eau" normalized-consumption="180"/>
+        <dotation capacity="90" logistic-threshold="30" name="Food" normalized-consumption="30"/>
+        <dotation capacity="540" logistic-threshold="30" name="Water" normalized-consumption="180"/>
       </category>
     </composition>
     <sensors>
@@ -123,14 +123,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="7.5"/>
-        <dotation category="ration" name="Vivre" value="1.25"/>
+        <dotation category="ration" name="Water" value="7.5"/>
+        <dotation category="ration" name="Food" value="1.25"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="100"/>
+        <dotation category="carburant" name="Gasoil" value="100"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -175,8 +175,8 @@
     </speeds>
     <composition>
       <category name="ration">
-        <dotation capacity="300" logistic-threshold="30" name="Vivre" normalized-consumption="100"/>
-        <dotation capacity="18000" logistic-threshold="30" name="Eau" normalized-consumption="600"/>
+        <dotation capacity="300" logistic-threshold="30" name="Food" normalized-consumption="100"/>
+        <dotation capacity="18000" logistic-threshold="30" name="Water" normalized-consumption="600"/>
       </category>
     </composition>
     <sensors>
@@ -186,8 +186,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Vivre" value="4.16"/>
-        <dotation category="ration" name="Eau" value="25"/>
+        <dotation category="ration" name="Food" value="4.16"/>
+        <dotation category="ration" name="Water" value="25"/>
       </consumption>
     </consumptions>
     <weapon-systems/>
@@ -229,8 +229,8 @@
         <dotation capacity="240" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="30"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -241,8 +241,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -250,17 +250,17 @@
     </weapon-systems>
     <objects>
       <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="destruction route" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="destruction pont" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="site decontamination" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="plot ravitaillement" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="poste tir"/>
-      <object initial-construction-time="36000s" type="poste controle"/>
-      <object initial-destruction-time="1800s" type="zone implantation lrm"/>
-      <object initial-destruction-time="1800s" type="zone implantation canon"/>
-      <object initial-destruction-time="1800s" type="zone implantation mortier"/>
-      <object initial-destruction-time="1800s" type="zone implantation cobra"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
+      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
+      <object initial-construction-time="36000s" type="checkpoint"/>
+      <object initial-destruction-time="1800s" type="mrls deployment area"/>
+      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
+      <object initial-destruction-time="1800s" type="mortar deployment area"/>
+      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
   </element>
   <element codeEMAT6="Equipe ERYX" codeEMAT8="Equipe ERYX" codeLFRIL="Equipe ERYX" codeNNO="Equipe ERYX" comment="Soldier with Short Range Antitank Weapon" id="5" name="SRAW soldier" protection="Combatant" size="Personal" weight="0.3">
@@ -299,8 +299,8 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -311,8 +311,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -321,7 +321,7 @@
     </weapon-systems>
     <objects>
       <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="45s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
     </objects>
   </element>
   <element codeEMAT6="Equipe MILAN" codeEMAT8="Equipe MILAN" codeLFRIL="Equipe MILAN" codeNNO="Equipe MILAN" comment="" id="6" name="Medium Range Antitank Weapon Team" protection="Combatant" size="Personal" weight="0.4">
@@ -360,8 +360,8 @@
         <dotation capacity="1200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="150"/>
       </category>
       <category name="ration">
-        <dotation capacity="13" logistic-threshold="30" name="Vivre" normalized-consumption="5"/>
-        <dotation capacity="180" logistic-threshold="30" name="Eau" normalized-consumption="30"/>
+        <dotation capacity="13" logistic-threshold="30" name="Food" normalized-consumption="5"/>
+        <dotation capacity="180" logistic-threshold="30" name="Water" normalized-consumption="30"/>
       </category>
     </composition>
     <sensors>
@@ -372,8 +372,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Vivre" value="0.2"/>
-        <dotation category="ration" name="Eau" value="1.25"/>
+        <dotation category="ration" name="Food" value="0.2"/>
+        <dotation category="ration" name="Water" value="1.25"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -419,34 +419,31 @@
         <dotation capacity="960" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="120"/>
       </category>
       <category name="carburant">
-        <dotation capacity="440" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="23"/>
+        <dotation capacity="440" logistic-threshold="30" name="Gasoil" normalized-consumption="23"/>
       </category>
       <category name="ration">
-        <dotation capacity="12" logistic-threshold="30" name="Vivre" normalized-consumption="4"/>
-        <dotation capacity="72" logistic-threshold="30" name="Eau" normalized-consumption="24"/>
+        <dotation capacity="12" logistic-threshold="30" name="Food" normalized-consumption="4"/>
+        <dotation capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
       </category>
     </composition>
     <sensors>
       <sensor height="2" type="Eye"/>
     </sensors>
-    <radars>
-      <radar type="Radar MISTRAL Courte Portee"/>
-      <radar type="Radar MISTRAL Longue Portee"/>
-    </radars>
+    <radars/>
     <transports>
       <crew man-boarding-time="5s" man-unloading-time="4s"/>
       <unit capacity="2" ton-loading-time="15s" ton-unloading-time="10s"/>
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1"/>
-        <dotation category="ration" name="Vivre" value="0.16"/>
+        <dotation category="ration" name="Water" value="1"/>
+        <dotation category="ration" name="Food" value="0.16"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -540,11 +537,11 @@
         <dotation capacity="4" logistic-threshold="0" name="Antitank Missile" normalized-consumption="2"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="1" name="F35 Kerosene" normalized-consumption="540"/>
+        <dotation capacity="540" logistic-threshold="1" name="Kerosene" normalized-consumption="540"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -561,14 +558,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -642,11 +639,11 @@
         <dotation capacity="480" logistic-threshold="0" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1360" logistic-threshold="1" name="F35 Kerosene" normalized-consumption="1360"/>
+        <dotation capacity="1360" logistic-threshold="1" name="Kerosene" normalized-consumption="1360"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -663,14 +660,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -722,11 +719,11 @@
         <dotation capacity="480" logistic-threshold="0" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="1" name="F35 Kerosene" normalized-consumption="540"/>
+        <dotation capacity="540" logistic-threshold="1" name="Kerosene" normalized-consumption="540"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -743,14 +740,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -826,11 +823,11 @@
         <dotation capacity="10" logistic-threshold="10" name="120-mm armour-piercing shell" normalized-consumption="3"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1700" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="320"/>
+        <dotation capacity="1700" logistic-threshold="30" name="Gasoil" normalized-consumption="320"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -843,14 +840,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -965,11 +962,11 @@
         <dotation capacity="480" logistic-threshold="0" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1550" logistic-threshold="1" name="F35 Kerosene" normalized-consumption="1550"/>
+        <dotation capacity="1550" logistic-threshold="1" name="Kerosene" normalized-consumption="1550"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -987,14 +984,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -1002,7 +999,7 @@
       <weapon-system launcher="5.56-mm Assault Rifle" munition="5.56-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="plot ravitaillement"/>
+      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="logistic support area"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="AAC Breakdown 1"/>
@@ -1068,20 +1065,20 @@
         <dotation capacity="1920" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="240"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="explosif">
-        <dotation capacity="200" logistic-threshold="10" name="explosif classique" normalized-consumption="200"/>
+        <dotation capacity="200" logistic-threshold="10" name="standard explosive" normalized-consumption="200"/>
       </category>
       <category name="mine">
-        <dotation capacity="50" logistic-threshold="10" name="mine classique" normalized-consumption="50"/>
+        <dotation capacity="50" logistic-threshold="10" name="standard landmine" normalized-consumption="50"/>
       </category>
       <category name="barbele">
-        <dotation capacity="10" logistic-threshold="10" name="barbele classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard barbed wire" normalized-consumption="10"/>
       </category>
       <category name="ration">
-        <dotation capacity="24" logistic-threshold="30" name="Vivre" normalized-consumption="8"/>
-        <dotation capacity="144" logistic-threshold="30" name="Eau" normalized-consumption="48"/>
+        <dotation capacity="24" logistic-threshold="30" name="Food" normalized-consumption="8"/>
+        <dotation capacity="144" logistic-threshold="30" name="Water" normalized-consumption="48"/>
       </category>
     </composition>
     <sensors>
@@ -1093,17 +1090,17 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="2"/>
-        <dotation category="ration" name="Vivre" value="0.33"/>
+        <dotation category="ration" name="Water" value="2"/>
+        <dotation category="ration" name="Food" value="0.33"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
       <consumption status="EnTravaux">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -1111,25 +1108,25 @@
       <weapon-system launcher="12.7-mm Cupola Machine Gun" munition="12,7-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="0s" type="bouchon mines" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="0s" type="mines" valorization-time="0s"/>
       <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="72s" destruction-time-factor="180s" devalorization-time="10800s" initial-construction-time="3600s" initial-destruction-time="0s" type="abattis" valorization-time="3600s"/>
       <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="900s" destruction-time-factor="1620s" devalorization-time="5400s" initial-construction-time="3600s" initial-destruction-time="0s" type="barricade" valorization-time="1800s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="10800s" initial-construction-time="6000s" initial-destruction-time="18000s" type="eboulement" valorization-time="1200s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="1s" initial-construction-time="12600s" type="destruction route" valorization-time="1800s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="1s" destruction-time-factor="1s" non-bypassed-speed="5" type="pont flottant continu"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="1s" destruction-time-factor="1s" non-bypassed-speed="5" type="pont flottant discontinu"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="1s" initial-construction-time="19800s" type="destruction pont" valorization-time="1800s"/>
-      <object initial-construction-time="14400s" type="aire poser"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="72s" destruction-time-factor="180s" devalorization-time="10800s" initial-construction-time="3600s" initial-destruction-time="0s" non-bypassed-speed="5" type="plateforme" valorization-time="3600s"/>
-      <object initial-construction-time="14400s" type="camp prisonniers"/>
-      <object initial-construction-time="14400s" type="camp refugies"/>
-      <object type="poste tir"/>
-      <object type="aire logistique"/>
-      <object type="zone protegee"/>
-      <object type="zone minee lineaire"/>
-      <object type="zone poser helicoptere"/>
-      <object type="zone minee par dispersion"/>
-      <object construction-time-factor="20m" initial-construction-time="2h" initial-destruction-time="02h" type="fosse anti char"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="10800s" initial-construction-time="6000s" initial-destruction-time="18000s" type="landslide" valorization-time="1200s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="1s" initial-construction-time="12600s" type="road destruction" valorization-time="1800s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="1s" destruction-time-factor="1s" non-bypassed-speed="5" type="continuous pontoon bridge"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="1s" destruction-time-factor="1s" non-bypassed-speed="5" type="discontinuous pontoon bridge"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="1s" initial-construction-time="19800s" type="bridge destruction" valorization-time="1800s"/>
+      <object initial-construction-time="14400s" type="landing area"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="72s" destruction-time-factor="180s" devalorization-time="10800s" initial-construction-time="3600s" initial-destruction-time="0s" non-bypassed-speed="5" type="platform" valorization-time="3600s"/>
+      <object initial-construction-time="14400s" type="prisoners camp"/>
+      <object initial-construction-time="14400s" type="refugees camp"/>
+      <object type="firing post"/>
+      <object type="logistic area"/>
+      <object type="safe zone"/>
+      <object construction-time-factor="240s" destruction-time-factor="180s" devalorization-time="800s" initial-construction-time="3600s" initial-destruction-time="0s" non-bypassed-speed="0" type="mined area (linear)" valorization-time="0s"/>
+      <object type="landing area (helicopter)"/>
+      <object construction-time-factor="240s" destruction-time-factor="180s" devalorization-time="800s" initial-construction-time="3600s" initial-destruction-time="0s" non-bypassed-speed="0" type="mined area (scattered)" valorization-time="0s"/>
+      <object construction-time-factor="20m" initial-construction-time="2h" initial-destruction-time="02h" type="anti tank obstacle"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -1210,11 +1207,11 @@
         <dotation capacity="960" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="120"/>
       </category>
       <category name="carburant">
-        <dotation capacity="528" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="105"/>
+        <dotation capacity="528" logistic-threshold="30" name="Gasoil" normalized-consumption="105"/>
       </category>
       <category name="ration">
-        <dotation capacity="12" logistic-threshold="30" name="Vivre" normalized-consumption="4"/>
-        <dotation capacity="72" logistic-threshold="30" name="Eau" normalized-consumption="24"/>
+        <dotation capacity="12" logistic-threshold="30" name="Food" normalized-consumption="4"/>
+        <dotation capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
       </category>
     </composition>
     <sensors>
@@ -1227,14 +1224,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1"/>
-        <dotation category="ration" name="Vivre" value="0.16"/>
+        <dotation category="ration" name="Water" value="1"/>
+        <dotation category="ration" name="Food" value="0.16"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -1246,7 +1243,7 @@
       <weapon-system launcher="105-mm Gun" munition="105-mm armour-piercing shell"/>
     </weapon-systems>
     <objects>
-      <object type="poste controle"/>
+      <object type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="6" type="MOB Breakdown 1 EB"/>
@@ -1351,11 +1348,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="102" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="17"/>
+        <dotation capacity="102" logistic-threshold="30" name="Gasoil" normalized-consumption="17"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -1369,14 +1366,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="2"/>
+        <dotation category="carburant" name="Gasoil" value="2"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="11"/>
+        <dotation category="carburant" name="Gasoil" value="11"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -1384,7 +1381,7 @@
       <weapon-system launcher="5.56-mm Assault Rifle" munition="5.56-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object type="poste controle"/>
+      <object type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -1462,11 +1459,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="102" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="17"/>
+        <dotation capacity="102" logistic-threshold="30" name="Gasoil" normalized-consumption="17"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -1480,14 +1477,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="2"/>
+        <dotation category="carburant" name="Gasoil" value="2"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="11"/>
+        <dotation category="carburant" name="Gasoil" value="11"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -1495,7 +1492,7 @@
       <weapon-system launcher="5.56-mm Assault Rifle" munition="5.56-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object type="poste controle"/>
+      <object type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -1574,11 +1571,11 @@
         <dotation capacity="760" logistic-threshold="10" name="20-mm Shell" normalized-consumption="9"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -1592,14 +1589,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -1608,7 +1605,7 @@
       <weapon-system launcher="20-mm Gun" munition="20-mm Shell"/>
     </weapon-systems>
     <objects>
-      <object type="poste controle"/>
+      <object type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="9" type="MOB Breakdown 1 EB"/>
@@ -1706,17 +1703,17 @@
         <dotation capacity="3000" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="300"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="mine">
-        <dotation capacity="10" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard landmine" normalized-consumption="10"/>
       </category>
       <category name="barbele">
-        <dotation capacity="10" logistic-threshold="10" name="barbele classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard barbed wire" normalized-consumption="10"/>
       </category>
       <category name="ration">
-        <dotation capacity="12" logistic-threshold="30" name="Vivre" normalized-consumption="4"/>
-        <dotation capacity="72" logistic-threshold="30" name="Eau" normalized-consumption="24"/>
+        <dotation capacity="12" logistic-threshold="30" name="Food" normalized-consumption="4"/>
+        <dotation capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
       </category>
     </composition>
     <sensors>
@@ -1729,14 +1726,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1"/>
-        <dotation category="ration" name="Vivre" value="0.16"/>
+        <dotation category="ration" name="Water" value="1"/>
+        <dotation category="ration" name="Food" value="0.16"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -1848,11 +1845,11 @@
         <dotation capacity="1500" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="300"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="ration">
-        <dotation capacity="12" logistic-threshold="30" name="Vivre" normalized-consumption="4"/>
-        <dotation capacity="72" logistic-threshold="30" name="Eau" normalized-consumption="24"/>
+        <dotation capacity="12" logistic-threshold="30" name="Food" normalized-consumption="4"/>
+        <dotation capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
       </category>
     </composition>
     <sensors>
@@ -1866,14 +1863,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1"/>
-        <dotation category="ration" name="Vivre" value="0.2"/>
+        <dotation category="ration" name="Water" value="1"/>
+        <dotation category="ration" name="Food" value="0.2"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -1968,11 +1965,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="72" logistic-threshold="30" name="Eau" normalized-consumption="24"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
       </category>
     </composition>
     <sensors>
@@ -1982,14 +1979,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -2077,11 +2074,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="340" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="340"/>
+        <dotation capacity="340" logistic-threshold="30" name="Gasoil" normalized-consumption="340"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -2091,14 +2088,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -2186,11 +2183,11 @@
         <dotation capacity="240" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="30"/>
       </category>
       <category name="carburant">
-        <dotation capacity="220" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="27"/>
+        <dotation capacity="220" logistic-threshold="30" name="Gasoil" normalized-consumption="27"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -2200,14 +2197,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -2217,7 +2214,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="10" nature="Solide" volume="20.5"/>
+        <carrying mass="10" nature="Solid" volume="20.5"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -2295,11 +2292,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="240" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="240" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -2309,14 +2306,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -2403,11 +2400,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="100"/>
+        <dotation capacity="500" logistic-threshold="30" name="Gasoil" normalized-consumption="100"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -2419,14 +2416,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -2514,11 +2511,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="170" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="28"/>
+        <dotation capacity="170" logistic-threshold="30" name="Gasoil" normalized-consumption="28"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -2528,14 +2525,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -2545,7 +2542,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="3.5" nature="Solide" volume="11.5"/>
+        <carrying mass="3.5" nature="Solid" volume="11.5"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -2624,11 +2621,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="55"/>
+        <dotation capacity="540" logistic-threshold="30" name="Gasoil" normalized-consumption="55"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -2640,14 +2637,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -2657,7 +2654,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="16" nature="Solide" volume="22.8"/>
+        <carrying mass="16" nature="Solid" volume="22.8"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -2735,11 +2732,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="440" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="26"/>
+        <dotation capacity="440" logistic-threshold="30" name="Gasoil" normalized-consumption="26"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -2751,21 +2748,21 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
       <weapon-system launcher="5.56-mm Assault Rifle" munition="5.56-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="site decontamination" valorization-time="0s"/>
+      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="decontamination site" valorization-time="0s"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1"/>
@@ -2843,11 +2840,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -2858,17 +2855,17 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
       <consumption status="EnTravaux">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -2876,10 +2873,10 @@
       <weapon-system launcher="7.62-mm Cupola Machine Gun" munition="7.62-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="600s" type="zone implantation canon"/>
-      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="1200s" initial-destruction-time="1000s" type="zone implantation lrm"/>
-      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="1200s" initial-destruction-time="1000s" type="zone implantation cobra"/>
-      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="1000s" type="zone implantation mortier"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="600s" type="gun artillery deployment area"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="1200s" initial-destruction-time="1000s" type="mrls deployment area"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="1200s" initial-destruction-time="1000s" type="cobra deployment area"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="1000s" type="mortar deployment area"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -2962,11 +2959,11 @@
         <dotation capacity="960" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="120"/>
       </category>
       <category name="carburant">
-        <dotation capacity="970" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="250"/>
+        <dotation capacity="970" logistic-threshold="30" name="Gasoil" normalized-consumption="250"/>
       </category>
       <category name="ration">
-        <dotation capacity="12" logistic-threshold="30" name="Vivre" normalized-consumption="4"/>
-        <dotation capacity="72" logistic-threshold="30" name="Eau" normalized-consumption="24"/>
+        <dotation capacity="12" logistic-threshold="30" name="Food" normalized-consumption="4"/>
+        <dotation capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
       </category>
     </composition>
     <sensors>
@@ -2977,14 +2974,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1"/>
-        <dotation category="ration" name="Vivre" value="0.16"/>
+        <dotation category="ration" name="Water" value="1"/>
+        <dotation category="ration" name="Food" value="0.16"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -3093,11 +3090,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="617" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="300"/>
+        <dotation capacity="617" logistic-threshold="30" name="Gasoil" normalized-consumption="300"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -3108,14 +3105,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -3219,11 +3216,11 @@
         <dotation capacity="1200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="150"/>
       </category>
       <category name="carburant">
-        <dotation capacity="565" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="565"/>
+        <dotation capacity="565" logistic-threshold="30" name="Gasoil" normalized-consumption="565"/>
       </category>
       <category name="ration">
-        <dotation capacity="15" logistic-threshold="30" name="Vivre" normalized-consumption="5"/>
-        <dotation capacity="90" logistic-threshold="30" name="Eau" normalized-consumption="30"/>
+        <dotation capacity="15" logistic-threshold="30" name="Food" normalized-consumption="5"/>
+        <dotation capacity="90" logistic-threshold="30" name="Water" normalized-consumption="30"/>
       </category>
     </composition>
     <sensors>
@@ -3234,14 +3231,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1.25"/>
-        <dotation category="ration" name="Vivre" value="0.2"/>
+        <dotation category="ration" name="Water" value="1.25"/>
+        <dotation category="ration" name="Food" value="0.2"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -3335,17 +3332,17 @@
         <dotation capacity="1000" logistic-threshold="10" name="12,7-mm Bullet" normalized-consumption="110"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="mine">
-        <dotation capacity="10" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard landmine" normalized-consumption="10"/>
       </category>
       <category name="barbele">
-        <dotation capacity="10" logistic-threshold="10" name="barbele classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard barbed wire" normalized-consumption="10"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -3360,14 +3357,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -3463,11 +3460,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="102" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="17"/>
+        <dotation capacity="102" logistic-threshold="30" name="Gasoil" normalized-consumption="17"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -3479,14 +3476,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="2"/>
+        <dotation category="carburant" name="Gasoil" value="2"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="11"/>
+        <dotation category="carburant" name="Gasoil" value="11"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -3494,7 +3491,7 @@
       <weapon-system launcher="7.62-mm Coaxial Machine Gun" munition="7.62-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object type="poste controle"/>
+      <object type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="8" type="MOB Breakdown 1 EB"/>
@@ -3580,7 +3577,7 @@
     </speeds>
     <composition>
       <category name="carburant">
-        <dotation capacity="200" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="1700"/>
+        <dotation capacity="200" logistic-threshold="30" name="Gasoil" normalized-consumption="1700"/>
       </category>
     </composition>
     <sensors>
@@ -3590,10 +3587,10 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems/>
@@ -3639,11 +3636,11 @@
         <dotation capacity="240" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="30"/>
       </category>
       <category name="carburant">
-        <dotation capacity="30" logistic-threshold="10" name="F57 Essence" normalized-consumption="6"/>
+        <dotation capacity="30" logistic-threshold="10" name="Gas" normalized-consumption="6"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -3655,14 +3652,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F57 Essence" value="1.5"/>
+        <dotation category="carburant" name="Gas" value="1.5"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F57 Essence" value="6"/>
+        <dotation category="carburant" name="Gas" value="6"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -3723,11 +3720,11 @@
         <dotation capacity="1500" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="300"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -3739,14 +3736,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -3754,7 +3751,7 @@
       <weapon-system launcher="7.62-mm Cupola Machine Gun" munition="7.62-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="zone brouillage" valorization-time="0s"/>
+      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="jamming area" valorization-time="0s"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -3831,17 +3828,17 @@
         <dotation capacity="400" logistic-threshold="10" name="14,5-mm Bullet" normalized-consumption="400"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="mine">
-        <dotation capacity="5" logistic-threshold="10" name="mine classique" normalized-consumption="5"/>
+        <dotation capacity="5" logistic-threshold="10" name="standard landmine" normalized-consumption="5"/>
       </category>
       <category name="barbele">
-        <dotation capacity="10" logistic-threshold="10" name="barbele classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard barbed wire" normalized-consumption="10"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -3855,14 +3852,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -3870,9 +3867,9 @@
     </weapon-systems>
     <objects>
       <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="45s"/>
-      <object initial-construction-time="1800s" initial-destruction-time="1800s" type="destruction route"/>
-      <object initial-construction-time="1200s" initial-destruction-time="1200s" type="destruction pont"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
+      <object initial-construction-time="1800s" initial-destruction-time="1800s" type="road destruction"/>
+      <object initial-construction-time="1200s" initial-destruction-time="1200s" type="bridge destruction"/>
       <object construction-time-factor="60s" initial-construction-time="800s" type="barricade"/>
     </objects>
     <breakdowns>
@@ -3917,11 +3914,11 @@
         <dotation capacity="960" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="120"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="ration">
-        <dotation capacity="12" logistic-threshold="30" name="Vivre" normalized-consumption="4"/>
-        <dotation capacity="72" logistic-threshold="30" name="Eau" normalized-consumption="24"/>
+        <dotation capacity="12" logistic-threshold="30" name="Food" normalized-consumption="4"/>
+        <dotation capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
       </category>
     </composition>
     <sensors>
@@ -3936,14 +3933,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1"/>
-        <dotation category="ration" name="Vivre" value="0.16"/>
+        <dotation category="ration" name="Water" value="1"/>
+        <dotation category="ration" name="Food" value="0.16"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4028,11 +4025,11 @@
         <dotation capacity="20" logistic-threshold="10" name="Antitank Missile" normalized-consumption="1"/>
       </category>
       <category name="carburant">
-        <dotation capacity="102" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="17"/>
+        <dotation capacity="102" logistic-threshold="30" name="Gasoil" normalized-consumption="17"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -4044,14 +4041,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="2"/>
+        <dotation category="carburant" name="Gasoil" value="2"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="11"/>
+        <dotation category="carburant" name="Gasoil" value="11"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4060,7 +4057,7 @@
       <weapon-system launcher="Antitank Missile Launcher" munition="Antitank Missile"/>
     </weapon-systems>
     <objects>
-      <object type="poste controle"/>
+      <object type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -4137,30 +4134,28 @@
         <dotation capacity="960" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="120"/>
       </category>
       <category name="carburant">
-        <dotation capacity="440" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="23"/>
+        <dotation capacity="440" logistic-threshold="30" name="Gasoil" normalized-consumption="23"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
       <sensor height="2" type="Eye"/>
     </sensors>
-    <radars>
-      <radar type="Ecoute radar STAIR"/>
-    </radars>
+    <radars/>
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4252,30 +4247,28 @@
         <dotation capacity="960" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="120"/>
       </category>
       <category name="carburant">
-        <dotation capacity="440" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="23"/>
+        <dotation capacity="440" logistic-threshold="30" name="Gasoil" normalized-consumption="23"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
       <sensor height="2" type="Eye"/>
     </sensors>
-    <radars>
-      <radar type="Ecoute VHF"/>
-    </radars>
+    <radars/>
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4368,8 +4361,8 @@
         <dotation capacity="3" logistic-threshold="10" name="68-mm Rocket" normalized-consumption="2"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -4379,8 +4372,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4428,8 +4421,8 @@
         <dotation capacity="10" logistic-threshold="10" name="81-mm Smoke Shell" normalized-consumption="10"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -4441,14 +4434,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4497,14 +4490,14 @@
         <dotation capacity="50" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="10"/>
       </category>
       <category name="explosif">
-        <dotation capacity="10" logistic-threshold="10" name="explosif classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard explosive" normalized-consumption="10"/>
       </category>
       <category name="mine">
-        <dotation capacity="10" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard landmine" normalized-consumption="10"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -4515,8 +4508,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4526,15 +4519,15 @@
     </weapon-systems>
     <objects>
       <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="1000s" initial-destruction-time="0s" non-bypassed-speed="5" type="destruction route" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="1000s" initial-destruction-time="0s" non-bypassed-speed="2" type="destruction pont" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="60s" devalorization-time="0s" initial-destruction-time="1000s" non-bypassed-speed="2" type="site decontamination" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="60s" devalorization-time="0s" initial-destruction-time="1000s" non-bypassed-speed="2" type="plot ravitaillement" valorization-time="0s"/>
-      <object initial-destruction-time="1800s" type="zone implantation lrm"/>
-      <object initial-destruction-time="1800s" type="zone implantation canon"/>
-      <object initial-destruction-time="1800s" type="zone implantation mortier"/>
-      <object initial-destruction-time="1800s" type="zone implantation cobra"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
+      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="1000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="1000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="60s" devalorization-time="0s" initial-destruction-time="1000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="60s" devalorization-time="0s" initial-destruction-time="1000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
+      <object initial-destruction-time="1800s" type="mrls deployment area"/>
+      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
+      <object initial-destruction-time="1800s" type="mortar deployment area"/>
+      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
   </element>
   <element codeEMAT6="Equipe M120" codeEMAT8="Equipe M120" codeLFRIL="Equipe M120" codeNNO="Equipe M120" comment="" id="45" name="Mortar Launcher 120mm" protection="UnarmouredVehicle" size="Small" weight="0.3">
@@ -4577,11 +4570,11 @@
         <dotation capacity="5" logistic-threshold="10" name="120-mm Illumination Shell" normalized-consumption="3"/>
       </category>
       <category name="carburant">
-        <dotation capacity="240" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="240" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="18" logistic-threshold="30" name="Vivre" normalized-consumption="6"/>
-        <dotation capacity="108" logistic-threshold="30" name="Eau" normalized-consumption="36"/>
+        <dotation capacity="18" logistic-threshold="30" name="Food" normalized-consumption="6"/>
+        <dotation capacity="108" logistic-threshold="30" name="Water" normalized-consumption="36"/>
       </category>
     </composition>
     <sensors>
@@ -4592,14 +4585,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1.5"/>
-        <dotation category="ration" name="Vivre" value="0.24"/>
+        <dotation category="ration" name="Water" value="1.5"/>
+        <dotation category="ration" name="Food" value="0.24"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4686,11 +4679,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="90" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="90"/>
+        <dotation capacity="90" logistic-threshold="30" name="Gasoil" normalized-consumption="90"/>
       </category>
       <category name="ration">
-        <dotation capacity="12" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="12" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -4703,14 +4696,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4793,11 +4786,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="240" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="240" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -4813,14 +4806,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4912,8 +4905,8 @@
         <dotation capacity="240" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="30"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -4924,8 +4917,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -4933,17 +4926,17 @@
     </weapon-systems>
     <objects>
       <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="destruction route" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="destruction pont" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="site decontamination" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="plot ravitaillement" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="poste tir"/>
-      <object initial-construction-time="36000s" type="poste controle"/>
-      <object initial-destruction-time="1800s" type="zone implantation lrm"/>
-      <object initial-destruction-time="1800s" type="zone implantation canon"/>
-      <object initial-destruction-time="1800s" type="zone implantation mortier"/>
-      <object initial-destruction-time="1800s" type="zone implantation cobra"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
+      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
+      <object initial-construction-time="36000s" type="checkpoint"/>
+      <object initial-destruction-time="1800s" type="mrls deployment area"/>
+      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
+      <object initial-destruction-time="1800s" type="mortar deployment area"/>
+      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
   </element>
   <element codeEMAT6="VBL APILAS" codeEMAT8="VBL APILAS" codeLFRIL="VBL APILAS" codeNNO="VBL APILAS" comment="" id="49" name="Light Armored Vehicle Rocket" protection="LightTank" size="Small" weight="4">
@@ -4984,11 +4977,11 @@
         <dotation capacity="4" logistic-threshold="10" name="68-mm Rocket" normalized-consumption="2"/>
       </category>
       <category name="carburant">
-        <dotation capacity="102" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="17"/>
+        <dotation capacity="102" logistic-threshold="30" name="Gasoil" normalized-consumption="17"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -4998,14 +4991,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="2"/>
+        <dotation category="carburant" name="Gasoil" value="2"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="11"/>
+        <dotation category="carburant" name="Gasoil" value="11"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -5014,7 +5007,7 @@
       <weapon-system launcher="68-mm Rocket Launcher" munition="68-mm Rocket"/>
     </weapon-systems>
     <objects>
-      <object type="poste controle"/>
+      <object type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -5092,34 +5085,31 @@
         <dotation capacity="10" logistic-threshold="10" name="Short Range Surface To Air Missile" normalized-consumption="2"/>
       </category>
       <category name="carburant">
-        <dotation capacity="992" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="340"/>
+        <dotation capacity="992" logistic-threshold="30" name="Gasoil" normalized-consumption="340"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
       <sensor height="1.5" type="Eye"/>
     </sensors>
-    <radars>
-      <radar type="Radar ROLAND Courte Portee"/>
-      <radar type="Radar ROLAND Longue Portee"/>
-    </radars>
+    <radars/>
     <transports>
       <crew man-boarding-time="5s" man-unloading-time="4s"/>
       <unit capacity="2" ton-loading-time="15s" ton-unloading-time="10s"/>
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Vivre" value="0.12"/>
-        <dotation category="ration" name="Eau" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -5230,11 +5220,11 @@
         <dotation capacity="800" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="300"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="ration">
-        <dotation capacity="12" logistic-threshold="30" name="Vivre" normalized-consumption="4"/>
-        <dotation capacity="72" logistic-threshold="30" name="Eau" normalized-consumption="24"/>
+        <dotation capacity="12" logistic-threshold="30" name="Food" normalized-consumption="4"/>
+        <dotation capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
       </category>
     </composition>
     <sensors>
@@ -5248,14 +5238,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1"/>
-        <dotation category="ration" name="Vivre" value="0.16"/>
+        <dotation category="ration" name="Water" value="1"/>
+        <dotation category="ration" name="Food" value="0.16"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -5351,17 +5341,17 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="mine">
-        <dotation capacity="10" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard landmine" normalized-consumption="10"/>
       </category>
       <category name="barbele">
-        <dotation capacity="10" logistic-threshold="10" name="barbele classique" normalized-consumption="10"/>
+        <dotation capacity="10" logistic-threshold="10" name="standard barbed wire" normalized-consumption="10"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -5376,14 +5366,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -5391,7 +5381,7 @@
       <weapon-system launcher="5.56-mm Assault Rifle" munition="5.56-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object type="poste controle"/>
+      <object type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="8" type="MOB Breakdown 1 EB"/>
@@ -5480,11 +5470,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="170" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="28"/>
+        <dotation capacity="170" logistic-threshold="30" name="Gasoil" normalized-consumption="28"/>
       </category>
       <category name="ration">
-        <dotation capacity="12" logistic-threshold="30" name="Vivre" normalized-consumption="4"/>
-        <dotation capacity="72" logistic-threshold="30" name="Eau" normalized-consumption="24"/>
+        <dotation capacity="12" logistic-threshold="30" name="Food" normalized-consumption="4"/>
+        <dotation capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
       </category>
     </composition>
     <sensors>
@@ -5497,14 +5487,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1"/>
-        <dotation category="ration" name="Vivre" value="0.16"/>
+        <dotation category="ration" name="Water" value="1"/>
+        <dotation category="ration" name="Food" value="0.16"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -5597,11 +5587,11 @@
         <dotation capacity="100" logistic-threshold="10" name="20-mm Shell" normalized-consumption="9"/>
       </category>
       <category name="carburant">
-        <dotation capacity="170" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="28"/>
+        <dotation capacity="170" logistic-threshold="30" name="Gasoil" normalized-consumption="28"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -5611,14 +5601,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -5628,7 +5618,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="3.5" nature="Solide" volume="11.5"/>
+        <carrying mass="3.5" nature="Solid" volume="11.5"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -5706,11 +5696,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="170" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="28"/>
+        <dotation capacity="170" logistic-threshold="30" name="Gasoil" normalized-consumption="28"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -5720,14 +5710,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -5736,7 +5726,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="3.5" nature="Solide" volume="11.5"/>
+        <carrying mass="3.5" nature="Solid" volume="11.5"/>
       </supply-functions>
     </logistic-functions>
   </element>
@@ -5776,11 +5766,11 @@
         <dotation capacity="240" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="30"/>
       </category>
       <category name="carburant">
-        <dotation capacity="220" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="27"/>
+        <dotation capacity="220" logistic-threshold="30" name="Gasoil" normalized-consumption="27"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -5790,14 +5780,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -5806,7 +5796,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="10" nature="Solide" volume="20.5"/>
+        <carrying mass="10" nature="Solid" volume="20.5"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -5881,11 +5871,11 @@
     </speeds>
     <composition>
       <category name="carburant">
-        <dotation capacity="5500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="1000"/>
+        <dotation capacity="5500" logistic-threshold="30" name="Gasoil" normalized-consumption="1000"/>
       </category>
       <category name="ration">
-        <dotation capacity="180" logistic-threshold="30" name="Eau" normalized-consumption="60"/>
-        <dotation capacity="30" logistic-threshold="30" name="Vivre" normalized-consumption="10"/>
+        <dotation capacity="180" logistic-threshold="30" name="Water" normalized-consumption="60"/>
+        <dotation capacity="30" logistic-threshold="30" name="Food" normalized-consumption="10"/>
       </category>
     </composition>
     <sensors>
@@ -5898,14 +5888,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="2.5"/>
-        <dotation category="ration" name="Vivre" value="0.41"/>
+        <dotation category="ration" name="Water" value="2.5"/>
+        <dotation category="ration" name="Food" value="0.41"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="100"/>
+        <dotation category="carburant" name="Gasoil" value="100"/>
       </consumption>
     </consumptions>
     <weapon-systems/>
@@ -5952,11 +5942,11 @@
         <dotation capacity="300" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="300"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1700" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="320"/>
+        <dotation capacity="1700" logistic-threshold="30" name="Gasoil" normalized-consumption="320"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -5967,17 +5957,17 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
       <consumption status="EnTravaux">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -6066,11 +6056,11 @@
         <dotation capacity="800" logistic-threshold="10" name="12,7-mm Bullet" normalized-consumption="110"/>
       </category>
       <category name="carburant">
-        <dotation capacity="240" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="240" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -6082,14 +6072,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -6099,7 +6089,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="12" nature="Solide" volume="14.1"/>
+        <carrying mass="12" nature="Solid" volume="14.1"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -6177,11 +6167,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="55"/>
+        <dotation capacity="540" logistic-threshold="30" name="Gasoil" normalized-consumption="55"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -6193,14 +6183,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -6209,7 +6199,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="16" nature="Solide" volume="22.8"/>
+        <carrying mass="16" nature="Solid" volume="22.8"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -6288,11 +6278,11 @@
         <dotation capacity="2000" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="300"/>
       </category>
       <category name="carburant">
-        <dotation capacity="170" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="28"/>
+        <dotation capacity="170" logistic-threshold="30" name="Gasoil" normalized-consumption="28"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -6302,14 +6292,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -6319,7 +6309,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="3.5" nature="Solide" volume="11.5"/>
+        <carrying mass="3.5" nature="Solid" volume="11.5"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -6397,8 +6387,8 @@
         <dotation capacity="240" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="30"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -6409,8 +6399,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -6418,17 +6408,17 @@
     </weapon-systems>
     <objects>
       <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="bouchon mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="destruction route" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="destruction pont" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="site decontamination" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="plot ravitaillement" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="poste tir"/>
-      <object initial-construction-time="36000s" type="poste controle"/>
-      <object initial-destruction-time="1800s" type="zone implantation lrm"/>
-      <object initial-destruction-time="1800s" type="zone implantation canon"/>
-      <object initial-destruction-time="1800s" type="zone implantation mortier"/>
-      <object initial-destruction-time="1800s" type="zone implantation cobra"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
+      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
+      <object initial-construction-time="36000s" type="checkpoint"/>
+      <object initial-destruction-time="1800s" type="mrls deployment area"/>
+      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
+      <object initial-destruction-time="1800s" type="mortar deployment area"/>
+      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
   </element>
   <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="63" name="Load Carrying Vehicle" protection="UnarmouredVehicle" size="Medium" weight="11">
@@ -6467,11 +6457,11 @@
         <dotation capacity="240" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="30"/>
       </category>
       <category name="carburant">
-        <dotation capacity="240" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="240" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -6483,14 +6473,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -6499,7 +6489,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="12" nature="Solide" volume="14.1"/>
+        <carrying mass="12" nature="Solid" volume="14.1"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -6577,11 +6567,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="480" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="70"/>
+        <dotation capacity="480" logistic-threshold="30" name="Gasoil" normalized-consumption="70"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -6591,14 +6581,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -6685,11 +6675,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="480" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="70"/>
+        <dotation capacity="480" logistic-threshold="30" name="Gasoil" normalized-consumption="70"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -6699,14 +6689,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -6793,11 +6783,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="55"/>
+        <dotation capacity="540" logistic-threshold="30" name="Gasoil" normalized-consumption="55"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -6809,14 +6799,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -6900,11 +6890,11 @@
     </speeds>
     <composition>
       <category name="carburant">
-        <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
+        <dotation capacity="390" logistic-threshold="30" name="Gasoil" normalized-consumption="35"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -6916,19 +6906,19 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems/>
     <objects>
-      <object type="poste controle"/>
+      <object type="checkpoint"/>
     </objects>
     <logistic-functions>
       <health-functions>
@@ -7008,11 +6998,11 @@
     </speeds>
     <composition>
       <category name="carburant">
-        <dotation capacity="1550" logistic-threshold="30" name="F35 Kerosene" normalized-consumption="1550"/>
+        <dotation capacity="1550" logistic-threshold="30" name="Kerosene" normalized-consumption="1550"/>
       </category>
       <category name="ration">
-        <dotation capacity="18" logistic-threshold="30" name="Vivre" normalized-consumption="6"/>
-        <dotation capacity="108" logistic-threshold="30" name="Eau" normalized-consumption="36"/>
+        <dotation capacity="18" logistic-threshold="30" name="Food" normalized-consumption="6"/>
+        <dotation capacity="108" logistic-threshold="30" name="Water" normalized-consumption="36"/>
       </category>
     </composition>
     <sensors>
@@ -7025,19 +7015,19 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1.5"/>
-        <dotation category="ration" name="Vivre" value="0.24"/>
+        <dotation category="ration" name="Water" value="1.5"/>
+        <dotation category="ration" name="Food" value="0.24"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
     </consumptions>
     <weapon-systems/>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="plot ravitaillement"/>
+      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="logistic support area"/>
     </objects>
     <logistic-functions>
       <health-functions>
@@ -7107,11 +7097,11 @@
         <dotation capacity="1680" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="210"/>
       </category>
       <category name="carburant">
-        <dotation capacity="200" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="200" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="21" logistic-threshold="30" name="Vivre" normalized-consumption="7"/>
-        <dotation capacity="126" logistic-threshold="30" name="Eau" normalized-consumption="42"/>
+        <dotation capacity="21" logistic-threshold="30" name="Food" normalized-consumption="7"/>
+        <dotation capacity="126" logistic-threshold="30" name="Water" normalized-consumption="42"/>
       </category>
     </composition>
     <sensors>
@@ -7123,14 +7113,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="1.75"/>
-        <dotation category="ration" name="Vivre" value="0.29"/>
+        <dotation category="ration" name="Water" value="1.75"/>
+        <dotation category="ration" name="Food" value="0.29"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -7217,11 +7207,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="70" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="12"/>
+        <dotation capacity="70" logistic-threshold="30" name="Gasoil" normalized-consumption="12"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -7231,14 +7221,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -7469,8 +7459,8 @@
         <dotation capacity="12" logistic-threshold="50" name="UR NTI1 MOB" normalized-consumption="12"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -7480,8 +7470,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -7537,8 +7527,8 @@
         <dotation capacity="24" logistic-threshold="50" name="UR NTI1 MOB" normalized-consumption="24"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -7548,8 +7538,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -7599,11 +7589,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="200" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="200" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -7615,14 +7605,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -7715,8 +7705,8 @@
         <dotation capacity="12" logistic-threshold="50" name="UR NTI1 EA" normalized-consumption="12"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -7726,8 +7716,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -7778,11 +7768,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="55"/>
+        <dotation capacity="540" logistic-threshold="30" name="Gasoil" normalized-consumption="55"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -7794,14 +7784,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -7889,11 +7879,11 @@
         <dotation capacity="240" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="30"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="55"/>
+        <dotation capacity="540" logistic-threshold="30" name="Gasoil" normalized-consumption="55"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -7905,14 +7895,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -7921,7 +7911,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="16" nature="Solide" volume="22.8"/>
+        <carrying mass="16" nature="Solid" volume="22.8"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -8000,11 +7990,11 @@
         <dotation capacity="800" logistic-threshold="10" name="12,7-mm Bullet" normalized-consumption="110"/>
       </category>
       <category name="carburant">
-        <dotation capacity="240" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="240" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -8016,14 +8006,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -8033,7 +8023,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="12" nature="Solide" volume="14.1"/>
+        <carrying mass="12" nature="Solid" volume="14.1"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -8111,11 +8101,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="200" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="200" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -8127,14 +8117,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -8221,11 +8211,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="440" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="23"/>
+        <dotation capacity="440" logistic-threshold="30" name="Gasoil" normalized-consumption="23"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -8235,14 +8225,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -8325,11 +8315,11 @@
         <dotation capacity="2000" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="300"/>
       </category>
       <category name="carburant">
-        <dotation capacity="240" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="40"/>
+        <dotation capacity="240" logistic-threshold="30" name="Gasoil" normalized-consumption="40"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -8341,14 +8331,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -8358,7 +8348,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="12" nature="Solide" volume="14.1"/>
+        <carrying mass="12" nature="Solid" volume="14.1"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -8436,11 +8426,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="100"/>
+        <dotation capacity="500" logistic-threshold="30" name="Gasoil" normalized-consumption="100"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -8452,14 +8442,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="50"/>
+        <dotation category="carburant" name="Gasoil" value="50"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -8592,11 +8582,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="70" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="12"/>
+        <dotation capacity="70" logistic-threshold="30" name="Gasoil" normalized-consumption="12"/>
       </category>
       <category name="ration">
-        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
-        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <dotation capacity="3" logistic-threshold="30" name="Food" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Water" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -8606,14 +8596,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.25"/>
-        <dotation category="ration" name="Vivre" value="0.04"/>
+        <dotation category="ration" name="Water" value="0.25"/>
+        <dotation category="ration" name="Food" value="0.04"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -8706,8 +8696,8 @@
         <dotation capacity="12" logistic-threshold="50" name="UR NTI1 TCT" normalized-consumption="12"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -8717,8 +8707,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -8772,8 +8762,8 @@
         <dotation capacity="24" logistic-threshold="50" name="UR NTI1 MOB" normalized-consumption="24"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -8783,8 +8773,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -8840,8 +8830,8 @@
         <dotation capacity="24" logistic-threshold="50" name="UR NTI1 EA" normalized-consumption="24"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -8851,8 +8841,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -8903,11 +8893,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="55"/>
+        <dotation capacity="540" logistic-threshold="30" name="Gasoil" normalized-consumption="55"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -8919,14 +8909,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9014,11 +9004,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="55"/>
+        <dotation capacity="540" logistic-threshold="30" name="Gasoil" normalized-consumption="55"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -9030,14 +9020,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="20"/>
+        <dotation category="carburant" name="Gasoil" value="20"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="40"/>
+        <dotation category="carburant" name="Gasoil" value="40"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9046,7 +9036,7 @@
     <objects/>
     <logistic-functions>
       <supply-functions>
-        <carrying mass="16" nature="Solide" volume="22.8"/>
+        <carrying mass="16" nature="Solid" volume="22.8"/>
       </supply-functions>
     </logistic-functions>
     <breakdowns>
@@ -9124,11 +9114,11 @@
         <dotation capacity="720" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <dotation capacity="440" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="26"/>
+        <dotation capacity="440" logistic-threshold="30" name="Gasoil" normalized-consumption="26"/>
       </category>
       <category name="ration">
-        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
-        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+        <dotation capacity="9" logistic-threshold="30" name="Food" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Water" normalized-consumption="18"/>
       </category>
     </composition>
     <sensors>
@@ -9141,14 +9131,14 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.75"/>
-        <dotation category="ration" name="Vivre" value="0.12"/>
+        <dotation category="ration" name="Water" value="0.75"/>
+        <dotation category="ration" name="Food" value="0.12"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+        <dotation category="carburant" name="Gasoil" value="15"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+        <dotation category="carburant" name="Gasoil" value="60"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9233,8 +9223,8 @@
         <dotation capacity="6" logistic-threshold="50" name="UR NTI1 MOB" normalized-consumption="6"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -9244,8 +9234,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9297,8 +9287,8 @@
         <dotation capacity="6" logistic-threshold="50" name="UR NTI1 TCT" normalized-consumption="6"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -9308,8 +9298,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9361,8 +9351,8 @@
         <dotation capacity="6" logistic-threshold="50" name="UR NTI1 EA" normalized-consumption="6"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -9372,8 +9362,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Vivre" value="0.5"/>
-        <dotation category="ration" name="Eau" value="0.08"/>
+        <dotation category="ration" name="Food" value="0.5"/>
+        <dotation category="ration" name="Water" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9426,8 +9416,8 @@
         <dotation capacity="3" logistic-threshold="50" name="UR NTI1 MOB" normalized-consumption="3"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -9437,8 +9427,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9492,8 +9482,8 @@
         <dotation capacity="3" logistic-threshold="50" name="UR NTI2 TCT" normalized-consumption="3"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -9503,8 +9493,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9554,11 +9544,11 @@
         <dotation capacity="10" logistic-threshold="0" name="Handmade Bomb" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="10" logistic-threshold="0" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="10" logistic-threshold="0" name="Gasoil" normalized-consumption="0"/>
       </category>
       <category name="ration">
-        <dotation capacity="42" logistic-threshold="30" name="Eau" normalized-consumption="42"/>
-        <dotation capacity="21" logistic-threshold="30" name="Vivre" normalized-consumption="21"/>
+        <dotation capacity="42" logistic-threshold="30" name="Water" normalized-consumption="42"/>
+        <dotation capacity="21" logistic-threshold="30" name="Food" normalized-consumption="21"/>
       </category>
     </composition>
     <sensors>
@@ -9568,8 +9558,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0"/>
-        <dotation category="ration" name="Vivre" value="0"/>
+        <dotation category="ration" name="Water" value="0"/>
+        <dotation category="ration" name="Food" value="0"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9613,11 +9603,11 @@
         <dotation capacity="480" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="60"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="480"/>
+        <dotation capacity="540" logistic-threshold="30" name="Gasoil" normalized-consumption="480"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -9628,25 +9618,25 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F63 Gasoil" value="10"/>
+        <dotation category="carburant" name="Gasoil" value="10"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
       <consumption status="EnTravaux">
-        <dotation category="carburant" name="F63 Gasoil" value="51"/>
+        <dotation category="carburant" name="Gasoil" value="51"/>
       </consumption>
     </consumptions>
     <weapon-systems>
       <weapon-system launcher="5.56-mm Assault Rifle" munition="5.56-mm Bullet"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="120m" initial-destruction-time="80m" non-bypassed-speed="5" type="pont flottant continu" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="120m" initial-destruction-time="80m" non-bypassed-speed="5" type="pont flottant discontinu" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="120m" initial-destruction-time="80m" non-bypassed-speed="5" type="continuous pontoon bridge" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="120m" initial-destruction-time="80m" non-bypassed-speed="5" type="discontinuous pontoon bridge" valorization-time="0s"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1"/>
@@ -9724,11 +9714,11 @@
         <dotation capacity="4" logistic-threshold="0" name="Very Short Range Surface To Air Missile" normalized-consumption="2"/>
       </category>
       <category name="carburant">
-        <dotation capacity="540" logistic-threshold="1" name="F35 Kerosene" normalized-consumption="540"/>
+        <dotation capacity="540" logistic-threshold="1" name="Kerosene" normalized-consumption="540"/>
       </category>
       <category name="ration">
-        <dotation capacity="6" logistic-threshold="30" name="Vivre" normalized-consumption="2"/>
-        <dotation capacity="36" logistic-threshold="30" name="Eau" normalized-consumption="12"/>
+        <dotation capacity="6" logistic-threshold="30" name="Food" normalized-consumption="2"/>
+        <dotation capacity="36" logistic-threshold="30" name="Water" normalized-consumption="12"/>
       </category>
     </composition>
     <sensors>
@@ -9745,14 +9735,14 @@
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="Eau" value="0.5"/>
-        <dotation category="ration" name="Vivre" value="0.08"/>
+        <dotation category="ration" name="Water" value="0.5"/>
+        <dotation category="ration" name="Food" value="0.08"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
       <consumption status="Deplacement">
-        <dotation category="carburant" name="F35 Kerosene" value="224"/>
+        <dotation category="carburant" name="Kerosene" value="224"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -9829,7 +9819,7 @@
     <weapon-systems/>
     <objects>
       <object initial-destruction-time="20m" type="fire"/>
-      <object initial-destruction-time="120m" type="nuage nbc"/>
+      <object initial-destruction-time="120m" type="nbc cloud"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1"/>
@@ -9911,7 +9901,7 @@
     <consumptions/>
     <weapon-systems/>
     <objects>
-      <object initial-construction-time="3m" type="zone interdite mouvement"/>
+      <object initial-construction-time="3m" type="movement forbidden area"/>
       <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="installation"/>
       <object initial-destruction-time="40m" type="fire"/>
     </objects>
@@ -9995,9 +9985,9 @@
     <consumptions/>
     <weapon-systems/>
     <objects>
-      <object construction-time-factor="0s" destruction-time-factor=".0s" initial-construction-time="180s" initial-destruction-time="0s" type="zone interdite mouvement"/>
+      <object construction-time-factor="0s" destruction-time-factor=".0s" initial-construction-time="180s" initial-destruction-time="0s" type="movement forbidden area"/>
       <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="installation"/>
-      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="poste controle"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1"/>

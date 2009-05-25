@@ -3,7 +3,7 @@
   <propagation wind-speed-limit="5"/>
   <nbc-suit max-speed-modifier="0.4" reloading-time-modifier="1.5"/>
   <agents>
-    <agent id="1" name="Biologique">
+    <agent id="1" name="Biological">
       <effects affliction="intoxication" type="liquid">
         <effect percentage="0" wound="nonblesse"/>
         <effect percentage="0.2" wound="u1"/>
@@ -13,7 +13,7 @@
         <effect percentage="0.2" wound="mort"/>
       </effects>
     </agent>
-    <agent id="2" name="Chimique">
+    <agent id="2" name="Chimical">
       <effects affliction="intoxication" contamination="true" type="liquid">
         <effect percentage="0" wound="nonblesse"/>
         <effect percentage="0.2" wound="u1"/>
@@ -31,7 +31,7 @@
         <effect percentage="0.2" wound="mort"/>
       </effects>
     </agent>
-    <agent id="3" name="Nucleaire">
+    <agent id="3" name="Nuclear">
       <effects affliction="intoxication" contamination="true" type="liquid">
         <effect percentage="0" wound="nonblesse"/>
         <effect percentage="0.2" wound="u1"/>

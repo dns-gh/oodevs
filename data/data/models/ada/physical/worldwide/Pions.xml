@@ -14,7 +14,7 @@
         <dotation capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -45,16 +45,16 @@
         <dotation capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <dotation capacity="600" logistic-threshold="30" name="explosif classique" normalized-consumption="0"/>
+        <dotation capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <dotation capacity="150" logistic-threshold="30" name="mine classique" normalized-consumption="0"/>
+        <dotation capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
-        <dotation capacity="40" logistic-threshold="30" name="barbele classique" normalized-consumption="0"/>
+        <dotation capacity="40" logistic-threshold="30" name="standard barbed wire" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -247,13 +247,13 @@
         <dotation capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <dotation capacity="600" logistic-threshold="30" name="explosif classique" normalized-consumption="0"/>
+        <dotation capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <dotation capacity="150" logistic-threshold="30" name="mine classique" normalized-consumption="0"/>
+        <dotation capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -289,8 +289,8 @@
         <dotation capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-        <dotation capacity="100" logistic-threshold="10" name="F57 Essence" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <dotation capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -324,10 +324,10 @@
         <dotation capacity="48" logistic-threshold="30" name="Antitank Missile" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <dotation capacity="600" logistic-threshold="30" name="explosif classique" normalized-consumption="0"/>
+        <dotation capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -378,8 +378,8 @@
         <dotation capacity="3000" logistic-threshold="10" name="9.00-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="10000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-        <dotation capacity="400" logistic-threshold="40" name="F57 Essence" normalized-consumption="0"/>
+        <dotation capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <dotation capacity="400" logistic-threshold="40" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -427,7 +427,7 @@
         <dotation capacity="800" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -459,7 +459,7 @@
         <dotation capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -490,7 +490,7 @@
         <dotation capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -559,7 +559,7 @@
         <dotation capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -636,10 +636,10 @@
         <dotation capacity="1200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <dotation capacity="60" logistic-threshold="30" name="explosif classique" normalized-consumption="0"/>
+        <dotation capacity="60" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <dotation capacity="30" logistic-threshold="5" name="mine classique" normalized-consumption="0"/>
+        <dotation capacity="30" logistic-threshold="5" name="standard landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -711,8 +711,8 @@
         <dotation capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="10000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-        <dotation capacity="100" logistic-threshold="10" name="F57 Essence" normalized-consumption="0"/>
+        <dotation capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <dotation capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -738,7 +738,7 @@
         <dotation capacity="1200" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -763,7 +763,7 @@
         <dotation capacity="1200" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -823,7 +823,7 @@
         <dotation capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="10000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -851,8 +851,8 @@
         <dotation capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-        <dotation capacity="100" logistic-threshold="10" name="F57 Essence" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <dotation capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -921,7 +921,7 @@
         <dotation capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="10000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -950,8 +950,8 @@
         <dotation capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-        <dotation capacity="100" logistic-threshold="10" name="F57 Essence" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <dotation capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -985,7 +985,7 @@
         <dotation capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1019,7 +1019,7 @@
         <dotation capacity="1000" logistic-threshold="30" name="81-mm High Explosive Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1073,7 +1073,7 @@
         <dotation capacity="1200" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1098,7 +1098,7 @@
         <dotation capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1124,7 +1124,7 @@
         <dotation capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1148,7 +1148,7 @@
         <dotation capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1174,7 +1174,7 @@
         <dotation capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1200,7 +1200,7 @@
         <dotation capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1266,8 +1266,8 @@
         <dotation capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-        <dotation capacity="400" logistic-threshold="40" name="F57 Essence" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <dotation capacity="400" logistic-threshold="40" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1312,7 +1312,7 @@
         <dotation capacity="1200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1416,7 +1416,7 @@
         <dotation capacity="1200" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="3000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1753,13 +1753,13 @@
         <dotation capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <dotation capacity="600" logistic-threshold="30" name="explosif classique" normalized-consumption="0"/>
+        <dotation capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <dotation capacity="150" logistic-threshold="30" name="mine classique" normalized-consumption="0"/>
+        <dotation capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1844,7 +1844,7 @@
         <dotation capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1909,16 +1909,16 @@
         <dotation capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <dotation capacity="600" logistic-threshold="30" name="explosif classique" normalized-consumption="0"/>
+        <dotation capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <dotation capacity="150" logistic-threshold="30" name="mine classique" normalized-consumption="0"/>
+        <dotation capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
-        <dotation capacity="40" logistic-threshold="30" name="barbele classique" normalized-consumption="0"/>
+        <dotation capacity="40" logistic-threshold="30" name="standard barbed wire" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1949,16 +1949,16 @@
         <dotation capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <dotation capacity="600" logistic-threshold="30" name="explosif classique" normalized-consumption="0"/>
+        <dotation capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <dotation capacity="150" logistic-threshold="30" name="mine classique" normalized-consumption="0"/>
+        <dotation capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
-        <dotation capacity="40" logistic-threshold="30" name="barbele classique" normalized-consumption="0"/>
+        <dotation capacity="40" logistic-threshold="30" name="standard barbed wire" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1989,7 +1989,7 @@
         <dotation capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2064,7 +2064,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2093,7 +2093,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2121,7 +2121,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2150,7 +2150,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2178,7 +2178,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2285,7 +2285,7 @@
         <dotation capacity="36" logistic-threshold="30" name="155-mm Sub-Munition Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2318,8 +2318,8 @@
         <dotation capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-        <dotation capacity="200" logistic-threshold="20" name="F57 Essence" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <dotation capacity="200" logistic-threshold="20" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2353,8 +2353,8 @@
         <dotation capacity="96" logistic-threshold="30" name="277-mm Sub-Munition Rocket" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="2500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
-        <dotation capacity="100" logistic-threshold="10" name="F57 Essence" normalized-consumption="0"/>
+        <dotation capacity="2500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <dotation capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2385,7 +2385,7 @@
         <dotation capacity="800" logistic-threshold="30" name="20-mm Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2418,7 +2418,7 @@
         <dotation capacity="100" logistic-threshold="10" name="120-mm Hight Explosive Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2449,7 +2449,7 @@
         <dotation capacity="800" logistic-threshold="30" name="20-mm Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2835,7 +2835,7 @@
         <dotation capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <dotation capacity="10000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <dotation capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>

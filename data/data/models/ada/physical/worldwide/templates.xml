@@ -40,4 +40,22 @@
     </template>
   </template>
   <template/>
+  <template>
+    <element automatType="Militias" name="Militias" type="automat" x="0" y="0"/>
+    <template>
+      <element agentType="Militia" commandPost="true" name="Militia" type="agent" x="1462.98" y="-224.102"/>
+    </template>
+    <template>
+      <element agentType="Militia" commandPost="false" name="Militia" type="agent" x="-31.8789" y="35.9688"/>
+    </template>
+    <template>
+      <element agentType="Militia" commandPost="false" name="Militia" type="agent" x="545.809" y="-9.42188"/>
+    </template>
+    <template>
+      <element agentType="Militia" commandPost="false" name="Militia" type="agent" x="-371.613" y="36.5547"/>
+    </template>
+    <template>
+      <element agentType="Militia" commandPost="false" name="Militia" type="agent" x="-1605.29" y="160.992"/>
+    </template>
+  </template>
 </templates>
