@@ -146,15 +146,6 @@ void ParamLocation::Draw( const geometry::Point2f& , const kernel::Viewport_ABC&
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLocation::IsValid
-// Created: SBO 2009-05-25
-// -----------------------------------------------------------------------------
-bool ParamLocation::IsValid() const
-{
-    return location_.get() && location_->IsValid();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ParamLocation::IsOptional
 // Created: SBO 2008-03-10
 // -----------------------------------------------------------------------------
