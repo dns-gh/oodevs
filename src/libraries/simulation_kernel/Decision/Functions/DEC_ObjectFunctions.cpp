@@ -23,6 +23,8 @@
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_Objective.h"
 
+#include <xeumeuleu/xml.h>
+
 // =============================================================================
 // GEN OBJECT
 // =============================================================================
@@ -128,4 +130,37 @@ void DEC_ObjectFunctions::SetObjectiveFlag( DIA_Call_ABC& call )
     DEC_Objective* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
     assert( pTmp );
     pTmp->Flag( call.GetParameter( 1 ).ToBool() );
+}
+
+namespace
+{
+    std::map< int, std::string > objectNames_;
+
+    void RegisterObject( xml::xistream& xis )
+    {
+        int id;
+        std::string type;
+        xis >> xml::attribute( "id", id )
+            >> xml::attribute( "type", type );
+        objectNames_[ id ] = type;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::RegisterObjectNames
+// Created: LDC 2009-05-25
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::RegisterObjectNames( xml::xistream& xis )
+{
+    xis >> xml::start( "objects" )
+        >> xml::list( "object", &RegisterObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::ConvertTypeObjectToString
+// Created: LDC 2009-05-25
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::ConvertTypeObjectToString( DIA_Call_ABC& call )
+{
+    call.GetResult().SetValue( objectNames_[ call.GetParameter( 0 ).ToId() ] );
 }

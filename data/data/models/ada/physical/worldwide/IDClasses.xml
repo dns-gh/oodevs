@@ -11,43 +11,43 @@
     <Classe nom="TraitementLogMaintenance"              id="203" />
     <Classe nom="TraitementLogSante"                    id="204" />
     <Classe nom="TraitementLogRavitaillement"           id="201" />
-    <Classe nom="fosse anti char"                       id="147" />
+    <Classe nom="anti tank obstacle"                    id="147" />
     <Classe nom="abattis"                               id="147" />
     <Classe nom="barricade"                             id="147" />
-    <Classe nom="bouchon mines"                         id="147" />
-    <Classe nom="zone minee lineaire"                   id="147" />
-    <Classe nom="zone minee par dispersion"             id="147" />
-    <Classe nom="eboulement"                            id="147" />
-    <Classe nom="destruction route"                     id="147" />
-    <Classe nom="destruction pont"                      id="147" />
-    <Classe nom="pont flottant continu"                 id="168" />
-    <Classe nom="pont flottant discontinu"              id="168" />
-    <Classe nom="poste tir"                             id="166" />
-    <Classe nom="zone protegee"                         id="166" />
-    <Classe nom="zone implantation canon"               id="167" />
-    <Classe nom="zone implantation cobra"               id="167" />
-    <Classe nom="zone implantation lrm"                 id="167" />
-    <Classe nom="site franchissement"                   id="168" />
-    <Classe nom="nuage nbc"                             id="190" />
-    <Classe nom="site decontamination"                  id="213" />
-    <Classe nom="plot ravitaillement"                   id="189" />
-    <Classe nom="zone brouillage"                       id="212" />
-    <Classe nom="rota"                                  id="197" />
-    <Classe nom="zone NBC"                              id="126" />
-    <Classe nom="aire poser"                            id="210" />
-    <Classe nom="piste"                                 id="209" />
-    <Classe nom="plateforme"                            id="210" />
-    <Classe nom="zone mobilite amelioree"               id="210" />
-    <Classe nom="zone poser helicoptere"                id="210" />
-    <Classe nom="aire logistique"                       id="210" />
-    <Classe nom="camp prisonniers"                      id="207" />
-    <Classe nom="camp refugies"                         id="207" />
-    <Classe nom="itineraire logistique"                 id="211" />
-    <Classe nom="poste controle"                        id="208" />
-    <Classe nom="terrain largage"                       id="210" />
-    <Classe nom="zone interdite tir"                    id="215" />
-    <Classe nom="zone interdite mouvement"              id="215" />
-    <Classe nom="zone implantation mortier"             id="167" />
+    <Classe nom="mines"                                 id="147" />
+    <Classe nom="mined area (linear)"                   id="147" />
+    <Classe nom="mined area (scattered)"                id="147" />
+    <Classe nom="landslide"                             id="147" />
+    <Classe nom="road destruction"                      id="147" />
+    <Classe nom="bridge destruction"                    id="147" />
+    <Classe nom="continuous pontoon bridge"             id="168" />
+    <Classe nom="discontinuous pontoon bridge"          id="168" />
+    <Classe nom="firing post"                           id="166" />
+    <Classe nom="safe zone"                             id="166" />
+    <Classe nom="gun artillery deployment area"         id="167" />
+    <Classe nom="cobra deployment area"                 id="167" />
+    <Classe nom="mrls deployment area"                  id="167" />
+    <Classe nom="crossing site"                         id="168" />
+    <Classe nom="nbc cloud"                             id="190" />
+    <Classe nom="decontamination site"                  id="213" />
+    <Classe nom="logistic support area"                 id="189" />
+    <Classe nom="jamming area"                          id="212" />
+    <Classe nom="rota area"                             id="197" />
+    <Classe nom="nbc zone"                              id="126" />
+    <Classe nom="landing area"                          id="210" />
+    <Classe nom="trail"                                 id="209" />
+    <Classe nom="platform"                              id="210" />
+    <Classe nom="mobility enhanced area"                id="210" />
+    <Classe nom="landing area (helicopter)"             id="210" />
+    <Classe nom="logistic area"                         id="210" />
+    <Classe nom="prisoners camp"                        id="207" />
+    <Classe nom="refugees camp"                         id="207" />
+    <Classe nom="logistic route"                        id="211" />
+    <Classe nom="checkpoint"                            id="208" />
+    <Classe nom="dropping area"                         id="210" />
+    <Classe nom="fire forbidden area"                   id="215" />
+    <Classe nom="movement forbidden area"               id="215" />
+    <Classe nom="mortar deployment area"                id="167" />
     <Classe nom="installation"                          id="210" />
     <Classe nom="fire"                                  id="210" />
     <Classe nom="emergency shelter"                     id="210" />

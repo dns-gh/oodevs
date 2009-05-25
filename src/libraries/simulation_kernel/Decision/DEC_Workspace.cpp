@@ -67,6 +67,7 @@ DEC_Workspace::DEC_Workspace( MIL_Config& config )
     modelTypes_[strPopulation] = &populationModels_;
 
     InitializeConfig( config );
+    InitializeObjectNames( config );
     InitializeDIA   ( config );
 }
 
@@ -185,6 +186,9 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetObjectiveLocalisation     , "DEC_Objectif_Localisation" );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::IsObjectiveFlagged           , "DEC_Objectif_EstFlage"     );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::SetObjectiveFlag             , "DEC_Objectif_Flag"         );
+    
+    // Objects
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::ConvertTypeObjectToString    , "S_TypeObject_ToString" );
 
     //Rep_Points
     pFuncTable->RegisterFunction( DEC_PathFunctions::GetRepPoint     , "DEC_GetRepPoint" ); //point_
@@ -604,4 +608,24 @@ DIA_Model* DEC_Workspace::FindDIAModelFromScript( const std::string& strScriptNa
             return &itModelPopulation->second->GetDIAModel();
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::InitializeObjectNames
+// Created: LDC 2009-05-25
+// -----------------------------------------------------------------------------
+void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
+{    
+    xml::xifstream xis( config.GetPhysicalFile() );
+    std::string strFile;
+    xis >> xml::start( "physical" )
+            >> xml::start( "object-names" )
+                >> xml::attribute( "file", strFile )
+            >> xml::end()
+        >> xml::end();
+
+    strFile = config.BuildPhysicalChildFile( strFile );
+
+    xml::xifstream xisObjectNames( strFile );
+    DEC_ObjectFunctions::RegisterObjectNames( xisObjectNames );
 }

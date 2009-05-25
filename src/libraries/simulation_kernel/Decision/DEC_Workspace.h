@@ -55,6 +55,7 @@ private:
     static bool CheckFilesDepencies  ( const std::string& strArchiveFile );
 
     void InitializeConfig      ( MIL_Config& config );
+    void InitializeObjectNames ( MIL_Config& config );
     void InitializeMissions    ( MIL_Config& config );
     void InitializeDIA         ( MIL_Config& config );
     void InitializeDIATypes    ( xml::xistream& xis, bool& bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );

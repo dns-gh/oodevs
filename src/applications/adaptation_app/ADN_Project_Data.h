@@ -67,6 +67,7 @@ public:
 
         // $$$$ NLD 2007-01-15: files not loaded!
         ADN_Type_String szPathfinder_;
+        ADN_Type_String szObjectNames_;
     };
 
 //*****************************************************************************

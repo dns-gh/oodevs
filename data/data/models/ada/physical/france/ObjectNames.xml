@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<objects>
+    <object id="0" type="bouchon mines"/>
+    <object id="1" type="zone minee lineaire"/>
+    <object id="2" type="zone minee par dispersion"/>
+    <object id="3" type="fosse anti char"/>
+    <object id="4" type="abattis"/>
+    <object id="5" type="barricade"/>
+    <object id="6" type="eboulement"/>
+    <object id="7" type="destruction route"/>
+    <object id="8" type="destruction pont"/>
+    <object id="9" type="pont flottant continu"/>
+    <object id="10" type="poste tir"/>
+    <object id="11" type="zone protegee"/>
+    <object id="12" type="zone implantation canon"/>
+    <object id="13" type="zone implantation cobra"/>
+    <object id="14" type="zone implantation lrm"/>
+    <object id="15" type="site franchissement"/>
+    <object id="16" type="nuage nbc"/>
+    <object id="17" type="plot ravitaillement"/>
+    <object id="18" type="site decontamination"/>
+    <object id="19" type="zone brouillage"/>
+    <object id="20" type="rota"/>
+    <object id="21" type="zone nbc"/>
+    <object id="22" type="aire poser"/>
+    <object id="23" type="piste"/>
+    <object id="24" type="plateforme"/>
+    <object id="25" type="zone mobilite amelioree"/>
+    <object id="26" type="zone poser helicoptere"/>
+    <object id="27" type="aire logistique"/>
+    <object id="28" type="itineraire logistique"/>
+    <object id="29" type="camp prisonniers"/>
+    <object id="30" type="camp refugies"/>
+    <object id="31" type="poste controle"/>
+    <object id="32" type="terrain largage"/>
+    <object id="33" type="zone interdite mouvement"/>
+    <object id="34" type="zone interdite tir"/>
+    <object id="35" type="zone implantation mortier"/>
+    <object id="36" type="pont flottant discontinu"/>
+    <object id="37" type="installation"/>
+    <object id="38" type="fire"/>
+    <object id="39" type="emergency shelter"/>
+</objects>
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       

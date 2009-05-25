@@ -82,6 +82,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "populations", szPopulation_);
     ReadFile( input, "reports", szReports_);
     ReadFile( input, "pathfinder", szPathfinder_);
+    ReadFile( input, "object-names", szObjectNames_ );
     ReadFile( input, "models", szModels_);
     ReadFile( input, "missions", szMissions_);
     input >> xml::end();
@@ -123,6 +124,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "reports", szReports_ );
     WriteFile( output, "models", szModels_ );
     WriteFile( output, "missions", szMissions_ );
+    WriteFile( output, "object-names", szObjectNames_ );
     output << xml::end();
 }
 

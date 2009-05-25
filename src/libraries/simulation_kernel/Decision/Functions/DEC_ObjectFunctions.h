@@ -23,6 +23,9 @@ class MIL_Automate;
 class DEC_ObjectFunctions
 {
 public:
+    
+    static void RegisterObjectNames( xml::xistream& xis );
+
     //! @name Functions
     //@{
     template< typename T > static void MagicCreateObject ( DIA_Call_ABC& call, const T& caller );
@@ -44,6 +47,9 @@ public:
     static void GetGenObjectPreliminaire     ( DIA_Call_ABC& call );
     static void GetGenObjectTC2              ( DIA_Call_ABC& call );
     static void GetGenObjectMinesActivityTime( DIA_Call_ABC& call );
+
+    // Objects
+    static void ConvertTypeObjectToString    ( DIA_Call_ABC& call );
 
     // Objectives
     static void GetObjectiveLocalisation     ( DIA_Call_ABC& call );
