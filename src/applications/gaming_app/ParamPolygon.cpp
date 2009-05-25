@@ -39,5 +39,7 @@ ParamPolygon::~ParamPolygon()
 // -----------------------------------------------------------------------------
 void ParamPolygon::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    action.AddParameter( *CreateParameter< actions::parameters::Polygon >() );
+    actions::parameters::Polygon* pPolygon = CreateParameter< actions::parameters::Polygon >();
+    if( pPolygon )
+        action.AddParameter( *pPolygon );
 }

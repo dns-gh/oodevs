@@ -66,6 +66,12 @@ protected:
     template< typename T >
     T* CreateParameter() const
     {
+        if( ! location_.get() )
+        {
+            if( IsOptional() )
+                return 0;
+            throw std::runtime_error( "Entity not set!" );
+        }
         return new T( parameter_, converter_, *location_ );
     }
     //@}
