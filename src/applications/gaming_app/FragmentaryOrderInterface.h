@@ -10,7 +10,7 @@
 #ifndef __FragmentaryOrderInterface_h_
 #define __FragmentaryOrderInterface_h_
 
-#include "MissionInterface_ABC.h"
+#include "actions_gui/MissionInterface_ABC.h"
 
 namespace kernel
 {
@@ -31,7 +31,7 @@ class MissionInterfaceBuilder;
 */
 // Created: SBO 2006-11-22
 // =============================================================================
-class FragmentaryOrderInterface : public MissionInterface_ABC
+class FragmentaryOrderInterface : public actions::gui::MissionInterface_ABC
 {
 public:
     //! @name Constructors/Destructor

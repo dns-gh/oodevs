@@ -41,6 +41,11 @@ namespace gui
 namespace actions
 {
     class ActionsModel;
+
+    namespace gui
+    {
+        class MissionInterface_ABC;
+    }
 }
 
 class QPopupMenu;
@@ -48,7 +53,6 @@ class Decisions_ABC;
 class Decisions;
 class AutomatDecisions;
 class PopulationDecisions;
-class MissionInterface_ABC;
 class StaticModel;
 class Publisher_ABC;
 class MissionInterfaceFactory;
@@ -112,7 +116,7 @@ private:
     void AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap = QPixmap() );
     int AddFragOrders( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
     void AddFragOrders( kernel::Iterator< const kernel::FragOrder& > it, QPopupMenu& menu, const char* slot );
-    void SetInterface( MissionInterface_ABC* missionInterface );
+    void SetInterface( actions::gui::MissionInterface_ABC* missionInterface );
     void NotifyMission();
 
     template< typename T >
@@ -132,7 +136,7 @@ private:
     const kernel::Profile_ABC& profile_;
     std::auto_ptr< CommandPublisher > commandPublisher_;
 
-    MissionInterface_ABC* pMissionInterface_;
+    actions::gui::MissionInterface_ABC* pMissionInterface_;
     MissionInterfaceBuilder* interfaceBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}

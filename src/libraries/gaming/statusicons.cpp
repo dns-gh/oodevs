@@ -23,7 +23,6 @@
 #include "res/reinforcing.xpm"
 #include "res/parent.xpm"
 #include "res/mission.xpm"
-#include "res/mission_title.xpm"
 #include "res/parameter2.xpm"
 #include "res/checkpoint.xpm"
 #include "res/checkpoint1.xpm"

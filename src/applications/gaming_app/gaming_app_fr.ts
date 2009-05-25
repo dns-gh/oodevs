@@ -998,41 +998,41 @@
     <name>LimaParameter</name>
     <message>
         <source>Line</source>
-        <translation>Ligne</translation>
+        <translation type="obsolete">Ligne</translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation>Fonctions</translation>
+        <translation type="obsolete">Fonctions</translation>
     </message>
     <message>
         <source>Set &apos;%1&apos; function</source>
-        <translation>Ajouter la fonction &apos;%1&apos;</translation>
+        <translation type="obsolete">Ajouter la fonction &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Schedule</source>
-        <translation>Horaire</translation>
+        <translation type="obsolete">Horaire</translation>
     </message>
 </context>
 <context>
     <name>LimitParameter</name>
     <message>
         <source>Set %1</source>
-        <translation>Ajouter &apos;%1&apos;</translation>
+        <translation type="obsolete">Ajouter &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>ListParameter</name>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation type="obsolete">Créer</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Supprimer</translation>
+        <translation type="obsolete">Supprimer</translation>
     </message>
     <message>
         <source>Clear list</source>
-        <translation>Vider la liste</translation>
+        <translation type="obsolete">Vider la liste</translation>
     </message>
 </context>
 <context>
@@ -1735,19 +1735,19 @@
     <name>MissionInterface_ABC</name>
     <message>
         <source>Mandatory</source>
-        <translation>Obligatoire</translation>
+        <translation type="obsolete">Obligatoire</translation>
     </message>
     <message>
         <source>Optional</source>
-        <translation>Optionnel</translation>
+        <translation type="obsolete">Optionnel</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation type="obsolete">Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="obsolete">Annuler</translation>
     </message>
 </context>
 <context>
@@ -2198,113 +2198,113 @@
     <name>ParamAgentKnowledgeList</name>
     <message>
         <source>Add agent knowledge</source>
-        <translation>Ajouter la connaissance</translation>
+        <translation type="obsolete">Ajouter la connaissance</translation>
     </message>
     <message>
         <source>Agent knowledge %1</source>
-        <translation>Connaissance %1</translation>
+        <translation type="obsolete">Connaissance %1</translation>
     </message>
 </context>
 <context>
     <name>ParamAgentList</name>
     <message>
         <source>Add agent</source>
-        <translation>Ajouter l&apos;unité</translation>
+        <translation type="obsolete">Ajouter l&apos;unité</translation>
     </message>
     <message>
         <source>Agent %1:%2</source>
-        <translation>Unité %1 : %2</translation>
+        <translation type="obsolete">Unité %1 : %2</translation>
     </message>
     <message>
         <source>Add hierarchy</source>
-        <translation>Ajouter la hiérarchie</translation>
+        <translation type="obsolete">Ajouter la hiérarchie</translation>
     </message>
 </context>
 <context>
     <name>ParamAutomatList</name>
     <message>
         <source>Add automat</source>
-        <translation>Ajouter l&apos;automate</translation>
+        <translation type="obsolete">Ajouter l&apos;automate</translation>
     </message>
     <message>
         <source>Automat %1</source>
-        <translation>Automate %1</translation>
+        <translation type="obsolete">Automate %1</translation>
     </message>
 </context>
 <context>
     <name>ParamHumanWoundList</name>
     <message>
         <source>Add...</source>
-        <translation>Ajouter...</translation>
+        <translation type="obsolete">Ajouter...</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Supprimer</translation>
+        <translation type="obsolete">Supprimer</translation>
     </message>
 </context>
 <context>
     <name>ParamIntelligenceList</name>
     <message>
         <source>Add intelligence</source>
-        <translation>Ajouter le renseignement</translation>
+        <translation type="obsolete">Ajouter le renseignement</translation>
     </message>
     <message>
         <source>Intelligence %1</source>
-        <translation>Renseignement %1</translation>
+        <translation type="obsolete">Renseignement %1</translation>
     </message>
 </context>
 <context>
     <name>ParamLimaList</name>
     <message>
         <source>Phase line %1</source>
-        <translation>Lima %1</translation>
+        <translation type="obsolete">Lima %1</translation>
     </message>
     <message>
         <source>Add line as</source>
-        <translation>Ajouter la lima en tant que</translation>
+        <translation type="obsolete">Ajouter la lima en tant que</translation>
     </message>
 </context>
 <context>
     <name>ParamLocationList</name>
     <message>
         <source>Location %1</source>
-        <translation>Position %1</translation>
+        <translation type="obsolete">Position %1</translation>
     </message>
 </context>
 <context>
     <name>ParamMissionObjective</name>
     <message>
         <source>Location</source>
-        <translation>Position</translation>
+        <translation type="obsolete">Position</translation>
     </message>
     <message>
         <source>Schedule</source>
-        <translation>Horaire</translation>
+        <translation type="obsolete">Horaire</translation>
     </message>
 </context>
 <context>
     <name>ParamMissionObjectiveList</name>
     <message>
         <source>Objective %1</source>
-        <translation>Objectif %1</translation>
+        <translation type="obsolete">Objectif %1</translation>
     </message>
 </context>
 <context>
     <name>ParamObjectKnowledgeList</name>
     <message>
         <source>Add object knowledge</source>
-        <translation>Ajouter la connaissance d&apos;objet</translation>
+        <translation type="obsolete">Ajouter la connaissance d&apos;objet</translation>
     </message>
     <message>
         <source>Object knowledge %1</source>
-        <translation>Connaissance d&apos;objet %1</translation>
+        <translation type="obsolete">Connaissance d&apos;objet %1</translation>
     </message>
 </context>
 <context>
     <name>ParamObstacle</name>
     <message>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation type="obsolete">Type:</translation>
     </message>
     <message>
         <source>Obstacle type:</source>
@@ -2312,37 +2312,33 @@
     </message>
     <message>
         <source>Density</source>
-        <translation>Densité</translation>
+        <translation type="obsolete">Densité</translation>
     </message>
     <message>
         <source>TC2</source>
-        <translation>TC2</translation>
+        <translation type="obsolete">TC2</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Position</translation>
+        <translation type="obsolete">Position</translation>
     </message>
     <message>
         <source>Obstacle type</source>
-        <translation>Type d&apos;obstacle</translation>
-    </message>
-    <message>
-        <source>Demolition target type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Type d&apos;obstacle</translation>
     </message>
 </context>
 <context>
     <name>ParamObstacleList</name>
     <message>
         <source>Obstacle %1</source>
-        <translation>Obstacle %1</translation>
+        <translation type="obsolete">Obstacle %1</translation>
     </message>
 </context>
 <context>
     <name>ParamPathList</name>
     <message>
         <source>Route %1</source>
-        <translation>Itinéraire %1</translation>
+        <translation type="obsolete">Itinéraire %1</translation>
     </message>
 </context>
 <context>

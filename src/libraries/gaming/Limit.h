@@ -29,8 +29,8 @@ class Limit : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher );
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg );
+             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MsgLimitCreation& asnMsg );
     virtual ~Limit();
     //@}
 
@@ -39,9 +39,6 @@ public:
     virtual void Select( kernel::ActionController& actions ) const;
     virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
-
-    void CopyTo( ASN1T_Line& destination ) const;
-    void CopyTo( kernel::Location_ABC& location ) const;
     virtual bool IsLimit() const;
     //@}
 

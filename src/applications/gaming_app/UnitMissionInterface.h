@@ -10,7 +10,7 @@
 #ifndef __UnitMissionInterface_h_
 #define __UnitMissionInterface_h_
 
-#include "MissionInterface_ABC.h"
+#include "actions_gui/MissionInterface_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +30,7 @@ class MissionInterfaceBuilder;
 */
 // Created: SBO 2006-11-22
 // =============================================================================
-class UnitMissionInterface : public MissionInterface_ABC
+class UnitMissionInterface : public actions::gui::MissionInterface_ABC
 {
 public:
     //! @name Constructors/Destructor

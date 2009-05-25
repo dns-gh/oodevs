@@ -27,10 +27,10 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller
                                           , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
-    : MissionInterface_ABC( parent, mission.GetName().c_str(), entity, controller )
-    , model_              ( model )
-    , publisher_          ( publisher )
-    , mission_            ( mission )
+    : actions::gui::MissionInterface_ABC( parent, mission.GetName().c_str(), entity, controller )
+    , model_( model )
+    , publisher_( publisher )
+    , mission_( mission )
 {
     builder.Build( *this, entity, mission );
 }

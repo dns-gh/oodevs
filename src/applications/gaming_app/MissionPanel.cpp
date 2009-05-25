@@ -37,14 +37,12 @@
 #include "icons.h"
 
 using namespace kernel;
-using namespace actions;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
-MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, ActionsModel& actionsModel
+MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
                           , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const Simulation& simulation )
     : QDockWindow              ( QDockWindow::OutsideDock, pParent, "mission" )
     , controllers_             ( controllers )
@@ -408,7 +406,7 @@ void MissionPanel::Disengage()
 // Name: MissionPanel::SetInterface
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MissionPanel::SetInterface( MissionInterface_ABC* missionInterface )
+void MissionPanel::SetInterface( actions::gui::MissionInterface_ABC* missionInterface )
 {
     if( !missionInterface )
     {

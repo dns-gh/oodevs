@@ -11,6 +11,7 @@
 #define __GlTools_ABC_h_
 
 #include "GLToolColors.h"
+#include "Types.h"
 #include <qfont.h>
 
 class QImage;

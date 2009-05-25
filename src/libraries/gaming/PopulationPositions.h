@@ -36,6 +36,7 @@ public:
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
+    virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     //@}
 
 private:

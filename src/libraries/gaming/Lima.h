@@ -29,8 +29,8 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Lima( kernel::Controller& controller, Publisher_ABC& publisher );
-             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MsgLimaCreation& asnMsg );
     virtual ~Lima();
     //@}
 
@@ -39,9 +39,6 @@ public:
     virtual void Select( kernel::ActionController& actions ) const;
     virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
-
-    void CopyTo( ASN1T_Line& destination ) const;
-    void CopyTo( kernel::Location_ABC& location ) const;
     virtual bool IsLimit() const;
     //@}
 

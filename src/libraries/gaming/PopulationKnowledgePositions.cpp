@@ -9,16 +9,15 @@
 
 #include "gaming_pch.h"
 #include "PopulationKnowledgePositions.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePositions constructor
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-PopulationKnowledgePositions::PopulationKnowledgePositions( const PopulationKnowledge_ABC& k )
+PopulationKnowledgePositions::PopulationKnowledgePositions( const kernel::PopulationKnowledge_ABC& k )
     : knowledge_( k )
 {
     // NOTHING
@@ -39,7 +38,7 @@ PopulationKnowledgePositions::~PopulationKnowledgePositions()
 // Name: PopulationKnowledgePositions::GetRealPosition
 // Created: AGE 2006-08-07
 // -----------------------------------------------------------------------------
-const Positions& PopulationKnowledgePositions::GetRealPosition() const
+const kernel::Positions& PopulationKnowledgePositions::GetRealPosition() const
 {
     // $$$$ AGE 2006-08-07: pas terribule atole
     return knowledge_.GetEntity()->Get< Positions >();
@@ -88,4 +87,13 @@ bool PopulationKnowledgePositions::IsIn( const geometry::Rectangle2f& rectangle 
 geometry::Rectangle2f PopulationKnowledgePositions::GetBoundingBox() const
 {
     return GetRealPosition().GetBoundingBox();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledgePositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void PopulationKnowledgePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    GetRealPosition().Accept( visitor );
 }

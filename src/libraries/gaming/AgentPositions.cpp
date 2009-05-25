@@ -15,6 +15,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -109,6 +110,15 @@ geometry::Rectangle2f AgentPositions::GetBoundingBox() const
 {
     const geometry::Point2f center = GetPosition();
     return geometry::Rectangle2f( center.X() - 250, center.Y(), center.X() + 250, center.Y() + 400 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void AgentPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitPoint( GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

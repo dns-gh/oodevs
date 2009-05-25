@@ -20,14 +20,11 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include <xeumeuleu/xml.h>
 
-using namespace kernel;
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions constructor
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-ObjectPositions::ObjectPositions( const CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
+ObjectPositions::ObjectPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : converter_( converter )
     , location_( &location.Clone() )
 {
@@ -62,8 +59,8 @@ ObjectPositions::~ObjectPositions()
 void ObjectPositions::ReadLocation( xml::xistream& xis )
 {
     std::string type;
-    xis >> start( "shape" )
-            >> attribute( "type", type );
+    xis >> xml::start( "shape" )
+            >> xml::attribute( "type", type );
     if( type == "polygone" )
         location_ = new kernel::Polygon();
     else if( type == "ligne" )
@@ -74,10 +71,10 @@ void ObjectPositions::ReadLocation( xml::xistream& xis )
         location_ = new kernel::Point();
     else
         return;
-    xis     >> start( "points" )
-                >> list( "point", *this, &ObjectPositions::ReadPoint )
-            >> end()
-        >> end();
+    xis     >> xml::start( "points" )
+                >> xml::list( "point", *this, &ObjectPositions::ReadPoint )
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,15 +150,27 @@ geometry::Rectangle2f ObjectPositions::GetBoundingBox() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectPositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void ObjectPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    if( location_ )
+        location_->Accept( visitor );
+    else
+        visitor.VisitPoint( GetPosition() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectPositions::SerializeAttributes
 // Created: SBO 2006-09-12
 // -----------------------------------------------------------------------------
 void ObjectPositions::SerializeAttributes( xml::xostream& xos ) const
 {
     LocationSerializer serializer( converter_ );
-    xos << start( "shape" );
+    xos << xml::start( "shape" );
     serializer.Serialize( *location_, xos );
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------

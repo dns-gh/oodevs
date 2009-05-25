@@ -11,6 +11,7 @@
 #include "LocationPositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
@@ -93,6 +94,15 @@ bool LocationPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 geometry::Rectangle2f LocationPositions::GetBoundingBox() const
 {
     return boundingBox_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationPositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void LocationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitLines( points_ );
 }
 
 // -----------------------------------------------------------------------------

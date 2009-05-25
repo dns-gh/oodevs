@@ -10,15 +10,13 @@
 #include "actions_pch.h"
 #include "Limit.h"
 
-using namespace kernel;
-using namespace actions;
-using namespace parameters;
+using namespace actions::parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-Limit::Limit( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_Line& line )
+Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line )
     : Location( parameter, converter, line )
 {
     // NOTHING
@@ -28,7 +26,7 @@ Limit::Limit( const OrderParameter& parameter, const CoordinateConverter_ABC& co
 // Name: Limit constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-Limit::Limit( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
+Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : Location( parameter, converter, location )
 {
     // NOTHING
@@ -38,7 +36,7 @@ Limit::Limit( const OrderParameter& parameter, const CoordinateConverter_ABC& co
 // Name: Limit constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-Limit::Limit( const kernel::OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
+Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
     : Location( parameter, converter, xis )
 {
     // NOTHING

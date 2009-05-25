@@ -10,8 +10,7 @@
 #include "gaming_pch.h"
 #include "PopulationPositions.h"
 #include "Population.h"
-
-using namespace kernel;
+#include "clients_kernel/LocationVisitor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions constructor
@@ -75,4 +74,13 @@ float PopulationPositions::GetHeight() const
 geometry::Rectangle2f PopulationPositions::GetBoundingBox() const
 {
     return population_.GetBoundingBox();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void PopulationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitPoint( GetPosition() );
 }

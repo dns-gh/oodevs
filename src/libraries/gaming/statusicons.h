@@ -25,7 +25,6 @@ DECLARE_ICON( reinforced );
 DECLARE_ICON( reinforcing );
 DECLARE_ICON( parent );
 DECLARE_ICON( mission );
-DECLARE_ICON( mission_title );
 DECLARE_ICON( parameter2 );
 DECLARE_ICON( checkpoint );
 DECLARE_ICON( checkpoint1 );

@@ -13,12 +13,13 @@
 #include "PopulationConcentration.h"
 #include "PopulationPartPositionsProxy.h"
 #include "Tools.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/PopulationType.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -310,6 +311,15 @@ bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
 geometry::Rectangle2f Population::GetBoundingBox() const
 {
     return boundingBox_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void Population::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitPoint( GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

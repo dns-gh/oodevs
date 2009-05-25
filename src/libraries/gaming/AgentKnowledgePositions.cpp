@@ -10,14 +10,13 @@
 #include "gaming_pch.h"
 #include "AgentKnowledgePositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-
-using namespace kernel;
+#include "clients_kernel/LocationVisitor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePositions constructor
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-AgentKnowledgePositions::AgentKnowledgePositions( const CoordinateConverter_ABC& converter )
+AgentKnowledgePositions::AgentKnowledgePositions( const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
 {
     // NOTHING
@@ -88,6 +87,15 @@ void AgentKnowledgePositions::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& mess
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f AgentKnowledgePositions::GetBoundingBox() const
 {
-    const geometry::Vector2f diag( 1000, 1000 ); // $$$$ SBO 2006-07-05: 
+    const geometry::Vector2f diag( 1000, 1000 ); // $$$$ SBO 2006-07-05: hard coded
     return geometry::Rectangle2f( position_ - diag, position_ + diag );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void AgentKnowledgePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitPoint( position_ );
 }

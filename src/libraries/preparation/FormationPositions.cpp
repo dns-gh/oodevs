@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "FormationPositions.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 // -----------------------------------------------------------------------------
@@ -98,6 +99,15 @@ geometry::Rectangle2f FormationPositions::GetBoundingBox() const
 {
     const geometry::Point2f center = GetPosition();
     return geometry::Rectangle2f( center.X() - 500, center.Y(), center.X() + 500, center.Y() + 800 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationPositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void FormationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitPoint( GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

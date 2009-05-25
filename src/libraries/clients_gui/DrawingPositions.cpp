@@ -116,6 +116,15 @@ geometry::Rectangle2f DrawingPositions::GetBoundingBox() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawingPositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void DrawingPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitPoint( position_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawingPositions::UpdateElements
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------

@@ -80,8 +80,8 @@
     ============================================================================
     -->
     <target name="libraries" description="build all libraries"
-            depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.game_asn,library.simulation_terrain,library.simulation_kernel,
-                     library.clients_kernel,library.clients_gui,library.gaming,library.preparation,
+            depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.simulation_terrain,library.simulation_kernel,
+                     library.clients_kernel,library.clients_gui,library.actions,library.actions_gui,library.gaming,library.preparation,
                      library.bml_plugin,library.crossbow_plugin,library.gearth_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,library.messenger_plugin,library.3a"/>
 
     <target name="library.tools" description="build tools static library">
@@ -145,13 +145,19 @@
         </build-lib>
     </target>
     
+    <target name="library.actions_gui" description="build actions_gui static library" depends="library.clients_gui,library.actions">
+        <build-lib name="actions_gui" depends="boost,qt,xeumeuleu" pattern="lib${ant.project.name}_actions_gui-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+        </build-lib>
+    </target>
+    
     <target name="library.indicators" description="build indicators static library" depends="library.clients_kernel">
         <build-lib name="indicators" depends="boost,qt,xeumeuleu" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
 
-    <target name="library.gaming" description="build gaming static library" depends="library.game_asn,library.clients_gui,library.actions,library.indicators">
+    <target name="library.gaming" description="build gaming static library" depends="library.game_asn,library.clients_gui,library.actions,library.actions_gui,library.indicators">
         <build-lib name="gaming" depends="qt" pattern="lib${ant.project.name}_gaming-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
@@ -366,6 +372,7 @@
                          lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_gaming-${platform}-mt
                          lib${ant.project.name}_actions-${platform}-mt
+                         lib${ant.project.name}_actions_gui-${platform}-mt
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt
                          lib${ant.project.name}_indicators-${platform}-mt">

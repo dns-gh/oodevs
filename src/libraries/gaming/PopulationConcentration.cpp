@@ -9,9 +9,10 @@
 
 #include "gaming_pch.h"
 #include "PopulationConcentration.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/ActionController.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "tools.h"
 
 using namespace kernel;
@@ -195,4 +196,13 @@ bool PopulationConcentration::IsIn( const geometry::Rectangle2f& rect ) const
 geometry::Rectangle2f PopulationConcentration::GetBoundingBox() const
 {
     return boundingBox_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void PopulationConcentration::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitCircle( position_, radius_ );
 }

@@ -9,11 +9,12 @@
 
 #include "gaming_pch.h"
 #include "IntelligencePositions.h"
-#include "game_asn/MessengerSenders.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include "game_asn/MessengerSenders.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -92,6 +93,15 @@ geometry::Rectangle2f IntelligencePositions::GetBoundingBox() const
 {
     const geometry::Point2f center = GetPosition();
     return geometry::Rectangle2f( center.X() - 250, center.Y(), center.X() + 250, center.Y() + 400 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencePositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void IntelligencePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitPoint( GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

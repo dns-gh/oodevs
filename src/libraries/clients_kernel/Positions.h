@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class LocationVisitor_ABC;
 
 // =============================================================================
 /** @class  Positions
@@ -38,6 +39,7 @@ public:
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const = 0;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const = 0;
     virtual geometry::Rectangle2f GetBoundingBox() const = 0;
+    virtual void Accept( LocationVisitor_ABC& visitor ) const = 0;
     //@}
 };
 

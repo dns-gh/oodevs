@@ -13,10 +13,9 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.h>
-
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions constructor
@@ -62,7 +61,7 @@ PopulationPositions::~PopulationPositions()
 geometry::Point2f PopulationPositions::ReadPosition( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
 {
     std::string mgrs;
-    xis >> attribute( "position", mgrs );
+    xis >> xml::attribute( "position", mgrs );
     return converter.ConvertToXY( mgrs );
 }
 
@@ -131,6 +130,15 @@ geometry::Rectangle2f PopulationPositions::GetBoundingBox() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationPositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void PopulationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitCircle( center_, radius_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationPositions::Draw
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
@@ -147,7 +155,7 @@ void PopulationPositions::Draw( const geometry::Point2f&, const kernel::Viewport
 // -----------------------------------------------------------------------------
 void PopulationPositions::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "position", converter_.ConvertToMgrs( center_ ) );
+    xos << xml::attribute( "position", converter_.ConvertToMgrs( center_ ) );
 }
 
 // -----------------------------------------------------------------------------

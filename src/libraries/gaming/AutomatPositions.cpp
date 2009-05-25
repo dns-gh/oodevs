@@ -13,6 +13,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
@@ -119,6 +120,15 @@ Rectangle2f AutomatPositions::GetBoundingBox() const
         result.Incorporate( ((const AgentPositions&)( childPositions )).position_ );
     }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatPositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void AutomatPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitPoint( GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

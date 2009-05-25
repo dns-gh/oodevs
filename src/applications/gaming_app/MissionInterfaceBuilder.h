@@ -11,7 +11,7 @@
 #define __MissionInterfaceBuilder_h_
 
 #include "game_asn/Simulation.h"
-#include "ParamComboBox.h"
+#include "actions_gui/ParamComboBox.h"
 
 namespace kernel
 {
@@ -29,9 +29,16 @@ namespace gui
     class ParametersLayer;
 }
 
+namespace actions
+{
+    namespace gui
+    {
+        class MissionInterface_ABC;
+        class Param_ABC;
+    }
+}
+
 class StaticModel;
-class MissionInterface_ABC;
-class Param_ABC;
 class Simulation;
 
 // =============================================================================
@@ -59,7 +66,7 @@ public:
 
     //! @name Operations
     //@{
-    void Build( MissionInterface_ABC& missionInterface, kernel::Entity_ABC& entity, const kernel::OrderType& order );
+    void Build( actions::gui::MissionInterface_ABC& missionInterface, kernel::Entity_ABC& entity, const kernel::OrderType& order );
     //@}
 
 private:
@@ -73,51 +80,51 @@ private:
     //@{
     void Build( const kernel::OrderParameter& parameter );
 
-    Param_ABC* BuildAgent                ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildAgentList            ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildAutomat              ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildAutomatList          ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildDotation             ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildAtlasNature          ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildBoolean              ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildDirection            ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildNumeric              ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildAgentKnowledge       ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildAgentKnowledgeList   ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildObjectKnowledge      ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildObjectKnowledgeList  ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildPopulationKnowledge  ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildPath                 ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildPathList             ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildPoint                ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildPointList            ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildPolygon              ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildPolygonList          ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildLocation             ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildLocationList         ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildGenObject            ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildGenObjectList        ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildMissionObjective     ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildMissionObjectiveList ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildMaintenancePriorities( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildMedicalPriorities    ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildEnumeration          ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildAgent                ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildAgentList            ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildAutomat              ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildAutomatList          ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildDotation             ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildAtlasNature          ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildBoolean              ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildDirection            ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildNumeric              ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildAgentKnowledge       ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildAgentKnowledgeList   ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildObjectKnowledge      ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildObjectKnowledgeList  ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildPopulationKnowledge  ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildPath                 ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildPathList             ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildPoint                ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildPointList            ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildPolygon              ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildPolygonList          ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildLocation             ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildLocationList         ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildGenObject            ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildGenObjectList        ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildMissionObjective     ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildMissionObjectiveList ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildMaintenancePriorities( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildMedicalPriorities    ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildEnumeration          ( const kernel::OrderParameter& parameter ) const;
 
-    Param_ABC* BuildLimit                ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildLimaList             ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildDotationTypeList     ( const kernel::OrderParameter& parameter ) const;
-    Param_ABC* BuildIntelligenceList     ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildLimit                ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildLimaList             ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildDotationTypeList     ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildIntelligenceList     ( const kernel::OrderParameter& parameter ) const;
 
     template < class T >
-    ParamComboBox<T>& BuildVarList( const kernel::OrderParameter& parameter ) const
+    actions::gui::ParamComboBox<T>& BuildVarList( const kernel::OrderParameter& parameter ) const
     {
-        return *new ParamComboBox<T>( parameter );
+        return *new actions::gui::ParamComboBox<T>( parameter );
     }
     //@}
 
     //! @name Types
     //@{
-    typedef Param_ABC* (MissionInterfaceBuilder::*T_BuilderFunctor)( const kernel::OrderParameter& ) const;
+    typedef actions::gui::Param_ABC* (MissionInterfaceBuilder::*T_BuilderFunctor)( const kernel::OrderParameter& ) const;
     typedef std::map< QString, T_BuilderFunctor > T_BuilderFunctors;
     typedef T_BuilderFunctors::const_iterator   CIT_BuilderFunctors;
     //@}
@@ -132,7 +139,7 @@ private:
     kernel::ObjectKnowledgeConverter_ABC&  objectKnowledgeConverter_;
     const StaticModel&                     staticModel_;
     const Simulation&                      simulation_;
-    MissionInterface_ABC*                  missionInterface_;
+    actions::gui::MissionInterface_ABC*    missionInterface_;
     kernel::Entity_ABC*                    entity_;
     T_BuilderFunctors                      builderFunctors_;
     //@}

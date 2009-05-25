@@ -12,7 +12,7 @@
 #include "TacticalLine_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -113,6 +113,15 @@ geometry::Rectangle2f TacticalLinePositions::GetBoundingBox() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitLines( pointList_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::Draw
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
@@ -130,39 +139,6 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
             glColor3f( 0.55f, 0.3f, 0.1f );
         tools.DrawLines( pointList_ );
     glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::WriteGeometry
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-void TacticalLinePositions::WriteGeometry( ASN1T_Line& line ) const
-{
-    line.type             = EnumLocationType::line;
-    line.coordinates.n    = pointList_.size();
-    if( pointList_.empty() )
-    {
-        line.coordinates.elem = 0;
-        return;
-    }
-    line.coordinates.elem = new ASN1T_CoordLatLong[ pointList_.size() ];
-
-    unsigned int i = 0;
-    for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
-    {
-        converter_.ConvertToGeo( *itPoint, line.coordinates.elem[i] );
-        ++i;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::WriteGeometry
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-void TacticalLinePositions::WriteGeometry( kernel::Location_ABC& location ) const
-{
-    for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
-        location.AddPoint( *it );
 }
 
 // -----------------------------------------------------------------------------

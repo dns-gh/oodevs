@@ -21,7 +21,14 @@ namespace gui
     class ParametersLayer;
 }
 
-class Param_ABC;
+namespace actions
+{
+    namespace gui
+    {
+        class Param_ABC;
+    }
+}
+
 class AfterActionParameter;
 class AfterActionFunction;
 class AfterActionModel;
@@ -69,12 +76,12 @@ private:
     //@{
     void CreateRequestButton();
     void CreateParameter( const AfterActionParameter& parameter );
-    boost::shared_ptr< Param_ABC > CreateParameter( const std::string& type, const QString& name );
+    boost::shared_ptr< actions::gui::Param_ABC > CreateParameter( const std::string& type, const QString& name );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< boost::shared_ptr< Param_ABC > > T_Parameters;
+    typedef std::vector< boost::shared_ptr< actions::gui::Param_ABC > > T_Parameters;
     //@}
 
 private:

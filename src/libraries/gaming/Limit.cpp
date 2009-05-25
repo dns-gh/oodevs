@@ -14,14 +14,12 @@
 #include "clients_kernel/ActionController.h"
 #include "Tools.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, Publisher_ABC& publisher )
-    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), 0, publisher )
+Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), 0, publisher, converter )
     , controller_( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -31,8 +29,8 @@ Limit::Limit( Controller& controller, Publisher_ABC& publisher )
 // Name: Limit constructor
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg )
-    : TacticalLine_ABC( asnMsg.tactical_line.name, asnMsg.oid, publisher )
+Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MsgLimitCreation& asnMsg )
+    : TacticalLine_ABC( asnMsg.tactical_line.name, asnMsg.oid, publisher, converter )
     , controller_( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -89,7 +87,7 @@ void Limit::UpdateToSim( E_State state )
 // Name: Limit::Select
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Limit::Select( ActionController& actions ) const
+void Limit::Select( kernel::ActionController& actions ) const
 {
     actions.Select( *(Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this, *this );
 }
@@ -98,7 +96,7 @@ void Limit::Select( ActionController& actions ) const
 // Name: Limit::ContextMenu
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Limit::ContextMenu( ActionController& actions, const QPoint& point ) const
+void Limit::ContextMenu( kernel::ActionController& actions, const QPoint& point ) const
 {
     actions.ContextMenu( *(Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this, *this, point );
 }
@@ -107,7 +105,7 @@ void Limit::ContextMenu( ActionController& actions, const QPoint& point ) const
 // Name: Limit::Activate
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-void Limit::Activate( ActionController& actions ) const
+void Limit::Activate( kernel::ActionController& actions ) const
 {
     actions.Activate( *this, *(kernel::TacticalLine_ABC*)this );
 }
@@ -119,22 +117,4 @@ void Limit::Activate( ActionController& actions ) const
 bool Limit::IsLimit() const
 {
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Limit::CopyTo
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void Limit::CopyTo( ASN1T_Line& destination ) const
-{
-    WriteGeometry ( destination );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Limit::CopyTo
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-void Limit::CopyTo( kernel::Location_ABC& location ) const
-{
-    WriteGeometry( location );
 }

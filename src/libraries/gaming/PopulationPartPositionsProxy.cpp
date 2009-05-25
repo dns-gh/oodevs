@@ -73,3 +73,12 @@ geometry::Rectangle2f PopulationPartPositionsProxy::GetBoundingBox() const
 {
     return positions_.GetBoundingBox();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPartPositionsProxy::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void PopulationPartPositionsProxy::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    positions_.Accept( visitor );
+}

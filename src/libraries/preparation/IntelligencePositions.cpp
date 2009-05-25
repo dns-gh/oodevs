@@ -11,18 +11,15 @@
 #include "IntelligencePositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.h>
-
-using namespace xml;
-using namespace geometry;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: IntelligencePositions constructor
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-IntelligencePositions::IntelligencePositions( const CoordinateConverter_ABC& converter, const geometry::Point2f& position )
+IntelligencePositions::IntelligencePositions( const kernel::CoordinateConverter_ABC& converter, const geometry::Point2f& position )
     : converter_( converter )
     , position_ ( position )
     , height_   ( 0 )
@@ -39,7 +36,7 @@ IntelligencePositions::IntelligencePositions( const kernel::CoordinateConverter_
     , height_   ( 0 )
 {
     std::string mgrs;
-    xis >> attribute( "position", mgrs );
+    xis >> xml::attribute( "position", mgrs );
     position_ = converter_.ConvertToXY( mgrs );
 }
 
@@ -78,9 +75,9 @@ bool IntelligencePositions::IsAt( const geometry::Point2f& pos, float precision 
 {
     const float halfSizeX = 500.f * 0.5f; // $$$$ SBO 2006-03-21: use font size?
     const float sizeY     = 400.f;
-    const Point2f position = GetPosition();
-    const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
-                                 position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
+    const geometry::Point2f position = GetPosition();
+    const geometry::Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
+                                           position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
     return agentBBox.IsInside( pos );
 }
 
@@ -101,6 +98,15 @@ geometry::Rectangle2f IntelligencePositions::GetBoundingBox() const
 {
     const geometry::Point2f center = GetPosition();
     return geometry::Rectangle2f( center.X() - 250, center.Y(), center.X() + 250, center.Y() + 400 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencePositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void IntelligencePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitPoint( GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,5 +134,5 @@ void IntelligencePositions::Draw( const geometry::Point2f& where, const kernel::
 // -----------------------------------------------------------------------------
 void IntelligencePositions::SerializeIntelligences( xml::xostream& xos ) const
 {
-    xos << attribute( "position", converter_.ConvertToMgrs( position_ ) );
+    xos << xml::attribute( "position", converter_.ConvertToMgrs( position_ ) );
 }

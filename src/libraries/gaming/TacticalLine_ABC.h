@@ -10,15 +10,12 @@
 #ifndef __TacticalLine_ABC_h_
 #define __TacticalLine_ABC_h_
 
-#include "clients_kernel/Types.h"
 #include "clients_kernel/TacticalLine_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "game_asn/Simulation.h"
 
 namespace kernel
 {
-    class GlTools_ABC;
-    class Location_ABC;
+    class CoordinateConverter_ABC;
 }
 
 class Publisher_ABC;
@@ -38,7 +35,7 @@ class TacticalLine_ABC : public kernel::TacticalLine_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( const QString& baseName, unsigned long id, Publisher_ABC& publisher );
+             TacticalLine_ABC( const QString& baseName, unsigned long id, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -69,7 +66,6 @@ protected:
     //! @name Helpers
     //@{
     void WriteGeometry( ASN1T_Line& line ) const;
-    void WriteGeometry( kernel::Location_ABC& location ) const;
     void WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion ) const;
     virtual void UpdateToSim( E_State state ) = 0;
     template< typename Message >
@@ -92,6 +88,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     Publisher_ABC& publisher_;
     unsigned long  id_;
     QString        name_;

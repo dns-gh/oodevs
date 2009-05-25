@@ -9,22 +9,17 @@
 
 #include "gaming_pch.h"
 #include "Lima.h"
-#include "game_asn/MessengerSenders.h"
-#include "Tools.h"
-#include "TacticalLinePositions.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
-#include <xeumeuleu/xml.h>
-
-using namespace kernel;
-using namespace xml;
+#include "game_asn/MessengerSenders.h"
+#include "Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, Publisher_ABC& publisher )
-    : TacticalLine_ABC( "Phase line", 0, publisher )
+Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( tools::translate( "Lima", "Phase line" ), 0, publisher, converter )
     , controller_     ( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -34,8 +29,8 @@ Lima::Lima( Controller& controller, Publisher_ABC& publisher )
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg )
-    : TacticalLine_ABC( asnMsg.tactical_line.name, asnMsg.oid, publisher )
+Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MsgLimaCreation& asnMsg )
+    : TacticalLine_ABC( asnMsg.tactical_line.name, asnMsg.oid, publisher, converter )
     , controller_     ( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -92,7 +87,7 @@ void Lima::UpdateToSim( E_State state )
 // Name: Lima::Select
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Lima::Select( ActionController& actions ) const
+void Lima::Select( kernel::ActionController& actions ) const
 {
     actions.Select( *(Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this, *this );
 }
@@ -101,7 +96,7 @@ void Lima::Select( ActionController& actions ) const
 // Name: Lima::ContextMenu
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Lima::ContextMenu( ActionController& actions, const QPoint& point ) const
+void Lima::ContextMenu( kernel::ActionController& actions, const QPoint& point ) const
 {
     actions.ContextMenu( *(Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this, *this, point );
 }
@@ -110,27 +105,9 @@ void Lima::ContextMenu( ActionController& actions, const QPoint& point ) const
 // Name: Lima::Activate
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-void Lima::Activate( ActionController& actions ) const
+void Lima::Activate( kernel::ActionController& actions ) const
 {
     actions.Activate( *this, *(kernel::TacticalLine_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima::CopyTo
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void Lima::CopyTo( ASN1T_Line& destination ) const
-{
-    WriteGeometry( destination ); // $$$$ SBO 2006-11-14: visitor/Serializer
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima::CopyTo
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-void Lima::CopyTo( kernel::Location_ABC& location ) const
-{
-    WriteGeometry( location );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,41 +9,39 @@
 
 #include "gaming_app_pch.h"
 #include "MissionInterfaceBuilder.h"
-#include "MissionInterface_ABC.h"
-#include "ParamAgent.h"
-#include "ParamAgentList.h"
-#include "ParamAtlasNature.h"
-#include "ParamAutomat.h"
-#include "ParamAutomatList.h"
-#include "ParamPath.h"
-#include "ParamPathList.h"
-#include "ParamPoint.h"
-#include "ParamPolygon.h"
-#include "ParamBool.h"
-#include "ParamLocation.h"
-#include "ParamLocationList.h"
-#include "ParamPointList.h"
-#include "ParamPolygonList.h"
-#include "ParamAgentKnowledge.h"
-#include "ParamAgentKnowledgeList.h"
-#include "ParamPopulationKnowledge.h"
-#include "ParamObjectKnowledge.h"
-#include "ParamObjectKnowledgeList.h"
-#include "ParamObstacle.h"
-#include "ParamObstacleList.h"
-#include "ParamDirection.h"
-#include "ParamNumericField.h"
-#include "ParamEquipmentList.h"
-#include "ParamHumanWoundList.h"
-#include "ParamDotationDType.h"
-#include "LimitParameter.h"
-#include "ParamLimaList.h"
-#include "ParamMissionObjective.h"
-#include "ParamMissionObjectiveList.h"
-#include "ParamDotationTypeList.h"
-#include "ParamIntelligenceList.h"
-#include "gaming/StaticModel.h"
-#include "gaming/Tools.h"
+#include "actions_gui/MissionInterface_ABC.h"
+#include "actions_gui/ParamAgent.h"
+#include "actions_gui/ParamAgentList.h"
+#include "actions_gui/ParamAtlasNature.h"
+#include "actions_gui/ParamAutomat.h"
+#include "actions_gui/ParamAutomatList.h"
+#include "actions_gui/ParamPath.h"
+#include "actions_gui/ParamPathList.h"
+#include "actions_gui/ParamPoint.h"
+#include "actions_gui/ParamPolygon.h"
+#include "actions_gui/ParamBool.h"
+#include "actions_gui/ParamLocation.h"
+#include "actions_gui/ParamLocationList.h"
+#include "actions_gui/ParamPointList.h"
+#include "actions_gui/ParamPolygonList.h"
+#include "actions_gui/ParamAgentKnowledge.h"
+#include "actions_gui/ParamAgentKnowledgeList.h"
+#include "actions_gui/ParamPopulationKnowledge.h"
+#include "actions_gui/ParamObjectKnowledge.h"
+#include "actions_gui/ParamObjectKnowledgeList.h"
+#include "actions_gui/ParamObstacle.h"
+#include "actions_gui/ParamObstacleList.h"
+#include "actions_gui/ParamDirection.h"
+#include "actions_gui/ParamNumericField.h"
+#include "actions_gui/ParamEquipmentList.h"
+#include "actions_gui/ParamHumanWoundList.h"
+#include "actions_gui/ParamDotationDType.h"
+#include "actions_gui/LimitParameter.h"
+#include "actions_gui/ParamLimaList.h"
+#include "actions_gui/ParamMissionObjective.h"
+#include "actions_gui/ParamMissionObjectiveList.h"
+#include "actions_gui/ParamDotationTypeList.h"
+#include "actions_gui/ParamIntelligenceList.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
@@ -53,6 +51,9 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/OrderParameterValue.h"
+#include "gaming/Simulation.h"
+#include "gaming/StaticModel.h"
+#include "gaming/Tools.h"
 
 using namespace kernel;
 
@@ -127,7 +128,7 @@ MissionInterfaceBuilder::~MissionInterfaceBuilder()
 // Name: MissionInterfaceBuilder::Build
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void MissionInterfaceBuilder::Build( MissionInterface_ABC& missionInterface, Entity_ABC& entity, const OrderType& order )
+void MissionInterfaceBuilder::Build( actions::gui::MissionInterface_ABC& missionInterface, Entity_ABC& entity, const OrderType& order )
 {
     missionInterface_ = &missionInterface;
     entity_ = &entity;
@@ -146,7 +147,7 @@ void MissionInterfaceBuilder::Build( const OrderParameter& parameter )
     if( it != builderFunctors_.end() )
     {
         T_BuilderFunctor functor = it->second;
-        if( Param_ABC* param = (this->*functor)( parameter ) )
+        if( actions::gui::Param_ABC* param = (this->*functor)( parameter ) )
             missionInterface_->AddParameter( *param );
     }
     else
@@ -157,264 +158,264 @@ void MissionInterfaceBuilder::Build( const OrderParameter& parameter )
 // Name: MissionInterfaceBuilder::BuildAgent
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAgent( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildAgent( const OrderParameter& parameter ) const
 {
-    return new ParamAgent( missionInterface_, parameter, controllers_.controller_ );
+    return new actions::gui::ParamAgent( missionInterface_, parameter, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAgentList
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAgentList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildAgentList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_ );
+    return new actions::gui::ParamAgentList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAutomat
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAutomat( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildAutomat( const OrderParameter& parameter ) const
 {
-    return new ParamAutomat( missionInterface_, parameter, controllers_.controller_ );
+    return new actions::gui::ParamAutomat( missionInterface_, parameter, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAutomatList
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildAutomatList( const OrderParameter& parameter ) const
 {
-    return new ParamAutomatList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_ );
+    return new actions::gui::ParamAutomatList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAtlasNature
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const OrderParameter& parameter ) const
 {
-    return new ParamAtlasNature( missionInterface_, parameter, staticModel_.atlasNatures_ );
+    return new actions::gui::ParamAtlasNature( missionInterface_, parameter, staticModel_.atlasNatures_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildDotation
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildDotation( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildDotation( const OrderParameter& parameter ) const
 {
-    return new ParamDotationDType( parameter, staticModel_.objectTypes_ );
+    return new actions::gui::ParamDotationDType( parameter, staticModel_.objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildBoolean
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildBoolean( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildBoolean( const OrderParameter& parameter ) const
 {
-    return new ParamBool( missionInterface_, parameter ); // $$$$ SBO 2007-03-14: default value?
+    return new actions::gui::ParamBool( missionInterface_, parameter ); // $$$$ SBO 2007-03-14: default value?
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildDirection
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildDirection( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildDirection( const OrderParameter& parameter ) const
 {
-    return new ParamDirection( missionInterface_, parameter );
+    return new actions::gui::ParamDirection( missionInterface_, parameter );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildNumeric
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildNumeric( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildNumeric( const OrderParameter& parameter ) const
 {
-    return new ParamNumericField( parameter, true );
+    return new actions::gui::ParamNumericField( parameter, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAgentKnowledge
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledge( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamAgentKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_, controllers_.controller_ );
+    return new actions::gui::ParamAgentKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildAgentKnowledgeList
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamAgentKnowledgeList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_, knowledgeConverter_, *entity_ );
+    return new actions::gui::ParamAgentKnowledgeList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_, knowledgeConverter_, *entity_ );
 }
  
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildObjectKnowledge
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledge( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamObjectKnowledge( missionInterface_, parameter, objectKnowledgeConverter_, *entity_, controllers_.controller_ );
+    return new actions::gui::ParamObjectKnowledge( missionInterface_, parameter, objectKnowledgeConverter_, *entity_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildObjectKnowledgeList
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledgeList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildObjectKnowledgeList( const OrderParameter& parameter ) const
 {
-    return new ParamObjectKnowledgeList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_, objectKnowledgeConverter_, *entity_ );
+    return new actions::gui::ParamObjectKnowledgeList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_, objectKnowledgeConverter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPopulationKnowledge
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPopulationKnowledge( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildPopulationKnowledge( const OrderParameter& parameter ) const
 {
-    return new ParamPopulationKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_, controllers_.controller_ );
+    return new actions::gui::ParamPopulationKnowledge( missionInterface_, parameter, knowledgeConverter_, *entity_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPath
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPath( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildPath( const OrderParameter& parameter ) const
 {
-    return new ParamPath( missionInterface_, parameter, layer_, converter_, *entity_ );
+    return new actions::gui::ParamPath( missionInterface_, parameter, layer_, converter_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPathList
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPathList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildPathList( const OrderParameter& parameter ) const
 {
-    return new ParamPathList( missionInterface_, parameter, layer_, converter_, *entity_, controllers_.actions_ );
+    return new actions::gui::ParamPathList( missionInterface_, parameter, layer_, converter_, *entity_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPoint
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPoint( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildPoint( const OrderParameter& parameter ) const
 {
-    return new ParamPoint( missionInterface_, parameter, converter_ );
+    return new actions::gui::ParamPoint( missionInterface_, parameter, converter_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPointList
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPointList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildPointList( const OrderParameter& parameter ) const
 {
-    return new ParamPointList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
+    return new actions::gui::ParamPointList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPolygon
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPolygon( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildPolygon( const OrderParameter& parameter ) const
 {
-    return new ParamPolygon( parameter, layer_, converter_ );
+    return new actions::gui::ParamPolygon( parameter, layer_, converter_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPolygonList
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildPolygonList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildPolygonList( const OrderParameter& parameter ) const
 {
-    return new ParamPolygonList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
+    return new actions::gui::ParamPolygonList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildLocation
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildLocation( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildLocation( const OrderParameter& parameter ) const
 {
-    return new ParamLocation( parameter, layer_, converter_ );
+    return new actions::gui::ParamLocation( parameter, layer_, converter_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildLocationList
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildLocationList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildLocationList( const OrderParameter& parameter ) const
 {
-    return new ParamLocationList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
+    return new actions::gui::ParamLocationList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildGenObject
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderParameter& parameter ) const
 {
-    return new ParamObstacle( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.controller_ );
+    return new actions::gui::ParamObstacle( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.controller_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildObstacleList
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildGenObjectList( const OrderParameter& parameter ) const
 {
-    return new ParamObstacleList( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.actions_, controllers_.controller_ );
+    return new actions::gui::ParamObstacleList( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.actions_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildMissionObjective
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildMissionObjective( const kernel::OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildMissionObjective( const kernel::OrderParameter& parameter ) const
 {
-    return new ParamMissionObjective( parameter, layer_, simulation_, converter_ );
+    return new actions::gui::ParamMissionObjective( parameter, layer_, simulation_.GetDateTime(), converter_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildMissionObjectiveList
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildMissionObjectiveList( const kernel::OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildMissionObjectiveList( const kernel::OrderParameter& parameter ) const
 {
-    return new ParamMissionObjectiveList( missionInterface_, parameter, layer_, simulation_, converter_, controllers_.actions_ );
+    return new actions::gui::ParamMissionObjectiveList( missionInterface_, parameter, layer_, simulation_.GetDateTime(), converter_, controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildMaintenancePriorities
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildMaintenancePriorities( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildMaintenancePriorities( const OrderParameter& parameter ) const
 {
-    return new ParamEquipmentList( missionInterface_, parameter, staticModel_.objectTypes_ );
+    return new actions::gui::ParamEquipmentList( missionInterface_, parameter, staticModel_.objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildMedicalPriorities
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildMedicalPriorities( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildMedicalPriorities( const OrderParameter& parameter ) const
 {
-    return new ParamHumanWoundList( missionInterface_, parameter );
+    return new actions::gui::ParamHumanWoundList( missionInterface_, parameter );
 }
 
 namespace
 {
     struct OrderParameterValueVisitor : public kernel::OrderParameterValueVisitor_ABC
     {
-        OrderParameterValueVisitor( ParamComboBox< ASN1INT >& param ) : param_( &param ) {}
+        OrderParameterValueVisitor( actions::gui::ParamComboBox< ASN1INT >& param ) : param_( &param ) {}
         virtual void Visit( const OrderParameterValue& value )
         {
             param_->AddItem( value.GetName().c_str(), value.GetId() );
         }
-        ParamComboBox< ASN1INT >* param_;
+        actions::gui::ParamComboBox< ASN1INT >* param_;
     };
 }
 
@@ -422,9 +423,9 @@ namespace
 // Name: MissionInterfaceBuilder::BuildEnumeration
 // Created: SBO 2006-12-01
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& parameter ) const
 {
-    ParamComboBox< ASN1INT >& param = BuildVarList< ASN1INT >( parameter );
+    actions::gui::ParamComboBox< ASN1INT >& param = BuildVarList< ASN1INT >( parameter );
     OrderParameterValueVisitor visitor( param );
     parameter.Accept( visitor );
     return &param;
@@ -434,34 +435,34 @@ Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& para
 // Name: MissionInterfaceBuilder::BuildLimit
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildLimit( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildLimit( const OrderParameter& parameter ) const
 {
-    return new LimitParameter( missionInterface_, parameter, converter_, controllers_.controller_ );
+    return new actions::gui::LimitParameter( missionInterface_, parameter, converter_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildLimaList
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildLimaList( const OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildLimaList( const OrderParameter& parameter ) const
 {
-    return new ParamLimaList( missionInterface_, parameter, converter_, controllers_.actions_, controllers_.controller_, simulation_ );
+    return new actions::gui::ParamLimaList( missionInterface_, parameter, converter_, controllers_.actions_, controllers_.controller_, simulation_.GetDateTime() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildDotationTypeList
 // Created: AGE 2007-10-23
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildDotationTypeList( const kernel::OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildDotationTypeList( const kernel::OrderParameter& parameter ) const
 {
-    return new ParamDotationTypeList( missionInterface_, parameter, staticModel_.objectTypes_ );
+    return new actions::gui::ParamDotationTypeList( missionInterface_, parameter, staticModel_.objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildIntelligenceList
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Param_ABC* MissionInterfaceBuilder::BuildIntelligenceList( const kernel::OrderParameter& parameter ) const
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildIntelligenceList( const kernel::OrderParameter& parameter ) const
 {
-    return new ParamIntelligenceList( missionInterface_, parameter, converter_, controllers_.actions_, controllers_.controller_ );
+    return new actions::gui::ParamIntelligenceList( missionInterface_, parameter, converter_, controllers_.actions_, controllers_.controller_ );
 }

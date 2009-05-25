@@ -10,21 +10,21 @@
 #include "gaming_app_pch.h"
 #include "AfterActionFunctionList.h"
 #include "moc_AfterActionFunctionList.cpp"
+#include "actions/ParameterContainer_ABC.h"
+#include "actions_gui/ParamAgent.h"
+#include "actions_gui/ParamAgentList.h"
+#include "actions_gui/ParamDotationTypeList.h"
+#include "actions_gui/ParamEquipmentList.h"
+#include "actions_gui/ParamLocation.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_gui/ListItemToolTip.h"
+#include "clients_gui/ValuedListItem.h"
 #include "gaming/AfterActionFunction.h"
+#include "gaming/AfterActionModel.h"
 #include "gaming/AfterActionParameter.h"
 #include "gaming/IndicatorRequest.h"
-#include "gaming/AfterActionModel.h"
-#include "actions/ParameterContainer_ABC.h"
 #include "gaming/StaticModel.h"
-#include "ParamAgent.h"
-#include "ParamAgentList.h"
-#include "ParamLocation.h"
-#include "ParamDotationTypeList.h"
-#include "ParamEquipmentList.h"
 #include "icons.h"
 #include <qtoolbox.h>
 #include <qvgroupbox.h>
@@ -98,7 +98,7 @@ void AfterActionFunctionList::Display( const AfterActionFunction& function, Disp
 void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
 {
     delete request_; request_ = 0;
-    std::for_each( paramList_.begin(), paramList_.end(), boost::bind( &Param_ABC::RemoveFromController, _1 ) );
+    std::for_each( paramList_.begin(), paramList_.end(), boost::bind( &actions::gui::Param_ABC::RemoveFromController, _1 ) );
     paramList_.clear();
     delete parameters_;
     parameters_ = new QVGroupBox( tr( "Parameters" ), this );
@@ -149,7 +149,7 @@ void AfterActionFunctionList::Request()
             IndicatorRequest& request = model_.CreateRequest( *function );
             Serializer serializer( request );
             std::for_each( paramList_.begin(), paramList_.end(),
-                boost::bind( &Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );
+                boost::bind( &actions::gui::Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );
             request.Commit();
         }
 }
@@ -158,22 +158,22 @@ void AfterActionFunctionList::Request()
 // Name: AfterActionFunctionList::CreateParameter
 // Created: AGE 2007-09-28
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Param_ABC > AfterActionFunctionList::CreateParameter( const std::string& type, const QString& name )
+boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreateParameter( const std::string& type, const QString& name )
 {
     const OrderParameter parameter( name.ascii(), type.c_str(), false );
-    boost::shared_ptr< Param_ABC > result;
+    boost::shared_ptr< actions::gui::Param_ABC > result;
 
     if( type == "unit" )
-        result.reset( new ParamAgent( this, parameter, controllers_.controller_ ) );
+        result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
     else if( type == "unit list" )
-        result.reset( new ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
+        result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
     else if( type == "dotation list" )
-        result.reset( new ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
+        result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
     else if( type == "equipment list" )
-        result.reset( new ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
+        result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
     else if( type == "zone" )
     {
-        std::auto_ptr< ParamLocation > location( new ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
+        std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
         location->SetShapeFilter( false, false, true, true );
         result.reset( location.release() );
     }
@@ -186,7 +186,7 @@ boost::shared_ptr< Param_ABC > AfterActionFunctionList::CreateParameter( const s
 // -----------------------------------------------------------------------------
 void AfterActionFunctionList::CreateParameter( const AfterActionParameter& parameter )
 {
-    boost::shared_ptr< Param_ABC > pParameter = CreateParameter( parameter.GetType(), parameter.GetName() );
+    boost::shared_ptr< actions::gui::Param_ABC > pParameter = CreateParameter( parameter.GetType(), parameter.GetName() );
     if( pParameter )
     {
         paramList_.push_back( pParameter );

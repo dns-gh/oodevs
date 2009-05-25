@@ -12,10 +12,9 @@
 #include "TacticalLine_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.h>
-
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions constructor
@@ -37,7 +36,7 @@ TacticalLinePositions::TacticalLinePositions( xml::xistream& xis, const kernel::
     : converter_( converter )
     , owner_    ( owner )
 {
-    xis >> list( "point", *this, &TacticalLinePositions::ReadPoint );
+    xis >> xml::list( "point", *this, &TacticalLinePositions::ReadPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,6 +120,15 @@ geometry::Rectangle2f TacticalLinePositions::GetBoundingBox() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitLines( pointList_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::Draw
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
@@ -149,8 +157,8 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
 // -----------------------------------------------------------------------------
 void TacticalLinePositions::SerializeAttributes( xml::xostream& xos ) const
 {
-    for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
-        xos << start( "point" ) << converter_.ConvertToMgrs( *itPoint ) << end();
+    for( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
+        xos << xml::start( "point" ) << converter_.ConvertToMgrs( *itPoint ) << xml::end();
 }
 
 // -----------------------------------------------------------------------------
