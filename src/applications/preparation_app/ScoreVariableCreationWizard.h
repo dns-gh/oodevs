@@ -10,10 +10,34 @@
 #ifndef __ScoreVariableCreationWizard_h_
 #define __ScoreVariableCreationWizard_h_
 
+#include "clients_gui/ValuedComboBox.h"
+#include <boost/shared_ptr.hpp>
+
+namespace actions
+{
+    namespace gui
+    {
+        class Param_ABC;
+    }
+}
+
+namespace gui
+{
+    class ParametersLayer;
+}
+
+namespace kernel
+{
+    class Controllers;
+}
+
 namespace indicators
 {
     class Element_ABC;
 }
+
+class StaticModel;
+class QVGroupBox;
 
 // =============================================================================
 /** @class  ScoreVariableCreationWizard
@@ -28,7 +52,7 @@ class ScoreVariableCreationWizard : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ScoreVariableCreationWizard( QWidget* parent );
+             ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, gui::ParametersLayer& layer, const StaticModel& staticModel );
     virtual ~ScoreVariableCreationWizard();
     //@}
 
@@ -41,12 +65,15 @@ signals:
     //! @name Signals
     //@{
     void VariableCreated( const indicators::Element_ABC& variable );
+    void Closed();
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnAccept();
+    void OnChangeName();
+    void OnChangeType();
     //@}
 
 private:
@@ -56,12 +83,23 @@ private:
     ScoreVariableCreationWizard& operator=( const ScoreVariableCreationWizard& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    boost::shared_ptr< actions::gui::Param_ABC > CreateParameter( const std::string& type, const QString& name );
+    virtual void hideEvent( QHideEvent* e );
+    virtual QSize sizeHint() const;
+    //@}
+
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
+    gui::ParametersLayer& layer_;
+    const StaticModel& staticModel_;
     QLineEdit* name_;
-    QComboBox* type_;
-    QLineEdit* value_;
+    gui::ValuedComboBox< std::string >* type_;
+    QVGroupBox* paramBox_;
+    boost::shared_ptr< actions::gui::Param_ABC > parameter_;
     //@}
 };
 

@@ -24,10 +24,12 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
+    class ParametersLayer;
 }
 
 class Score_ABC;
 class ScoresModel;
+class StaticModel;
 
 // =============================================================================
 /** @class  ScoreDialog
@@ -42,7 +44,7 @@ class ScoreDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, const indicators::Primitives& indicators, const indicators::GaugeTypes& gauges );
+             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, gui::ParametersLayer& layer, const StaticModel& staticModel );
     virtual ~ScoreDialog();
     //@}
 

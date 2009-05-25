@@ -18,6 +18,7 @@
 #include "indicators/Primitive.h"
 #include "indicators/Variables.h"
 #include "preparation/Score.h"
+#include "preparation/StaticModel.h"
 #include <xeumeuleu/xml.h>
 
 namespace
@@ -74,7 +75,7 @@ namespace
 // Name: ScoreEditor constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators, const indicators::GaugeTypes& gauges )
+ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const StaticModel& staticModel )
     : QDialog( parent, "ScoreEditor" )
     , current_( 0 )
 {
@@ -93,24 +94,26 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
     {
         QGroupBox* box = new QGroupBox( 2, Qt::Vertical, tr( "Formula" ), this );
         formula_ = new FormulaLineEdit( box );
-        new ScoreSyntaxHighlighter( formula_, controllers, indicators );
+        new ScoreSyntaxHighlighter( formula_, controllers, staticModel.indicators_ );
         checkResult_ = new QLabel( box );
         checkResult_->setMinimumHeight( 30 );
         grid->addMultiCellWidget( box, 1, 1, 0, 1 );
         connect( formula_, SIGNAL( textChanged() ), SLOT( CheckFormula() ) );
     }
     {
-        ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( this, controllers, factory, indicators );
+        ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( this, controllers, factory, staticModel.indicators_ );
         grid->addWidget( library, 2, 0 );
         connect( library, SIGNAL( Selected( const indicators::Primitive& ) ), SLOT( OnSelectPrimitive( const indicators::Primitive& ) ) );
         connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
     }
     {
         QGroupBox* box = new QHGroupBox( tr( "Variables" ), this );
-        variables_ = new ScoreVariablesList( box, factory );
+        variables_ = new ScoreVariablesList( box, factory, controllers, layer, staticModel );
         grid->addWidget( box, 2, 1 );
         connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
         connect( variables_, SIGNAL( Updated() ), SLOT( CheckFormula() ) );
+        connect( variables_, SIGNAL( StartEdit() ), SLOT( hide() ) );
+        connect( variables_, SIGNAL( EndEdit() ), SLOT( show() ) );
     }
     {
         QGroupBox* box = new QHGroupBox( this );
@@ -119,7 +122,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         grid->addMultiCellWidget( box, 3, 3, 0, 1 );
     }
     {
-        gauge_ = new ScoreGaugeConfiguration( this, controllers, gauges );
+        gauge_ = new ScoreGaugeConfiguration( this, controllers, staticModel.gaugeTypes_ );
         grid->addMultiCellWidget( gauge_, 4, 4, 0, 1 );
     }
     {
@@ -128,7 +131,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         QButton* cancel = new QPushButton( tr( "Cancel" ), box );
         grid->addWidget( box, 5, 1 );
         connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
-        connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
+        connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );
     }
 }
 
@@ -154,6 +157,7 @@ void ScoreEditor::StartEdit( Score_ABC& score )
     gauge_->StartEdit( score.GetGauge() );
     formula_->setText( score.GetFormula() );
     show();
+    emit Show();
 }
 
 // -----------------------------------------------------------------------------
@@ -164,6 +168,7 @@ void ScoreEditor::Commit()
 {
     CommitTo( *current_ );
     accept();
+    emit Hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -177,6 +182,26 @@ void ScoreEditor::CommitTo( Score_ABC& score )
     concrete.SetFormula( formula_->text() );
     concrete.SetVariables( variables_->GetValue() );
     concrete.SetGauge( gauge_->GetValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreEditor::Cancel
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void ScoreEditor::Cancel()
+{
+    reject();
+    emit Hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreEditor::closeEvent
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void ScoreEditor::closeEvent( QCloseEvent* e )
+{
+    QDialog::closeEvent( e );
+    emit Hide();
 }
 
 // -----------------------------------------------------------------------------

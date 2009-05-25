@@ -12,13 +12,24 @@
 
 #include "clients_gui/ListDisplayer.h"
 
+namespace gui
+{
+    class ParametersLayer;
+}
+
 namespace indicators
 {
     class Element_ABC;
     class Variables;
 }
 
+namespace kernel
+{
+    class Controllers;
+}
+
 class ScoreVariableCreationWizard;
+class StaticModel;
 
 // =============================================================================
 /** @class  ScoreVariablesList
@@ -33,7 +44,7 @@ class ScoreVariablesList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory );
+             ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers, gui::ParametersLayer& layer, const StaticModel& staticModel );
     virtual ~ScoreVariablesList();
     //@}
 
@@ -48,6 +59,8 @@ signals:
     //@{
     void Insert( const QString& text );
     void Updated();
+    void StartEdit();
+    void EndEdit();
     //@}
 
 public slots:

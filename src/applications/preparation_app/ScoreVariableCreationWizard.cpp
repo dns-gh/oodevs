@@ -10,40 +10,58 @@
 #include "preparation_app_pch.h"
 #include "ScoreVariableCreationWizard.h"
 #include "moc_ScoreVariableCreationWizard.cpp"
+#include "actions_gui/ParamAgent.h"
+#include "actions_gui/ParamAgentList.h"
+#include "actions_gui/ParamDotationTypeList.h"
+#include "actions_gui/ParamEquipmentList.h"
+#include "actions_gui/ParamLocation.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/OrderParameter.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Variable.h"
+#include "gaming/StaticModel.h"
+#include <qvgroupbox.h>
 
 // -----------------------------------------------------------------------------
 // Name: ScoreVariableCreationWizard constructor
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent )
+ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, gui::ParametersLayer& layer, const StaticModel& staticModel )
     : QDialog( parent )
+    , controllers_( controllers )
+    , layer_( layer )
+    , staticModel_( staticModel )
 {
     setCaption( tr( "Create variable" ) );
+    setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
+    grid->setRowStretch( 1, 5 );
     {
         QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Information" ), this );
         new QLabel( tr( "Name: " ), box );
         name_ = new QLineEdit( box );
+        connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( OnChangeName() ) );
         new QLabel( tr( "Type: " ), box );
-        type_ = new QComboBox( box );
-        type_->insertItem( "float" );
-        type_->insertItem( "string" );
-        type_->insertItem( "unit" );
-        type_->insertItem( "unit list" );
-        type_->insertItem( "position" );
-        type_->insertItem( "area" );
-        new QLabel( tr( "Value: " ), box );
-        value_ = new QLineEdit( box );
+        type_ = new gui::ValuedComboBox< std::string >( box );
+        type_->AddItem( tr( "Unit" ), "unit" );
+        type_->AddItem( tr( "Unit list" ), "unit list" );
+        type_->AddItem( tr( "Dotation list" ), "dotation list" );
+        type_->AddItem( tr( "Equipment list" ), "equipment list" );
+        type_->AddItem( tr( "Zone" ), "zone" );
+        connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
         grid->addWidget( box, 0, 0 );
+    }
+    {
+        paramBox_ = new QVGroupBox( tr( "Value" ), this );
+        grid->addWidget( paramBox_, 1, 0 );
     }
     {
         QHBox* box = new QHBox( this );
         QButton* ok = new QPushButton( tr( "Ok" ), box );
         QButton* cancel = new QPushButton( tr( "Cancel" ), box );
-        grid->addWidget( box, 1, 0 );
+        grid->addWidget( box, 2, 0 );
         connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
     }
@@ -66,9 +84,28 @@ ScoreVariableCreationWizard::~ScoreVariableCreationWizard()
 void ScoreVariableCreationWizard::Create()
 {
     name_->clear();
-    type_->setCurrentItem( 0 );
-    value_->clear();
+    OnChangeName();
+    OnChangeType();
     show();
+}
+
+namespace
+{
+    struct Serializer : public actions::ParameterContainer_ABC
+    {
+        explicit Serializer( const QString& name ) : name_( name ), variable_( 0 ) {}
+        virtual void AddParameter( actions::Parameter_ABC& parameter )
+        {
+            indicators::DataTypeFactory types;
+            std::string value;
+            parameter.CommitTo( value );
+            variable_ = new indicators::Variable( name_.ascii(), types.Instanciate( parameter.GetType() ), value );
+            delete &parameter;
+        }
+
+        const QString name_;
+        indicators::Variable* variable_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -77,11 +114,93 @@ void ScoreVariableCreationWizard::Create()
 // -----------------------------------------------------------------------------
 void ScoreVariableCreationWizard::OnAccept()
 {
-    if( name_->text().isEmpty() || value_->text().isEmpty() )
+    if( name_->text().isEmpty() )
         return;
-    // $$$$ SBO 2009-04-21: TODO: use variable factory, value definition helpers and validators...
-    indicators::DataTypeFactory types;
-    indicators::Variable* var = new indicators::Variable( name_->text().ascii(), types.Instanciate( type_->currentText().ascii() ), value_->text().ascii() );
-    emit VariableCreated( *var );
+    if( parameter_.get() )
+        parameter_->RemoveFromController();
+    Serializer serializer( name_->text() );
+    parameter_->CommitTo( serializer );
+    emit VariableCreated( *serializer.variable_ );
     accept();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariableCreationWizard::hideEvent
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void ScoreVariableCreationWizard::hideEvent( QHideEvent* e )
+{
+    QDialog::hideEvent( e );
+    emit Closed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariableCreationWizard::OnChangeName
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void ScoreVariableCreationWizard::OnChangeName()
+{
+    if( name_->text().isEmpty() )
+        name_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
+    else
+        name_->unsetPalette();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariableCreationWizard::OnChangeType
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void ScoreVariableCreationWizard::OnChangeType()
+{
+    if( parameter_ )
+    {
+        parameter_->RemoveFromController(); parameter_.reset();
+        delete paramBox_;
+        paramBox_ = new QVGroupBox( tr( "Value" ), this );
+        static_cast< QGridLayout* >( layout() )->addWidget( paramBox_, 1, 0 );
+    }
+    parameter_ = CreateParameter( type_->GetValue(), name_->text() );
+    if( parameter_ )
+    {
+        parameter_->BuildInterface( paramBox_ );
+        parameter_->RegisterIn( controllers_.actions_ );
+    }
+    else
+        new QLabel( name_->text(), paramBox_ );
+    paramBox_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariableCreationWizard::CreateParameter
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::CreateParameter( const std::string& type, const QString& name )
+{
+    const QString variableName = name.isEmpty() ? tr( "Variable value: " ) : QString( "%1: " ).arg( name );
+    const kernel::OrderParameter parameter( variableName.ascii(), type.c_str(), false );
+    boost::shared_ptr< actions::gui::Param_ABC > result;
+    if( type == "unit" )
+        result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
+    else if( type == "unit list" )
+        result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
+    else if( type == "dotation list" )
+        result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
+    else if( type == "equipment list" )
+        result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
+    else if( type == "zone" )
+    {
+        std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
+        location->SetShapeFilter( false, false, true, true );
+        result.reset( location.release() );
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariableCreationWizard::sizeHint
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+QSize ScoreVariableCreationWizard::sizeHint() const
+{
+    return QSize( 200, 200 );
 }

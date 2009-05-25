@@ -717,16 +717,40 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Value: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Variable value: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

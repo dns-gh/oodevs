@@ -621,15 +621,39 @@ Do you want to save anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Value: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Variable value: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

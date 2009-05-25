@@ -13,6 +13,11 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 
+namespace gui
+{
+    class ParametersLayer;
+}
+
 namespace indicators
 {
     class GaugeTypes;
@@ -26,6 +31,7 @@ namespace kernel
 
 class Score_ABC;
 class ScoreEditor;
+class StaticModel;
 
 // =============================================================================
 /** @class  ScoreList
@@ -42,7 +48,7 @@ class ScoreList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators, const indicators::GaugeTypes& gauges );
+             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const StaticModel& staticModel );
     virtual ~ScoreList();
     //@}
 
@@ -50,6 +56,8 @@ signals:
     //! @name Signals
     //@{
     void ScoreDeleted( const Score_ABC& score );
+    void Show();
+    void Hide();
     //@}
 
 private slots:

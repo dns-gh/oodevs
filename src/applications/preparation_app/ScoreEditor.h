@@ -25,11 +25,13 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
+    class ParametersLayer;
 }
 
 class Score_ABC;
 class ScoreGaugeConfiguration;
 class ScoreVariablesList;
+class StaticModel;
 
 // =============================================================================
 /** @class  ScoreEditor
@@ -44,7 +46,7 @@ class ScoreEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& indicators, const indicators::GaugeTypes& gauges );
+             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const StaticModel& staticModel );
     virtual ~ScoreEditor();
     //@}
 
@@ -53,10 +55,18 @@ public:
     void StartEdit( Score_ABC& score );
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void Show();
+    void Hide();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
     void Commit();
+    void Cancel();
     void OnInsert( const QString& text );
     void OnSelectPrimitive( const indicators::Primitive& indicator );
     void CheckFormula();
@@ -72,6 +82,7 @@ private:
     //! @name Helpers
     //@{
     void CommitTo( Score_ABC& score );
+    virtual void closeEvent( QCloseEvent* e );
     //@}
 
 private:
