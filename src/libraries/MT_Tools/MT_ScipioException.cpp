@@ -93,7 +93,7 @@ MT_ScipioException::~MT_ScipioException()
 void MT_ScipioException::SendToLogger() const
 {
     std::stringstream strMsg;
-    strMsg << "Scipio Exception - Context " << strContext_ << " - File " << strFile_ << " - Line " << nLine_ << " - Message '" << strMessage_ << "' ";
+    strMsg << "SWORD Exception - Context " << strContext_ << " - File " << strFile_ << " - Line " << nLine_ << " - Message '" << strMessage_ << "' ";
     if( !strDescription_.empty() )
         strMsg << strDescription_;
 
