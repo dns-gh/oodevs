@@ -1123,9 +1123,9 @@
       <object type="firing post"/>
       <object type="logistic area"/>
       <object type="safe zone"/>
-      <object construction-time-factor="240s" destruction-time-factor="180s" devalorization-time="800s" initial-construction-time="3600s" initial-destruction-time="0s" non-bypassed-speed="0" type="mined area (linear)" valorization-time="0s"/>
+      <object construction-time-factor="240s" destruction-time-factor="180s" devalorization-time="800s" initial-construction-time="3600s" initial-destruction-time="0s" type="mined area (linear)" valorization-time="0s"/>
       <object type="landing area (helicopter)"/>
-      <object construction-time-factor="240s" destruction-time-factor="180s" devalorization-time="800s" initial-construction-time="3600s" initial-destruction-time="0s" non-bypassed-speed="0" type="mined area (scattered)" valorization-time="0s"/>
+      <object construction-time-factor="240s" destruction-time-factor="180s" devalorization-time="800s" initial-construction-time="3600s" initial-destruction-time="0s" type="mined area (scattered)" valorization-time="0s"/>
       <object construction-time-factor="20m" initial-construction-time="2h" initial-destruction-time="02h" type="anti tank obstacle"/>
     </objects>
     <breakdowns>
