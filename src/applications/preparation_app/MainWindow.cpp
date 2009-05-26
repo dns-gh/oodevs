@@ -149,7 +149,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
-    ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, staticModel_.indicators_, staticModel_.gaugeTypes_ );
 
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
@@ -220,6 +219,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pCreationPanel->AddPanel( drawerPanel );
 
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
+    ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_ );
     new FileToolbar( this );
     new DisplayToolbar( this, controllers );
 
