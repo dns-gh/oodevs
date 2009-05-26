@@ -176,7 +176,7 @@ void GradientButton::mouseMoveEvent( QMouseEvent* event )
         return;
     if( event->state() | Qt::LeftButton )
     {
-        selected_->SetPercentage( unsigned short( event->pos().x() * 100 / canvas()->rect().width() ) );
+        selected_->SetPercentage( unsigned short( event->pos().x() * 100.f / canvas()->rect().width() ) );
         std::sort( colors_.begin(), colors_.end(), sComparator() );
         Update();
     }
@@ -213,7 +213,7 @@ namespace
 
         virtual void Visit( float position, const QColor& color )
         {
-            gradient_->AddItem( unsigned short( position * 100 ), color );
+            gradient_->AddItem( unsigned int( position * 100.f ), color );
         }
 
     private:
@@ -295,9 +295,9 @@ void GradientButton::Update()
 // Name: GradientButton::AddItem
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-GradientItem* GradientButton::AddItem( unsigned short percentage, const QColor& color )
+GradientItem* GradientButton::AddItem( unsigned int percentage, const QColor& color )
 {
-    GradientItem* item = new GradientItem( canvas(), percentage, color );
+    GradientItem* item = new GradientItem( canvas(), unsigned short( percentage ), color );
     colors_.push_back( item );
     std::sort( colors_.begin(), colors_.end(), sComparator() );
     return item;
