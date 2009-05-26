@@ -41,6 +41,7 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
         editName_ = new QLineEdit( tools::translate( "ScenarioEditPage", "Enter exercise name" ), hbox );
         connect( editName_, SIGNAL( textChanged( const QString& ) ), SLOT( EditNameChanged( const QString& ) ) );
         editTerrainList_ = new QComboBox( hbox );
+        editModelList_ = new QComboBox( hbox );
         QPushButton* button = new QPushButton( tools::translate( "ScenarioEditPage", "Create" ), hbox );
         connect( button, SIGNAL( clicked() ), this, SLOT( CreateExercise() ) );
     }
@@ -71,12 +72,23 @@ ScenarioEditPage::~ScenarioEditPage()
 void ScenarioEditPage::Update()
 {
     editTerrainList_->clear();
-    editTerrainList_->insertItem( tools::translate( "ScenarioEditPage", "Select the terrain" ) );
+    editTerrainList_->insertItem( tools::translate( "ScenarioEditPage", "Terrain:" ) );
     editTerrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+    editModelList_->clear();
+    editModelList_->insertItem( tools::translate( "ScenarioEditPage", "Model:" ) );
+    QStringList decisionalModels = frontend::commands::ListModels( config_ );
+    for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+    {
+        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+        for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
+            editModelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ) );
+    }
+    if( editModelList_->count() == 2 )
+        editModelList_->setCurrentItem( 1 );
+    editModelList_->setShown( editModelList_->count() > 2 );
     editExerciseList_->clear();
     editExerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage::CreateExercise
@@ -84,10 +96,13 @@ void ScenarioEditPage::Update()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::CreateExercise()
 {
-    if( editTerrainList_->currentItem() > 0 && !editName_->text().isEmpty() )
+    if( editTerrainList_->currentItem() > 0 && editModelList_->currentItem() > 0 )
     {
-        const std::string terrain  = editTerrainList_->currentText().ascii();
-        frontend::CreateExercise( config_, editName_->text().ascii(), terrain, "ada", "france" );
+        if( editName_->text().isEmpty() || editExerciseList_->findItem( editName_->text(), Qt::ExactMatch ) )
+            return;
+        const std::string terrain = editTerrainList_->currentText().ascii();
+        const QStringList model = QStringList::split( "/", editModelList_->currentText() );
+        frontend::CreateExercise( config_, editName_->text().ascii(), terrain, model.front().ascii(), model.back().ascii() );
         Edit( editName_->text() );
     }    
 }

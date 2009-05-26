@@ -255,10 +255,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select the terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Create new exercise:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -272,6 +268,14 @@
     </message>
     <message>
         <source>Editing exercise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Model:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

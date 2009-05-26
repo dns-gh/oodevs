@@ -70,6 +70,7 @@ private:
     ProgressPage* progressPage_;
     QListBox*  editExerciseList_;
     QComboBox* editTerrainList_;
+    QComboBox* editModelList_;
     QLineEdit* editName_;
     //@}
 };

@@ -328,7 +328,7 @@
     </message>
     <message>
         <source>Select the terrain</source>
-        <translation>Sélectionner le terrain</translation>
+        <translation type="obsolete">Sélectionner le terrain</translation>
     </message>
     <message>
         <source>Create new exercise:</source>
@@ -345,6 +345,14 @@
     <message>
         <source>Editing exercise</source>
         <translation>Edition exercice</translation>
+    </message>
+    <message>
+        <source>Terrain:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Model:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

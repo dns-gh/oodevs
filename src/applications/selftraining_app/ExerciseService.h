@@ -13,6 +13,9 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #pragma warning( push )
 #pragma warning( disable: 4512 )
+#ifndef _WIN32_WINNT
+#   define _WIN32_WINNT 0x0501
+#endif
 #include <boost/asio.hpp>
 #pragma warning( pop )
 
