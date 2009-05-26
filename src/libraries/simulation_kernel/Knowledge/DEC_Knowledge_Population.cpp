@@ -35,7 +35,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Population, "DEC_Knowledge_Population" )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationKnown )
     : DEC_Knowledge_ABC     ()
-    , nID_                  ( MIL_IDManager::knowledgePopulations_.GetFreeSimID() )
+    , nID_                  ( MIL_IDManager::GetFreeId() )
     , pKnowledgeGroup_      ( &knowledgeGroup )
     , pPopulationKnown_     ( &populationKnown )
     , concentrations_       ()

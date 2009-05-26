@@ -19,11 +19,9 @@
 #include "Hla/HLA_Federate.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Tools/MIL_IDManager.h"
 
 #include <xeumeuleu/xml.h>
 

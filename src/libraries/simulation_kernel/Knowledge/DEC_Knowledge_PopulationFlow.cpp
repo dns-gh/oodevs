@@ -38,7 +38,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlow, "DEC_Knowledge_Population
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationFlow& flowKnown )
     : pPopulationKnowledge_    ( &populationKnowledge )
     , pFlowKnown_              ( &flowKnown )
-    , nID_                     ( MIL_IDManager::knowledgePopulationFlows_.GetFreeSimID() )
+    , nID_                     ( MIL_IDManager::GetFreeId() )
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
     , flowParts_               ()

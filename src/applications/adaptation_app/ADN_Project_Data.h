@@ -51,7 +51,6 @@ public:
         ADN_Type_String szAutomata_;
         ADN_Type_String szNBC_;
         ADN_Type_String szHealth_;
-        ADN_Type_String szIDs_;
         ADN_Type_String szHumanFactors_;
         ADN_Type_String szBreakdowns_;
         ADN_Type_String szKnowledgeGroups_;

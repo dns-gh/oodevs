@@ -72,7 +72,6 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "fire", szFire_ );
     ReadFile( input, "medical-treatment", szMedicalTreatment_ );
     ReadFile( input, "health", szHealth_);
-    ReadFile( input, "classeids", szIDs_);
     ReadFile( input, "human-factors", szHumanFactors_);
     ReadFile( input, "breakdowns", szBreakdowns_);
     ReadFile( input, "knowledge-groups", szKnowledgeGroups_);
@@ -112,7 +111,6 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "fire", szFire_ );
     WriteFile( output, "medical-treatment", szMedicalTreatment_ );
     WriteFile( output, "health", szHealth_ );
-    WriteFile( output, "classeids", szIDs_ );
     WriteFile( output, "human-factors", szHumanFactors_ );
     WriteFile( output, "breakdowns", szBreakdowns_ );
     WriteFile( output, "knowledge-groups", szKnowledgeGroups_ );
@@ -276,7 +274,6 @@ void ADN_Project_Data::FilesNeeded( T_StringList& vFiles ) const
 {
     ADN_Project_Data* that = const_cast< ADN_Project_Data* >( this );
     assert( ! that->szFile_.GetFileName().GetData().empty() );
-    vFiles.push_back( that->dataInfos_.szIDs_.GetData() );
 }
 
 //-----------------------------------------------------------------------------
@@ -317,10 +314,4 @@ void ADN_Project_Data::Save()
     ADN_Tools::CreatePathToFile( szFile );
     xml::xofstream output( szFile );
     dataInfos_.WriteArchive( output );
-
-    std::string szIdsFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + dataInfos_.szIDs_.GetData();
-    ADN_Tools::CreatePathToFile( szIdsFile );
-    std::ofstream idsOutput( szIdsFile.c_str() );
-    idsOutput << idClassesXml;
-    idsOutput.close();
 }

@@ -13,9 +13,7 @@
 #include "CapacityFactory.h"
 #include "AttributeFactory.h"
 #include "Object.h"
-//#include "MIL_AgentServer.h"
 #include "Entities/MIL_Army_ABC.h"
-//#include "Entities/MIL_EntityManager.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_IDManager.h"
 
@@ -31,7 +29,6 @@ using namespace xml;
 MIL_ObjectLoader::MIL_ObjectLoader()
     : factory_      ( new CapacityFactory() )
     , attributes_   ( new AttributeFactory() )
-    , id_           ( MIL_IDManager::objects_ )
 {
     //NOTHING
 }
@@ -102,7 +99,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& type, MIL_Arm
     CIT_Prototypes it = prototypes_.find( type );
     if ( it != prototypes_.end() )
     {        
-        Object* pObject = new Object( id_.GetFreeSimID(), *it->second, army, &location, std::string(), reserved );
+        Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, std::string(), reserved );
         pObject->Finalize();
         return pObject;
     }
@@ -147,7 +144,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const ASN1T_MagicActionCreateObj
         TER_Localisation location;
         if( ! NET_ASN_Tools::ReadLocation( asn.location, location ) )
             return 0;
-        Object* pObject = new Object( id_.GetFreeSimID(), *it->second, army, &location, asn.name );
+        Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, asn.name );
         attributes_->Create( *pObject, asn.attributes );
         pObject->Finalize();
         return pObject;        
@@ -166,7 +163,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& bui
     CIT_Prototypes it = prototypes_.find( builder.GetType().GetName() );
     if ( it != prototypes_.end() )
     {        
-        Object* pObject = new Object( id_.GetFreeSimID(), *it->second, army, 0 );
+        Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, 0 );
 		builder.Build( *pObject );
         pObject->Finalize();
         return pObject;

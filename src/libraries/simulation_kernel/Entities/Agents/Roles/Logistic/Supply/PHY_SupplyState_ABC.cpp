@@ -20,7 +20,7 @@
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 PHY_SupplyState_ABC::PHY_SupplyState_ABC()
-    : nID_          ( MIL_IDManager::supplyStates_.GetFreeSimID() )
+    : nID_          ( MIL_IDManager::GetFreeId() )
     , nCreationTick_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
 }

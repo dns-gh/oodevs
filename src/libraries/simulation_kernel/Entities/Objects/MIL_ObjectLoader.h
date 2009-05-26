@@ -19,7 +19,6 @@ class Object;
 class TER_Localisation;
 class MIL_Object_ABC;
 class MIL_Army_ABC;
-class MIL_MOSIDManager;
 class MIL_ObjectBuilder_ABC;
 
 namespace boost
@@ -93,7 +92,6 @@ private:
     std::auto_ptr< CapacityFactory > factory_;
     std::auto_ptr< AttributeFactory > attributes_;
     T_Prototypes prototypes_;
-    mutable MIL_MOSIDManager& id_;
     //@}
 };
 

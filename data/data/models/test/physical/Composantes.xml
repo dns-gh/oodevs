@@ -511,9 +511,7 @@
     <weapon-systems/>
     <objects/>
     <logistic-functions>
-      <maintenance-functions>
-        <reparing category="NTI1" max-reparation-time="14400s" type="EA, M"/>
-      </maintenance-functions>
+      <maintenance-functions/>
     </logistic-functions>
     <breakdowns>
       <breakdown origin="random" percentage="100" type="Panne 1"/>
@@ -571,10 +569,7 @@
     <weapon-systems/>
     <objects/>
     <logistic-functions>
-      <maintenance-functions>
-        <reparing category="NTI1" type="M"/>
-        <reparing category="NTI2" type="M"/>
-      </maintenance-functions>
+      <maintenance-functions/>
     </logistic-functions>
     <breakdowns>
       <breakdown origin="random" percentage="100" type="Panne 1"/>
@@ -632,10 +627,7 @@
     <weapon-systems/>
     <objects/>
     <logistic-functions>
-      <maintenance-functions>
-        <reparing category="NTI1" type="EA"/>
-        <reparing category="NTI2" type="EA"/>
-      </maintenance-functions>
+      <maintenance-functions/>
     </logistic-functions>
     <breakdowns>
       <breakdown origin="random" percentage="100" type="Panne 1"/>
@@ -693,11 +685,7 @@
     <weapon-systems/>
     <objects/>
     <logistic-functions>
-      <maintenance-functions>
-        <reparing category="NTI1" type="M"/>
-        <reparing category="NTI2" type="M"/>
-        <reparing category="NTI3" type="M"/>
-      </maintenance-functions>
+      <maintenance-functions/>
     </logistic-functions>
     <breakdowns>
       <breakdown origin="random" percentage="100" type="Panne 1"/>
@@ -755,11 +743,7 @@
     <weapon-systems/>
     <objects/>
     <logistic-functions>
-      <maintenance-functions>
-        <reparing category="NTI1" type="EA"/>
-        <reparing category="NTI2" type="EA"/>
-        <reparing category="NTI3" type="EA"/>
-      </maintenance-functions>
+      <maintenance-functions/>
     </logistic-functions>
     <breakdowns>
       <breakdown origin="random" percentage="100" type="Panne 1"/>

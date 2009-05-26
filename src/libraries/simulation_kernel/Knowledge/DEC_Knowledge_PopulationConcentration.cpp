@@ -34,7 +34,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationConcentration, "DEC_Knowledge_P
 DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationConcentration& concentrationKnown )
     : pPopulationKnowledge_     ( &populationKnowledge    )
     , pConcentrationKnown_      ( &concentrationKnown )
-    , nID_                      ( MIL_IDManager::knowledgePopulationConcentrations_.GetFreeSimID() )
+    , nID_                      ( MIL_IDManager::GetFreeId() )
     , nTimeLastUpdate_          ( 0 )
     , position_                 ( concentrationKnown.GetPosition() )
     , rNbrAliveHumans_          ( 0. )

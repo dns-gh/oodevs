@@ -2465,56 +2465,6 @@ stance</source>
     </message>
 </context>
 <context>
-    <name>ADN_Objects_Data</name>
-    <message>
-        <source>Objects - Invalid object type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Objects_Data::ObjectInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects - Object &apos;%1&apos; - Invalid resource &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects - Object &apos;%1&apos; - Default speed must be &gt;= 0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects - Object &apos;%1&apos; - Default speed when bypassed &gt;= 0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects - Object &apos;%1&apos; - Max interaction height must be &gt;= 0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects - Object &apos;%1&apos; - Outgoing population density must be &gt;= 0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects - Object &apos;%1&apos; - Number of users must be &gt; 0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects - Invalid number of &apos;users&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects - Invalid resource category for construction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects - Invalid resource category for mining</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Objects_GUI</name>
     <message>
         <source>Object</source>
@@ -2522,18 +2472,6 @@ stance</source>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Is dangerous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can be bypassed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can be mined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2549,83 +2487,71 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Default speed when bypassed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max interaction height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Outgoing population density</source>
+        <source>Geometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>people/m&#xb2;</source>
+        <source>Symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Attrition</source>
+        <source>Capacities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Population attrition</source>
+        <source>Default consumption</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Attrition surface</source>
+        <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>PH</source>
+        <source>Distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can be reserved obstacle</source>
+        <source>Bypass Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Safety distance</source>
+        <source>Speed impact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activity type when working</source>
+        <source>Max agent speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Effect on movement</source>
+        <source>Max Animator: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Units max speed</source>
+        <source>agents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Max nbr of concurrent users</source>
+        <source>NBC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resources required for construction</source>
+        <source>Max Toxic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Qty</source>
+        <source>Max size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resources required for mining</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatic obstacle positioning</source>
+        <source>Genie prepared</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

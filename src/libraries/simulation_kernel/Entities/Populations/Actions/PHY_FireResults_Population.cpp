@@ -23,7 +23,7 @@
 PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& firer )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
-    , nID_               ( MIL_IDManager::fireResultsPopulation_.GetFreeSimID() )
+    , nID_               ( MIL_IDManager::GetFreeId() )
 {
     NET_ASN_MsgStartPopulationFire asnMsg;
     asnMsg().fire_oid  = nID_;

@@ -51,7 +51,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , pArmyKnowing_                     ( &armyKnowing )
     , pObjectKnown_                     ( &objectKnown )
     , pObjectType_                      ( &objectKnown.GetType() )
-    , nID_                              ( MIL_IDManager::knowledgesObject_.GetFreeSimID() )
+    , nID_                              ( MIL_IDManager::GetFreeId() )
     , nAttributesUpdated_               ( eAttr_AllAttributes )
     , pOwnerArmy_                       ( &objectKnown.GetArmy() )    
     , localisation_                     ( )

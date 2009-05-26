@@ -27,11 +27,8 @@
 #include "MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
-#include "Tools/MIL_IDManager.h"
 #include "MIL_Singletons.h"
 #include <xeumeuleu/xml.h>
-
-
 
 MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
 

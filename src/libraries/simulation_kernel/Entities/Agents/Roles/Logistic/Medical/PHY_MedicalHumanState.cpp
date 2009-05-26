@@ -29,7 +29,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MedicalHumanState, "PHY_MedicalHumanState" )
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& human, bool bEvacuatedByThirdParty )
-    : nID_                   ( MIL_IDManager::medicalHumanStates_.GetFreeSimID() )
+    : nID_                   ( MIL_IDManager::GetFreeId() )
     , nCreationTick_         ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , pPion_                 ( &pion )
     , pHuman_                ( &human )

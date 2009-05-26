@@ -562,7 +562,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, uin
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
-    MIL_AgentPion& pion = type.InstanciatePion( MIL_IDManager::units_.GetFreeSimID(), automate, vPosition );
+    MIL_AgentPion& pion = type.InstanciatePion( MIL_IDManager::GetFreeId(), automate, vPosition );
     assert( pions_[ pion.GetID() ] == 0 );
     pions_[ pion.GetID() ] = &pion;
 

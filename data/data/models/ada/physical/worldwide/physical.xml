@@ -16,7 +16,6 @@
   <fire file="Fire.xml"/>
   <medical-treatment file="MedicalTreatment.xml"/>
   <health file="Sante.xml"/>
-  <classeids file="IDClasses.xml"/>
   <human-factors file="FacteursHumains.xml"/>
   <breakdowns file="Pannes.xml"/>
   <knowledge-groups file="GroupesConnaissance.xml"/>

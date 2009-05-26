@@ -104,7 +104,7 @@ namespace
         {}
         virtual HLA_RoleInterface& Create( const ObjectIdentifier& objectId, const std::string& /*objectName*/ )
         {
-            MIL_AgentHLA* pPion = new MIL_AgentHLA( MIL_IDManager::units_.GetFreeSimID(), objectId, interactionManager_ );
+            MIL_AgentHLA* pPion = new MIL_AgentHLA( MIL_IDManager::GetFreeId(), objectId, interactionManager_ );
             return pPion->GetRole< HLA_RoleInterface >();
         }
         virtual void Destroy( HLA_RoleInterface& object )

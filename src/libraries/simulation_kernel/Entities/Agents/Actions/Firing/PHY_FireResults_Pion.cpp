@@ -27,7 +27,7 @@
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Agent_ABC& target )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
-    , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
+    , nID_               ( MIL_IDManager::GetFreeId() )
 {
     NET_ASN_MsgStartUnitFire asnMsg;
     asnMsg().m.ammunitionPresent = 0;
@@ -47,7 +47,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Population& target )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
-    , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
+    , nID_               ( MIL_IDManager::GetFreeId() )
 {
     NET_ASN_MsgStartUnitFire asnMsg;
     asnMsg().m.ammunitionPresent = 0;
@@ -67,7 +67,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT_Vector2D& targetPosition, const PHY_DotationCategory& dotationCategory )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
-    , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
+    , nID_               ( MIL_IDManager::GetFreeId() )
 {
     NET_ASN_MsgStartUnitFire asnMsg;
     asnMsg().m.ammunitionPresent = 1;

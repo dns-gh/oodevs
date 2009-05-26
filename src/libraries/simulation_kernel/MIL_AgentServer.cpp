@@ -22,7 +22,6 @@
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/MIL_IDManager.h"
 #include "Hla/HLA_Federate.h"
 
 #include "simulation_terrain/TER_World.h"
@@ -139,7 +138,6 @@ void MIL_AgentServer::ReadStaticData()
         
     pAgentServer_ = new NET_AgentServer( config_, *this, *this );
 
-    MIL_IDManager::Initialize( config_ );
     ReadTerData();
     pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
     pWorkspaceDIA_     = new DEC_Workspace       ( config_ );

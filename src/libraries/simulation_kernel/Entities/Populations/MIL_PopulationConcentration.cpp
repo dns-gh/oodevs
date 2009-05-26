@@ -37,7 +37,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentrati
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis )
-    : MIL_PopulationElement_ABC      ( population, MIL_IDManager::populationConcentrations_.GetFreeSimID() )
+    : MIL_PopulationElement_ABC      ( population, MIL_IDManager::GetFreeId() )
     , TER_PopulationConcentration_ABC()
     , position_                      ()
     , location_                      ()
@@ -67,7 +67,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position )
-    : MIL_PopulationElement_ABC      (  population, MIL_IDManager::populationConcentrations_.GetFreeSimID() )
+    : MIL_PopulationElement_ABC      (  population, MIL_IDManager::GetFreeId() )
     , TER_PopulationConcentration_ABC()
     , position_                      ( position )
     , location_                      ()

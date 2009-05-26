@@ -10,11 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Agent_ABC.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Tools/MIL_IDManager.h"
-#include "MT_Tools/MT_Role_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Agent_ABC constructor
@@ -24,11 +20,7 @@ MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name, xml::xistream& xis, uint 
     : MIL_Entity_ABC ( name, xis ) 
     , nID_           ( nID )
 {
-    if( MIL_IDManager::units_.IsMosIDValid( nID_ ) )
-    {
-        bool bOut = MIL_IDManager::units_.LockMosID( nID_ );
-        assert( bOut );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,11 +31,7 @@ MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name, uint nID )
     : MIL_Entity_ABC ( name ) 
     , nID_           ( nID )
 {
-    if( MIL_IDManager::units_.IsMosIDValid( nID_ ) )
-    {
-        bool bOut = MIL_IDManager::units_.LockMosID( nID_ );
-        assert( bOut );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +40,7 @@ MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name, uint nID )
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC::MIL_Agent_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,6 +49,7 @@ MIL_Agent_ABC::MIL_Agent_ABC()
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC::~MIL_Agent_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -70,12 +60,6 @@ void MIL_Agent_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> nID_;
-    
-    if( MIL_IDManager::units_.IsMosIDValid( nID_ ) )
-    {
-        bool bOut = MIL_IDManager::units_.LockMosID( nID_ );
-        assert( bOut );
-    }
 }
 
 // -----------------------------------------------------------------------------
