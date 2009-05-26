@@ -141,16 +141,15 @@ namespace
 {
     struct GeometrySerializer : public kernel::LocationVisitor_ABC
     {
-        GeometrySerializer( const kernel::CoordinateConverter_ABC& converter )
+        GeometrySerializer( kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter )
             : converter_( converter )
-            , location_( 0 )
+            , location_( location )
         {}
 
         virtual void VisitLines( const T_PointVector& points )
         {
-            location_.reset( new kernel::Lines() );
             for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-                location_->AddPoint( *it );
+                location_.AddPoint( *it );
         }
 
         virtual void VisitPolygon( const T_PointVector& ) {}
@@ -158,18 +157,11 @@ namespace
         virtual void VisitPoint( const geometry::Point2f& ) {}
         virtual void VisitPath( const geometry::Point2f&, const T_PointVector& ) {}
 
-        const kernel::Location_ABC& GetLocation() const
-        {
-            if( !location_.get() )
-                throw std::runtime_error( __FUNCTION__ );
-            return *location_;
-        }
-        
     private:
         GeometrySerializer& operator=( const GeometrySerializer& );
 
         const kernel::CoordinateConverter_ABC& converter_;
-        std::auto_ptr< kernel::Location_ABC > location_;
+        kernel::Location_ABC& location_;
     };
 }
 
@@ -179,11 +171,13 @@ namespace
 // -----------------------------------------------------------------------------
 void LimitParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    if( !selected_ )
-        return;
-    GeometrySerializer serializer( converter_ );
-    selected_->Get< kernel::Positions >().Accept( serializer );
-    std::auto_ptr< actions::parameters::Limit > param( new actions::parameters::Limit( parameter_, converter_, serializer.GetLocation() ) );
+    kernel::Lines lines;
+    if( selected_ )
+    {
+        GeometrySerializer serializer( lines, converter_ );
+        selected_->Get< kernel::Positions >().Accept( serializer );
+    }
+    std::auto_ptr< actions::parameters::Limit > param( new actions::parameters::Limit( parameter_, converter_, lines ) );
     parameter.AddParameter( *param.release() );
 }
 
