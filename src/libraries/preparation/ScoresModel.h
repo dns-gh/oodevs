@@ -15,8 +15,10 @@
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
+class ModelChecker_ABC;
 class Score_ABC;
 class ScoreFactory_ABC;
 
@@ -42,6 +44,7 @@ public:
     void Delete( const Score_ABC& score );
     void Purge();
     void Load( const std::string& file );
+    bool CheckValidity( ModelChecker_ABC& checker ) const;
     void Serialize( const std::string& file ) const;
     //@}
 
@@ -54,6 +57,7 @@ private:
 
     //! @name Helpers
     //@{
+    void Serialize( xml::xostream& xos ) const;
     void ReadScore( xml::xistream& xis );
     //@}
 

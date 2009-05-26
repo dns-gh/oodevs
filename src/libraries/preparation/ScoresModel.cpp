@@ -9,8 +9,10 @@
 
 #include "preparation_pch.h"
 #include "ScoresModel.h"
+#include "ModelChecker_ABC.h"
 #include "Score_ABC.h"
 #include "ScoreFactory_ABC.h"
+#include "Tools.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.h>
@@ -56,12 +58,39 @@ void ScoresModel::Load( const std::string& file )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ScoresModel::CheckValidity
+// Created: SBO 2009-05-26
+// -----------------------------------------------------------------------------
+bool ScoresModel::CheckValidity( ModelChecker_ABC& checker ) const
+{
+    try
+    {
+        xml::xostringstream xos;
+        Serialize( xos );
+        return true;
+    }
+    catch( std::exception& e )
+    {
+        return checker.Reject( tools::translate( "ScoresModel", "Score definitions contain errors:\nReason: %1." ).arg( e.what() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ScoresModel::Serialize
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
 void ScoresModel::Serialize( const std::string& file ) const
 {
     xml::xofstream xos( file );
+    Serialize( xos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoresModel::Serialize
+// Created: SBO 2009-05-26
+// -----------------------------------------------------------------------------
+void ScoresModel::Serialize( xml::xostream& xos ) const
+{
     xos << xml::start( "scores" );
     std::for_each( elements_.begin(), elements_.end(), boost::bind( &Score_ABC::Serialize
                                                                   , boost::bind( &T_Elements::value_type::second, _1 )
