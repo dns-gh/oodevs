@@ -33,7 +33,7 @@ public:
 
 public:
     ADN_MainWindow* GetMainWindow();
-    void AddTranslator( const char* name );
+    void AddTranslator( const char* name, const QString& locale );
 
 public:
     static ADN_App* pApplication_;

@@ -90,15 +90,27 @@ std::string Wrap( const std::string& content, const std::string& prefix )
     return result;
 }
 
+namespace
+{
+    QString ReadLang()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD Officer Training" ) );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_App::Initialize
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
 bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile )
 {
-    AddTranslator( "adaptation" );
-    AddTranslator( "adn" );
-    AddTranslator( "ENT" );
+    const QString locale = ReadLang();
+    AddTranslator( "adaptation", locale );
+    AddTranslator( "adn", locale );
+    AddTranslator( "ENT", locale );
+    AddTranslator( "tools", locale );
 
     // Initialize all the translations.
     ADN_Tr::InitTranslations();
@@ -143,10 +155,10 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
 // Name: ADN_App::AddTranslator
 // Created: SBO 2008-08-08
 // -----------------------------------------------------------------------------
-void ADN_App::AddTranslator( const char* name )
+void ADN_App::AddTranslator( const char* name, const QString& locale )
 {
     std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
-    const QString file = QString( "%1_%2" ).arg( name ).arg( QTextCodec::locale() );
+    const QString file = QString( "%1_%2" ).arg( name ).arg( locale );
     if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
-        installTranslator( trans.release() );
+       installTranslator( trans.release() );
 }
