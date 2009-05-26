@@ -228,3 +228,33 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestTypesInEquality )
         BOOST_CHECK( *lhs != *rhs );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorTypeResolver_TestVariableTypeIsCompatibleWithBuiltin
+// Created: SBO 2009-05-11
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestVariableTypeIsCompatibleWithBuiltin )
+{
+    boost::shared_ptr< ElementTypeResolver > resolver( NewResolver() );
+    DataTypeFactory factory;
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "unit", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "key", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "unit list", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "dotation list", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "equipment list", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+}

@@ -80,7 +80,11 @@ namespace
     {
         std::string result( type );
         // $$$$ SBO 2009-05-12: Variable types
+        boost::replace_all( result, "unit list", "unsigned long" );
         boost::replace_all( result, "unit", "unsigned long" );
+        boost::replace_all( result, "dotation list", "unsigned long" );
+        boost::replace_all( result, "equipment list", "unsigned long" );
+        boost::replace_all( result, "zone", "position" );
         // $$$$ SBO 2009-05-12: Extractor types
         boost::replace_all( result, "key", "unsigned long" );
         boost::replace_all( result, "equipment-type", "unsigned long" );
