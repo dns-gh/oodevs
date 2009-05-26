@@ -97,6 +97,7 @@ private:
     gui::ParametersLayer& layer_;
     const StaticModel& staticModel_;
     QLineEdit* name_;
+    QButton* ok_;
     gui::ValuedComboBox< std::string >* type_;
     QVGroupBox* paramBox_;
     boost::shared_ptr< actions::gui::Param_ABC > parameter_;

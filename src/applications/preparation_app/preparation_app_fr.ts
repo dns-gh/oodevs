@@ -660,6 +660,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Variables</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gauge</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScoreList</name>

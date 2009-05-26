@@ -49,10 +49,11 @@ namespace
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
 ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Controllers& controllers, const indicators::GaugeTypes& gaugeTypes )
-    : QVGroupBox( tr( "Gauge configuration" ), parent )
+    : QVBox( parent )
     , controllers_( controllers )
     , gaugeTypes_( gaugeTypes )
 {
+    setMargin( 5 );
     {
         QHBox* box = new QHBox( this );
         new QLabel( tr( "Representation type: " ), box );
@@ -61,6 +62,7 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
     }
     {
         QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tr( "Value normalization" ), this );
+        box->setMargin( 5 );
         {
             QHBox* hbox = new QHBox( box );
             {
@@ -91,7 +93,7 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
             intervals_->horizontalHeader()->setLabel( 0, tr( "Min" ) );
             intervals_->horizontalHeader()->setLabel( 1, tr( "Max" ) );
             intervals_->horizontalHeader()->setLabel( 2, tr( "Symbol" ) );
-            intervals_->setFixedHeight( 100 );
+            intervals_->setFixedHeight( 150 );
             intervals_->setLeftMargin( 0 );
             intervals_->setHScrollBarMode( QScrollView::AlwaysOff );
             AddInterval();

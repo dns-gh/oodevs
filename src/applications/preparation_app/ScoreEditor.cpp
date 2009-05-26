@@ -80,56 +80,66 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
     , current_( 0 )
 {
     setCaption( tr( "Score editor" ) );
-    QGridLayout* grid = new QGridLayout( this, 6, 2, 0, 5 );
+    QGridLayout* grid = new QGridLayout( this, 3, 1, 0, 5 );
     grid->setMargin( 5 );
-    grid->setRowStretch( 2, 3 );
-    grid->setColStretch( 0, 2 );
-    grid->setColStretch( 1, 3 );
+    grid->setRowStretch( 1, 4 );
     {
         QGroupBox* box = new QHGroupBox( tr( "Information" ), this );
         new QLabel( tr( "Name:" ), box );
         name_ = new QLineEdit( box );
-        grid->addMultiCellWidget( box, 0, 0, 0, 1 );
+        grid->addWidget( box, 0, 0 );
     }
     {
-        QGroupBox* box = new QGroupBox( 2, Qt::Vertical, tr( "Formula" ), this );
-        formula_ = new FormulaLineEdit( box );
-        new ScoreSyntaxHighlighter( formula_, controllers, staticModel.indicators_ );
-        checkResult_ = new QLabel( box );
-        checkResult_->setMinimumHeight( 30 );
-        grid->addMultiCellWidget( box, 1, 1, 0, 1 );
-        connect( formula_, SIGNAL( textChanged() ), SLOT( CheckFormula() ) );
-    }
-    {
-        ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( this, controllers, factory, staticModel.indicators_ );
-        grid->addWidget( library, 2, 0 );
-        connect( library, SIGNAL( Selected( const indicators::Primitive& ) ), SLOT( OnSelectPrimitive( const indicators::Primitive& ) ) );
-        connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
-    }
-    {
-        QGroupBox* box = new QHGroupBox( tr( "Variables" ), this );
-        variables_ = new ScoreVariablesList( box, factory, controllers, layer, staticModel );
-        grid->addWidget( box, 2, 1 );
-        connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
-        connect( variables_, SIGNAL( Updated() ), SLOT( CheckFormula() ) );
-        connect( variables_, SIGNAL( StartEdit() ), SLOT( hide() ) );
-        connect( variables_, SIGNAL( EndEdit() ), SLOT( show() ) );
-    }
-    {
-        QGroupBox* box = new QHGroupBox( this );
-        box->setMinimumHeight( 80 );
-        help_ = new QLabel( box );
-        grid->addMultiCellWidget( box, 3, 3, 0, 1 );
-    }
-    {
-        gauge_ = new ScoreGaugeConfiguration( this, controllers, staticModel.gaugeTypes_ );
-        grid->addMultiCellWidget( gauge_, 4, 4, 0, 1 );
+        QTabWidget* tabs = new QTabWidget( this );
+        {
+            QWidget* page = new QWidget( tabs );
+            QGridLayout* pageLayout = new QGridLayout( page, 6, 2, 0, 5 );
+            pageLayout->setRowStretch( 1, 3 );
+            pageLayout->setColStretch( 0, 2 );
+            pageLayout->setColStretch( 1, 3 );
+            {
+                QGroupBox* box = new QGroupBox( 2, Qt::Vertical, tr( "Formula" ), page );
+                formula_ = new FormulaLineEdit( box );
+                new ScoreSyntaxHighlighter( formula_, controllers, staticModel.indicators_ );
+                checkResult_ = new QLabel( box );
+                checkResult_->setMinimumHeight( 30 );
+                pageLayout->addMultiCellWidget( box, 0, 0, 0, 1 );
+                connect( formula_, SIGNAL( textChanged() ), SLOT( CheckFormula() ) );
+            }
+            {
+                ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( page, controllers, factory, staticModel.indicators_ );
+                pageLayout->addWidget( library, 1, 0 );
+                connect( library, SIGNAL( Selected( const indicators::Primitive& ) ), SLOT( OnSelectPrimitive( const indicators::Primitive& ) ) );
+                connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
+            }
+            {
+                QGroupBox* box = new QHGroupBox( tr( "Variables" ), page );
+                variables_ = new ScoreVariablesList( box, factory, controllers, layer, staticModel );
+                pageLayout->addWidget( box, 1, 1 );
+                connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
+                connect( variables_, SIGNAL( Updated() ), SLOT( CheckFormula() ) );
+                connect( variables_, SIGNAL( StartEdit() ), SLOT( hide() ) );
+                connect( variables_, SIGNAL( EndEdit() ), SLOT( show() ) );
+            }
+            {
+                QGroupBox* box = new QHGroupBox( page );
+                box->setMinimumHeight( 80 );
+                help_ = new QLabel( box );
+                pageLayout->addMultiCellWidget( box, 2, 2, 0, 1 );
+            }
+            tabs->addTab( page, tr( "Definition" ) );
+        }
+        {
+            gauge_ = new ScoreGaugeConfiguration( tabs, controllers, staticModel.gaugeTypes_ );
+            tabs->addTab( gauge_, tr( "Gauge" ) );
+        }
+        grid->addWidget( tabs, 1, 0 );
     }
     {
         QHBox* box = new QHBox( this );
         ok_ = new QPushButton( tr( "Ok" ), box );
         QButton* cancel = new QPushButton( tr( "Cancel" ), box );
-        grid->addWidget( box, 5, 1 );
+        grid->addWidget( box, 2, 0, Qt::AlignRight );
         connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );
     }

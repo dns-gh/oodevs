@@ -35,7 +35,7 @@ namespace kernel
 */
 // Created: SBO 2009-05-05
 // =============================================================================
-class ScoreGaugeConfiguration : public QVGroupBox
+class ScoreGaugeConfiguration : public QVBox
                               , public kernel::Observer_ABC
                               , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                               , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >

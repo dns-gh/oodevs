@@ -59,10 +59,10 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, kerne
     }
     {
         QHBox* box = new QHBox( this );
-        QButton* ok = new QPushButton( tr( "Ok" ), box );
+        ok_ = new QPushButton( tr( "Ok" ), box );
         QButton* cancel = new QPushButton( tr( "Cancel" ), box );
         grid->addWidget( box, 2, 0 );
-        connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
+        connect( ok_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
     }
     hide();
@@ -140,6 +140,7 @@ void ScoreVariableCreationWizard::hideEvent( QHideEvent* e )
 // -----------------------------------------------------------------------------
 void ScoreVariableCreationWizard::OnChangeName()
 {
+    ok_->setDisabled( name_->text().isEmpty() );
     if( name_->text().isEmpty() )
         name_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
     else
