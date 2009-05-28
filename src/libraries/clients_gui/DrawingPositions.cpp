@@ -121,7 +121,7 @@ geometry::Rectangle2f DrawingPositions::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void DrawingPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPoint( position_ );
+    LocationProxy::Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------
