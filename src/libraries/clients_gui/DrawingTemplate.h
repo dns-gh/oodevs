@@ -57,6 +57,7 @@ public:
     //@{
     QString GetName() const;
     QString GetType() const;
+    QString GetCode() const;
     QString GetDescription() const;
     QString GetCategory() const;
     QPixmap GetPixmap() const;
@@ -104,6 +105,7 @@ private:
     svg::TextRenderer& renderer_;
     QString name_;
     QString type_;
+    QString code_;
     QString description_;
     svg::References* references_;
     svg::Node_ABC* line_;

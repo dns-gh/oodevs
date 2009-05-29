@@ -353,6 +353,15 @@ void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawTacticalGraphics
+// Created: SBO 2009-05-29
+// -----------------------------------------------------------------------------
+void GlProxy::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const
+{
+    tools_->DrawTacticalGraphics( symbol, location, overlined );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::Reset2d
 // Created: AGE 2007-01-19
 // -----------------------------------------------------------------------------

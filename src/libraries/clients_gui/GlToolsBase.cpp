@@ -16,6 +16,7 @@
 #include "SvglRenderer.h"
 #include "GlTooltip.h"
 #include "SvglProxy.h"
+#include "TacticalGraphics.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -31,6 +32,7 @@ GlToolsBase::GlToolsBase( Controllers& controllers )
     , renderer_( new SvglRenderer() )
     , symbols_ ( new GLSymbols( *renderer_ ) )
     , svgl_    ( new SvglProxy( *renderer_ ) )
+    , graphics_( new TacticalGraphics( controllers ) )
     , billboard_( 0 )
 {
     controllers_.Register( *this );
@@ -145,6 +147,7 @@ void GlToolsBase::SetCurrentColor( float r, float g, float b, float a /*= 1*/ )
 {
     glColor4f( r, g, b, a );
     renderer_->SetCurrentColor( r, g, b, a );
+    graphics_->SetCurrentColor( r, g, b, a );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,6 +175,15 @@ void GlToolsBase::PrintApp6( const std::string& symbol, const std::string& style
 void GlToolsBase::DrawSvg( const std::string& filename, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/ )
 {
     svgl_->Draw( filename, viewport, vWidth, vHeight );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlToolsBase::DrawTacticalGraphics
+// Created: SBO 2009-05-29
+// -----------------------------------------------------------------------------
+void GlToolsBase::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, bool overlined )
+{
+    graphics_->Draw( symbol, location, viewport, *this, overlined );
 }
 
 // -----------------------------------------------------------------------------

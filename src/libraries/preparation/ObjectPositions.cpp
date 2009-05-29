@@ -10,23 +10,25 @@
 #include "preparation_pch.h"
 #include "ObjectPositions.h"
 #include "LocationSerializer.h"
-#include "clients_kernel/Polygon.h"
-#include "clients_kernel/Lines.h"
 #include "clients_kernel/Circle.h"
-#include "clients_kernel/Point.h"
-#include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Lines.h"
+#include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Point.h"
+#include "clients_kernel/Polygon.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions constructor
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-ObjectPositions::ObjectPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
+ObjectPositions::ObjectPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const kernel::Location_ABC& location )
     : converter_( converter )
     , location_( &location.Clone() )
+    , symbol_( type.GetSymbol() )
 {
     Update();
 }
@@ -35,9 +37,10 @@ ObjectPositions::ObjectPositions( const kernel::CoordinateConverter_ABC& convert
 // Name: ObjectPositions constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-ObjectPositions::ObjectPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+ObjectPositions::ObjectPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type )
     : converter_( converter )
     , location_( 0 )
+    , symbol_( type.GetSymbol() )
 {
     ReadLocation( xis );
     Update();
@@ -98,7 +101,7 @@ geometry::Point2f ObjectPositions::GetPosition() const
         return points_.front();
     return geometry::Point2f();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::GetHeight
 // Created: SBO 2006-09-11
@@ -243,32 +246,7 @@ void ObjectPositions::VisitPath( const geometry::Point2f& first, const T_PointVe
 // -----------------------------------------------------------------------------
 void ObjectPositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
+    if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() ) // $$$$ SBO 2009-05-29: location_->IsValid()
         return;
-
-    const bool selected = tools.ShouldDisplay();
-    glPushAttrib( GL_LINE_BIT );
-    if( selected )
-    {
-        glPushAttrib( GL_CURRENT_BIT );
-        glColor4f( 0, 0, 0, 0.5f );
-        glLineWidth( 6.f );
-        Draw( tools );
-        glPopAttrib();
-    }
-    glLineWidth( 2.f );
-    Draw( tools );
-    glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectPositions::Draw
-// Created: SBO 2007-03-28
-// -----------------------------------------------------------------------------
-void ObjectPositions::Draw( const kernel::GlTools_ABC& tools ) const
-{
-    if( points_.size() >= 2 )
-        tools.DrawLines( points_ );
-    else
-        tools.DrawCross( points_.front(), GL_CROSSSIZE );
+    tools.DrawTacticalGraphics( symbol_, *location_, tools.ShouldDisplay() );
 }

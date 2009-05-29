@@ -1800,11 +1800,11 @@
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
-        <translation>Objets</translation>
+        <translation type="obsolete">Objets</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation type="obsolete">Créer</translation>
     </message>
 </context>
 <context>
@@ -2963,6 +2963,17 @@
 &apos;Write&apos; permission allows you to control an unit.</source>
         <translation>&apos;Lecture&apos; permet de voir une unité.
 &apos;Ecriture&apos; permet de contrôler une unité.</translation>
+    </message>
+</context>
+<context>
+    <name>gui</name>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objets</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Créer</translation>
     </message>
 </context>
 <context>

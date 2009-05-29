@@ -9,14 +9,13 @@
 
 #include "gaming_pch.h"
 #include "ObjectKnowledgePositions.h"
-
-using namespace kernel;
+#include "clients_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePositions constructor
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-ObjectKnowledgePositions::ObjectKnowledgePositions( const CoordinateConverter_ABC& converter )
+ObjectKnowledgePositions::ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter )
     : LocationPositions( converter )
     , realObjectKnown_( false )
     , perceived_      ( false )
@@ -51,7 +50,8 @@ void ObjectKnowledgePositions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& m
 // Name: ObjectKnowledgePositions::Draw
 // Created: AGE 2006-05-19
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void ObjectKnowledgePositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    LocationPositions::Draw( where, viewport, tools );
+    if( const kernel::Location_ABC* location = GetLocation() )
+        tools.DrawTacticalGraphics( "--", *location, tools.ShouldDisplay() );
 }

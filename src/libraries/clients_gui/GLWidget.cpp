@@ -568,6 +568,14 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
     glPopAttrib();
 }
 
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawTacticalGraphics
+// Created: SBO 2009-05-29
+// -----------------------------------------------------------------------------
+void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const
+{
+    Base().DrawTacticalGraphics( symbol, location, viewport_, overlined );
+}
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawIcon

@@ -11,7 +11,11 @@
 #include "LocationPositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Circle.h"
+#include "clients_kernel/Lines.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/Point.h"
+#include "clients_kernel/Polygon.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
@@ -22,6 +26,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LocationPositions::LocationPositions( const CoordinateConverter_ABC& converter )
     : converter_( converter )
+    , location_( 0 )
 {
     // NOTHING
 }
@@ -109,7 +114,7 @@ void LocationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: LocationPositions::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void LocationPositions::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void LocationPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
@@ -141,6 +146,25 @@ void LocationPositions::Draw( const kernel::GlTools_ABC& tools ) const
         tools.DrawCross( points_.front(), GL_CROSSSIZE );
 }
 
+namespace
+{
+    std::auto_ptr< kernel::Location_ABC > BuildLocation( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
+    {
+        std::auto_ptr< kernel::Location_ABC > location;
+        switch( asn.type )
+        {
+        case EnumLocationType::point:   location.reset( new kernel::Point() ); break;
+        case EnumLocationType::line:    location.reset( new kernel::Lines() ); break;
+        case EnumLocationType::polygon: location.reset( new kernel::Polygon() ); break;
+        case EnumLocationType::circle:  location.reset( new kernel::Circle() ); break;
+        default: throw std::runtime_error( __FUNCTION__ " unsupported location type." ); break;
+        }
+        for( unsigned int i = 0; i < asn.coordinates.n; ++i )
+            location->AddPoint( converter.ConvertToXY( asn.coordinates.elem[i] ) );
+        return location;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LocationPositions::Update
 // Created: AGE 2006-05-18
@@ -151,6 +175,7 @@ void LocationPositions::Update( const ASN1T_Location& asn )
     center_ = geometry::Point2f( 0, 0 );
     boundingBox_.Set( 0, 0, 0, 0 );
     AddLocation( asn );
+    location_ = BuildLocation( converter_, asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,4 +212,13 @@ void LocationPositions::AddPoint( const geometry::Point2f& point )
     points_.push_back( point );
     center_ += geometry::Vector2f( point.X(), point.Y() );
     boundingBox_.Incorporate( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationPositions::GetLocation
+// Created: SBO 2009-05-29
+// -----------------------------------------------------------------------------
+const kernel::Location_ABC* LocationPositions::GetLocation() const
+{
+    return location_.get();
 }

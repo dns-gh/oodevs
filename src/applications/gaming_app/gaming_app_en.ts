@@ -1555,17 +1555,6 @@
     </message>
 </context>
 <context>
-    <name>ObjectCreationPanel</name>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ObjectKnowledgePanel</name>
     <message>
         <source>Object knowledges</source>
@@ -2517,6 +2506,17 @@
     <message>
         <source>&apos;Read&apos; permission allows you to see an unit.
 &apos;Write&apos; permission allows you to control an unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui</name>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

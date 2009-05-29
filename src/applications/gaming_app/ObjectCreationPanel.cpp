@@ -14,24 +14,21 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Controllers.h"
 
-#pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
-
-using namespace kernel;
-using namespace gui;
+#pragma warning( disable : 4355 )
 
 // -----------------------------------------------------------------------------
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, ParametersLayer& layer, gui::SymbolIcons& icons, const GlTools_ABC& tools )
-    : InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
+ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
+: gui::InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
     , controllers_( controllers )
     , publisher_( publisher )
     , tools_( tools )
-    , created_( new ObjectPrototype( this, controllers, model, layer, icons ) )
+    , created_( new ObjectPrototype( this, controllers, model, layer ) )
 {
-    QPushButton* pOkButton = new QPushButton( tr( "Create" ), this );
-    connect( pOkButton, SIGNAL( clicked() ), this, SLOT( Commit() ) );
+    QPushButton* ok = new QPushButton( tr( "Create" ), this );
+    connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
     controllers_.Register( *this );
 }
     
@@ -50,8 +47,6 @@ ObjectCreationPanel::~ObjectCreationPanel()
 // -----------------------------------------------------------------------------
 void ObjectCreationPanel::Commit()
 {
-    if( !created_->CheckValidity() )
-        return;
     created_->Commit( publisher_ );
 }
 

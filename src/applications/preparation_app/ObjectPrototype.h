@@ -34,13 +34,13 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, gui::SymbolIcons& icons );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer );
     virtual ~ObjectPrototype();
     //@}
 
     //! @name Operations
     //@{
-    void Commit();
+    virtual void Commit();
     //@}
 
 private:
@@ -50,17 +50,12 @@ private:
     ObjectPrototype& operator=( const ObjectPrototype& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    const kernel::ObjectType& GetType() const;
-    //@}
-
 private:
     //! @name Member data
     //@{
-    TeamsModel&                 teamsModel_;
-    kernel::Object_ABC*         creation_;
-    ObjectAttributesContainer*  container_;   
+    TeamsModel& model_;
+    kernel::Object_ABC* creation_;
+    ObjectAttributesContainer* container_;   
     //@}
 };
 

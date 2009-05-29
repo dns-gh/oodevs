@@ -16,7 +16,6 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "Types.h"
 
@@ -35,7 +34,6 @@ namespace kernel
 class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
              , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
-             , public kernel::Drawable_ABC
 {
 public:
     //! @name Static
@@ -56,27 +54,24 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Accessors
     //@{
-    virtual kernel::ObjectType& GetType           () const;
-    virtual QString             GetTypeName       () const;
-            bool                IsReservedObstacle() const;
-            bool                IsReservedObstacleActivated() const;
-
+    const kernel::ObjectType& GetType() const;
+    virtual QString GetTypeName() const;
+    bool IsReservedObstacle() const;
+    bool IsReservedObstacleActivated() const;
     //@}
     
 private:
     //! @name Copy/Assignment
     //@{
-    Object( const Object& );
-    Object& operator=( const Object& );
+    Object( const Object& );            //!< Copy constructor
+    Object& operator=( const Object& ); //!< Assignement operator
     //@}
 
-private:
-    //! @name Operations
+    //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
     //@}
@@ -85,16 +80,15 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    kernel::ObjectType&   type_;
+    const kernel::ObjectType& type_;
 
-    kernel::OptionalValue< float          > rConstructionPercentage_;
-    kernel::OptionalValue< float          > rValorizationPercentage_;
-    kernel::OptionalValue< float          > rBypassConstructionPercentage_;
+    kernel::OptionalValue< float > rConstructionPercentage_;
+    kernel::OptionalValue< float > rValorizationPercentage_;
+    kernel::OptionalValue< float > rBypassConstructionPercentage_;
     kernel::OptionalValue< E_DemolitionTargetType > obstacleType_;
-    kernel::OptionalValue< bool           > reservedObstacleActivated_;
+    kernel::OptionalValue< bool > reservedObstacleActivated_;
     //@}
 
-private:
     //! @name Member data
     //@{
     ASN1T_EnumLocationType nTypeLocalisation_;

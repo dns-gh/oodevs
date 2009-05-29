@@ -20,6 +20,7 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class Location_ABC;
+    class ObjectType;
 }
 
 namespace xml
@@ -42,8 +43,8 @@ class ObjectPositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             ObjectPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
+             ObjectPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const kernel::Location_ABC& location );
+             ObjectPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type );
     virtual ~ObjectPositions();
     //@}
 
@@ -77,7 +78,6 @@ private:
     virtual void VisitCircle ( const geometry::Point2f& center, float radius );
     virtual void VisitPoint  ( const geometry::Point2f& point );
     virtual void VisitPath   ( const geometry::Point2f& first, const T_PointVector& points );
-    void Draw( const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -85,8 +85,8 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::Location_ABC* location_;
+    const std::string symbol_;
     geometry::Rectangle2f boundingBox_;
-
     T_PointVector points_;
     //@}
 

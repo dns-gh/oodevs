@@ -13,24 +13,19 @@
 #include "ObjectPrototype_ABC.h"
 #include "moc_ObjectPrototype_ABC.cpp"
 
-#include "DisplayBuilder.h"
 #include "LocationCreator.h"
 #include "ParametersLayer.h"
 #include "Tools.h"
 #include "RichLabel.h"
-#include "GroupDisplayer.h"
 #include "ObjectAttributePrototypeContainer.h"
 #include "ObjectAttributePrototypeFactory_ABC.h"
-#include "ObjectPreviewIcon.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/ObjectType.h"
-#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Iterator.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -40,14 +35,12 @@ using namespace gui;
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const Resolver_ABC< ObjectType, std::string >& resolver, 
-                                         ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory, SymbolIcons& icons )
+                                         ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory )
     : QGroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
     , controllers_( controllers )
     , resolver_  ( resolver )
     , location_  ( 0 )    
-    , attributes_( new ObjectAttributePrototypeContainer( resolver, factory, 
-                            new QGroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent ) ) )
-    , preview_ ( 0 )
+    , attributes_( new ObjectAttributePrototypeContainer( resolver, factory, new QGroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent ) ) )
 {
     new QLabel( tr( "Name:" ), this );
     name_ = new QLineEdit( this );
@@ -66,13 +59,20 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 
     locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );  
 
-    preview_.reset( new ObjectPreviewIcon( this, controllers, icons ) );
-
     // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
 
     controllers.Register( *this );
 
     connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC destructor
+// Created: SBO 2006-04-18
+// -----------------------------------------------------------------------------
+ObjectPrototype_ABC::~ObjectPrototype_ABC()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -107,9 +107,7 @@ void ObjectPrototype_ABC::hideEvent( QHideEvent* )
 {
     if( locationCreator_ )
         controllers_.Unregister( *locationCreator_ );
-    delete location_;
-    location_ = 0;
-    
+    ResetLocation();
     attributes_->Hide();
 }
 
@@ -129,15 +127,6 @@ void ObjectPrototype_ABC::FillObjectTypes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPrototype_ABC destructor
-// Created: SBO 2006-04-18
-// -----------------------------------------------------------------------------
-ObjectPrototype_ABC::~ObjectPrototype_ABC()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectPrototype_ABC::CheckValidity
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
@@ -153,7 +142,7 @@ bool ObjectPrototype_ABC::CheckValidity() const
         position_->Warn( 3000 );
         return false;
     }
-    return true; // ( !activeAttributes_ || activeAttributes_->CheckValidity() );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -174,6 +163,8 @@ void ObjectPrototype_ABC::Clean()
 void ObjectPrototype_ABC::Commit()
 {
     attributes_->Commit();
+    name_->setText( "" );
+    ResetLocation();
 }
 
 // -----------------------------------------------------------------------------
@@ -216,7 +207,9 @@ void ObjectPrototype_ABC::OnTypeChanged()
     const ObjectType* type = objectTypes_->GetValue();
     if( !type )
         return;
-    preview_->NotifySelected( *type );    
+    locationCreator_->Allow( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle() );
+    if( location_ && !location_->IsValid() )
+        ResetLocation();
     attributes_->Select( *type );
 }
 
@@ -226,12 +219,10 @@ void ObjectPrototype_ABC::OnTypeChanged()
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::Handle( Location_ABC& location )
 {
-    delete location_;
+    ResetLocation();
     location_ = &location;
     if( location.IsValid() )
         locationLabel_->setText( location.GetName() );
-    else
-        locationLabel_->setText( tr( "---" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,36 +237,21 @@ void ObjectPrototype_ABC::ResetLocation()
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype_ABC::Draw
-// Created: SBO 2006-04-20
+// Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::Draw( const GlTools_ABC& tools ) const
+void ObjectPrototype_ABC::Draw( const kernel::GlTools_ABC& tools ) const
 {
-    if( isVisible() && location_ )
-    {
-//        if ( symbol_ != "" )
-//            DrawSymbol( tools );
-//        else
-        DrawSymbolLocation( tools );          
-    }
+    if( location_ )
+        Draw( *location_, geometry::Rectangle2f(), tools );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPrototype_ABC::DrawSymbol
-// Created: JCR 2008-08-27
+// Name: ObjectPrototype_ABC::Draw
+// Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::DrawSymbol( const kernel::GlTools_ABC& /*tools*/ ) const
+void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    // DrawingTemplate template( xml::xistream& xis, const DrawingCategory& category, svg::TextRenderer& renderer );
-    // SvgLocationDrawer drawer( template );
-    // location_->Accept( drawer );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ObjectPrototype_ABC::DrawSymbolLocation
-// Created: JCR 2008-08-27
-// -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::DrawSymbolLocation( const kernel::GlTools_ABC& tools ) const
-{
-    SimpleLocationDrawer drawer( tools );
-    location_->Accept( drawer );    
+    if( isVisible() )
+        if( const kernel::ObjectType* type = objectTypes_->GetValue() )
+            tools.DrawTacticalGraphics( type->GetSymbol(), location, true );
 }

@@ -14,19 +14,8 @@
 #include "game_asn/SimulationSenders.h"
 #include "LocationSerializer.h"
 
-namespace kernel
-{
-    class ObjectType;
-}
-
-namespace gui
-{
-    class SymbolIcons;
-}
-
 class StaticModel;
 class Publisher_ABC;
-
 
 // =============================================================================
 /** @class  ObjectPrototype
@@ -40,7 +29,7 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer, gui::SymbolIcons& icons );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer );
     virtual ~ObjectPrototype();
     //@}
 
@@ -54,12 +43,6 @@ private:
     //@{
     ObjectPrototype( const ObjectPrototype& );            //!< Copy constructor
     ObjectPrototype& operator=( const ObjectPrototype& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    ASN1T_MagicActionCreateObject& GetMessage();
-    const kernel::ObjectType& GetType() const;
     //@}
 
 private:

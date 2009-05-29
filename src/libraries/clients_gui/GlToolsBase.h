@@ -19,6 +19,7 @@ namespace gui
     class GLSymbols;
     class SvglRenderer;
     class SvglProxy;
+    class TacticalGraphics;
 
 // =============================================================================
 /** @class  GlToolsBase
@@ -54,6 +55,7 @@ public:
     static std::string DefaultStyle();
     void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
     void DrawSvg  ( const std::string& filename, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
+    void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, bool overlined );
     void DrawBillboardRect();
     //@}
 
@@ -91,6 +93,7 @@ private:
     std::auto_ptr< SvglRenderer > renderer_;
     std::auto_ptr< GLSymbols >    symbols_;
     std::auto_ptr< SvglProxy >    svgl_;
+    std::auto_ptr< TacticalGraphics > graphics_;
 
     unsigned billboard_;
 

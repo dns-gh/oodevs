@@ -231,7 +231,7 @@ kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, k
 {
     Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
-    result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, location ) );
+    result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, result->GetType(), location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( *result, &team ) );
     ObjectAttributesContainer& attributes = *new ObjectAttributesContainer();
     result->Attach< ObjectAttributesContainer >( attributes );
@@ -248,7 +248,7 @@ kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_
 {
     Object* result = new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, staticModel_.objectTypes_, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
-    result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_ ) );
+    result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( *result, &team ) );
     
     ObjectAttributesContainer& attributes = *new ObjectAttributesContainer();

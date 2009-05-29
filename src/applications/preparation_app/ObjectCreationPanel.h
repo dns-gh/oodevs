@@ -10,7 +10,6 @@
 #ifndef __ObjectCreationPanel_h_
 #define __ObjectCreationPanel_h_
 
-#include "clients_kernel/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
 
@@ -24,12 +23,11 @@ namespace kernel
 
 namespace gui
 {
-    class ParametersLayer;
+    class ObjectPrototype_ABC;
     class PanelStack_ABC;
-    class SymbolIcons;
+    class ParametersLayer;
 }
 
-class ObjectPrototype;
 class StaticModel;
 class TeamsModel;
 
@@ -43,24 +41,17 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
                           , public kernel::Observer_ABC
                           , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
-    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-            ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, gui::SymbolIcons& icons, const kernel::GlTools_ABC& tools );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~ObjectCreationPanel();
     //@}
 
     //! @name Operations
     //@{
-    void Draw( kernel::Viewport_ABC& viewport );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void Commit();
+    virtual void Draw( kernel::Viewport_ABC& viewport );
     //@}
 
 private:
@@ -80,7 +71,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
-    ObjectPrototype* created_;
+    gui::ObjectPrototype_ABC* created_;
     //@}
 };
 

@@ -77,7 +77,7 @@ BattleCenterJoinPage::~BattleCenterJoinPage()
 // -----------------------------------------------------------------------------
 void BattleCenterJoinPage::Update()
 {
-    exercises_->Update();
+//    exercises_->Update();
 }
 
 // -----------------------------------------------------------------------------

@@ -135,16 +135,12 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ParametersLayer& layer, gui::SymbolIcons& icons )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, 
-                           * FactoryMaker( controllers, model.objectTypes_, creation_ ),
-                           icons )
-    , msg_          ()
-    , creation_     ()
-    , serializer_   ( model.coordinateConverter_, creation_.location )
+ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer )
+    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, *FactoryMaker( controllers, model.objectTypes_, creation_ ) )
+    , serializer_( model.coordinateConverter_, creation_.location )
 {
-    msg_().action.t                 = T_MsgObjectMagicAction_action_create_object;
-    msg_().action.u.create_object   = &creation_;
+    msg_().action.t               = T_MsgObjectMagicAction_action_create_object;
+    msg_().action.u.create_object = &creation_;
 }
 
 // -----------------------------------------------------------------------------
@@ -162,29 +158,16 @@ ObjectPrototype::~ObjectPrototype()
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Commit( Publisher_ABC& publisher )
 {    
-    if( name_->text().isEmpty() )
-        return;
-    
-    creation_.name = name_->text().ascii();    
-    creation_.team = teams_->GetValue()->GetId();
-    creation_.type = objectTypes_->GetValue()->GetType().c_str();
-    
-    if( location_ )
-        serializer_.Serialize( *location_ );    
-    
-    ObjectPrototype_ABC::Commit();
-    msg_.Send( publisher );
-    Clean();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectPrototype::GetType
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-const ObjectType& ObjectPrototype::GetType() const
-{
-    const ObjectType* type = objectTypes_->GetValue();
-    if( !type )
-        throw std::runtime_error( "Object prototype has no type" );
-    return *type;
+    if( CheckValidity() )
+    {    
+        std::string name = name_->text().isEmpty() ? "" : name_->text().ascii();
+        creation_.name = name.c_str();
+        creation_.team = teams_->GetValue()->GetId();
+        creation_.type = objectTypes_->GetValue()->GetType().c_str();
+        if( location_ )
+            serializer_.Serialize( *location_ );    
+        ObjectPrototype_ABC::Commit();
+        msg_.Send( publisher );
+        Clean();
+    }
 }

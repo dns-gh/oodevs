@@ -17,6 +17,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Location_ABC;
 }
 
 // =============================================================================
@@ -64,6 +65,7 @@ private:
 protected:
     //! @name Helpers
     //@{
+    const kernel::Location_ABC* GetLocation() const;
     void Update( const ASN1T_Location& asn );
     void Update( const ASN1T_Location& asn, const geometry::Point2f& startPoint );
     //@}
@@ -75,6 +77,7 @@ private:
     T_PointVector points_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f center_;
+    std::auto_ptr< kernel::Location_ABC > location_;
     //@}
 };
 

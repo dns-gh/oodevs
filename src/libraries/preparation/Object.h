@@ -14,15 +14,12 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "EnumTypes.h"
 
 namespace kernel
 {
     class Controller;
     class ObjectType;
-    class DotationType;
     class Displayer_ABC;
     class CoordinateConverter_ABC;
 }
@@ -36,12 +33,14 @@ namespace xml
 class IdManager;
 
 // =============================================================================
+/** @class  Object
+    @brief  Object
+*/
 // Created: SBO 2005-09-02
 // =============================================================================
 class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
-             , public kernel::Drawable_ABC
-             , public kernel::Serializable_ABC             
+             , public kernel::Serializable_ABC
 {
 
 public:
@@ -54,19 +53,18 @@ public:
     virtual ~Object();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
-    //@}
-
     //! @name Accessors
     //@{
     virtual const kernel::ObjectType& GetType() const;
     //@}
-    
+
+    //! @name Operations
+    //@{
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -77,16 +75,13 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    unsigned long             ReadId                       ( xml::xistream& xis );
-    QString                   ReadName                     ( xml::xistream& xis );
-    const kernel::ObjectType& ReadType                     ( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types );    
     //@}
 
 public:
     //! @name Member data
     //@{
-    const kernel::CoordinateConverter_ABC&  converter_;
-    const kernel::ObjectType&               type_;    
+    const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::ObjectType& type_;    
     //@}
 };
 

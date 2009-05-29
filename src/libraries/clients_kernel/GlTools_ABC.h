@@ -21,6 +21,7 @@ namespace kernel
 {
     class Controllers;
     class GlTooltip_ABC;
+    class Location_ABC;
 
 // =============================================================================
 /** @class  GlTools_ABC
@@ -89,6 +90,7 @@ public:
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const = 0;
     virtual void DrawCell         ( const geometry::Point2f& center ) const = 0;
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f ) const = 0;
+    virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const = 0;
     //@}
 
 private:

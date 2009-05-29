@@ -23,11 +23,9 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/ObjectIcons.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Object::Object
@@ -35,8 +33,8 @@ using namespace xml;
 // -----------------------------------------------------------------------------    
 Object::Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const QString& name, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
-    , converter_                     ( converter )
-    , type_                          ( type )
+    , converter_( converter )
+    , type_( type )
 {
     RegisterSelf( *this );
     name_ = name.isEmpty() ? tools::translate( "Object", "%1 [%2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
@@ -48,9 +46,9 @@ Object::Object( kernel::Controller& controller, const kernel::CoordinateConverte
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
 Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& types, IdManager& idManager )
-    : EntityImplementation< Object_ABC >( controller, ReadId( xis ), ReadName( xis ) )
-    , converter_                     ( converter )
-    , type_                          ( ReadType( xis, types ) )    
+    : EntityImplementation< Object_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), xml::attribute< std::string >( xis, "name" ).c_str() )
+    , converter_( converter )
+    , type_( types.Get( xml::attribute< std::string >( xis, "type" ) ) )
 {
     idManager.Lock( id_ );
     RegisterSelf( *this );
@@ -66,39 +64,6 @@ Object::~Object()
     if( Entity_ABC* superior = const_cast< Entity_ABC* >( Get< kernel::TacticalHierarchies >().GetSuperior() ) )
         static_cast< Team* >( superior )->Resolver< kernel::Object_ABC >::Remove( id_ ); // $$$$ SBO 2006-10-20: 
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::ReadId
-// Created: SBO 2006-10-20
-// -----------------------------------------------------------------------------
-unsigned long Object::ReadId( xml::xistream& xis )
-{
-    int id;
-    xis >> attribute( "id", id );
-    return (unsigned long)id;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::ReadName
-// Created: SBO 2006-10-20
-// -----------------------------------------------------------------------------
-QString Object::ReadName( xml::xistream& xis )
-{
-    std::string name;
-    xis >> attribute( "name", name );
-    return name.c_str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::ReadType
-// Created: SBO 2006-10-20
-// -----------------------------------------------------------------------------
-const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_ABC< ObjectType, std::string >& types )
-{
-    std::string type;
-    xis >> attribute( "type", type );
-    return types.Get( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,23 +98,14 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::Draw
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void Object::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
-{
-    ObjectIcons::Draw( type_, where, viewport, tools );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Object::SerializeAttributes
 // Created: SBO 2006-09-12
 // -----------------------------------------------------------------------------
 void Object::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "id", long( id_ ) )
-        << attribute( "type", type_.GetType() )
-        << attribute( "name", name_ );
+    xos << xml::attribute( "id", long( id_ ) )
+        << xml::attribute( "type", type_.GetType() )
+        << xml::attribute( "name", name_ );
 }
 
 // -----------------------------------------------------------------------------

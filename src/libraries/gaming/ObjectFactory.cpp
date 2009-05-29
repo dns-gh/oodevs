@@ -64,7 +64,7 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 {
     Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
-    result->Attach< Positions >( *new ObjectPositions( static_.coordinateConverter_ ) );
+    result->Attach< Positions >( *new ObjectPositions( result->GetType(), static_.coordinateConverter_ ) );
     result->Attach< TacticalHierarchies >( *new ObjectHierarchies( *result, model_.teams_.GetTeam( message.team ) ) );
     
     Register( *result, message.attributes );

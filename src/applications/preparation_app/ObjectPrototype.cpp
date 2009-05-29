@@ -147,9 +147,9 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer, gui::SymbolIcons& icons )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, creation_ ), icons )
-    , teamsModel_( teamsModel )
+ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer )
+    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, creation_ ) )
+    , model_( teamsModel )
     , creation_( 0 )
 {
     // NOTHING
@@ -170,23 +170,11 @@ ObjectPrototype::~ObjectPrototype()
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Commit()
 {
-    const QString name = name_->text();
-    const kernel::Team_ABC* team = teams_->GetValue();
-    
-    creation_ = teamsModel_.CreateObject( *team, const_cast< ObjectType& >( GetType() ), name, *location_ );
-    if( creation_ )
-        ObjectPrototype_ABC::Commit();
-    creation_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectPrototype::GetType
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-const ObjectType& ObjectPrototype::GetType() const
-{
-    const ObjectType* type = objectTypes_->GetValue();
-    if( !type )
-        throw std::runtime_error( "Object prototype has no type" );
-    return *type;
+    if( CheckValidity() )
+    {
+        creation_ = model_.CreateObject( *teams_->GetValue(), *objectTypes_->GetValue(), name_->text(), *location_ );
+        if( creation_ )
+            ObjectPrototype_ABC::Commit();
+        creation_ = 0;
+    }
 }

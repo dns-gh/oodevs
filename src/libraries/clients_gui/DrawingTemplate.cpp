@@ -39,14 +39,16 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const DrawingCategory& c
 {
     SVGFactory factory( renderer_ );
     
-    std::string name, type, description;
+    std::string name, type, code, description;
     input >> xml::attribute( "name", name )
           >> xml::attribute( "type", type )
+          >> xml::optional() >> xml::attribute( "code", code )
           >> xml::optional() >> xml::content( "description", description )
           >> xml::start( "segment" );
 
     name_ = name.c_str(); 
     type_ = type.c_str();
+    code_ = code.empty() ? name_ : code.c_str();
     if( ! description.empty() )
         description_ = description.c_str();
     else 
@@ -87,6 +89,15 @@ QString DrawingTemplate::GetName() const
 QString DrawingTemplate::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingTemplate::GetCode
+// Created: SBO 2009-05-29
+// -----------------------------------------------------------------------------
+QString DrawingTemplate::GetCode() const
+{
+    return code_;
 }
 
 // -----------------------------------------------------------------------------

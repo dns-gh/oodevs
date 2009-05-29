@@ -13,6 +13,12 @@
 #include "LocationPositions.h"
 #include "clients_kernel/Updatable_ABC.h"
 
+namespace kernel
+{
+    class ObjectType;
+    class Location_ABC;
+}
+
 // =============================================================================
 /** @class  ObjectPositions
     @brief  ObjectPositions
@@ -27,8 +33,13 @@ class ObjectPositions : public LocationPositions
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObjectPositions( const kernel::CoordinateConverter_ABC& converter );
+             ObjectPositions( const kernel::ObjectType& type, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ObjectPositions();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -42,6 +53,12 @@ private:
     //@{
     virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
     virtual void DoUpdate( const ASN1T_MsgObjectCreation& message );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const std::string symbol_;
     //@}
 };
 

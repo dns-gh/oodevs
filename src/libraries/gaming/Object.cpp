@@ -9,19 +9,14 @@
 
 #include "gaming_pch.h"
 #include "Object.h"
-
 #include "Tools.h"
-#include "clients_kernel/Units.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/ObjectIcons.h"
-
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Units.h"
 
 using namespace kernel;
 
@@ -33,11 +28,11 @@ const QString Object::typeName_ = "object";
 // -----------------------------------------------------------------------------
 Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& typeResolver )
     : EntityImplementation< Object_ABC >( controller, message.oid, message.name )
-    , converter_                     ( converter )
-    , type_                          ( typeResolver.Get( message.type ) )
-    , nTypeLocalisation_             ( message.location.type )
-    , construction_                  ( 0 )
-    , valorization_                  ( 0 )
+    , converter_        ( converter )
+    , type_             ( typeResolver.Get( message.type ) )
+    , nTypeLocalisation_( message.location.type )
+    , construction_     ( 0 )
+    , valorization_     ( 0 )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid );
@@ -67,7 +62,7 @@ Object::~Object()
 // Name: Object::GetType
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-ObjectType& Object::GetType() const
+const ObjectType& Object::GetType() const
 {
     return type_;
 }
@@ -110,15 +105,6 @@ void Object::Display( Displayer_ABC& displayer ) const
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" ).Start( Styles::bold ).Add( *(Object_ABC*)this ).End();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Draw
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void Object::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
-{
-    ObjectIcons::Draw( type_, where, viewport, tools );
 }
 
 // -----------------------------------------------------------------------------

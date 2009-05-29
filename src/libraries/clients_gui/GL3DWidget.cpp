@@ -408,6 +408,15 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawTacticalGraphics
+// Created: SBO 2009-05-29
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const
+{
+    // $$$$ SBO 2009-05-29: TODO
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------

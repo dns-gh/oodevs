@@ -81,7 +81,7 @@ void TeamsModel::CreateKnowledgeGroup( const kernel::Team_ABC& team )
 // Name: TeamsModel::CreateObject
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-Object_ABC* TeamsModel::CreateObject( const kernel::Team_ABC& team, kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location )
+Object_ABC* TeamsModel::CreateObject( const kernel::Team_ABC& team, const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location )
 {
     return static_cast< Team& >( Get( team.GetId() ) ).CreateObject( type, name, location );
 }
