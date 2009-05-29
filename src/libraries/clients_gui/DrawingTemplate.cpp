@@ -32,6 +32,7 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const DrawingCategory& c
     , markerStart_ ( 0 )
     , markerMiddle_( 0 )
     , markerEnd_   ( 0 )
+    , marker_      ( 0 )
     , linePixmap_( MAKE_PIXMAP( line ) )
     , pointPixmap_( MAKE_PIXMAP( point ) )
     , polygonPixmap_( MAKE_PIXMAP( polygon ) )
@@ -57,7 +58,8 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const DrawingCategory& c
     input >> xml::end() // segment
           >> xml::list( "marker-start", *this, &DrawingTemplate::ReadMarker, markerStart_, startUnit )
           >> xml::list( "marker-mid", *this, &DrawingTemplate::ReadMarker, markerMiddle_, middleUnit )
-          >> xml::list( "marker-end", *this, &DrawingTemplate::ReadMarker, markerEnd_, endUnit );
+          >> xml::list( "marker-end", *this, &DrawingTemplate::ReadMarker, markerEnd_, endUnit )
+          >> xml::list( "marker", *this, &DrawingTemplate::ReadMarker, marker_, markerUnit );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,6 +172,18 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
             DrawMiddleMarker( context, tools, *it, *(it-1), *(it+1) );
     if( markerEnd_ )
         DrawEndMarker( context, tools, points.back(), points[ points.size() - 2 ] );
+    if( marker_ )
+    {
+        geometry::Rectangle2f boundingBox;
+        geometry::Point2f center;
+        const unsigned int count = points.size() - 1;
+        for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )
+        {
+            boundingBox.Incorporate( *it );
+            center += geometry::Vector2f( it->X() / count, it->Y() / count );
+        }
+        DrawMarker( context, tools, *marker_, markerUnit, center, geometry::Vector2f( 1.f, 0.f ) * boundingBox.Width() );
+    }
 }
 
 // -----------------------------------------------------------------------------
