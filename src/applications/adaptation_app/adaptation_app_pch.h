@@ -119,17 +119,17 @@ namespace xml
 
         //! @name Operators
         //@{
-        xistream& operator()( xistream& xis ) const
+        friend xistream& operator>>( xistream& xis, const attribute_manipulator& m )
         {
-            T value = value_.GetData();
-            xis.attribute( name_, value );
-            value_ = value;
+            T value = m.value_.GetData();
+            xis.attribute( m.name_, value );
+            m.value_ = value;
             return xis;
         }
-        xostream& operator()( xostream& xos ) const
+        friend xostream& operator<<( xostream& xos, const attribute_manipulator& m )
         {
-            T value = value_.GetData();
-            xos.attribute( name_, value );
+            T value = m.value_.GetData();
+            xos.attribute( m.name_, value );
             return xos;
         }
         //@}
@@ -162,16 +162,16 @@ namespace xml
 
         //! @name Operators
         //@{
-        xistream& operator()( xistream& xis ) const
+        friend xistream& operator>>( xistream& xis, const content_manipulator& m )
         {
             T value;
-            xis >> start( tag_ ) >> value >> end();
-            value_ = value;
+            xis >> start( m.tag_ ) >> value >> end();
+            m.value_ = value;
             return xis;
         }
-        xostream& operator()( xostream& xos ) const
+        friend xostream& operator<<( xostream& xos, const content_manipulator& m )
         {
-            return xos << start( tag_ ) << value_.GetData() << end();
+            return xos << start( m.tag_ ) << m.value_.GetData() << end();
         }
         //@}
 
