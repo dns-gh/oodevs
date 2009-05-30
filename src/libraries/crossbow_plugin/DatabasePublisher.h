@@ -13,11 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "game_asn/Messenger.h"
 #include "dispatcher/MessageHandler_ABC.h"
-
-namespace xml
-{
-    class xistream;
-}
+#include <xeumeuleu/xml.h>
 
 namespace dispatcher
 {

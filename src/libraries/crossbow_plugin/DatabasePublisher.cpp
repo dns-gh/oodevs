@@ -22,7 +22,6 @@
 #include "ScopeEditor.h"
 #include "ExtensionFactory.h"
 #include "dispatcher/Model.h"
-#include <xeumeuleu/xml.h>
 
 using namespace plugins;
 using namespace plugins::crossbow;
