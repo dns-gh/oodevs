@@ -11,7 +11,7 @@
 
 #include "MT/MT_Logger/MT_FileLogger.h"
 #include "tools/win32/FlexLm.h"
-#include "xeumeuleu/exception.h"
+#include <xeumeuleu/xml.h>
 
 #include <commctrl.h>
 #include <new.h>
