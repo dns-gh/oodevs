@@ -81,8 +81,8 @@
       <weapon-system launcher="Mitrailleuse" munition="Balle Classique 12,7"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="600s" type="bouchon mines" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="600s" non-bypassed-speed="10" type="pont flottant continu" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="600s" type="mines" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="600s" non-bypassed-speed="10" type="continuous pontoon bridge" valorization-time="0s"/>
       <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="72s" destruction-time-factor="180s" devalorization-time="10800s" initial-construction-time="3600s" initial-destruction-time="0s" type="abattis" valorization-time="3600s"/>
     </objects>
     <breakdowns>
@@ -174,8 +174,8 @@
       <weapon-system launcher="Mitrailleuse" munition="Balle Classique 12,7"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="600s" type="bouchon mines" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="600s" non-bypassed-speed="10" type="pont flottant continu" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="600s" type="mines" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" initial-destruction-time="600s" non-bypassed-speed="10" type="continuous pontoon bridge" valorization-time="0s"/>
       <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="72s" destruction-time-factor="180s" devalorization-time="10800s" initial-construction-time="3600s" initial-destruction-time="0s" type="abattis" valorization-time="3600s"/>
     </objects>
     <breakdowns>
@@ -252,7 +252,7 @@
       <weapon-system launcher="Mitrailleuse" munition="Balle Classique 12,7"/>
     </weapon-systems>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" type="fosse anti char" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" type="anti tank obstacle" valorization-time="0s"/>
     </objects>
   </element>
   <element codeEMAT6="CompNBC" codeEMAT8="CompNBC" codeLFRIL="CompNBC" codeNNO="CompNBC" comment="" id="4" name="CompNBC" protection="BlindeLeger" size="Moyen" weight="5">
@@ -329,7 +329,7 @@
       <weapon-system launcher="Lance-fussoir" munition="Obus fumigene"/>
     </weapon-systems>
     <objects>
-      <object initial-construction-time="0s" initial-destruction-time="0s" type="site decontamination"/>
+      <object initial-construction-time="0s" initial-destruction-time="0s" type="decontamination site"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="100" type="Panne 6"/>

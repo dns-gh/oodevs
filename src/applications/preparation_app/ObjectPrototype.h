@@ -14,7 +14,6 @@
 
 namespace kernel
 {
-    class ObjectType;
     class Object_ABC;
 }
 

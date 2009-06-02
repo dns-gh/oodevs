@@ -12,6 +12,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
+#include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Reports_Data::ReportParameterValue

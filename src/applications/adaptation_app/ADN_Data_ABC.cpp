@@ -6,20 +6,10 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Data_ABC.cpp $
-// $Author: Ape $
-// $Modtime: 22/04/05 16:08 $
-// $Revision: 3 $
-// $Workfile: ADN_Data_ABC.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Data_ABC.h"
 #include "moc_ADN_Data_ABC.cpp"
-
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
@@ -52,13 +42,13 @@ ADN_Data_ABC::~ADN_Data_ABC()
 void ADN_Data_ABC::Load()
 {
     T_StringList fileList;
-    this->FilesNeeded( fileList );
-    // This function is only valid is there is one file to write.
-    assert( fileList.size() == 1 );
-    std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
-
-    xml::xifstream input( strFile );
-    ReadArchive( input );
+    FilesNeeded( fileList );
+    if( ! fileList.empty() )
+    {
+        const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
+        xml::xifstream input( strFile );
+        ReadArchive( input );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -68,14 +58,14 @@ void ADN_Data_ABC::Load()
 void ADN_Data_ABC::Save()
 {
     T_StringList fileList;
-    this->FilesNeeded( fileList );
-    // This function is only valid is there is one file to write.
-    assert( fileList.size() == 1 );
-    std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + fileList.front();
-    ADN_Tools::CreatePathToFile( strFile );
-
-    xml::xofstream output( strFile );
-    WriteArchive( output );
+    FilesNeeded( fileList );
+    if( ! fileList.empty() )
+    {
+        std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + fileList.front();
+        ADN_Tools::CreatePathToFile( strFile );
+        xml::xofstream output( strFile );
+        WriteArchive( output );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -10,10 +10,7 @@
 #ifndef __ObjectType_h_
 #define __ObjectType_h_
 
-namespace boost
-{
-    template<typename T> class shared_ptr;
-}
+#include <boost/shared_ptr.hpp>
 
 namespace xml 
 { 
@@ -21,11 +18,8 @@ namespace xml
     class xistream; 
 };
 
-class ObjectCapacity_ABC;
-
 namespace kernel
 {
-    class Object_ABC;
 
 // =============================================================================
 /** @class  ObjectType
@@ -39,7 +33,7 @@ class ObjectType
 public:
     //! @name Constructors/Destructor
     //@{
-            ObjectType( xml::xistream& xis, const std::string& type );
+    explicit ObjectType( xml::xistream& xis );
     virtual ~ObjectType();
     //@}
 
@@ -88,14 +82,13 @@ private:
 private:
     //! @name Static members
     //@{
-    std::string     type_;
-    std::string     symbol_;
-    
-    T_Capacities    capacities_;
-
-    bool            canBeValorized_;
-    bool            canBeBypassed_;
-    std::string     geometry_;
+    const std::string name_;
+    const std::string type_;
+    const std::string symbol_;
+    const std::string geometry_;
+    T_Capacities capacities_;
+    bool canBeValorized_;
+    bool canBeBypassed_;
     //@}
 };
 

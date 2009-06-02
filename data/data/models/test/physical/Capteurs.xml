@@ -124,7 +124,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="1000" type="bouchon mines">
+        <object detection-distance="1000" type="mines">
           <population-modifier density="1" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -136,7 +136,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.2"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="itineraire logistique">
+        <object detection-distance="1000" type="itinerlogistic area">
           <population-modifier density="1" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -148,7 +148,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.2"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="5000" type="site franchissement">
+        <object detection-distance="5000" type="crossing site">
           <population-modifier density="1" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -226,7 +226,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="1000" type="rota">
+        <object detection-distance="1000" type="rota area">
           <population-modifier density="1" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -238,7 +238,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.2"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="nuage nbc">
+        <object detection-distance="1000" type="nbc cloud">
           <population-modifier density="1" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>

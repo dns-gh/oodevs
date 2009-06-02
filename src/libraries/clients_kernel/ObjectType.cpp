@@ -9,27 +9,23 @@
 
 #include "clients_kernel_pch.h"
 #include "ObjectType.h"
-#include "tools.h"
-
 #include <xeumeuleu/xml.h>
-#include <boost/shared_ptr.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectType constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-ObjectType::ObjectType( xistream& xis, const std::string& type )
-    : type_ ( type )    
-    , symbol_ ()
+ObjectType::ObjectType( xml::xistream& xis )
+    : name_( xml::attribute< std::string >( xis, "name" ) )
+    , type_( xml::attribute< std::string >( xis, "type" ) )
+    , symbol_ ( xml::attribute< std::string >( xis, "symbol", "" ) )
+    , geometry_( xml::attribute< std::string >( xis, "geometry", "" ) )
     , canBeValorized_ ( false )
     , canBeBypassed_ ( false )
 {
-    xis >> optional() >> attribute( "geometry", geometry_ )
-        >> optional() >> attribute( "symbol", symbol_ )
-        >> list( *this, &ObjectType::ReadCapacities );
+    xis >> xml::list( *this, &ObjectType::ReadCapacities );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +41,7 @@ ObjectType::~ObjectType()
 // Name: ObjectType::ReadAttributes
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-void ObjectType::ReadCapacities( const std::string& capacity, xistream& xis )
+void ObjectType::ReadCapacities( const std::string& capacity, xml::xistream& xis )
 {
     capacities_[ capacity ].reset( new xml::xibufferstream( xis ) );
 }
@@ -56,7 +52,7 @@ void ObjectType::ReadCapacities( const std::string& capacity, xistream& xis )
 // -----------------------------------------------------------------------------
 const std::string& ObjectType::GetName() const
 {
-    return type_;
+    return name_;
 }
 
 // -----------------------------------------------------------------------------

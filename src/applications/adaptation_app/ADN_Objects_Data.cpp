@@ -137,7 +137,7 @@ namespace
     std::vector< std::string > VectorBuilder( const char* choice[], uint size )
     {
         std::vector< std::string > stack( size );
-        for ( int i = 0; i < size; ++i )
+        for ( int i = 0; i < int( size ); ++i )
             stack[ i ] = std::string( choice[ i ] );
         return stack;
     }
@@ -279,7 +279,7 @@ const char* ADN_Objects_Data::ADN_CapacityInfos_Constructor::choices_[] = { "raw
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Constructor::ADN_CapacityInfos_Constructor()
-    : nDefaultConsumption_ ( E_ConsumptionType::eWorking )
+    : nDefaultConsumption_ ( eWorking )
     , unitType_ ( VectorBuilder( choices_, 2 ) )
     , ptrBuildable_ ( new ADN_CapacityInfos_Buildable() )
     , ptrImprovable_ ( new ADN_CapacityInfos_Improvable() )
@@ -821,20 +821,19 @@ INIT_DATA( ADN_CapacityInfos_Workable,         "Workable",          "workable" )
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
 ADN_Objects_Data::ObjectInfos::ObjectInfos( const std::string& type )
-    : ADN_Ref_ABC       ()    
-    , strName_          ( type )    
+    : ADN_Ref_ABC()
+    , strType_( type )
 {
     InitializeCapacities();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ObjectInfos
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ObjectInfos::ObjectInfos()
-    : ADN_Ref_ABC       ()    
-    , strName_          ()    
+    : ADN_Ref_ABC()
+    , strType_()
 {
     InitializeCapacities();
 }
@@ -846,7 +845,6 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos()
 ADN_Objects_Data::ObjectInfos::~ObjectInfos()
 {
 //    vScoreLocation_.Reset();
-	
 }
 
 // -----------------------------------------------------------------------------
@@ -977,7 +975,9 @@ void ADN_Objects_Data::ObjectInfos::ReadCapacityArchive( const std::string& type
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& xis )
 {
-    xis >> xml::attribute( "geometry", geometries_ )
+    xis >> xml::attribute( "name", strName_ )
+        >> xml::attribute( "type", strType_ )
+        >> xml::attribute( "geometry", geometries_ )
         >> xml::optional() >> xml::attribute( "symbol", symbol_ )
         >> xml::list( *this, &ADN_Objects_Data::ObjectInfos::ReadCapacityArchive );
 }
@@ -989,19 +989,18 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& xis )
 void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& xos )
 {
     xos << xml::start( "object" )
-        << xml::attribute( "type", strName_ )
+        << xml::attribute( "name", strName_ )
+        << xml::attribute( "type", strType_ ) 
         << xml::attribute( "geometry", geometries_.GetData() )
         << xml::attribute( "symbol", symbol_ );
 
 	for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
-	{
 		if( it->second->bPresent_.GetData() )
 		{
 			xos << xml::start( it->first );
             it->second->WriteArchive( xos );
             xos << xml::end();
 		}
-	}
     xos << xml::end();
 }
 

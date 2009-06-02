@@ -122,7 +122,7 @@ void ObjectPrototype_ABC::FillObjectTypes()
     while( it.HasMoreElements() )
     {
         const ObjectType& element = it.NextElement();
-        objectTypes_->AddItem( element.GetType(), &element );
+        objectTypes_->AddItem( element.GetName(), &element );
     }
 }
 

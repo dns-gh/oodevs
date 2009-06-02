@@ -129,10 +129,8 @@ void ObjectTypes::ReadObjectTypes( const std::string& objects )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadObjectType( xml::xistream& xis )
 {
-    std::string type;
-    xis >> attribute( "type", type );
-    // int nType = tools::ObjectTypeFromString( type );
-    StringResolver< ObjectType >::Register( type, *new ObjectType( xis, type ) );
+    ObjectType* type = new ObjectType( xis );
+    StringResolver< ObjectType >::Register( type->GetType(), *type );
 }
 
 // -----------------------------------------------------------------------------

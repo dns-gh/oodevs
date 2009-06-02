@@ -298,7 +298,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="300" type="bouchon mines">
+        <object detection-distance="300" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.01"/>
@@ -310,7 +310,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.5"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="fosse anti char">
+        <object detection-distance="500" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.5"/>
@@ -346,7 +346,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="300" type="eboulement">
+        <object detection-distance="300" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -358,7 +358,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="300" type="destruction route">
+        <object detection-distance="300" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -370,7 +370,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="pont flottant continu">
+        <object detection-distance="400" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -382,7 +382,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="pont flottant discontinu">
+        <object detection-distance="400" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -394,7 +394,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="poste tir">
+        <object detection-distance="500" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -406,7 +406,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone protegee">
+        <object detection-distance="500" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -418,7 +418,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="destruction pont">
+        <object detection-distance="500" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -430,7 +430,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="site franchissement">
+        <object detection-distance="400" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -442,7 +442,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation canon">
+        <object detection-distance="100" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -454,7 +454,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation cobra">
+        <object detection-distance="100" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -466,7 +466,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation lrm">
+        <object detection-distance="100" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -478,7 +478,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="rota">
+        <object detection-distance="500" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -490,7 +490,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="camp refugies">
+        <object detection-distance="1000" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -502,7 +502,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="camp prisonniers">
+        <object detection-distance="1000" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -514,7 +514,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="site decontamination">
+        <object detection-distance="500" type="decontamination site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -526,7 +526,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="200" type="plot ravitaillement">
+        <object detection-distance="200" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -538,7 +538,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="piste">
+        <object detection-distance="500" type="trail">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -550,7 +550,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="poste controle">
+        <object detection-distance="500" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -562,7 +562,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation mortier">
+        <object detection-distance="100" type="mortar deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -640,7 +640,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="500" type="fosse anti char">
+        <object detection-distance="500" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.5"/>
@@ -676,7 +676,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="eboulement">
+        <object detection-distance="500" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -688,7 +688,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="destruction route">
+        <object detection-distance="500" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -700,7 +700,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="pont flottant continu">
+        <object detection-distance="500" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -712,7 +712,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="pont flottant discontinu">
+        <object detection-distance="500" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -724,7 +724,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="poste tir">
+        <object detection-distance="500" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -736,7 +736,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone protegee">
+        <object detection-distance="500" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -748,7 +748,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="destruction pont">
+        <object detection-distance="500" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -760,7 +760,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="plot ravitaillement">
+        <object detection-distance="500" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -772,7 +772,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="rota">
+        <object detection-distance="500" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -784,7 +784,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone poser helicoptere">
+        <object detection-distance="500" type="landing area (helicopter)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -796,7 +796,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="aire logistique">
+        <object detection-distance="500" type="logistic area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -808,7 +808,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="aire poser">
+        <object detection-distance="500" type="landing area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -820,7 +820,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="camp prisonniers">
+        <object detection-distance="1000" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -832,7 +832,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="camp refugies">
+        <object detection-distance="1000" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -844,7 +844,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="piste">
+        <object detection-distance="500" type="trail">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -856,7 +856,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="plateforme">
+        <object detection-distance="500" type="platform">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1193,7 +1193,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="100" type="bouchon mines">
+        <object detection-distance="100" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -1205,7 +1205,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee lineaire">
+        <object detection-distance="100" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -1217,7 +1217,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee par dispersion">
+        <object detection-distance="100" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -1229,7 +1229,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="fosse anti char">
+        <object detection-distance="100" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -1265,7 +1265,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="eboulement">
+        <object detection-distance="100" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1277,7 +1277,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="destruction route">
+        <object detection-distance="100" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1289,7 +1289,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant continu">
+        <object detection-distance="100" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1301,7 +1301,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1313,7 +1313,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="poste tir">
+        <object detection-distance="100" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1325,7 +1325,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone protegee">
+        <object detection-distance="100" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1337,7 +1337,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="destruction pont">
+        <object detection-distance="100" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1349,7 +1349,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="site franchissement">
+        <object detection-distance="100" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1361,7 +1361,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation canon">
+        <object detection-distance="100" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1373,7 +1373,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation cobra">
+        <object detection-distance="100" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1385,7 +1385,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation lrm">
+        <object detection-distance="100" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1397,7 +1397,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="rota">
+        <object detection-distance="100" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1409,7 +1409,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="camp prisonniers">
+        <object detection-distance="100" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1421,7 +1421,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="camp refugies">
+        <object detection-distance="100" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1433,7 +1433,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="poste controle">
+        <object detection-distance="0" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1445,7 +1445,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="site decontamination">
+        <object detection-distance="100" type="decontamination site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1523,7 +1523,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="100" type="bouchon mines">
+        <object detection-distance="100" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -1535,7 +1535,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee lineaire">
+        <object detection-distance="100" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -1547,7 +1547,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee par dispersion">
+        <object detection-distance="100" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -1559,7 +1559,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="fosse anti char">
+        <object detection-distance="400" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1595,7 +1595,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="eboulement">
+        <object detection-distance="400" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1607,7 +1607,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction route">
+        <object detection-distance="400" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1619,7 +1619,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="pont flottant continu">
+        <object detection-distance="400" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1631,7 +1631,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1643,7 +1643,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="poste tir">
+        <object detection-distance="400" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1655,7 +1655,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone protegee">
+        <object detection-distance="400" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1667,7 +1667,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction pont">
+        <object detection-distance="400" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1679,7 +1679,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="site franchissement">
+        <object detection-distance="1000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1691,7 +1691,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation canon">
+        <object detection-distance="400" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1703,7 +1703,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation cobra">
+        <object detection-distance="400" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1715,7 +1715,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation lrm">
+        <object detection-distance="400" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -1727,7 +1727,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="camp prisonniers">
+        <object detection-distance="400" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1739,7 +1739,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="camp refugies">
+        <object detection-distance="400" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1751,7 +1751,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="rota">
+        <object detection-distance="500" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1763,7 +1763,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="poste controle">
+        <object detection-distance="400" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1775,7 +1775,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="plot ravitaillement">
+        <object detection-distance="0" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1787,7 +1787,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="plateforme">
+        <object detection-distance="0" type="platform">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2057,7 +2057,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="1500" type="rota">
+        <object detection-distance="1500" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2093,7 +2093,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="200" type="bouchon mines">
+        <object detection-distance="200" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -2105,7 +2105,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1500" type="camp refugies">
+        <object detection-distance="1500" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2117,7 +2117,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1500" type="camp prisonniers">
+        <object detection-distance="1500" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2129,7 +2129,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="destruction pont">
+        <object detection-distance="500" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2141,7 +2141,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="destruction route">
+        <object detection-distance="500" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2153,7 +2153,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="pont flottant continu">
+        <object detection-distance="500" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2165,7 +2165,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2177,7 +2177,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="poste controle">
+        <object detection-distance="1000" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2189,7 +2189,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="site decontamination">
+        <object detection-distance="500" type="decontamination site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2201,7 +2201,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="site franchissement">
+        <object detection-distance="500" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2213,7 +2213,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="plot ravitaillement">
+        <object detection-distance="100" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2225,7 +2225,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="eboulement">
+        <object detection-distance="100" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2237,7 +2237,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="fosse anti char">
+        <object detection-distance="0" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2249,7 +2249,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="poste tir">
+        <object detection-distance="0" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2261,7 +2261,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="piste">
+        <object detection-distance="0" type="trail">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2273,7 +2273,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone minee par dispersion">
+        <object detection-distance="0" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -2285,7 +2285,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone minee lineaire">
+        <object detection-distance="0" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -2297,7 +2297,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone implantation mortier">
+        <object detection-distance="0" type="mortar deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2309,7 +2309,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone implantation lrm">
+        <object detection-distance="0" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2321,7 +2321,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone implantation cobra">
+        <object detection-distance="0" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2333,7 +2333,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone implantation canon">
+        <object detection-distance="0" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2345,7 +2345,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone protegee">
+        <object detection-distance="0" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2423,7 +2423,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="300" type="bouchon mines">
+        <object detection-distance="300" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -2435,7 +2435,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="300" type="zone minee lineaire">
+        <object detection-distance="300" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -2447,7 +2447,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="300" type="zone minee par dispersion">
+        <object detection-distance="300" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -2459,7 +2459,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="fosse anti char">
+        <object detection-distance="400" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -2495,7 +2495,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="eboulement">
+        <object detection-distance="400" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2507,7 +2507,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction route">
+        <object detection-distance="400" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2519,7 +2519,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="pont flottant continu">
+        <object detection-distance="400" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2531,7 +2531,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2543,7 +2543,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="poste tir">
+        <object detection-distance="500" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -2555,7 +2555,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone protegee">
+        <object detection-distance="500" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -2567,7 +2567,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction pont">
+        <object detection-distance="400" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2579,7 +2579,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="site franchissement">
+        <object detection-distance="1000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2591,7 +2591,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone implantation canon">
+        <object detection-distance="500" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -2603,7 +2603,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone implantation cobra">
+        <object detection-distance="500" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -2615,7 +2615,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone implantation lrm">
+        <object detection-distance="500" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -2627,7 +2627,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="rota">
+        <object detection-distance="2000" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2639,7 +2639,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="camp prisonniers">
+        <object detection-distance="1000" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2651,7 +2651,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="camp refugies">
+        <object detection-distance="1000" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2663,7 +2663,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="site decontamination">
+        <object detection-distance="2000" type="decontamination site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2675,7 +2675,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="poste controle">
+        <object detection-distance="1000" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2687,7 +2687,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="piste">
+        <object detection-distance="0" type="trail">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2699,7 +2699,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="plot ravitaillement">
+        <object detection-distance="0" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2711,7 +2711,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone implantation mortier">
+        <object detection-distance="0" type="mortar deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2792,7 +2792,7 @@
     </sensor>
     <sensor name="Detecteur NBC">
       <object-detection>
-        <object detection-distance="1" type="zone nbc">
+        <object detection-distance="1" type="nbc zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -2870,7 +2870,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="300" type="bouchon mines">
+        <object detection-distance="300" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -2882,7 +2882,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="300" type="zone minee lineaire">
+        <object detection-distance="300" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.01"/>
@@ -2894,7 +2894,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="300" type="zone minee par dispersion">
+        <object detection-distance="300" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.01"/>
@@ -2906,7 +2906,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.9"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="fosse anti char">
+        <object detection-distance="400" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -2942,7 +2942,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="eboulement">
+        <object detection-distance="400" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2954,7 +2954,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction route">
+        <object detection-distance="400" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2966,7 +2966,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="pont flottant continu">
+        <object detection-distance="400" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2978,7 +2978,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2990,7 +2990,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="poste tir">
+        <object detection-distance="500" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -3002,7 +3002,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone protegee">
+        <object detection-distance="500" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -3014,7 +3014,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction pont">
+        <object detection-distance="400" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3026,7 +3026,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="site franchissement">
+        <object detection-distance="1000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3038,7 +3038,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone implantation canon">
+        <object detection-distance="500" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -3050,7 +3050,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone implantation cobra">
+        <object detection-distance="500" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -3062,7 +3062,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="zone implantation lrm">
+        <object detection-distance="500" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.9"/>
@@ -3074,7 +3074,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="rota">
+        <object detection-distance="500" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3086,7 +3086,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="camp prisonniers">
+        <object detection-distance="500" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3098,7 +3098,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="camp refugies">
+        <object detection-distance="500" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3176,7 +3176,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="150" type="zone minee lineaire">
+        <object detection-distance="150" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.3"/>
@@ -3188,7 +3188,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="zone minee par dispersion">
+        <object detection-distance="150" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.3"/>
@@ -3200,7 +3200,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="fosse anti char">
+        <object detection-distance="150" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3236,7 +3236,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="eboulement">
+        <object detection-distance="150" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3248,7 +3248,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="destruction route">
+        <object detection-distance="150" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3260,7 +3260,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="pont flottant continu">
+        <object detection-distance="150" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3272,7 +3272,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3284,7 +3284,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="poste tir">
+        <object detection-distance="150" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3296,7 +3296,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="zone protegee">
+        <object detection-distance="150" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3308,7 +3308,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="destruction pont">
+        <object detection-distance="150" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3320,7 +3320,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="site franchissement">
+        <object detection-distance="150" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3332,7 +3332,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="rota">
+        <object detection-distance="150" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3344,7 +3344,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="camp prisonniers">
+        <object detection-distance="150" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3356,7 +3356,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="camp refugies">
+        <object detection-distance="150" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3368,7 +3368,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="aire logistique">
+        <object detection-distance="150" type="logistic area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3380,7 +3380,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="piste">
+        <object detection-distance="150" type="trail">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3392,7 +3392,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="poste controle">
+        <object detection-distance="150" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3404,7 +3404,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="zone mobilite amelioree">
+        <object detection-distance="150" type="mobility enhanced area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3506,7 +3506,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="pont flottant continu">
+        <object detection-distance="2000" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3518,7 +3518,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3530,7 +3530,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="poste tir">
+        <object detection-distance="2000" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3542,7 +3542,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="destruction pont">
+        <object detection-distance="2000" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3554,7 +3554,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="site franchissement">
+        <object detection-distance="2000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3566,7 +3566,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="zone implantation canon">
+        <object detection-distance="2000" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3578,7 +3578,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="zone implantation cobra">
+        <object detection-distance="2000" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3590,7 +3590,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="zone implantation lrm">
+        <object detection-distance="2000" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3602,7 +3602,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="rota">
+        <object detection-distance="2000" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3614,7 +3614,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="camp prisonniers">
+        <object detection-distance="2000" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3626,7 +3626,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2000" type="camp refugies">
+        <object detection-distance="2000" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3832,7 +3832,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="100" type="bouchon mines">
+        <object detection-distance="100" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -3844,7 +3844,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee lineaire">
+        <object detection-distance="100" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -3856,7 +3856,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee par dispersion">
+        <object detection-distance="100" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -3868,7 +3868,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="fosse anti char">
+        <object detection-distance="100" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3904,7 +3904,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="eboulement">
+        <object detection-distance="100" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3916,7 +3916,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="destruction route">
+        <object detection-distance="100" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3928,7 +3928,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant continu">
+        <object detection-distance="100" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3940,7 +3940,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3952,7 +3952,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="poste tir">
+        <object detection-distance="100" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3964,7 +3964,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone protegee">
+        <object detection-distance="100" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3976,7 +3976,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="destruction pont">
+        <object detection-distance="100" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3988,7 +3988,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="site franchissement">
+        <object detection-distance="100" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4000,7 +4000,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation canon">
+        <object detection-distance="100" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4012,7 +4012,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation cobra">
+        <object detection-distance="100" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4024,7 +4024,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone implantation lrm">
+        <object detection-distance="100" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4036,7 +4036,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="rota">
+        <object detection-distance="100" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4048,7 +4048,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="camp prisonniers">
+        <object detection-distance="100" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4060,7 +4060,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="camp refugies">
+        <object detection-distance="100" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4072,7 +4072,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="poste controle">
+        <object detection-distance="0" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4084,7 +4084,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="site decontamination">
+        <object detection-distance="100" type="decontamination site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4162,7 +4162,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="100" type="bouchon mines">
+        <object detection-distance="100" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -4174,7 +4174,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee lineaire">
+        <object detection-distance="100" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -4186,7 +4186,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee par dispersion">
+        <object detection-distance="100" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -4198,7 +4198,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="fosse anti char">
+        <object detection-distance="400" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4234,7 +4234,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="eboulement">
+        <object detection-distance="400" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4246,7 +4246,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction route">
+        <object detection-distance="400" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4258,7 +4258,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="pont flottant continu">
+        <object detection-distance="400" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4270,7 +4270,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4282,7 +4282,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="poste tir">
+        <object detection-distance="400" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4294,7 +4294,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone protegee">
+        <object detection-distance="400" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4306,7 +4306,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction pont">
+        <object detection-distance="400" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4318,7 +4318,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="site franchissement">
+        <object detection-distance="1000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4330,7 +4330,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation canon">
+        <object detection-distance="400" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4342,7 +4342,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation cobra">
+        <object detection-distance="400" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4354,7 +4354,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation lrm">
+        <object detection-distance="400" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4366,7 +4366,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="camp prisonniers">
+        <object detection-distance="400" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4378,7 +4378,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="camp refugies">
+        <object detection-distance="400" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4390,7 +4390,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="rota">
+        <object detection-distance="500" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4402,7 +4402,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="poste controle">
+        <object detection-distance="400" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4414,7 +4414,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone implantation mortier">
+        <object detection-distance="0" type="mortar deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4426,7 +4426,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="site decontamination">
+        <object detection-distance="0" type="decontamination site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4438,7 +4438,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="plot ravitaillement">
+        <object detection-distance="0" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4450,7 +4450,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="zone poser helicoptere">
+        <object detection-distance="0" type="landing area (helicopter)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4528,7 +4528,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="100" type="bouchon mines">
+        <object detection-distance="100" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -4540,7 +4540,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee lineaire">
+        <object detection-distance="100" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -4552,7 +4552,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee par dispersion">
+        <object detection-distance="100" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -4564,7 +4564,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="fosse anti char">
+        <object detection-distance="400" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4600,7 +4600,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="eboulement">
+        <object detection-distance="400" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4612,7 +4612,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction route">
+        <object detection-distance="400" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4624,7 +4624,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="pont flottant continu">
+        <object detection-distance="400" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4636,7 +4636,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4648,7 +4648,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="poste tir">
+        <object detection-distance="400" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4660,7 +4660,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone protegee">
+        <object detection-distance="400" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4672,7 +4672,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction pont">
+        <object detection-distance="400" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4684,7 +4684,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="site franchissement">
+        <object detection-distance="1000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4696,7 +4696,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation canon">
+        <object detection-distance="400" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4708,7 +4708,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation cobra">
+        <object detection-distance="400" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4720,7 +4720,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation lrm">
+        <object detection-distance="400" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4732,7 +4732,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="camp prisonniers">
+        <object detection-distance="400" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4744,7 +4744,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="camp refugies">
+        <object detection-distance="400" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4756,7 +4756,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="rota">
+        <object detection-distance="500" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4768,7 +4768,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="poste controle">
+        <object detection-distance="400" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4780,7 +4780,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="plot ravitaillement">
+        <object detection-distance="0" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4792,7 +4792,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="plateforme">
+        <object detection-distance="0" type="platform">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4870,7 +4870,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="2500" type="zone minee lineaire">
+        <object detection-distance="2500" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.3"/>
@@ -4882,7 +4882,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="zone minee par dispersion">
+        <object detection-distance="2500" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.3"/>
@@ -4894,7 +4894,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="fosse anti char">
+        <object detection-distance="2500" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4930,7 +4930,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="eboulement">
+        <object detection-distance="2500" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4942,7 +4942,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="destruction route">
+        <object detection-distance="2500" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4954,7 +4954,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="pont flottant continu">
+        <object detection-distance="2500" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4966,7 +4966,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4978,7 +4978,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="poste tir">
+        <object detection-distance="2500" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4990,7 +4990,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="zone protegee">
+        <object detection-distance="2500" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5002,7 +5002,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="destruction pont">
+        <object detection-distance="2500" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5014,7 +5014,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="site franchissement">
+        <object detection-distance="2500" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5026,7 +5026,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="rota">
+        <object detection-distance="2500" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5038,7 +5038,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="camp prisonniers">
+        <object detection-distance="2500" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5050,7 +5050,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="camp refugies">
+        <object detection-distance="2500" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5062,7 +5062,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="aire logistique">
+        <object detection-distance="2500" type="logistic area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5074,7 +5074,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="piste">
+        <object detection-distance="2500" type="trail">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5086,7 +5086,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="poste controle">
+        <object detection-distance="2500" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5098,7 +5098,7 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="2500" type="zone mobilite amelioree">
+        <object detection-distance="2500" type="mobility enhanced area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5176,7 +5176,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="500" type="pont flottant continu">
+        <object detection-distance="500" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5188,7 +5188,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="pont flottant discontinu">
+        <object detection-distance="500" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5200,7 +5200,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="destruction pont">
+        <object detection-distance="500" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5212,7 +5212,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="camp prisonniers">
+        <object detection-distance="1000" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5224,7 +5224,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="camp refugies">
+        <object detection-distance="1000" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5236,7 +5236,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="piste">
+        <object detection-distance="500" type="trail">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5264,7 +5264,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="bouchon mines">
+        <object detection-distance="1000" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5276,7 +5276,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="destruction pont">
+        <object detection-distance="1000" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5288,7 +5288,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="destruction route">
+        <object detection-distance="1000" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5300,7 +5300,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="eboulement">
+        <object detection-distance="1000" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5312,7 +5312,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="fosse anti char">
+        <object detection-distance="1000" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5324,7 +5324,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="zone minee lineaire">
+        <object detection-distance="1000" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5336,7 +5336,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="zone minee par dispersion">
+        <object detection-distance="1000" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5478,7 +5478,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="100" type="bouchon mines">
+        <object detection-distance="100" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -5490,7 +5490,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee lineaire">
+        <object detection-distance="100" type="mined area (linear)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -5502,7 +5502,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="zone minee par dispersion">
+        <object detection-distance="100" type="mined area (scattered)">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -5514,7 +5514,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="fosse anti char">
+        <object detection-distance="400" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0"/>
@@ -5550,7 +5550,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="eboulement">
+        <object detection-distance="400" type="landslide">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5562,7 +5562,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction route">
+        <object detection-distance="400" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5574,7 +5574,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="pont flottant continu">
+        <object detection-distance="400" type="continuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5586,7 +5586,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="pont flottant discontinu">
+        <object detection-distance="100" type="discontinuous pontoon bridge">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5598,7 +5598,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="poste tir">
+        <object detection-distance="400" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5610,7 +5610,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone protegee">
+        <object detection-distance="400" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5622,7 +5622,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="destruction pont">
+        <object detection-distance="400" type="bridge destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5634,7 +5634,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="site franchissement">
+        <object detection-distance="1000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5646,7 +5646,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation canon">
+        <object detection-distance="400" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5658,7 +5658,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation cobra">
+        <object detection-distance="400" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5670,7 +5670,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="zone implantation lrm">
+        <object detection-distance="400" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5682,7 +5682,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="camp prisonniers">
+        <object detection-distance="400" type="prisoners camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5694,7 +5694,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="camp refugies">
+        <object detection-distance="400" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5706,7 +5706,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="rota">
+        <object detection-distance="500" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5718,7 +5718,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="400" type="poste controle">
+        <object detection-distance="400" type="checkpoint">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5730,7 +5730,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="plot ravitaillement">
+        <object detection-distance="0" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5742,7 +5742,7 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="0" type="plateforme">
+        <object detection-distance="0" type="platform">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>

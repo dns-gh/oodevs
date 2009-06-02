@@ -12,7 +12,6 @@
 #include "preparation/StaticModel.h"
 #include "preparation/TeamsModel.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
