@@ -28,7 +28,7 @@
     <object id="25" type="mobility enhanced area"/>
     <object id="26" type="landing area (helicopter)"/>
     <object id="27" type="logistic area"/>
-    <object id="28" type="itinerlogistic area"/>
+    <object id="28" type="logistic route"/>
     <object id="29" type="prisoners camp"/>
     <object id="30" type="refugees camp"/>
     <object id="31" type="checkpoint"/>

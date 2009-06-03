@@ -136,7 +136,7 @@
             <distance-modifier type="PostePrepareGenie" value="0.2"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="itinerlogistic area">
+        <object detection-distance="1000" type="logistic route">
           <population-modifier density="1" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
