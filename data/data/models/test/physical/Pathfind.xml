@@ -17,43 +17,43 @@
       <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
       <enemies cost-on-contact="0" cost-at-security-range="0"/>
       <object-costs avoid="true">
-        <object-cost type="fosse anti char" value="10000"/>
+        <object-cost type="anti tank obstacle" value="10000"/>
         <object-cost type="abattis" value="10000"/>
         <object-cost type="barricade" value="10000"/>
-        <object-cost type="bouchon mines" value="10000"/>
-        <object-cost type="zone minee lineaire" value="10000"/>
-        <object-cost type="zone minee par dispersion" value="10000"/>
-        <object-cost type="eboulement" value="10000"/>
-        <object-cost type="destruction route" value="10000"/>
-        <object-cost type="destruction pont" value="10000"/>
-        <object-cost type="pont flottant continu" value="0"/>
-        <object-cost type="pont flottant discontinu" value="0"/>
-        <object-cost type="poste tir" value="0"/>
-        <object-cost type="zone protegee" value="0"/>
-        <object-cost type="zone implantation canon" value="10"/>
-        <object-cost type="zone implantation cobra" value="10"/>
-        <object-cost type="zone implantation lrm" value="10"/>
-        <object-cost type="site franchissement" value="10"/>
-        <object-cost type="nuage nbc" value="10000"/>
-        <object-cost type="site decontamination" value="10"/>
-        <object-cost type="plot ravitaillement" value="10"/>
-        <object-cost type="zone brouillage" value="10000"/>
-        <object-cost type="rota" value="10000"/>
-        <object-cost type="zone nbc" value="10000"/>
-        <object-cost type="nuage nbc" value="10000"/>
-        <object-cost type="aire poser" value="10"/>
-        <object-cost type="piste" value="-5"/>
-        <object-cost type="plateforme" value="10"/>
-        <object-cost type="zone poser helicoptere" value="10"/>
-        <object-cost type="aire logistique" value="10"/>
-        <object-cost type="camp prisonniers" value="10"/>
-        <object-cost type="camp refugies" value="10"/>
-        <object-cost type="itineraire logistique" value="-10"/>
-        <object-cost type="poste controle" value="-5"/>
-        <object-cost type="terrain largage" value="10"/>
-        <object-cost type="zone interdite tir" value="10"/>
-        <object-cost type="zone interdite mouvement" value="10000"/>
-        <object-cost type="zone implantation mortier" value="10"/>
+        <object-cost type="mines" value="10000"/>
+        <object-cost type="mined area (linear)" value="10000"/>
+        <object-cost type="mined area (scattered)" value="10000"/>
+        <object-cost type="landslide" value="10000"/>
+        <object-cost type="road destruction" value="10000"/>
+        <object-cost type="bridge destruction" value="10000"/>
+        <object-cost type="continuous pontoon bridge" value="0"/>
+        <object-cost type="discontinuous pontoon bridge" value="0"/>
+        <object-cost type="firing post" value="0"/>
+        <object-cost type="safe zone" value="0"/>
+        <object-cost type="gun artillery deployment area" value="10"/>
+        <object-cost type="cobra deployment area" value="10"/>
+        <object-cost type="mrls deployment area" value="10"/>
+        <object-cost type="crossing site" value="10"/>
+        <object-cost type="nbc cloud" value="10000"/>
+        <object-cost type="decontamination site" value="10"/>
+        <object-cost type="logistic support area" value="10"/>
+        <object-cost type="jamming area" value="10000"/>        
+        <object-cost type="rota area" value="10000"/>
+        <object-cost type="nbc zone" value="10000"/>
+        <object-cost type="landing area" value="10"/>
+        <object-cost type="trail" value="-5"/>
+        <object-cost type="platform" value="10"/>
+        <object-cost type="mobility enhanced area" value="10"/>
+        <object-cost type="landing area (helicopter)" value="10"/>
+        <object-cost type="logistic area" value="10"/>
+        <object-cost type="prisoners camp" value="10"/>
+        <object-cost type="refugees camp" value="10"/>
+        <object-cost type="logistic route" value="-10"/>
+        <object-cost type="checkpoint" value="-5"/>
+        <object-cost type="dropping area" value="10"/>
+        <object-cost type="fire forbidden area" value="10"/>
+        <object-cost type="movement forbidden area" value="10000"/>
+        <object-cost type="mortar deployment area" value="10"/>
         <object-cost type="installation" value="0"/>
       </object-costs>
       <population-costs security-range="50" maximum="100" outside-of-population="10">
