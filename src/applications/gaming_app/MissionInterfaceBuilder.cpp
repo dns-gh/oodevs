@@ -15,6 +15,7 @@
 #include "actions_gui/ParamAtlasNature.h"
 #include "actions_gui/ParamAutomat.h"
 #include "actions_gui/ParamAutomatList.h"
+#include "actions_gui/ParamDateTime.h"
 #include "actions_gui/ParamPath.h"
 #include "actions_gui/ParamPathList.h"
 #include "actions_gui/ParamPoint.h"
@@ -88,6 +89,7 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["bool"]                = &MissionInterfaceBuilder::BuildBoolean;
     builderFunctors_["direction"]           = &MissionInterfaceBuilder::BuildDirection;
     builderFunctors_["numeric"]             = &MissionInterfaceBuilder::BuildNumeric;
+    builderFunctors_["datetime"]            = &MissionInterfaceBuilder::BuildParamDateTime;
 
     builderFunctors_["agentknowledge"]      = &MissionInterfaceBuilder::BuildAgentKnowledge;
     builderFunctors_["agentknowledgelist"]  = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
@@ -233,6 +235,15 @@ actions::gui::Param_ABC* MissionInterfaceBuilder::BuildDirection( const OrderPar
 actions::gui::Param_ABC* MissionInterfaceBuilder::BuildNumeric( const OrderParameter& parameter ) const
 {
     return new actions::gui::ParamNumericField( parameter, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildParamDateTime
+// Created: SBO 2009-06-03
+// -----------------------------------------------------------------------------
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildParamDateTime( const kernel::OrderParameter& parameter ) const
+{
+    return new actions::gui::ParamDateTime( missionInterface_, parameter, simulation_.GetDateTime() );
 }
 
 // -----------------------------------------------------------------------------

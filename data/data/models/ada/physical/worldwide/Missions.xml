@@ -464,7 +464,7 @@
     <mission dia-behavior="MIS_Pion_INF_DetruireParCoupDeMain" dia-type="T_Mission_Pion_INF_DetruireParCoupDeMain" id="104" name="Infantry - destroy">
       <parameter dia-name="objectif_" name="Objective" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="heureDestruction_" name="Timing" optional="false" type="GDH"/>
+      <parameter dia-name="heureDestruction_" name="Timing" optional="false" type="Datetime"/>
       <parameter dia-name="natureDestruction_" name="Destruction type" optional="false" type="Enumeration">
         <value id="0" name="ground"/>
         <value id="1" name="objects"/>

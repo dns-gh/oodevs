@@ -41,6 +41,7 @@
 #include "actions/MaintenancePriorities.h"
 #include "actions/MedicalPriorities.h"
 #include "actions/IntelligenceList.h"
+#include "actions/DateTime.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
@@ -167,6 +168,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
         return new actions::parameters::LimaList( parameter, converter_, *asn.value.u.limasOrder );
     case T_MissionParameter_value_intelligenceList:
         return new actions::parameters::IntelligenceList( parameter, converter_, *asn.value.u.intelligenceList, model_.teams_, staticModel_.levels_, controller_ );
+    case T_MissionParameter_value_dateTime:
+        return new actions::parameters::DateTime( parameter, *asn.value.u.dateTime );
     }
     return 0;
 }
@@ -255,6 +258,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
         param.reset( new actions::parameters::MedicalPriorities( parameter, xis ) );
     else if( type == "maintenancepriorities" )
         param.reset( new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, xis ) );
+    else if( type == "datetime" )
+        param.reset( new actions::parameters::DateTime( parameter, xis ) );
     else
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
     param->Set( true ); // $$$$ SBO 2007-10-11: ...

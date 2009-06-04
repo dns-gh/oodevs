@@ -11,6 +11,7 @@
 #define __ParamDateTime_h_
 
 #include "Param_ABC.h"
+#include "clients_kernel/OrderParameter.h"
 
 namespace actions
 {
@@ -30,6 +31,7 @@ class ParamDateTime : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             ParamDateTime( QObject* parent, const kernel::OrderParameter& parameter, const QDateTime& current );
              ParamDateTime( QObject* parent, const QString& name, const QDateTime& current, bool optional );
     virtual ~ParamDateTime();
     //@}
@@ -63,8 +65,8 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::OrderParameter parameter_;
     QDateTime date_;
-    bool optional_;
     //@}
 };
 

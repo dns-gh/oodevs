@@ -18,13 +18,26 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamDateTime constructor
+// Created: SBO 2009-06-03
+// -----------------------------------------------------------------------------
+ParamDateTime::ParamDateTime( QObject* parent, const kernel::OrderParameter& parameter, const QDateTime& current )
+    : QObject( parent )
+    , Param_ABC( parameter.GetName().c_str() )
+    , parameter_( parameter )
+    , date_( current )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDateTime constructor
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
 ParamDateTime::ParamDateTime( QObject* parent, const QString& name, const QDateTime& current, bool optional )
     : QObject( parent )
     , Param_ABC( name )
+    , parameter_( name.ascii(), "datetime", optional )
     , date_( current )
-    , optional_( optional )
 {
     // NOTHING
 }
@@ -56,7 +69,7 @@ void ParamDateTime::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool ParamDateTime::CheckValidity()
 {
-    return optional_; // $$$$ SBO 2007-05-14: check with current date (allow date in the past?)
+    return IsOptional() || !date_.isNull(); // $$$$ SBO 2007-05-14: check with current date (allow date in the past?)
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +78,7 @@ bool ParamDateTime::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamDateTime::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    parameter.AddParameter( *new actions::parameters::DateTime( kernel::OrderParameter( GetName().ascii(), "datetime", false ), date_ ) );
+    parameter.AddParameter( *new actions::parameters::DateTime( parameter_, date_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,5 +107,5 @@ void ParamDateTime::Draw( const geometry::Point2f& point, const kernel::Viewport
 // -----------------------------------------------------------------------------
 bool ParamDateTime::IsOptional() const
 {
-    return optional_;
+    return parameter_.IsOptional();
 }

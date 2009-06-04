@@ -104,3 +104,25 @@ void DateTime::CommitTo( ASN1T_DateTime& asn ) const
 {
     asn = time_.c_str();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DateTime::CommitTo
+// Created: SBO 2009-06-03
+// -----------------------------------------------------------------------------
+void DateTime::CommitTo( ASN1T_MissionParameter& asn ) const
+{
+    asn.null_value = !IsSet();
+    asn.value.t = T_MissionParameter_value_dateTime;
+    asn.value.u.dateTime = new ASN1T_DateTime();
+    if( IsSet() )
+        CommitTo( *asn.value.u.dateTime );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DateTime::Clean
+// Created: SBO 2009-06-03
+// -----------------------------------------------------------------------------
+void DateTime::Clean( ASN1T_MissionParameter& asn ) const
+{
+    delete asn.value.u.dateTime;
+}

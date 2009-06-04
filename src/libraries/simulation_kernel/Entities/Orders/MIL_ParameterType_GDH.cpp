@@ -18,7 +18,7 @@
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
 MIL_ParameterType_GDH::MIL_ParameterType_GDH()
-    : MIL_ParameterType_ABC( "GDH" )
+    : MIL_ParameterType_ABC( "datetime" )
 {
     // NOTHING
 }
@@ -80,6 +80,7 @@ bool MIL_ParameterType_GDH::Copy( const DIA_Variable_ABC& from, ASN1T_MissionPar
 
     to.null_value  = false;
     to.value.t     = T_MissionParameter_value_dateTime;
+    to.value.u.dateTime = new ASN1T_DateTime();
 
     if( !NET_ASN_Tools::CopyGDH( from, *to.value.u.dateTime ) )
         return false;
@@ -93,5 +94,5 @@ bool MIL_ParameterType_GDH::Copy( const DIA_Variable_ABC& from, ASN1T_MissionPar
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_GDH::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
 {
-    // NOTHIN
+    delete to.value.u.dateTime;
 }

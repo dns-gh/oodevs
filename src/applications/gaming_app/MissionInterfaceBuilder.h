@@ -89,6 +89,7 @@ private:
     actions::gui::Param_ABC* BuildBoolean              ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC* BuildDirection            ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC* BuildNumeric              ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC* BuildParamDateTime        ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC* BuildAgentKnowledge       ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC* BuildAgentKnowledgeList   ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC* BuildObjectKnowledge      ( const kernel::OrderParameter& parameter ) const;
