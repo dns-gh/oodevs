@@ -3,7 +3,7 @@
   <units>
     <unit dia-type="StrategicBomberPatrol" file="Air\Pions\Patrouille Assaut\model.hal" name="Strategic Bomber Patrol">
       <missions>
-        <mission name="JOINT AIR - Air strike"/>
+        <mission name="Joint Air - Air strike"/>
         <mission name="move"/>
         <mission name="follow"/>
       </missions>
@@ -173,8 +173,6 @@
       <missions>
         <mission name="Air Defense Artillery - defend area"/>
         <mission name="Air Defense Artillery - defend area (from a position)"/>
-        <mission name="Air Defense Artillery - defend site"/>
-        <mission name="Air Defense Artillery - defend site (from a position)"/>
         <mission name="Air Defense Artillery - monitor"/>
         <mission name="move"/>
         <mission name="go through decontamination process"/>
@@ -198,11 +196,9 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="Air Defense Artillery (MISTRAL) - defend site"/>
-        <mission name="Air Defense Artillery (MISTRAL) - defend site (from a position)"/>
-        <mission name="Air Defense Artillery (MISTRAL) - defend area"/>
-        <mission name="Air Defense Artillery (MISTRAL) - defend area (from a position)"/>
-        <mission name="Air Defense Artillery (MISTRAL) - monitor"/>
+        <mission name="Air Defense Artillery (Very Short Range) - defend area"/>
+        <mission name="Air Defense Artillery (Very Short Range) - defend area (from a position)"/>
+        <mission name="Air Defense Artillery (Very Short Range) - monitor"/>
       </missions>
     </unit>
     <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.hal" name="Very Short Range Surface To Air Battery CP">
@@ -247,7 +243,6 @@
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.hal" name="Infantery platoon">
       <missions>
         <mission name="Infantry - support"/>
-        <mission name="Infantry - counter-attack"/>
         <mission name="Infantry - control an area"/>
         <mission name="Infantry - cover"/>
         <mission name="Infantry - defend"/>
@@ -267,12 +262,9 @@
         <mission name="Infantry - take contact"/>
         <mission name="Infantry - reconnoiter an axis"/>
         <mission name="Infantry - reconnoiter"/>
-        <mission name="Infantry - assist units in their rearward maneuvers">
-          <fragorder name="Withdraw"/>
-        </mission>
         <mission name="Infantry - reduce"/>
         <mission name="Infantry - seize"/>
-        <mission name="Infantry - monitor an area">
+        <mission name="Infantry - monitor">
           <fragorder name="Withdraw"/>
         </mission>
         <mission name="move"/>
@@ -291,15 +283,13 @@
         <mission name="channel populations"/>
         <mission name="deny population crossing"/>
         <mission name="secure area (against populations assault)"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.hal" name="MRA infantery platoon">
       <missions>
         <mission name="Infantry - bar"/>
         <mission name="Infantry - support"/>
-        <mission name="Infantry - monitor an area">
+        <mission name="Infantry - monitor">
           <fragorder name="Withdraw"/>
         </mission>
         <mission name="move"/>
@@ -311,15 +301,13 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.hal" name="LRA infantery platoon">
       <missions>
         <mission name="Infantry - support"/>
         <mission name="Infantry - bar"/>
-        <mission name="Infantry - monitor an area">
+        <mission name="Infantry - monitor">
           <fragorder name="Withdraw"/>
         </mission>
         <mission name="move"/>
@@ -331,8 +319,6 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.hal" name="Mortar support troop">
@@ -349,8 +335,6 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.hal" name="Infantery company CP">
@@ -370,8 +354,6 @@
         <mission name="filtrate populations"/>
         <mission name="report information on populations"/>
         <mission name="secure area (against populations assault)"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.hal" name="Battery CP">
@@ -396,8 +378,6 @@
         <mission name="move"/>
         <mission name="Logistics - deploy"/>
         <mission name="cross"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.hal" name="Section Maintenance">
@@ -579,8 +559,6 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="cross"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.hal" name="Truck convoy">
@@ -645,8 +623,6 @@
         <mission name="Field Artillery - operate (on position)">
           <fragorder name="Fire"/>
         </mission>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.hal" name="Firefinder radar">
@@ -703,8 +679,6 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="Peloton Transport Blindes">
@@ -795,7 +769,7 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="follow"/>
-        <mission name="Infantry - monitor an area"/>
+        <mission name="Infantry - monitor"/>
       </missions>
     </unit>
     <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.hal" name="Theater High Altitude Defense Troop">
@@ -811,8 +785,6 @@
         <mission name="cross"/>
         <mission name="Air Defense Artillery - defend area"/>
         <mission name="Air Defense Artillery - defend area (from a position)"/>
-        <mission name="Air Defense Artillery - defend site"/>
-        <mission name="Air Defense Artillery - defend site (from a position)"/>
         <mission name="Air Defense Artillery - monitor"/>
       </missions>
     </unit>
@@ -852,7 +824,6 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
-        <mission name="Armor - operate an identification point"/>
         <mission name="Armor - control"/>
         <mission name="Armor - scout"/>
         <mission name="Armor - escort"/>
@@ -861,14 +832,12 @@
         <mission name="Armor - monitor"/>
         <mission name="Armor - report information"/>
         <mission name="adopt transportation posture"/>
-        <mission name="Armor - escort Units"/>
+        <mission name="Armor - escort units"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - reconnoiter an axis"/>
         <mission name="Armor - reconnoiter"/>
         <mission name="Armor - seize"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="Antitank patrol">
@@ -881,7 +850,6 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
-        <mission name="Armor - operate an identification point"/>
         <mission name="Armor - support"/>
         <mission name="Armor - bar"/>
         <mission name="Armor - control"/>
@@ -891,7 +859,7 @@
         <mission name="Armor - monitor"/>
         <mission name="Armor - report information"/>
         <mission name="adopt transportation posture"/>
-        <mission name="Armor - escort Units"/>
+        <mission name="Armor - escort units"/>
         <mission name="Armor - support (from a position)"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - delay"/>
@@ -900,8 +868,6 @@
         <mission name="Armor - reconnoiter"/>
         <mission name="Armor - seize"/>
         <mission name="Armor - support (dynamic)"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.hal" name="Armored squadron CP">
@@ -915,8 +881,6 @@
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
         <mission name="Armor CP To Deploy"/>
       </missions>
     </unit>
@@ -936,9 +900,6 @@
           <fragorder name="Cross departure line"/>
         </mission>
         <mission name="Armor - bar"/>
-        <mission name="Armor - counter-attack">
-          <fragorder name="Cross departure line"/>
-        </mission>
         <mission name="Armor - control"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - fix"/>
@@ -959,14 +920,11 @@
         <mission name="deny population crossing"/>
         <mission name="report information on populations"/>
         <mission name="secure area (against populations assault)"/>
-        <mission name="Armor - operate an identification point"/>
         <mission name="Armor - scout"/>
         <mission name="Armor - escort"/>
-        <mission name="Armor - escort Units"/>
+        <mission name="Armor - escort units"/>
         <mission name="Armor - open a route"/>
         <mission name="Armor - report information"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.hal" name="Light armored platoon">
@@ -985,9 +943,6 @@
           <fragorder name="Cross departure line"/>
         </mission>
         <mission name="Armor - bar"/>
-        <mission name="Armor - counter-attack">
-          <fragorder name="Cross departure line"/>
-        </mission>
         <mission name="Armor - control"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - escort"/>
@@ -1002,7 +957,7 @@
         <mission name="Armor - support (dynamic)"/>
         <mission name="Armor - monitor"/>
         <mission name="Armor - delay"/>
-        <mission name="Armor - escort Units"/>
+        <mission name="Armor - escort units"/>
         <mission name="Armor - support (from a position)"/>
         <mission name="channel populations"/>
         <mission name="control Populations (in an area)"/>
@@ -1010,11 +965,8 @@
         <mission name="deny population crossing"/>
         <mission name="report information on populations"/>
         <mission name="secure area (against populations assault)"/>
-        <mission name="Armor - operate an identification point"/>
         <mission name="Armor - open a route"/>
         <mission name="Armor - report information"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Mobility support platoon">
@@ -1034,20 +986,14 @@
         <mission name="Engineer - clear obstacles"/>
         <mission name="Engineer - clean up area"/>
         <mission name="Engineer - operate a crossing site"/>
-        <mission name="Engineer - operate a new crossing site"/>
         <mission name="Engineer - open a route"/>
-        <mission name="Engineer - build camps"/>
-        <mission name="Engineer - perform deployment support work"/>
-        <mission name="Engineer - perform counter-mobility work"/>
-        <mission name="Engineer - perform protection work"/>
+        <mission name="Engineer - perform work"/>
         <mission name="Engineer - reconnoiter a route"/>
         <mission name="Engineer - reconnoiter a crossing site"/>
         <mission name="Engineer - reconnoiter an area"/>
         <mission name="Engineer - reinforce"/>
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Countermobility platoon">
@@ -1067,12 +1013,8 @@
         <mission name="Engineer - clear obstacles"/>
         <mission name="Engineer - clean up area"/>
         <mission name="Engineer - operate a crossing site"/>
-        <mission name="Engineer - operate a new crossing site"/>
         <mission name="Engineer - open a route"/>
-        <mission name="Engineer - build camps"/>
-        <mission name="Engineer - perform deployment support work"/>
-        <mission name="Engineer - perform counter-mobility work"/>
-        <mission name="Engineer - perform protection work"/>
+        <mission name="Engineer - perform work"/>
         <mission name="Engineer - reconnoiter a route"/>
         <mission name="Engineer - reconnoiter a crossing site"/>
         <mission name="Engineer - reconnoiter an area"/>
@@ -1095,12 +1037,8 @@
         <mission name="Engineer - clear obstacles"/>
         <mission name="Engineer - clean up area"/>
         <mission name="Engineer - operate a crossing site"/>
-        <mission name="Engineer - operate a new crossing site"/>
         <mission name="Engineer - open a route"/>
-        <mission name="Engineer - build camps"/>
-        <mission name="Engineer - perform deployment support work"/>
-        <mission name="Engineer - perform counter-mobility work"/>
-        <mission name="Engineer - perform protection work"/>
+        <mission name="Engineer - perform work"/>
         <mission name="Engineer - reconnoiter a route"/>
         <mission name="Engineer - reconnoiter a crossing site"/>
         <mission name="Engineer - reconnoiter an area"/>
@@ -1128,12 +1066,8 @@
         <mission name="Engineer - clear obstacles"/>
         <mission name="Engineer - clean up area"/>
         <mission name="Engineer - operate a crossing site"/>
-        <mission name="Engineer - operate a new crossing site"/>
         <mission name="Engineer - open a route"/>
-        <mission name="Engineer - build camps"/>
-        <mission name="Engineer - perform deployment support work"/>
-        <mission name="Engineer - perform counter-mobility work"/>
-        <mission name="Engineer - perform protection work"/>
+        <mission name="Engineer - perform work"/>
         <mission name="Engineer - reconnoiter a route"/>
         <mission name="Engineer - reconnoiter a crossing site"/>
         <mission name="Engineer - reconnoiter an area"/>
@@ -1155,8 +1089,6 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
     <unit dia-type="Drone_SDTI" file="\Appui\Rens\Pions\Roim\Drone SDTI\Model.hal" name="Drone">
@@ -1635,16 +1567,14 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="Air Defense Artillery - defend a route"/>
-        <mission name="Air Defense Artillery (MISTRAL) - defend site"/>
-        <mission name="Air Defense Artillery (MISTRAL) - defend area"/>
-        <mission name="Air Defense Artillery (MISTRAL) - monitor"/>
+        <mission name="Air Defense Artillery (Very Short Range) - defend area"/>
+        <mission name="Air Defense Artillery (Very Short Range) - monitor"/>
         <mission name="adopt transportation posture"/>
       </missions>
     </automat>
     <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.hal" name="Short Range Surface To Air Battery">
       <missions>
         <mission name="Air Defense Artillery - defend area"/>
-        <mission name="Air Defense Artillery - defend site"/>
         <mission name="Air Defense Artillery - monitor"/>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1784,7 +1714,6 @@
         <mission name="Infantry - attack (smoothly)">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Infantry - bar a direction"/>
         <mission name="Infantry - control"/>
         <mission name="Infantry - cover"/>
         <mission name="Infantry - scout"/>
@@ -1795,7 +1724,6 @@
         <mission name="Infantry - harass"/>
         <mission name="Infantry - take and maintain contact"/>
         <mission name="Infantry - reconnoiter"/>
-        <mission name="Infantry - relieve"/>
         <mission name="Infantry - seize"/>
         <mission name="Infantry - hold"/>
         <mission name="replenish"/>
@@ -1808,14 +1736,12 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="Infantry - monitor"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
         <mission name="Infantry - block"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.hal" name="LRA infantery company">
       <missions>
-        <mission name="Infantry - bar a direction"/>
+        <mission name="Infantry - hold"/>
         <mission name="Infantry - cover"/>
         <mission name="Infantry - block">
           <fragorder name="Withdraw"/>
@@ -1845,7 +1771,7 @@
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
         <mission name="replenish"/>
-        <mission name="Follow"/>
+        <mission name="follow"/>
         <mission name="move"/>
       </missions>
     </automat>
@@ -2004,9 +1930,8 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="Air Defense Artillery (HAWK) - defend site"/>
-        <mission name="Air Defense Artillery (HAWK) - defend area"/>
-        <mission name="Air Defense Artillery (HAWK) - monitor"/>
+        <mission name="Air Defense Artillery (Long Range) - defend area"/>
+        <mission name="Air Defense Artillery (Long Range) - monitor"/>
         <mission name="adopt transportation posture"/>
       </missions>
     </automat>
@@ -2035,9 +1960,6 @@
         <mission name="Armor - cover"/>
         <mission name="Armor - block"/>
         <mission name="Armor - scout"/>
-        <mission name="Armor - carry out a raid">
-          <fragorder name="Cross departure line"/>
-        </mission>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - delay">
           <fragorder name="Withdraw"/>
@@ -2050,11 +1972,9 @@
         <mission name="Armor - hold"/>
         <mission name="Armor - monitor"/>
         <mission name="Armor - escort"/>
-        <mission name="Armor - escort Units"/>
+        <mission name="Armor - escort units"/>
         <mission name="Armor - screen"/>
         <mission name="Armor - reconnoiter (a position)"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="Light armored squadron">
@@ -2071,16 +1991,10 @@
         <mission name="Armor - attack">
           <fragorder name="Cross departure line"/>
         </mission>
-        <mission name="Armor - counter-attack">
-          <fragorder name="Cross departure line"/>
-        </mission>
         <mission name="Armor - control"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - block"/>
         <mission name="Armor - scout"/>
-        <mission name="Armor - carry out a raid">
-          <fragorder name="Cross departure line"/>
-        </mission>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - delay">
           <fragorder name="Withdraw"/>
@@ -2092,11 +2006,9 @@
         <mission name="Armor - hold"/>
         <mission name="Armor - monitor"/>
         <mission name="Armor - escort"/>
-        <mission name="Armor - escort Units"/>
+        <mission name="Armor - escort units"/>
         <mission name="Armor - screen"/>
         <mission name="Armor - reconnoiter (a position)"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
         <mission name="Armor - support"/>
       </missions>
     </automat>
@@ -2117,10 +2029,8 @@
         <mission name="Armor - reconnoiter (a position)"/>
         <mission name="Armor - escort"/>
         <mission name="adopt transportation posture"/>
-        <mission name="Armor - escort Units"/>
+        <mission name="Armor - escort units"/>
         <mission name="Armor - cover"/>
-        <mission name="prepare to"/>
-        <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Deployment support company">
@@ -2136,7 +2046,7 @@
         <mission name="manage prisoners"/>
         <mission name="Engineer - clear obstacles in an area"/>
         <mission name="Engineer - support bridging"/>
-        <mission name="Engineer - breach"/>
+        <mission name="Engineer - bypass obstacles in an area"/>
         <mission name="Engineer - open routes"/>
         <mission name="Engineer - perform work"/>
         <mission name="Engineer - reconnoiter an area"/>
@@ -2156,7 +2066,7 @@
         <mission name="manage prisoners"/>
         <mission name="Engineer - clear obstacles in an area"/>
         <mission name="Engineer - support bridging"/>
-        <mission name="Engineer - breach"/>
+        <mission name="Engineer - bypass obstacles in an area"/>
         <mission name="Engineer - open routes"/>
         <mission name="Engineer - perform work"/>
         <mission name="Engineer - reconnoiter an area"/>
@@ -2176,7 +2086,7 @@
         <mission name="manage prisoners"/>
         <mission name="Engineer - clear obstacles in an area"/>
         <mission name="Engineer - support bridging"/>
-        <mission name="Engineer - breach"/>
+        <mission name="Engineer - bypass obstacles in an area"/>
         <mission name="Engineer - open routes"/>
         <mission name="Engineer - perform work"/>
         <mission name="Engineer - reconnoiter an area"/>
@@ -2196,7 +2106,7 @@
         <mission name="manage prisoners"/>
         <mission name="Engineer - clear obstacles in an area"/>
         <mission name="Engineer - support bridging"/>
-        <mission name="Engineer - breach"/>
+        <mission name="Engineer - bypass obstacles in an area"/>
         <mission name="Engineer - open routes"/>
         <mission name="Engineer - perform work"/>
         <mission name="Engineer - reconnoiter an area"/>
@@ -2377,12 +2287,12 @@
     </automat>
     <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.hal" name="Battalion">
       <missions>
-        <mission name="Battalion - Move to"/>
-        <mission name="Battalion - Attack"/>
+        <mission name="Battalion - move to"/>
+        <mission name="Battalion - attack"/>
         <mission name="Battalion - conduct a blocking action"/>
         <mission name="Battalion - delay"/>
-        <mission name="Battalion - Movement to contact"/>
-        <mission name="Battalion - Control"/>
+        <mission name="Battalion - movement to contact"/>
+        <mission name="Battalion - control"/>
         <mission name="Battalion - make a raid"/>
       </missions>
     </automat>
