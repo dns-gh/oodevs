@@ -153,24 +153,10 @@ const Team_ABC& ObjectKnowledge::GetOwner() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Draw
-// Created: AGE 2006-05-19
+// Name: ObjectKnowledge::GetSymbol
+// Created: SBO 2009-06-04
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+std::string ObjectKnowledge::GetSymbol() const
 {
-    if( type_ )
-        ObjectIcons::Draw( *type_, where, viewport, tools );
-//    if( viewport.IsVisible( where ) )
-//    {
-//        // $$$$ SBO 2007-05-04: hard coded icon positions
-//        glPushAttrib( GL_CURRENT_BIT );
-//            glColor3f( 1, 1, 1 );
-//            if( reservedObstacleActivated_.IsSet() )
-//                tools.DrawIcon( reservedObstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
-//            if( nConstructionPercentage_.IsSet() )
-//                tools.DrawLife( where - geometry::Vector2f( 0.f, 250.f ), nConstructionPercentage_ / 100.f );
-//            if( nBypassConstructionPercentage_.IsSet() )
-//                tools.DrawLife( where - geometry::Vector2f( 0.f, 200.f ), nBypassConstructionPercentage_ / 100.f );
-//        glPopAttrib();
-//    }
+    return type_ ? type_->GetSymbol() : "";
 }

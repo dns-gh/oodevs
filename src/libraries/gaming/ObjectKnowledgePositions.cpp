@@ -10,15 +10,17 @@
 #include "gaming_pch.h"
 #include "ObjectKnowledgePositions.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePositions constructor
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-ObjectKnowledgePositions::ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter )
+ObjectKnowledgePositions::ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectKnowledge_ABC& knowledge )
     : LocationPositions( converter )
+    , knowledge_( knowledge )
     , realObjectKnown_( false )
-    , perceived_      ( false )
+    , perceived_( false )
 {
     // NOTHING
 }
@@ -50,8 +52,8 @@ void ObjectKnowledgePositions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& m
 // Name: ObjectKnowledgePositions::Draw
 // Created: AGE 2006-05-19
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
-        tools.DrawTacticalGraphics( "--", *location, tools.ShouldDisplay() );
+        tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.ShouldDisplay() );
 }

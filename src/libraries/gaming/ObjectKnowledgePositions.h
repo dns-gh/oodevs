@@ -13,6 +13,11 @@
 #include "LocationPositions.h"
 #include "clients_kernel/Updatable_ABC.h"
 
+namespace kernel
+{
+    class ObjectKnowledge_ABC;
+}
+
 // =============================================================================
 /** @class  ObjectKnowledgePositions
     @brief  ObjectKnowledgePositions
@@ -26,7 +31,7 @@ class ObjectKnowledgePositions : public LocationPositions
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter );
+             ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectKnowledge_ABC& knowledge );
     virtual ~ObjectKnowledgePositions();
     //@}
 
@@ -50,6 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::ObjectKnowledge_ABC& knowledge_;
     bool realObjectKnown_;
     bool perceived_;
     //@}

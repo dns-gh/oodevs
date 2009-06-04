@@ -63,7 +63,7 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message )
 {
     ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.objects_, static_.objectTypes_ );
-    knowledge->Attach< Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_ ) );
+    knowledge->Attach< Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_, *knowledge ) );
     knowledge->Attach( *new ObjectPerceptions( controllers_.controller_, model_.agents_ ) );
     Register( *knowledge, message.attributes );
     knowledge->Polish();
