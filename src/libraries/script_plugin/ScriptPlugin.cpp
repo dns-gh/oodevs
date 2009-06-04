@@ -87,6 +87,16 @@ void ScriptPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ScriptPlugin::Receive
+// Created: SBO 2009-06-03
+// -----------------------------------------------------------------------------
+void ScriptPlugin::Receive( const ASN1T_MsgsAarToClient& message )
+{
+    if( message.msg.t == T_MsgsAarToClient_msg_msg_indicator )
+        controller_->Update( events::IndicatorChanged( message.msg.u.msg_indicator->name, message.msg.u.msg_indicator->value ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ScriptPlugin::NotifyClientAuthenticated
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------

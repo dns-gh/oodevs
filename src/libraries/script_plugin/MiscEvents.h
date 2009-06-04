@@ -21,9 +21,11 @@ namespace script
         DECLARE_EVENT( TickEnded, int, tick );
         DECLARE_EVENT( TimeFlowed, float, delta );
         DECLARE_EVENT( PhaseChanged, std::string, phase );
-
+        
         DECLARE_EVENT2( ClientJoined, std::string, client, std::string, profile );
-        DECLARE_EVENT(  ClientLeft, std::string, client );
+        DECLARE_EVENT( ClientLeft, std::string, client );
+
+        DECLARE_EVENT2( IndicatorChanged, std::string, name, double, value );
 
         struct Reset {};
     }

@@ -16,8 +16,8 @@
 #include "EventCondition.h"
 #include "ClientConditions.h"
 #include "ScriptConditions.h"
+#include "IndicatorConditions.h"
 #include "MiscEvents.h"
-#include "clients_kernel/ElementObserver_ABC.h"
 #include "directia/Brain.h"
 
 using namespace plugins::script;
@@ -35,6 +35,7 @@ ConditionFacade::ConditionFacade( kernel::Controller& controller, const kernel::
     Add( new PopulationConditions( controller, converter ) );
     Add( new ClientConditions( controller, model ) );
     Add( new ScriptConditions( controller ) );
+    Add( new IndicatorConditions( controller ) );
 }
 
 // -----------------------------------------------------------------------------

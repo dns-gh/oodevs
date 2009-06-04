@@ -82,6 +82,11 @@ events =
         TickEnded       = function( self ) return condition end,
         ClientConnected = function( self ) return condition( strClient, strProfile ) end,
         ClientLeft      = function( self ) return condition( strClient ) end
+    },
+    
+    indicators =
+    {
+        IndicatorChanged = function( self ) return condition( strName, nValue ) end
     }
 }
 

@@ -68,6 +68,7 @@ public:
     //! @name Operations
     //@{
     virtual void Receive                  ( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive                  ( const ASN1T_MsgsAarToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     virtual void Update();
