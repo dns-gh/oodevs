@@ -644,7 +644,6 @@ ADN_Equipement_Data::ADN_Equipement_Data()
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::~ADN_Equipement_Data()
 {
-    nNextCatId_ = 1;
     dotations_.Reset();
 }
 
@@ -663,6 +662,7 @@ void ADN_Equipement_Data::FilesNeeded(T_StringList& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::Reset()
 {
+    nNextCatId_ = 1;
     for( IT_DotationInfos_Vector it = dotations_.begin(); it != dotations_.end(); ++it )
         (*it)->Reset();
 }
