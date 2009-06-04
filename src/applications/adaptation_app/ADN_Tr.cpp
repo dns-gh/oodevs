@@ -297,7 +297,7 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "Numeric", QT_TRANSLATE_NOOP("ADN_Tr", "Numeric" ), eMissionParameterTypeNumeric ),
     T_ConverterMissionParameterType( "String", QT_TRANSLATE_NOOP("ADN_Tr", "String" ), eMissionParameterTypeString ),
     T_ConverterMissionParameterType( "Direction", QT_TRANSLATE_NOOP("ADN_Tr", "Direction" ), eMissionParameterTypeDirection ),
-    T_ConverterMissionParameterType( "GDH", QT_TRANSLATE_NOOP("ADN_Tr", "GDH" ), eMissionParameterTypeGDH ),
+    T_ConverterMissionParameterType( "Datetime", QT_TRANSLATE_NOOP("ADN_Tr", "Datetime" ), eMissionParameterTypeGDH ),
     T_ConverterMissionParameterType( "Enumeration", QT_TRANSLATE_NOOP("ADN_Tr", "Enumeration" ), eMissionParameterTypeEnumeration ),
     T_ConverterMissionParameterType( "NatureAtlas", QT_TRANSLATE_NOOP("ADN_Tr", "NatureAtlas" ), eMissionParameterTypeNatureAtlas ),
     T_ConverterMissionParameterType( "AgentKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "AgentKnowledge" ), eMissionParameterTypeAgentKnowledge ),
