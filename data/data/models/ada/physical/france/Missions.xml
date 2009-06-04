@@ -315,8 +315,8 @@
       <parameter dia-name="zone_" name="Zone" optional="false" type="Location"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_Renforcer" dia-type="T_Mission_Pion_GEN_Renforcer" id="73" name="GEN Renforcer">
-      <parameter dia-name="lieuRenforcement_" name="Lieu renforcement" optional="true" type="Point"/>
-      <parameter dia-name="unite_" name="Unite" optional="true" type="Agent"/>
+      <parameter dia-name="lieuRenforcement_" name="Lieu renforcement" optional="false" type="Point"/>
+      <parameter dia-name="unite_" name="Unite" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_RealiserTravauxProtection" dia-type="T_Mission_Pion_GEN_RealiserTravauxProtection" id="74" name="GEN Realiser Travaux Protection">
       <parameter dia-name="travaux_" name="Travaux" optional="false" type="GenObjectList"/>
