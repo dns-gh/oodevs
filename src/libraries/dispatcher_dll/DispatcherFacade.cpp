@@ -18,6 +18,12 @@
 #   include "gearth_plugin/GearthPluginFactory.h"
 #   include "crossbow_plugin/CrossbowPluginFactory.h"
 #endif
+
+#ifdef XMLIA_PLUGIN
+    #include "xmliaExport_plugin/xmliaExportPluginFactory.h"
+    #include "xmliaImport_plugin/xmliaImportPluginFactory.h"
+#endif
+
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace plugins;
@@ -42,6 +48,11 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv )
     dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
     dispatcher_->RegisterPluginFactory( *new gearth::GearthPluginFactory() );
 #endif
+#ifdef XMLIA_PLUGIN
+    dispatcher_->RegisterPluginFactory( *new xmliaExport::XmliaExportPluginFactory() );
+    dispatcher_->RegisterPluginFactory( *new xmliaImport::XmliaImportPluginFactory() );
+#endif
+
     dispatcher_->CreatePlugins();
 }
 
