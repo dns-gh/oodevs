@@ -359,8 +359,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     aar->hide();
 
     new XPSPlayer( this, controllers_ );
-    if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) )
-        Load();
 }
 
 // -----------------------------------------------------------------------------
