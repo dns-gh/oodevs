@@ -26,17 +26,17 @@
     <population-filter density="0.1"/>
     <time-limited/>
   </object>
-  <object geometry="point" name="safe zone" symbol="" type="safe zone">
+  <object geometry="point" name="Safe Point" symbol="G*MPSF----****X" type="safe zone">
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
   </object>
-  <object geometry="polygon" name="jamming area" symbol="" type="jamming area">
+  <object geometry="polygon" name="Jamming Area" symbol="G*EW***********" type="jamming area">
     <avoidable distance="250"/>
     <interact-with-enemy/>
     <interference/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
-  <object geometry="polygon" name="NBC Area" symbol="" type="nbc zone">
+  <object geometry="polygon" name="NBC Area" symbol="G*MPNR----****X" type="nbc zone">
     <avoidable distance="100"/>
     <contamination max-toxic="1" type="nbc"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
@@ -50,13 +50,13 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="input"/>
   </object>
-  <object geometry="point" name="Fire" symbol="" type="fire">
+  <object geometry="point" name="Arson/Fire" symbol="O*VPA-----*****" type="fire">
     <avoidable distance="250"/>
     <extinguishable/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <propagation model="fire"/>
   </object>
-  <object geometry="point" name="Decontamination Point" symbol="G*MPNDP---****X" type="decontamination site">
+  <object geometry="polygon" name="Decontamination Point" symbol="G*MPNDP---****X" type="decontamination site">
     <avoidable distance="250"/>
     <decontamination/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -68,10 +68,10 @@
   <object geometry="line" name="Crossing Site" symbol="G*MPBCL---****X" type="crossing site">
     <bridging/>
   </object>
-  <object geometry="point" name="ROTA Point" symbol="" type="rota area">
+  <object geometry="point" name="ROTA Point" symbol="G*ROTA*********" type="rota area">
     <contamination max-toxic="-1" type="nbc"/>
   </object>
-  <object geometry="line" name="Abatis" symbol="G*MPOS----****X" type="abattis">
+  <object geometry="polygon" name="Abatis" symbol="G*MPOS----****X" type="abattis">
     <activable/>
     <attrition category="standard landmine"/>
     <avoidable distance="1000"/>
@@ -90,7 +90,7 @@
     <interact-with-enemy/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="lline" name="Anti-tank Ditch" symbol="G*MPOADC--****X" type="anti tank obstacle">
+  <object geometry="polygon" name="Anti-tank Ditch" symbol="G*MPOADC--****X" type="anti tank obstacle">
     <avoidable distance="250"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -122,7 +122,7 @@
     <interact-with-enemy/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="line" name="Mined Area (linear)" symbol="G*MPOFA---****X" type="mined area (linear)">
+  <object geometry="polygon" name="Mined Area (linear)" symbol="G*MPOFA---****X" type="mined area (linear)">
     <activable/>
     <attrition category="standard landmine"/>
     <avoidable distance="500"/>
@@ -234,7 +234,7 @@
     <bridging/>
     <workable max-animator="0"/>
   </object>
-  <object geometry="point" name="firing post" symbol="" type="firing post">
+  <object geometry="point" name="firing post" symbol="G*FPAP----****X" type="firing post">
     <protection geniePrepared="true" max-size="1"/>
   </object>
   <object geometry="point" name="gun artillery deployment area" symbol="G*FPAP----****X" type="gun artillery deployment area">
@@ -254,8 +254,8 @@
   </object>
   <object geometry="polygon" name="Landing Zone" symbol="G*GPGAL---****X" type="landing area"/>
   <object geometry="polygon" name="Airfield Zone" symbol="G*GPGAZ---****X" type="trail"/>
-  <object geometry="polygon" name="Platform" symbol="" type="platform"/>
-  <object geometry="polygon" name="mobility enhanced area" symbol="" type="mobility enhanced area"/>
+  <object geometry="polygon" name="Platform" symbol="G*PLATFORM*****" type="platform"/>
+  <object geometry="polygon" name="mobility enhanced area" symbol="G*MPSP----****X" type="mobility enhanced area"/>
   <object geometry="polygon" name="Landing Zone (helicopter)" symbol="G*GPGAL---****X" type="landing area (helicopter)"/>
   <object geometry="polygon" name="Forward Arming and Refueling Point (FARP)" symbol="G*SPAR----****X" type="logistic area"/>
   <object geometry="polygon" name="Detainee Holding Area" symbol="G*SPAD----****X" type="prisoners camp">
@@ -277,5 +277,5 @@
     <interaction-height height="6000"/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="point" name="Installation" symbol="" type="installation"/>
+  <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation"/>
 </objects>
