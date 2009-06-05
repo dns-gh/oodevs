@@ -124,7 +124,8 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
 void EngineerConstruction::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     Parameter< std::string >::Draw( where, viewport, tools );
-    ObjectIcons::Draw( type_, GetPosition(), viewport, tools );
+//    if( const kernel::Location_ABC* location = GetLocation() ) // $$$$ SBO 2009-06-05: TODO
+//        tools.DrawTacticalGraphics( type_.GetSymbol(), *location, tools.ShouldDisplay() );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +135,7 @@ void EngineerConstruction::Draw( const geometry::Point2f& where, const Viewport_
 void EngineerConstruction::Serialize( xml::xostream& xos ) const
 {
     Parameter< std::string >::Serialize( xos );
-    xos << attribute( "value", type_.GetName() );
+    xos << attribute( "value", type_.GetType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +167,7 @@ void EngineerConstruction::Clean( ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void EngineerConstruction::CommitTo( ASN1T_PlannedWork& asn ) const
 {    
-    asn.type = type_.GetName().c_str();
+    asn.type = type_.GetType().c_str();
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string type = it->second->GetType();
