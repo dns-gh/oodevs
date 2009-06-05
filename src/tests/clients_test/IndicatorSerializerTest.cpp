@@ -260,7 +260,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestOperationalState )
             "<extract function='operational-state' id='1'/>"
             "<reduce function='select' id='2' input='1' key='42' type='float'/>"
         "</indicator>";
-    RegisterVariable( "Unit", "key", "42" );
+    RegisterVariable( "Unit", "unit", "42" );
     ParseAndCheck( "Select( operational-state(), $Unit )", expected );
 }
 
@@ -276,7 +276,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMeanOperationalState )
             "<transform function='domain' id='2' input='1' select='un,its' type='float'/>"
             "<reduce function='mean' id='3' input='2' type='float'/>"
         "</indicator>";
-    RegisterVariable( "Units", "list(key)", "un,its" );
+    RegisterVariable( "Units", "unit list", "un,its" );
     ParseAndCheck( "Mean( Domain( operational-state(), $Units ) )", expected );
 }
 
@@ -294,8 +294,8 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestDistanceBetweenUnits )
             "<reduce function='select' id='4' input='3' key='51' type='position'/>"
             "<transform function='distance' id='5' input='2,4' type='float'/>"
         "</indicator>";
-    RegisterVariable( "Unit1", "key", "42" );
-    RegisterVariable( "Unit2", "key", "51" );
+    RegisterVariable( "Unit1", "unit", "42" );
+    RegisterVariable( "Unit2", "unit", "51" );
     ParseAndCheck( "Distance( Select( position(), $Unit1 ), Select( position(), $Unit2 ) )", expected );
 }
 
@@ -313,7 +313,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNumberOfBreakdown )
             "<transform function='filter' id='4' input='2,3' type='unsigned long'/>"
             "<reduce function='count' id='5' input='4' type='unsigned'/>"
         "</indicator>";
-    RegisterVariable( "Units", "list(key)", "un,its" );
+    RegisterVariable( "Units", "unit list", "un,its" );
     ParseAndCheck( "Count( Filter( Is-One-Of( maintenance-handling-unit(), $Units ), maintenance-handling-unit() ) )", expected );
 }
 
@@ -342,7 +342,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestComponentDamages )
             "<extract components='com,pon,ents' function='fire-component-damage' id='1'/>"
             "<reduce function='sum' id='2' input='1' type='float'/>"
         "</indicator>";
-    RegisterVariable( "Components", "list(key)", "com,pon,ents" );
+    RegisterVariable( "Components", "equipment list", "com,pon,ents" );
     ParseAndCheck( "Sum( fire-component-damage( $Components ) )", expected );
 }
 
@@ -363,7 +363,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestInflictedDamageFromDirectFiresFrom
             "<transform function='filter' id='6' input='4,5' type='float'/>"
             "<reduce function='sum' id='7' input='6' type='float'/>"
         "</indicator>";
-    RegisterVariable( "Components", "list(key)", "com,pon,ents" );
+    RegisterVariable( "Components", "equipment list", "com,pon,ents" );
     RegisterVariable( "Zone", "zone", "circle(00UTM0000000000,00UTM0000000000)" );
     ParseAndCheck( "Sum( Filter( Contains( $Zone, Compose( position(), direct-fire-unit() ) ), fire-component-damage( $Components ) ) )", expected );
 }
@@ -380,8 +380,8 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestTotalResourcesForUnits )
             "<transform function='domain' id='2' input='1' select='un,its' type='int'/>"
             "<reduce function='sum' id='3' input='2' type='int'/>"
         "</indicator>";
-    RegisterVariable( "Dotations", "list(key)", "dot,ati,ons" );
-    RegisterVariable( "Units", "list(key)", "un,its" );
+    RegisterVariable( "Dotations", "dotation list", "dot,ati,ons" );
+    RegisterVariable( "Units", "unit list", "un,its" );
     ParseAndCheck( "Sum( Domain( resources( $Dotations ), $Units ) )", expected );
 }
 
@@ -403,8 +403,8 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResourceConsumptionsForUnits )
             "<transform function='domain' id='8' input='7' select='un,its' type='int'/>"
             "<reduce function='sum' id='9' input='8' type='int'/>"
         "</indicator>";
-    RegisterVariable( "Resources", "list(key)", "res,our,ces" );
-    RegisterVariable( "Units", "list(key)", "un,its" );
+    RegisterVariable( "Resources", "dotation list", "res,our,ces" );
+    RegisterVariable( "Units", "unit list", "un,its" );
     ParseAndCheck( "Sum( Domain( Filter( Compare( 'less', Derivate( resources( $Resources ) ), 0 ), Derivate( resources( $Resources ) ) ), $Units ) )", expected );
 }
 

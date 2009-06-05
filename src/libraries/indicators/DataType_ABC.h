@@ -36,7 +36,12 @@ public:
     virtual std::string ToString() const = 0;
     virtual bool operator==( const DataType_ABC& rhs ) const = 0;
     virtual bool operator!=( const DataType_ABC& rhs ) const = 0;
+    //@}
+
+    //! @name Helpers
+    //@{
     virtual bool IsCompatible( const std::string& type ) const = 0;
+    virtual bool IsCollection() const = 0;
     //@}
 
 private:

@@ -652,7 +652,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
     const std::string input =
     "<indicator>"
         "<extract function='resources' id='resources' dotations='42'/>"
-        "<transform type='int' function='derivate' input='resources' id='resources-var'/>"
+        "<transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
         "<constant type='int' value='0' id='zero'/>"
         "<transform function='compare' type='int' operator='less' input='resources-var,zero' id='test'/>"
         "<transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"

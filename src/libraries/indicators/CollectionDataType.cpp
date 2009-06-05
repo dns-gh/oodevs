@@ -101,3 +101,12 @@ bool CollectionDataType::IsCompatible( const std::string& type ) const
 {
     return ElementTypeResolver::IsCompatible( fullType_, type ) || ElementTypeResolver::IsCompatible( types_.back(), type );
 }
+
+// -----------------------------------------------------------------------------
+// Name: CollectionDataType::IsCollection
+// Created: SBO 2009-06-05
+// -----------------------------------------------------------------------------
+bool CollectionDataType::IsCollection() const
+{
+    return true;
+}

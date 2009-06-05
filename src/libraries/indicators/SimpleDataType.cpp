@@ -87,3 +87,12 @@ bool SimpleDataType::IsCompatible( const std::string& type ) const
 {
     return ElementTypeResolver::IsCompatible( type_, type );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SimpleDataType::IsCollection
+// Created: SBO 2009-06-05
+// -----------------------------------------------------------------------------
+bool SimpleDataType::IsCollection() const
+{
+    return false;
+}

@@ -52,6 +52,7 @@ private:
     //! @name Helpers
     //@{
     virtual bool IsCompatible( const std::string& type ) const;
+    virtual bool IsCollection() const;
     //@}
 
 private:

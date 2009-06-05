@@ -249,12 +249,17 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestVariableTypeIsCompatibleWithBuil
     }
     {
         boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "dotation list", resolver ) );
-        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(resource-type)", resolver ) );
         BOOST_CHECK( *lhs == *rhs );
     }
     {
         boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "equipment list", resolver ) );
-        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(key)", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(equipment-type)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "zone", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "position", resolver ) );
         BOOST_CHECK( *lhs == *rhs );
     }
 }

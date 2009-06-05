@@ -76,15 +76,22 @@ void ElementTypeResolver::AddElement( const DataType_ABC& definition, const Data
 
 namespace
 {
-    std::string ReplaceBaseElementTypes( const std::string& type )
+    std::string ReplaceVariableTypes( const std::string& type )
     {
         std::string result( type );
         // $$$$ SBO 2009-05-12: Variable types
-        boost::replace_all( result, "unit list", "unsigned long" );
-        boost::replace_all( result, "unit", "unsigned long" );
-        boost::replace_all( result, "dotation list", "unsigned long" );
-        boost::replace_all( result, "equipment list", "unsigned long" );
+        boost::replace_all( result, "unit list", "list(key)" );
+        boost::replace_all( result, "unit", "key" );
+        boost::replace_all( result, "dotation list", "list(resource-type)" );
+        boost::replace_all( result, "equipment list", "list(equipment-type)" );
         boost::replace_all( result, "zone", "position" );
+        boost::replace_all( result, "operator", "string" ); // $$$$ SBO 2009-06-05: 
+        return result;
+    }
+
+    std::string ReplaceBaseElementTypes( const std::string& type )
+    {
+        std::string result( type );
         // $$$$ SBO 2009-05-12: Extractor types
         boost::replace_all( result, "key", "unsigned long" );
         boost::replace_all( result, "equipment-type", "unsigned long" );
@@ -95,6 +102,11 @@ namespace
         boost::replace_all( result, "operator", "string" );
         // $$$$ SBO 2009-04-15: TODO: put this into a config file...
         return result;
+    }
+
+    bool IsNumeric( const std::string& type )
+    {
+        return type == "unsigned" || type == "float";
     }
 }
 
@@ -179,5 +191,16 @@ std::string ElementTypeResolver::ToSimpleType( const std::string& type )
 // -----------------------------------------------------------------------------
 bool ElementTypeResolver::IsCompatible( const std::string& lhs, const std::string& rhs )
 {
-    return IsAbstract( lhs ) || IsAbstract( rhs ) || ReplaceBaseElementTypes( lhs ) == ReplaceBaseElementTypes( rhs );
+    return IsAbstract( lhs ) || IsAbstract( rhs ) 
+        || IsNumericCompatible( lhs, rhs )
+        || ReplaceVariableTypes( lhs ) == ReplaceVariableTypes( rhs );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ElementTypeResolver::IsNumericCompatible
+// Created: SBO 2009-06-05
+// -----------------------------------------------------------------------------
+bool ElementTypeResolver::IsNumericCompatible( const std::string& lhs, const std::string& rhs )
+{
+    return IsNumeric( lhs ) && IsNumeric( rhs );
 }

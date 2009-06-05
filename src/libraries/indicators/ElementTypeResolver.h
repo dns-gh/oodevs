@@ -51,6 +51,7 @@ private:
     //@{
     void Update();
     void ConvertElementTypes( std::vector< std::string >& type1, std::vector< std::string >& type2 ) const;
+    static bool IsNumericCompatible( const std::string& lhs, const std::string& rhs );
     //@}
 
     //! @name Types

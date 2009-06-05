@@ -159,7 +159,8 @@ void Score::SerializeIndicators( xml::xostream& xos ) const
 {
     xos << xml::start( "indicators" );
     SerializeIndicator( xos, QString( "indicator( '%1', %2 )" ).arg( name_ ).arg( formula_ ) );
-    SerializeIndicator( xos, QString( "indicator( '%1/Tendency', derivate( %2 ) )" ).arg( name_ ).arg( formula_ ) );
+    SerializeIndicator( xos, QString( "indicator( '%1/Tendency', derivate( %2, %3 ) )" )
+                                .arg( name_ ).arg( formula_ ).arg( 10 ) ); // $$$$ SBO 2009-06-05: 10 sec period, allow user customization if needed
     xos << xml::end();
 }
 

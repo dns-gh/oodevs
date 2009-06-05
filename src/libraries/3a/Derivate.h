@@ -13,6 +13,8 @@
 #include "Functions.h"
 #include "TypeChecks.h"
 #include <map>
+#include <deque>
+#include <xeumeuleu/xml.h>
 
 #pragma warning( push )
 #pragma warning( disable : 4800 4804 )
@@ -37,10 +39,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Derivate( Function1_ABC< K, T >& next )
-                : next_( next ), currentKey_() {}
-             Derivate( xml::xistream& , Function1_ABC< K, T >& next )
-                : next_( next ), currentKey_() {}
+    Derivate( xml::xistream& xis, Function1_ABC< K, T >& next )
+        : period_( double( std::max( xml::attribute< unsigned int >( xis, "period", 1 ), 1u ) ) ), next_( next ), currentKey_() {}
     //@}
 
     //! @name Operations
@@ -56,9 +56,11 @@ public:
     }
     virtual void Apply( const T& arg )
     {
-        T& previous = previous_[ currentKey_ ];
-        next_.Apply( arg - previous );
-        previous = arg;
+        std::deque< T >& previous = previous_[ currentKey_ ];
+        next_.Apply( ( arg - ( previous.empty() ? 0 : previous.back() ) ) / period_ );
+        previous.push_front( arg );
+        if( previous.size() > period_ )
+            previous.pop_back();
     }
     virtual void EndTick()
     {
@@ -81,8 +83,9 @@ private:
 private:
     //! @name Member data
     //@{
+    NumericValue period_;
     Function1_ABC< K, T >& next_;
-    std::map< K, T > previous_;
+    std::map< K, std::deque< T > > previous_;
     K currentKey_;
     //@}
 };
