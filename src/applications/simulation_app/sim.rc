@@ -75,7 +75,7 @@ BEGIN
             VALUE "InternalName", "SIM"
             VALUE "LegalCopyright", "Copyright © 2005 Masa"
             VALUE "OriginalFilename", "SIM.exe"
-            VALUE "ProductName", "Scipio"
+            VALUE "ProductName", "SWORD"
             VALUE "ProductVersion", "1.1"
         END
     END
