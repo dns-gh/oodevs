@@ -393,19 +393,19 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResourceConsumptionsForUnits )
 {
     const std::string expected = 
         "<indicator>"
-            "<constant id='3' type='float' value='0'/>"
+            "<constant id='4' type='float' value='0'/>"
             "<extract dotations='res,our,ces' function='resources' id='1'/>"
-            "<transform function='derivate' id='2' input='1' type='int'/>"
-            "<transform function='compare' id='4' input='2,3' operator='less' type='bool'/>"
-            "<extract dotations='res,our,ces' function='resources' id='5'/>"
-            "<transform function='derivate' id='6' input='5' type='int'/>"
-            "<transform function='filter' id='7' input='4,6' type='int'/>"
-            "<transform function='domain' id='8' input='7' select='un,its' type='int'/>"
-            "<reduce function='sum' id='9' input='8' type='int'/>"
+            "<transform function='derivate' id='3' input='1' period='1' type='int'/>"
+            "<transform function='compare' id='5' input='3,4' operator='less' type='bool'/>"
+            "<extract dotations='res,our,ces' function='resources' id='6'/>"
+            "<transform function='derivate' id='8' input='6' period='1' type='int'/>"
+            "<transform function='filter' id='9' input='5,8' type='int'/>"
+            "<transform function='domain' id='10' input='9' select='un,its' type='int'/>"
+            "<reduce function='sum' id='11' input='10' type='int'/>"
         "</indicator>";
     RegisterVariable( "Resources", "dotation list", "res,our,ces" );
     RegisterVariable( "Units", "unit list", "un,its" );
-    ParseAndCheck( "Sum( Domain( Filter( Compare( 'less', Derivate( resources( $Resources ) ), 0 ), Derivate( resources( $Resources ) ) ), $Units ) )", expected );
+    ParseAndCheck( "Sum( Domain( Filter( Compare( 'less', Derivate( resources( $Resources ), 1 ), 0 ), Derivate( resources( $Resources ), 1 ) ), $Units ) )", expected );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
