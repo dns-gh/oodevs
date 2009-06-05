@@ -9,7 +9,7 @@
 
 #include "xmliaExport_plugin_pch.h"
 #include "xmliaExportPluginFactory.h"
-//#include "xmliaExportPlugin.h"
+#include "xmliaExportPlugin.h"
 
 using namespace plugins::xmliaExport;
 
@@ -38,7 +38,7 @@ XmliaExportPluginFactory::~XmliaExportPluginFactory()
 std::auto_ptr< dispatcher::Plugin_ABC > XmliaExportPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& /*config*/, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& /*client*/, dispatcher::LinkResolver_ABC& /*resolver*/, dispatcher::CompositeRegistrable&  ) const
 {
     std::auto_ptr< dispatcher::Plugin_ABC > result;
-   /* if( name == "xmliaExport" )
-        result.reset( new BmlPlugin( model, xis, simulation ) );*/
+    if( name == "xmliaExport" )
+        result.reset( new XmliaExportPlugin( model, xis, simulation ) );
     return result;
 }
