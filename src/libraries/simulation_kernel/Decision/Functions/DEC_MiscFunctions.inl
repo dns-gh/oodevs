@@ -21,7 +21,7 @@ void DEC_MiscFunctions::RC_Operational( DIA_Call_ABC& call, T& caller )
 {
     const MIL_Report* pReport = MIL_Report::Find( call.GetParameter( 0 ).ToId() );
     if( pReport )
-        pReport->Send( caller, MIL_Report::eRcTypeOperational, call.GetParameters() );
+        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::eRcTypeOperational, call.GetParameters() );
 }
 
 //-----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ void DEC_MiscFunctions::RC_Message( DIA_Call_ABC& call, T& caller )
 {
     const MIL_Report* pReport = MIL_Report::Find( call.GetParameter( 0 ).ToId() );
     if( pReport )
-        pReport->Send( caller, MIL_Report::eRcTypeMessage, call.GetParameters() );
+        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::eRcTypeMessage, call.GetParameters() );
 }
 
 //-----------------------------------------------------------------------------
@@ -45,5 +45,5 @@ void DEC_MiscFunctions::RC_Warning( DIA_Call_ABC& call, T& caller )
 {
     const MIL_Report* pReport = MIL_Report::Find( call.GetParameter( 0 ).ToId() );
     if( pReport )
-        pReport->Send( caller, MIL_Report::eRcTypeWarning, call.GetParameters() );
+        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::eRcTypeWarning, call.GetParameters() );
 }

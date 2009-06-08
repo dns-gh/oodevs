@@ -380,6 +380,7 @@ public:
 
     //! @name Operations
     //@{
+    template< typename T > void SendReportWithTypeAsArgument( const T& sender, E_Type nType, const DIA_Parameters& diaParameters ) const;
     template< typename T > void Send( const T& sender, E_Type nType, const DIA_Parameters& diaParameters ) const;
     //@}
 
@@ -405,7 +406,7 @@ private:
     template< typename T > 
     static void PostEvent( const T& receiver, E_EngineReport nReport, DIA_Parameters& parameters );
 
-    bool DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const DIA_Parameters& diaParameters ) const;
+    bool DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const DIA_Parameters& diaParameters, unsigned int firstParameter ) const;
     //@}
 
     //! @name Types

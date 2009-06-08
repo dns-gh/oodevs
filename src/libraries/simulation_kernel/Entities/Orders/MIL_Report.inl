@@ -34,8 +34,18 @@ const MIL_Report* MIL_Report::Find( uint nID )
 template< typename T > inline
 void MIL_Report::Send( const T& sender, E_Type nType, const DIA_Parameters& diaParameters ) const
 {
-    DoSend( sender.GetID(), nType, sender.GetKnowledge(), diaParameters );
+    DoSend( sender.GetID(), nType, sender.GetKnowledge(), diaParameters, 0 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > void MIL_Report::SendReportWithTypeAsArgument
+// Created: LDC 2009-06-08
+// -----------------------------------------------------------------------------
+template< typename T > inline
+void MIL_Report::SendReportWithTypeAsArgument( const T& sender, E_Type nType, const DIA_Parameters& diaParameters ) const
+{
+    DoSend( sender.GetID(), nType, sender.GetKnowledge(), diaParameters, 1 );
+}    
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::PostEvent

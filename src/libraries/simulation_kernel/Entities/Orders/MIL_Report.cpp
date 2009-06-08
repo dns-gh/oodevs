@@ -174,10 +174,11 @@ MIL_Report::~MIL_Report()
 // Name: MIL_Report::DoSend
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
-bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const DIA_Parameters& diaParameters ) const
+bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const DIA_Parameters& diaParameters, unsigned int firstParameter ) const
 {
     // DIA parameter 0 : Report ID
-    if( ( diaParameters.GetParameters().size() - 1 ) != parameters_.size() )
+    unsigned int nDiaParameter = diaParameters.GetParameters().size() - parameters_.size();
+    if( nDiaParameter != firstParameter )
     {
         MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (invalid DIA parameters)" );
         return false;
@@ -194,12 +195,10 @@ bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolv
     if( !parameters_.empty() )
     {
         asn().parametres.elem = new ASN1T_MissionParameter[ parameters_.size() ];
-    
-        uint nDiaParameter = 1;
         for( CIT_ParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++nDiaParameter )
         {
             const DIA_Variable_ABC& diaParameter = const_cast< DIA_Parameters& >( diaParameters ).GetParameter( nDiaParameter );
-            if( !(**it).Copy( diaParameter, asn().parametres.elem[ nDiaParameter - 1 ], knowledgeResolver, false /*not optional*/ ) )
+            if( !(**it).Copy( diaParameter, asn().parametres.elem[ nDiaParameter - firstParameter ], knowledgeResolver, false /*not optional*/ ) )
                 return false; //$$$ Memory leak
         }
     }
