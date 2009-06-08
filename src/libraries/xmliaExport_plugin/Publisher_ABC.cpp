@@ -7,6 +7,6 @@
 //
 // *****************************************************************************
 
-#include "bml_plugin_pch.h"
+#include "xmliaExport_plugin_pch.h"
 #include "Publisher_ABC.h"
 
