@@ -268,7 +268,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="10" name="standard barbed wire"/>
+          <dotation count="10" name="barbele classique"/>
         </resources>
       </buildable>
     </constructor>
