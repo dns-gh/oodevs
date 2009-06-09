@@ -21,7 +21,7 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "InputPropagationPrototype_ABC", "Propagation" ) )    
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "InputPropagationPrototype_ABC", "Propagation" ) )
 {    
     new QLabel( tools::translate( "InputPropagationPrototype_ABC", "NBC Agent:" ), this );
 
@@ -64,7 +64,7 @@ void InputPropagationPrototype_ABC::LoadPath()
 {
     static const int length = 22;
     QString fileName = QFileDialog::getOpenFileName( "./", tools::translate( "InputPropagationPrototype_ABC", "Propagation (propagation.xml)" ), 0, tools::translate( "InputPropagationPrototype_ABC", "Open File" ) );
-    if ( fileName.ascii() )
+    if( fileName.ascii() )
     {        
         source_ = std::string( fileName.ascii() );
         if( source_.size() > length )

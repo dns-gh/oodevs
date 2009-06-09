@@ -22,11 +22,11 @@ CrossingSitePrototype_ABC::CrossingSitePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "CrossingSitePrototype_ABC", "Crossing site" ) )
 {
     new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Width:" ), this );
-    width_ = new QSpinBox( 0, 10000, 10, this );
+    width_ = new QSpinBox( 1, 10000, 10, this );
     width_->setSuffix( kernel::Units::meters );
 
     new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Depth:" ), this );
-    depth_ = new QSpinBox( 0, 1000, 10, this );
+    depth_ = new QSpinBox( 1, 1000, 10, this );
     depth_->setSuffix( kernel::Units::meters );
 
     new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Stream speed:" ), this );

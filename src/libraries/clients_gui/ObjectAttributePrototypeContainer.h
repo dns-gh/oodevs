@@ -53,6 +53,7 @@ public:
 
     //! @name Operations
     //@{
+    bool CheckValidity() const;
     void Commit();
     void Clean();
     void Hide();
@@ -88,7 +89,7 @@ private:
     const ObjectAttributePrototypeFactory_ABC& factory_;
     const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver_;
     T_AttributesPrototypes attributes_;
-    T_AttributeContainer* select_;
+    boost::shared_ptr< T_AttributeContainer > current_;
     QWidget* parent_;
     //@}
 };

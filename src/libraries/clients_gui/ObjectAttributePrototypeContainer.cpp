@@ -28,7 +28,7 @@ using namespace gui;
 ObjectAttributePrototypeContainer::ObjectAttributePrototypeContainer( const Resolver_ABC< ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent )
     : factory_ ( factory )
     , resolver_ ( resolver )
-    , select_ ( 0 )
+    , current_ ()
     , parent_ ( parent )
 {
     // NOTHING
@@ -65,7 +65,7 @@ void ObjectAttributePrototypeContainer::Load( const kernel::ObjectType& type )
     {
         std::pair< IT_AttributesPrototypes, bool > result = attributes_.insert( std::make_pair( type.GetType(), new T_AttributeContainer() ) );
         for( kernel::ObjectType::T_Capacities::const_iterator it = type.CapacitiesBegin(); result.second && it != type.CapacitiesEnd(); ++it )
-            factory_.Create( it->first, *it->second, *result.first->second, parent_ );    
+            factory_.Create( it->first, *it->second, *result.first->second, parent_ );
     }
 }
 
@@ -78,9 +78,22 @@ const ObjectAttributePrototypeContainer::T_AttributeContainer* ObjectAttributePr
     CIT_AttributesPrototypes it = attributes_.find( type.GetType() );    
     Hide();    
     if ( it != attributes_.end() )
-        select_ = it->second.get(); // throw std::runtime_error( "Unable to select " + type.GetType() + " object type." );        
+        current_ = it->second; // throw std::runtime_error( "Unable to select " + type.GetType() + " object type." );        
     Show();
-    return select_;
+    return current_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributePrototypeContainer::CheckValidity
+// Created: SBO 2009-06-09
+// -----------------------------------------------------------------------------
+bool ObjectAttributePrototypeContainer::CheckValidity() const
+{
+    if( current_.get() )
+        for( T_AttributeContainer::const_iterator it = current_->begin(); it != current_->end(); ++it )
+            if( ! (*it)->CheckValidity() )
+                return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,8 +102,8 @@ const ObjectAttributePrototypeContainer::T_AttributeContainer* ObjectAttributePr
 // -----------------------------------------------------------------------------
 void ObjectAttributePrototypeContainer::Commit()
 {
-    if ( select_ )
-        std::for_each( select_->begin(), select_->end(), boost::bind( &ObjectAttributePrototype_ABC::Commit, _1 ) );
+    if( current_.get() )
+        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::Commit, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,8 +112,8 @@ void ObjectAttributePrototypeContainer::Commit()
 // -----------------------------------------------------------------------------
 void ObjectAttributePrototypeContainer::Clean()
 {
-    if ( select_ )
-        std::for_each( select_->begin(), select_->end(), boost::bind( &ObjectAttributePrototype_ABC::Clean, _1 ) );
+    if( current_.get() )
+        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::Clean, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,9 +122,9 @@ void ObjectAttributePrototypeContainer::Clean()
 // -----------------------------------------------------------------------------
 void ObjectAttributePrototypeContainer::Hide()
 {
-    if ( select_ )
-        std::for_each( select_->begin(), select_->end(), boost::bind( &ObjectAttributePrototype_ABC::hide, _1 ) );
-    select_ = 0;
+    if( current_.get() )
+        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::hide, _1 ) );
+    current_.reset();
 }
     
 // -----------------------------------------------------------------------------
@@ -120,6 +133,6 @@ void ObjectAttributePrototypeContainer::Hide()
 // -----------------------------------------------------------------------------
 void ObjectAttributePrototypeContainer::Show()
 {
-    if ( select_ )
-        std::for_each( select_->begin(), select_->end(), boost::bind( &ObjectAttributePrototype_ABC::show, _1 ) );
+    if( current_.get() )
+        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::show, _1 ) );
 }

@@ -89,7 +89,7 @@ void MineAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 void MineAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "mine" )            
-            << content( "density", density_.value_ ) // $$$$ SBO 2007-02-08: oulaylay serialized even for mine jams!        
+            << content( "density", density_.value_ )
         << end();
 }
 
