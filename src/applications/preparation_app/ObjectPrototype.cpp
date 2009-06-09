@@ -16,7 +16,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
 
-//#include "ConstructionPrototype.h"
+#include "ConstructionPrototype.h"
 //#include "BypassPrototype.h"
 #include "ObstaclePrototype.h"
 #include "NBCPrototype.h"
@@ -39,37 +39,13 @@ namespace
 {
     typedef ObjectAttributePrototypeFactory_ABC::T_AttributeContainer  T_AttributeContainer;
 
-    class ConstructorBuilder
-    {
-    public:
-        ConstructorBuilder( T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
-            : container_ ( container )
-            , parent_ ( parent )
-            , object_ ( object ) {}
-
-        void BuildPrototype( xml::xistream& /*xis*/, bool /*density*/ )
-        {            
-        }
-
-        void ImprovePrototype( xml::xistream& /*xis*/, bool /*density*/ )
-        {
-        }
-    private:
-        ConstructorBuilder& operator=( const ConstructorBuilder& );
-        ConstructorBuilder( const ConstructorBuilder& );
-
-    private:
-        T_AttributeContainer& container_;
-        QWidget* parent_; 
-        Object_ABC*& object_;
-    };
-
     void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
     {
-        ConstructorBuilder builder( container, parent, object );
-        const bool density = xml::attribute< std::string >( xis, "unit-type" ) == "density";
-        xis >> xml::optional() >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
-        xis >> xml::optional() >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
+        // $$$$ SBO 2009-06-09: TODO...
+//        const bool density = xml::attribute< std::string >( xis, "unit-type" ) == "density";
+//        xis >> xml::optional() >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
+//        xis >> xml::optional() >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
+        container.push_back( new ConstructionPrototype( parent, object ) );
     }
 
     void BypassableAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )

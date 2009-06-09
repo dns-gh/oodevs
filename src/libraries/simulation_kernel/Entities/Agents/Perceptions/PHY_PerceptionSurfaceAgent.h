@@ -17,7 +17,6 @@ class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class DEC_Knowledge_Agent;
 
-
 //*****************************************************************************
 // Created: DFT 02-02-26
 // Last modified: JVT 03-09-01

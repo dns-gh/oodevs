@@ -145,7 +145,7 @@ void MineAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 {
-    if ( dotation_ )
+    if( dotation_ )
     {
         asn.m.minePresent = 1;        
         
@@ -166,7 +166,7 @@ void MineAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
         asn.m.minePresent = 1;
         

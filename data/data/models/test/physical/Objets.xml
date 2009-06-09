@@ -265,6 +265,14 @@
     <logistic/>
   </object>
   <object geometry="point" name="Poste de contrôle" symbol="G*GPGPPK--****X" type="checkpoint">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <dotation count="10" name="standard barbed wire"/>
+        </resources>
+      </buildable>
+    </constructor>
+    <workable max-animator="1"/>
     <detection/>
   </object>
   <object geometry="polygon" name="Terrain de largage" symbol="G*GPGAD---****X" type="dropping area"/>

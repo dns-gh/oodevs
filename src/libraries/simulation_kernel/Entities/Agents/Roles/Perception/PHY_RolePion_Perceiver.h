@@ -21,6 +21,7 @@
 
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
+class DIA_Variable_ABC;
 class PHY_PerceptionLevel;
 class PHY_PerceptionView;
 class PHY_Perception_ABC;
@@ -79,13 +80,13 @@ public:
     //@}
 
     //@{
-    void NotifyExternalPerception( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level );
-    void NotifyPerception        ( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
-    void NotifyPerception        ( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level );
-    void NotifyPerception        ( MIL_Object_ABC&              object       , const PHY_PerceptionLevel& level );
-    void NotifyPerception        ( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
-    void NotifyPerception        ( MIL_PopulationFlow&          flow         , const PHY_PerceptionLevel& level, const T_PointVector& shape );
-    void NotifyPerception        ( const MIL_Effect_IndirectFire& flyingShell ) const;    
+    virtual void NotifyExternalPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level );
+    void NotifyPerception( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
+    void NotifyPerception( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level );
+    void NotifyPerception( MIL_Object_ABC&              object       , const PHY_PerceptionLevel& level );
+    void NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
+    void NotifyPerception( MIL_PopulationFlow&          flow         , const PHY_PerceptionLevel& level, const T_PointVector& shape );
+    void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;    
     //@}
 
     //! @name Operations

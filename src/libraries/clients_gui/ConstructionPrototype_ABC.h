@@ -42,6 +42,12 @@ private:
     ConstructionPrototype_ABC( const ConstructionPrototype_ABC& );            //!< Copy constructor
     ConstructionPrototype_ABC& operator=( const ConstructionPrototype_ABC& ); //!< Assignement operator
     //@}
+
+protected:
+    //! @name Member data
+    //@{
+    QSpinBox* completion_;
+    //@}
 };
 
 }

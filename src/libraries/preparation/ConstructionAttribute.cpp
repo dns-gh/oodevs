@@ -10,21 +10,19 @@
 #include "preparation_pch.h"
 #include "ConstructionAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DotationType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
-#include <xeumeuleu/xml.h>
-
-using namespace kernel;
-using namespace xml;
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute( kernel::PropertiesDictionary& dico )
-    : rConstructionPercentage_ ( 0., Units::percentage )    
-    , nDotationConstruction_   ( 0 )
-    , construction_            ( 0 )
+    : completion_( 0, kernel::Units::percentage )
+    , dotationType_( 0 )
+    , dotationCount_( 0 )
 {
     CreateDictionary( dico );
 }
@@ -33,10 +31,10 @@ ConstructionAttribute::ConstructionAttribute( kernel::PropertiesDictionary& dico
 // Name: ConstructionAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( xistream& /*xis*/, kernel::PropertiesDictionary& dico )
-    : rConstructionPercentage_ ( 0., Units::percentage )    
-    , nDotationConstruction_   ( 0 )
-    , construction_            ( 0 )
+ConstructionAttribute::ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
+    : completion_( unsigned int( xml::attribute< float >( xis, "completion", 1.f ) * 100 ), kernel::Units::percentage )
+    , dotationType_( 0 )
+    , dotationCount_( 0 )
 {    
     CreateDictionary( dico );
 }
@@ -57,7 +55,7 @@ ConstructionAttribute::~ConstructionAttribute()
 void ConstructionAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ );
+             .Display( tools::translate( "Object", "Construction:" ), completion_ );
 
 //    displayer.Group( tools::translate( "Object", "Information" ) )
 //             .Item( tools::translate( "Object", "Construction dotation:" ) )
@@ -69,25 +67,45 @@ void ConstructionAttribute::Display( kernel::Displayer_ABC& displayer ) const
 // Name: ConstructionAttribute::DisplayInTooltip
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
+void ConstructionAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ );
+    displayer.Display( tools::translate( "Object", "Construction:" ), completion_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::SerializeAttributes
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SerializeAttributes( xml::xostream& /*xos*/ ) const
+void ConstructionAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    // NOTHING
+    xos << xml::start( "construction" )
+            << xml::attribute( "completion", float( completion_.value_ ) / 100.f );
+    if( dotationType_ != 0 && dotationCount_ != 0 )
+        xos << xml::start( "resources" )
+                << xml::start( "dotation" )
+                    << xml::attribute( "name", dotationType_->GetCategory() )
+                    << xml::attribute( "count", dotationCount_ )
+                << xml::end()
+            << xml::end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::CreateDictionary( kernel::PropertiesDictionary& /*dico*/ )
+void ConstructionAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    // NOTHING
+    dico.Register( *this, tools::translate( "Object", "Info/Construction/Completion" ), completion_ );
+    dico.Register( *this, tools::translate( "Object", "Info/Construction/Dotation/Type" ), dotationType_ );
+    dico.Register( *this, tools::translate( "Object", "Info/Construction/Dotation/Count" ), dotationCount_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::SetCompletion
+// Created: SBO 2009-06-09
+// -----------------------------------------------------------------------------
+void ConstructionAttribute::SetCompletion( unsigned int value )
+{
+    completion_.value_ = value;
 }

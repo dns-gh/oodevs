@@ -33,7 +33,7 @@ namespace
     class ControlZoneType : public MIL_ObjectType_ABC
     {
     public:
-        virtual uint GetID() const { return 0; }
+        virtual unsigned int GetID() const { return 0; }
         virtual const std::string& GetName() const { return name_; }
     private:
         static const std::string name_;

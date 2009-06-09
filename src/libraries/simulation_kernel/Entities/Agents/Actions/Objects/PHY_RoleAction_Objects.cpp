@@ -423,7 +423,7 @@ void PHY_RoleAction_Objects::StopAnimateObject( uint nKnowledgeObjectID )
     MIL_Object_ABC& object = *pObject;
     assert( pPion_ );
     WorkableCapacity* capacity = object.Retrieve< WorkableCapacity >();
-    if ( capacity )
+    if( capacity )
     {
         pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
         object().ReleaseAnimator( *pPion_ );

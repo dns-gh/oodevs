@@ -10,27 +10,33 @@
 #ifndef __AttributeFactory_h_
 #define __AttributeFactory_h_
 
-class Object;
-
 #include "ObjectComponentRegistry_ABC.h"
 
+class Object;
+
+// =============================================================================
+/** @class  AttributeFactory
+    @brief  AttributeFactory
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 class AttributeFactory : public ObjectComponentRegistry_ABC< Object >
 {
 public:	
 	//! @name Constructors/Destructor
     //@{
-			AttributeFactory();
+			 AttributeFactory();
 	virtual ~AttributeFactory();
 	//@}
 
-    //! @name 
+    //! @name Operations
     //@{    
     void Create( Object& object, const std::string& attribute, xml::xistream& xis ) const;
     void Create( Object& object, const ASN1T_ObjectAttributes& asn ) const;
     //@}
 
 private:
-    //! @name 
+    //! @name Helpers
     //@{
     void Register( const std::string& attribute, const T_CallBack& callback );
     //@}

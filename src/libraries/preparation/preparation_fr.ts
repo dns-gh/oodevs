@@ -570,6 +570,18 @@
         <source>Supply route</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info/Construction/Dotation/Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Construction/Dotation/Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Construction/Completion</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Population</name>

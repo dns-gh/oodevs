@@ -10,13 +10,19 @@
 #ifndef __ObjectComponentRegistry_ABC_h_
 #define __ObjectComponentRegistry_ABC_h_
 
+#include <boost/function.hpp>
+
 namespace xml
 {
     class xistream;
 }
 
-#include <boost/function.hpp>
-
+// =============================================================================
+/** @class  ObjectComponentRegistry_ABC
+    @brief  ObjectComponentRegistry_ABC
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 template< typename Component >
 class ObjectComponentRegistry_ABC
 {
@@ -29,7 +35,7 @@ public:
 public:	
 	//! @name Constructors/Destructor
     //@{
-			ObjectComponentRegistry_ABC() {}
+			 ObjectComponentRegistry_ABC() {}
 	virtual ~ObjectComponentRegistry_ABC() {}
 	//@}	
 

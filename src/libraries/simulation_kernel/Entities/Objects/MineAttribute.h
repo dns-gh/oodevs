@@ -41,7 +41,7 @@ public:
 
     //! @name Initialize
     //@{
-    void Load(  xml::xistream& xis );
+    void Load( xml::xistream& xis );
     //@}
 
     //! @name CheckPoints

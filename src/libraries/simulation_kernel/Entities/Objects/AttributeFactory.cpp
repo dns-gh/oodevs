@@ -43,7 +43,7 @@ namespace
     };
 
     template< typename Capacity, typename Attribute >
-    static void InitializeDotation( Object& object )
+    void InitializeDotation( Object& object )
     {
         if( object.RetrieveAttribute< Attribute >() )
             return;
@@ -71,7 +71,6 @@ namespace
             InitializeDotation< ImprovableCapacity, ConstructionAttribute >( object );
             InitializeDotation< BuildableCapacity, ConstructionAttribute >( object );
             object.GetAttribute< ConstructionAttribute >().Load( xis );
-            // 
         }
     };
 

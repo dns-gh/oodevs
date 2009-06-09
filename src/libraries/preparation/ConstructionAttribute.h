@@ -52,6 +52,11 @@ public:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
+    //! @name Accessors
+    //@{
+    void SetCompletion( unsigned int value );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -67,9 +72,9 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::DotationType*           construction_;
-    unsigned int                    nDotationConstruction_;
-    kernel::UnitedValue< float >    rConstructionPercentage_;
+    kernel::UnitedValue< unsigned int > completion_;
+    const kernel::DotationType*         dotationType_;
+    unsigned int                        dotationCount_;
     //@}
 };
 

@@ -10,7 +10,6 @@
 #ifndef __ObjectPrototype_h_
 #define __ObjectPrototype_h_
 
-#include "CapacityContainer_ABC.h"
 #include "MIL_ObjectType_ABC.h"
 #include "MIL_ObjectBuilder_ABC.h"
 
@@ -22,32 +21,28 @@ class Object;
 */
 // Created: JCR 2008-05-23
 // =============================================================================
-class ObjectPrototype 
-    : public MIL_ObjectType_ABC
-    , public MIL_ObjectBuilder_ABC
+class ObjectPrototype : public MIL_ObjectType_ABC
+                      , public MIL_ObjectBuilder_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObjectPrototype( const std::string& type, uint id );
+             ObjectPrototype( const std::string& type, unsigned int id );
     virtual ~ObjectPrototype();
     //@}
 
-    //! @name 
+    //! @name Operations
     //@{
-    template <typename Capacity> void AddCapacity( Capacity* capacity );    
-    //@}
-
-    //! @name 
-    //@{
+    template< typename Capacity >
+    void AddCapacity( Capacity* capacity );
     void Build( Object& object ) const;
-    const MIL_ObjectType_ABC& GetType() const;
     //@}
 
-    //! @name 
+    //! @name Accessors
     //@{
-    uint                GetID() const;
-    const std::string&  GetName() const;
+    const MIL_ObjectType_ABC& GetType() const;
+    unsigned int GetID() const;
+    const std::string& GetName() const;
     //@}
 
 private:
@@ -58,17 +53,11 @@ private:
     //@}
 
 private:
-    //! @name 
-    //@{
-    typedef std::vector< ObjectCapacity_ABC* >        T_Capacities;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    std::string  type_;
-    uint         id_;
-    T_Capacities capacities_;
+    const std::string type_;
+    unsigned int id_;
+    std::vector< ObjectCapacity_ABC* > capacities_;
     //@}
 };
 
@@ -76,7 +65,7 @@ private:
 // Name: template <typename Capacity> void ObjectPrototype::AddCapacity
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-template < typename Capacity > 
+template< typename Capacity > 
 void ObjectPrototype::AddCapacity( Capacity* capacity )
 {
     Attach( *capacity );

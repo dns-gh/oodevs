@@ -19,25 +19,25 @@
 */
 // Created: JCR 2008-06-02
 // =============================================================================
-class MIL_ObjectType_ABC 
-    : protected tools::Extendable< ObjectCapacity_ABC >
+class MIL_ObjectType_ABC : protected tools::Extendable< ObjectCapacity_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-            MIL_ObjectType_ABC() {}
+             MIL_ObjectType_ABC() {}
     virtual ~MIL_ObjectType_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual uint GetID() const = 0;
+    virtual unsigned int GetID() const = 0;
     virtual const std::string& GetName() const = 0;
     //@}
 
     //! @name 
     //@{
-    template< typename Capacity > const Capacity* GetCapacity() const;
+    template< typename Capacity >
+    const Capacity* GetCapacity() const;
     //@}
 
 private:

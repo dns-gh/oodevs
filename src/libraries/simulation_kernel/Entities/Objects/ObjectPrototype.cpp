@@ -17,7 +17,7 @@
 // Name: ObjectPrototype constructor
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( const std::string& type, uint id )
+ObjectPrototype::ObjectPrototype( const std::string& type, unsigned int id )
     : type_ ( type )
     , id_ ( id )
 {
@@ -46,7 +46,7 @@ const std::string& ObjectPrototype::GetName() const
 // Name: ObjectPrototype::GetID
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-uint ObjectPrototype::GetID() const
+unsigned int ObjectPrototype::GetID() const
 {
     return id_; 
 }
@@ -66,6 +66,5 @@ const MIL_ObjectType_ABC& ObjectPrototype::GetType() const
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Build( Object& object ) const
 {
-    std::for_each( capacities_.begin(), capacities_.end(), 
-                   boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
+    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
 }

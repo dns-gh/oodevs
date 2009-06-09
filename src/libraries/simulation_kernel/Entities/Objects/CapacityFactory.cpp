@@ -19,6 +19,7 @@
 #include "ConstructionCapacity.h"
 #include "ContaminationCapacity.h"
 #include "DecontaminationCapacity.h"
+#include "DetectionCapacity.h"
 #include "ExtinguishableCapacity.h"
 #include "FirePropagationCapacity.h"
 #include "HealableCapacity.h"
@@ -33,9 +34,7 @@
 #include "TimeLimitedCapacity.h"
 #include "WorkableCapacity.h"
 #include "SupplyCapacity.h"
-
 #include "MIL_PropagationManager.h"
-
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
@@ -50,14 +49,13 @@ namespace
         }
     };
 
-    static void AddConstructor( ObjectPrototype& prototype, xml::xistream& xis )
+    void AddConstructor( ObjectPrototype& prototype, xml::xistream& xis )
     {
-        ConstructionCapacity    constructor( prototype, xis );
-
-        xis >> xml::list( constructor, &ConstructionCapacity::AddCapacity );        
+        ConstructionCapacity constructor( prototype, xis );
+        xis >> xml::list( constructor, &ConstructionCapacity::AddCapacity );
     }
 
-    static void AddPropagation( ObjectPrototype& prototype, xml::xistream& xis, MIL_PropagationManager& propagation )
+    void AddPropagation( ObjectPrototype& prototype, xml::xistream& xis, MIL_PropagationManager& propagation )
     {
         std::string model( xml::attribute( xis, "model", std::string() ) );
         if ( model == "input" )
@@ -75,7 +73,7 @@ CapacityFactory::CapacityFactory()
     : propagation_ ( new MIL_PropagationManager() ) 
 {
     Register( "activable", boost::bind( &AddBuilder< ActivableCapacity >::Add, _1, _2 ) );
-    Register( "attrition", boost::bind( &AddBuilder< AttritionCapacity >::Add, _1, _2 ) );    
+    Register( "attrition", boost::bind( &AddBuilder< AttritionCapacity >::Add, _1, _2 ) );
     Register( "avoidable", boost::bind( &AddBuilder< AvoidanceCapacity >::Add, _1, _2 ) );
     Register( "bridging", boost::bind( &AddBuilder< BridgingCapacity >::Add, _1, _2 ) );
     Register( "bypassable", boost::bind( &AddBuilder< BypassableCapacity >::Add, _1, _2 ) );
@@ -96,7 +94,7 @@ CapacityFactory::CapacityFactory()
     Register( "time-limited", boost::bind( &AddBuilder< TimeLimitedCapacity >::Add, _1, _2 ) );
     Register( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
     Register( "supply", boost::bind( &AddBuilder< SupplyCapacity >::Add, _1, _2 ) );
-    Register( "detection", boost::bind( &AddBuilder< SupplyCapacity >::Add, _1, _2 ) );
+    Register( "detection", boost::bind( &AddBuilder< DetectionCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

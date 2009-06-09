@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "ConstructionPrototype_ABC.h"
 #include "Tools.h"
+#include "clients_kernel/Units.h"
 
 using namespace gui;
 
@@ -20,7 +21,9 @@ using namespace gui;
 ConstructionPrototype_ABC::ConstructionPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "ConstructionPrototype_ABC", "Construction" ) )    
 {
-    // new QLabel( tools::translate( "ConstructionPrototype_ABC", "Construction:" ), this );
+    new QLabel( tools::translate( "ConstructionPrototype_ABC", "Construction:" ), this );
+    completion_ = new QSpinBox( 0, 100, 1, this );
+    completion_->setSuffix( kernel::Units::percentage );
 }
 
 // -----------------------------------------------------------------------------

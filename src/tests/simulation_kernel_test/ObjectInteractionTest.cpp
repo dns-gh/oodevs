@@ -13,29 +13,28 @@
 struct ASN1T_MagicActionCreateObject;
 struct ASN1T_ObjectAttributes;
 struct ASN1T_Location;
-enum ASN1T_EnumObjectErrorCode;
 
+#include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
-
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
-
+#include "simulation_kernel/Entities/Objects/AnimatorAttribute.h"
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
 #include "simulation_kernel/Entities/Objects/NBCAttribute.h"
 #include "simulation_kernel/Entities/Objects/ToxicAttribute_ABC.h"
-
 #include "simulation_kernel/Entities/Objects/MIL_ToxicEffectManipulator.h"
-
 #include "simulation_kernel/Entities/Objects/ContaminationCapacity.h"
+#include "simulation_kernel/Entities/Objects/DetectionCapacity.h"
 #include "simulation_kernel/Entities/Objects/InteractIfEquippedCapacity.h"
 #include "simulation_kernel/Entities/Objects/InteractWithEnemyCapacity.h"
 #include "simulation_kernel/Entities/Objects/ProtectionCapacity.h"
 #include "simulation_kernel/Entities/Objects/SupplyRouteAttribute.h"
 #include "simulation_kernel/Entities/Objects/SupplyCapacity.h"
-
-#include <xeumeuleu/xml.h>
+#include "simulation_kernel/Entities/Objects/ObstacleAttribute.h"
+#include "simulation_kernel/Entities/Objects/TimeLimitedAttribute.h"
+#include "simulation_kernel/Entities/Objects/MineAttribute.h"
 
 #include "MockBuilder.h"
 #include "MockArmy.h"
@@ -43,12 +42,13 @@ enum ASN1T_EnumObjectErrorCode;
 #include "MockRoleLocation.h"
 #include "MockRoleNBC.h"
 #include "MockRoleInterface_Posture.h"
+#include "MockRolePerceiver.h"
+#include <xeumeuleu/xml.h>
 
 using namespace mockpp;
 
 namespace
 {
-    template < typename T >
     MIL_Object_ABC* CreateObject( const MIL_ObjectType_ABC& type, MockArmy& army, MIL_ObjectLoader& loader )
     {
         MIL_Object_ABC* pObject =0;
@@ -61,8 +61,13 @@ namespace
         builder.verify();
         
         BOOST_REQUIRE( pObject != 0 );
-        BOOST_REQUIRE( pObject->Retrieve< T >() != 0 );
         return pObject;
+    }
+
+    template< typename T >
+    void CheckCapacity( MIL_Object_ABC& object )
+    {
+        BOOST_REQUIRE( object.Retrieve< T >() != 0 );
     }
 }
 
@@ -92,11 +97,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
     MockArmy army;
     MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
 
-    MIL_Object_ABC* pObject = CreateObject< ContaminationCapacity >( type, army, loader );
+    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    CheckCapacity< ContaminationCapacity >( *pObject );
 
     MT_Vector2D position;
     MockAgent agent;
-    agent.RegisterRole< MockRoleLocation >();    
+    agent.RegisterRole< MockRoleLocation >();
     {
         MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
         MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
@@ -163,7 +169,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC )
     MockArmy army;
     MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
 
-    MIL_Object_ABC* pObject = CreateObject< ContaminationCapacity >( type, army, loader );
+    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    CheckCapacity< ContaminationCapacity >( *pObject );
 
     // The following lines are used to force the Instanciation of attributes
     BOOST_CHECK_NO_THROW( ( static_cast< Object* >( pObject )->GetAttribute< MockToxicAttribute, ToxicAttribute_ABC >() ) );
@@ -204,9 +211,9 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
 
     {
         xml::xistringstream xis( "<objects>" 
-            "<object type='implantationArea'>"                    
-            "<protection max-size='1' geniePrepared='false'/>"
-            "</object>" 
+                "<object type='implantationArea'>"                    
+                    "<protection max-size='1' geniePrepared='false'/>"
+                "</object>" 
             "</objects>"
             ); 
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
@@ -216,7 +223,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
     MockArmy army;
     MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
 
-    MIL_Object_ABC* pObject = CreateObject< ProtectionCapacity >( type, army, loader );
+    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    CheckCapacity< ProtectionCapacity >( *pObject );
 
     //First add
     MT_Vector2D position;
@@ -244,8 +252,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
 
 // -----------------------------------------------------------------------------
 /* Name: Test VerifyObjectCapacity_Interaction_InteractIfEquipped
-Create an object prototype with supply-route capacity and checks it "can interacti with"
-only if it is equipeed.
+    Create an object prototype with supply-route capacity and checks it "can interacti with"
+    only if it is equipeed.
 */
 // Created: LDC 2009-03-05
 // -----------------------------------------------------------------------------
@@ -267,7 +275,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped )
     MockArmy army;
     MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
 
-    MIL_Object_ABC* pObject = CreateObject< InteractIfEquippedCapacity >( type, army, loader );
+    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    CheckCapacity< InteractIfEquippedCapacity >( *pObject );
 
     MockAgent agent;
     
@@ -280,8 +289,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped )
 
 // -----------------------------------------------------------------------------
 /* Name: Test VerifyObjectCapacity_Interaction_Supply
-Create an object prototype able to be a supply area.
-Instanciate the object and test if the interaction mechanism is triggered
+    Create an object prototype able to be a supply area.
+    Instanciate the object and test if the interaction mechanism is triggered
 */
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
@@ -289,12 +298,11 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
 {
     //@TODO test à renforcer après le merge
     MIL_ObjectLoader loader;
-
     {
         xml::xistringstream xis( "<objects>" 
-            "<object type='plot ravitaillement'>"                    
-            "<supply/>"
-            "</object>" 
+                "<object type='plot ravitaillement'>"
+                    "<supply/>"
+                "</object>"
             "</objects>"
             ); 
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
@@ -302,46 +310,32 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
     const MIL_ObjectType_ABC& type = loader.GetType( "plot ravitaillement" );
 
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
+    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject )( &army ).expects( mockpp::once() );
 
-    MIL_Object_ABC* pObject = 0;    
-    {
-        MockBuilder builder;
-        builder.GetType_mocker.expects( mockpp::once() ) .will( returnValue( &type ) );
-        MOCKPP_CHAINER_FOR( MockBuilder, Build )         ( &builder ).expects( mockpp::once() );
-        BOOST_CHECK_NO_THROW(
-            pObject = loader.CreateObject( builder, army );            
-        );
-        builder.verify();
-    }
-
-    BOOST_REQUIRE( pObject != 0 );
-    BOOST_REQUIRE( pObject->Retrieve< SupplyCapacity >() != 0 );
+    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    CheckCapacity< SupplyCapacity >( *pObject );
 
     //First add
     MT_Vector2D position;
     MockAgent agent;
     {
-        MOCKPP_CHAINER_FOR( MockAgent, GetArmyShadow ) ( &agent ).expects( mockpp::once() );
-
+        MOCKPP_CHAINER_FOR( MockAgent, GetArmyShadow )( &agent ).expects( mockpp::once() );
     }
-    agent.RegisterRole< MockRoleLocation >();    
+    agent.RegisterRole< MockRoleLocation >();
     {
-        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
-        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
+        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyObjectCollision )( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
+        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )    ( &agent.GetRole< MockRoleLocation >() )
             .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
     }
-
     BOOST_CHECK_NO_THROW( pObject->ProcessAgentEntering( agent ) );
-
     agent.verify();
     army.verify();
 }
 
 // -----------------------------------------------------------------------------
 /* Name: Test VerifyObjectCapacity_Interaction_InteractWithEnemy
-Create an object prototype with interact-wtih-enemy capacity and checks it "can interacti with"
-only with other armies.
+    Create an object prototype with interact-with-enemy capacity and checks it "can interact with"
+    only with other armies.
 */
 // Created: LDC 2009-03-06
 // -----------------------------------------------------------------------------
@@ -364,7 +358,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy )
     MockArmy enemyArmy;
     MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
 
-    MIL_Object_ABC* pObject = CreateObject< InteractWithEnemyCapacity >( type, army, loader );
+    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    CheckCapacity< InteractWithEnemyCapacity >( *pObject );
 
     MockAgent agent;
     MOCKPP_CHAINER_FOR( MockAgent, GetArmyShadow ) ( &agent ).expects( mockpp::once() ).will( returnValue( static_cast< MIL_Army_ABC* >( &army ) ) );
@@ -372,5 +367,83 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy )
     MOCKPP_CHAINER_FOR( MockAgent, GetArmyShadow ) ( &agent ).expects( mockpp::once() ).will( returnValue( static_cast< MIL_Army_ABC* >( &enemyArmy ) ) );
     BOOST_CHECK_EQUAL( true, pObject->CanInteractWith( agent ) );
 
+    agent.verify();
     army.verify();
 }
+
+// -----------------------------------------------------------------------------
+// Name: VerifyObjectCapacity_Interaction_Detection
+// Created: SBO 2009-06-08
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
+{
+    MIL_ObjectLoader loader;
+    {
+        xml::xistringstream xis( "<objects>"
+                "<object geometry='point' type='checkpoint'>"
+                    "<detection/>"
+                "</object>"
+            "</objects>"
+        );
+        loader.Initialize( xis );
+    }
+    const MIL_ObjectType_ABC& type = loader.GetType( "checkpoint" );
+    MockArmy army;
+    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
+
+    MIL_Object_ABC* object = CreateObject( type, army, loader );
+    CheckCapacity< DetectionCapacity >( *object );
+    BOOST_CHECK_NO_THROW( static_cast< Object* >( object )->GetAttribute< AnimatorAttribute >() );
+
+    MockAgent animator;
+    animator.RegisterRole< MockRolePerceiver >();
+    static_cast< Object* >( object )->GetAttribute< AnimatorAttribute >().AddAnimator( animator );
+
+    MockAgent intruder;
+    BOOST_CHECK_NO_THROW( object->ProcessAgentEntering( intruder ) );
+    animator.GetRole< MockRolePerceiver >().NotifyExternalPerception_mocker.expects( once() )
+                                                                           .with( same< MIL_Agent_ABC >( intruder )
+                                                                                , same< const PHY_PerceptionLevel >( PHY_PerceptionLevel::identified_ ) );
+    army.verify();
+    animator.verify();
+    intruder.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: BOOST_AUTO_TEST_CASE
+// Created: SBO 2009-06-08
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Mine )
+{
+    MIL_ObjectLoader loader;
+    {
+        xml::xistringstream xis( "<objects>"
+                "<object id='288' name='mines [288]' type='mines'>"
+                    "<attributes>"
+                        "<obstacle activated='true' type='preliminary'/>"
+                        "<activity-time value='0'/>"
+                        "<mine><density>0</density></mine>"
+                    "</attributes>"
+                    "<shape type='point'>"
+                        "<points>"
+                            "<point>30TYT0388241408</point>"
+                        "</points>"
+                    "</shape>"
+                "</object>"
+            "</objects>"
+        );
+        loader.Initialize( xis );
+    }
+
+    const MIL_ObjectType_ABC& type = loader.GetType( "mines" );
+    MockArmy army;
+    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
+
+    MIL_Object_ABC* object = CreateObject( type, army, loader );
+    BOOST_CHECK_NO_THROW( static_cast< Object* >( object )->GetAttribute< ObstacleAttribute >() );
+    BOOST_CHECK_NO_THROW( static_cast< Object* >( object )->GetAttribute< TimeLimitedAttribute >() );
+    BOOST_CHECK_NO_THROW( static_cast< Object* >( object )->GetAttribute< MineAttribute >() );
+
+    army.verify();
+}
+

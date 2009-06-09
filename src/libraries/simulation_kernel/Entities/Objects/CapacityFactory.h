@@ -10,25 +10,31 @@
 #ifndef __Object_CapacityFactory_h_
 #define __Object_CapacityFactory_h_
 
-class ObjectPrototype;
-class MIL_PropagationManager;
-
 #include "ObjectComponentRegistry_ABC.h"
 #include "CapacityFactory_ABC.h"
 
-class CapacityFactory : public ObjectComponentRegistry_ABC< ObjectPrototype >, 
-						public CapacityFactory_ABC
+class ObjectPrototype;
+class MIL_PropagationManager;
+
+// =============================================================================
+/** @class  CapacityFactory
+    @brief  CapacityFactory
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
+class CapacityFactory : public ObjectComponentRegistry_ABC< ObjectPrototype >
+                      , public CapacityFactory_ABC
 {
 public:	
 	//! @name Constructors/Destructor
     //@{
-			CapacityFactory();
+             CapacityFactory();
 	virtual ~CapacityFactory();
 	//@}	
 
 	//! @name Creation
     //@{
-    void Create( ObjectPrototype& object, const std::string& capacity, xml::xistream& xis );	
+    void Create( ObjectPrototype& object, const std::string& capacity, xml::xistream& xis );
 	//@}
 
 private:

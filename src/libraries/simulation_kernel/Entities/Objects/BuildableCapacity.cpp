@@ -38,7 +38,7 @@ BuildableCapacity::BuildableCapacity( const PHY_ConsumptionType& consumption, Co
     , dotation_ ( 0 )
     , nFullNbrDotation_ ( 0 )
 {
-    xis >> xml::optional() 
+    xis >> xml::optional()
         >> xml::start( "resources" )
             >> list( "dotation", *this, &BuildableCapacity::ReadDotation )
         >> xml::end();
@@ -50,7 +50,7 @@ BuildableCapacity::BuildableCapacity( const PHY_ConsumptionType& consumption, Co
 // -----------------------------------------------------------------------------
 void BuildableCapacity::ReadDotation( xml::xistream& xis )
 {
-    if ( dotation_ == 0 )
+    if( dotation_ == 0 )
     {
         std::string dotation( xml::attribute< std::string >( xis, "name" ) );
         dotation_ = PHY_DotationType::FindDotationCategory( dotation );

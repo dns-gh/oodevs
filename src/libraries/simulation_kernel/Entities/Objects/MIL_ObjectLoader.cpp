@@ -9,26 +9,22 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectLoader.h"
-#include "ObjectPrototype.h"
-#include "CapacityFactory.h"
 #include "AttributeFactory.h"
+#include "CapacityFactory.h"
 #include "Object.h"
+#include "ObjectPrototype.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_IDManager.h"
-
 #include <xeumeuleu/xml.h>
-#include <boost/shared_ptr.hpp>
-
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectLoader constructor
 // Created: JCR 2008-04-21
 // -----------------------------------------------------------------------------
 MIL_ObjectLoader::MIL_ObjectLoader()
-    : factory_      ( new CapacityFactory() )
-    , attributes_   ( new AttributeFactory() )
+    : factory_( new CapacityFactory() )
+    , attributes_( new AttributeFactory() )
 {
     //NOTHING
 }
@@ -49,10 +45,10 @@ MIL_ObjectLoader::~MIL_ObjectLoader()
 // -----------------------------------------------------------------------------
 const MIL_ObjectType_ABC& MIL_ObjectLoader::GetType( const std::string& type ) const
 {
-    const CIT_Prototypes cit = prototypes_.find( type );
-    if ( cit != prototypes_.end() )
-        return *(cit->second);
-    throw std::runtime_error( "Unknown object type - " + type );
+    CIT_Prototypes it = prototypes_.find( type );
+    if( it == prototypes_.end() )
+        throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
+    return *it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,24 +57,23 @@ const MIL_ObjectType_ABC& MIL_ObjectLoader::GetType( const std::string& type ) c
 // -----------------------------------------------------------------------------
 void MIL_ObjectLoader::Initialize( xml::xistream& xis )
 {
-    xis >> start( "objects" )
-            >> list( "object", *this, &MIL_ObjectLoader::ReadObjectPrototype )
-        >> end();
+    xis >> xml::start( "objects" )
+            >> xml::list( "object", *this, &MIL_ObjectLoader::ReadObjectPrototype )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectLoader::ReadObject
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
-void MIL_ObjectLoader::ReadObjectPrototype( xistream& xis )
-{    
-    std::string type( attribute( xis, "type", std::string() ) );
-    if ( prototypes_.find( type ) == prototypes_.end() )
-    {
-        ObjectPrototype* prototype = new ObjectPrototype( type, prototypes_.size() );
-        prototypes_[ type ].reset( prototype ); 
-        xis >> xml::list( *this, &MIL_ObjectLoader::ReadCapacity, *prototype );
-    }
+void MIL_ObjectLoader::ReadObjectPrototype( xml::xistream& xis )
+{
+    const std::string type( xml::attribute< std::string >( xis, "type" ) );
+    boost::shared_ptr< ObjectPrototype >& prototype = prototypes_[ type ];
+    if( prototype.get() )
+        throw std::runtime_error( __FUNCTION__ " - Object type redefinition: " + type );
+    prototype.reset( new ObjectPrototype( type, prototypes_.size() ) );
+    xis >> xml::list( *this, &MIL_ObjectLoader::ReadCapacity, *prototype );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,39 +92,35 @@ void MIL_ObjectLoader::ReadCapacity( const std::string& capacity, xml::xistream&
 MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location, bool reserved ) const
 {
     CIT_Prototypes it = prototypes_.find( type );
-    if ( it != prototypes_.end() )
-    {        
-        Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, std::string(), reserved );
-        pObject->Finalize();
-        return pObject;
-    }
-    return 0;
+    if( it == prototypes_.end() )
+        throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
+    Object* object = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, "", reserved );
+    object->Finalize();
+    return object;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectLoader::ReadObject
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xistream& xis, MIL_Army_ABC& army ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC& army ) const
 {    
-    const int id = attribute( xis, "id", 0 );
-    std::string type( attribute( xis, "type", std::string() ) );
-    std::string name( attribute( xis, "name", std::string() ) );
+    const unsigned int id = xml::attribute< unsigned int >( xis, "id" );
+    const std::string type( xml::attribute< std::string >( xis, "type" ) );
+    const std::string name( xml::attribute< std::string >( xis, "name" ) );
     
     CIT_Prototypes it = prototypes_.find( type );
-    if ( it != prototypes_.end() )
-    {
-        TER_Localisation location;
-        location.Read( xis );
-        Object* pObject = new Object( id, *it->second, army, &location, name );
-        xis >> xml::optional() 
-            >> xml::start( "attributes" )
-                >> xml::list( *this, &MIL_ObjectLoader::ReadAttributes, *pObject )
-            >> end();
-        pObject->Finalize();
-        return pObject;
-    }
-    throw std::runtime_error( "Unknown prototype : " + type );
+    if( it == prototypes_.end() )
+        throw std::runtime_error( __FUNCTION__ " - Unknown object prototype: " + type );
+    TER_Localisation location;
+    location.Read( xis );
+    // $$$$ SBO 2009-06-08: Check geometry constraint
+    Object* object = new Object( id, *it->second, army, &location, name );
+    xis >> xml::optional() >> xml::start( "attributes" )
+            >> xml::list( *this, &MIL_ObjectLoader::ReadAttributes, *object )
+        >> xml::end();
+    object->Finalize();
+    return object;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,20 +129,19 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xistream& xis, MIL_Army_ABC& arm
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const ASN1T_MagicActionCreateObject& asn, MIL_Army_ABC& army, ASN1T_EnumObjectErrorCode& value ) const
 {
-    CIT_Prototypes it = prototypes_.find( asn.type ); // asn.type
-    if ( it != prototypes_.end() )
+    CIT_Prototypes it = prototypes_.find( asn.type );
+    if( it == prototypes_.end() )
     {
-        TER_Localisation location;
-        if( ! NET_ASN_Tools::ReadLocation( asn.location, location ) )
-            return 0;
-        Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, asn.name );
-        attributes_->Create( *pObject, asn.attributes );
-        pObject->Finalize();
-        return pObject;        
-    }
-    else
         value = EnumObjectErrorCode::error_invalid_object;
-    return 0;
+        return 0;
+    }
+    TER_Localisation location;
+    if( ! NET_ASN_Tools::ReadLocation( asn.location, location ) )
+        return 0;
+    Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, asn.name );
+    attributes_->Create( *pObject, asn.attributes );
+    pObject->Finalize();
+    return pObject;
 }
 
 // -----------------------------------------------------------------------------
@@ -161,14 +151,12 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const ASN1T_MagicActionCreateObj
 MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army ) const
 {
     CIT_Prototypes it = prototypes_.find( builder.GetType().GetName() );
-    if ( it != prototypes_.end() )
-    {        
-        Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, 0 );
-		builder.Build( *pObject );
-        pObject->Finalize();
-        return pObject;
-    }
-    return 0;
+    if ( it == prototypes_.end() )
+        return 0;
+    Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, 0 );
+	builder.Build( *pObject );
+    pObject->Finalize();
+    return pObject;
 }
 
 // -----------------------------------------------------------------------------
