@@ -48,8 +48,8 @@ namespace
         if( object.RetrieveAttribute< Attribute >() )
             return;
         Capacity* capacity = object.Retrieve< Capacity >();
-        if ( capacity )         
-            object.GetAttribute< Attribute >() = Attribute( *capacity->GetDotationCategory(), capacity->GetMaxDotation() );        
+        if( capacity )
+            object.GetAttribute< Attribute >() = Attribute( *capacity->GetDotationCategory(), capacity->GetMaxDotation() );
     }
 
     template<>

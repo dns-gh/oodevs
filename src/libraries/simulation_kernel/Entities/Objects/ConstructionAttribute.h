@@ -27,16 +27,15 @@ class PHY_DotationCategory;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class ConstructionAttribute 
-    : public ObjectAttribute_ABC
-    , private UpdatableAttribute_ABC
+class ConstructionAttribute : public ObjectAttribute_ABC
+                            , private UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              ConstructionAttribute();
-    explicit ConstructionAttribute( const PHY_DotationCategory& category, uint nFullNbrDotation );
-    explicit ConstructionAttribute( const PHY_DotationCategory& dotation, const ASN1T_ObjectAttributes& asn );
+             ConstructionAttribute( const PHY_DotationCategory& category, uint nFullNbrDotation );
+             ConstructionAttribute( const PHY_DotationCategory& dotation, const ASN1T_ObjectAttributes& asn );
     virtual ~ConstructionAttribute();
     //@}
 

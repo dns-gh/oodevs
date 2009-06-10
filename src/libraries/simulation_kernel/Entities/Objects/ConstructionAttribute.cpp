@@ -11,26 +11,23 @@
 #include "ConstructionAttribute.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeConstruction.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeConstruction.h"
 #include "HLA/HLA_UpdateFunctor.h"
 #include <hla/AttributeIdentifier.h>
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( ConstructionAttribute, "ConstructionAttribute" )
-
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute constructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute()
-    : nFullNbrDotation_ ( 0 )
-    , nCurrentNbrDotation_ ( 0 )
-    , rConstructionPercentage_ ( 1. )
-    , dotation_  ( 0 )
+    : nFullNbrDotation_( 0 )
+    , nCurrentNbrDotation_( 0 )
+    , rConstructionPercentage_( 1. )
+    , dotation_( 0 )
 {
     // NOTHING
 }
@@ -40,27 +37,12 @@ ConstructionAttribute::ConstructionAttribute()
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, uint nFullNbrDotation )
-    : nFullNbrDotation_ ( nFullNbrDotation )
-    , nCurrentNbrDotation_ ( 0 )
-    , rConstructionPercentage_ ( 0. )
-    , dotation_ ( &dotation )
+    : nFullNbrDotation_( nFullNbrDotation )
+    , nCurrentNbrDotation_( 0 )
+    , rConstructionPercentage_( 1. )
+    , dotation_( &dotation )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::Load
-// Created: JCR 2008-08-26
-// -----------------------------------------------------------------------------
-void ConstructionAttribute::Load( xml::xistream& xis )
-{
-    assert( dotation_ );
-    MT_Float completion = 1.;
-
-    xis >> xml::optional() >> xml::attribute( "completion", completion );
-    if( completion > 0. && completion <= 1. )
-        rConstructionPercentage_ = completion;
-    nCurrentNbrDotation_ = uint( rConstructionPercentage_ * nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,6 +68,21 @@ ConstructionAttribute::~ConstructionAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::Load
+// Created: JCR 2008-08-26
+// -----------------------------------------------------------------------------
+void ConstructionAttribute::Load( xml::xistream& xis )
+{
+    assert( dotation_ );
+    MT_Float completion = 1.;
+
+    xis >> xml::optional() >> xml::attribute( "completion", completion );
+    if( completion > 0. && completion <= 1. )
+        rConstructionPercentage_ = completion;
+    nCurrentNbrDotation_ = uint( rConstructionPercentage_ * nFullNbrDotation_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::Instanciate
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
@@ -93,7 +90,6 @@ void ConstructionAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeConstruction( *this ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::operator=
@@ -157,16 +153,13 @@ void ConstructionAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 {
-    if ( dotation_ )
+    if( dotation_ )
     {
         asn.m.constructionPresent = 1;        
-        
         asn.construction.m.dotation_typePresent = 1;
         asn.construction.dotation_type = dotation_->GetMosID();
-
         asn.construction.m.dotation_nbrPresent = 1;
         asn.construction.dotation_nbr = nCurrentNbrDotation_;
-        
         asn.construction.m.percentagePresent = 1;
         asn.construction.percentage = rConstructionPercentage_ * 100.;
     }
@@ -178,13 +171,11 @@ void ConstructionAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 {
-    if ( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate) )
+    if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate ) )
     {
         asn.m.constructionPresent = 1;
-
         asn.construction.m.dotation_nbrPresent = 1;
         asn.construction.dotation_nbr = nCurrentNbrDotation_;
-
         asn.construction.m.percentagePresent = 1;
         asn.construction.percentage = rConstructionPercentage_ * 100.;
         Reset( eOnUpdate );
@@ -199,7 +190,7 @@ void ConstructionAttribute::OnUpdate( const ASN1T_ObjectAttributes& asn )
 {
     if( asn.m.constructionPresent )
     {
-        if ( asn.construction.m.percentagePresent )
+        if( asn.construction.m.percentagePresent )
             Set( asn.construction.percentage / 100. );
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
@@ -286,7 +277,7 @@ void ConstructionAttribute::Serialize( HLA_UpdateFunctor& functor ) const
 // Name: ConstructionAttribute::Deserialize
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
+void ConstructionAttribute::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
 {
     if( attributeID == "completion" )
     {

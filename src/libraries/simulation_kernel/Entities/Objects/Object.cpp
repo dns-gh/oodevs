@@ -111,8 +111,7 @@ void Object::load( MIL_CheckPointInArchive& file, const uint )
     file >> capacities;
     std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );
 
-    T_Attributes attributes;
-    file >> attributes;
+    file >> attributes_;
 }
     
 // -----------------------------------------------------------------------------
@@ -125,7 +124,7 @@ void Object::save( MIL_CheckPointOutArchive& file, const uint ) const
     file << name_
          << id_
          << capacities_
-         << attributes_;         
+         << attributes_;
 }
 
 // -----------------------------------------------------------------------------
