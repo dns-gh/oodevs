@@ -7,38 +7,42 @@
 //
 // *****************************************************************************
 
-#include "xmliaExport_plugin_pch.h"
-#include "OrderReport.h"
-#include "SerializationTools.h"
-#include "Publisher_ABC.h"
+#include "xmliaImport_plugin_pch.h"
+#include "Publisher.h"
+//#include "soapDCSOperationsSoapBindingProxy.h"
+//#include "DCSOperationsSoapBinding.nsmap"
+#include "ResponseHandler_ABC.h"
+//#include "SerializationTools.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.h>
+#include <boost/lexical_cast.hpp>
+#include <fstream>
 
-using namespace plugins::xmliaExport;
-
-// -----------------------------------------------------------------------------
-// Name: OrderReport constructor
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-OrderReport::OrderReport( const dispatcher::Automat& automat, const kernel::Resolver_ABC< kernel::MissionType >& missions, const ASN1T_MsgAutomatOrder& asn )
-{
-    // Creation du message a envoyer
-}
+using namespace plugins::xmliaImport;
 
 // -----------------------------------------------------------------------------
-// Name: OrderReport destructor
-// Created: SBO 2008-05-22
+// Name: Publisher constructor
+// Created: SBO 2008-04-02
 // -----------------------------------------------------------------------------
-OrderReport::~OrderReport()
+Publisher::Publisher( xml::xistream& xis )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderReport::Send
-// Created: SBO 2008-05-22
+// Name: Publisher destructor
+// Created: SBO 2008-04-02
 // -----------------------------------------------------------------------------
-void OrderReport::Send( Publisher_ABC& publisher ) const
+Publisher::~Publisher()
 {
-    xml::xostream& xos = publisher.CreateReport();
-    // Création du contenu du fichier xml a envoyer
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Publisher::PullOrder
+// Created: SBO 2008-05-16
+// -----------------------------------------------------------------------------
+void Publisher::PullOrder( const std::string& message, ResponseHandler_ABC& handler )
+{
+    //Récupération des ordres veant    
 }

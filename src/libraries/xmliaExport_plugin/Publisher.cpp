@@ -19,32 +19,12 @@
 #include <fstream>
 
 using namespace plugins::xmliaExport;
-/*
-namespace
-{
-    std::string ReadProxyHost( xml::xistream& xis )
-    {
-        const std::string proxy = xml::attribute< std::string >( xis, "proxy", "" );
-        return proxy.substr( 0, proxy.find_first_of( ':' ) );
-    }
-
-    unsigned short ReadProxyPort( xml::xistream& xis )
-    {
-        const std::string proxy = xml::attribute< std::string >( xis, "proxy", "" );
-        if( proxy.empty() )
-            return 0;
-        return boost::lexical_cast< unsigned short >( proxy.substr( proxy.find_first_of( ':' ) + 1 ) );
-    }
-}*/
 
 // -----------------------------------------------------------------------------
 // Name: Publisher constructor
 // Created: SBO 2008-04-02
 // -----------------------------------------------------------------------------
 Publisher::Publisher( xml::xistream& xis )
-    /*: endpoint_ ( xml::attribute< std::string >( xis, "endpoint" ) )
-    , proxyHost_( ReadProxyHost( xis ) )
-    , proxyPort_( ReadProxyPort( xis ) )*/
 {
     // NOTHING
 }
@@ -64,23 +44,8 @@ Publisher::~Publisher()
 // -----------------------------------------------------------------------------
 void Publisher::PushReports()
 {
-    /*try
-    {
-        std::string toSend = GetReports();
-        if( toSend.empty() )
-            return;
-
-        DCSOperationsSoapBindingProxy service;
-        //ConfigureService( service );
-        std::string response;
-        service.pushReport( toSend, response );
-        if( service.error )
-            throw std::exception( service.soap_fault_string() );
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "xmliaExport error pushing reports: " << e.what() );
-    }*/
+   // Récupération des données a envoyer (getReports)
+   //Envoie des données au webServices
 }
 
 // -----------------------------------------------------------------------------
@@ -115,18 +80,3 @@ xml::xostream& Publisher::CreateReport()
     }
     return *new xml::xosubstream( *reports_ );
 }
-
-/*
-// -----------------------------------------------------------------------------
-// Name: Publisher::ConfigureService
-// Created: SBO 2008-05-20
-// -----------------------------------------------------------------------------
-void Publisher::ConfigureService( DCSOperationsSoapBindingProxy& service ) const
-{
-    service.soap_endpoint = endpoint_.c_str();
-    if( !proxyHost_.empty() )
-    {
-        service.proxy_host = proxyHost_.c_str();
-        service.proxy_port = proxyPort_;
-    }
-}*/

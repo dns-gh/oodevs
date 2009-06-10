@@ -31,15 +31,6 @@ ReportFactory::~ReportFactory()
 {
     // NOTHING
 }
-/*
-// -----------------------------------------------------------------------------
-// Name: ReportFactory::CreateOrderReport
-// Created: SBO 2008-05-23
-// -----------------------------------------------------------------------------
-OrderReport* ReportFactory::CreateOrderReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitOrder& asn ) const
-{
-    return new OrderReport( entity, missions_, asn );
-}*/
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::CreateOrderReport

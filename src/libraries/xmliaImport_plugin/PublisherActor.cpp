@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "xmliaExport_plugin_pch.h"
+#include "xmliaImport_plugin_pch.h"
 #include "PublisherActor.h"
 #include "ResponseHandler_ABC.h"
 #undef Yield
@@ -15,7 +15,7 @@
 #include "tools/thread/ThreadPool.h"
 #include <boost/bind.hpp>
 
-using namespace plugins::xmliaExport;
+using namespace plugins::xmliaImport;
 
 // -----------------------------------------------------------------------------
 // Name: PublisherActor constructor
@@ -38,30 +38,51 @@ PublisherActor::~PublisherActor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PublisherActor::PushReports
+// Name: PublisherActor::PullOrder
 // Created: AGE 2008-05-30
 // -----------------------------------------------------------------------------
-void PublisherActor::PushReports()
+void PublisherActor::PullOrder( const std::string& message, ResponseHandler_ABC& handler )
 {
-    thread_->Enqueue( boost::bind( &PublisherActor::DoPushReports, this ) );
+    thread_->Enqueue( boost::bind( &PublisherActor::DoPullOrder, this, message, boost::ref( handler ) ) );
+}
+
+namespace
+{
+    struct HandlerWrapper : public ResponseHandler_ABC
+    {
+        explicit HandlerWrapper( std::string& response ) : response_( &response ) {}
+        virtual void Handle( const std::string& response )
+        {
+            *response_ = response;
+        }
+        std::string* response_;
+    };
+}
+// -----------------------------------------------------------------------------
+// Name: PublisherActor::DoPullOrder
+// Created: AGE 2008-05-30
+// -----------------------------------------------------------------------------
+void PublisherActor::DoPullOrder( const std::string& message, ResponseHandler_ABC& handler )
+{
+    std::string answer;
+    HandlerWrapper wrapper( answer );
+    base_->PullOrder( message, wrapper );
+
+    boost::recursive_mutex::scoped_lock locker( mutex_ );
+    answers_.push_back( T_Answer( &handler, answer ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PublisherActor::CreateReport
+// Name: PublisherActor::CommitOrders
 // Created: AGE 2008-05-30
 // -----------------------------------------------------------------------------
-xml::xostream& PublisherActor::CreateReport()
+void PublisherActor::CommitOrders()
 {
-    return base_->CreateReport();
+    T_Answers toDeal;
+    {
+        boost::recursive_mutex::scoped_lock locker( mutex_ );
+        std::swap( answers_, toDeal );
+    }
+    for( T_Answers::const_iterator it = toDeal.begin(); it != toDeal.end(); ++it )
+        it->first->Handle( it->second );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PublisherActor::DoPushReports
-// Created: AGE 2008-05-30
-// -----------------------------------------------------------------------------
-void PublisherActor::DoPushReports()
-{
-    base_->PushReports();
-}
-
-

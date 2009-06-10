@@ -7,61 +7,61 @@
 //
 // *****************************************************************************
 
-#include "xmliaExport_plugin_pch.h"
-#include "PublisherActor.h"
-#include "ResponseHandler_ABC.h"
-#undef Yield
-#undef GetMessage
-#include "tools/thread/ThreadPool.h"
-#include <boost/bind.hpp>
+#include "xmliaImport_plugin_pch.h"
+#include "Simulation.h"
 
-using namespace plugins::xmliaExport;
+using namespace plugins::xmliaImport;
 
 // -----------------------------------------------------------------------------
-// Name: PublisherActor constructor
-// Created: AGE 2008-05-30
+// Name: Simulation constructor
+// Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-PublisherActor::PublisherActor( std::auto_ptr< Publisher_ABC > base )
-    : base_( base )
-    , thread_( new tools::thread::ThreadPool( 1 ) )
+Simulation::Simulation()
+    : currentTick_( 1 )
+    , tickDuration_( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PublisherActor destructor
-// Created: AGE 2008-05-30
+// Name: Simulation destructor
+// Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-PublisherActor::~PublisherActor()
+Simulation::~Simulation()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PublisherActor::PushReports
-// Created: AGE 2008-05-30
+// Name: Simulation::Update
+// Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void PublisherActor::PushReports()
+void Simulation::Update( const ASN1T_MsgControlEndTick& message )
 {
-    thread_->Enqueue( boost::bind( &PublisherActor::DoPushReports, this ) );
+    currentTick_  = message.current_tick;
+    tickDuration_ = message.tick_duration;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PublisherActor::CreateReport
-// Created: AGE 2008-05-30
+// Name: Simulation::MustReportPosition
+// Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-xml::xostream& PublisherActor::CreateReport()
+bool Simulation::MustReportPosition( unsigned long& currentTick ) const
 {
-    return base_->CreateReport();
+    if( currentTick == 0 || tickDuration_ > 0 && currentTick_ > currentTick + 5 * 60 / tickDuration_ ) // $$$$ SBO 2008-06-09: every 5 minutes
+    {
+        currentTick = currentTick_;
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PublisherActor::DoPushReports
-// Created: AGE 2008-05-30
+// Name: Simulation::MustReportStatus
+// Created: SBO 2008-07-15
 // -----------------------------------------------------------------------------
-void PublisherActor::DoPushReports()
+bool Simulation::MustReportStatus( unsigned long& currentTick ) const
 {
-    base_->PushReports();
+    currentTick = currentTick_;
+    return true;
 }
-
-
