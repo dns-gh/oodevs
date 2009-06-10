@@ -23,6 +23,7 @@ using namespace gui;
 EntitySearchBox_ABC::EntitySearchBox_ABC( QWidget* parent, ActionController& actions )
     : QHBox( parent, "EntitySearchBox" )
     , actions_( actions )
+    , lastItem_( items_.end() )
 {
     setMargin( 2 );
     setSpacing( 10 );
