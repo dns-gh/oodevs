@@ -20,7 +20,7 @@ public:
 	//! @name Constructors/Destructor
     //@{
 	         PopulationAttribute();
-             explicit PopulationAttribute( xml::xistream& xis );
+    explicit PopulationAttribute( xml::xistream& xis );
 	virtual ~PopulationAttribute();
 	//@}
 
@@ -29,6 +29,7 @@ public:
     MT_Float GetDensity() const;
     void  Reset();
     void  SetDensity( MT_Float rDensity );    
+    template< typename Archive > void serialize( Archive&, const uint );
 	//@}
 
     //! @name Copy

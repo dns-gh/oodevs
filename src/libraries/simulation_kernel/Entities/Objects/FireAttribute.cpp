@@ -104,12 +104,12 @@ FireAttribute& FireAttribute::operator=( const FireAttribute& rhs )
 void FireAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 {
     std::string className;
-    
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> className
-       >> heat_;     
+       >> heat_;
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
-        throw std::runtime_error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );	
+        throw std::runtime_error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
 }
     
 // -----------------------------------------------------------------------------
@@ -118,9 +118,9 @@ void FireAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 // -----------------------------------------------------------------------------
 void FireAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
 {
-    ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );        
+    ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << pClass_->GetName()
-       << heat_;    
+       << heat_;
 }
 
 // -----------------------------------------------------------------------------

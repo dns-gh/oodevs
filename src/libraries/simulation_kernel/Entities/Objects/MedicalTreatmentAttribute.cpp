@@ -118,7 +118,7 @@ void MedicalTreatmentAttribute::load( MIL_CheckPointInArchive& ar, const uint )
     std::string typeName;
     int sizeOfList, injuryCategory, sizeOfMap;
     float time;
-    
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> sizeOfMap;
     for ( int i = 0 ; i < sizeOfMap ; i++ )
     {

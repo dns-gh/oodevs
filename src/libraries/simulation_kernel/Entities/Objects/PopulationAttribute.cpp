@@ -41,6 +41,16 @@ PopulationAttribute::~PopulationAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: void PopulationAttribute::serialize
+// Created: SBO 2009-06-10
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PopulationAttribute::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DotationAttribute::operator=
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------

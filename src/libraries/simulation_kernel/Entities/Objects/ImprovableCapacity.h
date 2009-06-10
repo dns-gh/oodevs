@@ -21,7 +21,6 @@ namespace xml
 
 class PHY_DotationCategory;
 class PHY_ConsumptionType;
-class Deserializer;
 
 // =============================================================================
 /** @class  ImprovableCapacity
@@ -35,8 +34,8 @@ class ImprovableCapacity : public ObjectCapacity_ABC
 public:
     //! @name Constructors/Destructor
     //@{    
-    explicit ImprovableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis );
              ImprovableCapacity();
+             ImprovableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis );
     virtual ~ImprovableCapacity();
     //@}
     
@@ -46,25 +45,21 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
-    virtual void Register( Object& /*object*/ );
     //@}
 
-    //! @name virtual
+    //! @name Operations
     //@{
+    virtual void Register( Object& object );
     virtual void Instanciate( Object& object ) const;
+    void Mine( Object& object );
     //@}
 
-    //! @name Accessor
+    //! @name Accessors
     //@{    
     const PHY_ConsumptionType&  GetDefaultConsumptionMode() const;
     const PHY_DotationCategory* GetDotationCategory() const;
     uint                        GetMaxDotation() const;
     ConstructionCapacity::E_UnitType GetUnit() const;
-    //@}
-
-    //! @name 
-    //@{
-    void Mine( Object& object );
     //@}
 
 private:
@@ -74,7 +69,7 @@ private:
     ImprovableCapacity& operator=( const ImprovableCapacity& ); //!< Assignment operator
     //@}
 
-    //! @name 
+    //! @name Helpers
     //@{
     void ReadDotation( xml::xistream& xis );
     //@}
@@ -83,9 +78,9 @@ private:
     //! @name Member data
     //@{    
     const PHY_ConsumptionType* default_;
-    ConstructionCapacity::E_UnitType unitType_;    
+    ConstructionCapacity::E_UnitType unitType_;
     const PHY_DotationCategory* dotation_;
-    uint nFullNbrDotation_;
+    unsigned int nFullNbrDotation_;
     //@}
 };
 

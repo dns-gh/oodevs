@@ -32,13 +32,17 @@ class ObjectAttribute_ABC
 public:
     //! @name Constructor/destructor
     //@{
-            ObjectAttribute_ABC() {}
+             ObjectAttribute_ABC() {}
     virtual ~ObjectAttribute_ABC() {}
     //@}
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > 
+    void serialize( Archive&, const uint )
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Knowledge instance

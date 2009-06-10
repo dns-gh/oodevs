@@ -81,9 +81,9 @@ private:
 private:
     //! @name Data members
     //@{
-    uint nFullNbrDotation_;
-    const PHY_DotationCategory* dotation_;
     const PHY_ConsumptionType* default_;
+    const PHY_DotationCategory* dotation_;
+    uint nFullNbrDotation_;
     ConstructionCapacity::E_UnitType unitType_;
     //@}
 };

@@ -11,19 +11,15 @@
 #include "BuildableCapacity.h"
 #include "Object.h"
 #include "ConstructionAttribute.h"
-
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Entities\Agents\Units\Dotations\PHY_ConsumptionType.h"
-
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( BuildableCapacity, "BuildableCapacity" )
@@ -34,9 +30,9 @@ BOOST_CLASS_EXPORT_GUID( BuildableCapacity, "BuildableCapacity" )
 // -----------------------------------------------------------------------------
 BuildableCapacity::BuildableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis )
     : default_ ( &consumption )
-    , unitType_ ( type )
     , dotation_ ( 0 )
     , nFullNbrDotation_ ( 0 )
+    , unitType_ ( type )
 {
     xis >> xml::optional()
         >> xml::start( "resources" )
@@ -66,9 +62,9 @@ void BuildableCapacity::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 BuildableCapacity::BuildableCapacity()
     : default_ ( 0 )    
-    , unitType_ ( ConstructionCapacity::eRaw )
     , dotation_ ( 0 )
     , nFullNbrDotation_ ( 0 )
+    , unitType_ ( ConstructionCapacity::eRaw )
 {
     // NOTHING
 }
@@ -79,9 +75,9 @@ BuildableCapacity::BuildableCapacity()
 // -----------------------------------------------------------------------------
 BuildableCapacity::BuildableCapacity( const BuildableCapacity& from )
     : default_ ( from.default_ )
-    , unitType_ ( from.unitType_ )
     , dotation_ ( from.dotation_ )
     , nFullNbrDotation_ ( from.nFullNbrDotation_ )
+    , unitType_ ( from.unitType_ )
 {
     // NOTHING
 }
@@ -101,21 +97,14 @@ BuildableCapacity::~BuildableCapacity()
 // -----------------------------------------------------------------------------
 void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const uint )
 {
-    std::string consumption, dotation;
+    unsigned int consumptionId, dotationId;
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar >> consumption
-       >> unitType_    
-       >> dotation
-       >> nFullNbrDotation_;
-    default_ = PHY_ConsumptionType::FindConsumptionType( consumption );
-    if ( !default_ )
-        throw std::runtime_error( "Unknown consumption category - " + consumption + " - " ); 
-    if ( dotation != "" )
-    {
-        dotation_ = PHY_DotationType::FindDotationCategory( dotation );
-        if ( !dotation_ )
-            throw std::runtime_error( "Unknown dotation category - " + dotation + " - " ); 
-    }
+    ar >> consumptionId
+       >> dotationId
+       >> nFullNbrDotation_
+       >> unitType_;
+    default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
+    dotation_ = PHY_DotationType::FindDotationCategory( dotationId );
 }
     
 // -----------------------------------------------------------------------------
@@ -125,13 +114,10 @@ void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const uint )
 void BuildableCapacity::save( MIL_CheckPointOutArchive& ar, const uint ) const
 {    
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar << default_->GetName()
+    ar << (const uint&)default_->GetID()
+       << (const uint&)( dotation_ ? dotation_->GetMosID() : 0 )
+       << nFullNbrDotation_
        << unitType_;
-    if ( dotation_ )
-       ar << dotation_->GetName();
-    else
-       ar << "";
-    ar << nFullNbrDotation_;
 }
 
 // -----------------------------------------------------------------------------
