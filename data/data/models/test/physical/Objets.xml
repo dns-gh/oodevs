@@ -272,8 +272,8 @@
         </resources>
       </buildable>
     </constructor>
-    <workable max-animator="1"/>
     <detection/>
+    <workable max-animator="1"/>
   </object>
   <object geometry="polygon" name="Terrain de largage" symbol="G*GPGAD---****X" type="dropping area"/>
   <object geometry="polygon" name="Zone de tir interdit" symbol="G*FPAN----****X" type="fire forbidden area">
