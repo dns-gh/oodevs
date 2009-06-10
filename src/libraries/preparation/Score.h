@@ -19,7 +19,6 @@ namespace kernel
 
 namespace indicators
 {
-    class ElementFactory_ABC;
     class Gauge;
     class GaugeFactory_ABC;
     class Primitives;
@@ -92,7 +91,6 @@ private:
     QString formula_;
     std::auto_ptr< indicators::Gauge > gauge_;
     std::auto_ptr< indicators::Variables > variables_;
-    std::auto_ptr< indicators::ElementFactory_ABC > elementFactory_;
     //@}
 };
 

@@ -47,7 +47,6 @@ Score::Score( xml::xistream& xis, kernel::Controller& controller, const indicato
     , formula_( ReadFormula( xis ) )
     , gauge_( ReadGauge( xis, gaugeFactory ) )
     , variables_( new indicators::Variables( xis ) )
-    , elementFactory_( new indicators::ElementFactory( indicators, *variables_ ) )
 {
     controller_->Create( *(Score_ABC*)this );
 }
@@ -63,7 +62,6 @@ Score::Score( const QString& name, kernel::Controller& controller, const indicat
     , formula_()
     , gauge_( gaugeFactory.Create() )
     , variables_( new indicators::Variables() )
-    , elementFactory_( new indicators::ElementFactory( indicators, *variables_ ) )
 {
     controller_->Create( *(Score_ABC*)this );
 }
@@ -79,7 +77,6 @@ Score::Score( const Score& score )
     , formula_( score.formula_ )
     , gauge_( new indicators::Gauge( *score.gauge_ ) )
     , variables_( new indicators::Variables( *score.variables_ ) )
-    , elementFactory_( new indicators::ElementFactory( indicators_, *variables_ ) )
 {
     // NOTHING
 }
@@ -170,7 +167,8 @@ void Score::SerializeIndicators( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Score::SerializeIndicator( xml::xostream& xos, const QString& formula ) const
 {
-    indicators::Serializer serializer( *elementFactory_ );
+    indicators::ElementFactory factory( indicators_, *variables_ );
+    indicators::Serializer serializer( factory );
     indicators::FormulaParser parser( serializer );
     parser.Parse( formula.ascii() );
     serializer.Serialize( xos );
