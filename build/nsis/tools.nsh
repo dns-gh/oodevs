@@ -276,8 +276,8 @@ FunctionEnd
 
     Section "${ComponentName}"
         SetOutPath "$INSTDIR\installation files"
-        File "${RUNDIR}\SWORD ${ComponentName}.exe"
-        ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}.exe" /S /D=$INSTDIR\${ComponentName}'
+        File "${OUTDIR}\SWORD ${ComponentName}_${PLATFORM}.exe"
+        ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /D=$INSTDIR\${ComponentName}'
     SectionEnd
 
 !macroend
