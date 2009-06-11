@@ -11,7 +11,7 @@
 #include "IndicatorRequests.h"
 #include "IndicatorRequest.h"
 #include "clients_kernel/Controller.h"
-#include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 
 using namespace kernel;
 
@@ -73,6 +73,6 @@ Iterator< const IndicatorRequest& > IndicatorRequests::CreateIterator()
 // -----------------------------------------------------------------------------
 void IndicatorRequests::Update( const ASN1T_MsgPlotResult& asnMsg )
 {
-    std::for_each( requests_.begin(), requests_.end(), 
-                   boost::bind( &IndicatorRequest::Update, _1, boost::ref( asnMsg ) ) );
+    BOOST_FOREACH( T_Requests::value_type& request, requests_ )
+        request->Update( asnMsg );
 }

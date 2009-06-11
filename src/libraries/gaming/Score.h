@@ -25,6 +25,7 @@ namespace indicators
     class Tendency;
 }
 
+class IndicatorRequest;
 class Publisher_ABC;
 class ScoreDefinition;
 class ScoreDefinitions;
@@ -57,6 +58,7 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     void Update( const ASN1T_MsgIndicator& message );
+    void ConnectTo( IndicatorRequest& request );
     //@}
 
 private:
@@ -77,6 +79,7 @@ private:
     std::auto_ptr< indicators::Gauge > gauge_;
     double value_;
     double tendencyValue_;
+    IndicatorRequest* request_;
     //@}
 };
 

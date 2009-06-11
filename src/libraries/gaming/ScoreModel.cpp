@@ -100,14 +100,17 @@ void ScoreModel::Update( const ASN1T_MsgPlotResult& message )
 // Name: ScoreModel::CreateRequest
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-IndicatorRequest& ScoreModel::CreateRequest( const Score& score )
+IndicatorRequest& ScoreModel::CreateRequest( Score& score )
 {
     T_ScoreRequests::iterator it = scoreRequests_.find( &score );
     IndicatorRequest* request;
     if( it != scoreRequests_.end() )
         request = it->second;
     else
+    {
         request = scoreRequests_[ &score ] = &requests_->CreateRequest( score );
+        score.ConnectTo( *request );
+    }
     request->Commit();
     return *request;
 }

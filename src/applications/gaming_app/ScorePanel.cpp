@@ -15,10 +15,37 @@
 #include "IndicatorPlotFactory.h"
 #include "IndicatorReportDialog.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/ValuedDragObject.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Score.h"
 #include "gaming/ScoreModel.h"
 #include "gaming/Tools.h"
+
+namespace
+{
+    class MyList : public gui::ListDisplayer< ScorePanel >
+    {
+    public:
+        MyList( ScorePanel* parent, gui::ItemFactory_ABC& factory, ScoreModel& model )
+            : ListDisplayer< ScorePanel >( parent, *parent, factory )
+            , model_( model )
+        {}
+        virtual QDragObject* dragObject()
+        {
+            if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( selectedItem() ) )
+                if( Score* score = item->GetValue< Score >() )
+                {
+                    const IndicatorRequest& request = model_.CreateRequest( *score );
+                    return new gui::ValuedDragObject( &request, this );
+                }
+            return 0;
+        }
+
+    private:
+        MyList& operator=( const MyList& );
+        ScoreModel& model_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ScorePanel constructor
@@ -38,7 +65,7 @@ ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controller
     setCaption( tools::translate( "ScorePanel", "Scores" ) );
 
     {
-        scores_ = new gui::ListDisplayer< ScorePanel >( this, *this, factory_ );
+        scores_ = new MyList( this, factory_, model_ );
         scores_->AddColumn( tools::translate( "Score", "Name" ) );
         scores_->AddColumn( tools::translate( "Score", "Value" ) );
         scores_->AddColumn( tools::translate( "Score", "Tendency" ) );
@@ -138,6 +165,7 @@ void ScorePanel::NotifyUpdated( const IndicatorRequest& request )
 // -----------------------------------------------------------------------------
 void ScorePanel::Display( const Score& score, gui::ValuedListItem* item )
 {
+    item->setDragEnabled( true );
     item->SetValue( &score );
     score.Display( scores_->GetItemDisplayer( item ) );
 }

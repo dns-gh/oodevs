@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Score.h"
+#include "IndicatorRequest.h"
 #include "Services.h"
 #include "ScoreDefinition.h"
 #include "ScoreDefinitions.h"
@@ -41,6 +42,7 @@ Score::Score( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definit
     , gauge_( definition_.CreateGauge() )
     , value_( 0 )
     , tendencyValue_( 0 )
+    , request_( 0 )
 {
     controller_.Create( *this );
 }
@@ -72,7 +74,11 @@ void Score::Update( const ASN1T_MsgIndicator& message )
     if( boost::ends_with( message.name, "/Tendency" ) )
         tendencyValue_ = message.value;
     else
+    {
         value_ = message.value;
+        if( request_ )
+            request_->Update( message );
+    }
     controller_.Update( *this );
 }
 
@@ -95,4 +101,13 @@ void Score::Display( kernel::Displayer_ABC& displayer ) const
 std::string Score::Commit( const T_Parameters& ) const
 {
     return QString( "indicator://%1" ).arg( name_ ).ascii();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::ConnectTo
+// Created: SBO 2009-06-11
+// -----------------------------------------------------------------------------
+void Score::ConnectTo( IndicatorRequest& request )
+{
+    request_ = &request;
 }

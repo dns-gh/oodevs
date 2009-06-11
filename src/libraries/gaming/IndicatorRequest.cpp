@@ -74,6 +74,22 @@ void IndicatorRequest::Update( const ASN1T_MsgPlotResult& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: IndicatorRequest::Update
+// Created: SBO 2009-06-11
+// -----------------------------------------------------------------------------
+void IndicatorRequest::Update( const ASN1T_MsgIndicator& message )
+{
+    if( !IsFailed() )
+        newValues_.push_back( message.value );
+    if( IsDone() )
+    {
+        std::copy( newValues_.begin(), newValues_.end(), std::back_inserter( result_ ) );
+        newValues_.clear();
+    }
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: IndicatorRequest::GetName
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------

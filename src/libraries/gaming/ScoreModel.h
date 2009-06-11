@@ -49,7 +49,7 @@ public:
     void Purge();
     void Update( const ASN1T_MsgIndicator& message );
     void Update( const ASN1T_MsgPlotResult& message );
-    IndicatorRequest& CreateRequest( const Score& score );
+    IndicatorRequest& CreateRequest( Score& score );
     //@}
 
 private:

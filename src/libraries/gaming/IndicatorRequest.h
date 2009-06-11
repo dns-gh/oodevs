@@ -47,7 +47,8 @@ public:
     void Commit() const;
 
     QString GetName() const;
-    void Update( const ASN1T_MsgPlotResult& asnMsg );
+    void Update( const ASN1T_MsgPlotResult& message );
+    void Update( const ASN1T_MsgIndicator& message );
     bool IsPending() const;
     bool IsDone() const;
     bool IsFailed() const;
@@ -77,6 +78,7 @@ private:
     T_Parameters parameters_;
     bool done_;
     T_Data result_;
+    T_Data newValues_;
     std::string error_;
     //@}
 };
