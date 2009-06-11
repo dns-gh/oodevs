@@ -839,15 +839,15 @@
 <context>
     <name>LoginDialog</name>
     <message>
-        <source>Profile parameters</source>
+        <source>Anonymous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User login</source>
+        <source>Select user profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Password</source>
+        <source>Password: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -855,7 +855,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Disconnect</source>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -920,19 +920,19 @@
 <context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
-        <source>Dotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quota</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Supply quotas allocation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Target:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quota</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -951,15 +951,15 @@
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
     <message>
-        <source>Dotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Push supply flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Target:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -982,22 +982,6 @@
 <context>
     <name>LogisticSupplyRecompletionDialog</name>
     <message>
-        <source>Max</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Recompletion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1014,7 +998,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Crew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1023,6 +1019,10 @@
     </message>
     <message>
         <source>Ammo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1035,6 +1035,10 @@
     </message>
     <message>
         <source>officers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warrant-officers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1065,23 +1069,11 @@
         <source>Partial recompletion</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>warrant-officers</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Populations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1097,11 +1089,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intelligences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Orbat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> - Not connected</source>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1109,19 +1113,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load exercise definition file (exercise.xml)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automats</source>
+        <source>Creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1137,15 +1129,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Folk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Intelligences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1153,11 +1137,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Knowledge</source>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load exercise definition file (exercise.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error loading exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Not connected</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1313,11 +1313,115 @@
 <context>
     <name>Menu</name>
     <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vision lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vision cones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vision surfaces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon ranges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Routes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Covered routes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convex hulls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decisional State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistics toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real time actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Small texts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Large texts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1361,74 +1465,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vision lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vision cones</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vision surfaces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Routes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Covered routes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Units...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Missing links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Real time actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Small texts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Large texts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactical lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weather</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Display mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1441,10 +1477,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Profiles...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1453,19 +1485,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convex hulls</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Mission</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decisional State</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Formations</source>
+        <source>&amp;Exercise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1473,35 +1493,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon ranges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Exercise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Units toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistics toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain toolbar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1519,6 +1519,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Agent missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Engage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1527,23 +1535,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Population missions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Agent missions</source>
+        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source></source>
+        <source>Fragmentary orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1589,7 +1589,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Mining:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Bypass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prepared:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1626,6 +1642,14 @@
     </message>
     <message>
         <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1666,30 +1690,6 @@
     </message>
     <message>
         <source>Agent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prepared:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mining:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Danger:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1751,7 +1751,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Construction dotation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Mining:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Development dotation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1764,14 +1772,6 @@
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction dotation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Development dotation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1803,7 +1803,39 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent state:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>NBC agent(s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of doctors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available doctors:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1831,11 +1863,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activity time:</source>
+        <source>Density:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Density:</source>
+        <source>Activity time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1844,38 +1876,6 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC agent state:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Danger:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Medical Treatment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total number of beds:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of available beds:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total number of doctors:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of available doctors:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2031,15 +2031,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Usage (MiB)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Virtual memory: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Usage (MiB)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2051,11 +2051,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pathfinds</source>
+        <source>Longs: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Longs: </source>
+        <source>Pathfinds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2154,19 +2154,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Speed factor: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disconnect (C)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unpause (P)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2178,7 +2170,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Speed factor: </source>
+        <source>Connecting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unpause (P)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2336,7 +2336,7 @@
 <context>
     <name>TimelineActionItem</name>
     <message>
-        <source>Delete</source>
+        <source>Press enter to rename, unfocus field to cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2344,7 +2344,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Press enter to rename, unfocus field to cancel</source>
+        <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2476,6 +2476,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Access permissions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Supervisor actions:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2488,24 +2492,20 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Profile edition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile has changed, commit modifications?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Access permissions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Permissions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&apos;Read&apos; permission allows you to see an unit.
 &apos;Write&apos; permission allows you to control an unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile edition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile has changed, commit modifications?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

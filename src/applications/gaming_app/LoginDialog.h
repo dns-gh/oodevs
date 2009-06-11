@@ -10,6 +10,16 @@
 #ifndef __LoginDialog_h_
 #define __LoginDialog_h_
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
+namespace xml
+{
+    class xistream;
+}
+
 class Profile;
 class Network;
 
@@ -21,20 +31,21 @@ class Network;
 // =============================================================================
 class LoginDialog : public QDialog
 {
-    Q_OBJECT
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LoginDialog( QWidget* pParent, const Profile& profile, Network& network );
+             LoginDialog( QWidget* pParent, const Profile& profile, Network& network, const tools::ExerciseConfig& config );
     virtual ~LoginDialog();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void Validate();
-    void Reject();
+    void OnAccept();
+    void OnReject();
+    void OnSelectItem( QIconViewItem* item );
     //@}
 
 private:
@@ -44,12 +55,19 @@ private:
     LoginDialog& operator=( const LoginDialog& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void FillUsers( const tools::ExerciseConfig& config );
+    void ReadUser( xml::xistream& xis );
+    //@}
+
 private:
     //! @name Member data
     //@{
     const Profile& profile_;
     Network& network_;
-    QLineEdit* login_;
+    QIconView* users_;
+    QHBox* passwordBox_;
     QLineEdit* password_;
     //@}
 };

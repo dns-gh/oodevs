@@ -1039,15 +1039,15 @@
     <name>LoginDialog</name>
     <message>
         <source>Profile parameters</source>
-        <translation>Paramètres des profils</translation>
+        <translation type="obsolete">Paramètres des profils</translation>
     </message>
     <message>
         <source>User login</source>
-        <translation>Profil utilisateur</translation>
+        <translation type="obsolete">Profil utilisateur</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Mot de passe</translation>
+        <translation type="obsolete">Mot de passe</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1055,7 +1055,23 @@
     </message>
     <message>
         <source>Disconnect</source>
-        <translation>Déconnecter</translation>
+        <translation type="obsolete">Déconnecter</translation>
+    </message>
+    <message>
+        <source>Password: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Anonymous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select user profile</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
