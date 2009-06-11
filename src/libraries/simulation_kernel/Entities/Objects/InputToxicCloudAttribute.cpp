@@ -9,17 +9,17 @@
 
 #include "simulation_kernel_pch.h"
 #include "InputToxicCloudAttribute.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeInputToxicCloud.h"
+#include "MIL_AgentServer.h"
 #include "MIL_NbcAgentType.h"
 #include "MIL_ToxicEffectManipulator.h"
-#include "simulation_terrain/TER_World.h"
 #include "NBCAttribute.h"
-
-#include "MIL_AgentServer.h"
-
-#include <shapefile/shapefile_lib.h>
-#include <vmap/FeatureHandler_ABC.h>
+#include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeInputToxicCloud.h"
+#include "simulation_terrain/TER_World.h"
+#include <geodata/Feature_ABC.h>
+#include <geodata/FeatureHandler_ABC.h>
+#include <geodata/Primitive_ABC.h>
+#include <gdal_ogr/gdal_ogr_lib.h>
 #include <xeumeuleu/xml.h>
 
 #pragma warning( push, 1 )
@@ -239,20 +239,19 @@ void InputToxicCloudAttribute::WriteODB( xml::xostream& xos ) const
 
 namespace
 {
-    struct Handler : public vmap::FeatureHandler_ABC
+    struct Handler : public geodata::FeatureHandler_ABC
     {
         typedef InputToxicCloudAttribute::T_Quantity    T_Quantity;
         typedef InputToxicCloudAttribute::T_Quantities  T_Quantities;
-        Handler( const std::string& field, T_Quantities& quantities, std::vector< T_Quantity >& export )
-            : field_ ( field ), quantities_ ( quantities ), export_ ( export ) {}
+        Handler( const std::string& field, T_Quantities& quantities, std::vector< T_Quantity >& e )
+            : field_ ( field ), quantities_ ( quantities ), export_ ( e ) {}
         
-        virtual void Handle( vmap::Feature_ABC* feature )
+        virtual void Handle( geodata::Feature_ABC* feature )
         {            
             const geometry::Point2d geoPos( feature->GetPrimitive().GetPosition() );
             if( feature->HasAttribute( field_ ) )
             {                
-                double      quantity = boost::get< double >( feature->GetAttribute( field_ ) );
-                
+                const double quantity = boost::get< double >( feature->GetAttribute( field_ ) );
                 if ( quantity > 0 ) 
                 {
                     MT_Vector2D position;
@@ -279,10 +278,9 @@ namespace
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::LoadShape( const std::string& name )
 {
-    std::string             fdir( filename_, 0, filename_.find_last_of( '/' ) );
-    shapefile::Directory    dir( fdir + "/propagation/" );
-    Handler                 handler( field_, *quantities_, export_ );
-
+    const std::string fdir( filename_, 0, filename_.find_last_of( '/' ) );
+    gdal_ogr::OGR_Directory dir( "shp", fdir + "/propagation/" );
+    Handler handler( field_, *quantities_, export_ );
     quantities_->Clear();
     export_.clear();
     dir.Retrieve( handler, name, extent_ );

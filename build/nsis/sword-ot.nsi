@@ -83,7 +83,6 @@ Section "!${APP_NAME}"
     File "${OUTDIR}\release\applications\frontend_app\*.exe"
     File "${OUTDIR}\release\applications\selftraining_app\*.exe"
     File "${OUTDIR}\release\applications\package_app\*.exe"
-    File "${OUTDIR}\generation_app\*.exe"
     File "${RUNDIR}\gradients.xml"
     File "${RUNDIR}\preferences.xml"
     File "${RUNDIR}\functions.xml"
@@ -96,7 +95,6 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\TAO_Strategies.dll"
     File "${RUNDIR}\TAO_Svc_Utils.dll"
     File "${RUNDIR}\ace.dll"
-    ;File "${RUNDIR}\dbghelp.dll"
     File "${RUNDIR}\libFedTime.dll"
     File "${RUNDIR}\libRTI-NG.dll"
     File "${RUNDIR}\librtiInternalIntercept.dll"
@@ -109,10 +107,21 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\population-${PLATFORM}-mt.dll"
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"
-    File "${RUNDIR}\shapelib.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File /nonfatal "${RUNDIR}\*.manifest"
     File "*.ico"
+    
+    ; terrain dependencies
+    File "${RUNDIR}\expat_ogdi31.dll"
+    File "${RUNDIR}\gdal16.dll"
+    File "${RUNDIR}\gdal_SDE.dll"
+    File /nonfatal "${RUNDIR}\geos_c.dll"
+    File "${RUNDIR}\ogdi31.dll"
+    File "${RUNDIR}\ogr_SDE.dll"
+    File "${RUNDIR}\proj.dll"
+    File "${RUNDIR}\rpf.dll"
+    File "${RUNDIR}\vrf.dll"
+    File "${RUNDIR}\zlib_ogdi31.dll"
     
     ; evaluation licence
     File "${RUNDIR}\evaluation.lic"
@@ -131,6 +140,12 @@ Section "!${APP_NAME}"
     !insertmacro OT.AddCommonConfig
 
 SectionEnd
+
+SectionGroup "Additional components"
+    
+    !insertmacro OT.AddOptionalComponent "Terrain Generation"
+    
+SectionGroupEnd
 
 ;--------------------------------
 SectionGroup "Models" s_mod
@@ -235,6 +250,7 @@ SectionGroupEnd
 Section "Uninstall"
 
     !insertmacro OT.KillRunning
+    !insertmacro OT.UninstallAdditionalComponent "Terrain Generation"
     !insertmacro OT.Uninstall
 
 SectionEnd

@@ -268,6 +268,30 @@ FunctionEnd
 
 !macroend
 
+
+;------------------------------------------------------------------------------
+; Additional Component Installation helper
+;------------------------------------------------------------------------------
+!macro OT.AddOptionalComponent ComponentName
+
+    Section "${ComponentName}"
+        SetOutPath "$INSTDIR\installation files"
+        File "${RUNDIR}\SWORD ${ComponentName}.exe"
+        ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}.exe" /S /D=$INSTDIR\${ComponentName}'
+    SectionEnd
+
+!macroend
+
+;------------------------------------------------------------------------------
+; Additional Component Uninstallation helper
+;------------------------------------------------------------------------------
+!macro OT.UninstallAdditionalComponent ComponentName
+
+    IfFileExists "$INSTDIR\${ComponentName}\uninstall.exe" 0 +2
+        ExecWait '"$INSTDIR\${ComponentName}\uninstall.exe" /S _?=$INSTDIR\${ComponentName}'
+
+!macroend
+
 ;------------------------------------------------------------------------------
 ; Uninstallation helper
 ;------------------------------------------------------------------------------

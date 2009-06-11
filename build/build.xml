@@ -324,7 +324,8 @@
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher,library.simulation_kernel">
         <build-app name="simulation_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,shapelib,shapefile@{suffix},vmap,directia-${platform}-mt-4_5
+                   libs="HLA,libFedTime,masalloc,tools,masasn,,directia-${platform}-mt-4_5
+                         gdal_i,gdal_ogr,geodata
                          population-${platform}-mt@{suffix}
                          dispatcher-${platform}-mt@{suffix}
                          lib${ant.project.name}_tools-${platform}-mt@{suffix}
@@ -555,7 +556,8 @@
 
     <target name="application.simulation_kernel_test" description="build CSword Simulation kernel test executable" depends="library.simulation_kernel">
         <build-test name="simulation_kernel"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,shapelib,shapefile@{suffix},vmap,directia-${platform}-mt-4_5
+                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5
+                         gdal_i,gdal_ogr,geodata
                          population-${platform}-mt@{suffix}
                          dispatcher-${platform}-mt@{suffix}
                          lib${ant.project.name}_tools-${platform}-mt@{suffix}
@@ -641,8 +643,9 @@
     ============================================================================
     -->
     <target name="configure" description="initialize local project structure with libraries">
-        <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind,vmap,shapefile"/>
+        <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind,vmap,geodata,gdal_ogr"/>
         <update name="terrain" package="generation_app_${platform}"/>
+        <update name="terrain" package="SWORD Terrain Generation.exe"/>
         <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
         <update name="qt" version="3.3.8"/>
         <update name="DIN"/>
@@ -660,7 +663,7 @@
         <update name="zipstream"/>
         <update name="zlib"/>
         <update name="bugtrap"/>
-        <update name="shapelib"/>
+        <update name="gdal" version="1.6.a"/>
         <update name="esri" version="9.2"/>
         <update name="folk"/>
         <update name="mockpp"/>
