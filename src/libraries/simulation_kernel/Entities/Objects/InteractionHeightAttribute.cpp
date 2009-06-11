@@ -31,7 +31,7 @@ InteractionHeightAttribute::InteractionHeightAttribute()
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
 InteractionHeightAttribute::InteractionHeightAttribute( const ASN1T_ObjectAttributes& asn )
-: height_( asn.interaction_height.height )
+    : height_( asn.interaction_height.height )
 {
     // NOTHING
 }
@@ -99,7 +99,7 @@ void InteractionHeightAttribute::WriteODB( xml::xostream& xos ) const
 // Name: InteractionHeightAttribute::Get
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-float InteractionHeightAttribute::Get() const
+MT_Float InteractionHeightAttribute::Get() const
 {
     return height_;
 }

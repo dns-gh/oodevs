@@ -14,26 +14,32 @@
 
 class MIL_PropagationManager;
 
+// =============================================================================
+/** @class  FirePropagationCapacity
+    @brief  FirePropagationCapacity
+*/
+// Created: RFT 2008-05-30
+// =============================================================================
 class FirePropagationCapacity : public PropagationCapacity_ABC    
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-	explicit FirePropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager );
 	         FirePropagationCapacity();
+    explicit FirePropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager );
     virtual ~FirePropagationCapacity();
 	//@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
     //@}
 
-	//! @name virtual
+	//! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
-	virtual void Update( Object& object, uint time );
+    virtual void Register( Object& object );
+    virtual void Update( Object& object, uint time );
 	//@}
 
 private:
@@ -47,21 +53,13 @@ private:
     int  UpdateState( Object& object, uint time );
 	void Propagate( Object& object );
 	void CheckPropagation( const MT_Vector2D& vOrigin, Object& object );
-    //@}
-	
-	//! @name Helpers
-    //@{
 	TER_Localisation GetLocalisation( const MT_Vector2D& pt ) const;
 	//@}
 
 private:
-	//! @name 
+	//! @name Member data
     //@{
 	MIL_PropagationManager* pManager_;
-	//@}
-
-    //! @name 
-    //@{
     //Time of creation, and time of death of the fire
     uint   timeOfCreation_;
     uint   timeOfDeath_;

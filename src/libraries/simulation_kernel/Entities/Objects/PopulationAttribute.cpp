@@ -18,7 +18,7 @@
 PopulationAttribute::PopulationAttribute()
     : density_ ( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ PopulationAttribute::PopulationAttribute()
 // Created: LDC 2009-04-01
 // -----------------------------------------------------------------------------
 PopulationAttribute::PopulationAttribute( xml::xistream& xis )
-    : density_( xml::attribute< float >( xis, "density" ) )
+    : density_( xml::attribute< MT_Float >( xis, "density" ) )
 {
     // NOTHING
 }
@@ -37,7 +37,7 @@ PopulationAttribute::PopulationAttribute( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 PopulationAttribute::~PopulationAttribute()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +48,7 @@ template< typename Archive >
 void PopulationAttribute::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    // $$$$ _RC_ SBO 2009-06-11: what about density?
 }
 
 // -----------------------------------------------------------------------------

@@ -19,31 +19,22 @@
 */
 // Created: MGD 2009-03-05
 // =============================================================================
-class SupplyCapacity
-    : public ObjectCapacity_ABC
-    , public MIL_InteractiveContainer_ABC
+class SupplyCapacity : public ObjectCapacity_ABC
+                     , public MIL_InteractiveContainer_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SupplyCapacity( xml::xistream& xis );
              SupplyCapacity();
+    explicit SupplyCapacity( xml::xistream& xis );
     virtual ~SupplyCapacity();
     //@}
 
-     //! @name CheckPoints
+     //! @name Operations
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );    
-    virtual void Register( Object& /*object*/ );
-    //@}
-
-	//! @name virtual
-    //@{
-    virtual void Instanciate( Object& object ) const;	
-	//@}
-
-    //! @name Operations on agent 
-    //@{
+    template< typename Archive > void serialize( Archive&, const uint );
+    virtual void Instanciate( Object& object ) const;
+    virtual void Register( Object& object );
     virtual void ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent );
     //@}
 

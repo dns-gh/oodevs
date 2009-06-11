@@ -29,26 +29,26 @@ class ActivableCapacity : public ObjectCapacity_ABC
 public:
     //! @name Constructors/Destructor
     //@{    
-    explicit ActivableCapacity( xml::xistream& xis );
              ActivableCapacity();
-             ActivableCapacity( const ActivableCapacity& ); //!< Copy constructor
+             ActivableCapacity( const ActivableCapacity& );
+    explicit ActivableCapacity( xml::xistream& xis );
     virtual ~ActivableCapacity();
     //@}
 
      //! @name CheckPoints
     //@{    
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
     //@}
 
-    //! @name virtual
+    //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;	
+    virtual void Register( Object& object );
+    void Activate( Object& object );
     //@}   
 
-    //! @name 
-    //@{    
-    void Activate( Object& object );
+    //! @name Accessors
+    //@{
     bool IsActivated( Object& object ) const;
     //@}
 

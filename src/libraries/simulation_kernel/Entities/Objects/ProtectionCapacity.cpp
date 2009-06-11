@@ -12,7 +12,6 @@
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( ProtectionCapacity, "ProtectionCapacity" )
@@ -49,14 +48,14 @@ ProtectionCapacity::ProtectionCapacity( const ProtectionCapacity& from )
 {
     // NOTHING
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: ProtectionCapacity destructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ProtectionCapacity::~ProtectionCapacity()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

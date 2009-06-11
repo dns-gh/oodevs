@@ -19,31 +19,26 @@
 */
 // Created: MGD 2009-03-05
 // =============================================================================
-class DetectionCapacity
-    : public ObjectCapacity_ABC
-    , public MIL_InteractiveContainer_ABC
+class DetectionCapacity : public ObjectCapacity_ABC
+                        , public MIL_InteractiveContainer_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DetectionCapacity( xml::xistream& xis );
              DetectionCapacity();
+    explicit DetectionCapacity( xml::xistream& xis );
     virtual ~DetectionCapacity();
     //@}
 
      //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );    
-    virtual void Register( Object& /*object*/ );
     //@}
 
-	//! @name virtual
+	//! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;	
-	//@}
-
-    //! @name Operations on agent 
-    //@{
+    virtual void Register( Object& object );
     virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
     //@}
 

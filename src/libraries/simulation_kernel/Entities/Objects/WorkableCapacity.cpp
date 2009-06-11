@@ -11,7 +11,6 @@
 #include "WorkableCapacity.h"
 #include "Object.h"
 #include "AnimatorAttribute.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( WorkableCapacity, "WorkableCapacity" )

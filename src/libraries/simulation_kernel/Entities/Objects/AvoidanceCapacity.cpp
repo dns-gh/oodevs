@@ -14,7 +14,6 @@
 #include "simulation_terrain/TER_DynamicData.h"
 #include "Object.h"
 #include "Tools/MIL_Tools.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( AvoidanceCapacity, "AvoidanceCapacity" )

@@ -12,7 +12,6 @@
 #include "MedicalTreatmentAttribute.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Object.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( HealableCapacity, "HealableCapacity" )
@@ -50,7 +49,6 @@ HealableCapacity::HealableCapacity()
 {
     //NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: HealableCapacity constructor
@@ -163,8 +161,6 @@ bool HealableCapacity::UpdateState( MedicalTreatmentAttribute& attr )
     //Update information about the possibility to admit a new patient
     return ( attr.GetAvailableBeds() > 0 && attr.GetAvailableDoctors() > 0 );
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: HealableCapacity::ActivateEmergencyPlan

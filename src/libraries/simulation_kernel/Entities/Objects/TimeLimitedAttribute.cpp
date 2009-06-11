@@ -118,7 +118,7 @@ bool TimeLimitedAttribute::IsTimeOver( uint time ) const
     if ( nActivityTime_ == 0 )
         return false;
     if( nDeathTimeStep_ == 0 )
-        nDeathTimeStep_ = time + MIL_Tools::ConvertSecondsToSim( nActivityTime_ );
+        nDeathTimeStep_ = uint( time + MIL_Tools::ConvertSecondsToSim( nActivityTime_ ) );
     return nDeathTimeStep_ <= time;
 }
 

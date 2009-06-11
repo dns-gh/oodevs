@@ -22,30 +22,24 @@ class MIL_Agent_ABC;
 */
 // Created: LDC 2009-03-03
 // =============================================================================
-class InteractIfEquippedCapacity
-    : public ObjectCapacity_ABC
-    , public MIL_InteractiveContainer_ABC
+class InteractIfEquippedCapacity : public ObjectCapacity_ABC
+                                 , public MIL_InteractiveContainer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InteractIfEquippedCapacity( xml::xistream& xis );
              InteractIfEquippedCapacity();
+    explicit InteractIfEquippedCapacity( xml::xistream& xis );
     virtual ~InteractIfEquippedCapacity();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CanInteractWith( const Object& object, const MIL_Agent_ABC& /*agent*/, bool& canInteract );
-    
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
-    //@}
-
-    //! @name Capacity creation
-    //@{
-    virtual void Instanciate( Object& /*object*/ ) const;
+    virtual void Instanciate( Object& object ) const;
+    virtual void Register( Object& object );
+    virtual void CanInteractWith( const Object& object, const MIL_Agent_ABC& /*agent*/, bool& canInteract );
     //@}
 
 private:
@@ -53,15 +47,6 @@ private:
     //@{
     InteractIfEquippedCapacity( const InteractIfEquippedCapacity& );            //!< Copy constructor
     InteractIfEquippedCapacity& operator=( const InteractIfEquippedCapacity& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

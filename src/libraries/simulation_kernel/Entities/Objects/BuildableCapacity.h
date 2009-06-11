@@ -14,52 +14,55 @@
 #include "ObjectCapacity_ABC.h"
 #include "ConstructionCapacity.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 class Deserializer;
 class PHY_DotationCategory;
 class PHY_ConsumptionType;
 
+// =============================================================================
+/** @class  BuildableCapacity
+    @brief  BuildableCapacity
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 class BuildableCapacity : public ObjectCapacity_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{    
-    explicit BuildableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis );	
              BuildableCapacity();
+    explicit BuildableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis );	
     virtual ~BuildableCapacity();
 	//@}
 
      //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
-    virtual void Register( Object& /*object*/ );
     //@}
 
-	//! @name virtual
+	//! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;	
+    virtual void Register( Object& object );
+
+    void Construct( Object& object );
+    void Construct( Object& object, float rDeltaPercentage );
+    void Destroy( Object& object );
+    void Destroy( Object& object, float rDeltaPercentage );
     //@}
 
-    //! @name Accessor
+    //! @name Accessors
     //@{
     const PHY_ConsumptionType&  GetDefaultConsumptionMode() const;
     const PHY_DotationCategory* GetDotationCategory() const;
     uint                        GetMaxDotation() const;
     ConstructionCapacity::E_UnitType GetUnit() const;
-    //@}
-
-    //! @name 
-    //@{    
-    void Construct( Object& object, float rDeltaPercentage );
-    void Destroy( Object& object, float rDeltaPercentage );    
-    //@}
-
-    //! @name 
-    //@{
-    void Construct( Object& object );
-    void Destroy( Object& object );
     //@}
 
 private:
@@ -68,18 +71,14 @@ private:
     BuildableCapacity( const BuildableCapacity& );
     //@}
 
-    //! @name 
+    //! @name Helpers
     //@{
+    void ReadDotation( xml::xistream& xis );
     void ChangeConstructionPercentage( Object& object, float rNewConstructionPercentage );
     //@}
 
-    //! @name 
-    //@{
-    void ReadDotation( xml::xistream& xis );
-    //@}
-
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     const PHY_ConsumptionType* default_;
     const PHY_DotationCategory* dotation_;

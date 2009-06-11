@@ -12,24 +12,30 @@
 
 class TER_DynamicData;
 
+// =============================================================================
+/** @class  MIL_DynamicPathDataHandler
+    @brief  Handle Pahthind dynamic data
+*/
+// Created: JCR 2008-06-02
+// =============================================================================
 class MIL_DynamicPathDataHandler
-{     // Handle Pahthind dynamic data
+{
 public:
     //! @name Constructor/destructor
     //@{
-    MIL_DynamicPathDataHandler();
+     MIL_DynamicPathDataHandler();
     ~MIL_DynamicPathDataHandler();
     //@}
 
-    //! @name 
+    //! @name Operations
     //@{
     void Reset( TER_DynamicData* data );
     //@}
 
 private:
-    //! @name 
+    //! @name Member data
     //@{
-    TER_DynamicData*    pPathfindData_;
+    TER_DynamicData* pPathfindData_;
     //@}
 };
 

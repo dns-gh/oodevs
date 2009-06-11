@@ -12,28 +12,27 @@
 
 #include "ObjectCapacity_ABC.h"
 
+// =============================================================================
+/** @class  MobilityCapacity
+    @brief  MobilityCapacity
+*/
+// Created: JCR 2008-06-02
+// =============================================================================
 class MobilityCapacity : public ObjectCapacity_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-	explicit MobilityCapacity( xml::xistream& xis );
              MobilityCapacity();
+    explicit MobilityCapacity( xml::xistream& xis );
 	virtual ~MobilityCapacity();
 	//@}
 
-    //! @name CheckPoints
+    //! @name Operations
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
-    //@}
-
-	//! @name virtual
-    //@{
+    virtual void Register( Object& object );
     virtual void Instanciate( Object& object ) const;
-	//@}
-
-    //! @name 
     MT_Float GetDefaultSpeed() const;
     MT_Float ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const;
     //@}
@@ -44,14 +43,13 @@ private:
     MobilityCapacity( const MobilityCapacity& from );
     //@}
 
-    //! @name Initialize
+    //! @name Helpers
     //@{
     void InitializeSpeed( xml::xistream& xis );
     void InitializeSpeedPolicy( xml::xistream& xis );
     //@}
 
-private:
-    //! @name Type
+    //! @name Types
     //@{
     enum E_SpeedPolicy
     {
@@ -62,11 +60,11 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name Member data
     //@{
-    E_SpeedPolicy   nSpeedPolicy_;
-    float           rDefaultSpeed_;
-    float           rSpeedPolicyMaxSpeedAgentFactor_;
+    E_SpeedPolicy nSpeedPolicy_;
+    float         rDefaultSpeed_;
+    float         rSpeedPolicyMaxSpeedAgentFactor_;
     //@}
 };
 

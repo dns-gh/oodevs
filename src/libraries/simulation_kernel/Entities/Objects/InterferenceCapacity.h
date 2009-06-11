@@ -13,31 +13,28 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
-class InterferenceCapacity 
-    : public ObjectCapacity_ABC
-    , public MIL_InteractiveContainer_ABC
+// =============================================================================
+/** @class  InterferenceCapacity
+    @brief  InterferenceCapacity
+*/
+// Created: RFT 2008-05-30
+// =============================================================================
+class InterferenceCapacity : public ObjectCapacity_ABC
+                           , public MIL_InteractiveContainer_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-	explicit InterferenceCapacity( xml::xistream& xis );
 	         InterferenceCapacity();
+    explicit InterferenceCapacity( xml::xistream& xis );
     virtual ~InterferenceCapacity();
 	//@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
-    //@}
-
-	//! @name virtual
-    //@{
     virtual void Instanciate( Object& object ) const;
-	//@}
-
-   //! @name MIL_InteractiveContainer_ABC
-    //@{
+    virtual void Register( Object& object );
     virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentExiting( Object& object, MIL_Agent_ABC& agent );    
     //@}

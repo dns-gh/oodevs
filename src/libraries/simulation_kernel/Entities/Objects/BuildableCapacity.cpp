@@ -25,19 +25,55 @@
 BOOST_CLASS_EXPORT_GUID( BuildableCapacity, "BuildableCapacity" )
 
 // -----------------------------------------------------------------------------
+// Name: BuildableCapacity::BuildableCapacity
+// Created: JCR 2008-05-22
+// -----------------------------------------------------------------------------
+BuildableCapacity::BuildableCapacity()
+    : default_( 0 )    
+    , dotation_( 0 )
+    , nFullNbrDotation_( 0 )
+    , unitType_( ConstructionCapacity::eRaw )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: BuildableCapacity constructor
+// Created: JCR 2008-05-22
+// -----------------------------------------------------------------------------
+BuildableCapacity::BuildableCapacity( const BuildableCapacity& from )
+    : default_( from.default_ )
+    , dotation_( from.dotation_ )
+    , nFullNbrDotation_( from.nFullNbrDotation_ )
+    , unitType_( from.unitType_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: BuildableCapacity constructor
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
 BuildableCapacity::BuildableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis )
-    : default_ ( &consumption )
-    , dotation_ ( 0 )
-    , nFullNbrDotation_ ( 0 )
-    , unitType_ ( type )
+    : default_( &consumption )
+    , dotation_( 0 )
+    , nFullNbrDotation_( 0 )
+    , unitType_( type )
 {
     xis >> xml::optional()
         >> xml::start( "resources" )
+            // $$$$ _RC_ SBO 2009-06-11: Not a real list, only one dotation
             >> list( "dotation", *this, &BuildableCapacity::ReadDotation )
         >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: BuildableCapacity destructor
+// Created: JCR 2008-05-22
+// -----------------------------------------------------------------------------
+BuildableCapacity::~BuildableCapacity()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,41 +93,6 @@ void BuildableCapacity::ReadDotation( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: BuildableCapacity::BuildableCapacity
-// Created: JCR 2008-05-22
-// -----------------------------------------------------------------------------
-BuildableCapacity::BuildableCapacity()
-    : default_ ( 0 )    
-    , dotation_ ( 0 )
-    , nFullNbrDotation_ ( 0 )
-    , unitType_ ( ConstructionCapacity::eRaw )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BuildableCapacity constructor
-// Created: JCR 2008-05-22
-// -----------------------------------------------------------------------------
-BuildableCapacity::BuildableCapacity( const BuildableCapacity& from )
-    : default_ ( from.default_ )
-    , dotation_ ( from.dotation_ )
-    , nFullNbrDotation_ ( from.nFullNbrDotation_ )
-    , unitType_ ( from.unitType_ )
-{
-    // NOTHING
-}
-	
-// -----------------------------------------------------------------------------
-// Name: BuildableCapacity destructor
-// Created: JCR 2008-05-22
-// -----------------------------------------------------------------------------
-BuildableCapacity::~BuildableCapacity()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: BuildableCapacity::load
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
@@ -104,7 +105,11 @@ void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const uint )
        >> nFullNbrDotation_
        >> unitType_;
     default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
+    if( !default_ )
+        throw std::runtime_error( __FUNCTION__ " Unknown consumption category" ); 
     dotation_ = PHY_DotationType::FindDotationCategory( dotationId );
+    if( !dotation_ && dotationId )
+        throw std::runtime_error( __FUNCTION__ " Unknown dotation category" ); 
 }
     
 // -----------------------------------------------------------------------------
@@ -141,7 +146,7 @@ void BuildableCapacity::Instanciate( Object& object ) const
     else if ( unitType_ == ConstructionCapacity::eDensity && dotation_ )
     {
         const TER_Localisation& location = object.GetLocalisation();
-        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_ * location.GetArea() );
+        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, uint( nFullNbrDotation_ * location.GetArea() ) );
     }
 }
 

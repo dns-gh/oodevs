@@ -16,27 +16,28 @@
 
 class Object;
 
-class TimeLimitedCapacity
-    : public ObjectCapacity_ABC
+// =============================================================================
+/** @class  ProtectionCapacity
+    @brief  ProtectionCapacity
+*/
+// Created: JCR 2008-06-02
+// =============================================================================
+class TimeLimitedCapacity : public ObjectCapacity_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-    explicit TimeLimitedCapacity( xml::xistream& xis );
              TimeLimitedCapacity();
+    explicit TimeLimitedCapacity( xml::xistream& xis );
     virtual ~TimeLimitedCapacity();
 	//@}
 
-    //! @name CheckPoints
+    //! @name Operations
     //@{    
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
-    //@}
-
-	//! @name virtual
-    //@{
     virtual void Instanciate( Object& object ) const;
-	virtual void Update( Object& object, uint time );
+    virtual void Register( Object& object );
+    virtual void Update( Object& object, uint time );
 	//@}
 
 private:

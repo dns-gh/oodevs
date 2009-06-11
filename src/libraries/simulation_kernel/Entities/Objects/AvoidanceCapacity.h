@@ -29,27 +29,27 @@ class AvoidanceCapacity : public ObjectCapacity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AvoidanceCapacity( xml::xistream& xis );
              AvoidanceCapacity();
              AvoidanceCapacity( const AvoidanceCapacity& from );
+    explicit AvoidanceCapacity( xml::xistream& xis );
     virtual ~AvoidanceCapacity();
     //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
     //@}
 
-    //! @name 
+    //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
+    virtual void Register( Object& object );
     virtual void Finalize( Object& object );    
     //@}
 
-    //! @name 
+    //! @name Accessors
     //@{
-    const TER_Localisation&   GetLocalisation() const;
+    const TER_Localisation& GetLocalisation() const;
     //@}
 
 private:
@@ -58,7 +58,7 @@ private:
     AvoidanceCapacity& operator=( const AvoidanceCapacity& ); //!< Assignment operator
     //@}
 
-    //! @name 
+    //! @name Helpers
     //@{
     void InitializeArea( Object& object );
     void ResetDynamicData( Object& object );
@@ -68,10 +68,8 @@ private:
     //! @name Member data
     //@{
     TER_Localisation            avoid_;
-    // Path finder enhancement
     MIL_DynamicPathDataHandler  handler_;
-
-    MT_Float                    distance_;    
+    MT_Float                    distance_;
     //@}
 };
 

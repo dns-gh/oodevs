@@ -43,8 +43,7 @@ AttritionCapacity::AttritionCapacity( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 AttritionCapacity::AttritionCapacity()
-    : category_ ( )
-    , dotation_ ( 0 )
+    : dotation_( 0 )
 {
     // NOTHING
 }
@@ -54,8 +53,8 @@ AttritionCapacity::AttritionCapacity()
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 AttritionCapacity::AttritionCapacity( const AttritionCapacity& from )
-    : category_ ( from.category_ )
-    , dotation_ ( from.dotation_ )
+    : category_( from.category_ )
+    , dotation_( from.dotation_ )
 {
     // NOTHING
 }
@@ -77,7 +76,6 @@ void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const uint )
 {    
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    
     ar >> category_;
     dotation_ = PHY_DotationType::FindDotationCategory( category_ );
     if ( !dotation_ )
@@ -124,14 +122,12 @@ bool AttritionCapacity::HasInteractionCapabilities( Object& object ) const
 {    
     // Is Bypassed
     const BypassAttribute* bypass = object.RetrieveAttribute< BypassAttribute >();
-    if ( bypass && bypass->IsBypassed() )
+    if( bypass && bypass->IsBypassed() )
         return false;
-
     // Is Activated
     const ObstacleAttribute* obstacle = object.RetrieveAttribute< ObstacleAttribute >();
-    if ( obstacle && !obstacle->IsActivated() )
+    if( obstacle && !obstacle->IsActivated() )
         return false;
-
     return true;
 }
 
@@ -141,19 +137,17 @@ bool AttritionCapacity::HasInteractionCapabilities( Object& object ) const
 // -----------------------------------------------------------------------------
 void AttritionCapacity::ProcessAgentMovingInside( Object& object, MIL_Agent_ABC& agent )
 {
-    if ( object.GetArmy().GetID() == agent.GetArmy().GetID() || !HasInteractionCapabilities( object ) )
+    if( object.GetArmy().GetID() == agent.GetArmy().GetID() || !HasInteractionCapabilities( object ) )
         return;
-       
     ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();    
-    if ( ! ( construction && construction->HasDotation( *dotation_ ) && dotation_->HasAttritions() ) )
+    if( ! ( construction && construction->HasDotation( *dotation_ ) && dotation_->HasAttritions() ) )
         return;
-
     PHY_ObjectExplosionFireResult fireResult( object );    
     agent.GetRole< PHY_RoleInterface_Composantes >().ApplyExplosion( *this, fireResult );
 
     uint hits = fireResult.GetHits();
     if ( hits > 0 )    
-        construction->Build( (MT_Float)( - hits / (MT_Float)construction->GetMaxDotation() ) );    
+        construction->Build( - MT_Float( hits ) / MT_Float( construction->GetMaxDotation() ) );
 }
 
 // -----------------------------------------------------------------------------

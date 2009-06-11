@@ -11,7 +11,6 @@
 #include "ExtinguishableCapacity.h"
 #include "FireAttribute.h"
 #include "Object.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( ExtinguishableCapacity, "ExtinguishableCapacity" )
@@ -50,7 +49,7 @@ ExtinguishableCapacity::ExtinguishableCapacity( const ExtinguishableCapacity& fr
 // -----------------------------------------------------------------------------
 ExtinguishableCapacity::~ExtinguishableCapacity()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +59,7 @@ ExtinguishableCapacity::~ExtinguishableCapacity()
 template< typename Archive >
 void ExtinguishableCapacity::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );        
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------

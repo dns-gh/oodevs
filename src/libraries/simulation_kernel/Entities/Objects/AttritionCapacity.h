@@ -21,42 +21,41 @@ class PHY_AttritionData;
 class MIL_PopulationElement_ABC;
 class MIL_Agent_ABC;
 
-class AttritionCapacity 
-    : public ObjectCapacity_ABC
-    , public MIL_InteractiveContainer_ABC
+// =============================================================================
+/** @class  AttritionCapacity
+    @brief  AttritionCapacity
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
+class AttritionCapacity : public ObjectCapacity_ABC
+                        , public MIL_InteractiveContainer_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-    explicit AttritionCapacity( xml::xistream& xis );
              AttritionCapacity();
              AttritionCapacity( const AttritionCapacity& from );
+    explicit AttritionCapacity( xml::xistream& xis );
     virtual ~AttritionCapacity();
 	//@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
-    
-    virtual void Register( Object& /*object*/ );
     //@}
 
-
-	//! @name virtual
+	//! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;	
-	//@}
+    virtual void Register( Object& object );
 
-    //! @name MIL_InteractiveContainer_ABC
-    //@{
     virtual void ProcessAgentMovingInside( Object& object, MIL_Agent_ABC& agent );
     virtual void ProcessPopulationMovingInside( Object& object, MIL_PopulationElement_ABC& agent );
     //@}
 
-    //! @name 
+    //! @name Accessors
     //@{
     const PHY_AttritionData& GetAttritionData( const PHY_Protection& protection ) const;
     MT_Float GetAttritionSurface() const;
@@ -64,26 +63,25 @@ public:
     //@}
 
 private:
-    //! @name HasInteractionCapabilities
+    //! @name Helpers
     //@{
     bool HasInteractionCapabilities( Object& object ) const;
     //@}
 
-    //! @name Population
+    //! @name types
     //@{
     struct PopulationAttrition 
     {
-        PopulationAttrition() : surface_ ( 0. ), ph_ ( 0 ) {}
-        
-        MT_Float    surface_;
-        MT_Float    ph_;
+        PopulationAttrition() : surface_( 0. ), ph_( 0 ) {}
+        MT_Float surface_;
+        MT_Float ph_;
     };
     //@}
 
 private:
     //! @name 
     //@{
-    std::string         category_;
+    std::string category_;
     PopulationAttrition population_;
     const PHY_DotationCategory* dotation_;
     //@}

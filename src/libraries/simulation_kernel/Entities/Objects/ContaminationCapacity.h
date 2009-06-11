@@ -24,44 +24,28 @@ class MIL_Agent_ABC;
 */
 // Created: JCR 2008-06-02
 // =============================================================================
-class ContaminationCapacity  
-    : public ObjectCapacity_ABC
-    , public MIL_InteractiveContainer_ABC
+class ContaminationCapacity : public ObjectCapacity_ABC
+                            , public MIL_InteractiveContainer_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ContaminationCapacity( xml::xistream& xis );
              ContaminationCapacity();
+    explicit ContaminationCapacity( xml::xistream& xis );
     virtual ~ContaminationCapacity();
     //@}
 
      //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );    
-    virtual void Register( Object& /*object*/ );
     //@}
 
-	//! @name virtual
+	//! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;	
-	//@}
-
-    //! @name 
-    //@{
-    virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );    
-    //@}
-
-    //! @name 
-    //@{
+    virtual void Register( Object& object );
+    virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
     void DecontaminateZone( const TER_Localisation& zone );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef boost::ptr_vector< TER_Localisation >   T_LocalisationVector;
-    typedef T_LocalisationVector::const_iterator    CIT_LocalisationVector;
     //@}
 
 private:
@@ -70,17 +54,23 @@ private:
     ContaminationCapacity( const ContaminationCapacity& );  //!< Copy constructor
     //@}
 
-    //! @name Operations
+    //! @name Helpers
     //@{
     bool IsInsideDecontaminatedZone( const MT_Vector2D& position ) const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef boost::ptr_vector< TER_Localisation >   T_LocalisationVector;
+    typedef T_LocalisationVector::const_iterator    CIT_LocalisationVector;
     //@}
 
 private:
     //! @name 
     //@{
-    std::string             type_;
-    int                     maxToxic_;
-    T_LocalisationVector    decontaminatedZones_;
+    std::string type_;
+    int maxToxic_;
+    T_LocalisationVector decontaminatedZones_;
     //@}
 };
 

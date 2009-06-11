@@ -10,20 +10,16 @@
 #include "simulation_kernel_pch.h"
 #include "ControlZoneCapacity.h"
 #include "Object.h"
-
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Units/Categories/PHY_Volume.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
-#include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
-
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Tools/MIL_Tools.h"
-
 #include "simulation_terrain/TER_Localisation.h"
-
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
@@ -49,22 +45,22 @@ namespace
         //@{
         void LoadFirePercentages()
         {
-                static const char *volumes = "<shot-percentages>"
-                    "<per-human-per-hectare percentage='100' volume='Medium'/>"
-                    "<per-human-per-hectare percentage='10' volume='Small'/>"
-                    "<per-human-per-hectare percentage='20' volume='Personal'/>"
-                    "<per-human-per-hectare percentage='100' volume='Small'/>"
-                    "<per-human-per-hectare percentage='10' volume='Medium'/>"
-                    "<per-human-per-hectare percentage='20' volume='Heavy'/>"
-                    "<per-human-per-hectare percentage='100' volume='Medium'/>"
-                    "<per-human-per-hectare percentage='10' volume='Small'/>"
-                    "<per-human-per-hectare percentage='20' volume='Personal'/>"
-                    "</shot-percentages>";
+            static const char *volumes = "<shot-percentages>"
+                "<per-human-per-hectare percentage='100' volume='Medium'/>"
+                "<per-human-per-hectare percentage='10' volume='Small'/>"
+                "<per-human-per-hectare percentage='20' volume='Personal'/>"
+                "<per-human-per-hectare percentage='100' volume='Small'/>"
+                "<per-human-per-hectare percentage='10' volume='Medium'/>"
+                "<per-human-per-hectare percentage='20' volume='Heavy'/>"
+                "<per-human-per-hectare percentage='100' volume='Medium'/>"
+                "<per-human-per-hectare percentage='10' volume='Small'/>"
+                "<per-human-per-hectare percentage='20' volume='Personal'/>"
+                "</shot-percentages>";
 
-                xml::xistringstream xis( volumes );
-                xis >> xml::start( "shot-percentages" )
-                        >> xml::list( "per-human-per-hectare", *this, &StaticLoader::ReadPercentage )
-                    >> xml::end();
+            xml::xistringstream xis( volumes );
+            xis >> xml::start( "shot-percentages" )
+                    >> xml::list( "per-human-per-hectare", *this, &StaticLoader::ReadPercentage )
+                >> xml::end();
         }
 
     private:
@@ -146,7 +142,7 @@ template< typename Archive >
 void ControlZoneCapacity::serialize( Archive& file, const uint )
 {    
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    file & const_cast< MIL_Agent_ABC*& >( controller_ );         
+    file & const_cast< MIL_Agent_ABC*& >( controller_ );
     if ( controller_ )
         vFirerPosition_ = &controller_->GetRole< PHY_RolePion_Location >().GetPosition();
 }
@@ -165,8 +161,8 @@ void ControlZoneCapacity::Register( Object& object )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void ControlZoneCapacity::Instanciate( Object& object ) const
-{    
-    object.AddCapacity( new ControlZoneCapacity( *this ) );    
+{
+    object.AddCapacity( new ControlZoneCapacity( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +184,6 @@ void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_Targe
     MT_Float rPHCoeff = MT_IsZero( area ) 
                                 ? 0. 
                                 : controller_->GetRole< PHY_RolePion_Humans >().GetNbrUsableHumans() / area;
-
     targets.clear();
     object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1,  boost::cref( object.GetArmy() ), rPHCoeff, boost::ref( targets ) ) );
 }
@@ -199,10 +194,8 @@ void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_Targe
 // -----------------------------------------------------------------------------
 void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC& army, MT_Float phCoef, T_TargetVector& targets ) const
 {
-
     if ( army.IsAFriend( agent->GetArmy() ) == eTristate_True )
         return;    
-
     PHY_RoleInterface_Composantes::T_ComposanteVector compTargets;
     agent->GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
     for( PHY_RoleInterface_Composantes::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )

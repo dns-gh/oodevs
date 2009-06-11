@@ -11,7 +11,6 @@
 #define __Object_DecontaminationCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
-//#include "MIL_InteractiveContainer_ABC.h"
 
 class MIL_Agent_ABC;
 
@@ -21,33 +20,27 @@ class MIL_Agent_ABC;
 */
 // Created: JCR 2008-06-02
 // =============================================================================
-class DecontaminationCapacity  
-    : public ObjectCapacity_ABC
-    // , public MIL_InteractiveContainer_ABC
+class DecontaminationCapacity : public ObjectCapacity_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DecontaminationCapacity( xml::xistream& xis );
              DecontaminationCapacity();
+    explicit DecontaminationCapacity( xml::xistream& xis );
     virtual ~DecontaminationCapacity();
     //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
     //@}
 
-	//! @name virtual
+	//! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
-	virtual void Update( Object& object, uint time );
-	//@}
-
-    //! @name 
-    //@{
+    virtual void Register( Object& object );
+    virtual void Update( Object& object, uint time );
     void QueueForDecontamination( MIL_Agent_ABC& agent );
     //@}
 
@@ -57,12 +50,11 @@ private:
     DecontaminationCapacity( const DecontaminationCapacity& );  //!< Copy constructor
     //@}
 
-    //! @name Helper
+    //! @name Helpers
     //@{
     bool Decontaminate( Object& object, MIL_Agent_ABC& agent );
     //@}
 
-private:
     //! @name Types
     //@{
     typedef std::deque< MIL_Agent_ABC* > T_AgentQueue;
@@ -71,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    T_AgentQueue decontaminationQueue_;    
+    T_AgentQueue decontaminationQueue_;
     //@}
 };
 

@@ -11,7 +11,6 @@
 #include "TerrainHeuristicCapacity.h"
 #include "Object.h"
 #include "Tools/MIL_Tools.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( TerrainHeuristicCapacity, "TerrainHeuristicCapacity" )
@@ -78,7 +77,7 @@ template< typename Archive > void TerrainHeuristicCapacity::serialize( Archive& 
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
          & environmentScores_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TerrainHeuristicCapacity::Register
 // Created: JCR 2008-08-18
@@ -86,7 +85,7 @@ template< typename Archive > void TerrainHeuristicCapacity::serialize( Archive& 
 void TerrainHeuristicCapacity::Register( Object& object )
 {
     object.AddCapacity( this );
-} 
+}
 
 // -----------------------------------------------------------------------------
 // Name: TerrainHeuristicCapacity::Instanciate

@@ -74,9 +74,7 @@ ConstructionAttribute::~ConstructionAttribute()
 void ConstructionAttribute::Load( xml::xistream& xis )
 {
     assert( dotation_ );
-    MT_Float completion = 1.;
-
-    xis >> xml::optional() >> xml::attribute( "completion", completion );
+    const MT_Float completion = xml::attribute< MT_Float >( xis, "completion", 1.f );
     if( completion > 0. && completion <= 1. )
         rConstructionPercentage_ = completion;
     nCurrentNbrDotation_ = uint( rConstructionPercentage_ * nFullNbrDotation_ );
@@ -113,6 +111,7 @@ void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const uint )
     std::string dotation;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
        >> dotation
+       >> nFullNbrDotation_
        >> nCurrentNbrDotation_
        >> rConstructionPercentage_;
     dotation_ = PHY_DotationType::FindDotationCategory( dotation );
@@ -161,7 +160,7 @@ void ConstructionAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
         asn.construction.m.dotation_nbrPresent = 1;
         asn.construction.dotation_nbr = nCurrentNbrDotation_;
         asn.construction.m.percentagePresent = 1;
-        asn.construction.percentage = rConstructionPercentage_ * 100.;
+        asn.construction.percentage = uint( rConstructionPercentage_ * 100. );
     }
 }
 
@@ -177,7 +176,7 @@ void ConstructionAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
         asn.construction.m.dotation_nbrPresent = 1;
         asn.construction.dotation_nbr = nCurrentNbrDotation_;
         asn.construction.m.percentagePresent = 1;
-        asn.construction.percentage = rConstructionPercentage_ * 100.;
+        asn.construction.percentage = uint( rConstructionPercentage_ * 100. );
         Reset( eOnUpdate );
     }
 }

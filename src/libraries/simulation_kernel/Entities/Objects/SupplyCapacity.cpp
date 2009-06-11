@@ -14,7 +14,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
-
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <xeumeuleu/xml.h>
 
@@ -49,7 +48,6 @@ SupplyCapacity::SupplyCapacity( const SupplyCapacity& from )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SupplyCapacity Destructor
 // Created: MGD 2009-03-05
@@ -69,7 +67,7 @@ void SupplyCapacity::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SupplyCapacity::Register
 // Created: MGD 2009-03-05
@@ -90,7 +88,7 @@ void SupplyCapacity::Instanciate( Object& object ) const
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: SupplyCapacity::ProcessAgentInside
 // Created: MGD 2009-03-05

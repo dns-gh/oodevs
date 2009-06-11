@@ -12,41 +12,36 @@
 
 #include "ObjectCapacity_ABC.h"
 
+// =============================================================================
+/** @class  BypassableCapacity
+    @brief  BypassableCapacity
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 class BypassableCapacity : public ObjectCapacity_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-	explicit BypassableCapacity( xml::xistream& xis );
              BypassableCapacity();
+    explicit BypassableCapacity( xml::xistream& xis );
     virtual ~BypassableCapacity();
 	//@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
     //@}
 
-
-	//! @name virtual
+	//! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;	
-    //@}
-
-    //! @name 
-    //@{
+    virtual void Instanciate( Object& object ) const;
+    virtual void Register( Object& object );
     void Bypass( Object& object, MT_Float rDeltaPercentage );
     //@}
 
 private:
-    //! @name Copy
-    //@{
-    BypassableCapacity( const BypassableCapacity& );
-    //@}
-
-private:
-    //! @name Type
+    //! @name Member data
     //@{
     uint bypassSpeed_;
     //@}

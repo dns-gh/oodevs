@@ -26,24 +26,16 @@ class WorkableCapacity : public ObjectCapacity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit WorkableCapacity( xml::xistream& xis );
              WorkableCapacity();
+    explicit WorkableCapacity( xml::xistream& xis );
     virtual ~WorkableCapacity();
-    //@}
-
-    //! @name CheckPoints
-    //@{
-    template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& object );
-    //@}
-
-    //! @name virtual
-    //@{
-    virtual void Instanciate( Object& object ) const;	
     //@}
 
     //! @name Operations
     //@{
+    template< typename Archive > void serialize( Archive&, const uint );
+    virtual void Instanciate( Object& object ) const;
+    virtual void Register( Object& object );
     bool AddAnimator( Object& object, const MIL_Agent_ABC& agent );
     void ReleaseAnimator( Object& object, const MIL_Agent_ABC& agent );
     //@}
@@ -55,7 +47,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name Member data
     //@{
     uint maxAnimators_;
     //@}

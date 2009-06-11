@@ -14,31 +14,27 @@
 
 class TerrainData;
 
-// $$$$ TODO : push into pathfind rules
-
+// =============================================================================
+/** @class  TerrainHeuristicCapacity
+    @brief  TerrainHeuristicCapacity
+*/
+// Created: MGD 2009-03-05
+// =============================================================================
 class TerrainHeuristicCapacity : public ObjectCapacity_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-	explicit TerrainHeuristicCapacity( xml::xistream& xis );
 	         TerrainHeuristicCapacity();
+    explicit TerrainHeuristicCapacity( xml::xistream& xis );
 	virtual ~TerrainHeuristicCapacity();
 	//@}
 
-     //! @name CheckPoints
+     //! @name Operations
     //@{    
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
-    //@}
-
-	//! @name virtual
-    //@{
     virtual void Instanciate( Object& object ) const;
-    //@}
-
-    //! @name 
-    //@{
+    virtual void Register( Object& object );
     int ComputePlacementScore( const MT_Vector2D& pos, const TerrainData& nPassability ) const;
     //@}
 
@@ -62,9 +58,9 @@ private:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
-    T_EnvironmentScoreMap       environmentScores_;
+    T_EnvironmentScoreMap environmentScores_;
     //@}
 };
 

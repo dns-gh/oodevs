@@ -12,29 +12,31 @@
 
 #include "ObjectCapacity_ABC.h"
 
+// =============================================================================
+/** @class  ExtinguishableCapacity
+    @brief  ExtinguishableCapacity
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 class ExtinguishableCapacity : public ObjectCapacity_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-	explicit ExtinguishableCapacity( xml::xistream& xis );
 	         ExtinguishableCapacity();
+    explicit ExtinguishableCapacity( xml::xistream& xis );
     virtual ~ExtinguishableCapacity();
 	//@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
+    //@}
+
+	//! @name Operations
+    //@{
+    virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
-    //@}
-
-	//! @name virtual
-    //@{
-    virtual void Instanciate( Object& object ) const;	
-    //@}
-
-    //! @name 
-    //@{
     void Extinguish( Object& object, int extinguisherAgent, int numberOfFireHoses );
     //@}
 

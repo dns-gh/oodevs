@@ -66,7 +66,7 @@ SupplyRouteAttribute::SupplyRouteAttribute()
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 SupplyRouteAttribute::SupplyRouteAttribute( const ASN1T_ObjectAttributes& asn )
-    : bEquipped_        ( asn.supply_route.equipped )
+    : bEquipped_        ( asn.supply_route.equipped ? true : false )
     , rWeightSupported_ ( asn.supply_route.max_weight )
     , rWidth_           ( asn.supply_route.width )
     , rLength_          ( asn.supply_route.length ) 

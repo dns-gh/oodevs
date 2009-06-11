@@ -41,7 +41,7 @@ OccupantAttribute& OccupantAttribute::operator=( const OccupantAttribute& /*rhs*
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void OccupantAttribute::serialize
+// Name: OccupantAttribute::serialize
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 template< typename Archive > 
@@ -57,7 +57,7 @@ void OccupantAttribute::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void OccupantAttribute::AddOccupant( const MIL_Agent_ABC& agent )
 {
-    if ( ! pOccupant_ )
+    if( ! pOccupant_ )
         pOccupant_ = &agent;
     else
         throw std::exception( "try to use an object already occupied" );
@@ -69,7 +69,7 @@ void OccupantAttribute::AddOccupant( const MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void OccupantAttribute::ReleaseOccupant( const MIL_Agent_ABC& agent )
 {
-    if ( pOccupant_ == &agent )
+    if( pOccupant_ == &agent )
         pOccupant_ = 0;
 }
 

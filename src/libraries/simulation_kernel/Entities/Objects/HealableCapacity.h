@@ -15,6 +15,12 @@
 
 class MedicalTreatmentAttribute;
 
+// =============================================================================
+/** @class  HealableCapacity
+    @brief  HealableCapacity
+*/
+// Created: RFT 2008-05-30
+// =============================================================================
 class HealableCapacity : public ObjectCapacity_ABC
 {
 private:
@@ -25,25 +31,22 @@ private:
 public:
 	//! @name Constructors/Destructor
     //@{
-	explicit HealableCapacity( xml::xistream& xis );
 	         HealableCapacity();
+    explicit HealableCapacity( xml::xistream& xis );
     virtual ~HealableCapacity();
 	//@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& object );
     //@}
 
-	//! @name virtual
+	//! @name Operations
     //@{
-    virtual void             Instanciate( Object& object ) const;
-    virtual void             Update( Object& object, float time );
-	//@}
+    virtual void Instanciate( Object& object ) const;
+    virtual void Register( Object& object );
+    virtual void Update( Object& object, float time );
 
-    //! @name Operators
-    //@{
     const std::string GetFirstWaitingPatientInjuryName() const;
     int   GetFirstWaitingPatientInjuryCategory() const;
     bool  UpdateInitialState( MedicalTreatmentAttribute& attr, float time );
@@ -53,7 +56,7 @@ public:
     void  MakeDiagnosis( MedicalTreatmentAttribute& attr );
     //@}
 
-    //! @name DecFunctions
+    //! @name Decisional functions
     //@{
     void TransferPatient();
     void ReceivePatient( const PHY_Human& injuredHuman );
@@ -65,7 +68,7 @@ private:
     HealableCapacity( const HealableCapacity& );
     //@}
 
-    //! @name Initialize
+    //! @name Helpers
     //@{
     void InitializeData( xml::xistream& xis );
     //@}
@@ -83,7 +86,6 @@ private:
     T_WaitingList careWaitingList_;
     T_WaitingList transferWaitingList_;
     T_WaitingList entranceWaitingList_;
-
     //@}
 };
 

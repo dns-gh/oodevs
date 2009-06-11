@@ -54,13 +54,13 @@ public:
 
     //! @name Accessors
     //@{
-    float Get() const;
+    MT_Float Get() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    float height_;
+    MT_Float height_;
     //@}
 };
 

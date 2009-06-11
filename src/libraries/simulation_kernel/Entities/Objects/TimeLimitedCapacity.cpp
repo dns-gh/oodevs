@@ -10,9 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "TimeLimitedCapacity.h"
 #include "Object.h"
-
 #include "TimeLimitedAttribute.h"
-
 
 BOOST_CLASS_EXPORT_GUID( TimeLimitedCapacity, "TimeLimitedCapacity" )
 
@@ -42,7 +40,7 @@ TimeLimitedCapacity::TimeLimitedCapacity( const TimeLimitedCapacity& from )
 {
     // NOTHING
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedCapacitydestructor
 // Created: JCR 2008-05-22
@@ -87,5 +85,5 @@ void TimeLimitedCapacity::Instanciate( Object& object ) const
 void TimeLimitedCapacity::Update( Object& object, uint time )
 {    
     if ( object.GetAttribute< TimeLimitedAttribute >().IsTimeOver( time ) )
-        object.MarkForDestruction();    
+        object.MarkForDestruction();
 }

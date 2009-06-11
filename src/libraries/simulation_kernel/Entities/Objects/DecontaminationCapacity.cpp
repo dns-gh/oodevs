@@ -12,7 +12,6 @@
 #include "Object.h"
 #include "AnimatorAttribute.h"
 #include "ConstructionAttribute.h"
-
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 
@@ -22,7 +21,7 @@ BOOST_CLASS_EXPORT_GUID( DecontaminationCapacity, "DecontaminationCapacity" )
 // Name: DecontaminationCapacity constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-DecontaminationCapacity::DecontaminationCapacity( xml::xistream& xis )    
+DecontaminationCapacity::DecontaminationCapacity( xml::xistream& xis )
 {
     // NOTHING
 }
@@ -31,7 +30,7 @@ DecontaminationCapacity::DecontaminationCapacity( xml::xistream& xis )
 // Name: DecontaminationCapacity constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-DecontaminationCapacity::DecontaminationCapacity()    
+DecontaminationCapacity::DecontaminationCapacity()
 {
     // NOTHING
 }
@@ -72,7 +71,6 @@ void DecontaminationCapacity::Register( Object& object )
 {
     object.AddCapacity( this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DecontaminationCapacity::Instanciate

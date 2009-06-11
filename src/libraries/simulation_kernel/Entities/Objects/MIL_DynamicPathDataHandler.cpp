@@ -16,7 +16,7 @@
 // Created: JCR 2008-08-11
 // -----------------------------------------------------------------------------
 MIL_DynamicPathDataHandler::MIL_DynamicPathDataHandler()
-    : pPathfindData_ ( 0 )
+    : pPathfindData_( 0 )
 {
     // NOTHING
 }

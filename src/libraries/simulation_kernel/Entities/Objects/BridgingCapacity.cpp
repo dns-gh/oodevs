@@ -11,11 +11,9 @@
 #include "BridgingCapacity.h"
 #include "Object.h"
 #include "TimeLimitedAttribute.h"
-
+#include "simulation_terrain/TER_DynamicData.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PathFindManager.h"
-#include "simulation_terrain/TER_DynamicData.h"
-
 
 BOOST_CLASS_EXPORT_GUID( BridgingCapacity, "BridgingCapacity" )
 
@@ -45,7 +43,7 @@ BridgingCapacity::BridgingCapacity( const BridgingCapacity& /*from*/ )
 {
     // NOTHING
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: BridgingCapacitydestructor
 // Created: JCR 2008-05-22
@@ -61,7 +59,7 @@ BridgingCapacity::~BridgingCapacity()
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void BridgingCapacity::serialize( Archive& file, const uint )
-{    
+{
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
@@ -79,7 +77,7 @@ void BridgingCapacity::Register( Object& object )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void BridgingCapacity::Instanciate( Object& object ) const
-{    
+{
     object.AddCapacity( new BridgingCapacity( *this ) );    
 }
 
@@ -90,8 +88,7 @@ void BridgingCapacity::Instanciate( Object& object ) const
 void BridgingCapacity::Finalize( Object& object )
 {
     T_PointVector bridge; 
-
-    CreateBridgeGeometry( object.GetLocalisation().GetPoints(), bridge );    
+    CreateBridgeGeometry( object.GetLocalisation().GetPoints(), bridge );
     handler_.Reset( new TER_DynamicData( bridge, TerrainData::Bridge() ) );
 }
 

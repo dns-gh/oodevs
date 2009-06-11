@@ -11,7 +11,6 @@
 #include "ActivableCapacity.h"
 #include "Object.h"
 #include "ObstacleAttribute.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( ActivableCapacity, "ActivableCapacity" )
@@ -20,7 +19,7 @@ BOOST_CLASS_EXPORT_GUID( ActivableCapacity, "ActivableCapacity" )
 // Name: ActivableCapacity::ActivableCapacity
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-ActivableCapacity::ActivableCapacity( xml::xistream& xis )    
+ActivableCapacity::ActivableCapacity( xml::xistream& xis )
 {
     // NOTHING
 }
@@ -29,7 +28,7 @@ ActivableCapacity::ActivableCapacity( xml::xistream& xis )
 // Name: ActivableCapacity::ActivableCapacity
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-ActivableCapacity::ActivableCapacity()    
+ActivableCapacity::ActivableCapacity()
 {
     // NOTHING
 }
@@ -49,7 +48,7 @@ ActivableCapacity::ActivableCapacity( const ActivableCapacity& from )
 // -----------------------------------------------------------------------------
 ActivableCapacity::~ActivableCapacity()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,9 +66,8 @@ template< typename Archive > void ActivableCapacity::serialize( Archive& file, c
 // -----------------------------------------------------------------------------
 void ActivableCapacity::Register( Object& object )
 {
-    object.AddCapacity( this );    
+    object.AddCapacity( this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ActivableCapacity::Instanciate
@@ -80,7 +78,7 @@ void ActivableCapacity::Instanciate( Object& object ) const
     object.AddCapacity( new ActivableCapacity( *this ) );
     object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( true ); // reserved obstacle
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: ActivableCapacity::Activate
 // Created: JCR 2008-07-04
@@ -89,7 +87,7 @@ void ActivableCapacity::Activate( Object& object )
 {
     return object.GetAttribute< ObstacleAttribute >().Activate();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ActivableCapacity::IsActivate
 // Created: JCR 2008-07-04

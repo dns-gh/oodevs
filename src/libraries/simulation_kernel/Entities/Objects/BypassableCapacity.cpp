@@ -11,9 +11,7 @@
 #include "BypassableCapacity.h"
 #include "BypassAttribute.h"
 #include "Object.h"
-
 #include "HLA/Deserializer.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( BypassableCapacity, "BypassableCapacity" )
@@ -39,21 +37,12 @@ BypassableCapacity::BypassableCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: BypassableCapacity constructor
-// Created: JCR 2008-05-22
-// -----------------------------------------------------------------------------
-BypassableCapacity::BypassableCapacity( const BypassableCapacity& from )
-{
-    // NOTHING
-}
-	
-// -----------------------------------------------------------------------------
 // Name: BypassableCapacity destructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 BypassableCapacity::~BypassableCapacity()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +53,7 @@ template< typename Archive >
 void BypassableCapacity::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & bypassSpeed_;    
+         & bypassSpeed_;
 }
 
 // -----------------------------------------------------------------------------

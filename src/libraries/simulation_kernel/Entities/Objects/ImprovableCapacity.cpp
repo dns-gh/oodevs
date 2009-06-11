@@ -98,7 +98,11 @@ void ImprovableCapacity::load( MIL_CheckPointInArchive& ar, const uint )
        >> dotationId
        >> nFullNbrDotation_;
     default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
+    if( !default_ )
+        throw std::runtime_error( __FUNCTION__ " Unknown consumption category" ); 
     dotation_ = PHY_DotationType::FindDotationCategory( dotationId );
+    if( !dotation_ && dotationId )
+        throw std::runtime_error( __FUNCTION__ " Unknown dotation category" ); 
 }
     
 // -----------------------------------------------------------------------------

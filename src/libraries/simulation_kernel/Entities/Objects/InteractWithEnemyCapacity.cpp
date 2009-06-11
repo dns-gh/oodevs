@@ -9,10 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "InteractWithEnemyCapacity.h"
-
-#include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 #include "Object.h"
-
+#include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( InteractWithEnemyCapacity, "InteractWithEnemyCapacity" )
@@ -55,7 +53,7 @@ void InteractWithEnemyCapacity::CanInteractWith( const Object& object, const MIL
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void InteractWithEnemyCapacity::serialize
+// Name: InteractWithEnemyCapacity::serialize
 // Created: LDC 2009-03-06
 // -----------------------------------------------------------------------------
 template< typename Archive > void InteractWithEnemyCapacity::serialize( Archive& file, const uint )

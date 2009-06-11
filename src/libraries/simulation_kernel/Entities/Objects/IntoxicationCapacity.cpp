@@ -9,15 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "IntoxicationCapacity.h"
-#include "Object.h"
 #include "MIL_NbcAgentType.h"
 #include "NBCAttribute.h"
+#include "Object.h"
 #include "ToxicAttribute_ABC.h"
 #include "MIL_ToxicEffectManipulator.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( IntoxicationCapacity, "IntoxicationCapacity" )
@@ -26,7 +25,7 @@ BOOST_CLASS_EXPORT_GUID( IntoxicationCapacity, "IntoxicationCapacity" )
 // Name: IntoxicationCapacity constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-IntoxicationCapacity::IntoxicationCapacity( xml::xistream& xis )    
+IntoxicationCapacity::IntoxicationCapacity( xml::xistream& xis )
     : type_ ( xml::attribute< std::string >( xis, "type" ) )
     , maxToxic_ ( xml::attribute< int >( xis, "max-toxic" ) )
 {
@@ -37,9 +36,8 @@ IntoxicationCapacity::IntoxicationCapacity( xml::xistream& xis )
 // Name: IntoxicationCapacity constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-IntoxicationCapacity::IntoxicationCapacity() 
-    : type_ ( )
-    , maxToxic_ ( 0 )
+IntoxicationCapacity::IntoxicationCapacity()
+    : maxToxic_( 0 )
 {
     // NOTHING
 }
@@ -49,8 +47,8 @@ IntoxicationCapacity::IntoxicationCapacity()
 // Created: JCR 2008-06-13
 // -----------------------------------------------------------------------------
 IntoxicationCapacity::IntoxicationCapacity( const IntoxicationCapacity& from )
-    : type_ ( from.type_ )
-    , maxToxic_ ( from.maxToxic_ )
+    : type_( from.type_ )
+    , maxToxic_( from.maxToxic_ )
 {
     // NOTHING
 }
@@ -74,9 +72,9 @@ void IntoxicationCapacity::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
          & type_
-         & maxToxic_;    
+         & maxToxic_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: IntoxicationCapacity::Register
 // Created: JCR 2008-07-03
@@ -97,7 +95,7 @@ void IntoxicationCapacity::Instanciate( Object& object ) const
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: IntoxicationCapacity::ProcessAgentInside
 // Created: JCR 2008-06-02

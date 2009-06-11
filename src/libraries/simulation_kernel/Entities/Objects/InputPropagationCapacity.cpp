@@ -13,7 +13,6 @@
 #include "ToxicAttribute_ABC.h"
 #include "InputToxicCloudAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( InputPropagationCapacity, "InputPropagationCapacity" )
@@ -23,8 +22,9 @@ BOOST_CLASS_EXPORT_GUID( InputPropagationCapacity, "InputPropagationCapacity" )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 InputPropagationCapacity::InputPropagationCapacity( xml::xistream& xis )
+    : model_( xml::attribute< std::string >( xis, "model" ) )
 {
-    xis >> xml::attribute( "model", model_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ namespace
     {        
         const T_PointVector& points = location.GetPoints();
         output.resize( points.size() );
-        for ( int i = 0; i < points.size(); ++i )
+        for( unsigned int i = 0; i < points.size(); ++i )
             TER_World::GetWorld().MosToSimMgrsCoord( points[i].rX_, points[i].rY_, output[ i ] );
     }
 }
@@ -105,7 +105,7 @@ namespace
 void InputPropagationCapacity::Update( Object& object, uint time )
 {    
     ToxicAttribute_ABC* pAttr = object.RetrieveAttribute< ToxicAttribute_ABC >();
-    if ( pAttr )
+    if( pAttr )
     {
         TER_Polygon   polygon;
         InputToxicCloudAttribute* pInput = static_cast< InputToxicCloudAttribute* >( pAttr );

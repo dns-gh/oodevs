@@ -13,9 +13,14 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
-class PropagationCapacity_ABC 
-    : public ObjectCapacity_ABC
-    , public MIL_InteractiveContainer_ABC
+// =============================================================================
+/** @class  PropagationCapacity_ABC
+    @brief  PropagationCapacity_ABC
+*/
+// Created: JCR 2008-06-02
+// =============================================================================
+class PropagationCapacity_ABC : public ObjectCapacity_ABC
+                              , public MIL_InteractiveContainer_ABC
 {
 
 };

@@ -13,22 +13,28 @@
 class PHY_ConsumptionType;
 class ObjectPrototype;
 
-
+// =============================================================================
+/** @class  ConstructionCapacity
+    @brief  ConstructionCapacity
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 class ConstructionCapacity
 {
 public:
-    //! @name 
+    //! @name Types
     //@{
     enum E_UnitType { eRaw, eDensity };
     //@}
+
 public:
     //! @name Constructor / destructor
     //@{
-    explicit ConstructionCapacity( ObjectPrototype& prototype, xml::xistream& xis ) ;
-    virtual ~ConstructionCapacity() ;
+             ConstructionCapacity( ObjectPrototype& prototype, xml::xistream& xis );
+    virtual ~ConstructionCapacity();
     //@}
 
-    //! @name 
+    //! @name Operations
     //@{
     void AddCapacity( const std::string& capacity, xml::xistream& xis ) const;
     //@}
@@ -37,11 +43,11 @@ private:
     //! @name Copy / Assigment
     //@{
     ConstructionCapacity( const ConstructionCapacity& );
-    ConstructionCapacity& operator=( const ConstructionCapacity& );    
+    ConstructionCapacity& operator=( const ConstructionCapacity& );
     //@}
 
 private:        
-    //! @name Data
+    //! @name Member data
     //@{
     const PHY_ConsumptionType* default_;
     E_UnitType unit_type_;

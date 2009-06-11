@@ -11,7 +11,6 @@
 #include "InteractIfEquippedCapacity.h"
 #include "SupplyRouteAttribute.h"
 #include "Object.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( InteractIfEquippedCapacity, "InteractIfEquippedCapacity" )

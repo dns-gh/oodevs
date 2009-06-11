@@ -17,7 +17,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <xeumeuleu/xml.h>
 
@@ -27,9 +26,8 @@ BOOST_CLASS_EXPORT_GUID( ContaminationCapacity, "ContaminationCapacity" )
 // Name: ContaminationCapacity constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-ContaminationCapacity::ContaminationCapacity( xml::xistream& xis )    
-    : type_ ( xml::attribute< std::string >( xis, "type" ) )
-    , maxToxic_ ( xml::attribute< int >( xis, "max-toxic" ) )
+ContaminationCapacity::ContaminationCapacity() 
+    : maxToxic_( 0 )
 {
     // NOTHING
 }
@@ -38,9 +36,9 @@ ContaminationCapacity::ContaminationCapacity( xml::xistream& xis )
 // Name: ContaminationCapacity constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-ContaminationCapacity::ContaminationCapacity() 
-    : type_ ( )
-    , maxToxic_ ( 0 )
+ContaminationCapacity::ContaminationCapacity( xml::xistream& xis )
+    : type_ ( xml::attribute< std::string >( xis, "type" ) )
+    , maxToxic_ ( xml::attribute< int >( xis, "max-toxic" ) )
 {
     // NOTHING
 }
@@ -132,10 +130,8 @@ void ContaminationCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& a
 bool ContaminationCapacity::IsInsideDecontaminatedZone( const MT_Vector2D& position ) const
 {    
     for( CIT_LocalisationVector it = decontaminatedZones_.begin(); it != decontaminatedZones_.end(); ++it )
-    { 
         if( it->IsInside( position ) )
             return true;
-    }
     return false;
 }
 

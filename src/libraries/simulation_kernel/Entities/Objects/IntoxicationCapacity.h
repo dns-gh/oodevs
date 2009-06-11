@@ -22,31 +22,22 @@ class MIL_Agent_ABC;
 */
 // Created: JCR 2008-06-02
 // =============================================================================
-class IntoxicationCapacity  
-    : public ObjectCapacity_ABC
-    , public MIL_InteractiveContainer_ABC
+class IntoxicationCapacity : public ObjectCapacity_ABC
+                           , public MIL_InteractiveContainer_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IntoxicationCapacity( xml::xistream& xis );
              IntoxicationCapacity();
+    explicit IntoxicationCapacity( xml::xistream& xis );
     virtual ~IntoxicationCapacity();
     //@}
 
      //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
-    //@}
-
-	//! @name virtual
-    //@{
-    virtual void Instanciate( Object& object ) const;	
-	//@}
-
-    //! @name 
-    //@{
+    virtual void Instanciate( Object& object ) const;
+    virtual void Register( Object& object );
     virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
     //@}
 
@@ -57,10 +48,10 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name Member data
     //@{
-    std::string  type_;
-    int          maxToxic_;
+    std::string type_;
+    int         maxToxic_;
     //@}
 };
 

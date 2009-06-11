@@ -13,42 +13,31 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
-class ProtectionCapacity 
-    : public ObjectCapacity_ABC
-    , private MIL_InteractiveContainer_ABC
+// =============================================================================
+/** @class  ProtectionCapacity
+    @brief  ProtectionCapacity
+*/
+// Created: JCR 2008-06-02
+// =============================================================================
+class ProtectionCapacity : public ObjectCapacity_ABC
+                         , private MIL_InteractiveContainer_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-	explicit ProtectionCapacity( xml::xistream& xis );
              ProtectionCapacity();
+    explicit ProtectionCapacity( xml::xistream& xis );
 	virtual ~ProtectionCapacity();
 	//@}
 
-    //! @name CheckPoints
+    //! @name Operations
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
-    //@}
-
-	//! @name virtual
-    //@{
+    virtual void Register( Object& object );
     virtual void Instanciate( Object& object ) const;
-	//@}
-
-    //! @name MIL_InteractiveContainer_ABC
-    //@{
     virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentExiting( Object& object, MIL_Agent_ABC& agent );
-    //@}
-
-private:
-    //! @name 
-    //@{
-    typedef std::set< const MIL_Agent_ABC* >    T_AgentContainer;
-    typedef T_AgentContainer::iterator          IT_AgentContainer;
-    typedef T_AgentContainer::const_iterator    CIT_AgentContainer;
     //@}
 
 private:
@@ -57,8 +46,15 @@ private:
     ProtectionCapacity( const ProtectionCapacity& from );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::set< const MIL_Agent_ABC* >    T_AgentContainer;
+    typedef T_AgentContainer::iterator          IT_AgentContainer;
+    typedef T_AgentContainer::const_iterator    CIT_AgentContainer;
+    //@}
+
 private:
-    //! @name 
+    //! @name Member data
     //@{
     int size_max_;
     T_AgentContainer container_;

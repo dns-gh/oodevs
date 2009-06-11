@@ -15,7 +15,6 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_ObjectBuilder_ABC.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( FirePropagationCapacity, "FirePropagationCapacity" )
@@ -37,13 +36,12 @@ FirePropagationCapacity::FirePropagationCapacity( xml::xistream& xis, MIL_Propag
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 FirePropagationCapacity::FirePropagationCapacity()
-	: pManager_ ( )
+	: pManager_ ( 0 )
 	, timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 	, timeOfDeath_ ( 0 )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: FirePropagationCapacity constructor
@@ -108,14 +106,13 @@ void FirePropagationCapacity::Instanciate( Object& object ) const
 	pManager_->Flag( vOrigin );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: FirePropagationCapacity::Update
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 void FirePropagationCapacity::Update( Object& object, uint time )
 {	
-    static const uint threshold		 = 10000; // to determine in order to control propagation
+    static const uint threshold	= 10000; // to determine in order to control propagation
 	const uint timeSinceCreation = time - timeOfCreation_;	
 	
 	int heat = UpdateState( object, time );

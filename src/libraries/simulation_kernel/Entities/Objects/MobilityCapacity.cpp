@@ -34,7 +34,6 @@ MobilityCapacity::MobilityCapacity( )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MobilityCapacity::InitializeSpeed
 // Created: JCR 2008-06-02
@@ -80,13 +79,13 @@ MobilityCapacity::MobilityCapacity( const MobilityCapacity& from )
 {
     // NOTHING
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: MobilityCapacity destructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 MobilityCapacity::~MobilityCapacity()
-{   
+{
     // NOTHING
 }
 
@@ -97,7 +96,7 @@ MobilityCapacity::~MobilityCapacity()
 template< typename Archive >
 void MobilityCapacity::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );    
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     file & nSpeedPolicy_
          & rDefaultSpeed_
          & rSpeedPolicyMaxSpeedAgentFactor_;
@@ -109,7 +108,7 @@ void MobilityCapacity::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MobilityCapacity::Register( Object& object )
 {
-    object.AddCapacity( this );    
+    object.AddCapacity( this );
 }
 
 // -----------------------------------------------------------------------------

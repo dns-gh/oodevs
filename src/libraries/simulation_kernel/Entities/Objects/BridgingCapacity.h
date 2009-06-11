@@ -14,30 +14,35 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_DynamicPathDataHandler.h"
 
-class TER_DynamicData;
 class Object;
+class TER_DynamicData;
 
-class BridgingCapacity
-    : public ObjectCapacity_ABC
+// =============================================================================
+/** @class  BridgingCapacity
+    @brief  BridgingCapacity
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
+class BridgingCapacity : public ObjectCapacity_ABC
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-    explicit BridgingCapacity( xml::xistream& xis );
              BridgingCapacity();
+    explicit BridgingCapacity( xml::xistream& xis );
     virtual ~BridgingCapacity();
 	//@}
 
     //! @name CheckPoints
     //@{    
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
     //@}
 
-	//! @name virtual
+	//! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
-    virtual void Finalize( Object& object );	
+    virtual void Register( Object& object );
+    virtual void Finalize( Object& object );
 	//@}
 
 private:
@@ -46,15 +51,14 @@ private:
     BridgingCapacity( const BridgingCapacity& from );
     //@}
 
-    //! @name 
+    //! @name Helpers
     //@{
     void CreateBridgeGeometry( const T_PointVector& points, T_PointVector& output ) const;
     //@}
 
 private:
-    //! @name 
+    //! @name Member data
     //@{
-    // Path finder enhancement
     MIL_DynamicPathDataHandler handler_;
     //@}
 };

@@ -12,26 +12,32 @@
 
 #include "PropagationCapacity_ABC.h"
 
+// =============================================================================
+/** @class  InputPropagationCapacity
+    @brief  InputPropagationCapacity
+*/
+// Created: RFT 2008-05-30
+// =============================================================================
 class InputPropagationCapacity : public PropagationCapacity_ABC    
 {
 public:
 	//! @name Constructors/Destructor
     //@{
-	explicit InputPropagationCapacity( xml::xistream& xis );
 	         InputPropagationCapacity();
+    explicit InputPropagationCapacity( xml::xistream& xis );
     virtual ~InputPropagationCapacity();
 	//@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
     //@}
 
-	//! @name virtual
+	//! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
-	virtual void Update( Object& object, uint time );
+    virtual void Register( Object& object );
+    virtual void Update( Object& object, uint time );
 	//@}
 
 private:
@@ -41,7 +47,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name Member data
     //@{
     std::string model_;
     //@}

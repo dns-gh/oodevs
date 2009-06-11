@@ -66,7 +66,7 @@ void BypassAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 {    
     asn.m.bypassPresent = 1;
     asn.bypass.m.percentagePresent = 1;
-    asn.bypass.percentage = rBypass_ * 100.;
+    asn.bypass.percentage = uint( rBypass_ * 100. );
 }
 
 // -----------------------------------------------------------------------------

@@ -14,8 +14,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 
-// #include "InterferenceAttribute.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( InterferenceCapacity, "InterferenceCapacity" )
@@ -38,7 +36,6 @@ InterferenceCapacity::InterferenceCapacity()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: InterferenceCapacity constructor
 // Created: JCR 2008-05-22
@@ -54,7 +51,7 @@ InterferenceCapacity::InterferenceCapacity( const InterferenceCapacity& /*from*/
 // -----------------------------------------------------------------------------
 InterferenceCapacity::~InterferenceCapacity()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +61,7 @@ InterferenceCapacity::~InterferenceCapacity()
 template< typename Archive >
 void InterferenceCapacity::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );            
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------

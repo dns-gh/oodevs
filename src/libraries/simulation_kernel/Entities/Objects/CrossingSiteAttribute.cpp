@@ -51,7 +51,7 @@ CrossingSiteAttribute::CrossingSiteAttribute()
     , rCurrentSpeed_    ( 0. )
     , bBanksToFitOut_   ( true )   
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
