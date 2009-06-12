@@ -44,6 +44,7 @@ public:
           bool         IsProfilingEnabled         () const;
           bool         IsDataTestMode             () const;
           bool         IsTestMode                 () const;
+          bool         IsFrozenMode                 () const;
           bool         IsDispatcherEmbedded       () const;
           uint16       GetNetworkPort             () const;
           bool         IsThreadedNetwork          () const;
@@ -113,12 +114,13 @@ private:
     bool                       bUseDecDebug_;
     bool                       bUsePathDebug_;
     bool                       bUseDiaDebugger_;
-    uint16                     diaDebuggerPort_;
+    uint16                    diaDebuggerPort_;
     bool                       bUseNetworkLogger_;
-    uint16                     networkLoggerPort_;
+    uint16                    networkLoggerPort_;
     bool                       bProfilingEnabled_;
     bool                       bDataTestMode_;
     bool                       bTestMode_;
+    bool                       bFrozenMode_;
     bool                       bEmbeddedDispatcher_;
     uint16                     networkPort_;
     uint                       timeStep_;
