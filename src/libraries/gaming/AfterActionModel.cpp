@@ -86,3 +86,12 @@ void AfterActionModel::ReadFunction( xml::xistream& xis )
     const QString name = function->GetName();
     Register( name, *function.release() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::Purge
+// Created: SBO 2009-06-12
+// -----------------------------------------------------------------------------
+void AfterActionModel::Purge()
+{
+    requests_->Purge();
+}

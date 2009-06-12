@@ -47,7 +47,7 @@ public:
     //@{
     void Update( const ASN1T_MsgAarInformation& asnMsg );
     void Update( const ASN1T_MsgPlotResult& asnMsg );
-
+    void Purge();
     IndicatorRequest& CreateRequest( const AfterActionFunction& function );
     //@}
 

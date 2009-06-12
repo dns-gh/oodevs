@@ -138,6 +138,7 @@ void Model::Purge()
     scores_.Purge();
     drawings_.Purge();
     intelligences_.Purge();
+    aar_.Purge();
     actions_.Purge();
     profiles_.Purge();
     weather_.Purge();

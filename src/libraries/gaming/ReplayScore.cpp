@@ -40,3 +40,12 @@ std::string ReplayScore::Commit( const T_Parameters& parameters ) const
 {
     return definition_.Commit( parameters );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ReplayScore::UpdatePlots
+// Created: SBO 2009-06-12
+// -----------------------------------------------------------------------------
+void ReplayScore::UpdatePlots( const ASN1T_MsgIndicator& )
+{
+    // NOTHING
+}

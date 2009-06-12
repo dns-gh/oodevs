@@ -43,6 +43,11 @@ private:
     ReplayScore& operator=( const ReplayScore& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void UpdatePlots( const ASN1T_MsgIndicator& message );
+    //@}
+
 private:
     //! @name Member data
     //@{

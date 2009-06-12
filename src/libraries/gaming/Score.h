@@ -68,6 +68,11 @@ private:
     Score& operator=( const Score& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void UpdatePlots( const ASN1T_MsgIndicator& message );
+    //@}
+
 private:
     //! @name Member data
     //@{

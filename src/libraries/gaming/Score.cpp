@@ -76,10 +76,19 @@ void Score::Update( const ASN1T_MsgIndicator& message )
     else
     {
         value_ = message.value;
-        if( request_ )
-            request_->Update( message );
+        UpdatePlots( message );
     }
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::UpdatePlots
+// Created: SBO 2009-06-12
+// -----------------------------------------------------------------------------
+void Score::UpdatePlots( const ASN1T_MsgIndicator& message )
+{
+    if( request_ )
+        request_->Update( message );
 }
 
 // -----------------------------------------------------------------------------
