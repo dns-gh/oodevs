@@ -132,6 +132,25 @@ void IndicatorPlot::NotifyUpdated( const IndicatorRequest& request )
 }
 
 // -----------------------------------------------------------------------------
+// Name: IndicatorPlot::NotifyDeleted
+// Created: SBO 2009-06-12
+// -----------------------------------------------------------------------------
+void IndicatorPlot::NotifyDeleted( const IndicatorRequest& request )
+{
+    T_PlottedRequests::iterator it = plots_.find( &request );
+    if( it != plots_.end() )
+    {
+        GQ_PlotData* data = it->second;
+        UnregisterPlotData( *data, true );
+        T_Datas::iterator itD = std::find( datas_.begin(), datas_.end(), data );
+        datas_.erase( itD );
+        plots_.erase( it );
+    }
+    if( plots_.empty() )
+        dock_->deleteLater();
+}
+
+// -----------------------------------------------------------------------------
 // Name: IndicatorPlot::UpdatePlot
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
@@ -182,21 +201,8 @@ void IndicatorPlot::mouseReleaseEvent( QMouseEvent* e )
 void IndicatorPlot::contextMenuEvent( QContextMenuEvent* e )
 {
     QPopupMenu* menu = new QPopupMenu( this );
-    if( !interactive_ )
-        menu->insertItem( tools::translate( "Indicators", "Refresh" ), this, SLOT( OnRefresh() ), Qt::Key_F5 );
     menu->insertItem( tools::translate( "Indicators", "Export data..." ), this, SLOT( OnExportData() ) );
     menu->exec( e->globalPos() );   
-}
-
-// -----------------------------------------------------------------------------
-// Name: IndicatorPlot::keyPressEvent
-// Created: SBO 2009-04-30
-// -----------------------------------------------------------------------------
-void IndicatorPlot::keyPressEvent( QKeyEvent* e )
-{
-    if( !interactive_ && e->key() == Qt::Key_F5 )
-        OnRefresh();
-    GQ_Plot::keyPressEvent( e );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,16 +214,6 @@ void IndicatorPlot::OnExportData()
     BOOST_FOREACH( const T_PlottedRequests::value_type& plot, plots_ )
         exportDialog_.Add( *plot.first );
     exportDialog_.Export();
-}
-
-// -----------------------------------------------------------------------------
-// Name: IndicatorPlot::OnRefresh
-// Created: SBO 2009-04-30
-// -----------------------------------------------------------------------------
-void IndicatorPlot::OnRefresh()
-{
-    BOOST_FOREACH( const T_PlottedRequests::value_type& plot, plots_ )
-        plot.first->Commit();
 }
 
 // -----------------------------------------------------------------------------

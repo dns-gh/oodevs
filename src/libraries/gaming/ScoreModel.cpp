@@ -50,6 +50,8 @@ ScoreModel::~ScoreModel()
 void ScoreModel::Purge()
 {
     DeleteAll();
+    scoreRequests_.clear();
+    requests_->Purge();
 }
 
 // -----------------------------------------------------------------------------

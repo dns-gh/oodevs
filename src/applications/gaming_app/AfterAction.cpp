@@ -16,6 +16,7 @@
 #include "gaming/Services.h"
 #include "gaming/Tools.h"
 #include "game_asn/AarSenders.h"
+#include "game_asn/ReplaySenders.h"
 #include "icons.h"
 
 using namespace gui;
@@ -87,7 +88,7 @@ void AfterAction::NotifyCreated( const AfterActionRequest& )
 // -----------------------------------------------------------------------------
 void AfterAction::NotifyUpdated( const Services& services )
 {
-    const bool isAar = services.HasService< aar::Service >();
+    const bool isAar = services.HasService< aar::Service >() && services.HasService< replay::Service >();
     window_->setAppropriate( aarDock_, isAar );
     if( ! aarDock_->isVisible() )
         aarDock_->setShown( isAar && !aar_ );

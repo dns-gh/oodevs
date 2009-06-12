@@ -52,7 +52,6 @@ private slots:
     //! @name Slots
     //@{
     void OnExportData();
-    void OnRefresh();
     //@}
 
 private:
@@ -69,9 +68,9 @@ private:
     virtual void dragEnterEvent( QDragEnterEvent* e );
     virtual void dropEvent( QDropEvent* e );
     virtual void contextMenuEvent( QContextMenuEvent* e );
-    virtual void keyPressEvent( QKeyEvent* e );
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const IndicatorRequest& request );
+    virtual void NotifyDeleted( const IndicatorRequest& request );
     void UpdatePlot( GQ_PlotData* plot, const IndicatorRequest& request, unsigned int from );
     //@}
 

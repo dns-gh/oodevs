@@ -32,7 +32,7 @@ IndicatorRequest::IndicatorRequest( kernel::Controller& controller, const Indica
 // -----------------------------------------------------------------------------
 IndicatorRequest::~IndicatorRequest()
 {
-    // NOTHING
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------

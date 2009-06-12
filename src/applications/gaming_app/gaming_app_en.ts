@@ -605,10 +605,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export data...</source>
         <translation type="unfinished"></translation>
     </message>
