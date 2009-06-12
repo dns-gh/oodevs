@@ -62,6 +62,7 @@ private slots:
     void OnChangeBoundaries();
     void OnTypeChanged();
     void OnChangeValue( int row, int col );
+    void OnReverseSymbols();
     //@}
 
 private:

@@ -87,6 +87,10 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
                 max_->setText( "100" );
                 connect( max_, SIGNAL( textChanged( const QString& ) ), SLOT( OnChangeBoundaries() ) );
             }
+            {
+                QButton* reverse = new QPushButton( tr( "Reverse" ), hbox );
+                connect( reverse, SIGNAL( clicked() ), SLOT( OnReverseSymbols() ) );
+            }
         }
         {
             intervals_ = new QTable( 0, 3, box );
@@ -214,6 +218,25 @@ void ScoreGaugeConfiguration::OnChangeValue( int row, int col )
 {
     if( col == 2 )
         UpdateSymbol( row, GetValue( row, 2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreGaugeConfiguration::OnReverseSymbols
+// Created: SBO 2009-06-12
+// -----------------------------------------------------------------------------
+void ScoreGaugeConfiguration::OnReverseSymbols()
+{
+    const int rows = intervals_->numRows();
+    for( int row = 0; row < rows / 2; ++row )
+    {
+        const int symetric = rows - row - 1;
+        if( symetric != row )
+        {
+            const double rowValue = GetValue( row, 2 );
+            UpdateSymbol( row, GetValue( symetric, 2 ) );
+            UpdateSymbol( symetric, rowValue );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
