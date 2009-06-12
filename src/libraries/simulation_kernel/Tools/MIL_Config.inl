@@ -118,6 +118,7 @@ bool MIL_Config::IsFrozenMode() const
 {
     return bFrozenMode_;
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Config::IsDispatcherEmbedded
 // Created: NLD 2006-10-04

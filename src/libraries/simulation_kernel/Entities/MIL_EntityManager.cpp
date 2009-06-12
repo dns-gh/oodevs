@@ -851,7 +851,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
 void MIL_EntityManager::Update()
 {
     PreprocessRandomBreakdowns();
-    if ( !MIL_AgentServer::GetWorkspace().GetConfig().IsFrozenMode() )
+    if( !MIL_AgentServer::GetWorkspace().GetConfig().IsFrozenMode() )
     {
         UpdateKnowledges();
         UpdateDecisions ();
