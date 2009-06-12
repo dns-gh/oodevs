@@ -20,8 +20,7 @@
 #endif
 
 #ifdef XMLIA_PLUGIN
-    #include "xmliaExport_plugin/xmliaExportPluginFactory.h"
-    #include "xmliaImport_plugin/xmliaImportPluginFactory.h"
+    #include "xmlia_plugin/xmliaPluginFactory.h"
 #endif
 
 #include "MT/MT_Logger/MT_Logger_lib.h"
@@ -49,8 +48,7 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv )
     dispatcher_->RegisterPluginFactory( *new gearth::GearthPluginFactory() );
 #endif
 #ifdef XMLIA_PLUGIN
-    dispatcher_->RegisterPluginFactory( *new xmliaExport::XmliaExportPluginFactory() );
-    dispatcher_->RegisterPluginFactory( *new xmliaImport::XmliaImportPluginFactory() );
+    dispatcher_->RegisterPluginFactory( *new xmlia::XmliaPluginFactory() );
 #endif
 
     dispatcher_->CreatePlugins();
