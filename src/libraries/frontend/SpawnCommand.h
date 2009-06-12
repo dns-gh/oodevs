@@ -56,6 +56,7 @@ protected:
     void AddExerciseArgument( const QString& exercise );
     void AddSessionArgument ( const QString& session );
     void addArgument( QString arg );
+    void SetWorkingDirectory( const QString& directory );
     //@}
 
 private:
@@ -87,6 +88,7 @@ private:
     QString                     commandLine_;
     std::auto_ptr<InternalData> internal_; //!< obscure data structure to hide OS implementation
     bool                        attach_;   //!< if set to true , kill the attached process on exit 
+    std::string                 workingDirectory_;
     //@}
 };
 

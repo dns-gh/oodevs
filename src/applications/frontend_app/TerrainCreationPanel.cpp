@@ -50,6 +50,12 @@ TerrainCreationPanel::TerrainCreationPanel( QWidgetStack* widget, QAction& actio
         QFont font( "Arial", 10, QFont::Bold );
         okay_->setFont( font );
     }
+    if( !CreateTerrain::IsAvailable() )
+    {
+        group->hide();
+        okay_->hide();
+        bubble_->ShowError( tr( "Terrain generation tool was not found on your system." ) );
+    }
     connect( okay_, SIGNAL( pressed() ), SLOT( CreateTerrain() ) );
     Update();
 }

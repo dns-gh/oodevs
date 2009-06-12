@@ -30,6 +30,7 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe,
     : config_( config )
     , internal_( new InternalData() )
     , attach_( attach )
+    , workingDirectory_( "." )
 {
 // $$$$ AGE 2007-10-09: 
 //    connect( this, SIGNAL( processExited() ), parent, SLOT( OnExit() ) );
@@ -90,10 +91,10 @@ void SpawnCommand::Start()
     std::string debug( commandLine_.local8Bit().data() ) ; 
     if( !CreateProcessA( 0, commandLine_.local8Bit().data(),
                 0, 0, TRUE, CREATE_NEW_CONSOLE, 0,
-                ".", &startupInfo, &internal_->pid_) )
+                workingDirectory_.c_str(), &startupInfo, &internal_->pid_) )
     {
         DWORD errCode = GetLastError();
-        throw std::runtime_error( "Could not start process" );
+        throw std::exception( "Could not start process" );
     }
 }
 
@@ -209,4 +210,13 @@ QString SpawnCommand::GetStatus() const
 std::string SpawnCommand::GetStartedExercise() const
 {
     return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::SetWorkingDirectory
+// Created: SBO 2009-06-12
+// -----------------------------------------------------------------------------
+void SpawnCommand::SetWorkingDirectory( const QString& directory )
+{
+    workingDirectory_ = directory.ascii();
 }

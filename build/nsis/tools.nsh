@@ -277,6 +277,7 @@ FunctionEnd
     Section "${ComponentName}"
         SetOutPath "$INSTDIR\installation files"
         File "${OUTDIR}\SWORD ${ComponentName}_${PLATFORM}.exe"
+        WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}\Common\Components\${ComponentName}" "RootDirectory" "${INSTDATADIR}\${ComponentName}\applications"
         ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /D=$INSTDIR\${ComponentName}'
     SectionEnd
 
@@ -287,8 +288,9 @@ FunctionEnd
 ;------------------------------------------------------------------------------
 !macro OT.UninstallAdditionalComponent ComponentName
 
-    IfFileExists "$INSTDIR\${ComponentName}\uninstall.exe" 0 +2
+    IfFileExists "$INSTDIR\${ComponentName}\uninstall.exe" 0 +3
         ExecWait '"$INSTDIR\${ComponentName}\uninstall.exe" /S _?=$INSTDIR\${ComponentName}'
+        DeleteRegKey ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}\Common\Components\${ComponentName}"
 
 !macroend
 

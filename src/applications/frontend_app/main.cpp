@@ -26,6 +26,13 @@ int main( int argc, char* argv[] )
     BugTrap::Setup( tools::translate( "Application", "SWORD Officer Training" ).ascii() )
         .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )
         .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
-    app.exec();
+    try
+    {
+        app.exec();
+    }
+    catch( std::exception& e )
+    {
+        QMessageBox::critical( 0, tools::translate( "Frontend", "Critical error" ), e.what() );
+    }
     return 0;
 }

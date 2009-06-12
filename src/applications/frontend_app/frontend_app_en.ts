@@ -171,6 +171,13 @@
     </message>
 </context>
 <context>
+    <name>Frontend</name>
+    <message>
+        <source>Critical error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameConfigPanel</name>
     <message>
         <source>Simulation</source>
@@ -429,6 +436,10 @@ Description: %3</source>
     <message>
         <source>The new terrain will be created in:
 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain generation tool was not found on your system.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -31,6 +31,11 @@ public:
     virtual ~CreateTerrain();
     //@}
 
+    //! @name Operations
+    //@{
+    static bool IsAvailable();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
