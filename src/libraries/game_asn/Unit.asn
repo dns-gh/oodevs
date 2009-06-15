@@ -52,6 +52,13 @@ EquipmentDotations ::= SEQUENCE
     nb-prisonniers             INTEGER
 }
 
+-- NBC
+ContaminationState ::= SEQUENCE
+{
+    percentage      Percentage,
+    quantity        REAL    
+}
+
 -- Ressources
 ResourceDotations ::= SEQUENCE
 {
@@ -181,7 +188,7 @@ MsgUnitAttributes ::= SEQUENCE
 
     en-tenue-de-protection-nbc    BOOLEAN                         OPTIONAL,
     contamine-par-agents-nbc      ListOID                         OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
-    etat-contamination            Percentage                      OPTIONAL,
+    etat-contamination            ContaminationState              OPTIONAL,
 
     communications-brouillees     BOOLEAN                         OPTIONAL,
     silence-radio                 BOOLEAN                         OPTIONAL,

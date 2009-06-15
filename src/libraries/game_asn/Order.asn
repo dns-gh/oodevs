@@ -45,9 +45,9 @@ MissionObjectiveList ::= SEQUENCE OF MissionObjective
 
 PlannedWork ::= SEQUENCE
 {
-    type                 EnumObjectType,
+    type                 VisibleString,
     position             Location,
-    type-obstacle        EnumObstacleType DEFAULT initial,
+    type-obstacle        EnumDemolitionTargetType DEFAULT preliminary,
     densite              REAL(0..5)       DEFAULT 0,
     tc2                  Automat          DEFAULT 0,
     activity-time        INTEGER          DEFAULT 0

@@ -23,11 +23,12 @@ MsgObjectKnowledgeCreation ::= SEQUENCE
     oid                          ObjectKnowledge, 
     team                         Team, 
     real-object                  OID, -- id de l'objet réel pointé par la connaissance
-    type                         EnumObjectType,
-    obstacle-type                EnumObstacleType   OPTIONAL,
-    reserved-obstacle-activated  BOOLEAN            OPTIONAL,    
-    construction-dotation-type   DotationType       OPTIONAL,
-    mining-dotation-type         DotationType       OPTIONAL    
+    type                         VisibleString,
+    attributes                   ObjectAttributes     
+    -- obstacle-type                EnumObstacleType   OPTIONAL
+    -- reserved-obstacle-activated  BOOLEAN            OPTIONAL,    
+    -- construction-dotation-type   DotationType       OPTIONAL,
+    -- mining-dotation-type         DotationType       OPTIONAL    
 }
 
 MsgObjectKnowledgeUpdate ::= SEQUENCE
@@ -36,16 +37,17 @@ MsgObjectKnowledgeUpdate ::= SEQUENCE
     team                            Team,
     real-object                     OID                OPTIONAL, -- id de l'objet réel pointé par la connaissance
     relevance                       INTEGER( 0..100 )  OPTIONAL,
-    location                        Location       OPTIONAL,
-    construction-percentage         INTEGER( 0..100 )  OPTIONAL, 
-    mining-percentage               INTEGER( 0..100 )  OPTIONAL,
-    bypass-construction-percentage  INTEGER( 0..100 )  OPTIONAL,
-    reserved-obstacle-activated     BOOLEAN            OPTIONAL,
-    perceived                       BOOLEAN            OPTIONAL,
-    specific-attributes             ObjectAttributesSpecific OPTIONAL,
-    automat-perception              ListOID            OPTIONAL, -- Liste des compagnies percevant l'objet
-    construction-dotation-nbr       INTEGER            OPTIONAL,
-    mining-dotation-nbr             INTEGER            OPTIONAL
+    location                        Location           OPTIONAL,
+    attributes                      ObjectAttributes   OPTIONAL,
+    perceived                       BOOLEAN            OPTIONAL,    
+    automat-perception              ListOID            OPTIONAL  -- Liste des compagnies percevant l'objet
+    -- construction-dotation-nbr       INTEGER            OPTIONAL,
+    -- mining-dotation-nbr             INTEGER            OPTIONAL,
+    -- specific-attributes             ObjectAttributesSpecific OPTIONAL,
+    -- construction-percentage         INTEGER( 0..100 )  OPTIONAL, 
+    -- mining-percentage               INTEGER( 0..100 )  OPTIONAL,
+    -- bypass-construction-percentage  INTEGER( 0..100 )  OPTIONAL,
+    -- reserved-obstacle-activated     BOOLEAN            OPTIONAL,
 }
 
 MsgObjectKnowledgeDestruction ::= SEQUENCE

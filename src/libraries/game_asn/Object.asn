@@ -12,55 +12,11 @@ ObjectIncludes ::= SEQUENCE { BaseExports }
 ObjectExports  ::= NULL
 -- END includes
 
-EnumObstacleType ::= ENUMERATED
-{
-    initial(0),
-    reserved(1)
-}
 
-EnumObjectType ::= ENUMERATED
+EnumDemolitionTargetType ::= ENUMERATED
 {
-    bouchon-mines               (0),
-    zone-minee-lineaire         (1),
-    zone-minee-par-dispersion   (2),
-    fosse-anti-char             (3),
-    abattis                     (4),
-    barricade                   (5),
-    eboulement                  (6),
-    destruction-route           (7),
-    destruction-pont            (8),
-    pont-flottant-continu       (9), 
-    poste-tir                   (10),
-    zone-protegee               (11),
-    zone-implantation-canon     (12),
-    zone-implantation-cobra     (13),
-    zone-implantation-lrm       (14),
-    site-franchissement         (15),
-    nuage-nbc                   (16), -- Doit etre une localisation de type 'cercle'
-    plot-ravitaillement         (17),
-    site-decontamination        (18),
-    zone-brouillage-brod        (19),
-    rota                        (20),
-    zone-nbc                    (21), -- Doit etre une localisation de type 'cercle'
-    zone-brouillage-bromure     (22),
-    aire-poser                  (23),
-    piste                       (24),
-    plateforme                  (25),
-    zone-mobilite-amelioree     (26),
-    zone-poser-helicoptere      (27),
-    aire-logistique             (28),
-    itineraire-logistique       (29), -- Doit etre une localisation de type 'ligne'
-    camp-prisonniers            (30),
-    camp-refugies               (31),
-    poste-controle              (32),
-    terrain-largage             (33),
-    zone-interdite-mouvement    (34),
-    zone-interdite-tir          (35),
-    zone-implantation-mortier   (36),
-    pont-flottant-discontinu    (37),
-    installation                (38),
-    fire                        (39),
-    emergency-shelter           (40)
+    preliminary     (0),
+    reserved        (1)
 }
 
 EnumObjectErrorCode ::= ENUMERATED
@@ -74,11 +30,68 @@ EnumObjectErrorCode ::= ENUMERATED
     error-invalid-specific-attributes(6)
 }
 
+ObjectAttributeBypass ::= SEQUENCE
+{
+    percentage      INTEGER( 0..100 )  OPTIONAL
+}
 
----------------------------
--- Attributs specifiques a certains objets
----------------------------     
-ObjectAttributesCrossingSite ::= SEQUENCE
+ObjectAttributeConstruction ::= SEQUENCE
+{
+    dotation-type   DotationType        OPTIONAL,
+    dotation-nbr    INTEGER             OPTIONAL,
+    density         REAL                OPTIONAL,
+    percentage      INTEGER( 0..100 )   OPTIONAL
+}
+
+ObjectAttributeLogistic ::= SEQUENCE
+{
+    tc2             Automat
+}
+
+ObjectAttributeInteractionHeight ::= SEQUENCE
+{
+    height        REAL
+}
+
+LocatedQuantity ::= SEQUENCE
+{    
+    coordinate    CoordLatLong,
+    quantity      REAL
+}
+
+LocatedQuantityList ::= SEQUENCE OF LocatedQuantity
+
+ObjectAttributeToxicCloud ::= SEQUENCE
+{
+    quantities    LocatedQuantityList
+}
+
+ObjectAttributeMine ::= SEQUENCE
+{
+    dotation-type   DotationType        OPTIONAL,        
+    dotation-nbr    INTEGER             OPTIONAL,
+    density         REAL                OPTIONAL,
+    percentage      INTEGER( 0..100 )   OPTIONAL
+}
+
+ObjectAttributeActivityTime ::= SEQUENCE
+{
+    value   INTEGER -- en heure
+}
+
+ObjectAttributeNBC ::= SEQUENCE
+{
+    danger-level        INTEGER(0..10),
+    nbc-agents  ListOID -- Cf. Data/NBC.xml
+}
+
+ObjectAttributeObstacle ::= SEQUENCE
+{
+    type        EnumDemolitionTargetType,
+    activated   BOOLEAN
+}
+
+ObjectAttributeCrossingSite ::= SEQUENCE
 {
     width                 INTEGER,    -- en mètres
     depth                 INTEGER,    -- en mètres
@@ -86,23 +99,7 @@ ObjectAttributesCrossingSite ::= SEQUENCE
     banks-require-fitting BOOLEAN
 }
 
-ObjectAttributesNbcCloud ::= SEQUENCE
-{
-    nbc-agent OID -- Cf. Data/NBC.xml
-}
-
-ObjectAttributesNbcZone ::= SEQUENCE
-{
-    nbc-agent OID -- Cf. Data/NBC.xml
-}
-
-ObjectAttributesRota ::= SEQUENCE
-{
-    danger-level        INTEGER(0..10),
-    nbc-agents          ListOID -- Cf. Data/NBC.xml
-}
-
-ObjectAttributesLogisticRoute ::= SEQUENCE
+ObjectAttributeSupplyRoute ::= SEQUENCE
 {
     equipped    BOOLEAN,
     max-weight  INTEGER,
@@ -111,46 +108,39 @@ ObjectAttributesLogisticRoute ::= SEQUENCE
     flow-rate   INTEGER
 }
 
-ObjectAttributesPrisonerCamp ::= SEQUENCE
+ObjectAttributeFire ::= SEQUENCE
 {
-    tc2  Automat
+    class-id	OID, -- Cf. Data/Fire.xml
+    heat		INTEGER
 }
 
-ObjectAttributesRefugeeCamp ::= SEQUENCE
+ObjectAttributeMedicalTreatment ::= SEQUENCE
 {
-    tc2  Automat
+	type-id			  ListOID, -- Cf. Data/MedicalTreatment.xml
+	beds			  INTEGER,
+	available-beds	  INTEGER,
+	doctors			  INTEGER,
+	available-doctors INTEGER
 }
 
-ObjectAttributesLinearMineArea ::= SEQUENCE
+ObjectAttributes ::= SEQUENCE
 {
-    density            REAL(0..5) DEFAULT 0,
-    activity-time      INTEGER    DEFAULT 0       
+    construction		ObjectAttributeConstruction OPTIONAL,
+    obstacle			ObjectAttributeObstacle OPTIONAL,
+    mine				ObjectAttributeMine OPTIONAL,    
+    activity-time		ObjectAttributeActivityTime OPTIONAL,    
+    bypass				ObjectAttributeBypass OPTIONAL,
+    logistic			ObjectAttributeLogistic OPTIONAL,
+    nbc					ObjectAttributeNBC OPTIONAL,
+    crossing-site		ObjectAttributeCrossingSite OPTIONAL,
+    supply-route		ObjectAttributeSupplyRoute OPTIONAL,
+    toxic-cloud			ObjectAttributeToxicCloud OPTIONAL,
+    fire				ObjectAttributeFire OPTIONAL,
+    medical-treatment	ObjectAttributeMedicalTreatment OPTIONAL,
+    interaction-height	ObjectAttributeInteractionHeight OPTIONAL
 }
 
-ObjectAttributesDispersedMineArea ::= SEQUENCE
-{
-    density            REAL(0..5) DEFAULT 0,
-    activity-time      INTEGER    DEFAULT 0       
-}
-
-ObjectAttributesMineJam ::= SEQUENCE
-{
-    activity-time INTEGER DEFAULT 0
-}
-
-ObjectAttributesSpecific ::= CHOICE
-{
-    crossing-site             ObjectAttributesCrossingSite,
-    nbc-cloud                 ObjectAttributesNbcCloud,
-    rota                      ObjectAttributesRota,
-    nbc-zone                  ObjectAttributesNbcZone,
-    logistic-route            ObjectAttributesLogisticRoute,
-    prisoner-camp             ObjectAttributesPrisonerCamp,
-    refugee-camp              ObjectAttributesRefugeeCamp,
-    linear-mine-area          ObjectAttributesLinearMineArea,
-    dispersed-mine-area       ObjectAttributesDispersedMineArea,
-    mine-jam                  ObjectAttributesMineJam
-}
+-- ObjectAttributes ::= SEQUENCE OF ObjectAttribute
  
 ---------------------------
 -- Objet réel
@@ -158,29 +148,19 @@ ObjectAttributesSpecific ::= CHOICE
 
 MsgObjectCreation ::= SEQUENCE
 {
-    oid                          OID,
-    type                         EnumObjectType,
-    obstacle-type                EnumObstacleType   OPTIONAL,
-    reserved-obstacle-activated  BOOLEAN            OPTIONAL,    
-    location                     Location,
-    name                         VisibleString,
-    team                         Team,
-    specific-attributes          ObjectAttributesSpecific OPTIONAL,
-    construction-dotation-type   DotationType       OPTIONAL,
-    mining-dotation-type         DotationType       OPTIONAL
+    oid         OID,
+    type        VisibleString,
+    name        VisibleString,
+    team        Team,
+    location    Location,
+    attributes  ObjectAttributes
 }
 
 MsgObjectUpdate ::= SEQUENCE
 {
-    oid                                 OID,
-    construction-percentage             INTEGER( 0..100 )  OPTIONAL, 
-    mining-percentage                   INTEGER( 0..100 )  OPTIONAL,
-    bypass-construction-percentage      INTEGER( 0..100 )  OPTIONAL,   
-    reserved-obstacle-activated         BOOLEAN            OPTIONAL,
-    construction-dotation-nbr           INTEGER            OPTIONAL,
-    mining-dotation-nbr                 INTEGER            OPTIONAL,   
-    location                            Location       OPTIONAL,
-    specific-attributes                 ObjectAttributesSpecific OPTIONAL
+    oid             OID,
+    location        Location OPTIONAL,
+    attributes      ObjectAttributes
 }
 
 MsgObjectDestruction ::= OID
@@ -192,22 +172,17 @@ MsgObjectDestruction ::= OID
 
 MagicActionUpdateObject ::= SEQUENCE
 {
-    oid                             OID,
-    construction-percentage         INTEGER( 0..100 ) OPTIONAL, 
-    mining-percentage               INTEGER( 0..100 ) OPTIONAL,
-    bypass-construction-percentage  INTEGER( 0..100 ) OPTIONAL,
-    reserved-obstacle-activated     BOOLEAN           OPTIONAL
+    oid                             OID,    
+    attributes                      ObjectAttributes
 }
 
 MagicActionCreateObject ::= SEQUENCE
-{
-    team                         Team, 
-    type                         EnumObjectType,
-    obstacle-type                EnumObstacleType   OPTIONAL,
-    reserved-obstacle-activated  BOOLEAN            OPTIONAL,
-    location                     Location,
-    name                         VisibleString      OPTIONAL,    
-    specific-attributes          ObjectAttributesSpecific OPTIONAL
+{        
+    type        VisibleString,    
+    location    Location,
+    name        VisibleString,
+    team        Team,
+    attributes  ObjectAttributes
 }
 
 MagicActionDestroyObjet ::= OID -- oid-objet
