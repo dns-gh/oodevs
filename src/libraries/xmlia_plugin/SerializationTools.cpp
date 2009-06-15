@@ -15,10 +15,10 @@ namespace plugins
 {
 namespace xmlia
 {
-    xml::xostream& operator<<( xml::xostream& xos, const Namespaces& )
+    xml::xostream& operator<<( xml::xostream& xos, const Namespaces& )//@TODO set final namespace
     {
         xos << xml::attribute( "xmlns", "urn:sisostds:bml:coalition:draft:cbml:1" )
-            << xml::attribute( "xmlns:jc3iedm", "http://www.mip-site.org" )
+            << xml::attribute( "xmlns:mpia", "urn:MPIA-schema" )
             << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" );
         return xos;
     }
