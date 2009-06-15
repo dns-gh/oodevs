@@ -377,7 +377,7 @@
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
         <build-app name="gaming_app" depends="terrain,xerces,qt,boost,flexlm"
-                   libs="masasn,svgl,zipstream,zlib1,bugtrap
+                   libs="masasn,svgl,zipstream,zlib1,bugtrap,shapelib
                          lib${ant.project.name}_actions-${platform}-mt
                          lib${ant.project.name}_actions_gui-${platform}-mt
                          lib${ant.project.name}_clients_gui-${platform}-mt
@@ -672,6 +672,7 @@
         <update name="zipstream"/>
         <update name="zlib"/>
         <update name="bugtrap"/>
+        <update name="shapelib"/>
         <update name="gdal" version="1.6.a"/>
         <update name="esri" version="9.2"/>
         <update name="folk"/>
