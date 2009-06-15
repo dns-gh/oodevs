@@ -68,6 +68,7 @@ namespace
 
     unsigned int GetValue()
     {
+      if( count_ == 0 ) return 4;
       float rapport = available_ < 0 ? 0 : available_ * 100 / count_;
       if( rapport < 0.2) return 0;
       else if( rapport < 0.4) return 1;
