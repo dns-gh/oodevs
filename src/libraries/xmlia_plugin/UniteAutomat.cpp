@@ -33,3 +33,10 @@ UniteAutomat::UniteAutomat( xml::xistream& xis )
 {
   //NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: UniteAutomat destructor
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+UniteAutomat::~UniteAutomat()
+{}

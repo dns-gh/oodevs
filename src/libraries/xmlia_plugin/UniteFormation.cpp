@@ -33,3 +33,10 @@ UniteFormation::UniteFormation( xml::xistream& xis )
 {
   //@NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: UniteFormation destructor
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+UniteFormation::~UniteFormation()
+{}

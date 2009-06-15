@@ -46,9 +46,6 @@ Rapport::Rapport( RapportManager& manager, xml::xistream& xis )
   xis >> xml::start( "mpia:Unite" );
   dest_   = new UniteFormation( xis );
   xis >> xml::end();
-
-  ReadEntities( xis );
-
 }
 
 // -----------------------------------------------------------------------------

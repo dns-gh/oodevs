@@ -110,7 +110,9 @@ void RapportManager::Read( xml::xistream& xis )
 
   if( type == "SITREP" )
   {
-    receivedRapports_.push_back( new Sitrep( *this, xis ) );
+    Sitrep* newSitrep = new Sitrep( *this , xis );
+    newSitrep->ReadEntities( xis );
+    receivedRapports_.push_back( newSitrep );
   }
 }
 
