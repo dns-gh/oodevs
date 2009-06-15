@@ -14,7 +14,7 @@
 #include "clients_kernel/WorldParameters.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "graphics/extensions.h"
-#include <shapelib/shapefil.h>
+#include <gdal_ogr/gdal_ogr_lib.h>
 #include <boost/shared_ptr.hpp>
 
 using namespace gui;
@@ -159,48 +159,48 @@ void FolkLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 
 namespace
 {
-    void ShpClose( SHPHandle shp ) { if( shp ) SHPClose( shp ); }
-
-    template< typename Edge >
-    void DoAddPoints( SHPObject& object, T_PointVector& points, std::vector< Edge >& edges, const CoordinateConverter_ABC& converter )
-    {
-        for( int part = 0; part < object.nParts; ++part )
-        {
-            const int start = object.panPartStart[ part ];
-            const int end   = part < object.nParts - 1 ? object.panPartStart[ part+1 ] : object.nVertices;
-            Edge edge;
-            edge.start = points.size();
-            float length = 0;
-            points.reserve( points.size() + 2 * ( end - start ) );
-            for( int i = start; i < end; ++i )
-            {
-                const Point2d geodetic( object.padfX[i], object.padfY[i] );
-                const Point2f point = converter.ConvertFromGeo( geodetic );
-                if( i > start )
-                    length += points.back().Distance( point );
-                points.push_back( point );
-                if( i > start && i < end-1 )
-                    points.push_back( point );
-            }
-            edge.end = points.size();
-            edge.ratio = 1.f / length;
-            edges.push_back( edge );
-        }
-    }
-
-    template< typename Edge >
-    void AddPoints( SHPObject& object, T_PointVector& points, std::vector< Edge >& edges, const CoordinateConverter_ABC& converter )
-    {
-        switch( object.nSHPType )
-        {
-        default:
-        case SHPT_NULL: return;
-        case SHPT_ARC:
-        case SHPT_ARCZ:
-        case SHPT_ARCM:
-            return DoAddPoints( object, points, edges, converter );
-        };
-    }
+//    void ShpClose( SHPHandle shp ) { if( shp ) SHPClose( shp ); }
+//
+//    template< typename Edge >
+//    void DoAddPoints( SHPObject& object, T_PointVector& points, std::vector< Edge >& edges, const CoordinateConverter_ABC& converter )
+//    {
+//        for( int part = 0; part < object.nParts; ++part )
+//        {
+//            const int start = object.panPartStart[ part ];
+//            const int end   = part < object.nParts - 1 ? object.panPartStart[ part+1 ] : object.nVertices;
+//            Edge edge;
+//            edge.start = points.size();
+//            float length = 0;
+//            points.reserve( points.size() + 2 * ( end - start ) );
+//            for( int i = start; i < end; ++i )
+//            {
+//                const Point2d geodetic( object.padfX[i], object.padfY[i] );
+//                const Point2f point = converter.ConvertFromGeo( geodetic );
+//                if( i > start )
+//                    length += points.back().Distance( point );
+//                points.push_back( point );
+//                if( i > start && i < end-1 )
+//                    points.push_back( point );
+//            }
+//            edge.end = points.size();
+//            edge.ratio = 1.f / length;
+//            edges.push_back( edge );
+//        }
+//    }
+//
+//    template< typename Edge >
+//    void AddPoints( SHPObject& object, T_PointVector& points, std::vector< Edge >& edges, const CoordinateConverter_ABC& converter )
+//    {
+//        switch( object.nSHPType )
+//        {
+//        default:
+//        case SHPT_NULL: return;
+//        case SHPT_ARC:
+//        case SHPT_ARCZ:
+//        case SHPT_ARCM:
+//            return DoAddPoints( object, points, edges, converter );
+//        };
+//    }
 }
 
 // -----------------------------------------------------------------------------
@@ -209,18 +209,18 @@ namespace
 // -----------------------------------------------------------------------------
 void FolkLayer::LoadGraph( const std::string& graph )
 {
-    boost::shared_ptr< SHPInfo > shp( SHPOpen( graph.c_str() ,"rb" ), &ShpClose );
-    if( ! shp ) return;
-    const Point2f bottomLeft = converter_.ConvertFromGeo( Point2d( shp->adBoundsMin[0], shp->adBoundsMin[1] ) );
-    const Point2f topRight   = converter_.ConvertFromGeo( Point2d( shp->adBoundsMax[0], shp->adBoundsMax[1] ) );
-    box_ = Rectangle2f( bottomLeft, topRight );
-    edges_.reserve( shp->nRecords );
-    graph_.reserve( shp->nRecords * 4 );
-    for( int i = 0; i < shp->nRecords; ++i )
-    {
-        boost::shared_ptr< SHPObject > object( SHPReadObject( shp.get(), i ), &SHPDestroyObject );
-        if( object )
-            AddPoints( *object, graph_, edges_, converter_ );
-    }
-    coordinates_.resize( graph_.size() );
+//    boost::shared_ptr< SHPInfo > shp( SHPOpen( graph.c_str() ,"rb" ), &ShpClose );
+//    if( ! shp ) return;
+//    const Point2f bottomLeft = converter_.ConvertFromGeo( Point2d( shp->adBoundsMin[0], shp->adBoundsMin[1] ) );
+//    const Point2f topRight   = converter_.ConvertFromGeo( Point2d( shp->adBoundsMax[0], shp->adBoundsMax[1] ) );
+//    box_ = Rectangle2f( bottomLeft, topRight );
+//    edges_.reserve( shp->nRecords );
+//    graph_.reserve( shp->nRecords * 4 );
+//    for( int i = 0; i < shp->nRecords; ++i )
+//    {
+//        boost::shared_ptr< SHPObject > object( SHPReadObject( shp.get(), i ), &SHPDestroyObject );
+//        if( object )
+//            AddPoints( *object, graph_, edges_, converter_ );
+//    }
+//    coordinates_.resize( graph_.size() );
 }
