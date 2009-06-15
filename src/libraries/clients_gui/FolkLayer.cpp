@@ -14,7 +14,7 @@
 #include "clients_kernel/WorldParameters.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "graphics/extensions.h"
-#include <gdal_ogr/gdal_ogr_lib.h>
+//#include <gdal_ogr/gdal_ogr_lib.h>
 #include <boost/shared_ptr.hpp>
 
 using namespace gui;
