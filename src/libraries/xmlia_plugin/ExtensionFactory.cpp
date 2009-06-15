@@ -9,10 +9,8 @@
 
 #include "xmlia_plugin_pch.h"
 #include "ExtensionFactory.h"
-//#include "AgentExtension.h"
-#include "AutomatExtension.h"
+#include "AgentExtension.h"
 #include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
 
 using namespace plugins::xmlia;
 
@@ -20,9 +18,9 @@ using namespace plugins::xmlia;
 // Name: ExtensionFactory constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, const ReportFactory& reportFactory, const Simulation& simulation, const dispatcher::Model& model )
+ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, RapportManager& rapportManager, const Simulation& simulation, const dispatcher::Model& model )
     : publisher_( publisher )
-    , reportFactory_( reportFactory )
+    , rapportManager_( rapportManager )
     , simulation_( simulation )
     , model_( model )
 {
@@ -44,14 +42,5 @@ ExtensionFactory::~ExtensionFactory()
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
-    //entity.Attach< XmliaExtension_ABC >( *new AgentExtension( entity, publisher_, reportFactory_, simulation_, model_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Automat& entity )
-{
-    entity.Attach< XmliaExtension_ABC >( *new AutomatExtension( entity, publisher_, reportFactory_ ) );
+    entity.Attach< XmliaExtension_ABC >( *new AgentExtension( entity, publisher_, rapportManager_, simulation_, model_ ) );
 }

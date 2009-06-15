@@ -29,9 +29,8 @@ namespace xmlia
 {
     class ExtensionFactory;
     class PublisherActor;
-    //class Serializer;
     class UpdateListener;
-    class ReportFactory;
+    class RapportManager;
     class Simulation;
 
 // =============================================================================
@@ -74,7 +73,7 @@ private:
     dispatcher::Model& model_;
     std::auto_ptr< PublisherActor > publisher_;
     std::auto_ptr< Simulation > simulation_;
-    std::auto_ptr< ReportFactory > reportFactory_;
+    std::auto_ptr< RapportManager > rapportManager_;
     std::auto_ptr< ExtensionFactory > extensionFactory_;
     std::auto_ptr< UpdateListener > listener_;
     //@}

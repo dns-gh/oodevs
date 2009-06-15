@@ -10,7 +10,7 @@
 #ifndef __AgentExtension_h_
 #define __AgentExtension_h_
 
-#include "BmlExtension_ABC.h"
+#include "xmliaExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
 
@@ -22,10 +22,10 @@ namespace dispatcher
 
 namespace plugins
 {
-namespace bml
+namespace xmlia
 {
     class Publisher_ABC;
-    class ReportFactory;
+    class RapportManager;
     class Simulation;
 
 // =============================================================================
@@ -34,23 +34,21 @@ namespace bml
 */
 // Created: SBO 2008-02-29
 // =============================================================================
-class AgentExtension : public BmlExtension_ABC
+class AgentExtension : public XmliaExtension_ABC
                      , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
                      , public kernel::Updatable_ABC< ASN1T_MsgUnitDetection >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation, const dispatcher::Model& model );
+             AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, RapportManager& factory, const Simulation& simulation, const dispatcher::Model& model );
     virtual ~AgentExtension();
     //@}
 
     //! @name Operations
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
-    virtual void DoUpdate( const ASN1T_MsgUnitOrder& message );
     virtual void DoUpdate( const ASN1T_MsgUnitDetection& message );
     //@}
 
@@ -66,7 +64,7 @@ private:
     //@{
     dispatcher::Agent& holder_;
     Publisher_ABC& publisher_;
-    const ReportFactory& factory_;
+    RapportManager& rapportManager_;
     const Simulation& simulation_;
     const dispatcher::Model& model_;
     unsigned long lastUpdate_;

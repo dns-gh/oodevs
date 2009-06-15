@@ -40,7 +40,7 @@ class RapportManager
 public:
     //! @name Constructors/Destructor
     //@{
-  RapportManager( dispatcher::Model& model );
+    RapportManager( dispatcher::Model& model );
     virtual ~RapportManager();
     //@}
 

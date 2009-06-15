@@ -12,7 +12,7 @@
 #include "ExtensionFactory.h"
 #include "Publisher.h"
 #include "PublisherActor.h"
-#include "ReportFactory.h"
+#include "RapportManager.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
 #include "UpdateListener.h"
@@ -27,8 +27,8 @@ XmliaPlugin::XmliaPlugin( dispatcher::Model& model, xml::xistream& xis, dispatch
     : model_( model )
     , publisher_( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
     , simulation_( new Simulation() )
-    , reportFactory_( new ReportFactory( model_.GetMissionTypes() ) )
-    , extensionFactory_( new ExtensionFactory( *publisher_, *reportFactory_, *simulation_, model_ ) )
+    , rapportManager_( new RapportManager( model_ ) )
+    , extensionFactory_( new ExtensionFactory( *publisher_, *rapportManager_, *simulation_, model_ ) )
     , listener_( new UpdateListener( *publisher_, model_, simulation ) )
 {
     model_.RegisterFactory( *extensionFactory_ );
