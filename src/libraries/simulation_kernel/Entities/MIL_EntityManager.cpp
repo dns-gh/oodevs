@@ -410,6 +410,15 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "The effective composition of the automate '%d' ('%s') is not consistent with the composition described in the type '%s'", automate.GetID(), automate.GetName().c_str(), automate.GetType().GetName().c_str() ) );
         }
     }
+
+    // Disengage automata for frozen mode
+    if( config.IsFrozenMode() )
+    {
+        for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
+        {
+            it->second->Disengage();
+        }
+    }
     UpdateStates();
 }
 

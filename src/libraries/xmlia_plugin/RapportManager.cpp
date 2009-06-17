@@ -147,6 +147,7 @@ void RapportManager::Read( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void RapportManager::UpdateSimulation() const
 {
+    //@TODO change to receivedRapports_
   for( std::map< unsigned, Sitrep* >::const_iterator it = rapports_.begin(); it != rapports_.end(); it++ )
   {
     it->second->UpdateSimulation();
