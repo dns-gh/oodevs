@@ -24,6 +24,8 @@
 #include "ProfileFactory.h"
 #include "ScoresModel.h"
 #include "ScoreFactory.h"
+#include "SuccessFactorsModel.h"
+#include "SuccessFactorFactory.h"
 #include "IntelligencesModel.h"
 #include "OrbatReIndexer.h"
 #include "clients_kernel/Controllers.h"
@@ -58,6 +60,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
     , scoreFactory_( *new ScoreFactory( controllers_.controller_, staticModel.indicators_, staticModel.gaugeTypes_ ) )
+    , successFactorFactory_( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
     , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
@@ -67,6 +70,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
     , profiles_( *new ProfilesModel( profileFactory_ ) )
     , scores_( *new ScoresModel( scoreFactory_ ) )
+    , successFactors_( *new SuccessFactorsModel( successFactorFactory_ ) )
     , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
     , drawings_( *new gui::DrawerModel( controllers, drawingFactory_ ) )
 {
@@ -80,6 +84,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
 Model::~Model()
 {
     delete &intelligences_;
+    delete &successFactors_;
+    delete &successFactorFactory_;
     delete &scores_;
     delete &scoreFactory_;
     delete &profiles_;
@@ -104,6 +110,7 @@ void Model::Purge()
 {
     UpdateName( "orbat" );
     intelligences_.Purge();
+    successFactors_.Purge();
     scores_.Purge();
     profiles_.Purge();
     weather_.Purge();
@@ -149,6 +156,7 @@ void Model::Load( const tools::ExerciseConfig& config )
         controllers_.controller_.Update( weather_); 
     LoadOptional( config.GetProfilesFile(), profiles_ );
     LoadOptional( config.GetScoresFile(), scores_ );
+    LoadOptional( config.GetSuccessFactorsFile(), successFactors_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +181,8 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
     const bool valid = teams_.CheckValidity( checker )
                     && agents_.CheckValidity( checker )
                     && profiles_.CheckValidity( *this, checker )
-                    && scores_.CheckValidity( checker );
+                    && scores_.CheckValidity( checker )
+                    && successFactors_.CheckValidity( checker );
     if( valid )
     {
         xml::xofstream xos( config.GetOrbatFile(), xml::encoding( "ISO-8859-1" ) );
@@ -183,9 +192,10 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
         xos << end();
         UpdateName( config.GetOrbatFile() );
 
-        weather_ .Serialize( config.GetWeatherFile() );
+        weather_.Serialize( config.GetWeatherFile() );
         profiles_.Serialize( config.GetProfilesFile() );
-        scores_  .Serialize( config.GetScoresFile() );
+        scores_.Serialize( config.GetScoresFile() );
+        successFactors_.Serialize( config );
     }
     return valid;
 }

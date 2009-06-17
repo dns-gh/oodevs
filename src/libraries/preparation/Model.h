@@ -52,6 +52,8 @@ class ModelChecker_ABC;
 class OrbatImportFilter;
 class ScoresModel;
 class ScoreFactory_ABC;
+class SuccessFactorsModel;
+class SuccessFactorFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -94,6 +96,7 @@ private:
     AgentFactory_ABC& agentFactory_;
     ProfileFactory_ABC& profileFactory_;
     ScoreFactory_ABC& scoreFactory_;
+    SuccessFactorFactory_ABC& successFactorFactory_;
     gui::DrawingFactory_ABC& drawingFactory_;
     QString name_;
     //@}
@@ -109,6 +112,7 @@ public:
     WeatherModel& weather_;
     ProfilesModel& profiles_;
     ScoresModel& scores_;
+    SuccessFactorsModel& successFactors_;
     IntelligencesModel& intelligences_;
     gui::DrawerModel& drawings_;
     //@}

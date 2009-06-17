@@ -18,9 +18,8 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Iterator.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include <xeumeuleu/xml.h>
-
-using namespace xml;
+#include <boost/foreach.hpp>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel constructor
@@ -58,9 +57,9 @@ void ProfilesModel::Purge()
 // -----------------------------------------------------------------------------
 void ProfilesModel::Load( const std::string& file )
 {
-    xifstream xis( file );
-    xis >> start( "profiles" )
-        >> list( "profile", *this, &ProfilesModel::LoadProfile );
+    xml::xifstream xis( file );
+    xis >> xml::start( "profiles" )
+        >> xml::list( "profile", *this, &ProfilesModel::LoadProfile );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,11 +68,11 @@ void ProfilesModel::Load( const std::string& file )
 // -----------------------------------------------------------------------------
 void ProfilesModel::Serialize( const std::string& file ) const
 {
-    xofstream xos( file, xml::encoding( "ISO-8859-1" ) );
-    xos << start( "profiles" );
+    xml::xofstream xos( file, xml::encoding( "ISO-8859-1" ) );
+    xos << xml::start( "profiles" );
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->Serialize( xos );
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -194,4 +193,16 @@ bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity ) const
             return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
     return superior ? IsWriteable( *superior ) : false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::Find
+// Created: SBO 2009-06-15
+// -----------------------------------------------------------------------------
+const UserProfile* ProfilesModel::Find( const QString& name ) const
+{
+    BOOST_FOREACH( const T_UserProfiles::value_type profile, userProfiles_ )
+        if( profile->GetLogin() == name )
+            return profile;
+    return 0;
 }

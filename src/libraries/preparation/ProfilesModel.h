@@ -53,6 +53,7 @@ public:
     void DeleteProfile( const UserProfile& profile );
 
     bool Exists( const QString& login ) const;
+    const UserProfile* Find( const QString& name ) const;
     //@}
 
 private:

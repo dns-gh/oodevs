@@ -393,7 +393,7 @@
     </target>
 
     <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
-        <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,qt,boost,flexlm"
+        <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt,boost,flexlm"
                    libs="svgl,zipstream,zlib1,bugtrap
                          lib${ant.project.name}_actions-${platform}-mt
                          lib${ant.project.name}_actions_gui-${platform}-mt
@@ -668,6 +668,8 @@
         <update name="flexlm"/>
         <update name="xerces-c"/>
         <update name="xeumeuleu"/>
+        <update name="xalan-c"/>
+        <update name="xeuseuleu"/>
         <update name="svgl"/>
         <update name="zipstream"/>
         <update name="zlib"/>

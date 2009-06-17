@@ -37,6 +37,7 @@ namespace indicators
 }
 
 class IntelligenceKarmas;
+class SuccessFactorActionTypes;
 class TeamKarmas;
 
 // =============================================================================
@@ -76,6 +77,7 @@ public:
     gui::DrawingTypes&               drawings_;
     indicators::Primitives&          indicators_;
     indicators::GaugeTypes&          gaugeTypes_;
+    SuccessFactorActionTypes&        successFactorActionTypes_;
     //@}
 
 private:

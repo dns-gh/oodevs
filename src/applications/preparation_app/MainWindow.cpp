@@ -35,6 +35,7 @@
 #include "IntelligencesLayer.h"
 #include "ImportOrbatDialog.h"
 #include "ScoreDialog.h"
+#include "SuccessFactorDialog.h"
 
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
@@ -220,11 +221,12 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
     ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_ );
+    SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     new FileToolbar( this );
     new DisplayToolbar( this, controllers );
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
-    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *scoreDialog, *factory, expiration, *help );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *scoreDialog, *successFactorDialog, *factory, expiration, *help );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );

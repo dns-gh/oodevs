@@ -65,7 +65,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& scoreDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& scoreDialog, QDialog& successFactorDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
@@ -124,6 +124,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 
     menu = new QPopupMenu( this );
     menu->insertItem( tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
+    menu->insertItem( tools::translate( "Menu", "Success factors..." ), &successFactorDialog, SLOT( exec() ) );
     insertItem( tools::translate( "Menu", "&Exercise" ), menu );
 
     menu = pParent->createDockWindowMenu();

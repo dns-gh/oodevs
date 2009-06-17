@@ -86,6 +86,9 @@ void ExerciseConfig::LoadExercise( const std::string& file )
                 >> end()
                 >> optional() >> start( "scores" );
         scores_ = attribute< std::string >( xis, "file", "scores.xml" );
+        xis     >> end()
+                >> optional() >> start( "success-factors" );
+        successFactors_ = attribute< std::string >( xis, "file", "success-factors.xml" );
         xis     >> end();
         if( GetExerciseFile() != file )
             SetExerciseName( file );
@@ -232,6 +235,15 @@ std::string ExerciseConfig::GetProfilesFile() const
 std::string ExerciseConfig::GetScoresFile() const
 {
     return BuildExerciseChildFile( scores_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetSuccessFactorsFile
+// Created: SBO 2009-06-15
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetSuccessFactorsFile() const
+{
+    return BuildExerciseChildFile( successFactors_ );
 }
 
 // -----------------------------------------------------------------------------

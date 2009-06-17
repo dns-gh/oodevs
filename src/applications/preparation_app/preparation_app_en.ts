@@ -364,6 +364,10 @@ Do you want to save anyway?</source>
         <source>&amp;Exercise</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Success factors...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
