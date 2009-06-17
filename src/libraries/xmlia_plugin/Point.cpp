@@ -22,10 +22,14 @@ using namespace plugins::xmlia;
 // -----------------------------------------------------------------------------
 Point::Point( xml::xistream& xis )
 {
-   xis >> xml::start( "mpia:PointGeographique" )
+   //xis >> xml::start( "mpia:PointGeographique" )
+       xis >> xml::attribute( "id", sQname_ )
          >> xml::content( "mpia:Latitude", latitude_ )
-         >> xml::content( "mpia:Latitude", longitude_ )
-       >> xml::end();
+         >> xml::content( "mpia:Latitude", longitude_ );
+     //  >> xml::end();
+   std::string sId = sQname_.substr( 5 );
+   std::istringstream is( sId );
+   is >> id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,4 +86,13 @@ void Point::Update( dispatcher::Agent& agent )
 {
   latitude_  = agent.position_.latitude;
   longitude_ = agent.position_.longitude;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Point GetId
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+unsigned int Point::GetId() const
+{
+  return id_;
 }

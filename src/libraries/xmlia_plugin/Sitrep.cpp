@@ -22,6 +22,8 @@
 #include "xmlia_plugin/UniteAutomat.h"
 #include "xmlia_plugin/UniteFormation.h"
 #include "xmlia_plugin/UniteAgent.h"
+#include "xmlia_plugin/Point.h"
+#include "xmlia_plugin/EtatOperationnel.h"
 
 using namespace plugins::xmlia;
 
@@ -48,13 +50,7 @@ Sitrep::Sitrep( RapportManager& manager, dispatcher::Automat& author )
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
 Sitrep::~Sitrep()
-{
-  for( std::map< unsigned, UniteAgent* >::iterator it = unites_.begin(); it != unites_.end(); it++ )
-  {
-    delete it->second;
-  }
-  unites_.clear();
-}
+{}
 
 // -----------------------------------------------------------------------------
 // Name: Sitrep::Serialize
@@ -124,11 +120,21 @@ void Sitrep::SerializeSide( const dispatcher::Side& side, xml::xostream& xos, st
 // -----------------------------------------------------------------------------
 void Sitrep::ReadEntities( xml::xistream& xis )
 {
-  while( xis.has_child( "Unite") )
-  {
-    xml::start( "mpia:Unite" );
-    receivedUnites_.push_back( new UniteAgent( xis ) );
-  }
+  xis >> xml::list( "mpia:PointGeographique", *this, &Sitrep::ReadPosition );
+  xis >> xml::list( "mpia:EtatOperationnelEntiteOrganisationnelle", *this, &Sitrep::ReadEtatOps );
+  //@TODO move in rapport if others report have same data
+}
+
+void Sitrep::ReadPosition( xml::xistream& xis )
+{
+  Point* pt = new Point( xis );
+  unites_[pt->GetId()]->SetPosition( pt );
+}
+
+void Sitrep::ReadEtatOps( xml::xistream& xis )
+{
+  EtatOperationnel* etatOps = new EtatOperationnel( xis );
+  unites_[etatOps->GetId()]->SetEtatOps( etatOps );
 }
 
 // -----------------------------------------------------------------------------

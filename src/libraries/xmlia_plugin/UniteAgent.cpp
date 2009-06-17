@@ -29,9 +29,9 @@ using namespace plugins::xmlia;
 UniteAgent::UniteAgent( xml::xistream& xis )
 : Unite_ABC( xis )
 {
-  xis >> xml::end(); //</Unite>
-  localisation_ = new Point( xis );
-  etatOps_ = new EtatOperationnel( xis );
+  //xis >> xml::end(); //</Unite>
+  //localisation_ = new Point( xis );
+  //etatOps_ = new EtatOperationnel( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,4 +158,22 @@ void UniteAgent::Update( dispatcher::Agent& agent )
 bool UniteAgent::IsSide( unsigned int idSide) const
 {
   return idSide == idSide_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UniteAgent::SetPosition
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+void UniteAgent::SetPosition( Point* pt )
+{
+  localisation_ = pt;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UniteAgent::SetEtatOps
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+void UniteAgent::SetEtatOps( EtatOperationnel* etatOps )
+{
+  etatOps_ = etatOps;
 }

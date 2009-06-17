@@ -39,11 +39,13 @@ namespace plugins
       void Serialize( xml::xostream& xos, const std::string& sQnameRapport ) const;
       virtual std::string QName() const;
       void Update( dispatcher::Agent& agent );
+      unsigned int GetId() const;
       //@}
 
     private:
       //! @name Member data
       //@{
+      unsigned int id_;
       std::string sQname_;
       std::string sQnameParent_;
 

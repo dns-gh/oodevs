@@ -56,14 +56,8 @@ public:
     virtual void InsertOrUpdate( dispatcher::Agent& agent );
     virtual void UpdateSimulation();
     virtual void ReadEntities( xml::xistream& xis );
-    //@}
-
-private:
-
-    //! @name Member data
-    //@{
-    std::map< unsigned, UniteAgent* > unites_;
-    std::vector< UniteAgent* > receivedUnites_;
+    void ReadPosition( xml::xistream& xis );
+    void ReadEtatOps( xml::xistream& xis );
     //@}
 };
 

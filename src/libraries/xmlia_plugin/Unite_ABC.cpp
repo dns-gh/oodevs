@@ -56,6 +56,19 @@ std::string Unite_ABC::QName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Unite_ABC QNameToId
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+unsigned int Unite_ABC::QNameToId( std::string sQname )
+{
+  unsigned int id;
+  std::string sId = sQname.substr( 6 );
+  std::istringstream is( sId );
+  is >> id;
+  return id;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Unite_ABC QName
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------

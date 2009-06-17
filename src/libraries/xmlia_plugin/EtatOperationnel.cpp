@@ -87,13 +87,17 @@ namespace
 // -----------------------------------------------------------------------------
 EtatOperationnel::EtatOperationnel( xml::xistream& xis )
 {
-  xis >> xml::start( "mpia:EtatOperationnelEntiteOrganisationnelle" )
+ // xis >> xml::start( "mpia:EtatOperationnelEntiteOrganisationnelle" )
+   xis  >> xml::attribute( "id", sQname_ )
         >> xml::content( "mpia:EtatCarburants", iEtatCarburants_ )
         >> xml::content( "mpia:EtatEquipements", iEtatEquipements_)
         >> xml::content( "mpia:EtatMunitions", iEtatMunitions_)
         >> xml::content( "mpia:EtatOperationnel", etatOpsGeneral_ )
-        >> xml::content( "mpia:EtatPersonnel", iEtatPersonnel_)
-      >> xml::end();
+        >> xml::content( "mpia:EtatPersonnel", iEtatPersonnel_);
+    //  >> xml::end();
+  std::string sId = sQname_.substr( 5 );
+  std::istringstream is( sId );
+  is >> id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -181,4 +185,13 @@ void EtatOperationnel::Update( dispatcher::Agent& agent )
   //@TODO add Dotation
   iEtatCarburants_ = 4;
   iEtatMunitions_  = 4;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EtatOperationnel GetId
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+unsigned int EtatOperationnel::GetId() const
+{
+  return id_;
 }

@@ -72,6 +72,7 @@ namespace plugins
       ///! @name Operations
       //@{
       void SerializeDestinataires( xml::xostream& xos, const std::string sQNameRapport ) const;
+      void ReadUnites( xml::xistream& xis );
       //@}
 
     protected:
@@ -81,7 +82,8 @@ namespace plugins
       Unite_ABC* author_;
       Unite_ABC* dest_;
       RapportManager& rapportManager_;
-
+      int cpt_;
+      std::map< unsigned, UniteAgent* > unites_;
       //@}
     };
 

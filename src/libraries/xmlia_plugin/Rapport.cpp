@@ -23,7 +23,23 @@
 #include "xmlia_plugin/UniteFormation.h"
 #include "xmlia_plugin/UniteAgent.h"
 
+
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
+#include <iostream>
+
+namespace bpt = boost::posix_time;
+
 using namespace plugins::xmlia;
+
+namespace
+{
+  std::string CurrentTime()
+  {
+    return bpt::to_iso_extended_string( bpt::second_clock::local_time() );
+  }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Rapport constructor
@@ -33,19 +49,44 @@ Rapport::Rapport( RapportManager& manager, xml::xistream& xis )
 : rapportManager_( manager )
 {
   std::string sAuthorQname;
+  std::string sDestQname;
 
   xis >> xml::start( "mpia:Rapport" )
         >> xml::start( "mpia:EstRedigePar_EntiteOrganisationnelle" )
-        >> xml::content( "mpia:refid", sAuthorQname )
+          >> xml::content( "mpia:refid", sAuthorQname )
         >> xml::end()
-      >> xml::end();
-  //Hack assert that author and dest are in the same order than the send message
-  xis >> xml::start( "mpia:Unite" );
-  author_ = new UniteAutomat( xis );
-  xis >> xml::end();
-  xis >> xml::start( "mpia:Unite" );
-  dest_   = new UniteFormation( xis );
-  xis >> xml::end();
+      >> xml::end()
+      >> xml::start( "mpia:AssociationInstanceObjetAdresse" )
+        >> xml::start( "mpia:AssocieCommeSujet_InstanceObjet" )
+          >> xml::content( "mpia:refid", sDestQname )
+        >> xml::end()
+      >> xml::end(); 
+
+  unsigned int idAuthor = Unite_ABC::QNameToId( sAuthorQname );
+  unsigned int idDest = Unite_ABC::QNameToId( sDestQname );
+
+  cpt_ = 0;
+  xis >> xml::list( "mpia:Unite", *this, &Rapport::ReadUnites );
+}
+
+void Rapport::ReadUnites( xml::xistream& xis )
+{
+  //Hack replace by a xmlia data like group to determine type
+  if( cpt_ == 0)
+  {
+    author_ = new UniteAutomat( xis );
+    cpt_++;
+  }
+  else if( cpt_ == 1)
+  {
+    dest_   = new UniteFormation( xis );
+    cpt_++;
+  }
+  else
+  {
+    UniteAgent* unit = new UniteAgent( xis );
+    unites_.insert( std::pair< unsigned, UniteAgent* >( unit->GetId(), unit ) );
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +113,12 @@ Rapport::~Rapport()
 {
   delete author_;
   delete dest_;
+
+  for( std::map< unsigned, UniteAgent* >::iterator it = unites_.begin(); it != unites_.end(); it++ )
+  {
+    delete it->second;
+  }
+  unites_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,12 +141,12 @@ void Rapport::Serialize( xml::xostream& xos ) const
 {
   std::string sQnameRapport = QName();
 
-  std::string time = "TODO";//@TODO
+  std::string time = CurrentTime();
 
   xos << xml::start( "mpia:MPIA_Message" )
         << xml::attribute( "xmlns:mpia", "urn:MPIA-schema" )
-        << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-        << xml::attribute( "xsi:schemaLocation", "urn:MPIA-schema" )
+        //<< xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+        //<< xml::attribute( "xsi:schemaLocation", "urn:MPIA-schema" )
         << xml::start( "mpia:Header" )
           << xml::content( "mpia:VersionSchemaXMLIA", "V3.0-b" )
          << xml::content( "mpia:Name", type_ )
@@ -107,7 +154,7 @@ void Rapport::Serialize( xml::xostream& xos ) const
         << xml::start( "mpia:Entities" )
           << xml::start( "mpia:Rapport" )
             << xml::attribute( "id", sQnameRapport )
-            << xml::content( "mpia:Confirmation", "ASS" )//@TODOFORCE
+            << xml::content( "mpia:Confirmation", "REP" )//@TODOFORCE
             << xml::content( "mpia:GDHRapport", time )
             << xml::start( "mpia:EstRedigePar_EntiteOrganisationnelle" )
               << xml::content( "mpia:refid", author_->QName() )

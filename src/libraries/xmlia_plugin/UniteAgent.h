@@ -52,6 +52,8 @@ public:
     virtual void SerializeIncludeEntities( xml::xostream& xos, const std::string& sQnameRapport  ) const;
     void Update( dispatcher::Agent& agent );
     bool IsSide( unsigned int idSide) const;
+    void SetPosition( Point* pt );
+    void SetEtatOps( EtatOperationnel* etatOps );
     //@}
 
 private:

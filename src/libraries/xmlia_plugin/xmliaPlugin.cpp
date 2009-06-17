@@ -17,6 +17,8 @@
 #include "dispatcher/Model.h"
 #include "UpdateListener.h"
 
+#include <xeumeuleu/xml.h>
+
 using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
@@ -30,8 +32,14 @@ XmliaPlugin::XmliaPlugin( dispatcher::Model& model, xml::xistream& xis, dispatch
     , rapportManager_( new RapportManager( model_ ) )
     , extensionFactory_( new ExtensionFactory( *publisher_, *rapportManager_, *simulation_, model_ ) )
     , listener_( new UpdateListener( *publisher_, model_, simulation ) )
+    , nCptTick_(0)
 {
     model_.RegisterFactory( *extensionFactory_ );
+    
+    xis >> xml::attribute( "export", bExportActivation_ )
+        >> xml::attribute( "import", bImportActivation_ )
+        >> xml::attribute( "nbTicks", nTick_ )
+        >> xml::attribute( "webservice", sWebServiceUrl_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,14 +57,34 @@ XmliaPlugin::~XmliaPlugin()
 // -----------------------------------------------------------------------------
 void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 {
-    bool toto = true; // TEMP de test
-    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick || toto )
+    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
     {
-        simulation_->Update( *message.msg.u.msg_control_end_tick );
-        publisher_->CommitOrders();
-        listener_->PullOrders();
+        if( nCptTick_ == 0 )
+        {
+          //@HackTest xml
+          /*
+          xml::xifstream xis( "D:/Projets/sword_trunk/data/sitrep_example.xml" );
+          rapportManager_->Read(xis);
+          rapportManager_->Send();
+          */
 
-        publisher_->PushReports();
+          simulation_->Update( *message.msg.u.msg_control_end_tick );//@NOTE, keep could be usefull for other message
+
+          if( bExportActivation_ )
+          {
+            rapportManager_->Send();
+          }
+
+          if( bImportActivation_ )
+          {
+            rapportManager_->CleanReceivedRapport();
+            //@TODO branche to webservice and RapportManager read
+            rapportManager_->UpdateSimulation();
+          }
+
+          
+        }
+        nCptTick_ = ( nCptTick_ + 1 ) % nTick_ ;
     }
 }
 
@@ -64,7 +92,7 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 // Name: xmliaPlugin::NotifyClientAuthenticated
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
+void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& profile )
 {
     // NOTHING
 }

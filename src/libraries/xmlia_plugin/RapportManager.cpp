@@ -56,10 +56,12 @@ RapportManager::~RapportManager()
 // -----------------------------------------------------------------------------
 void RapportManager::Send()const
 {
-  for( std::map< unsigned, Sitrep* >::const_iterator it = rapports_.begin(); it != rapports_.end(); it++ )
+  for( std::vector< Sitrep* >::const_iterator it = receivedRapports_.begin(); it != receivedRapports_.end(); it++ )
   {
     xml::xostringstream xos;
-    it->second->Serialize( xos );
+    (*it)->Serialize( xos );
+    //@HackTest xml
+    //std::string test = xos.str();
     //@TODO link stream to webservice send, by call or return
   }
 }
@@ -106,7 +108,7 @@ void RapportManager::Read( xml::xistream& xis )
         >> xml::start( "mpia:Header" )
           >> xml::content( "mpia:Name", type )
         >> xml::end()
-        >> xml::start( "mpia:Entites" );
+        >> xml::start( "mpia:Entities" );
 
   if( type == "SITREP" )
   {

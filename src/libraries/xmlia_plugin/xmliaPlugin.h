@@ -76,6 +76,11 @@ private:
     std::auto_ptr< RapportManager > rapportManager_;
     std::auto_ptr< ExtensionFactory > extensionFactory_;
     std::auto_ptr< UpdateListener > listener_;
+    bool  bExportActivation_;
+    bool  bImportActivation_;
+    unsigned int nTick_;
+    std::string sWebServiceUrl_;
+    unsigned int nCptTick_;
     //@}
 };
 

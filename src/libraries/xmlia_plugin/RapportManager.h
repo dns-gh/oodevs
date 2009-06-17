@@ -36,7 +36,7 @@ namespace xmlia
 // =============================================================================
 class RapportManager
 {
-
+//@GLOBAL REFACTOR replace pointer by autoptr
 public:
     //! @name Constructors/Destructor
     //@{
@@ -66,7 +66,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::map< unsigned, Sitrep* > rapports_;//@refactor when new rapport type will be added
+    std::map< unsigned, Sitrep* > rapports_;//@refactor when new report type will be added
     std::vector< Sitrep* > receivedRapports_;
     dispatcher::Model& model_;
     //@}

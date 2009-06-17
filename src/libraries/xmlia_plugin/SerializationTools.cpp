@@ -15,7 +15,7 @@ namespace plugins
 {
 namespace xmlia
 {
-    xml::xostream& operator<<( xml::xostream& xos, const Namespaces& )//@TODO set final namespace
+    xml::xostream& operator<<( xml::xostream& xos, const Namespaces& )
     {
         xos << xml::attribute( "xmlns", "urn:sisostds:bml:coalition:draft:cbml:1" )
             << xml::attribute( "xmlns:mpia", "urn:MPIA-schema" )

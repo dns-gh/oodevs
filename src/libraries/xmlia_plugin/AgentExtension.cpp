@@ -48,10 +48,20 @@ AgentExtension::~AgentExtension()
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 {
+    //@move sort in rapport manager depending to report type
     const bool reportPosition = ( attributes.m.positionPresent || attributes.m.hauteurPresent ) && simulation_.MustReportPosition( lastUpdate_ );
     const bool reportStatus   = ( attributes.m.etat_operationnelPresent || attributes.m.dotation_eff_materielPresent || attributes.m.dotation_eff_personnelPresent ) && simulation_.MustReportStatus( lastUpdate_ );
     if( reportPosition || reportStatus )
-        rapportManager_.DoUpdate( holder_ );
+    {
+        try
+        {
+          rapportManager_.DoUpdate( holder_ );
+        }
+        catch( std::exception& e )
+        {
+          MT_LOG_ERROR_MSG( "XMLIA error storing report information: " << e.what() );
+        }      
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -60,5 +70,12 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitDetection& message )
 {
-    rapportManager_.DoUpdate( holder_, model_.agents_.Get( message.detected_unit_oid ) );
+    try
+    {
+      rapportManager_.DoUpdate( holder_, model_.agents_.Get( message.detected_unit_oid ) );
+    }
+    catch( std::exception& e )
+    {
+      MT_LOG_ERROR_MSG( "XMLIA error storing report information: " << e.what() );
+    }
 }
