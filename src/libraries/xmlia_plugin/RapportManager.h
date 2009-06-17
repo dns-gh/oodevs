@@ -14,6 +14,8 @@ namespace dispatcher
 {
   class Model;
   class Agent;
+  class SimulationPublisher_ABC;
+  class Profile_ABC;
 }
 
 namespace xml
@@ -40,13 +42,16 @@ class RapportManager
 public:
     //! @name Constructors/Destructor
     //@{
-    RapportManager( dispatcher::Model& model );
+    RapportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher );
     virtual ~RapportManager();
     //@}
 
     ///! @name Operations
     //@{
     dispatcher::Model& GetModel() const;
+    dispatcher::SimulationPublisher_ABC& GetSimulationPublisher() const;
+    dispatcher::Profile_ABC* GetClientProfile() const;
+    void SetClientProfile( dispatcher::Profile_ABC* profile );
     //@}
 
     ///! @name Export Operations
@@ -69,6 +74,8 @@ private:
     std::map< unsigned, Sitrep* > rapports_;//@refactor when new report type will be added
     std::vector< Sitrep* > receivedRapports_;
     dispatcher::Model& model_;
+	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
+    dispatcher::Profile_ABC* clientProfile_;
     //@}
 };
 

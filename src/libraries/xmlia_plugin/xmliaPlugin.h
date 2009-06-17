@@ -45,7 +45,7 @@ class XmliaPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             XmliaPlugin( dispatcher::Model& model, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation );
+             XmliaPlugin( dispatcher::Model& model, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulationPublisher );
     virtual ~XmliaPlugin();
     //@}
 
@@ -71,6 +71,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::Model& model_;
+	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
     std::auto_ptr< PublisherActor > publisher_;
     std::auto_ptr< Simulation > simulation_;
     std::auto_ptr< RapportManager > rapportManager_;

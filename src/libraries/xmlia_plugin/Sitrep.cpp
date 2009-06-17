@@ -16,12 +16,15 @@
 #include "dispatcher/Formation.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Agent.h"
+#include "dispatcher/Model.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 
-#include "xmlia_plugin/RapportManager.h"
-#include "xmlia_plugin/Unite_ABC.h"
-#include "xmlia_plugin/UniteAutomat.h"
-#include "xmlia_plugin/UniteFormation.h"
-#include "xmlia_plugin/UniteAgent.h"
+#include "RapportManager.h"
+#include "Unite_ABC.h"
+#include "UniteAutomat.h"
+#include "UniteFormation.h"
+#include "UniteAgent.h"
+#include "Point.h"
 #include "xmlia_plugin/Point.h"
 #include "xmlia_plugin/EtatOperationnel.h"
 
@@ -139,13 +142,38 @@ void Sitrep::ReadEtatOps( xml::xistream& xis )
 
 // -----------------------------------------------------------------------------
 // Name: Sitrep::UpdateSimulation
-// Created: MGD 2009-06-12
+// Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
 void Sitrep::UpdateSimulation()
 {
-  //@TODO add filter user profil
-  for( std::map< unsigned, UniteAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
-  {
+    dispatcher::SimulationPublisher_ABC& simPublisher = rapportManager_.GetSimulationPublisher();
+    for( std::map< unsigned, UniteAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
+    {
     //@TODO link to magic action
-  }
+      UniteAgent* reportAgent = it-> second;
+      dispatcher::Agent* simAgent = rapportManager_.GetModel().agents_.Find( it->first );
+      if ( simAgent != 0 )
+      {
+          {
+              simulation::UnitMagicAction asnMsg;
+
+              {
+                  ASN1T_CoordLatLong utm;
+                  asnMsg().action.t                        = T_MsgUnitMagicAction_action_move_to;
+                  asnMsg().oid = reportAgent->GetId();
+                  reportAgent->GetLocalization()->FillLatLong( utm );
+                  asnMsg().action.u.move_to = &utm;
+                  asnMsg.Send( simPublisher );
+              }
+
+              {
+              //    ASN1T_MagicActionPartialRecovery asnMagicAction;
+              //    asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
+              //    asnMsg().action.u.recompletement_partiel = &asnMagicAction;
+              //    //@TODO: fill msg
+              //    asnMsg.Send( simPublisher );
+              }
+          }
+      }
+    }
 }

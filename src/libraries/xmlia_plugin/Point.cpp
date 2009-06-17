@@ -88,6 +88,16 @@ void Point::Update( dispatcher::Agent& agent )
   longitude_ = agent.position_.longitude;
 }
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: Point::Update
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+void Point::FillLatLong( ASN1T_CoordLatLong& utm )
+{
+    utm.latitude = ( ASN1REAL ) latitude_;
+    utm.longitude = ( ASN1REAL ) longitude_;
 // -----------------------------------------------------------------------------
 // Name: Point GetId
 // Created: MGD 2009-06-12
@@ -95,4 +105,4 @@ void Point::Update( dispatcher::Agent& agent )
 unsigned int Point::GetId() const
 {
   return id_;
-}
+}}

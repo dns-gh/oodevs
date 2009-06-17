@@ -12,6 +12,8 @@
 
 #include "Entity_ABC.h"
 
+struct ASN1T_CoordLatLong;
+
 namespace plugins
 {
 namespace xmlia
@@ -39,6 +41,7 @@ public:
     void Serialize( xml::xostream& xos, const std::string& sQnameRapport ) const;
     virtual std::string QName() const;
     void Update( dispatcher::Agent& agent );
+    void FillLatLong( ASN1T_CoordLatLong& utm );
     unsigned int GetId() const;
     //@}
 

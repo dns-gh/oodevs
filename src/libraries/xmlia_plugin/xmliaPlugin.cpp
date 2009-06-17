@@ -25,13 +25,16 @@ using namespace plugins::xmlia;
 // Name: XmliaPlugin constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-XmliaPlugin::XmliaPlugin( dispatcher::Model& model, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation )
+XmliaPlugin::XmliaPlugin( dispatcher::Model& model,
+                          xml::xistream& xis,
+                          dispatcher::SimulationPublisher_ABC& simulationPublisher )
     : model_( model )
+	, simulationPublisher_ ( simulationPublisher )
     , publisher_( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
     , simulation_( new Simulation() )
-    , rapportManager_( new RapportManager( model_ ) )
+    , rapportManager_( new RapportManager( model_, simulationPublisher_ ) )
     , extensionFactory_( new ExtensionFactory( *publisher_, *rapportManager_, *simulation_, model_ ) )
-    , listener_( new UpdateListener( *publisher_, model_, simulation ) )
+    , listener_( new UpdateListener( *publisher_, model_, simulationPublisher_ ) )
     , nCptTick_(0)
 {
     model_.RegisterFactory( *extensionFactory_ );
@@ -92,16 +95,16 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 // Name: xmliaPlugin::NotifyClientAuthenticated
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& profile )
+void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
 {
-    // NOTHING
+    //rapportManager_.SetClientProfile( profile );
 }
 
 // -----------------------------------------------------------------------------
 // Name: XmliaPlugin::NotifyClientLeft
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-void XmliaPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
+void XmliaPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client )
 {
     // NOTHING
 }

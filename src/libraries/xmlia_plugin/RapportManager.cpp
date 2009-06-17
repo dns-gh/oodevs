@@ -13,6 +13,7 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Model.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 
 #include "xmlia_plugin/Sitrep.h"
 
@@ -25,8 +26,10 @@ using namespace plugins::xmlia;
 // Name: RapportManager constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-RapportManager::RapportManager( dispatcher::Model& model)
+RapportManager::RapportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher )
 : model_( model )
+, simulationPublisher_( simulationPublisher )
+, clientProfile_( 0 )
 {
     // NOTHING
 }
@@ -115,6 +118,7 @@ void RapportManager::Read( xml::xistream& xis )
     Sitrep* newSitrep = new Sitrep( *this , xis );
     newSitrep->ReadEntities( xis );
     receivedRapports_.push_back( newSitrep );
+
   }
 }
 
@@ -139,6 +143,34 @@ dispatcher::Model& RapportManager::GetModel() const
 {
   return model_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: RapportManager::SerializeSides
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+dispatcher::SimulationPublisher_ABC& RapportManager::GetSimulationPublisher() const
+{
+  return simulationPublisher_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RapportManager::SerializeSides
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+dispatcher::Profile_ABC* RapportManager::GetClientProfile() const
+{
+  return clientProfile_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RapportManager::SerializeSides
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+void RapportManager::SetClientProfile( dispatcher::Profile_ABC* profile )
+{
+  clientProfile_ = profile;
+}
+
 
 void RapportManager::CleanReceivedRapport()
 {

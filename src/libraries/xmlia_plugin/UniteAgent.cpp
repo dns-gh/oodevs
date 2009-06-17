@@ -161,6 +161,25 @@ bool UniteAgent::IsSide( unsigned int idSide) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UniteAgent::GetLocalization
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+Point* UniteAgent::GetLocalization() const
+{
+  return localisation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UniteAgent::GetOperationalState
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+EtatOperationnel* UniteAgent::GetOperationalState() const
+{
+  return etatOps_;
+}
+}
+
+// -----------------------------------------------------------------------------
 // Name: UniteAgent::SetPosition
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
