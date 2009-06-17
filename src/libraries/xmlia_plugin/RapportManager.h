@@ -15,6 +15,7 @@ namespace dispatcher
   class Model;
   class Agent;
   class SimulationPublisher_ABC;
+  class ClientPublisher_ABC;
   class Profile_ABC;
 }
 
@@ -51,7 +52,9 @@ public:
     dispatcher::Model& GetModel() const;
     dispatcher::SimulationPublisher_ABC& GetSimulationPublisher() const;
     dispatcher::Profile_ABC* GetClientProfile() const;
-    void SetClientProfile( dispatcher::Profile_ABC* profile );
+    void SetClientProfile( dispatcher::Profile_ABC& profile );
+    dispatcher::ClientPublisher_ABC* GetClientPublisher() const;
+    void SetClientPublisher( dispatcher::ClientPublisher_ABC& clientPublisher );
     //@}
 
     ///! @name Export Operations
@@ -76,6 +79,7 @@ private:
     dispatcher::Model& model_;
 	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
     dispatcher::Profile_ABC* clientProfile_;
+    dispatcher::ClientPublisher_ABC* clientPublisher_;
     //@}
 };
 

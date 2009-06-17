@@ -97,7 +97,8 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 // -----------------------------------------------------------------------------
 void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
 {
-    //rapportManager_.SetClientProfile( profile );
+    rapportManager_->SetClientPublisher( client );
+    rapportManager_->SetClientProfile( profile );
 }
 
 // -----------------------------------------------------------------------------

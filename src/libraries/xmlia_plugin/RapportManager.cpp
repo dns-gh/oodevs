@@ -13,7 +13,9 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Model.h"
+#include "dispatcher/Profile_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/ClientPublisher_ABC.h"
 
 #include "xmlia_plugin/Sitrep.h"
 
@@ -30,6 +32,7 @@ RapportManager::RapportManager( dispatcher::Model& model, dispatcher::Simulation
 : model_( model )
 , simulationPublisher_( simulationPublisher )
 , clientProfile_( 0 )
+, clientPublisher_( 0 )
 {
     // NOTHING
 }
@@ -119,12 +122,27 @@ void RapportManager::Read( xml::xistream& xis )
     newSitrep->ReadEntities( xis );
     receivedRapports_.push_back( newSitrep );
 
+    dispatcher::Profile_ABC* profile = GetClientProfile();
+    dispatcher::ClientPublisher_ABC* target = GetClientPublisher();
+
+    if ( profile != 0 && target != 0 )
+    {
+        ASN1T_MsgsMessengerToClient answer;
+        answer.t = T_MsgsMessengerToClient_msg_text_message;
+        ASN1T_MsgTextMessage message;
+        answer.u.msg_text_message = &message;
+
+        message.source.profile = profile->GetName().c_str();
+        message.target.profile = profile->GetName().c_str();
+        message.message = "SITREP received";//xis.;
+        target->Send( answer );
+    }
   }
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: RapportManager::Read
+// Name: RapportManager::UpdateSimulation
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
 void RapportManager::UpdateSimulation() const
@@ -136,7 +154,7 @@ void RapportManager::UpdateSimulation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RapportManager::SerializeSides
+// Name: RapportManager::GetModel
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
 dispatcher::Model& RapportManager::GetModel() const
@@ -145,7 +163,7 @@ dispatcher::Model& RapportManager::GetModel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RapportManager::SerializeSides
+// Name: RapportManager::GetSimulationPublisher
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
 dispatcher::SimulationPublisher_ABC& RapportManager::GetSimulationPublisher() const
@@ -154,7 +172,7 @@ dispatcher::SimulationPublisher_ABC& RapportManager::GetSimulationPublisher() co
 }
 
 // -----------------------------------------------------------------------------
-// Name: RapportManager::SerializeSides
+// Name: RapportManager::GetClientProfile
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
 dispatcher::Profile_ABC* RapportManager::GetClientProfile() const
@@ -163,12 +181,31 @@ dispatcher::Profile_ABC* RapportManager::GetClientProfile() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RapportManager::SerializeSides
+// Name: RapportManager::SetClientProfile
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
-void RapportManager::SetClientProfile( dispatcher::Profile_ABC* profile )
+void RapportManager::SetClientProfile( dispatcher::Profile_ABC& profile )
 {
-  clientProfile_ = profile;
+  clientProfile_ = &profile;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: RapportManager::GetClientPublisher
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+dispatcher::ClientPublisher_ABC* RapportManager::GetClientPublisher() const
+{
+    return clientPublisher_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RapportManager::SetClientPublisher
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+void RapportManager::SetClientPublisher( dispatcher::ClientPublisher_ABC& publisher )
+{
+    clientPublisher_ = &publisher;
 }
 
 
