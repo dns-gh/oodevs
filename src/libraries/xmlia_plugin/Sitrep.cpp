@@ -155,15 +155,27 @@ void Sitrep::UpdateSimulation()
       if ( simAgent != 0 )
       {
           {
-              simulation::UnitMagicAction asnMsg;
-
               {
+                  simulation::UnitMagicAction asnMsg;
                   ASN1T_CoordLatLong utm;
                   asnMsg().action.t                        = T_MsgUnitMagicAction_action_move_to;
                   asnMsg().oid = reportAgent->GetId();
                   reportAgent->GetLocalization()->FillLatLong( utm );
                   asnMsg().action.u.move_to = &utm;
                   asnMsg.Send( simPublisher );
+              }
+
+              {
+                  /*ASN1T_MsgIntelligenceCreation& intelligenceMsg;
+                  plugins::messenger::IntelligenceCreationRequest asn;
+                  asn().intelligence.name = name.ascii();
+                  asn().intelligence.nature = symbol.c_str();
+                  asn().intelligence.level = (ASN1T_EnumNatureLevel) level.GetId();
+                  asn().intelligence.diplomacy = ConvertToDiplomacy( karma );
+                  asn().intelligence.embarked = mounted;
+                  converter_.ConvertToGeo( position, asn().intelligence.location );
+                  asn().intelligence.formation = superior.GetId();
+                  asn.Send( publisher_ );*/
               }
 
               {
