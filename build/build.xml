@@ -15,7 +15,7 @@
     </svn>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword-OT"/>
-    <property name="version.major" value="3.1.1"/>
+    <property name="version.major" value="3.1.2"/>
     <property name="version.minor" value="${version.major}.${svn.version}"/>
     <property name="version.version" value="${version.minor}"/><!-- required for rc extension -->
 
@@ -611,16 +611,16 @@
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_MODEL=france"/>
-            <arg value="/X!include sword-ot.nsh"/>
-        </nsis>
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=worldwide"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped" script="sword-ot-scalped.nsi" license="true">
+        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=france"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot-scalped" script="sword-ot-scalped.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=france"/>

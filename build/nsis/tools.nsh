@@ -180,8 +180,8 @@
 ;------------------------------------------------------------------------------
 !macro OT.AddCommonConfig
 
-    WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}\Common" "Language" "$(OT_LANG)"
-    WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}\Common" "DataDirectory" "${INSTDATADIR}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}\Common" "Language" "$(OT_LANG)"
+    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}\Common" "DataDirectory" "${INSTDATADIR}"
 
 !macroend
 
@@ -277,7 +277,7 @@ FunctionEnd
     Section "${ComponentName}"
         SetOutPath "$INSTDIR\installation files"
         File "${OUTDIR}\SWORD ${ComponentName}_${PLATFORM}.exe"
-        WriteRegStr ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}\Common\Components\${ComponentName}" "RootDirectory" "${INSTDATADIR}\${ComponentName}\applications"
+        WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}\Common\Components\${ComponentName}" "RootDirectory" "${INSTDATADIR}\${ComponentName}\applications"
         ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /D=$INSTDIR\${ComponentName}'
     SectionEnd
 
@@ -290,7 +290,7 @@ FunctionEnd
 
     IfFileExists "$INSTDIR\${ComponentName}\uninstall.exe" 0 +3
         ExecWait '"$INSTDIR\${ComponentName}\uninstall.exe" /S _?=$INSTDIR\${ComponentName}'
-        DeleteRegKey ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}\Common\Components\${ComponentName}"
+        DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}\Common\Components\${ComponentName}"
 
 !macroend
 
@@ -315,7 +315,7 @@ FunctionEnd
     RmDir /r "$SMPROGRAMS\${APP_NAME}"
     DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
     ; TODO: prompt keep / delete preferences
-    ; DeleteRegKey ${INSTDIR_REG_ROOT} "Software\MASA Group\${APP_NAME}"
+    ; DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}"
     
     ; unregister .otpak extension association
     DeleteRegKey HKCR ".otpak"

@@ -9,6 +9,7 @@
 
 ;..................................................................................................
 !define APP_NAME "SCALPED"
+!define COMPANY_NAME "MASA Group"
 
 ;........................................
 ; defined from ant call
@@ -39,7 +40,7 @@
 
 Name "${APP_NAME}"
 OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MAJOR}.exe"
-InstallDir "$PROGRAMFILES\${APP_NAME}"
+InstallDir "$PROGRAMFILES\${COMPANY_NAME}\${APP_NAME}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL
