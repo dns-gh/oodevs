@@ -68,8 +68,9 @@ void RapportManager::Send( Publisher_ABC& publisher)const
     xml::xostringstream xos;
     (*it)->Serialize( xos );
     //@HackTest xml
-    //std::string test = xos.str();
-    //publisher.PushReports();
+    //std::string xmliaMessage = xos.str();
+    //std::string urlId = publisher.GetUrlId();
+    //publisher.PushReport( xmliaMessage, urlId );
     //@TODO link stream to webservice send, by call or return
   }
   publisher.PushReports();// pour test
@@ -250,6 +251,11 @@ void RapportManager::SetClientPublisher( dispatcher::ClientPublisher_ABC& publis
     clientPublisher_ = &publisher;
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: RapportManager::CleanReceivedRapport
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
 
 void RapportManager::CleanReceivedRapport()
 {

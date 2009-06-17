@@ -50,13 +50,13 @@ void Publisher::PushReports()
     {
        //Demande requête pour envoie des données au webService
         boost::asio::io_service io_service;
-        std::string webServicePath = "/plouguerneau/index.html";
-        std::string webServiceHost = "localhost";
-        TCP_Client client(io_service, "reception", webServicePath, webServiceHost );
+        std::string webServicePath = "/ServiceXmlIa/xmlias/type";
+        std::string webServiceHost = "swiwas01.chb.fr.ibm.com";
+        TCP_Client client(io_service, "sending", webServicePath, webServiceHost );
         io_service.run();
         std::string content = client.GetContent();
         xml::xistringstream streamContent( content );
-        //std::string webServicePathForSendingMessage = ParseGetRequest( streamContent );
+        
     }
     catch (std::exception& e)
     {
@@ -74,8 +74,8 @@ std::string Publisher::GetUrlReports()
     {
         //Demande requête pour envoie des données au webService
         boost::asio::io_service io_service;
-        std::string webServicePath = "/plouguerneau/index.html";
-        std::string webServiceHost = "localhost";
+        std::string webServicePath = "/ServiceXmlIa/xmlias/type";
+        std::string webServiceHost = "swiwas01.chb.fr.ibm.com";
         TCP_Client client(io_service, "reception", webServicePath, webServiceHost );
         io_service.run();
         std::string content = client.GetContent();
@@ -137,13 +137,50 @@ void Publisher::PullOrder( const std::string& message, ResponseHandler_ABC& hand
 {
     //Récupération des ordres venant du webService 
 }
-
 /*
 // -----------------------------------------------------------------------------
-// Name: Publisher::ParseGetRequest
-// Created: SLG 2008-05-16
+// Name: Publisher::GetUrlId
+// Created: SLG 2008-05-26
 // -----------------------------------------------------------------------------
-std::string Publisher::ParseHeadRequest( xml::xistringstream )
+std::string Publisher::GetUrlId()
 {
-    return "toto";
+    try
+    {
+        //Demande requête pour envoie des données au webService
+        boost::asio::io_service io_service;
+        std::string webServicePath = "/ServiceXmlIa/xmlias/type";
+        std::string webServiceHost = "swiwas01.chb.fr.ibm.com";
+        TCP_Client client(io_service, "sending", webServicePath, webServiceHost );
+        io_service.run();
+        std::string content = client.GetContent();
+        return content;
+    }
+    catch (std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
 }*/
+/*
+// -----------------------------------------------------------------------------
+// Name: Publisher::PushReports
+// Created: SBO 2008-05-26
+// -----------------------------------------------------------------------------
+void Publisher::PushReports( const std::string& xmliaMessage, const std::string& urlId )
+{
+    try
+    {
+        std::string webServiceHost = url.substr( 7, 23);
+        std::string webServicePath = url.substr( 36, 35); 
+        boost::asio::io_service io_service;
+
+        TCP_Client client(io_service, "sending", webServicePath, webServiceHost );
+        io_service.run();
+        std::string content = client.GetContent();
+        return content;
+    }
+    catch (std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+}
+*/

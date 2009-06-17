@@ -50,6 +50,8 @@ public:
     void CommitOrders();
     virtual std::string GetUrlReports() { return "";};
     virtual std::string GetXmliaMessage( const std::string& url ){ return "";};
+    //virtual std::string GetUrlId() { return ""; };
+    //virtual std::string PushReport( const std::string& xmliaMessage, const std::string& urlId ){ return ""; };
     //@}
 
 private:

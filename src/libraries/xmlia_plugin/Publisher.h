@@ -50,6 +50,8 @@ public:
     virtual xml::xostream& CreateReport();
     virtual std::string GetUrlReports();
     virtual std::string GetXmliaMessage( const std::string& url );
+    //virtual std::string GetUrlId();
+    //virtual std::string PushReport( const std::string& xmliaMessage, const std::string& urlId );
     
     //@}
 

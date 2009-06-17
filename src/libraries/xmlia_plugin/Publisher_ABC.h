@@ -46,6 +46,8 @@ public:
     virtual void PullOrder( const std::string& message, ResponseHandler_ABC& handler ) = 0;
     virtual std::string GetUrlReports() = 0;
     virtual std::string GetXmliaMessage( const std::string& url ) = 0;
+    //virtual std::string GetUrlId() = 0;
+    //virtual std::string PushReport( const std::string& xmliaMessage, const std::string& urlId ) = 0;
     //@}
 };
 
