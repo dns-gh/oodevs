@@ -177,7 +177,6 @@ EtatOperationnel* UniteAgent::GetOperationalState() const
 {
   return etatOps_;
 }
-}
 
 // -----------------------------------------------------------------------------
 // Name: UniteAgent::SetPosition

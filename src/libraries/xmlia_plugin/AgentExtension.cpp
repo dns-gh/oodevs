@@ -13,6 +13,7 @@
 #include "RapportManager.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.h>
 
 
