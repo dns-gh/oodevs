@@ -75,12 +75,13 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 
           if( bExportActivation_ )
           {
-            rapportManager_->Send();
+            rapportManager_->Send( *publisher_ );
           }
 
           if( bImportActivation_ )
           {
             rapportManager_->CleanReceivedRapport();
+            rapportManager_->Receive(*publisher_);
             //@TODO branche to webservice and RapportManager read
             rapportManager_->UpdateSimulation();
           }

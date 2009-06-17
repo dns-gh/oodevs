@@ -18,9 +18,9 @@
 #include <boost/asio.hpp>
 #include "TCP_Client.h"
 
-using namespace plugins::xmlia;
-using boost::asio::ip::tcp;
 
+using boost::asio::ip::tcp;
+using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
 // Name: Publisher constructor
@@ -46,13 +46,17 @@ Publisher::~Publisher()
 // -----------------------------------------------------------------------------
 void Publisher::PushReports()
 {
-   // Récupération des données a envoyer (getReports)
-   //Envoie des données au webService
     try
     {
+       //Demande requête pour envoie des données au webService
         boost::asio::io_service io_service;
-        TCP_Client client(io_service, "sending");
+        std::string webServicePath = "/plouguerneau/index.html";
+        std::string webServiceHost = "localhost";
+        TCP_Client client(io_service, "reception", webServicePath, webServiceHost );
         io_service.run();
+        std::string content = client.GetContent();
+        xml::xistringstream streamContent( content );
+        //std::string webServicePathForSendingMessage = ParseGetRequest( streamContent );
     }
     catch (std::exception& e)
     {
@@ -64,17 +68,48 @@ void Publisher::PushReports()
 // Name: Publisher::GetReports
 // Created: AGE 2008-06-06
 // -----------------------------------------------------------------------------
-std::string Publisher::GetReports()
+std::string Publisher::GetUrlReports()
 {
-    boost::recursive_mutex::scoped_lock locker( mutex_ );
-    std::string result;
-    if( reports_.get() != 0 )
+    try
     {
-        *reports_ << xml::end();
-        result = reports_->str();
-        reports_.release();
+        //Demande requête pour envoie des données au webService
+        boost::asio::io_service io_service;
+        std::string webServicePath = "/plouguerneau/index.html";
+        std::string webServiceHost = "localhost";
+        TCP_Client client(io_service, "reception", webServicePath, webServiceHost );
+        io_service.run();
+        std::string content = client.GetContent();
+        return content;
     }
-    return result;
+    catch (std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+    
+}
+
+// -----------------------------------------------------------------------------
+// Name: Publisher::GetMessage
+// Created: SLG 2009-06-06
+// -----------------------------------------------------------------------------
+std::string Publisher::GetXmliaMessage( const std::string& url )
+{
+    try
+    {
+        std::string webServiceHost = url.substr( 7, 23);
+        std::string webServicePath = url.substr( 36, 35); 
+        boost::asio::io_service io_service;
+        
+        TCP_Client client(io_service, "reception", webServicePath, webServiceHost );
+        io_service.run();
+        std::string content = client.GetContent();
+        return content;
+    }
+    catch (std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+
 }
 
 // -----------------------------------------------------------------------------
@@ -102,3 +137,13 @@ void Publisher::PullOrder( const std::string& message, ResponseHandler_ABC& hand
 {
     //Récupération des ordres venant du webService 
 }
+
+/*
+// -----------------------------------------------------------------------------
+// Name: Publisher::ParseGetRequest
+// Created: SLG 2008-05-16
+// -----------------------------------------------------------------------------
+std::string Publisher::ParseHeadRequest( xml::xistringstream )
+{
+    return "toto";
+}*/

@@ -48,6 +48,8 @@ public:
     virtual xml::xostream& CreateReport();
     virtual void PullOrder( const std::string& message, ResponseHandler_ABC& handler );
     void CommitOrders();
+    virtual std::string GetUrlReports() { return "";};
+    virtual std::string GetXmliaMessage( const std::string& url ){ return "";};
     //@}
 
 private:

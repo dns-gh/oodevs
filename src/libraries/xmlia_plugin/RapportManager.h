@@ -30,6 +30,7 @@ namespace plugins
 namespace xmlia
 {
   class Sitrep;
+  class Publisher_ABC;
 
 // =============================================================================
 /** @class  RapportManager
@@ -59,7 +60,8 @@ public:
 
     ///! @name Export Operations
     //@{
-    void Send()const;
+    void Send( Publisher_ABC& publisher )const;
+    void Receive( Publisher_ABC& publisher);
     void DoUpdate( dispatcher::Agent& agent );
     void DoUpdate( dispatcher::Agent& agent,  dispatcher::Agent& detected );
     //@}
@@ -68,6 +70,7 @@ public:
     //@{
     void CleanReceivedRapport();
     void Read( xml::xistream& xis );
+    void ReadUrl( xml::xistream& xis, Publisher_ABC& publisher );
     void UpdateSimulation() const ;
     //@}
 

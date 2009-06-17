@@ -17,6 +17,7 @@ namespace xml
 {
     class xistream;
     class xostringstream;
+    class xistringstream;
 }
 
 //class DCSOperationsSoapBindingProxy;
@@ -25,7 +26,6 @@ namespace plugins
 {
 namespace xmlia
 {
-    class ResponseHandler_ABC;
 
 // =============================================================================
 /** @class  Publisher
@@ -45,9 +45,12 @@ public:
 
     //! @name Operations
     //@{
-    void PushReports();
-    void PullOrder( const std::string& message, ResponseHandler_ABC& handler );
-    xml::xostream& CreateReport();
+    virtual void PushReports();
+    virtual void PullOrder( const std::string& message, ResponseHandler_ABC& handler );
+    virtual xml::xostream& CreateReport();
+    virtual std::string GetUrlReports();
+    virtual std::string GetXmliaMessage( const std::string& url );
+    
     //@}
 
 private:
@@ -59,7 +62,7 @@ private:
 
     //! @name Helpers
     //@{
-    std::string GetReports();
+    
     //@}
 
 private:

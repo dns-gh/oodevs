@@ -34,19 +34,35 @@ namespace xmlia
 class TCP_Client
 {
 public:
-    TCP_Client( boost::asio::io_service& io_service, const std::string parameter );
+    TCP_Client( boost::asio::io_service& io_service, const std::string parameter, const std::string webServicePath, const std::string webServiceHost );
 
+    //! @name Accessors
+    //@{
+    std::string GetContent();
+    //@}
 
 private:
     void handle_resolve ( const boost::system::error_code& err, tcp::resolver::iterator endpoint_iterator );
     void handle_connect ( const boost::system::error_code& err, tcp::resolver::iterator endpoint_iterator );
-    void handle_write   ( const boost::system::error_code& err);
+    void handle_write_request ( const boost::system::error_code& err);
+    void handle_read_status_line ( const boost::system::error_code& err );
+    void handle_read_headers ( const boost::system::error_code& err );
+    void handle_read_content ( const boost::system::error_code& err );
+
+
     void handle_read    ( const boost::system::error_code& err, size_t number_bytes_read );
+
+
 
 private:
     tcp::resolver resolver_;
     tcp::socket socket_;
     std::string parameter_;
+    boost::asio::streambuf request_;
+    boost::asio::streambuf response_;
+    std::istringstream content_stream_;
+    std::string strContent_;
+
 
     boost::array<char, 128> ReceptionbufferMessage;
 

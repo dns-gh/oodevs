@@ -44,6 +44,8 @@ public:
     virtual void PushReports() = 0;
     virtual xml::xostream& CreateReport() = 0;
     virtual void PullOrder( const std::string& message, ResponseHandler_ABC& handler ) = 0;
+    virtual std::string GetUrlReports() = 0;
+    virtual std::string GetXmliaMessage( const std::string& url ) = 0;
     //@}
 };
 

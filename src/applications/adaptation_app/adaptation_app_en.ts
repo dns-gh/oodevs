@@ -3414,10 +3414,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>GDH</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enumeration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4083,6 +4079,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Destroyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Datetime</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

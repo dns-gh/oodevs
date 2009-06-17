@@ -9,6 +9,7 @@
 
 #include "xmlia_plugin_pch.h"
 #include "RapportManager.h"
+#include "Publisher_ABC.h"
 
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
@@ -60,7 +61,7 @@ RapportManager::~RapportManager()
 // Name: RapportManager Send
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void RapportManager::Send()const
+void RapportManager::Send( Publisher_ABC& publisher)const
 {
   for( std::vector< Sitrep* >::const_iterator it = receivedRapports_.begin(); it != receivedRapports_.end(); it++ )
   {
@@ -68,8 +69,44 @@ void RapportManager::Send()const
     (*it)->Serialize( xos );
     //@HackTest xml
     //std::string test = xos.str();
+    //publisher.PushReports();
     //@TODO link stream to webservice send, by call or return
   }
+  publisher.PushReports();// pour test
+}
+
+// -----------------------------------------------------------------------------
+// Name: RapportManager Receive
+// Created: SLG 2009-06-12
+// -----------------------------------------------------------------------------
+void RapportManager::Receive( Publisher_ABC& publisher)
+{
+    const std::string UrlReportFromWebService = publisher.GetUrlReports();
+    
+    xml::xistringstream streamContent ( UrlReportFromWebService );
+    streamContent   >> xml::start( "html" )
+                    >> xml::start( "body" )
+                    >> xml::start( "ul" )
+                    >> xml::list( "li", *this, &RapportManager::ReadUrl, publisher )
+                    >> xml::end()
+                    >> xml::end()
+                    >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RapportManager::ReadUrl
+// Created: SLG 2009-06-12
+// -----------------------------------------------------------------------------
+void RapportManager::ReadUrl( xml::xistream& xis, Publisher_ABC& publisher )
+{
+    std::string url;
+    xis >> xml::start( "a" )
+        >> xml::attribute( "href", url );
+
+    const std::string message = publisher.GetXmliaMessage( url );
+    xml::xistringstream streamXmlia( message );
+    Read( streamXmlia );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -163,6 +200,10 @@ dispatcher::Model& RapportManager::GetModel() const
   return model_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: RapportManager::CleanReceivedRapport
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 // Name: RapportManager::GetSimulationPublisher
 // Created: RPD 2009-06-12
