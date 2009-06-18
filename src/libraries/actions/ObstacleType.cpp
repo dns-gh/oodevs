@@ -11,8 +11,6 @@
 #include "ObstacleType.h"
 #include <xeumeuleu/xml.h>
 
-using namespace xml;
-using namespace kernel;
 using namespace actions;
 using namespace parameters;
 
@@ -20,11 +18,11 @@ using namespace parameters;
 // Name: ObstacleType constructor
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-ObstacleType::ObstacleType( const OrderParameter& parameter, unsigned int value )
+ObstacleType::ObstacleType( const kernel::OrderParameter& parameter, unsigned int value )
     : Parameter< QString >( parameter )
     , value_ ( ASN1T_EnumDemolitionTargetType( value ) )
 {
-    // NOTHING
+    SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,9 +30,10 @@ ObstacleType::ObstacleType( const OrderParameter& parameter, unsigned int value 
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( xml::xistream& xis )
-    : Parameter< QString >( OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), xml::attribute< std::string >( xis, "type" ), false ) )    
+    : Parameter< QString >( kernel::OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), xml::attribute< std::string >( xis, "type" ), false ) )    
+    , value_( ASN1T_EnumDemolitionTargetType( xml::attribute< unsigned int >( xis, "value" ) ) )
 {
-    // NOTHING
+    SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +51,8 @@ ObstacleType::~ObstacleType()
 // -----------------------------------------------------------------------------
 void ObstacleType::Serialize( xml::xostream& xos ) const
 {
-    Parameter< QString >::Serialize( xos );    
+    Parameter< QString >::Serialize( xos );
+    xos << xml::attribute( "value", unsigned int( value_ ) );
 }
 
 // -----------------------------------------------------------------------------
