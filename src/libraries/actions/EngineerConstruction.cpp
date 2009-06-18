@@ -205,3 +205,15 @@ void EngineerConstruction::Accept( ParameterVisitor_ABC& visitor ) const
     visitor.Visit( *this );
     Parameter< std::string >::Accept( visitor );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EngineerConstruction::IsSet
+// Created: SBO 2009-06-16
+// -----------------------------------------------------------------------------
+bool EngineerConstruction::IsSet() const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        if( !it->second->IsSet() )
+            return false;
+    return !elements_.empty();
+}

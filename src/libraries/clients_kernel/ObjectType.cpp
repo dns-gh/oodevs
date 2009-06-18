@@ -119,7 +119,7 @@ bool ObjectType::HasBuildableDensity() const
             std::string density;
             xis >> xml::attribute( "unit-type", density );
             xis >> xml::start( "buildable" );
-            bool hasResources = xis.has_child( "resoutces" );
+            bool hasResources = xis.has_child( "resources" );
             xis >> xml::end();
             return( hasResources && density == "density" );
         }

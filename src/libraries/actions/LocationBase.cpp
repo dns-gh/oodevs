@@ -279,8 +279,9 @@ bool LocationBase::CheckValidity() const
 {
     switch( type_ )
     {
-    case EnumLocationType::line:
     case EnumLocationType::polygon:
+        return points_.size() > 2;
+    case EnumLocationType::line:
         return points_.size() > 1;
     case EnumLocationType::circle:
         return points_.size() == 2;

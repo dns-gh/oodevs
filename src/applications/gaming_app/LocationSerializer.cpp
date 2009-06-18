@@ -121,7 +121,6 @@ void LocationSerializer::VisitPath( const geometry::Point2f& , const T_PointVect
     VisitLines( points );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LocationSerializer::VisitCircle
 // Created: AGE 2006-08-09

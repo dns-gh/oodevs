@@ -50,6 +50,7 @@ class EngineerConstruction : public Parameter< std::string >
     virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
     virtual void Clean( ASN1T_MissionParameter& asn ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
+    virtual bool IsSet() const;
     //@}
 
     //! @name Commiters
