@@ -46,7 +46,8 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsig
 PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Population_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Entity< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
-    // NOTHING
+    if( ! GetValue() )
+        throw std::runtime_error( tools::translate( "Parameter", "Population knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

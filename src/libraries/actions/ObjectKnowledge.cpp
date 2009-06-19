@@ -55,8 +55,8 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long
 {
     const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
     SetValue( converter.Find( id, team ) );
-//    if( ! GetValue() )
-//        throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
+    if( ! GetValue() )
+        throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
