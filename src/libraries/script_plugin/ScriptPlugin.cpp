@@ -143,7 +143,7 @@ void ScriptPlugin::Update()
         reset_ = false;
         LoadScripts();
     }
-
+    
     ApplyPendings();
 
     long newTime = clock();
@@ -184,7 +184,7 @@ void ScriptPlugin::LoadScript( const std::string& file )
     }
     catch( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error reading script '" << file << "' : " << e.what() );
+        MT_LOG_ERROR_MSG( "Error reading script '" << file << "': " << e.what() );
     }
 }
 

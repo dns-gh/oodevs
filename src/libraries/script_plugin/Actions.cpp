@@ -18,6 +18,7 @@
 #include "ActionFactory.h"
 #include "directia/Brain.h"
 #include "game_asn/Publisher_ABC.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::script;
@@ -81,14 +82,21 @@ void Actions::RegisterIn( directia::Brain& brain )
 // -----------------------------------------------------------------------------
 void Actions::IssueOrder( const std::string& name )
 {
-    actions::ActionsModel model( *factory_ );
-    model.Load( file_ );
-    kernel::Iterator< const actions::Action_ABC& > it = model.CreateIterator();
-    while( it.HasMoreElements() )
+    try
     {
-        const actions::Action_ABC& action = it.NextElement();
-        if( action.GetName() == name.c_str() )
-            action.Publish( *publisher_ );
+        actions::ActionsModel model( *factory_ );
+        model.Load( file_ );
+        kernel::Iterator< const actions::Action_ABC& > it = model.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const actions::Action_ABC& action = it.NextElement();
+            if( action.GetName() == name.c_str() )
+                action.Publish( *publisher_ );
+        }
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error in script: " << e.what() )
     }
 }
 
@@ -98,9 +106,16 @@ void Actions::IssueOrder( const std::string& name )
 // -----------------------------------------------------------------------------
 void Actions::IssueXmlOrder( const std::string& name )
 {
-    xml::xistringstream xis( name );
-    xis >> xml::start( "action" );
-    std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( xis ) );
-    if( action.get() )
-         action->Publish( *publisher_ );
+    try
+    {
+        xml::xistringstream xis( name );
+        xis >> xml::start( "action" );
+        std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( xis ) );
+        if( action.get() )
+             action->Publish( *publisher_ );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error in script: " << e.what() )
+    }
 }
