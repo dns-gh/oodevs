@@ -294,8 +294,11 @@ void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawLines( const T_PointVector& points ) const
 {
-    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
-    glDrawArrays( GL_LINE_STRIP, 0, points.size() );
+    if( !points.empty() )
+    {
+        glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
+        glDrawArrays( GL_LINE_STRIP, 0, points.size() );
+    }
 }
 
 // -----------------------------------------------------------------------------
