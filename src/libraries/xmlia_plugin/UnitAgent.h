@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __UniteAgent_h_
-#define __UniteAgent_h_
+#ifndef __UnitAgent_h_
+#define __UnitAgent_h_
 
-#include "Unite_ABC.h"
+#include "Unit_ABC.h"
 
 namespace dispatcher
 {
@@ -28,22 +28,22 @@ namespace plugins
 namespace xmlia
 {
   class Point;
-  class EtatOperationnel;
+  class XmliaOperationalState;
 // =============================================================================
 /** @class  UniteAgent
     @brief  UniteAgent
 */
 // Created: MGD 2009-06-12
 // =============================================================================
-class UniteAgent : public Unite_ABC
+class UnitAgent : public Unit_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    UniteAgent( xml::xistream& xis );
-    UniteAgent( dispatcher::Agent& );
-    virtual ~UniteAgent();
+    UnitAgent( xml::xistream& xis );
+    UnitAgent( dispatcher::Agent& );
+    virtual ~UnitAgent();
     //@}
 
     ///! @name Operations
@@ -53,9 +53,9 @@ public:
     void Update( dispatcher::Agent& agent );
     bool IsSide( unsigned int idSide) const;
     Point* GetLocalization() const;
-    EtatOperationnel* GetOperationalState() const;
+    XmliaOperationalState* GetOperationalState() const;
     void SetPosition( Point* pt );
-    void SetEtatOps( EtatOperationnel* etatOps );
+    void SetEtatOps( XmliaOperationalState* etatOps );
     //@}
 
 private:
@@ -72,7 +72,7 @@ private:
     unsigned int idSide_;
     
     Point* localisation_;
-    EtatOperationnel* etatOps_;
+    XmliaOperationalState* etatOps_;
     //@}
 };
 
@@ -80,4 +80,4 @@ private:
 
 }//plugin
 
-#endif // __UniteAgent_h_
+#endif // __UnitAgent_h_

@@ -10,7 +10,7 @@
 #ifndef __UniteFormation_h_
 #define __UniteFormation_h_
 
-#include "Unite_ABC.h"
+#include "Unit_ABC.h"
 
 namespace dispatcher
 {
@@ -34,15 +34,15 @@ namespace plugins
     */
     // Created: MGD 2009-06-12
     // =============================================================================
-    class UniteFormation : public Unite_ABC
+    class UnitFormation : public Unit_ABC
     {
 
     public:
       //! @name Constructors/Destructor
       //@{
-      UniteFormation( dispatcher::Formation& formation );
-      UniteFormation( xml::xistream& xis );
-      virtual ~UniteFormation();
+      UnitFormation( dispatcher::Formation& formation );
+      UnitFormation( xml::xistream& xis );
+      virtual ~UnitFormation();
       //@}
     };
 

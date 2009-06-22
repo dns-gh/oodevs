@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __RapportManager_h_
-#define __RapportManager_h_
+#ifndef __ReportManager_h_
+#define __ReportManager_h_
 
 namespace dispatcher
 {
@@ -90,4 +90,4 @@ private:
 
 }//plugin
 
-#endif // __RapportManager_h_
+#endif // __ReportManager_h_

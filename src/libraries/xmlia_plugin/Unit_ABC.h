@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Unite_ABC_h_
-#define __Unite_ABC_h_
+#ifndef __Unit_ABC_h_
+#define __Unit_ABC_h_
 
 #include "Entity_ABC.h"
 
@@ -29,12 +29,12 @@ namespace xmlia
 {
 
 // =============================================================================
-/** @class  Unite_ABC
-    @brief  Unite_ABC
+/** @class  Unit_ABC
+    @brief  Unit_ABC
 */
 // Created: MGD 2009-06-12
 // =============================================================================
-class Unite_ABC : public Entity_ABC
+class Unit_ABC : public Entity_ABC
 {
 
 public:
@@ -51,14 +51,14 @@ public:
 
     //! @name Destructor
     //@{
-    virtual ~Unite_ABC();
+    virtual ~Unit_ABC();
     //@}
 
 protected:
     //! @name Constructors
     //@{
-    Unite_ABC( unsigned int id, const std::string& name );
-    Unite_ABC( xml::xistream& xis );
+    Unit_ABC( unsigned int id, const std::string& name );
+    Unit_ABC( xml::xistream& xis );
     //@}
 
 protected:
@@ -73,4 +73,4 @@ protected:
 
 }//plugin
 
-#endif // __Unite_ABC_h_
+#endif // __Unit_ABC_h_

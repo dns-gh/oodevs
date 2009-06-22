@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Rapport_h_
-#define __Rapport_h_
+#ifndef __Report_h_
+#define __Report_h_
 
 namespace dispatcher
 {
@@ -28,8 +28,8 @@ namespace plugins
   namespace xmlia
   {
     class ReportManager;
-    class Unite_ABC;
-    class UniteAgent;
+    class Unit_ABC;
+    class UnitAgent;
     // =============================================================================
     /** @class  Rapport
     @brief  Rapport
@@ -81,11 +81,11 @@ namespace plugins
       //@{
       const std::string type_;
       const std::string serializedContent_;
-      Unite_ABC* author_;
-      Unite_ABC* dest_;
+      Unit_ABC* author_;
+      Unit_ABC* dest_;
       ReportManager& reportManager_;
       int cpt_;
-      std::map< unsigned, UniteAgent* > unites_;
+      std::map< unsigned, UnitAgent* > unites_;
       //@}
     };
 
@@ -93,4 +93,4 @@ namespace plugins
 
 }//plugin
 
-#endif // __Rapport_h_
+#endif // __Report_h_

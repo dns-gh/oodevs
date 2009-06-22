@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "xmlia_plugin_pch.h"
-#include "EtatOperationnel.h"
+#include "XmliaOperationalState.h"
 
 #include "dispatcher/Agent.h"
 #include "dispatcher/Equipment.h"
@@ -22,7 +22,7 @@ using namespace plugins::xmlia;
 
 namespace
 {
-  std::string OperationalState( const ASN1T_EnumOperationalStatus& status )
+  std::string GetXmliaOperationalStateFromAsn( const ASN1T_EnumOperationalStatus& status )
   {
     switch( status )
     {
@@ -37,7 +37,7 @@ namespace
     return "NKN";
   }
 
-  ASN1T_EnumOperationalStatus AsnOperationalState( const std::string& status )
+  ASN1T_EnumOperationalStatus GetAsnOperationalStateFromXmlia( const std::string& status )
   {
     if( status == "OPR")
       return EnumOperationalStatus::operationnel;
@@ -82,10 +82,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: EtatOperationnel constructor
+// Name: XmliaOperationalState constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-EtatOperationnel::EtatOperationnel( xml::xistream& xis )
+XmliaOperationalState::XmliaOperationalState( xml::xistream& xis )
 {
  // xis >> xml::start( "mpia:EtatOperationnelEntiteOrganisationnelle" )
    xis  >> xml::attribute( "id", sQname_ )
@@ -101,12 +101,12 @@ EtatOperationnel::EtatOperationnel( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EtatOperationnel constructor
+// Name: XmliaOperationalState constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-EtatOperationnel::EtatOperationnel(  const dispatcher::Agent& agent, const std::string& sQnameParent  )
+XmliaOperationalState::XmliaOperationalState(  const dispatcher::Agent& agent, const std::string& sQnameParent  )
 : Entity_ABC()
-, etatOpsGeneral_( OperationalState( agent.nOperationalState_ ) )
+, etatOpsGeneral_( GetXmliaOperationalStateFromAsn( agent.nOperationalState_ ) )
 {
   std::ostringstream os;
   os << agent.GetId();
@@ -126,19 +126,19 @@ EtatOperationnel::EtatOperationnel(  const dispatcher::Agent& agent, const std::
 }
 
 // -----------------------------------------------------------------------------
-// Name: EtatOperationnel destructor
+// Name: XmliaOperationalState destructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-EtatOperationnel::~EtatOperationnel()
+XmliaOperationalState::~XmliaOperationalState()
 {
   // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: EtatOperationnel::Serialize
+// Name: XmliaOperationalState::Serialize
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void EtatOperationnel::Serialize( xml::xostream& xos, const std::string& sQnameRapport ) const
+void XmliaOperationalState::Serialize( xml::xostream& xos, const std::string& sQnameRapport ) const
 {
   xos << xml::start( "mpia:EtatOperationnelEntiteOrganisationnelle" )
         << xml::attribute( "id", QName())
@@ -158,21 +158,21 @@ void EtatOperationnel::Serialize( xml::xostream& xos, const std::string& sQnameR
 }
 
 // -----------------------------------------------------------------------------
-// Name: EtatOperationnel::QName
+// Name: XmliaOperationalState::QName
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-std::string EtatOperationnel::QName() const
+std::string XmliaOperationalState::QName() const
 {
   return sQname_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::Update
+// Name: XmliaOperationalState::Update
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void EtatOperationnel::Update( dispatcher::Agent& agent )
+void XmliaOperationalState::Update( dispatcher::Agent& agent )
 {
-  etatOpsGeneral_ = OperationalState( agent.nOperationalState_ );
+  etatOpsGeneral_ = GetXmliaOperationalStateFromAsn( agent.nOperationalState_ );
 
   AvailabilityComputer computer1;
   agent.equipments_.Apply( boost::bind( &AvailabilityComputer::AddEquipment, boost::ref( computer1 ), _1 ) );
@@ -188,19 +188,19 @@ void EtatOperationnel::Update( dispatcher::Agent& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EtatOperationnel GetId
+// Name: XmliaOperationalState GetId
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-unsigned int EtatOperationnel::GetId() const
+unsigned int XmliaOperationalState::GetId() const
 {
   return id_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: EtatOperationnel GetGeneralOperationalState
+// Name: XmliaOperationalState GetGeneralOperationalState
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
-std::string& EtatOperationnel::GetGeneralOperationalState()
+std::string& XmliaOperationalState::GetGeneralOperationalState()
 {
   return etatOpsGeneral_;
 }

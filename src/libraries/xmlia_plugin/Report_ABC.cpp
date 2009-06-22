@@ -18,10 +18,10 @@
 #include "dispatcher/Agent.h"
 
 #include "xmlia_plugin/ReportManager.h"
-#include "xmlia_plugin/Unite_ABC.h"
-#include "xmlia_plugin/UniteAutomat.h"
-#include "xmlia_plugin/UniteFormation.h"
-#include "xmlia_plugin/UniteAgent.h"
+#include "xmlia_plugin/Unit_ABC.h"
+#include "xmlia_plugin/UnitAutomate.h"
+#include "xmlia_plugin/UnitFormation.h"
+#include "xmlia_plugin/UnitAgent.h"
 
 
 #pragma warning( push, 1 )
@@ -62,8 +62,8 @@ Report_ABC::Report_ABC( ReportManager& manager, xml::xistream& xis )
         >> xml::end()
       >> xml::end(); 
 
-  unsigned int idAuthor = Unite_ABC::QNameToId( sAuthorQname );
-  unsigned int idDest = Unite_ABC::QNameToId( sDestQname );
+  unsigned int idAuthor = Unit_ABC::QNameToId( sAuthorQname );
+  unsigned int idDest = Unit_ABC::QNameToId( sDestQname );
 
   cpt_ = 0;
   xis >> xml::list( "mpia:Unite", *this, &Report_ABC::ReadUnites );
@@ -74,18 +74,18 @@ void Report_ABC::ReadUnites( xml::xistream& xis )
   //Hack replace by a xmlia data like group to determine type
   if( cpt_ == 0)
   {
-    author_ = new UniteAutomat( xis );
+    author_ = new UnitAutomate( xis );
     cpt_++;
   }
   else if( cpt_ == 1)
   {
-    dest_   = new UniteFormation( xis );
+    dest_   = new UnitFormation( xis );
     cpt_++;
   }
   else
   {
-    UniteAgent* unit = new UniteAgent( xis );
-    unites_.insert( std::pair< unsigned, UniteAgent* >( unit->GetId(), unit ) );
+    UnitAgent* unit = new UnitAgent( xis );
+    unites_.insert( std::pair< unsigned, UnitAgent* >( unit->GetId(), unit ) );
   }
 }
 
@@ -97,11 +97,11 @@ Report_ABC::Report_ABC( ReportManager& manager, const dispatcher::Automat& autho
 : reportManager_( manager )
 , type_( type )
 {
-  author_ = new UniteAutomat( author );
+  author_ = new UnitAutomate( author );
 
   if( author.parentFormation_ )
   {
-    dest_ = new UniteFormation( *author.parentFormation_);
+    dest_ = new UnitFormation( *author.parentFormation_);
   }
 }
 
@@ -114,7 +114,7 @@ Report_ABC::~Report_ABC()
   delete author_;
   delete dest_;
 
-  for( std::map< unsigned, UniteAgent* >::iterator it = unites_.begin(); it != unites_.end(); it++ )
+  for( std::map< unsigned, UnitAgent* >::iterator it = unites_.begin(); it != unites_.end(); it++ )
   {
     delete it->second;
   }

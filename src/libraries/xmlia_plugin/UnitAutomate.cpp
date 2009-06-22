@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "xmlia_plugin_pch.h"
-#include "UniteAutomat.h"
+#include "UnitAutomate.h"
 
 #include "dispatcher/Automat.h"
 
@@ -17,26 +17,26 @@
 using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
-// Name: UniteAutomat constructor
+// Name: UnitAutomate constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-UniteAutomat::UniteAutomat( const dispatcher::Automat& automat )
-: Unite_ABC( automat.GetId(), automat.name_ )
+UnitAutomate::UnitAutomate( const dispatcher::Automat& automat )
+: Unit_ABC( automat.GetId(), automat.name_ )
 {}
 
 // -----------------------------------------------------------------------------
-// Name: UniteAutomat constructor
+// Name: UnitAutomate constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-UniteAutomat::UniteAutomat( xml::xistream& xis )
-: Unite_ABC( xis )
+UnitAutomate::UnitAutomate( xml::xistream& xis )
+: Unit_ABC( xis )
 {
   //NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAutomat destructor
+// Name: UnitAutomate destructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-UniteAutomat::~UniteAutomat()
+UnitAutomate::~UnitAutomate()
 {}

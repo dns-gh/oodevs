@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __XMLIA_EtatOperationnel_h_
-#define __XMLIA_EtatOperationnel_h_
+#ifndef __XMLIA_OperationalState_h_
+#define __XMLIA_OperationalState_h_
 
 #include "Entity_ABC.h"
 
@@ -18,20 +18,20 @@ namespace plugins
   {
 
     // =============================================================================
-    /** @class  EtatOperationnel
-    @brief  EtatOperationnel
+    /** @class  OperationalState
+    @brief  OperationalState
     */
     // Created: MGD 2009-06-12
     // =============================================================================
-    class EtatOperationnel : public Entity_ABC
+    class XmliaOperationalState : public Entity_ABC
     {
 
     public:
       //! @name Constructors/Destructor
       //@{
-      EtatOperationnel( xml::xistream& xis );
-      EtatOperationnel( const dispatcher::Agent& agent, const std::string& sQnameParent );
-      virtual ~EtatOperationnel();
+      XmliaOperationalState( xml::xistream& xis );
+      XmliaOperationalState( const dispatcher::Agent& agent, const std::string& sQnameParent );
+      virtual ~XmliaOperationalState();
       //@}
 
       ///! @name Operations
@@ -62,4 +62,4 @@ namespace plugins
 
 }//plugin
 
-#endif // __XMLIA_EtatOperationnel_h_
+#endif // __XMLIA_OperationalState_h_

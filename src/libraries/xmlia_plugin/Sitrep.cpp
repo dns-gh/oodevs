@@ -21,13 +21,13 @@
 #include "dispatcher/ClientPublisher_ABC.h"
 
 #include "ReportManager.h"
-#include "Unite_ABC.h"
-#include "UniteAutomat.h"
-#include "UniteFormation.h"
-#include "UniteAgent.h"
+#include "Unit_ABC.h"
+#include "UnitAutomate.h"
+#include "UnitFormation.h"
+#include "UnitAgent.h"
 #include "Point.h"
 #include "xmlia_plugin/Point.h"
-#include "xmlia_plugin/EtatOperationnel.h"
+#include "xmlia_plugin/XmliaOperationalState.h"
 #include "game_asn/MessengerSenders.h"
 #include "game_asn/Messenger.h"
 
@@ -65,10 +65,10 @@ Sitrep::~Sitrep()
 // -----------------------------------------------------------------------------
 void Sitrep::InsertOrUpdate( dispatcher::Agent& agent )
 {
-  std::map< unsigned, UniteAgent* >::iterator itFind = unites_.find( agent.GetId() );
+  std::map< unsigned, UnitAgent* >::iterator itFind = unites_.find( agent.GetId() );
   if( itFind == unites_.end() )
   {
-    unites_.insert( std::pair< unsigned, UniteAgent* >( agent.GetId(), new UniteAgent( agent ) ) );
+    unites_.insert( std::pair< unsigned, UnitAgent* >( agent.GetId(), new UnitAgent( agent ) ) );
   }
 
   unites_[agent.GetId()]->Update( agent );
@@ -82,7 +82,7 @@ void Sitrep::SerializeOtherEntities( xml::xostream& xos ) const
 {
     std::string sQnameRapport = QName();
 
-    for( std::map< unsigned, UniteAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
+    for( std::map< unsigned, UnitAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
     {
       it->second->Serialize( xos, sQnameRapport );
     }
@@ -105,7 +105,7 @@ void Sitrep::SerializeSide( const dispatcher::Side& side, xml::xostream& xos, st
       << xml::start( "mpia:EstRapporteePar_Rapport" )
       << xml::content( "mpia:refid", sQnameRapport )
       << xml::end();
-  for( std::map< unsigned, UniteAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
+  for( std::map< unsigned, UnitAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
   {
     if( it->second->IsSide( side.GetId() ) )
     {
@@ -140,7 +140,7 @@ void Sitrep::ReadPosition( xml::xistream& xis )
 
 void Sitrep::ReadEtatOps( xml::xistream& xis )
 {
-  EtatOperationnel* etatOps = new EtatOperationnel( xis );
+  XmliaOperationalState* etatOps = new XmliaOperationalState( xis );
   unites_[etatOps->GetId()]->SetEtatOps( etatOps );
 }
 
@@ -160,10 +160,10 @@ void Sitrep::UpdateSimulation()
 	unsigned int authorID = author_->GetId();
 	unsigned long authorSideID = reportManager_.GetModel().automats_.Find( authorID )->team_.GetId();
 	dispatcher::Agent* simAuthorAgent = reportManager_.GetModel().agents_.Find( authorID );
-  for( std::map< unsigned, UniteAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
+  for( std::map< unsigned, UnitAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
   {
     //@TODO link to magic action
-    UniteAgent* reportAgent = it-> second;
+    UnitAgent* reportAgent = it-> second;
     dispatcher::Agent* simAgent = reportManager_.GetModel().agents_.Find( it->first );
     if ( simAgent != 0 )
     {

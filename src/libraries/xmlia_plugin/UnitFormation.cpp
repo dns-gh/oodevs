@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "xmlia_plugin_pch.h"
-#include "UniteFormation.h"
+#include "UnitFormation.h"
 
 #include "dispatcher/Formation.h"
 
@@ -17,26 +17,26 @@
 using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
-// Name: UniteFormation constructor
+// Name: UnitFormation constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-UniteFormation::UniteFormation( dispatcher::Formation& formation )
-: Unite_ABC( formation.GetId(), formation.GetName().ascii() )
+UnitFormation::UnitFormation( dispatcher::Formation& formation )
+: Unit_ABC( formation.GetId(), formation.GetName().ascii() )
 {}
 
 // -----------------------------------------------------------------------------
-// Name: UniteFormation constructor
+// Name: UnitFormation constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-UniteFormation::UniteFormation( xml::xistream& xis )
-: Unite_ABC( xis )
+UnitFormation::UnitFormation( xml::xistream& xis )
+: Unit_ABC( xis )
 {
   //@NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteFormation destructor
+// Name: UnitFormation destructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-UniteFormation::~UniteFormation()
+UnitFormation::~UnitFormation()
 {}

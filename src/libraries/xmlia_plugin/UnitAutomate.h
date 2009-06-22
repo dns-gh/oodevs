@@ -10,7 +10,7 @@
 #ifndef __UniteAutomat_h_
 #define __UniteAutomat_h_
 
-#include "Unite_ABC.h"
+#include "Unit_ABC.h"
 
 namespace dispatcher
 {
@@ -34,15 +34,15 @@ namespace xmlia
 */
 // Created: MGD 2009-06-12
 // =============================================================================
-  class UniteAutomat : public Unite_ABC
+  class UnitAutomate : public Unit_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    UniteAutomat( const dispatcher::Automat& automat );
-    UniteAutomat( xml::xistream& xis );
-    virtual ~UniteAutomat();
+    UnitAutomate( const dispatcher::Automat& automat );
+    UnitAutomate( xml::xistream& xis );
+    virtual ~UnitAutomate();
     //@}
 };
 

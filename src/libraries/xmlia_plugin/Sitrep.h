@@ -30,8 +30,8 @@ namespace plugins
 namespace xmlia
 {
   class ReportManager;
-  class Unite_ABC;
-  class UniteAgent;
+  class Unit_ABC;
+  class UnitAgent;
 // =============================================================================
 /** @class  Sitrep
     @brief  Sitrep

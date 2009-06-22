@@ -8,26 +8,26 @@
 // *****************************************************************************
 
 #include "xmlia_plugin_pch.h"
-#include "Unite_ABC.h"
+#include "Unit_ABC.h"
 
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
-// Name: Unite_ABC constructor
+// Name: Unit_ABC constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Unite_ABC::Unite_ABC( unsigned int id, const std::string& name )
+Unit_ABC::Unit_ABC( unsigned int id, const std::string& name )
 : id_( id )
 , name_( name )
 {}
 
 // -----------------------------------------------------------------------------
-// Name: Unite_ABC constructor
+// Name: Unit_ABC constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Unite_ABC::Unite_ABC( xml::xistream& xis )
+Unit_ABC::Unit_ABC( xml::xistream& xis )
 {
   std::string qName;
   xis >> xml::attribute( "id", qName )
@@ -38,16 +38,16 @@ Unite_ABC::Unite_ABC( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Unite_ABC destructor
+// Name: Unit_ABC destructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Unite_ABC::~Unite_ABC(){}
+Unit_ABC::~Unit_ABC(){}
 
 // -----------------------------------------------------------------------------
 // Name: Unite_ABC QName
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-std::string Unite_ABC::QName() const
+std::string Unit_ABC::QName() const
 {
   std::ostringstream os;
   os << id_;
@@ -56,10 +56,10 @@ std::string Unite_ABC::QName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Unite_ABC QNameToId
+// Name: Unit_ABC QNameToId
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-unsigned int Unite_ABC::QNameToId( std::string sQname )
+unsigned int Unit_ABC::QNameToId( std::string sQname )
 {
   unsigned int id;
   std::string sId = sQname.substr( 6 );
@@ -69,28 +69,28 @@ unsigned int Unite_ABC::QNameToId( std::string sQname )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Unite_ABC QName
+// Name: Unit_ABC QName
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-unsigned int Unite_ABC::GetId() const
+unsigned int Unit_ABC::GetId() const
 {
   return id_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Unite_ABC QName
+// Name: Unit_ABC QName
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
-std::string Unite_ABC::GetName()
+std::string Unit_ABC::GetName()
 {
   return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Unite_ABC Serialize
+// Name: Unit_ABC Serialize
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Unite_ABC::Serialize( xml::xostream& xos, const std::string& sQnameRapport  ) const
+void Unit_ABC::Serialize( xml::xostream& xos, const std::string& sQnameRapport  ) const
 {
   xos << xml::start( "mpia:Unite" )
         << xml::attribute( "id", QName() )

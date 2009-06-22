@@ -8,14 +8,14 @@
 // *****************************************************************************
 
 #include "xmlia_plugin_pch.h"
-#include "UniteAgent.h"
+#include "UnitAgent.h"
 
 #include "dispatcher/Side.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Agent.h"
 
 #include "Point.h"
-#include "EtatOperationnel.h"
+#include "XmliaOperationalState.h"
 
 #include "boost/bind.hpp"
 #include <xeumeuleu/xml.h>
@@ -23,11 +23,11 @@
 using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent constructor
+// Name: UnitAgent constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-UniteAgent::UniteAgent( xml::xistream& xis )
-: Unite_ABC( xis )
+UnitAgent::UnitAgent( xml::xistream& xis )
+: Unit_ABC( xis )
 {
   //xis >> xml::end(); //</Unite>
   //localisation_ = new Point( xis );
@@ -35,32 +35,32 @@ UniteAgent::UniteAgent( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent constructor
+// Name: UnitAgent constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-UniteAgent::UniteAgent( dispatcher::Agent& agent )
-: Unite_ABC( agent.GetId(), agent.name_ )
+UnitAgent::UnitAgent( dispatcher::Agent& agent )
+: Unit_ABC( agent.GetId(), agent.name_ )
 , idSide_(agent.automat_->team_.GetId() )
 {
   localisation_ = new Point( agent.position_.latitude, agent.position_.longitude, id_ );
-  etatOps_      = new EtatOperationnel( agent, QName() );
+  etatOps_      = new XmliaOperationalState( agent, QName() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent destructor
+// Name: UnitAgent destructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-UniteAgent::~UniteAgent()
+UnitAgent::~UnitAgent()
 {
     delete localisation_;
     delete etatOps_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::SerializeExtension
+// Name: UnitAgent::SerializeExtension
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UniteAgent::SerializeExtension( xml::xostream& xos, const std::string& sQnameRapport  ) const
+void UnitAgent::SerializeExtension( xml::xostream& xos, const std::string& sQnameRapport  ) const
 {
   std::ostringstream os;
   os << id_;
@@ -77,10 +77,10 @@ void UniteAgent::SerializeExtension( xml::xostream& xos, const std::string& sQna
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::SerializeInfo
+// Name: UnitAgent::SerializeInfo
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UniteAgent::SerializeIncludeEntities( xml::xostream& xos, const std::string& sQnameRapport  ) const
+void UnitAgent::SerializeIncludeEntities( xml::xostream& xos, const std::string& sQnameRapport  ) const
 {
   SerializeSideAssociation( xos );
   etatOps_->Serialize( xos, sQnameRapport );
@@ -89,10 +89,10 @@ void UniteAgent::SerializeIncludeEntities( xml::xostream& xos, const std::string
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::SerializeEtatOps
+// Name: UnitAgent::SerializeEtatOps
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UniteAgent::SerializeSideAssociation( xml::xostream& xos ) const
+void UnitAgent::SerializeSideAssociation( xml::xostream& xos ) const
 {
   std::ostringstream os;
   os << id_;
@@ -113,10 +113,10 @@ void UniteAgent::SerializeSideAssociation( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::SerializeAssociationLocalisation
+// Name: UnitAgent::SerializeAssociationLocalisation
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UniteAgent::SerializeAssociationLocalisation( xml::xostream& xos ) const
+void UnitAgent::SerializeAssociationLocalisation( xml::xostream& xos ) const
 {
   std::ostringstream os;
   os << id_;
@@ -138,10 +138,10 @@ void UniteAgent::SerializeAssociationLocalisation( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::Update
+// Name: UnitAgent::Update
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UniteAgent::Update( dispatcher::Agent& agent )
+void UnitAgent::Update( dispatcher::Agent& agent )
 {
   id_        = agent.GetId();
   name_      = agent.name_;
@@ -152,46 +152,46 @@ void UniteAgent::Update( dispatcher::Agent& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::IsSide
+// Name: UnitAgent::IsSide
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-bool UniteAgent::IsSide( unsigned int idSide) const
+bool UnitAgent::IsSide( unsigned int idSide) const
 {
   return idSide == idSide_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::GetLocalization
+// Name: UnitAgent::GetLocalization
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
-Point* UniteAgent::GetLocalization() const
+Point* UnitAgent::GetLocalization() const
 {
   return localisation_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::GetOperationalState
+// Name: UnitAgent::GetOperationalState
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
-EtatOperationnel* UniteAgent::GetOperationalState() const
+XmliaOperationalState* UnitAgent::GetOperationalState() const
 {
   return etatOps_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::SetPosition
+// Name: UnitAgent::SetPosition
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UniteAgent::SetPosition( Point* pt )
+void UnitAgent::SetPosition( Point* pt )
 {
   localisation_ = pt;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UniteAgent::SetEtatOps
+// Name: UnitAgent::SetEtatOps
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UniteAgent::SetEtatOps( EtatOperationnel* etatOps )
+void UnitAgent::SetEtatOps( XmliaOperationalState* etatOps )
 {
   etatOps_ = etatOps;
 }
