@@ -9,8 +9,6 @@
 
 #include "xmlia_plugin_pch.h"
 #include "Publisher.h"
-//#include "ResponseHandler_ABC.h"
-#include "SerializationTools.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.h>
 #include <boost/lexical_cast.hpp>
@@ -46,76 +44,46 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: Publisher constructor
-// Created: SBO 2008-04-02
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 Publisher::Publisher( xml::xistream& xis )
 {
   lastRequestTime_ =CurrentTime();
-    // NOTHING
+
+  xis >> xml::attribute( "webServiceHost", webServiceHost_ )
+      >> xml::attribute( "webservicePort", webservicePort_ );
+
 }
 
 // -----------------------------------------------------------------------------
 // Name: Publisher destructor
-// Created: SBO 2008-04-02
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 Publisher::~Publisher()
 {
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Publisher::PushReports
-// Created: SBO 2008-05-26
-// -----------------------------------------------------------------------------
-void Publisher::PushReports()
-{
-    try
-    {
-       //Demande requête pour envoie des données au webService
-        boost::asio::io_service io_service;
-        std::string webServicePath = "/ServiceXmlIa/xmlia/type/create";
-        std::string webServiceHost = "swiwas01.chb.fr.ibm.com";
-        TCP_Client client(io_service, "sending", webServicePath, webServiceHost );
-        io_service.run();
-        std::string content = client.GetContent();
-        xml::xistringstream streamContent( content );
-        
-    }
-    catch (std::exception& e)
-    {
-        std::cout << e.what() << std::endl;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: Publisher::GetReports
-// Created: AGE 2008-06-06
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 std::string Publisher::GetUrlReports()
 {
-    try
-    {
-        //Demande requête pour envoie des données au webService
-        boost::asio::io_service io_service;
-        //std::string webServicePath = "/ServiceXmlIa/xmlias/type?fromDate=17/06/2009%2013:54:32"; // + lastRequestTime_;
-        std::string webServicePath = "/ServiceXmlIa/xmlias/type?fromDate="+lastRequestTime_;
-        std::string webServiceHost = "swiwas01.chb.fr.ibm.com";
-        TCP_Client client(io_service, "reception", webServicePath, webServiceHost );
-        io_service.run();
-        std::string content = client.GetContent();
-        lastRequestTime_ = CurrentTime();
-        if( content == "")//@Hack
-          return  content;
-        unsigned int indexDebut = content.find("<html");
-        unsigned int indexFin = content.find("</html>")+7;
-        content = content.substr( indexDebut, indexFin - indexDebut );
-        return content;
-    }
-    catch (std::exception& e)
-    {
-        std::cout << e.what() << std::endl;
-    }
-    
+    boost::asio::io_service io_service;
+    std::string webServicePath = "/ServiceXmlIa/xmlias/type?fromDate="+lastRequestTime_;
+    TCP_Client client(io_service, "reception", webServicePath, webServiceHost_, webservicePort_ );
+    io_service.run();
+    std::string content = client.GetContent();
+    lastRequestTime_ = CurrentTime();
+    if( content == "")
+        throw std::exception( "content of url reports from  webService is empty" );
+    unsigned int indexDebut = content.find("<html");
+    unsigned int indexFin = content.find("</html>")+7; 
+    content = content.substr( indexDebut, indexFin - indexDebut );
+
+    return content;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,56 +92,23 @@ std::string Publisher::GetUrlReports()
 // -----------------------------------------------------------------------------
 std::string Publisher::GetXmliaMessage( const std::string& url )
 {
-    try
-    {
-        std::string webServiceHost = url.substr( 7, 23);
-        std::string webServicePath = url.substr( 36, 35); 
-        boost::asio::io_service io_service;
-        
-        TCP_Client client(io_service, "reception", webServicePath, webServiceHost );
-        io_service.run();
-        std::string content = client.GetContent();
-        int indexDebut = -1;
-        int indexFin = -1;
-        indexDebut = content.find("<mpia:MPIA_Message");
-        indexFin = content.find("</mpia:MPIA_Message>")+20;
-        if ( indexDebut < 0 || indexFin < 0)
-          return content = "";
-        content = content.substr( indexDebut, indexFin - indexDebut );
+    
+    std::string webServicePath = url.substr( 36, 35); 
+    boost::asio::io_service io_service;
+    
+    TCP_Client client(io_service, "reception", webServicePath, webServiceHost_, webservicePort_ );
+    io_service.run();
+    std::string content = client.GetContent();
+    int indexDebut = -1;
+    int indexFin = -1;
+    indexDebut = content.find("<mpia:MPIA_Message");
+    indexFin = content.find("</mpia:MPIA_Message>")+20;
+    if ( indexDebut < 0 || indexFin < 0)
+      throw std::exception( "content of xmliaMessage from webService is not conformed" );
+    content = content.substr( indexDebut, indexFin - indexDebut );
 
-        return content;
-    }
-    catch (std::exception& e)
-    {
-        std::cout << e.what() << std::endl;
-    }
+    return content;
 
-}
-
-// -----------------------------------------------------------------------------
-// Name: Publisher::CreateReport
-// Created: SBO 2008-05-26
-// -----------------------------------------------------------------------------
-xml::xostream& Publisher::CreateReport()
-{
-    boost::recursive_mutex::scoped_lock locker( mutex_ );
-    if( reports_.get() == 0 )
-    {
-        reports_.reset( new xml::xostringstream() );
-        *reports_ << xml::start( "ReportPush" )
-                    << Namespaces();
-    }
-    return *new xml::xosubstream( *reports_ );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: Publisher::PullOrder
-// Created: SBO 2008-05-16
-// -----------------------------------------------------------------------------
-void Publisher::PullOrder( const std::string& message, ResponseHandler_ABC& handler )
-{
-    //Récupération des ordres venant du webService 
 }
 
 // -----------------------------------------------------------------------------
@@ -182,36 +117,28 @@ void Publisher::PullOrder( const std::string& message, ResponseHandler_ABC& hand
 // -----------------------------------------------------------------------------
 std::string Publisher::GetUrlId()
 {
-  try
-  {
-    //Demande requête pour envoie des données au webService
     boost::asio::io_service io_service;
     std::string webServicePath = "/ServiceXmlIa/xmlia/type/create";
-    std::string webServiceHost = "swiwas01.chb.fr.ibm.com";
-    TCP_Client client(io_service, "sending", webServicePath, webServiceHost );
+    TCP_Client client(io_service, "sending", webServicePath, webServiceHost_, webservicePort_ );
     io_service.run();
     std::string content = client.GetContent();
+    if( content == "")
+        throw std::exception( "content of url id from webService is empty" );
     return content;
-  }
-  catch (std::exception& e)
-  {
-    std::cout << e.what() << std::endl;
-  }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Publisher::PushReports
-// Created: SBO 2008-05-26
+// Name: Publisher::PushReport
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 void Publisher::PushReport( const std::string& xmliaMessage, const std::string& strPoe )
 {
     try
     {
-        std::string webServiceHost = "swiwas01.chb.fr.ibm.com";
         std::string webServicePath = "/ServiceXmlIa/"+strPoe;
         boost::asio::io_service io_service;
 
-        TCP_Client client(io_service, "POST", webServicePath, webServiceHost, xmliaMessage );
+        TCP_Client client(io_service, "POST", webServicePath, webServiceHost_, webservicePort_, xmliaMessage );
         io_service.run();
         std::string content = client.GetContent();
     }

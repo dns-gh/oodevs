@@ -21,13 +21,12 @@ namespace plugins
 {
 namespace xmlia
 {
-    class ResponseHandler_ABC;
 
 // =============================================================================
 /** @class  Publisher_ABC
     @brief  Publisher interface
 */
-// Created: AGE 2008-05-30
+// Created: SLG 2009-06-12
 // =============================================================================
 class Publisher_ABC
 {
@@ -41,9 +40,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void PushReports() = 0;
-    virtual xml::xostream& CreateReport() = 0;
-    virtual void PullOrder( const std::string& message, ResponseHandler_ABC& handler ) = 0;
     virtual std::string GetUrlReports() = 0;
     virtual std::string GetXmliaMessage( const std::string& url ) = 0;
     virtual std::string GetUrlId() = 0;

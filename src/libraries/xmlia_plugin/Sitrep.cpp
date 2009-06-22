@@ -9,7 +9,6 @@
 
 #include "xmlia_plugin_pch.h"
 #include "Sitrep.h"
-#include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
 #include "dispatcher/Side.h"

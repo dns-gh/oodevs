@@ -15,7 +15,7 @@ using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
 // Name: XmliaPluginFactory constructor
-// Created: SBO 2008-02-29
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 XmliaPluginFactory::XmliaPluginFactory()
 {
@@ -24,7 +24,7 @@ XmliaPluginFactory::XmliaPluginFactory()
 
 // -----------------------------------------------------------------------------
 // Name: XmliaPluginFactory destructor
-// Created: SBO 2008-02-29
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 XmliaPluginFactory::~XmliaPluginFactory()
 {
@@ -33,7 +33,7 @@ XmliaPluginFactory::~XmliaPluginFactory()
 
 // -----------------------------------------------------------------------------
 // Name: XmliaPluginFactory::Create
-// Created: SBO 2008-02-29
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 std::auto_ptr< dispatcher::Plugin_ABC > XmliaPluginFactory::Create( const std::string& name,
 																	xml::xistream& xis,

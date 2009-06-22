@@ -11,11 +11,9 @@
 #include "xmliaPlugin.h"
 #include "ExtensionFactory.h"
 #include "Publisher.h"
-#include "PublisherActor.h"
 #include "ReportManager.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
-#include "UpdateListener.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
 #include <xeumeuleu/xml.h>
@@ -24,31 +22,30 @@ using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
 // Name: XmliaPlugin constructor
-// Created: SBO 2008-02-29
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 XmliaPlugin::XmliaPlugin( dispatcher::Model& model,
                           xml::xistream& xis,
                           dispatcher::SimulationPublisher_ABC& simulationPublisher )
     : model_( model )
 	, simulationPublisher_ ( simulationPublisher )
-    , publisher_( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
+    , publisher_( new Publisher( xis ) ) 
     , simulation_( new Simulation() )
     , reportManager_( new ReportManager( model_, simulationPublisher_ ) )
     , extensionFactory_( new ExtensionFactory( *publisher_, *reportManager_, *simulation_, model_ ) )
-    , listener_( new UpdateListener( *publisher_, model_, simulationPublisher_ ) )
     , nCptTick_(0)
 {
     model_.RegisterFactory( *extensionFactory_ );
     
     xis >> xml::attribute( "export", bExportActivation_ )
         >> xml::attribute( "import", bImportActivation_ )
-        >> xml::attribute( "nbTicks", nTick_ )
-        >> xml::attribute( "webservice", sWebServiceUrl_ );
+        >> xml::attribute( "nbTicks", nTick_ );
+  
 }
 
 // -----------------------------------------------------------------------------
 // Name: XmliaPlugin destructor
-// Created: SBO 2008-02-29
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 XmliaPlugin::~XmliaPlugin()
 {
@@ -57,7 +54,7 @@ XmliaPlugin::~XmliaPlugin()
 
 // -----------------------------------------------------------------------------
 // Name: XmliaPlugin::Receive
-// Created: SBO 2008-02-29
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 {
@@ -65,13 +62,7 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
     {
         if( nCptTick_ == 0 )
         {
-          //@HackTest xml
-          /*
-          xml::xifstream xis( "D:/Projets/sword_trunk/data/sitrep_example.xml" );
-          reportManager_->Read(xis);
-          reportManager_->Send();
-          */
-
+         
           simulation_->Update( *message.msg.u.msg_control_end_tick );//@NOTE, keep could be usefull for other message
 
           if( bExportActivation_ )
@@ -92,7 +83,6 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
             {
               reportManager_->CleanReceivedRapport();
               reportManager_->Receive(*publisher_);
-              //@TODO branche to webservice and ReportManager read
               reportManager_->UpdateSimulation();
             }
             catch( std::exception& e )
@@ -109,7 +99,7 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 
 // -----------------------------------------------------------------------------
 // Name: xmliaPlugin::NotifyClientAuthenticated
-// Created: SBO 2008-02-29
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
 {
@@ -119,7 +109,7 @@ void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& cl
 
 // -----------------------------------------------------------------------------
 // Name: XmliaPlugin::NotifyClientLeft
-// Created: SBO 2008-02-29
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 void XmliaPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client )
 {

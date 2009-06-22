@@ -28,8 +28,7 @@ namespace plugins
 namespace xmlia
 {
     class ExtensionFactory;
-    class PublisherActor;
-    class UpdateListener;
+    class Publisher;
     class ReportManager;
     class Simulation;
 
@@ -37,7 +36,7 @@ namespace xmlia
 /** @class  BmlPlugin
     @brief  BmlPlugin
 */
-// Created: SBO 2008-02-29
+// Created: SLG 2009-06-12
 // =============================================================================
 class XmliaPlugin : public dispatcher::Plugin_ABC
 {
@@ -72,15 +71,13 @@ private:
     //@{
     dispatcher::Model& model_;
 	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
-    std::auto_ptr< PublisherActor > publisher_;
+    std::auto_ptr< Publisher > publisher_;
     std::auto_ptr< Simulation > simulation_;
     std::auto_ptr< ReportManager > reportManager_;
     std::auto_ptr< ExtensionFactory > extensionFactory_;
-    std::auto_ptr< UpdateListener > listener_;
     bool  bExportActivation_;
     bool  bImportActivation_;
     unsigned int nTick_;
-    std::string sWebServiceUrl_;
     unsigned int nCptTick_;
     //@}
 };

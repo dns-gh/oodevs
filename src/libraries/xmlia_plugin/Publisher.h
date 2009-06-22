@@ -44,9 +44,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void PushReports();
-    virtual void PullOrder( const std::string& message, ResponseHandler_ABC& handler );
-    virtual xml::xostream& CreateReport();
     virtual std::string GetUrlReports();
     virtual std::string GetXmliaMessage( const std::string& url );
     virtual std::string GetUrlId();
@@ -72,6 +69,8 @@ private:
     std::auto_ptr< xml::xostringstream > reports_;
     boost::recursive_mutex mutex_;
     std::string lastRequestTime_;
+    std::string webServiceHost_;
+    std::string webservicePort_;
     //@}
 };
 

@@ -63,20 +63,19 @@ ReportManager::~ReportManager()
 // -----------------------------------------------------------------------------
 void ReportManager::Send( Publisher_ABC& publisher)const
 {
-  for( std::map< unsigned, Sitrep* >::const_iterator it = reports_.begin(); it != reports_.end(); it++ )
-  {
-    xml::xostringstream xos;
-    it->second->Serialize( xos );
-    std::string xmliaMessage = xos.str();
-    std::string urlId = publisher.GetUrlId();
-    if( urlId != "" )//@TODO change method approach
+    for( std::map< unsigned, Sitrep* >::const_iterator it = reports_.begin(); it != reports_.end(); it++ )
     {
-      unsigned int index = urlId.find( '\r' );
-      unsigned lengh = index - 11;
-      std::string strPoe =  urlId.substr(11, lengh );
-      publisher.PushReport( xmliaMessage, strPoe );
+        xml::xostringstream xos;
+        it->second->Serialize( xos );
+        std::string xmliaMessage = xos.str();
+        std::string urlId = publisher.GetUrlId();
+
+        unsigned int index = urlId.find( '\r' );
+        unsigned lengh = index - 11;
+        std::string strPoe =  urlId.substr(11, lengh );
+        publisher.PushReport( xmliaMessage, strPoe );
+   
     }
-  }
 }
 
 // -----------------------------------------------------------------------------
@@ -87,9 +86,6 @@ void ReportManager::Receive( Publisher_ABC& publisher)
 {
     const std::string UrlReportFromWebService = publisher.GetUrlReports();
     
-    if( UrlReportFromWebService == "" )//@Change method approach
-      return;
-
     xml::xistringstream streamContent ( UrlReportFromWebService );
     streamContent   >> xml::start( "html" )
                     >> xml::start( "body" )
@@ -98,6 +94,7 @@ void ReportManager::Receive( Publisher_ABC& publisher)
                     >> xml::end()
                     >> xml::end()
                     >> xml::end();
+
 }
 
 // -----------------------------------------------------------------------------
@@ -112,8 +109,6 @@ void ReportManager::ReadUrl( xml::xistream& xis, Publisher_ABC& publisher )
 
     const std::string message = publisher.GetXmliaMessage( url );
 
-    if( message == "" )//@Change method approach
-      return;
     if( true /*type == "SITREP"*/ )
     {
       dispatcher::Profile_ABC* profile = GetClientProfile();

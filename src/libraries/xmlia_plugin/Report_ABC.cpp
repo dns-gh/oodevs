@@ -9,7 +9,6 @@
 
 #include "xmlia_plugin_pch.h"
 #include "Report_ABC.h"
-#include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
 #include "dispatcher/Model.h"

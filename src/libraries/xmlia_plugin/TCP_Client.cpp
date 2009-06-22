@@ -15,9 +15,9 @@ using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
 // Name: TCP_Client constructor
-// Created: SBO 2008-04-02
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
-TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string parameter, const std::string webServicePath, const std::string webServiceHost, const std::string xmliaMessage )
+TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string parameter, const std::string webServicePath, const std::string webServiceHost, const std::string webServicePort, const std::string xmliaMessage )
 : resolver_(io_service),
   socket_(io_service),
   parameter_ (parameter)
@@ -35,7 +35,7 @@ TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string p
 
   // Start an asynchronous resolve to translate the server and service names
   // into a list of endpoints.
-  tcp::resolver::query query(webServiceHost, "12100");
+  tcp::resolver::query query(webServiceHost, webServicePort );
   resolver_.async_resolve(query,
     boost::bind(&TCP_Client::handle_resolve, this,
     boost::asio::placeholders::error,
@@ -45,9 +45,9 @@ TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string p
 
 // -----------------------------------------------------------------------------
 // Name: TCP_Client constructor
-// Created: SBO 2008-04-02
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
-TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string parameter, const std::string webServicePath, const std::string webServiceHost )
+TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string parameter, const std::string webServicePath, const std::string webServiceHost, const std::string webServicePort )
 : resolver_(io_service),
   socket_(io_service),
   parameter_ (parameter)
@@ -55,16 +55,15 @@ TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string p
     if ( parameter_ == "reception" )
     {
         std::ostream request_stream(&request_);
-        request_stream << "GET " << webServicePath << " HTTP/1.0\r\n";
+        request_stream << "GET " << webServicePath << " HTTP/1.1\r\n";
         request_stream << "Host: " << webServiceHost << "\r\n";
         request_stream << "Accept: */*\r\n";
         request_stream << "Connection: close\r\n\r\n";
-        request_stream << "Content-Length: 28" << "\r\n";
     }
     else if  ( parameter_ == "sending" )
     {
         std::ostream request_stream(&request_);
-        request_stream << "HEAD " << "/ServiceXmlIa/xmlia/type/create" << " HTTP/1.1\r\n";
+        request_stream << "HEAD " << webServicePath << " HTTP/1.1\r\n";
         request_stream << "Host: " << webServiceHost << "\r\n";
         request_stream << "POE: 1\r\n\r\n";
         request_stream << "Accept: */*\r\n";
@@ -79,7 +78,7 @@ TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string p
 
 // Start an asynchronous resolve to translate the server and service names
 // into a list of endpoints.
-    tcp::resolver::query query(webServiceHost, "12100");
+    tcp::resolver::query query( webServiceHost, webServicePort );
     resolver_.async_resolve(query,
                             boost::bind(&TCP_Client::handle_resolve, this,
                             boost::asio::placeholders::error,
@@ -89,7 +88,7 @@ TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string p
 
 // -----------------------------------------------------------------------------
 // Name: handle_resolve 
-// Created: SLG 2009-06-02
+// Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 void TCP_Client::handle_resolve( const boost::system::error_code& err, tcp::resolver::iterator endpoint_iterator)
 {
@@ -140,23 +139,7 @@ void TCP_Client::handle_connect( const boost::system::error_code& err, tcp::reso
     }
 
 }
-/*
-// -----------------------------------------------------------------------------
-// Name: handle_write 
-// Created: SLG 2009-06-02
-// -----------------------------------------------------------------------------
-void TCP_Client::handle_write(const boost::system::error_code& err)
-{
-    if (!err)
-    {
-        // lecture de la réponse!!!
-    }
-    else
-    {
-        std::cout << "Error: " << err.message() << "\n";
-    }
-}
-*/
+
 // -----------------------------------------------------------------------------
 // Name: handle_write 
 // Created: SLG 2009-06-02
@@ -226,22 +209,6 @@ void TCP_Client::handle_read_headers(const boost::system::error_code& err)
         std::ostringstream ss;
         ss << &response_;
         strContent_ += ss.str();
-      
-        // Process the response headers.
-        /*std::istream response_stream(&response_);
-        std::string header;
-        while (std::getline(response_stream, header) && header != "\r")
-        std::cout << header << "\n";
-        std::cout << "\n";
-
-        // Write whatever content we already have to output.
-        if (response_.size() > 0)
-        {
-        //std::cout << &response_;
-        std::ostringstream ss;
-        ss << &response_;
-        strContent_ += ss.str();
-        }*/
 
         // Start reading remaining data until EOF.
         boost::asio::async_read(socket_, response_,
@@ -290,21 +257,4 @@ void TCP_Client::handle_read_content(const boost::system::error_code& err)
 std::string TCP_Client::GetContent()
 {
     return strContent_;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: handle_write 
-// Created: SLG 2009-06-02
-// -----------------------------------------------------------------------------
-void TCP_Client::handle_read(const boost::system::error_code& err, size_t number_bytes_read )
-{
-    if (!err)
-    {
-        // Hum!!!
-    }
-    else
-    {
-        std::cout << "Error: " << err.message() << "\n";
-    }
 }
