@@ -10,7 +10,7 @@
 #ifndef __Sitrep_h_
 #define __Sitrep_h_
 
-#include "Rapport.h"
+#include "Report_ABC.h"
 
 namespace dispatcher
 {
@@ -29,7 +29,7 @@ namespace plugins
 {
 namespace xmlia
 {
-  class RapportManager;
+  class ReportManager;
   class Unite_ABC;
   class UniteAgent;
 // =============================================================================
@@ -38,14 +38,14 @@ namespace xmlia
 */
 // Created: MGD 2009-06-12
 // =============================================================================
-  class Sitrep : public Rapport
+  class Sitrep : public Report_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    Sitrep( RapportManager& manager, xml::xistream& xis );
-    Sitrep( RapportManager& manager, dispatcher::Automat& author );
+    Sitrep( ReportManager& manager, xml::xistream& xis );
+    Sitrep( ReportManager& manager, dispatcher::Automat& author );
     virtual ~Sitrep();
     //@}
 
@@ -58,6 +58,7 @@ public:
     virtual void ReadEntities( xml::xistream& xis );
     void ReadPosition( xml::xistream& xis );
     void ReadEtatOps( xml::xistream& xis );
+	virtual unsigned int GetAuthorID() const;
     //@}
 };
 

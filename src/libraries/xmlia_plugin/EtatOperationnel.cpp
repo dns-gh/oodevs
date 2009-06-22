@@ -149,11 +149,11 @@ void EtatOperationnel::Serialize( xml::xostream& xos, const std::string& sQnameR
         << xml::start( "mpia:EstRapporteePar_Rapport" )
           << xml::content( "mpia:refid", sQnameRapport )
         << xml::end()
-        << xml::content( "EtatCarburants", iEtatCarburants_ )
-        << xml::content( "EtatEquipements", iEtatEquipements_)
-        << xml::content( "EtatMunitions", iEtatMunitions_)
-        << xml::content( "EtatOperationnel", etatOpsGeneral_ )
-        << xml::content( "EtatPersonnel", iEtatPersonnel_)
+        << xml::content( "mpia:EtatCarburants", iEtatCarburants_ )
+        << xml::content( "mpia:EtatEquipements", iEtatEquipements_)
+        << xml::content( "mpia:EtatMunitions", iEtatMunitions_)
+        << xml::content( "mpia:EtatOperationnel", etatOpsGeneral_ )
+        << xml::content( "mpia:EtatPersonnel", iEtatPersonnel_)
       << xml::end();
 }
 
@@ -194,4 +194,13 @@ void EtatOperationnel::Update( dispatcher::Agent& agent )
 unsigned int EtatOperationnel::GetId() const
 {
   return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EtatOperationnel GetGeneralOperationalState
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+std::string& EtatOperationnel::GetGeneralOperationalState()
+{
+  return etatOpsGeneral_;
 }

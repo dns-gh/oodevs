@@ -46,6 +46,25 @@ void PublisherActor::PushReports()
     thread_->Enqueue( boost::bind( &PublisherActor::DoPushReports, this ) );
     base_->PushReports();//TEMP
 }
+// -----------------------------------------------------------------------------
+// Name: PublisherActor::PushReports
+// Created: AGE 2008-05-30
+// -----------------------------------------------------------------------------
+std::string PublisherActor::GetUrlId()
+{
+  //thread_->Enqueue( boost::bind( &PublisherActor::DoPushReports, this ) );
+  return base_->GetUrlId();//TEMP
+}
+
+// -----------------------------------------------------------------------------
+// Name: PublisherActor::PushReports
+// Created: AGE 2008-05-30
+// -----------------------------------------------------------------------------
+void PublisherActor::PushReport( const std::string& xmliaMessage, const std::string& strPoe )
+{
+  //thread_->Enqueue( boost::bind( &PublisherActor::DoPushReports, this ) );
+  base_->PushReport( xmliaMessage, strPoe );//TEMP
+}
 
 // -----------------------------------------------------------------------------
 // Name: PublisherActor::CreateReport
@@ -116,3 +135,20 @@ void PublisherActor::CommitOrders()
 }
 
 
+// -----------------------------------------------------------------------------
+// Name: PublisherActor::GetUrlReports
+// Created: SLG 2009-05-30
+// -----------------------------------------------------------------------------
+std::string PublisherActor::GetUrlReports()
+{
+  return base_->GetUrlReports();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PublisherActor::GetUrlReports
+// Created: SLG 2009-05-30
+// -----------------------------------------------------------------------------
+std::string PublisherActor::GetXmliaMessage( const std::string& url )
+{
+  return base_->GetXmliaMessage( url );
+}

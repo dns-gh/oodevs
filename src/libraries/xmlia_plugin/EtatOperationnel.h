@@ -40,6 +40,7 @@ namespace plugins
       virtual std::string QName() const;
       void Update( dispatcher::Agent& agent );
       unsigned int GetId() const;
+      std::string& GetGeneralOperationalState();
       //@}
 
     private:

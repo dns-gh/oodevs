@@ -33,19 +33,19 @@ namespace xmlia
   class Publisher_ABC;
 
 // =============================================================================
-/** @class  RapportManager
-    @brief  RapportManager
+/** @class  ReportManager
+    @brief  ReportManager
 */
 // Created: MGD 2009-06-12
 // =============================================================================
-class RapportManager
+class ReportManager
 {
 //@GLOBAL REFACTOR replace pointer by autoptr
 public:
     //! @name Constructors/Destructor
     //@{
-    RapportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher );
-    virtual ~RapportManager();
+    ReportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher );
+    virtual ~ReportManager();
     //@}
 
     ///! @name Operations
@@ -77,10 +77,10 @@ public:
 private:
     //! @name Member data
     //@{
-    std::map< unsigned, Sitrep* > rapports_;//@refactor when new report type will be added
+    std::map< unsigned, Sitrep* > reports_;//@refactor when new report type will be added
     std::vector< Sitrep* > receivedRapports_;
     dispatcher::Model& model_;
-	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
+	  dispatcher::SimulationPublisher_ABC& simulationPublisher_;
     dispatcher::Profile_ABC* clientProfile_;
     dispatcher::ClientPublisher_ABC* clientPublisher_;
     //@}

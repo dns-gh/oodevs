@@ -45,6 +45,7 @@ public:
     virtual void SerializeIncludeEntities( xml::xostream& xos, const std::string& sQnameRapport  ) const {};
     std::string QName() const;
     unsigned int GetId() const;
+	std::string GetName();
     static unsigned int QNameToId( std::string sQname );
     //@}
 

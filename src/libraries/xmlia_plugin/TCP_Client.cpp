@@ -17,6 +17,36 @@ using namespace plugins::xmlia;
 // Name: TCP_Client constructor
 // Created: SBO 2008-04-02
 // -----------------------------------------------------------------------------
+TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string parameter, const std::string webServicePath, const std::string webServiceHost, const std::string xmliaMessage )
+: resolver_(io_service),
+  socket_(io_service),
+  parameter_ (parameter)
+{
+    std::ostream request_stream(&request_);
+    request_stream << "POST " << webServicePath << " HTTP/1.1\r\n";
+    request_stream << "Host: " << webServiceHost << "\r\n";
+    request_stream << "Authorization: Basic\r\n";
+    request_stream << "Accept: */*\r\n";
+    request_stream << "Connection: close\r\n";
+    request_stream << "Content-length: " << xmliaMessage.length() <<"\r\n";
+    request_stream << "Content-Type: text/xml\r\n\r\n";
+    request_stream << xmliaMessage << "\r\n\r\n";
+
+
+  // Start an asynchronous resolve to translate the server and service names
+  // into a list of endpoints.
+  tcp::resolver::query query(webServiceHost, "12100");
+  resolver_.async_resolve(query,
+    boost::bind(&TCP_Client::handle_resolve, this,
+    boost::asio::placeholders::error,
+    boost::asio::placeholders::iterator));
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: TCP_Client constructor
+// Created: SBO 2008-04-02
+// -----------------------------------------------------------------------------
 TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string parameter, const std::string webServicePath, const std::string webServiceHost )
 : resolver_(io_service),
   socket_(io_service),
@@ -34,21 +64,18 @@ TCP_Client::TCP_Client( boost::asio::io_service& io_service, const std::string p
     else if  ( parameter_ == "sending" )
     {
         std::ostream request_stream(&request_);
-        request_stream << "HEAD " << "/ServiceXmlIa/xmlia/type/create" << " HTTP/1.0\r\n";
+        request_stream << "HEAD " << "/ServiceXmlIa/xmlia/type/create" << " HTTP/1.1\r\n";
         request_stream << "Host: " << webServiceHost << "\r\n";
+        request_stream << "POE: 1\r\n\r\n";
         request_stream << "Accept: */*\r\n";
         request_stream << "Connection: close\r\n\r\n";
-        request_stream << "poe: 1\r\n\r\n";
-        request_stream << "Authorization: Basic\r\n\r\n";
-
-        //request_stream << "Content-Length: 28" << "\r\n";
+        //request_stream << "Authorization: Basic\r\n\r\n";
     }
+    
     else 
     {
         std::cout << "wrong parameters function in connection to webServices NCCO"  << "\n";
     }
-
-
 
 // Start an asynchronous resolve to translate the server and service names
 // into a list of endpoints.
@@ -70,7 +97,8 @@ void TCP_Client::handle_resolve( const boost::system::error_code& err, tcp::reso
     {
         // Attempt a connection to the first endpoint in the list. Each endpoint
         // will be tried until we successfully establish a connection.
-        tcp::endpoint endpoint = *endpoint_iterator;
+      tcp::endpoint endpoint = *endpoint_iterator;
+
         socket_.async_connect(endpoint,
             boost::bind(&TCP_Client::handle_connect, this,
             boost::asio::placeholders::error, ++endpoint_iterator));
@@ -198,6 +226,7 @@ void TCP_Client::handle_read_headers(const boost::system::error_code& err)
         std::ostringstream ss;
         ss << &response_;
         strContent_ += ss.str();
+      
         // Process the response headers.
         /*std::istream response_stream(&response_);
         std::string header;
@@ -235,8 +264,6 @@ void TCP_Client::handle_read_content(const boost::system::error_code& err)
 {
     if (!err)
     {
-        if ( parameter_ == "reception" )
-        {
 
             // Write all of the data that has been read so far.
             std::ostringstream ss;
@@ -248,20 +275,7 @@ void TCP_Client::handle_read_content(const boost::system::error_code& err)
                 boost::asio::transfer_at_least(1),
                 boost::bind(&TCP_Client::handle_read_content, this,
                 boost::asio::placeholders::error));
-        }
-        else if ( parameter_ == "sending" )
-        {
-            // Write all of the data that has been read so far.
-            std::ostringstream ss;
-            ss << &response_;
-            strContent_ += ss.str();
-
-            // Continue reading remaining data until EOF.
-            boost::asio::async_read(socket_, response_,
-                boost::asio::transfer_at_least(1),
-                boost::bind(&TCP_Client::handle_read_content, this,
-                boost::asio::placeholders::error));
-        }
+       
     }
     else if (err != boost::asio::error::eof)
     {

@@ -35,6 +35,7 @@ class TCP_Client
 {
 public:
     TCP_Client( boost::asio::io_service& io_service, const std::string parameter, const std::string webServicePath, const std::string webServiceHost );
+    TCP_Client( boost::asio::io_service& io_service, const std::string parameter, const std::string webServicePath, const std::string webServiceHost, const std::string xmliaMessage );
 
     //! @name Accessors
     //@{

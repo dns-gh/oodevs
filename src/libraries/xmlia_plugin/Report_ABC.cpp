@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "xmlia_plugin_pch.h"
-#include "Rapport.h"
+#include "Report_ABC.h"
 #include "SerializationTools.h"
 #include <xeumeuleu/xml.h>
 
@@ -17,7 +17,7 @@
 #include "dispatcher/Automat.h"
 #include "dispatcher/Agent.h"
 
-#include "xmlia_plugin/RapportManager.h"
+#include "xmlia_plugin/ReportManager.h"
 #include "xmlia_plugin/Unite_ABC.h"
 #include "xmlia_plugin/UniteAutomat.h"
 #include "xmlia_plugin/UniteFormation.h"
@@ -42,11 +42,11 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Rapport constructor
+// Name: Report_ABC constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Rapport::Rapport( RapportManager& manager, xml::xistream& xis )
-: rapportManager_( manager )
+Report_ABC::Report_ABC( ReportManager& manager, xml::xistream& xis )
+: reportManager_( manager )
 {
   std::string sAuthorQname;
   std::string sDestQname;
@@ -66,10 +66,10 @@ Rapport::Rapport( RapportManager& manager, xml::xistream& xis )
   unsigned int idDest = Unite_ABC::QNameToId( sDestQname );
 
   cpt_ = 0;
-  xis >> xml::list( "mpia:Unite", *this, &Rapport::ReadUnites );
+  xis >> xml::list( "mpia:Unite", *this, &Report_ABC::ReadUnites );
 }
 
-void Rapport::ReadUnites( xml::xistream& xis )
+void Report_ABC::ReadUnites( xml::xistream& xis )
 {
   //Hack replace by a xmlia data like group to determine type
   if( cpt_ == 0)
@@ -90,11 +90,11 @@ void Rapport::ReadUnites( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Rapport constructor
+// Name: Report_ABC constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Rapport::Rapport( RapportManager& manager, const dispatcher::Automat& author,  const std::string& type  )
-: rapportManager_( manager )
+Report_ABC::Report_ABC( ReportManager& manager, const dispatcher::Automat& author,  const std::string& type  )
+: reportManager_( manager )
 , type_( type )
 {
   author_ = new UniteAutomat( author );
@@ -106,10 +106,10 @@ Rapport::Rapport( RapportManager& manager, const dispatcher::Automat& author,  c
 }
 
 // -----------------------------------------------------------------------------
-// Name: Rapport destructor
+// Name: Report_ABC destructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Rapport::~Rapport()
+Report_ABC::~Report_ABC()
 {
   delete author_;
   delete dest_;
@@ -122,10 +122,10 @@ Rapport::~Rapport()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Rapport QName
+// Name: Report_ABC QName
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-std::string Rapport::QName() const
+std::string Report_ABC::QName() const
 {
   std::ostringstream os;
   os << author_->GetId();
@@ -134,32 +134,32 @@ std::string Rapport::QName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Rapport::Serialize
+// Name: Report_ABC::Serialize
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Rapport::Serialize( xml::xostream& xos ) const
+void Report_ABC::Serialize( xml::xostream& xos ) const
 {
   std::string sQnameRapport = QName();
 
   std::string time = CurrentTime();
 
-  xos << xml::start( "mpia:MPIA_Message" )
+  xos   << xml::start( "mpia:MPIA_Message" )
         << xml::attribute( "xmlns:mpia", "urn:MPIA-schema" )
         //<< xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
         //<< xml::attribute( "xsi:schemaLocation", "urn:MPIA-schema" )
         << xml::start( "mpia:Header" )
-          << xml::content( "mpia:VersionSchemaXMLIA", "V3.0-b" )
-         << xml::content( "mpia:Name", type_ )
+        << xml::content( "mpia:VersionSchemaXMLIA", "V3.0-b" )
+        << xml::content( "mpia:Name", type_ )
         << xml::end()
         << xml::start( "mpia:Entities" )
-          << xml::start( "mpia:Rapport" )
-            << xml::attribute( "id", sQnameRapport )
-            << xml::content( "mpia:Confirmation", "REP" )//@TODOFORCE
-            << xml::content( "mpia:GDHRapport", time )
-            << xml::start( "mpia:EstRedigePar_EntiteOrganisationnelle" )
-              << xml::content( "mpia:refid", author_->QName() )
-            << xml::end()
-          << xml::end();
+        << xml::start( "mpia:Rapport" )
+        << xml::attribute( "id", sQnameRapport )
+        << xml::content( "mpia:Confirmation", "REP" )//@TODOFORCE
+        << xml::content( "mpia:GDHRapport", time )
+        << xml::start( "mpia:EstRedigePar_EntiteOrganisationnelle" )
+        << xml::content( "mpia:refid", author_->QName() )
+        << xml::end()
+        << xml::end();
 
   author_->Serialize( xos, sQnameRapport );
   dest_->Serialize( xos, sQnameRapport );
@@ -173,38 +173,43 @@ void Rapport::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Rapport::SerializeDestinataires
+// Name: Report_ABC::SerializeDestinataires
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Rapport::SerializeDestinataires( xml::xostream& xos, std::string sQnameRapport) const
+void Report_ABC::SerializeDestinataires( xml::xostream& xos, std::string sQnameRapport) const
 {
 
-  xos << xml::start( "mpia:AssociationInstanceObjetAdresse" )
+  xos   << xml::start( "mpia:AssociationInstanceObjetAdresse" )
         << xml::attribute( "id", "dest-1")//adapt if more than one dest
         << xml::content( "mpia:TransmissionEtReception", "RECEIV")
         << xml::start( "mpia:AssocieCommeObjet_Adresse")
-          << xml::content( "mpia:refid", "adresse-0")
+        << xml::content( "mpia:refid", "adresse-0")
         << xml::end()
         << xml::start( "mpia:AssocieCommeSujet_InstanceObjet" )
-          << xml::content( "mpia:refid", dest_->QName() )
+        << xml::content( "mpia:refid", dest_->QName() )
         << xml::end()
         << xml::start( "mpia:EstRapporteePar_Rapport" )
-          << xml::content( "mpia:refid", sQnameRapport )
+        << xml::content( "mpia:refid", sQnameRapport )
         << xml::end()
-      << xml::end()
-      << xml::start( "mpia:AdresseRadio" )
-      << xml::attribute( "id", "adresse-0")
-      << xml::end;
+        << xml::end()
+        << xml::start( "mpia:AdresseRadio" )
+        << xml::attribute( "id", "adresse-0")
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Rapport::SerializeSides
+// Name: Report_ABC::SerializeSides
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Rapport::SerializeSides( xml::xostream& xos, std::string sQnameRapport ) const
+void Report_ABC::SerializeSides( xml::xostream& xos, std::string sQnameRapport ) const
 {
-  for( kernel::Iterator< const dispatcher::Side& > it = rapportManager_.GetModel().sides_.CreateIterator(); it.HasMoreElements(); )
+  for( kernel::Iterator< const dispatcher::Side& > it = reportManager_.GetModel().sides_.CreateIterator(); it.HasMoreElements(); )
   {
     SerializeSide( it.NextElement(), xos, sQnameRapport);
   }
+}
+
+unsigned int Report_ABC::GetAuthorID() const
+{
+  return author_->GetId();
 }

@@ -27,7 +27,7 @@ namespace plugins
 {
   namespace xmlia
   {
-    class RapportManager;
+    class ReportManager;
     class Unite_ABC;
     class UniteAgent;
     // =============================================================================
@@ -36,13 +36,13 @@ namespace plugins
     */
     // Created: MGD 2009-06-12
     // =============================================================================
-    class Rapport
+    class Report_ABC
     {
 
     public:
       //! @name Destructor
       //@{
-      virtual ~Rapport();
+      virtual ~Report_ABC();
       //@}
 
       ///! @name Operations
@@ -53,6 +53,7 @@ namespace plugins
       void SerializeSides( xml::xostream& xos, std::string sQnameRapport ) const;
       virtual void SerializeSide( const dispatcher::Side& side, xml::xostream& xos, std::string sQnameRapport ) const = 0;
       virtual void ReadEntities( xml::xistream& xis ) = 0;
+      virtual unsigned int Report_ABC::GetAuthorID() const;
       //@}
 
       ///! @name Event
@@ -64,8 +65,8 @@ namespace plugins
     protected:
       //! @name Constructors
       //@{
-      Rapport( RapportManager& manager, xml::xistream& xis );
-      Rapport( RapportManager& manager, const dispatcher::Automat& author, const std::string& type );
+      Report_ABC( ReportManager& manager, xml::xistream& xis );
+      Report_ABC( ReportManager& manager, const dispatcher::Automat& author, const std::string& type );
       //@}
 
     private:
@@ -79,9 +80,10 @@ namespace plugins
       //! @name Member data
       //@{
       const std::string type_;
+      const std::string serializedContent_;
       Unite_ABC* author_;
       Unite_ABC* dest_;
-      RapportManager& rapportManager_;
+      ReportManager& reportManager_;
       int cpt_;
       std::map< unsigned, UniteAgent* > unites_;
       //@}

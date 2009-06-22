@@ -20,7 +20,6 @@ namespace xml
     class xistringstream;
 }
 
-//class DCSOperationsSoapBindingProxy;
 
 namespace plugins
 {
@@ -50,8 +49,8 @@ public:
     virtual xml::xostream& CreateReport();
     virtual std::string GetUrlReports();
     virtual std::string GetXmliaMessage( const std::string& url );
-    //virtual std::string GetUrlId();
-    //virtual std::string PushReport( const std::string& xmliaMessage, const std::string& urlId );
+    virtual std::string GetUrlId();
+    virtual void PushReport( const std::string& xmliaMessage, const std::string& strPoe );
     
     //@}
 
@@ -72,6 +71,7 @@ private:
     //@{
     std::auto_ptr< xml::xostringstream > reports_;
     boost::recursive_mutex mutex_;
+    std::string lastRequestTime_;
     //@}
 };
 

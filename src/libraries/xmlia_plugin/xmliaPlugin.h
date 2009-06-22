@@ -30,7 +30,7 @@ namespace xmlia
     class ExtensionFactory;
     class PublisherActor;
     class UpdateListener;
-    class RapportManager;
+    class ReportManager;
     class Simulation;
 
 // =============================================================================
@@ -74,7 +74,7 @@ private:
 	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
     std::auto_ptr< PublisherActor > publisher_;
     std::auto_ptr< Simulation > simulation_;
-    std::auto_ptr< RapportManager > rapportManager_;
+    std::auto_ptr< ReportManager > reportManager_;
     std::auto_ptr< ExtensionFactory > extensionFactory_;
     std::auto_ptr< UpdateListener > listener_;
     bool  bExportActivation_;

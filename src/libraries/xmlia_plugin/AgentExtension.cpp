@@ -10,7 +10,7 @@
 #include "xmlia_plugin_pch.h"
 #include "AgentExtension.h"
 
-#include "RapportManager.h"
+#include "ReportManager.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
@@ -23,10 +23,10 @@ using namespace plugins::xmlia;
 // Name: AgentExtension constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, RapportManager& rapportManager, const Simulation& simulation, const dispatcher::Model& model )
+AgentExtension::AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, ReportManager& reportManager, const Simulation& simulation, const dispatcher::Model& model )
     : holder_( holder )
     , publisher_( publisher )
-    , rapportManager_( rapportManager )
+    , reportManager_( reportManager )
     , simulation_( simulation )
     , model_( model )
     , lastUpdate_( 0 )
@@ -56,7 +56,7 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
     {
         try
         {
-          rapportManager_.DoUpdate( holder_ );
+          reportManager_.DoUpdate( holder_ );
         }
         catch( std::exception& e )
         {
@@ -73,7 +73,7 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitDetection& message )
 {
     try
     {
-      rapportManager_.DoUpdate( holder_, model_.agents_.Get( message.detected_unit_oid ) );
+      reportManager_.DoUpdate( holder_, model_.agents_.Get( message.detected_unit_oid ) );
     }
     catch( std::exception& e )
     {

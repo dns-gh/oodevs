@@ -18,8 +18,9 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/ClientPublisher_ABC.h"
 
-#include "RapportManager.h"
+#include "ReportManager.h"
 #include "Unite_ABC.h"
 #include "UniteAutomat.h"
 #include "UniteFormation.h"
@@ -27,6 +28,9 @@
 #include "Point.h"
 #include "xmlia_plugin/Point.h"
 #include "xmlia_plugin/EtatOperationnel.h"
+#include "game_asn/MessengerSenders.h"
+#include "game_asn/Messenger.h"
+
 
 using namespace plugins::xmlia;
 
@@ -34,8 +38,8 @@ using namespace plugins::xmlia;
 // Name: Sitrep constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Sitrep::Sitrep( RapportManager& manager, xml::xistream& xis )
-:  Rapport( manager, xis )
+Sitrep::Sitrep( ReportManager& manager, xml::xistream& xis )
+:  Report_ABC( manager, xis )
 {
    //NOTHING
 }
@@ -44,8 +48,8 @@ Sitrep::Sitrep( RapportManager& manager, xml::xistream& xis )
 // Name: Sitrep constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Sitrep::Sitrep( RapportManager& manager, dispatcher::Automat& author )
-: Rapport( manager, author, "SITREP" )
+Sitrep::Sitrep( ReportManager& manager, dispatcher::Automat& author )
+: Report_ABC( manager, author, "SITREP" )
 {}
 
 // -----------------------------------------------------------------------------
@@ -96,11 +100,11 @@ void Sitrep::SerializeSide( const dispatcher::Side& side, xml::xostream& xos, st
   std::string sQnameSide = "camp-" + sIdSide;
 
   xos << xml::start( "mpia:GroupeFonctionnel" )
-    << xml::attribute( "id", sQnameSide )
-    << xml::content( "mpia:Nom", side.GetName() )
-    << xml::start( "mpia:EstRapporteePar_Rapport" )
-    << xml::content( "mpia:refid", sQnameRapport )
-    << xml::end();
+      << xml::attribute( "id", sQnameSide )
+      << xml::content( "mpia:Nom", side.GetName() )
+      << xml::start( "mpia:EstRapporteePar_Rapport" )
+      << xml::content( "mpia:refid", sQnameRapport )
+      << xml::end();
   for( std::map< unsigned, UniteAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
   {
     if( it->second->IsSide( side.GetId() ) )
@@ -109,8 +113,8 @@ void Sitrep::SerializeSide( const dispatcher::Side& side, xml::xostream& xos, st
       os2 << it->second->GetId();
       std::string sIdUnite = os2.str();
       xos << xml::start( "mpia:EstAffiliationDe_AssociationAffiliationInstanceObjet" )
-        << xml::content( "mpia:refid", "association-" + sIdSide + "-" + sIdUnite)
-        << xml::end();
+          << xml::content( "mpia:refid", "association-" + sIdSide + "-" + sIdUnite)
+          << xml::end();
     }
   }
   xos << xml::content( "Categorie", "NKN" )//@TODOFORCE
@@ -140,52 +144,71 @@ void Sitrep::ReadEtatOps( xml::xistream& xis )
   unites_[etatOps->GetId()]->SetEtatOps( etatOps );
 }
 
+unsigned int Sitrep::GetAuthorID() const
+{
+	return author_->GetId();
+}
+
 // -----------------------------------------------------------------------------
 // Name: Sitrep::UpdateSimulation
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
 void Sitrep::UpdateSimulation()
 {
-    dispatcher::SimulationPublisher_ABC& simPublisher = rapportManager_.GetSimulationPublisher();
-    for( std::map< unsigned, UniteAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
-    {
+  dispatcher::SimulationPublisher_ABC& simPublisher = reportManager_.GetSimulationPublisher();
+  dispatcher::ClientPublisher_ABC& clientPublisher = *reportManager_.GetClientPublisher();
+	unsigned int authorID = author_->GetId();
+	unsigned long authorSideID = reportManager_.GetModel().automats_.Find( authorID )->team_.GetId();
+	dispatcher::Agent* simAuthorAgent = reportManager_.GetModel().agents_.Find( authorID );
+  for( std::map< unsigned, UniteAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
+  {
     //@TODO link to magic action
-      UniteAgent* reportAgent = it-> second;
-      dispatcher::Agent* simAgent = rapportManager_.GetModel().agents_.Find( it->first );
-      if ( simAgent != 0 )
+    UniteAgent* reportAgent = it-> second;
+    dispatcher::Agent* simAgent = reportManager_.GetModel().agents_.Find( it->first );
+    if ( simAgent != 0 )
+    {
+      unsigned long agentSideID = reportManager_.GetModel().agents_.Find( reportAgent->GetId())->automat_->team_.GetId();
       {
-          {
-              {
-                  simulation::UnitMagicAction asnMsg;
-                  ASN1T_CoordLatLong utm;
-                  asnMsg().action.t                        = T_MsgUnitMagicAction_action_move_to;
-                  asnMsg().oid = reportAgent->GetId();
-                  reportAgent->GetLocalization()->FillLatLong( utm );
-                  asnMsg().action.u.move_to = &utm;
-                  asnMsg.Send( simPublisher );
-              }
+        if ( agentSideID == authorSideID )
+        {
+          simulation::UnitMagicAction asnMsg;
+          ASN1T_CoordLatLong utm;
+          asnMsg().oid = reportAgent->GetId();
+          asnMsg().action.t                        = T_MsgUnitMagicAction_action_move_to;
+          reportAgent->GetLocalization()->FillLatLong( utm );
+          asnMsg().action.u.move_to = &utm;
+          asnMsg.Send( simPublisher );
+        }
+        else //create raw intelligence or knowledge on client for ENIs
+        {
+          ASN1T_MsgsMessengerToClient asnMsg;
+          ASN1T_MsgIntelligenceCreation asnTmp;
+          ASN1T_CoordLatLong utm;
+          asnMsg.t              = T_MsgsMessengerToClient_msg_intelligence_creation;
+          asnTmp.oid = reportAgent->GetId();
+          asnMsg.u.msg_intelligence_creation = &asnTmp;
+          reportAgent->GetLocalization()->FillLatLong( utm );
+          asnTmp.intelligence.name = reportAgent->GetName().c_str();
+          asnTmp.intelligence.nature = "ENI";
+          asnTmp.intelligence.location = utm;
+          clientPublisher.Send( asnMsg );
+        }
 
-              {
-                  /*ASN1T_MsgIntelligenceCreation& intelligenceMsg;
-                  plugins::messenger::IntelligenceCreationRequest asn;
-                  asn().intelligence.name = name.ascii();
-                  asn().intelligence.nature = symbol.c_str();
-                  asn().intelligence.level = (ASN1T_EnumNatureLevel) level.GetId();
-                  asn().intelligence.diplomacy = ConvertToDiplomacy( karma );
-                  asn().intelligence.embarked = mounted;
-                  converter_.ConvertToGeo( position, asn().intelligence.location );
-                  asn().intelligence.formation = superior.GetId();
-                  asn.Send( publisher_ );*/
-              }
-
-              {
-              //    ASN1T_MagicActionPartialRecovery asnMagicAction;
-              //    asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
-              //    asnMsg().action.u.recompletement_partiel = &asnMagicAction;
-              //    //@TODO: fill msg
-              //    asnMsg.Send( simPublisher );
-              }
-          }
+        if ( reportAgent->GetOperationalState()->GetGeneralOperationalState() == "NOP" )
+        {
+          simulation::UnitMagicAction asnMsg;
+          ASN1T_MagicActionPartialRecovery asnPartialRecovery;
+          asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
+          asnMsg().oid = reportAgent->GetId();
+          asnMsg().action.u.recompletement_partiel = &asnPartialRecovery;
+          asnPartialRecovery.m.equipementsPresent = 0;
+          asnPartialRecovery.m.personnelsPresent = 0;
+          asnPartialRecovery.m.dotationsPresent = 0;
+          asnPartialRecovery.m.munitionsPresent = 0;
+          asnPartialRecovery.m.stocksPresent = 0;
+          asnMsg.Send( simPublisher );
+        }
       }
     }
+  }
 }

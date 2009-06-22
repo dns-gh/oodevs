@@ -12,10 +12,11 @@
 #include "ExtensionFactory.h"
 #include "Publisher.h"
 #include "PublisherActor.h"
-#include "RapportManager.h"
+#include "ReportManager.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
 #include "UpdateListener.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 #include <xeumeuleu/xml.h>
 
@@ -32,8 +33,8 @@ XmliaPlugin::XmliaPlugin( dispatcher::Model& model,
 	, simulationPublisher_ ( simulationPublisher )
     , publisher_( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
     , simulation_( new Simulation() )
-    , rapportManager_( new RapportManager( model_, simulationPublisher_ ) )
-    , extensionFactory_( new ExtensionFactory( *publisher_, *rapportManager_, *simulation_, model_ ) )
+    , reportManager_( new ReportManager( model_, simulationPublisher_ ) )
+    , extensionFactory_( new ExtensionFactory( *publisher_, *reportManager_, *simulation_, model_ ) )
     , listener_( new UpdateListener( *publisher_, model_, simulationPublisher_ ) )
     , nCptTick_(0)
 {
@@ -67,23 +68,37 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
           //@HackTest xml
           /*
           xml::xifstream xis( "D:/Projets/sword_trunk/data/sitrep_example.xml" );
-          rapportManager_->Read(xis);
-          rapportManager_->Send();
+          reportManager_->Read(xis);
+          reportManager_->Send();
           */
 
           simulation_->Update( *message.msg.u.msg_control_end_tick );//@NOTE, keep could be usefull for other message
 
           if( bExportActivation_ )
           {
-            rapportManager_->Send( *publisher_ );
+            try
+            {
+              reportManager_->Send( *publisher_ );
+            }
+            catch( std::exception& e )
+            {
+              MT_LOG_ERROR_MSG( "XMLIA error storing report information: " << e.what() );
+            }  
           }
 
           if( bImportActivation_ )
           {
-            rapportManager_->CleanReceivedRapport();
-            rapportManager_->Receive(*publisher_);
-            //@TODO branche to webservice and RapportManager read
-            rapportManager_->UpdateSimulation();
+            try
+            {
+              reportManager_->CleanReceivedRapport();
+              reportManager_->Receive(*publisher_);
+              //@TODO branche to webservice and ReportManager read
+              reportManager_->UpdateSimulation();
+            }
+            catch( std::exception& e )
+            {
+              MT_LOG_ERROR_MSG( "XMLIA error storing report information: " << e.what() );
+            }  
           }
 
           
@@ -98,8 +113,8 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 // -----------------------------------------------------------------------------
 void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
 {
-    rapportManager_->SetClientPublisher( client );
-    rapportManager_->SetClientProfile( profile );
+    reportManager_->SetClientPublisher( client );
+    reportManager_->SetClientProfile( profile );
 }
 
 // -----------------------------------------------------------------------------

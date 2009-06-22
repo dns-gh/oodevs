@@ -24,7 +24,7 @@ namespace plugins
 namespace xmlia
 {
     class Publisher_ABC;
-    class RapportManager;
+    class ReportManager;
     class Simulation;
 
 // =============================================================================
@@ -39,7 +39,7 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory( Publisher_ABC& publisher, RapportManager& rapportManager, const Simulation& simulation, const dispatcher::Model& model );
+             ExtensionFactory( Publisher_ABC& publisher, ReportManager& reportManager, const Simulation& simulation, const dispatcher::Model& model );
     virtual ~ExtensionFactory();
     //@}
 
@@ -59,7 +59,7 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    RapportManager& rapportManager_;
+    ReportManager& reportManager_;
     const Simulation& simulation_;
     const dispatcher::Model& model_;
     //@}
