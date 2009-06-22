@@ -273,6 +273,7 @@
       </buildable>
     </constructor>
     <detection/>
+    <population-filter density="0.5"/>
     <workable max-animator="1"/>
   </object>
   <object geometry="polygon" name="Drop Zone (DZ)" symbol="G*GPGAD---****X" type="dropping area"/>

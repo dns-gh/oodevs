@@ -211,7 +211,7 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="unitesACouvrir_" name="Units to cover" optional="false" type="AgentList"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ABC_Reduire" dia-type="T_Mission_Pion_ABC_Reduire" id="43" name="Armor - reduce">
+    <mission dia-behavior="MIS_Pion_ABC_Reduire" dia-type="T_Mission_Pion_ABC_Reduire" id="43" name="Armor - destroy">
       <parameter dia-name="uniteAReduire_" name="Unit to reduce" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Appuyer" dia-type="T_Mission_Pion_ABC_Appuyer" id="44" name="Armor - support">
@@ -229,7 +229,7 @@
     <mission dia-behavior="MIS_Pion_ABC_Surveiller" dia-type="T_Mission_Pion_ABC_Surveiller" id="48" name="Armor - monitor">
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ABC_Barrer" dia-type="T_Mission_Pion_ABC_Barrer" id="49" name="Armor - bar">
+    <mission dia-behavior="MIS_Pion_ABC_Barrer" dia-type="T_Mission_Pion_ABC_Barrer" id="49" name="Armor - interdict">
       <parameter dia-name="positionInstallation_" name="Deployment area" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Attaquer" dia-type="T_Mission_Pion_ABC_Attaquer" id="50" name="Armor - attack">
@@ -353,8 +353,8 @@
       <parameter dia-name="pointCouverture_" name="Cover position" optional="false" type="Point"/>
       <parameter dia-name="cible_" name="Target" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_INF_Reduire" dia-type="T_Mission_Pion_INF_Reduire" id="86" name="Infantry - reduce">
-      <parameter dia-name="uniteAReduire_" name="Unit to reduce" optional="false" type="AgentKnowledge"/>
+    <mission dia-behavior="MIS_Pion_INF_Reduire" dia-type="T_Mission_Pion_INF_Reduire" id="86" name="Infantry - destroy">
+      <parameter dia-name="uniteAReduire_" name="Unit to destroy" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Appuyer" dia-type="T_Mission_Pion_INF_Appuyer" id="87" name="Infantry - support">
       <parameter dia-name="uniteAAppuyer_" name="Unit to support" optional="false" type="Agent"/>
@@ -379,14 +379,14 @@
     <mission dia-behavior="MIS_Pion_INF_Eclairer" dia-type="T_Mission_Pion_INF_Eclairer" id="93" name="Infantry - scout">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_INF_Interdire" dia-type="T_Mission_Pion_INF_Interdire" id="94" name="Infantry - deny">
+    <mission dia-behavior="MIS_Pion_INF_Interdire" dia-type="T_Mission_Pion_INF_Interdire" id="94" name="Infantry - interdict">
       <parameter dia-name="pointAInterdire_" name="Position to deny" optional="false" type="Point"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Semparer" dia-type="T_Mission_Pion_INF_Semparer" id="95" name="Infantry - seize">
       <parameter dia-name="objectif_" name="Objective" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_INF_PrendrePreciserContact" dia-type="T_Mission_Pion_INF_PrendrePreciserContact" id="96" name="Infantry - take contact">
+    <mission dia-behavior="MIS_Pion_INF_PrendrePreciserContact" dia-type="T_Mission_Pion_INF_PrendrePreciserContact" id="96" name="Infantry - movement to contact">
       <parameter dia-name="ennemi_" name="Enemy" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Defendre" dia-type="T_Mission_Pion_INF_Defendre" id="97" name="Infantry - defend">
@@ -461,7 +461,7 @@
         <value id="2" name="moving targets"/>
       </parameter>
     </mission>
-    <mission dia-behavior="MIS_Pion_INF_DetruireParCoupDeMain" dia-type="T_Mission_Pion_INF_DetruireParCoupDeMain" id="104" name="Infantry - destroy">
+    <mission dia-behavior="MIS_Pion_INF_DetruireParCoupDeMain" dia-type="T_Mission_Pion_INF_DetruireParCoupDeMain" id="104" name="Infantry - destroy (intervene)">
       <parameter dia-name="objectif_" name="Objective" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="heureDestruction_" name="Timing" optional="false" type="Datetime"/>
@@ -999,14 +999,14 @@
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Eclairer" dia-type="T_Mission_Automate_ABC_Eclairer" id="226" mrt-dia-behavior="MIS_Automate_MRT_ABC_Eclairer" name="Armor - scout"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_EffectuerRaid" dia-type="T_Mission_Automate_ABC_EffectuerRaid" id="227" mrt-dia-behavior="MIS_Automate_MRT_ABC_EffectuerRaid" name="Armor - carry out a raid"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Interdire" dia-type="T_Mission_Automate_ABC_Interdire" id="228" mrt-dia-behavior="MIS_Automate_MRT_ABC_Interdire" name="Armor - deny"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Interdire" dia-type="T_Mission_Automate_ABC_Interdire" id="228" mrt-dia-behavior="MIS_Automate_MRT_ABC_Interdire" name="Armor - interdict"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Jalonner" dia-type="T_Mission_Automate_ABC_Jalonner" id="229" mrt-dia-behavior="MIS_Automate_MRT_ABC_Jalonner" name="Armor - screen"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_PrendrePreciserContact" dia-type="T_Mission_Automate_ABC_PrendrePreciserContact" id="230" mrt-dia-behavior="MIS_Automate_MRT_ABC_PrendrePreciserContact" name="Armor - take contact"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_PrendrePreciserContact" dia-type="T_Mission_Automate_ABC_PrendrePreciserContact" id="230" mrt-dia-behavior="MIS_Automate_MRT_ABC_PrendrePreciserContact" name="Armor - movement to contact"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Reconnaitre" dia-type="T_Mission_Automate_ABC_Reconnaitre" id="231" mrt-dia-behavior="MIS_Automate_MRT_ABC_Reconnaitre" name="Armor - reconnoiter"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_ReconnaitrePoint" dia-type="T_Mission_Automate_ABC_ReconnaitrePoint" id="232" mrt-dia-behavior="MIS_Automate_MRT_ABC_ReconnaitrePoint" name="Armor - reconnoiter (a position)">
       <parameter dia-name="pointAReconnaitre_" name="Position to reconnoiter" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Reduire" dia-type="T_Mission_Automate_ABC_Reduire" id="233" mrt-dia-behavior="MIS_Automate_MRT_ABC_Reduire" name="Armor - reduce">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Reduire" dia-type="T_Mission_Automate_ABC_Reduire" id="233" mrt-dia-behavior="MIS_Automate_MRT_ABC_Reduire" name="Armor - destroy">
       <parameter dia-name="zoneResistance_" name="Resistance area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_ReleverEnDepassant" dia-type="T_Mission_Automate_ABC_ReleverEnDepassant" id="234" mrt-dia-behavior="MIS_Automate_MRT_ABC_ReleverEnDepassant" name="Armor - relieve">
@@ -1148,7 +1148,7 @@
       <parameter dia-name="zoneSurveillance_" name="Surveillance area" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Interdire" dia-type="T_Mission_Automate_INF_Interdire" id="276" mrt-dia-behavior="MIS_Automate_MRT_INF_Interdire" name="Infantry - deny">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Interdire" dia-type="T_Mission_Automate_INF_Interdire" id="276" mrt-dia-behavior="MIS_Automate_MRT_INF_Interdire" name="Infantry - interdict">
       <parameter dia-name="pointsAInterdire_" name="Positions to deny" optional="false" type="PointList"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
@@ -1160,7 +1160,7 @@
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
       <parameter dia-name="pias_" name="Checkpoints" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Reduire" dia-type="T_Mission_Automate_INF_Reduire" id="281" mrt-dia-behavior="MIS_Automate_MRT_INF_Reduire" name="Infantry - reduce">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Reduire" dia-type="T_Mission_Automate_INF_Reduire" id="281" mrt-dia-behavior="MIS_Automate_MRT_INF_Reduire" name="Infantry - destroy">
       <parameter dia-name="pointsResistance_" name="Resistance Positions" optional="false" type="PointList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Relever" dia-type="T_Mission_Automate_INF_Relever" id="282" mrt-dia-behavior="MIS_Automate_MRT_INF_Relever" name="Infantry - relieve">
@@ -1182,11 +1182,11 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerEnTerrainDifficile" dia-type="T_Mission_Automate_INF_AttaquerEnTerrainDifficile" id="287" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerEnTerrainDifficile" name="Infantry - attack (mobility limited terrain)">
       <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_BarrerDirection" dia-type="T_Mission_Automate_INF_BarrerDirection" id="288" mrt-dia-behavior="MIS_Automate_MRT_INF_BarrerDirection" name="Infantry - bar a direction">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_BarrerDirection" dia-type="T_Mission_Automate_INF_BarrerDirection" id="288" mrt-dia-behavior="MIS_Automate_MRT_INF_BarrerDirection" name="Infantry - interdict a direction">
       <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_DefendreFerme" dia-type="T_Mission_Automate_INF_DefendreFerme" id="289" mrt-dia-behavior="MIS_Automate_MRT_INF_DefendreFerme" name="Infantry - defend (until the end)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_DefendreFerme" dia-type="T_Mission_Automate_INF_DefendreFerme" id="289" mrt-dia-behavior="MIS_Automate_MRT_INF_DefendreFerme" name="Infantry - interdict (an area)">
       <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>

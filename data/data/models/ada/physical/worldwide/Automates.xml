@@ -18,9 +18,9 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Very Short Range Surface To Air Battery CP"/>
     <unit max-occurs="4" min-occurs="4" type="Very Short Range Surface To Air Defense Troop"/>
   </automat>
-  <automat decisional-model="Infantery company" id="114" name="Infantery company" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="Infantery company CP"/>
-    <unit min-occurs="1" type="Infantery platoon"/>
+  <automat decisional-model="Infantry company" id="114" name="Infantry company" type="Automate INF">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="Infantry company CP"/>
+    <unit min-occurs="1" type="Infantry platoon"/>
     <unit type="MRA troop"/>
     <unit type="Mortar troop"/>
     <unit type="Light armored platoon"/>
@@ -221,8 +221,8 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Battery CP"/>
     <unit max-occurs="2" min-occurs="2" type="Mortar firing platoon"/>
   </automat>
-  <automat decisional-model="LRA infantery company" id="159" name="LRA infantery company" type="Automate INF">
-    <unit command-post="true" max-occurs="3" min-occurs="3" type="LRA infantery platoon"/>
+  <automat decisional-model="LRA infantry company" id="159" name="LRA infantry company" type="Automate INF">
+    <unit command-post="true" max-occurs="3" min-occurs="3" type="LRA infantry platoon"/>
   </automat>
   <automat decisional-model="Attack Helicopter Squadron" id="160" name="Attack Helicopter squadron" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="AAC CP"/>

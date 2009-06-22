@@ -227,7 +227,7 @@
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
   </unit>
-  <unit decisional-model="Infantery platoon" id="9" name="Infantery platoon" type="Pion INF">
+  <unit decisional-model="Infantry platoon" id="9" name="Infantry platoon" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -271,7 +271,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="Infantery company CP" id="10" name="Infantery company CP" type="Pion INF">
+  <unit decisional-model="Infantry company CP" id="10" name="Infantry company CP" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
     <equipments>
       <equipment count="2" crew="3" type="Light Armored Vehicle 7.62-mm"/>
@@ -308,7 +308,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="LRA infantery platoon" id="11" name="LRA infantery platoon" type="Pion INF">
+  <unit decisional-model="LRA infantry platoon" id="11" name="LRA infantry platoon" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/anti armor/armored/wheeled"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="Armoured Personnel Carrier Antitank"/>
@@ -968,7 +968,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="MRA infantery platoon" id="33" name="MRA troop" type="Pion INF">
+  <unit decisional-model="MRA infantry platoon" id="33" name="MRA troop" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="5" loadable="true" major="true" type="Medium Range Antitank Weapon Team"/>
@@ -1380,7 +1380,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="300s"/>
   </unit>
-  <unit decisional-model="Unite de soin" id="50" name="Chirurgicale section (modular)" type="Pion LOG BLD Sante">
+  <unit decisional-model="Health unit" id="50" name="Chirurgicale section (modular)" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="7" type="TBU15 CLD"/>
@@ -1451,7 +1451,7 @@
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
   </unit>
-  <unit decisional-model="Unite de soin" id="53" name="Chirurgicale section HMC" type="Pion LOG BLD Sante">
+  <unit decisional-model="Health unit" id="53" name="Chirurgicale section HMC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Champ Operatoire"/>
@@ -2081,7 +2081,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Listening station_" id="79" name="Listening Station" type="Pion RENS">
+  <unit decisional-model="Listening station" id="79" name="Listening Station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="5" crew="3" major="true" type="Listening Vehicle"/>
@@ -2110,7 +2110,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Jamming station_" id="80" name="Jamming station" type="Pion RENS">
+  <unit decisional-model="Jamming station" id="80" name="Jamming station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature="combat support/military intelligence/signal intelligence/electronic warfare/jamming"/>
     <equipments>
       <equipment count="4" crew="3" type="Jammer"/>
@@ -2138,7 +2138,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="Radar detection station_" id="81" name="Radar detection station" type="Pion RENS">
+  <unit decisional-model="Radar detection station" id="81" name="Radar detection station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="Radar Detection Vehicle"/>
