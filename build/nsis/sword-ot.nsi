@@ -39,7 +39,11 @@
 ;..................................................................................................
 
 Name "${APP_NAME}"
-OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MAJOR}.exe"
+!ifdef EVALUATION
+    OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MAJOR}_eval.exe"
+!else
+    OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MAJOR}.exe"
+!endif
 InstallDir "$PROGRAMFILES\${COMPANY_NAME}\${APP_NAME}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
@@ -128,7 +132,9 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\zlib_ogdi31.dll"
     
     ; evaluation licence
-    File "${RUNDIR}\evaluation.lic"
+    !ifdef EVALUATION
+        File "${RUNDIR}\evaluation.lic"
+    !endif
     
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 

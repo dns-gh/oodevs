@@ -614,13 +614,14 @@
             <arg value="/DAPP_MODEL=worldwide"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
-        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_MODEL=france"/>
+            <arg value="/DEVALUATION=1"/>
+            <arg value="/DAPP_MODEL=worldwide"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
-        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot-scalped" script="sword-ot-scalped.nsi" license="true">
+        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=france"/>
