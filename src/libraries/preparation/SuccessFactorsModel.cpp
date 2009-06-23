@@ -114,12 +114,12 @@ bool SuccessFactorsModel::CheckValidity( ModelChecker_ABC& checker ) const
         xsl::xstringtransform xst( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ) );
         xml::xistringstream xis( xos.str() );
         xst << xis;
-        return true;
     }
     catch( std::exception& e )
     {
         return checker.Reject( tools::translate( "SuccessFactorsModel", "Success factor definitions contain errors:\nReason: %1." ).arg( e.what() ) );
     }
+    return checker.Validate();
 }
 
 // -----------------------------------------------------------------------------

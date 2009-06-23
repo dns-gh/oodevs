@@ -97,6 +97,7 @@ SuccessFactorActions& SuccessFactor::GetActions() const
 void SuccessFactor::SetName( const QString& name )
 {
     name_ = name;
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

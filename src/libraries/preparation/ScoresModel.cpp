@@ -67,12 +67,12 @@ bool ScoresModel::CheckValidity( ModelChecker_ABC& checker ) const
     {
         xml::xostringstream xos;
         Serialize( xos );
-        return true;
     }
     catch( std::exception& e )
     {
         return checker.Reject( tools::translate( "ScoresModel", "Score definitions contain errors:\nReason: %1." ).arg( e.what() ) );
     }
+    return checker.Validate();
 }
 
 // -----------------------------------------------------------------------------
