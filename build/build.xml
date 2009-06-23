@@ -98,6 +98,10 @@
     </target>
 
     <target name="library.game_asn" description="build game asn static library">
+		<exec dir="." executable="sh" failonerror="true">
+			<arg value="-c"/>
+			<arg value="./make.sh game_asn"/>
+		</exec>
         <build-lib name="game_asn" pattern="lib${ant.project.name}_game_asn-${platform}-mt@{suffix}" suffix="-gd" warnings="none">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
