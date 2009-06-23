@@ -127,8 +127,9 @@ MsgAutomatOrder ::= SEQUENCE
 {
     oid           Automat,
     mission       OID,
-    parametres    MissionParameters,
+    parametres    MissionParameters
 }
+
 MsgAutomatOrderAck ::= SEQUENCE
 {
     oid         Automat,
