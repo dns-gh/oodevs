@@ -45,14 +45,8 @@ namespace
 void DEC_ActionFunctions::Prisoners_CaptureAndLoad( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-        return SetInvalid( call, 1 );
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Capture( callerAgent );
-    if( bOut )
+    if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Capture( callerAgent ) )
         callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
-    call.GetResult().SetValue( bOut );
 }
    
 // -----------------------------------------------------------------------------
@@ -62,13 +56,11 @@ void DEC_ActionFunctions::Prisoners_CaptureAndLoad( DIA_Call_ABC& call, MIL_Agen
 void DEC_ActionFunctions::Prisoners_Unload( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-        return SetInvalid( call, 1 );
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Release();
-    callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
-    call.GetResult().SetValue( bOut );
+    if( pKnowledge )
+    {
+        pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Release();
+        callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,11 +72,10 @@ void DEC_ActionFunctions::Prisoners_UnloadInCamp( DIA_Call_ABC& call, MIL_AgentP
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAgent.GetArmy() );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
-        return SetInvalid( call, 2 );
+        return;
 
     callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
-    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Imprison( *pCampKnowledge->GetObjectKnown() );
-    call.GetResult().SetValue( bOut );
+    pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Imprison( *pCampKnowledge->GetObjectKnown() );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,10 +85,10 @@ void DEC_ActionFunctions::Prisoners_UnloadInCamp( DIA_Call_ABC& call, MIL_AgentP
 void DEC_ActionFunctions::Prisoners_IsLoaded( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-        return SetInvalid( call, 1 );
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) );
+    if( pKnowledge )
+        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) );
+    else
+        call.GetResult().SetValue( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,10 +100,9 @@ void DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_Ag
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAgent.GetArmy          () );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
-        return SetInvalid( call, 2 );
-    
-    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() );
-    call.GetResult().SetValue( bOut );
+        call.GetResult().SetValue( false );
+    else
+        call.GetResult().SetValue( pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,14 +112,8 @@ void DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_Ag
 void DEC_ActionFunctions::Refugees_OrientateAndLoad( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-        return SetInvalid( call, 1 );
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Orientate( callerAgent );
-    if( bOut )
+    if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Orientate( callerAgent ) )
         callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
-    call.GetResult().SetValue( bOut );
 }
    
 // -----------------------------------------------------------------------------
@@ -140,11 +124,9 @@ void DEC_ActionFunctions::Refugees_Unload( DIA_Call_ABC& call, MIL_AgentPion& ca
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
-        return SetInvalid( call, 1 );
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Release();
+        return;
+    pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Release();
     callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
-    call.GetResult().SetValue( bOut );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,12 +138,9 @@ void DEC_ActionFunctions::Refugees_UnloadInCamp( DIA_Call_ABC& call, MIL_AgentPi
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAgent.GetArmy          () );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
-        return SetInvalid( call, 2 );
-
-//    const MIL_CampRefugies& camp = static_cast< const MIL_CampRefugies& >( *pCampKnowledge->GetObjectKnown() );
+        return;
     callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
-    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Release( *pCampKnowledge->GetObjectKnown() );
-    call.GetResult().SetValue( bOut );
+    pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Release( *pCampKnowledge->GetObjectKnown() );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,9 +151,9 @@ void DEC_ActionFunctions::Refugees_IsLoaded( DIA_Call_ABC& call, MIL_AgentPion& 
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
-        return SetInvalid( call, 1 );
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) );
+        call.GetResult().SetValue( false );
+    else
+        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,10 +165,9 @@ void DEC_ActionFunctions::Refugees_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_Age
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAgent.GetArmy          () );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
-        return SetInvalid( call, 2 );
-
-    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().IsManaged( *pCampKnowledge->GetObjectKnown() );
-    call.GetResult().SetValue( bOut );
+        call.GetResult().SetValue( false );
+    else
+        call.GetResult().SetValue( pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().IsManaged( *pCampKnowledge->GetObjectKnown() ) );
 }
 
 // =============================================================================
