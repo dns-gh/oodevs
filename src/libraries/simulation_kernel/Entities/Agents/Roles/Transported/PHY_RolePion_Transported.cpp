@@ -162,6 +162,10 @@ bool PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
+    if( pTransporter_ && pTransporter_ == &transporter)
+    {
+        return true;
+    }
     if( pTransporter_ )
         return false;
 
