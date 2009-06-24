@@ -279,6 +279,7 @@ FunctionEnd
         File "${OUTDIR}\SWORD ${ComponentName}_${PLATFORM}.exe"
         WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}\Common\Components\${ComponentName}" "RootDirectory" "${INSTDATADIR}\${ComponentName}\applications"
         ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /D=$INSTDIR\${ComponentName}'
+        SetOutPath "$INSTDIR\${ComponentName}\applications"
         CreateShortCut "$SMPROGRAMS\${APP_NAME}\${ComponentName}.lnk" "$INSTDIR\${ComponentName}\applications\generation_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
