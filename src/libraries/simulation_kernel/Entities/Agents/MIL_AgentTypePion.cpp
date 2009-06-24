@@ -610,8 +610,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter                                     , "DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeFrontestAgent                   < MIL_AgentPion >            , "DEC_Geometrie_PionDevant"                                            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                    < MIL_AgentPion >            , "DEC_Geometrie_PionDerriere"                                          );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointBeforeLima                 < MIL_AgentPion >            , "DEC_Geometrie_CalculerPositionParRapportALima"                       );
-
+    
     // Fire 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToFireOnEnemy                 , "DEC_Tir_PorteeMaxPourTirerSurUnite"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToFireOnEnemy                 , "DEC_Tir_PorteeMinPourTirerSurUnite"                   );

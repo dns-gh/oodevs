@@ -414,25 +414,20 @@ void DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau( DIA_Call_ABC& call, 
     MIL_LimaOrder*    pLima           = caller.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
     MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
     const MIL_Fuseau* pFuseau         = call.GetParameter( 2 ).ToUserPtr( pFuseau );
-    DIA_Variable_ABC& diaReturnCode   = call.GetParameter( 3 );
 
     if( !pLima || !pFuseau )
-    {
-        diaReturnCode.SetValue( false );
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
-        return;
-    }
-
-    MT_Vector2D vResult;
-    const bool bResult = pFuseau->ComputePointBeforeLima( *pLima, rDistBeforeLima, vResult );
-    diaReturnCode.SetValue( bResult );
-    if( bResult )
-    {
-        MT_Vector2D* pResult = new MT_Vector2D( vResult ); //$$$$ RAM
-        call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
-    }
     else
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
+    {
+        MT_Vector2D vResult;
+        if( pFuseau->ComputePointBeforeLima( *pLima, rDistBeforeLima, vResult ) )
+        {
+            MT_Vector2D* pResult = new MT_Vector2D( vResult ); //$$$$ RAM
+            call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
+        }
+        else
+            call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -444,7 +439,6 @@ inline
 void DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( DIA_Call_ABC& call, const T& caller )
 {
     assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypePoint       ( call.GetParameter( 1 ) ) );
 
     DIA_Parameters& param = call.GetParameters();
     TER_Localisation* pLocalisation = param[0].ToUserPtr( pLocalisation );
@@ -453,15 +447,19 @@ void DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( DIA_Call_AB
     TER_Localisation clippedLocalisation;
     if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetFuseau(), clippedLocalisation ) )
     {
-        param.GetParameter( 1 ).SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
-        call.GetResult().SetValue( false );
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return; 
     }
 
     MT_Vector2D* pResult = new MT_Vector2D(); //$$$$ TMP
     bool bOut = clippedLocalisation.ComputeNearestPoint( GetPosition( caller ), *pResult );
-    param.GetParameter( 1 ).SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
-    call.GetResult().SetValue( bOut );
+    if( bOut)
+        call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
+    else
+    {
+        delete pResult;
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
+    }
 }
 
 // -----------------------------------------------------------------------------
