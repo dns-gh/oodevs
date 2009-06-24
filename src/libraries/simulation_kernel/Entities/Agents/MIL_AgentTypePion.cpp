@@ -476,7 +476,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion                      < MIL_AgentPion >, "DEC_ConnaissanceAgent_DangerositeSurPion"              );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge                 < MIL_AgentPion >, "DEC_ConnaissanceAgent_DangerositeSurConnaissance"      );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsPerceivedByAgent                                         , "DEC_ConnaissanceAgent_EstPercuParUnite"                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsPerceivedByKnowledgeGroup                                , "DEC_ConnaissanceAgent_EstPercuParGroupeDeConnaissance" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsAnEnemy                                                  , "DEC_ConnaissanceAgent_EstUnEnnemi"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsKnowledgeValid                          < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstValide"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsMoving                                                   , "DEC_ConnaissanceAgent_EstEnMouvement"                  );

@@ -157,11 +157,9 @@ void DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, c
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( false );
         return;
     }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
     bool bIsPerceived = caller.GetKnowledge().IsPerceived( pKnowledge->GetPopulationKnown() );
     call.GetResult().SetValue( bIsPerceived );
 }

@@ -28,7 +28,6 @@ public:
     static void GetNatureAtlas                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetDangerosity                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPerceivedByAgent                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsPerceivedByKnowledgeGroup           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsAnEnemy                             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsMoving                              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPerceivingAgent                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

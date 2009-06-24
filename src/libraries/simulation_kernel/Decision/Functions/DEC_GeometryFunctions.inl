@@ -482,8 +482,10 @@ void DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau( DI
     bool bOut;
 
     bOut = fuseauLocalisation.ComputeNearestPoint( pLocalisation->ComputeBarycenter(), *pResult );
-    param.GetParameter( 1 ).SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
-    call.GetResult().SetValue( bOut );
+    if( bOut )
+        call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
+    else
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
 }
 
 // -----------------------------------------------------------------------------

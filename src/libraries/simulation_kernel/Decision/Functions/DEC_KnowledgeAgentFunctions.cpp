@@ -35,12 +35,9 @@ void DEC_KnowledgeAgentFunctions::GetNatureAtlas( DIA_Call_ABC& call, const MIL_
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( (int)0 );
+        call.GetResult().SetValue( (int)PHY_NatureAtlas::notDefined_.GetID() );
         return;
     }
-    
-    call.GetParameter( 1 ).SetValue( eQueryValid );
     call.GetResult().SetValue( (int)pKnowledge->GetNatureAtlas().GetID() );
 }
 
@@ -53,12 +50,9 @@ void DEC_KnowledgeAgentFunctions::GetDangerosity( DIA_Call_ABC& call, const MIL_
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( 0.f );
         return;
     }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     const MT_Float rDangerosity = pKnowledge->GetDangerosity( callerAgent );
     call.GetResult().SetValue( (float)( rDangerosity + 1. ) );
@@ -136,24 +130,6 @@ void DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeAgentFunctions::IsPerceivedByKnowledgeGroup
-// Created: NLD 2004-04-06
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeAgentFunctions::IsPerceivedByKnowledgeGroup( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-        return;
-    }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( ( pKnowledge->GetCurrentPerceptionLevel() != PHY_PerceptionLevel::notSeen_ ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsAnEnemy
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
@@ -161,15 +137,9 @@ void DEC_KnowledgeAgentFunctions::IsAnEnemy( DIA_Call_ABC& call, const MIL_Agent
 {
     const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( (int)0 );
-        return;
-    }
-    
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    
-    call.GetResult().SetValue( pKnowledge->IsAnEnemy( caller.GetArmy() ) );
+        call.GetResult().SetValue( eTristate_DontKnow );
+    else
+        call.GetResult().SetValue( pKnowledge->IsAnEnemy( caller.GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,14 +150,9 @@ void DEC_KnowledgeAgentFunctions::IsMoving( DIA_Call_ABC& call, const MIL_AgentP
 {
     const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( false );
-        return;
-    }
-    
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (bool)( pKnowledge->GetSpeed() != 0. ) );
+    else
+        call.GetResult().SetValue( (bool)( pKnowledge->GetSpeed() != 0. ) );
 }
     
 
@@ -199,16 +164,7 @@ void DEC_KnowledgeAgentFunctions::IsPerceivingAgent( DIA_Call_ABC& call, const M
 {
     //$$$ Fonction BOF : trop de triche ...
     const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    
-    bool bResult = pKnowledge->GetAgentKnown().IsPerceived( callerAgent );
-    call.GetResult().SetValue( bResult );
+    call.GetResult().SetValue( pKnowledge && pKnowledge->GetAgentKnown().IsPerceived( callerAgent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,11 +175,10 @@ void DEC_KnowledgeAgentFunctions::KillOfficers( DIA_Call_ABC& call, const MIL_Ag
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( false );
-        return;
+    else
+    {
+        call.GetResult().SetValue( true );
+        pKnowledge->KillOfficers();
     }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    pKnowledge->KillOfficers();
 }

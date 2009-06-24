@@ -298,11 +298,9 @@ void DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge( DIA_Call_ABC& call,
 
     if( !pSource || !pTarget )
     {
-        call.GetParameter( 2 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)0. );
         return;
     }
-    call.GetParameter( 2 ).SetValue( eQueryValid );
 
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     const MT_Float rDangerosity = pSource->GetDangerosity( *pTarget );
@@ -320,11 +318,9 @@ void DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( DIA_Call_ABC& call, cons
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 2 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)0. );
         return;
     }
-    call.GetParameter( 2 ).SetValue( eQueryValid );
 
     DEC_RolePion_Decision* pTarget = call.GetParameter( 1 ).ToUserObject( pTarget );
     assert( pTarget );
