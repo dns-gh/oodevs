@@ -254,7 +254,7 @@ void DEC_GeometryFunctions::CompareLocalisations( DIA_Call_ABC& call )
 */
 // Created: NLD 2003-08-20
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_ABC& diaCall, const MIL_Automate& /*callerAutomate*/ )
+void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_ABC& diaCall, const MIL_Automate& callerAutomate )
 {
     DIA_Parameters& diaParams = diaCall.GetParameters();
 
@@ -266,7 +266,6 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
     TER_Localisation*   pLocalisation       = diaParams[ 1 ].ToUserPtr( pLocalisation );
     MT_Vector2D*        pDirDanger          = diaParams[ 2 ].ToUserPtr( pDirDanger );
     MT_Float            rDistMaxBtwPoints   = MIL_Tools::ConvertMeterToSim( diaParams[ 3 ].ToFloat() );
-    DIA_Variable_ABC&   diaReturnCode       = diaParams[ 4 ];
 
     assert( !pions.empty() );
 
@@ -277,7 +276,6 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
     {
         if( !( static_cast< DEC_RolePion_Decision& >( **itPion ).GetPion().GetFuseau() == fuseau ) ) //$$$ beark
         {
-            diaReturnCode.SetValue( eError_PionsPasDansMemeFuseau );
             diaCall.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
             return;
         }
@@ -288,7 +286,6 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
     pLocalisation->GetPointsClippedByPolygon( fuseau, clippedPointVector );
     if( clippedPointVector.empty() )
     {
-        diaReturnCode.SetValue( eError_LocalisationPasDansFuseau );
         diaCall.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
         return;
     }
@@ -355,7 +352,6 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
         pOutPoints->push_back( vBarycenter + vDir * ( rIncr * j ));
 
     // Envoi du résulat à DIA
-    diaReturnCode.SetValue( eNoError );
     diaCall.GetResult().SetValue( (void*)pOutPoints, &DEC_Tools::GetTypeListePoints() );
 }
 
@@ -599,12 +595,9 @@ void DEC_GeometryFunctions::ComputeSafetyPosition( DIA_Call_ABC& call, const MIL
     DEC_Knowledge_Agent* pKnowledgeEnnemy = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledgeEnnemy )
     {
-        call.GetParameter( 2 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return;
     }
-    else
-        call.GetParameter( 2 ).SetValue( eQueryValid );
 
     MT_Float rMinDistance = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
 
@@ -634,11 +627,9 @@ void DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation( DIA_Call_ABC& c
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 2 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return;
     }
-    call.GetParameter( 2 ).SetValue( eQueryValid );
 
     MT_Float rMinDistance = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
 
@@ -658,12 +649,9 @@ void DEC_GeometryFunctions::ComputeSafetyPositionWithObjective( DIA_Call_ABC& ca
     DEC_Knowledge_Agent* pKnowledgeEnnemy = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledgeEnnemy )
     {
-        call.GetParameter( 3 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return;
     }
-    else
-        call.GetParameter( 3 ).SetValue( eQueryValid );
 
     MT_Float     rMinDistance = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
     MT_Vector2D* pObjective   = call.GetParameter( 2 ).ToUserPtr( pObjective );
@@ -862,11 +850,9 @@ void DEC_GeometryFunctions::ComputePointsBeforeLima( DIA_Call_ABC& call, const M
     MIL_LimaOrder*    pLima           = callerAutomate.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
     MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
     MT_Float          rNbPoints       = call.GetParameter( 2 ).ToFloat();
-    DIA_Variable_ABC& diaReturnCode   = call.GetParameter( 3 );
 
     if( !pLima )
     {
-        diaReturnCode.SetValue( false );
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
         return;
     }
@@ -874,7 +860,6 @@ void DEC_GeometryFunctions::ComputePointsBeforeLima( DIA_Call_ABC& call, const M
     T_PointVector* pResult = new T_PointVector();
 
     bool bResult = callerAutomate.GetFuseau().ComputePointsBeforeLima( *pLima, rDistBeforeLima, (uint)rNbPoints, *pResult );
-    diaReturnCode.SetValue( bResult );
     if( bResult )
         call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
     else

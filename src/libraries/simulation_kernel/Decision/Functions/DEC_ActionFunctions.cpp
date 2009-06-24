@@ -31,11 +31,6 @@ namespace
     {
         return( !pKnowledge || !pCampKnowledge || !pCampKnowledge->GetObjectKnown() ); //|| pCampKnowledge->GetObjectKnown()->Retrieve< LogisticCapacity >() != 0 )
     }
-    void SetInvalid( DIA_Call_ABC& call, int parameter )
-    {
-        call.GetParameter( parameter ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-    }
 }
 
 // -----------------------------------------------------------------------------

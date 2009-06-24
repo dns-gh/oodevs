@@ -31,15 +31,13 @@ void DEC_FireFunctions::GetMaxRangeToFireOnEnemy( DIA_Call_ABC& call, const MIL_
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)-1. );
         return;
     }
 
-    call.GetParameter( 1 ).SetValue( eQueryValid );
     float rWantedPH = 0.8f;
-    if( call.GetParameters().GetParameters().size() >= 3 )
-        rWantedPH = call.GetParameter( 2 ).ToFloat();
+    if( call.GetParameters().GetParameters().size() >= 2 )
+        rWantedPH = call.GetParameter( 1 ).ToFloat();
     
     const float rRange = MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToFireOn( *pKnowledge, rWantedPH ) );
     call.GetResult().SetValue( rRange );
@@ -55,15 +53,13 @@ void DEC_FireFunctions::GetMinRangeToFireOnEnemy( DIA_Call_ABC& call, const MIL_
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if ( !pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)-1. );
         return;
     }
     
-    call.GetParameter( 1 ).SetValue( eQueryValid );
     float rWantedPH = 0.8f;
-    if ( call.GetParameters().GetParameters().size() >= 3 )
-        rWantedPH = call.GetParameter( 2 ).ToFloat();
+    if ( call.GetParameters().GetParameters().size() >= 2 )
+        rWantedPH = call.GetParameter( 1 ).ToFloat();
 
     const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToFireOn( *pKnowledge, rWantedPH );
     if( rRange == std::numeric_limits< MT_Float >::max() )
@@ -82,15 +78,13 @@ void DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture( DIA_Call_ABC& cal
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)-1. );
         return;
     }
 
-    call.GetParameter( 1 ).SetValue( eQueryValid );
     float rWantedPH = 0.8f;
-    if( call.GetParameters().GetParameters().size() >= 3 )
-        rWantedPH = call.GetParameter( 2 ).ToFloat();
+    if( call.GetParameters().GetParameters().size() >= 2 )
+        rWantedPH = call.GetParameter( 1 ).ToFloat();
     
     const float rRange = MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToFireOnActualPosture( *pKnowledge, rWantedPH ) );
     call.GetResult().SetValue( rRange );
@@ -106,15 +100,13 @@ void DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture( DIA_Call_ABC& cal
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if ( !pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)-1. );
         return;
     }
     
-    call.GetParameter( 1 ).SetValue( eQueryValid );
     float rWantedPH = 0.8f;
-    if ( call.GetParameters().GetParameters().size() >= 3 )
-        rWantedPH = call.GetParameter( 2 ).ToFloat();
+    if ( call.GetParameters().GetParameters().size() >= 2 )
+        rWantedPH = call.GetParameter( 1 ).ToFloat();
 
     const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToFireOnActualPosture( *pKnowledge, rWantedPH );
     if( rRange == std::numeric_limits< MT_Float >::max() )
@@ -133,15 +125,13 @@ void DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded( DIA_Call_ABC& call
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)-1. );
         return;
     }
 
-    call.GetParameter( 1 ).SetValue( eQueryValid );
     float rWantedPH = 0.8f;
-    if( call.GetParameters().GetParameters().size() >= 3 )
-        rWantedPH = call.GetParameter( 2 ).ToFloat();
+    if( call.GetParameters().GetParameters().size() >= 2 )
+        rWantedPH = call.GetParameter( 1 ).ToFloat();
 
     float rRange = MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RolePion_Composantes >().GetOnlyLoadableMaxRangeToFireOn( *pKnowledge, rWantedPH ) );
     call.GetResult().SetValue( rRange );
@@ -157,15 +147,13 @@ void DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy( DIA_Call_ABC& call, const M
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)-1. );
         return;
     }
 
-    call.GetParameter( 1 ).SetValue( eQueryValid );
     float rWantedPH = 0.8f;
-    if( call.GetParameters().GetParameters().size() >= 3 )
-        rWantedPH = call.GetParameter( 2 ).ToFloat();
+    if( call.GetParameters().GetParameters().size() >= 2 )
+        rWantedPH = call.GetParameter( 1 ).ToFloat();
     
     float rRange = MIL_Tools::ConvertSimToMeter( pKnowledge->GetMaxRangeToFireOn( callerAgent, rWantedPH ) );
     call.GetResult().SetValue( rRange );

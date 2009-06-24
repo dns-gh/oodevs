@@ -41,7 +41,7 @@ void DEC_ActionFunctions::StopAction( DIA_Call_ABC& call, const T& caller )
     assert( caller.HasAction( *pAction ) );
     MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDebug().NotifyActionStopped( call, caller, *pAction );
     delete pAction;
-    call.GetParameter( 0 ).SetValue( (void*)0, &DEC_Tools::GetTypeAction() );
+    call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeAction() );
 }
 
 // -----------------------------------------------------------------------------
