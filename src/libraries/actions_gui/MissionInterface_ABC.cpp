@@ -11,6 +11,7 @@
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/OrderType.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "actions_gui/resources.h"
@@ -19,40 +20,55 @@
 
 using namespace actions::gui;
 
+namespace
+{
+    QVBox* CreateTab( QTabWidget* parent, const QString& title, bool enabled = true )
+    {
+        QScrollView* sc = new QScrollView( parent );
+        sc->setResizePolicy( QScrollView::AutoOneFit );
+        sc->setFrameStyle( QFrame::NoFrame );
+        QVBox* tab = new QVBox( sc );
+        tab->setMargin( 5 );
+        tab->setSpacing( 5 );
+        sc->addChild( tab );
+        tab->layout()->setAlignment( Qt::AlignTop );
+        parent->addTab( sc, title );
+        parent->setTabEnabled( sc, enabled );
+        return tab;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const QString& title, kernel::Entity_ABC& entity, kernel::ActionController& controller )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller )
     : QVBox      ( parent )
-    , title_     ( title )
+    , title_     ( order.GetName().c_str() )
     , controller_( controller )
     , entity_    ( entity )
 {
     setMinimumSize( 280, 250 ); // $$$$ SBO 2007-04-27: 
-    CreateTitle( title );
+    CreateTitle( title_ );
     tabs_ = new QTabWidget( this );
+    mainTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Mandatory" ) );
+    optionalTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Optional" ) );
     {
-        QScrollView* sc = new QScrollView( tabs_ );
-        sc->setResizePolicy( QScrollView::AutoOneFit );
-        sc->setFrameStyle( QFrame::NoFrame );
-        mainTab_ = new QVBox( sc );
-        mainTab_->setMargin( 5 );
-        mainTab_->setSpacing( 5 );
-        sc->addChild( mainTab_ );
-        mainTab_->layout()->setAlignment( Qt::AlignTop );
-        tabs_->addTab( sc, tools::translate( "MissionInterface_ABC", "Mandatory" ) );
-    }
-    {
-        QScrollView* sc = new QScrollView( tabs_ );
-        sc->setResizePolicy( QScrollView::AutoOneFit );
-        sc->setFrameStyle( QFrame::NoFrame );
-        optionalTab_ = new QVBox( sc );
-        optionalTab_->setMargin( 5 );
-        optionalTab_->setSpacing( 5 );
-        sc->addChild( optionalTab_ );
-        optionalTab_->layout()->setAlignment( Qt::AlignTop );
-        tabs_->addTab( sc, tools::translate( "MissionInterface_ABC", "Optional" ) );
+        const std::string doctrine = order.GetDoctrineInformation();
+        const std::string usage = order.GetUsageInformation();
+        QVBox* helpTab = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Help" ), !doctrine.empty() || !usage.empty() );
+        if( !doctrine.empty() )
+        {
+            QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Doctrine" ), helpTab );
+            QLabel* label = new QLabel( doctrine.c_str(), box );
+            label->setAlignment( Qt::WordBreak );
+        }
+        if( !usage.empty() )
+        {
+            QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Usage" ), helpTab );
+            QLabel* label = new QLabel( usage.c_str(), box );
+            label->setAlignment( Qt::WordBreak );
+        }
     }
     CreateOkCancelButtons();
 }

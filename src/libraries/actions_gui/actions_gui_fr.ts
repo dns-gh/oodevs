@@ -86,6 +86,17 @@
     </message>
 </context>
 <context>
+    <name>MissionInteface_ABC</name>
+    <message>
+        <source>Doctrine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MissionInterface_ABC</name>
     <message>
         <source>Mandatory</source>
@@ -101,6 +112,10 @@
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

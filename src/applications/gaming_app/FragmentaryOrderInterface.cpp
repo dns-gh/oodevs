@@ -24,7 +24,7 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, ActionController& controller
                                                     , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
-    : actions::gui::MissionInterface_ABC( parent, fragOrder.GetName().c_str(), entity, controller )
+    : actions::gui::MissionInterface_ABC( parent, fragOrder, entity, controller )
     , model_( model )
     , publisher_( publisher )
     , fragOrder_( fragOrder )

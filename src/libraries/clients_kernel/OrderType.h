@@ -41,6 +41,8 @@ public:
     //@{
     unsigned long GetId() const;
     std::string GetName() const;
+    std::string GetDoctrineInformation() const;
+    std::string GetUsageInformation() const;
     void AddParameter( const OrderParameter& parameter );
     //@}
 
@@ -51,11 +53,19 @@ private:
     OrderType& operator=( const OrderType& ); //!< Assignment operator
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    void ReadDescriptions( xml::xistream& xis );
+    //@}
+
 private:
     //! @name Member data
     //@{
     unsigned long id_;
     std::string name_;
+    std::string doctrine_;
+    std::string usage_;
     //@}
 };
 

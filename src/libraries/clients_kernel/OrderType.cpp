@@ -53,6 +53,24 @@ std::string OrderType::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderType::GetDoctrineInformation
+// Created: SBO 2009-06-24
+// -----------------------------------------------------------------------------
+std::string OrderType::GetDoctrineInformation() const
+{
+    return doctrine_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderType::GetUsageInformation
+// Created: SBO 2009-06-24
+// -----------------------------------------------------------------------------
+std::string OrderType::GetUsageInformation() const
+{
+    return usage_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderType::AddParameter
 // Created: SBO 2008-03-05
 // -----------------------------------------------------------------------------
@@ -60,4 +78,16 @@ void OrderType::AddParameter( const OrderParameter& parameter )
 {
     OrderParameter* copy = new OrderParameter( parameter );
     Register( Count(), *copy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderType::ReadDescriptions
+// Created: SBO 2009-06-24
+// -----------------------------------------------------------------------------
+void OrderType::ReadDescriptions( xml::xistream& xis )
+{
+    xis >> optional() >> start( "descriptions" )
+            >> start( "doctrine" ) >> doctrine_ >> end()
+            >> start( "usage" ) >> usage_ >> end()
+        >> end();
 }

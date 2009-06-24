@@ -24,7 +24,7 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller
                                                       , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
-    : actions::gui::MissionInterface_ABC( parent, mission.GetName().c_str(), entity, controller )
+    : actions::gui::MissionInterface_ABC( parent, mission, entity, controller )
     , model_( model )
     , publisher_( publisher )
     , mission_( mission )

@@ -16,6 +16,7 @@ namespace kernel
 {
     class ActionController;
     class Entity_ABC;
+    class OrderType;
 }
 
 class QTabWidget;
@@ -41,7 +42,7 @@ class MissionInterface_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, const QString& title, kernel::Entity_ABC& entity, kernel::ActionController& controller );
+             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller );
     virtual ~MissionInterface_ABC();
     //@}
 

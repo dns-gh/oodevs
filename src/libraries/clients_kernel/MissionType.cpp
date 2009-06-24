@@ -55,6 +55,7 @@ void MissionType::Read( xml::xistream& xis )
     std::string mrt;
     xis >> optional() >> attribute( "mrt-dia-behavior", mrt )
         >> list( "parameter", *this, &MissionType::ReadParameter );
+    ReadDescriptions( xis );
     automat_ = !mrt.empty();
 }
 
