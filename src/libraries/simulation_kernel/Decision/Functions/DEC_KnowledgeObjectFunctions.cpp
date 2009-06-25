@@ -35,13 +35,8 @@
 void DEC_KnowledgeObjectFunctions::Recon( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    pKnowledge->Recon( callerAgent );
+    if( pKnowledge )
+        pKnowledge->Recon( callerAgent );
 }
 
 namespace 
@@ -127,25 +122,19 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( DIA_Call_ABC& call, const 
 void DEC_KnowledgeObjectFunctions::DamageObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
-    if( !( pKnowledge && pKnowledge->GetObjectKnown() ) )
+    if( ! pKnowledge )
+        call.GetResult().SetValue( eQueryInvalid );
+    else
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( (int)0 );
-        return;
-    }
-
-    MIL_Object_ABC& object = *pKnowledge->GetObjectKnown();
-    if ( object().CanBePerceived() )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryValid );
-
-        float rDamageFactor = call.GetParameter( 2 ).ToFloat();
-        object().Destroy( rDamageFactor );
-    }
-    else 
-    { 
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( (int)0 );
+        MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+        if ( pObject && (*pObject)().CanBePerceived() )
+        {
+            call.GetResult().SetValue( eQueryValid );
+            float rDamageFactor = call.GetParameter( 1 ).ToFloat();
+            (*pObject)().Destroy( rDamageFactor );
+        }
+        else
+            call.GetResult().SetValue( eQueryInvalid );
     }
 }
 
@@ -238,13 +227,12 @@ void DEC_KnowledgeObjectFunctions::EquipLogisticRoute( DIA_Call_ABC& call, MIL_A
         SupplyRouteAttribute* pAttribute = pObject->RetrieveAttribute< SupplyRouteAttribute >();
         if( pAttribute )
         {
-            call.GetParameter( 1 ).SetValue( eQueryValid );
+            call.GetResult().SetValue( eQueryValid );
             pAttribute->Equip();
             return;
         }
     }
-    call.GetParameter( 1 ).SetValue( eQueryInvalid );
-    return;
+    call.GetResult().SetValue( eQueryInvalid );
 }
 
 
@@ -260,13 +248,8 @@ void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( DIA_Call_ABC& ca
     {
         PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >();
         if( pAttribute )
-        {
-            call.GetParameter( 1 ).SetValue( eQueryValid );
-            pAttribute->SetDensity( call.GetParameter( 2 ).ToFloat() );
-            return;
-        }
+            pAttribute->SetDensity( call.GetParameter( 1 ).ToFloat() );
     }
-    call.GetParameter( 1 ).SetValue( eQueryInvalid );
 }
 
 // -----------------------------------------------------------------------------
@@ -281,11 +264,6 @@ void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( DIA_Call_ABC& 
     {
         PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >();
         if( pAttribute )
-        {
-            call.GetParameter( 1 ).SetValue( eQueryValid );
             pAttribute->Reset();
-            return;
-        }
     }
-    call.GetParameter( 1 ).SetValue( eQueryInvalid );
 }

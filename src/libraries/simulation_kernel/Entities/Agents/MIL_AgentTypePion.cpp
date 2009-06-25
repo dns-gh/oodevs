@@ -492,17 +492,14 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated      < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif"       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacle               < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsBypassed                       < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstContourne"                      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsConstructed                    < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstConstruit"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetLocalisation                  < MIL_AgentPion >, "DEC_ConnaissanceObjet_Localisation"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetType                          < MIL_AgentPion >, "DEC_ConnaissanceObjet_Type"                              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth       < MIL_AgentPion >, "DEC_ConnaissanceObjet_LargeurSiteFranchissement"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut< MIL_AgentPion >, "DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::Recon                                             , "DEC_ConnaissanceObjet_Reconnaitre"                       );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsRecon                          < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstReconnu"                        );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeOccupied                                     , "DEC_ConnaissanceObjet_PeutEtreOccupe"                    ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeAnimated                                     , "DEC_ConnaissanceObjet_PeutEtreAnime"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeBypassed                                     , "DEC_ConnaissanceObjet_PeutEtreContourne"                 );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped          < MIL_AgentPion >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"            ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::DamageObject                                      , "DEC_ConnaissanceObjet_Degrader"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity                       , "DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante"  ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity                     , "DEC_ConnaisssanceObjet_ResetDensitePopulationSortante"   );

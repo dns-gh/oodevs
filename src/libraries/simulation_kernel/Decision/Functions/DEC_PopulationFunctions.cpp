@@ -251,14 +251,9 @@ void DEC_PopulationFunctions::GetKnowledgeObjectLocalisation( DIA_Call_ABC& call
 {
     const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
-        return;
-    }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (void*)&pObject->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
+    else
+        call.GetResult().SetValue( (void*)&pObject->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
 }
 
 // -----------------------------------------------------------------------------

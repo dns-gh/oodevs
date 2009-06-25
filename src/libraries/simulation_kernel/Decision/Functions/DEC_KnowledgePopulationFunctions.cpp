@@ -120,15 +120,9 @@ void DEC_KnowledgePopulationFunctions::IsEnemy( DIA_Call_ABC& call, const MIL_Ag
 {
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
-        return;
-    }
-    
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    
-    call.GetResult().SetValue( caller.GetArmy().IsAnEnemy( pKnowledge->GetArmy() ) );
+    else
+        call.GetResult().SetValue( caller.GetArmy().IsAnEnemy( pKnowledge->GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------

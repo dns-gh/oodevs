@@ -60,13 +60,9 @@ void DEC_KnowledgePopulationFunctions::IsRecon( DIA_Call_ABC& call, const T& cal
 {
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledge->IsRecon() );
+    else
+        call.GetResult().SetValue( pKnowledge->IsRecon() );
 }
 
 // -----------------------------------------------------------------------------

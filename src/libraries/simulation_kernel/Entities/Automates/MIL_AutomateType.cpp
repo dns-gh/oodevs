@@ -320,13 +320,10 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated           < MIL_Automate >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsReservedObstacle                    < MIL_Automate >, "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsBypassed                            < MIL_Automate >, "DEC_ConnaissanceObjet_EstContourne"                         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsConstructed                         < MIL_Automate >, "DEC_ConnaissanceObjet_EstConstruit"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetLocalisation                       < MIL_Automate >, "DEC_ConnaissanceObjet_Localisation"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetType                               < MIL_Automate >, "DEC_ConnaissanceObjet_Type"                                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth            < MIL_Automate >, "DEC_ConnaissanceObjet_LargeurSiteFranchissement"            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut     < MIL_Automate >, "DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsRecon                               < MIL_Automate >, "DEC_ConnaissanceObjet_EstReconnu"                           );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped               < MIL_Automate >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"               ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesWith                   < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesAvec"                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesInZoneWith             < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjects                            < MIL_Automate >, "DEC_Connaissances_Objets"                                   );

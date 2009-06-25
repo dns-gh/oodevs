@@ -44,31 +44,9 @@ void DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( DIA_Call_ABC& cal
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
     const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >();
     if( !(pKnowledge && attribute != 0 ) )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (float)0. );
-        return;
-    }    
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( attribute->GetWidth() );
-}
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut
-// Created: PBT 2005-03-10
-// -----------------------------------------------------------------------------
-template< typename T >
-void DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut( DIA_Call_ABC& call, const T& caller )
-{
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >();
-    if( !(pKnowledge && attribute != 0 ) )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( attribute->IsBanksToFitOut() );
+    else
+        call.GetResult().SetValue( attribute->GetWidth() );
 }
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_KnowledgeObjectFunctions::GetLocalisation
@@ -79,14 +57,9 @@ void DEC_KnowledgeObjectFunctions::GetLocalisation( DIA_Call_ABC& call, const T&
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLocalisation() );
-        return;
-    }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (void*)&pKnowledge->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
+    else
+        call.GetResult().SetValue( (void*)&pKnowledge->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,13 +83,9 @@ void DEC_KnowledgeObjectFunctions::IsBypassed( DIA_Call_ABC& call, const T& call
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledge->IsBypassed() );
+        call.GetResult().SetValue( eTristate_DontKnow );
+    else
+        call.GetResult().SetValue( pKnowledge->IsBypassed() ? eTristate_True : eTristate_False );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,13 +116,9 @@ void DEC_KnowledgeObjectFunctions::IsReservedObstacle( DIA_Call_ABC& call, const
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledge->IsReservedObstacle() );
+    else
+        call.GetResult().SetValue( pKnowledge->IsReservedObstacle() );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,13 +131,9 @@ void DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( DIA_Call_ABC& ca
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledge->IsReservedObstacleActivated() );
+        call.GetResult().SetValue( true );
+    else
+        call.GetResult().SetValue( pKnowledge->IsReservedObstacleActivated() );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,30 +146,7 @@ void DEC_KnowledgeObjectFunctions::GetType( DIA_Call_ABC& call, const T& caller 
 {
     DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledge->GetType().GetName() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped
-// Created: NLD 2005-02-18
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped( DIA_Call_ABC& call, const T& caller )
-{
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    const DEC_Knowledge_ObjectAttributeSupplyRoute* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeSupplyRoute >();    
-    if( !( pKnowledge && attribute != 0 ) )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( attribute->IsEquipped() );
+    else
+        call.GetResult().SetValue( pKnowledge->GetType().GetName() );
 }
