@@ -466,8 +466,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
 
     // Agent knowledges accessors    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetOperationalState                       < MIL_AgentPion >, "DEC_ConnaissanceAgent_EtatOps"                         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetMajorOperationalState                  < MIL_AgentPion >, "DEC_ConnaissanceAgent_EtatOpsMajeur"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetSpeed                                  < MIL_AgentPion >, "DEC_ConnaissanceAgent_Vitesse"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetMajorOperationalState                  < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstDetruitTactique"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetPosition                               < MIL_AgentPion >, "DEC_ConnaissanceAgent_Position"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsFlying                                  < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstEnVol"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetNatureAtlas                                             , "DEC_ConnaissanceAgent_NatureAtlas"                     );
@@ -480,12 +479,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsKnowledgeValid                          < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstValide"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsMoving                                                   , "DEC_ConnaissanceAgent_EstEnMouvement"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsPerceivingAgent                                          , "DEC_ConnaissanceAgent_PercoitUnite"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsSurrendered                             < MIL_AgentPion >, "DEC_ConnaissanceAgent_SEstRendu"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsPrisoner                                < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstPrisonnier"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsRefugee                                 < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstRefugie"                      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsRefugeeManaged                          < MIL_AgentPion >, "DEC_ConnaissanteAgent_EstRefugiePrisEnCompte"          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsMilitia                                 < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstMilice"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsTerrorist                               < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstTerroriste"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsDead                                    < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstMort"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::Lock                                      < MIL_AgentPion >, "DEC_ConnaissanceAgent_Verrouiller"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::Unlock                                    < MIL_AgentPion >, "DEC_ConnaissanceAgent_Deverrouiller"                   );

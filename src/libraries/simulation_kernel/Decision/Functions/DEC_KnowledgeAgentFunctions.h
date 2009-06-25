@@ -44,12 +44,7 @@ public:
     template< typename T > static void GetMajorOperationalState              ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsFlying                              ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsKnowledgeValid                      ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsSurrendered                         ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsPrisoner                            ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsRefugee                             ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsRefugeeManaged                      ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsMilitia                             ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsTerrorist                           ( DIA_Call_ABC& call, const T& caller );   
     template< typename T > static void IsDead                                ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void Lock                                  ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void Unlock                                ( DIA_Call_ABC& call, const T& caller );
