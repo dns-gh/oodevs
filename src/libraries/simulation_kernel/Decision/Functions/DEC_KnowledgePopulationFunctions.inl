@@ -41,14 +41,9 @@ void DEC_KnowledgePopulationFunctions::GetAttitude( DIA_Call_ABC& call, const T&
 {
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( (int)0. );
-        return;
-    }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (int)pKnowledge->GetAttitude().GetID() );
+        call.GetResult().SetValue( (int)0 );
+    else
+        call.GetResult().SetValue( (int)pKnowledge->GetAttitude().GetID() );
 }
 
 // -----------------------------------------------------------------------------

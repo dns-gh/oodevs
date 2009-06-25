@@ -117,16 +117,7 @@ void DEC_KnowledgeAgentFunctions::IsInDetectionCone( DIA_Call_ABC& call, const M
 void DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-        return;
-    }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    bool bIsPerceived = callerAgent.GetKnowledge().IsPerceived( pKnowledge->GetAgentKnown() );
-    call.GetResult().SetValue( bIsPerceived );
+    call.GetResult().SetValue( pKnowledge && callerAgent.GetKnowledge().IsPerceived( pKnowledge->GetAgentKnown() ) );
 }
 
 // -----------------------------------------------------------------------------

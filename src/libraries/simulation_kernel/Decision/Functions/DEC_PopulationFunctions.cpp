@@ -297,14 +297,9 @@ void DEC_PopulationFunctions::GetKnowledgeObjectDistance( DIA_Call_ABC& call, co
 {
     const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
-        return;
-    }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (float)callerPopulation.GetDistanceTo( pObject->GetLocalisation() ) );
+    else
+        call.GetResult().SetValue( (float)callerPopulation.GetDistanceTo( pObject->GetLocalisation() ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -315,15 +310,12 @@ void DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint( DIA_Call_ABC& call
 {
     const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
-        return;
+    else
+    {
+        MT_Vector2D* pPoint = new MT_Vector2D( callerPopulation.GetClosestPoint( pObject->GetLocalisation() ) );
+        call.GetResult().SetValue( (void*)pPoint, &DEC_Tools::GetTypePoint() );
     }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    MT_Vector2D* pPoint = new MT_Vector2D( callerPopulation.GetClosestPoint( pObject->GetLocalisation() ) );
-    call.GetResult().SetValue( (void*)pPoint, &DEC_Tools::GetTypePoint() );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,14 +326,9 @@ void DEC_PopulationFunctions::IsEnemy( DIA_Call_ABC& call, const MIL_Population&
 {
     const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (int)0 );
-        return;
-    }
-    
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( callerPopulation.GetArmy().IsAnEnemy( pObject->GetArmy() ) );
+    else
+        call.GetResult().SetValue( callerPopulation.GetArmy().IsAnEnemy( pObject->GetArmy() ) );
 }
 
 // =============================================================================

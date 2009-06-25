@@ -26,13 +26,8 @@
 void DEC_KnowledgePopulationFunctions::Recon( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    pKnowledge->Recon();
+    if( pKnowledge )
+        pKnowledge->Recon();
 }
 
 // -----------------------------------------------------------------------------
@@ -42,17 +37,14 @@ void DEC_KnowledgePopulationFunctions::Recon( DIA_Call_ABC& call, const MIL_Agen
 void DEC_KnowledgePopulationFunctions::GetDangerosity( DIA_Call_ABC& call, const MIL_AgentPion& caller )
 {
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
-    if( !pKnowledge )
+    if( pKnowledge )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        return;
+        // For DIA, the dangerosity value is 1 <= dangerosity <= 2
+        const MT_Float rDangerosity = pKnowledge->GetDangerosity( caller );
+        call.GetResult().SetValue( (float)( rDangerosity + 1. ) );
     }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-
-    // For DIA, the dangerosity value is 1 <= dangerosity <= 2
-    const MT_Float rDangerosity = pKnowledge->GetDangerosity( caller );
-    call.GetResult().SetValue( (float)( rDangerosity + 1. ) );
+    else
+        call.GetResult().SetValue( 0.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,13 +54,8 @@ void DEC_KnowledgePopulationFunctions::GetDangerosity( DIA_Call_ABC& call, const
 void DEC_KnowledgePopulationFunctions::Secure( DIA_Call_ABC& call, const MIL_AgentPion& caller )
 {
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    pKnowledge->Secure( caller );
+    if( pKnowledge )
+        pKnowledge->Secure( caller );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,16 +66,12 @@ void DEC_KnowledgePopulationFunctions::SecuringPoint( DIA_Call_ABC& call, const 
 {
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
-        return;
+    else
+    {
+        MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetSecuringPoint( caller ) );
+        call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
     }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-
-    MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetSecuringPoint( caller ) );
-
-    call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,17 +82,13 @@ void DEC_KnowledgePopulationFunctions::ClosestPoint( DIA_Call_ABC& call, const M
 {
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
-        return;
+    else
+    {
+        MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller.GetRole< PHY_RolePion_Location >().GetPosition() ) ); //$$$ RAM
+
+        call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
     }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-
-    MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller.GetRole< PHY_RolePion_Location >().GetPosition() ) ); //$$$ RAM
-
-    call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,10 +113,10 @@ void DEC_KnowledgePopulationFunctions::Exterminate( DIA_Call_ABC& call, const MI
     DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
-        call.GetParameter( 2 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( eQueryInvalid );
         return;
     }
-    call.GetParameter( 2 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( eQueryValid );
     const MT_Float rSurface = call.GetParameter( 1 ).ToFloat();
     pKnowledge->Exterminate( caller, rSurface );
 }
