@@ -53,7 +53,9 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
         return;
     Mission* pInfos = (Mission*)pCurData_;
 //    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Missions_GUI::eNbrGuiElements );
-    vItemConnectors_[ADN_Missions_GUI::eName]      ->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eName]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDoctrineDescription]->Connect( &pInfos->doctrineDescription_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eUsageDescription]->Connect( &pInfos->usageDescription_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eParameters]->Connect( &pInfos->parameters_, bConnect );
 }
 

@@ -2272,6 +2272,14 @@ stance</source>
         <source>Available without mission</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Doctrine description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage description</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Model_Wizard</name>
@@ -3213,7 +3221,7 @@ Make sure that the file is not write-protected.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Supply_Data</name>
+    <name>ADN_Supply_Data::SupplyDataInfos</name>
     <message>
         <source>Invalid data</source>
         <translation type="unfinished"></translation>
@@ -4659,6 +4667,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Sword Officer Training Adaptation Tool - Saving Errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unloading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

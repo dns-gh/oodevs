@@ -27,6 +27,8 @@ public:
     enum E_GuiElements
     {
         eName,
+        eDoctrineDescription,
+        eUsageDescription,
         eParameters,
         eParameterValues,
         eFragOrderAvailableForAllMissions,

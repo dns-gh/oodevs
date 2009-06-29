@@ -83,7 +83,9 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget* parent, ADN_Missions_Data::T_
     // Mission data
     QGroupBox* pGroup = new QVGroupBox( tr( "Mission" ), mainWidget );
     QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
-    builder.AddField<ADN_EditLine_String>( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
+    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
 
     QGroupBox* pParameters = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pGroup );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );
@@ -150,6 +152,8 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     QGroupBox* pGroup = new QVGroupBox( tr( "Fragmentary orders" ), mainWidget );
     QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
+    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
     builder.AddField< ADN_CheckBox >( pParamHolder, tr( "Available for all missions" ), vInfosConnectors[eFragOrderAvailableForAllMissions] );
     builder.AddField< ADN_CheckBox >( pParamHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
 

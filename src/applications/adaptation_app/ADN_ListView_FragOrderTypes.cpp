@@ -54,6 +54,8 @@ void ADN_ListView_FragOrderTypes::ConnectItem( bool bConnect )
     FragOrder* pInfos = (FragOrder*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Missions_GUI::eNbrGuiElements );
     vItemConnectors_[ADN_Missions_GUI::eName]                            ->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDoctrineDescription]             ->Connect( &pInfos->doctrineDescription_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eUsageDescription]                ->Connect( &pInfos->usageDescription_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eParameters]                      ->Connect( &pInfos->parameters_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eFragOrderAvailableForAllMissions]->Connect( &pInfos->isAvailableForAllMissions_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eFragOrderAvailableWithoutMission]->Connect( &pInfos->isAvailableWithoutMission_, bConnect );

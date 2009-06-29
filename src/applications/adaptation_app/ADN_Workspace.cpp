@@ -219,9 +219,10 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
     projectData_->SetFile( filename );
     for( int n = eNbrWorkspaceElements - 1; n >= 0; --n )
     {
-        elements_[n]->GetDataABC().Reset();
         if( bVisible )
-            pProgressIndicator_->Increment( elements_[n]->GetName() );
+            pProgressIndicator_->Increment( tr( "Unloading: %1..." ).arg( elements_[n]->GetName() ) );
+        qApp->processEvents();
+        elements_[n]->GetDataABC().Reset();
     }
     projectData_->Reset();
 
@@ -250,8 +251,9 @@ void ADN_Workspace::Load(const std::string& filename)
 
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
+        pProgressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ) );
+        qApp->processEvents();
         elements_[n]->GetDataABC().Load();
-        pProgressIndicator_->Increment( elements_[n]->GetName() );
     }
     pProgressIndicator_->Reset();
 }

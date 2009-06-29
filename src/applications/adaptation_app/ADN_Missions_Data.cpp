@@ -230,6 +230,8 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
     newMission->diaBehavior_    = diaBehavior_.GetData();
     newMission->cdtDiaBehavior_ = cdtDiaBehavior_.GetData();
     newMission->mrtDiaBehavior_ = mrtDiaBehavior_.GetData();
+    newMission->doctrineDescription_ = doctrineDescription_.GetData();
+    newMission->usageDescription_    = usageDescription_.GetData();
     newMission->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
     {
@@ -245,12 +247,19 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input )
 {
+    std::string doctrineDesc, usageDesc;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "dia-type", diaType_ )
         >> xml::optional() >> xml::attribute( "dia-behavior", diaBehavior_ )
         >> xml::optional() >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
         >> xml::optional() >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
+        >> xml::optional() >> xml::start( "descriptions" )
+            >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end()
+            >> xml::start( "usage" ) >> usageDesc >> xml::end()
+        >> xml::end()
         >> xml::list( "parameter", *this, &ADN_Missions_Data::Mission::ReadParameter );
+    doctrineDescription_ = doctrineDesc;
+    usageDescription_ = usageDesc;
 }
 
 // -----------------------------------------------------------------------------
@@ -307,7 +316,15 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
         output << xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
                << xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ );
     }
-
+    if( ! doctrineDescription_.GetData().empty() || ! usageDescription_.GetData().empty() )
+    {
+        output << xml::start( "descriptions" );
+        if( ! doctrineDescription_.GetData().empty() )
+            output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end();
+        if( ! usageDescription_.GetData().empty() )
+            output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end();
+        output << xml::end();
+    }
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
 
@@ -356,6 +373,8 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
     FragOrder* newFragOrder = new FragOrder();
     newFragOrder->strName_ = strName_.GetData();
     newFragOrder->diaType_ = diaType_.GetData();
+    newFragOrder->doctrineDescription_ = doctrineDescription_.GetData();
+    newFragOrder->usageDescription_ = doctrineDescription_.GetData();
     newFragOrder->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
     {
@@ -371,11 +390,18 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input )
 {
+    std::string doctrineDesc, usageDesc;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", diaType_ )
           >> xml::optional() >> xml::attribute( "available-for-all-mission", isAvailableForAllMissions_ )
           >> xml::optional() >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
+          >> xml::optional() >> xml::start( "descriptions" )
+             >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end()
+             >> xml::start( "usage" ) >> usageDesc >> xml::end()
+          >> xml::end()
           >> xml::list( "parameter", *this, &ADN_Missions_Data::FragOrder::ReadParameter );
+    doctrineDescription_ = doctrineDesc;
+    usageDescription_ = usageDesc;
 }
 
 // -----------------------------------------------------------------------------
@@ -418,6 +444,15 @@ void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output, unsigned
             << xml::attribute( "id", id )
             << xml::attribute( "available-for-all-mission", isAvailableForAllMissions_ )
             << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
+    if( ! doctrineDescription_.GetData().empty() || ! usageDescription_.GetData().empty() )
+    {
+        output << xml::start( "descriptions" );
+        if( ! doctrineDescription_.GetData().empty() )
+            output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end();
+        if( ! usageDescription_.GetData().empty() )
+            output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end();
+        output << xml::end();
+    }
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
     output << xml::end();

@@ -167,7 +167,7 @@ void ADN_MainWindow::Build()
     // Status Bar
     QStatusBar* pStatus = statusBar();
     ADN_ProgressBar* pProgressBar = new ADN_ProgressBar( pStatus );
-    pStatus->addWidget( pProgressBar, 0, true );
+    pStatus->addWidget( pProgressBar );
     workspace_.SetProgressIndicator( pProgressBar );
 
     connect( pCoheranceTablesMenu_, SIGNAL( activated( int ) ), this, SLOT( ShowCoheranceTable( int ) ) );

@@ -12,15 +12,21 @@
 #include "ADN_ProgressBar.h"
 
 #include <qlayout.h>
+#include <qprogressbar.h>
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ProgressBar constructor
 // Created: JDY 03-07-17
 //-----------------------------------------------------------------------------
 ADN_ProgressBar::ADN_ProgressBar( QWidget* pParent, const char* szName, WFlags f )
-: QProgressBar             ( pParent, szName, f )
-, ADN_ProgressIndicator_ABC()
+    : QHBox( pParent, szName, f )
+    , ADN_ProgressIndicator_ABC()
 {
+    label_ = new QLabel( this );
+    label_->setAlignment( Qt::AlignLeft );
+    bar_ = new QProgressBar( this );
+    setStretchFactor( label_, 2 );
+    setStretchFactor( bar_, 1 );
 }
 
 
@@ -30,6 +36,7 @@ ADN_ProgressBar::ADN_ProgressBar( QWidget* pParent, const char* szName, WFlags f
 //-----------------------------------------------------------------------------
 ADN_ProgressBar::~ADN_ProgressBar()
 {
+    // NOTHING
 }
 
 
@@ -39,7 +46,7 @@ ADN_ProgressBar::~ADN_ProgressBar()
 // -----------------------------------------------------------------------------
 void ADN_ProgressBar::SetNbrOfSteps( int n )
 {
-    this->setTotalSteps( n );
+    bar_->setTotalSteps( n );
 }
 
 
@@ -49,7 +56,7 @@ void ADN_ProgressBar::SetNbrOfSteps( int n )
 // -----------------------------------------------------------------------------
 void ADN_ProgressBar::Increment( int n )
 {
-    this->setProgress( progress() + n );
+    bar_->setProgress( bar_->progress() + n );
 }
 
 
@@ -57,9 +64,10 @@ void ADN_ProgressBar::Increment( int n )
 // Name: ADN_ProgressBar::Increment
 // Created: APE 2005-03-18
 // -----------------------------------------------------------------------------
-void ADN_ProgressBar::Increment( const char* /*szText*/, int n )
+void ADN_ProgressBar::Increment( const char* szText, int n )
 {
-    this->Increment( n );
+    label_->setText( szText );
+    Increment( n );
 }
 
 
@@ -67,7 +75,8 @@ void ADN_ProgressBar::Increment( const char* /*szText*/, int n )
 // Name: ADN_ProgressBar::Reset
 // Created: APE 2005-03-18
 // -----------------------------------------------------------------------------
-void ADN_ProgressBar::Reset( const char* /*szMsg*/ )
+void ADN_ProgressBar::Reset( const char* szMsg )
 {
-    this->reset();
+    label_->setText( szMsg );
+    bar_->reset();
 }

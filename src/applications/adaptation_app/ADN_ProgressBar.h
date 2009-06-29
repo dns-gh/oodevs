@@ -12,9 +12,11 @@
 #ifndef __ADN_ProgressBar_h_
 #define __ADN_ProgressBar_h_
 
-#include <qprogressbar.h>
 #include "ADN_ProgressIndicator_ABC.h"
+#include <qhbox.h>
 
+class QLabel;
+class QProgressBar;
 
 // =============================================================================
 /** @class  ADN_ProgressBar
@@ -22,10 +24,10 @@
 */
 // Created: APE 2005-03-18
 // =============================================================================
-class ADN_ProgressBar
-: public QProgressBar
-, public ADN_ProgressIndicator_ABC
+class ADN_ProgressBar : public QHBox
+                      , public ADN_ProgressIndicator_ABC
 {
+
 public:
     explicit ADN_ProgressBar( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_ProgressBar();
@@ -41,6 +43,10 @@ public:
     void Increment( const char* szText, int n = 1 );
     void Reset( const char* szMsg = 0 );
     //@}
+
+private:
+    QLabel* label_;
+    QProgressBar* bar_;
 };
 
 
