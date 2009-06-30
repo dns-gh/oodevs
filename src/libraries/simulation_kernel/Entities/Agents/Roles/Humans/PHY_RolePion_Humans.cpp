@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Humans.h"
-
 #include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
@@ -40,6 +38,7 @@ PHY_RolePion_Humans::T_HumanData::T_HumanData()
     , nNbrInLogisticMaintenance_( 0 )
     , bHasChanged_              ( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -575,4 +574,31 @@ void PHY_RolePion_Humans::SendLogisticFullState() const
 {
     for( CIT_MedicalHumanStateSet it = medicalHumanStates_.begin(); it != medicalHumanStates_.end(); ++it )
         (**it).SendFullState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::GetNbrUsableHumans
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+uint PHY_RolePion_Humans::GetNbrUsableHumans() const
+{
+    return nNbrUsableHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::HasChanged
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Humans::HasChanged() const
+{
+    return nNbrHumansDataChanged_ > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::ChangeEvacuationMode
+// Created: NLD 2005-08-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Humans::ChangeEvacuationMode( E_EvacuationMode nMode )
+{
+    nEvacuationMode_ = nMode;
 }

@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionPrepareObject_h_
 #define __PHY_ActionPrepareObject_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Objects;
@@ -32,7 +30,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-            PHY_ActionPrepareObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionPrepareObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionPrepareObject();
 
     //! @name Operations
@@ -47,7 +45,5 @@ private:
     DIA_Variable_ABC&       diaReturnCode_;
     DIA_Variable_ABC&       diaReturnKnowledge_;
 };
-
-#include "PHY_ActionPrepareObject.inl"
 
 #endif // __PHY_ActionPrepareObject_h_

@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MaintenanceTransportConsign.h"
 #include "PHY_RolePion_Maintenance.h"
 #include "PHY_MaintenanceComposanteState.h"
@@ -45,6 +44,7 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
     : PHY_MaintenanceConsign_ABC()
     , pCarrier_                 ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,11 +53,8 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
 // -----------------------------------------------------------------------------
 PHY_MaintenanceTransportConsign::~PHY_MaintenanceTransportConsign()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceTransportConsign::serialize
@@ -69,11 +66,6 @@ void PHY_MaintenanceTransportConsign::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_MaintenanceConsign_ABC >( *this )
          & pCarrier_;
 }
-
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceTransportConsign::Cancel

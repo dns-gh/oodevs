@@ -70,6 +70,4 @@ private:
     static MT_Float rRadius_;
 };
 
-#include "PHY_PerceptionFlyingShell.inl"
-
 #endif // __PHY_PerceptionFlyingShell_h_

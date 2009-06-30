@@ -38,6 +38,7 @@ PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign()
     : PHY_MedicalConsign_ABC()
     , pCollectionAmbulance_ ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,11 +47,9 @@ PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign()
 // -----------------------------------------------------------------------------
 PHY_MedicalCollectionConsign::~PHY_MedicalCollectionConsign()
 {
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionConsign::serialize
 // Created: JVT 2005-04-11
@@ -61,10 +60,6 @@ void PHY_MedicalCollectionConsign::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_MedicalConsign_ABC >( *this )
          & pCollectionAmbulance_;
 }
-
-// =============================================================================
-// STATES
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionConsign::EnterStateWaitingForCollection
@@ -235,4 +230,22 @@ void PHY_MedicalCollectionConsign::Cancel()
         pCollectionAmbulance_ = 0;
     }
     PHY_MedicalConsign_ABC::Cancel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalCollectionConsign::CouldNeedCollectionAmbulance
+// Created: NLD 2005-01-13
+// -----------------------------------------------------------------------------
+bool PHY_MedicalCollectionConsign::CouldNeedCollectionAmbulance() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalCollectionConsign::IsATransportConsign
+// Created: NLD 2005-04-25
+// -----------------------------------------------------------------------------
+bool PHY_MedicalCollectionConsign::IsATransportConsign() const
+{
+    return true;
 }

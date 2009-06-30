@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleInterface_Medical.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleInterface_Medical, "PHY_RoleInterface_Medical" )
@@ -22,6 +21,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleInterface_Medical, "PHY_RoleInterface_Medical" 
 PHY_RoleInterface_Medical::PHY_RoleInterface_Medical( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +31,7 @@ PHY_RoleInterface_Medical::PHY_RoleInterface_Medical( MT_RoleContainer& role )
 PHY_RoleInterface_Medical::PHY_RoleInterface_Medical()
     : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,16 +40,5 @@ PHY_RoleInterface_Medical::PHY_RoleInterface_Medical()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Medical::~PHY_RoleInterface_Medical()
 {
+    // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Medical::serialize
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_RoleInterface_Medical::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
-}
-
-

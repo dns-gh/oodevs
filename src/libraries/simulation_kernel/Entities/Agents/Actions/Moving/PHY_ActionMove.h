@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionMove_h_
 #define __PHY_ActionMove_h_
 
-#include "MIL.h"
-
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "Entities/Actions/PHY_Action_ABC.h"
 
@@ -33,7 +31,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-    PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionMove();
 
     //! @name Operations
@@ -66,7 +64,5 @@ private:
     T_ObjectKnowledgeSet    objectAvoidAttempts_;
     T_KnowledgeObjectVector objectsToAvoid_;
 };
-
-#include "PHY_ActionMove.inl"
 
 #endif // __PHY_ActionMove_h_

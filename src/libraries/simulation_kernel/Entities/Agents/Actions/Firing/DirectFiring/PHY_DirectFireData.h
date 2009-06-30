@@ -12,8 +12,6 @@
 #ifndef __PHY_DirectFireData_h_
 #define __PHY_DirectFireData_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Random.h"
 
 class PHY_Composante_ABC;
@@ -131,7 +129,5 @@ private:
 private:
     static MT_Random randomGenerator_;
 };
-
-#include "PHY_DirectFireData.inl"
 
 #endif // __PHY_DirectFireData_h_

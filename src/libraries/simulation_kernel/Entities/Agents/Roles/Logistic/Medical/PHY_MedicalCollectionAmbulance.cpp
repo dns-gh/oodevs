@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MedicalCollectionAmbulance.h"
 #include "PHY_MedicalCollectionConsign.h"
 #include "PHY_MedicalHumanState.h"
@@ -336,3 +335,20 @@ bool PHY_MedicalCollectionAmbulance::Update()
     return nState_ == eFinished;    
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalCollectionAmbulance::GetNbrHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+uint PHY_MedicalCollectionAmbulance::GetNbrHumans() const
+{
+    return consigns_.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalCollectionAmbulance::IsAnEmergency
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+bool PHY_MedicalCollectionAmbulance::IsAnEmergency() const
+{
+    return bEmergencyAmbulance_;
+}

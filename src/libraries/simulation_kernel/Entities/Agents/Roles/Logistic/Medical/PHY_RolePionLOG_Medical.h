@@ -162,6 +162,4 @@ private:
     T_CollectionAmbulancesSet  reservations_;
 };
 
-#include "PHY_RolePionLOG_Medical.inl"
-
 #endif // __PHY_RolePionLOG_Medical_h_

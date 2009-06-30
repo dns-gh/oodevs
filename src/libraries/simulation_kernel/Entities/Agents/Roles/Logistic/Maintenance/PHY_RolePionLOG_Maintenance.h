@@ -126,6 +126,4 @@ private:
           T_MaintenanceConsigns       consigns_;
 };
 
-#include "PHY_RolePionLOG_Maintenance.inl"
-
 #endif // __PHY_RolePionLOG_Maintenance_h_

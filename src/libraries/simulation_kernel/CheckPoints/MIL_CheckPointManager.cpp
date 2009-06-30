@@ -10,19 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
-#include <direct.h>
-
 #include "MIL_CheckPointManager.h"
+#include "Network/NET_ASN_Messages.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
-#include "Network/NET_ASN_Messages.h"
-
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
+#include <direct.h>
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager constructor
@@ -35,6 +30,7 @@ MIL_CheckPointManager::MIL_CheckPointManager()
     , nNextCheckPointTick_  ( 0 )
     , currentCheckPoints_   ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -432,4 +428,13 @@ void MIL_CheckPointManager::save( MIL_CheckPointOutArchive& file, const uint ) c
 {
     file << nCheckPointsFrequency_
          << nMaxCheckPointNbr_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_CheckPointManager::GetCheckPointFrequency
+// Created: NLD 2003-08-05
+// -----------------------------------------------------------------------------
+uint MIL_CheckPointManager::GetCheckPointFrequency() const
+{
+    return nCheckPointsFrequency_;
 }

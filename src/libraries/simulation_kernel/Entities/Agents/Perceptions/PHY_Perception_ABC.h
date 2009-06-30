@@ -5,9 +5,6 @@
 #ifndef __PHY_Perception_ABC_h_
 #define __PHY_Perception_ABC_h_
 
-#include "MIL.h"
-
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 #include "simulation_terrain/TER_Object_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
@@ -19,6 +16,8 @@ class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
+class PHY_PerceptionLevel;
+class PHY_RolePion_Perceiver;
 
 //*****************************************************************************
 // Created: DFT 02-02-26
@@ -29,7 +28,7 @@ class PHY_Perception_ABC
     MT_COPYNOTALLOWED( PHY_Perception_ABC )
 
 public:
-    PHY_Perception_ABC( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_Perception_ABC( PHY_RolePion_Perceiver& perceiver );
     virtual ~PHY_Perception_ABC();
 
     //! @name Execution
@@ -60,7 +59,5 @@ protected:
 protected:
     PHY_RolePion_Perceiver& perceiver_;
 };
-
-#include "PHY_Perception_ABC.inl"
 
 #endif // __PHY_Perception_ABC_h_

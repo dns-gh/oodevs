@@ -12,8 +12,6 @@
 #ifndef __PHY_FireDamages_Agent_h_
 #define __PHY_FireDamages_Agent_h_
 
-#include "MIL.h"
-
 class MIL_Agent_ABC;
 class PHY_Human;
 class PHY_HumanWound;
@@ -62,7 +60,5 @@ private:
     T_ComposanteResults   composanteResults_;
     T_HumansPerRankVector humanResults_;
 };
-
-#include "PHY_FireDamages_Agent.inl"
 
 #endif // __PHY_FireDamages_Agent_h_

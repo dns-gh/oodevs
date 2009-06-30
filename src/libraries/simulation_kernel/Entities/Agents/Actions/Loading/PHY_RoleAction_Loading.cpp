@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -47,6 +46,7 @@ PHY_RoleAction_Loading::PHY_RoleAction_Loading()
     , bHasChanged_    ( true )
     , bHasBeenUpdated_( false )    
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,12 +55,9 @@ PHY_RoleAction_Loading::PHY_RoleAction_Loading()
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Loading::~PHY_RoleAction_Loading()
 {
-
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::serialize
 // Created: JVT 2005-03-30
@@ -75,9 +72,6 @@ void PHY_RoleAction_Loading::serialize( Archive& file, const uint )
          & bHasBeenUpdated_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::SetLoadedState
 // Created: NLD 2004-10-07
@@ -104,35 +98,39 @@ void PHY_RoleAction_Loading::SetUnloadedState()
     CheckConsistency();
 }
 
+namespace
+{
+    struct sLoadingUnloadingTimesFunctor
+    {
+        sLoadingUnloadingTimesFunctor()
+            : nNbrHumans_                   ( 0 )
+            , rNbrHumansLoadedPerTimeStep_  ( 0. )
+            , rNbrHumansUnloadedPerTimeStep_( 0. )
+        {
+        }
+
+        void operator() ( const PHY_ComposantePion& composante )
+        {
+            if( composante.CanBeLoaded() )
+                nNbrHumans_ += composante.GetNbrUsableHumans();
+            const PHY_ComposanteTypePion& compType = composante.GetType();
+            if( composante.CanTransportHumans() )
+            {
+                rNbrHumansLoadedPerTimeStep_   += compType.GetNbrHumansLoadedPerTimeStep  ();
+                rNbrHumansUnloadedPerTimeStep_ += compType.GetNbrHumansUnloadedPerTimeStep();
+            }
+        }
+
+        uint     nNbrHumans_;
+        MT_Float rNbrHumansLoadedPerTimeStep_;
+        MT_Float rNbrHumansUnloadedPerTimeStep_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::ComputeTimes
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-struct sLoadingUnloadingTimesFunctor
-{
-    sLoadingUnloadingTimesFunctor()
-        : nNbrHumans_                   ( 0 )
-        , rNbrHumansLoadedPerTimeStep_  ( 0. )
-        , rNbrHumansUnloadedPerTimeStep_( 0. )
-    {
-    }
-
-    void operator() ( const PHY_ComposantePion& composante )
-    {
-        if( composante.CanBeLoaded() )
-            nNbrHumans_ += composante.GetNbrUsableHumans();
-        const PHY_ComposanteTypePion& compType = composante.GetType();
-        if( composante.CanTransportHumans() )
-        {
-            rNbrHumansLoadedPerTimeStep_   += compType.GetNbrHumansLoadedPerTimeStep  ();
-            rNbrHumansUnloadedPerTimeStep_ += compType.GetNbrHumansUnloadedPerTimeStep();
-        }
-    }
-
-    uint     nNbrHumans_;
-    MT_Float rNbrHumansLoadedPerTimeStep_;
-    MT_Float rNbrHumansUnloadedPerTimeStep_;
-};
 MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 {
     sLoadingUnloadingTimesFunctor func;
@@ -225,31 +223,34 @@ int PHY_RoleAction_Loading::Unload()
     return eErrorLoadUnloadInSameTime;
 }
 
+namespace
+{
+    struct sLoadedStateConsistency
+    {
+        sLoadedStateConsistency()
+            : bHasValidCarriers_( false )
+            , bHasValidLoadable_( false )
+        {
+        }
+
+        void operator() ( const PHY_ComposantePion& composante )
+        {
+            if( composante.CanTransportHumans() )
+                bHasValidCarriers_ = true;
+
+            if( composante.CanBeLoaded() )
+                bHasValidLoadable_ = true;
+        }
+
+        bool bHasValidCarriers_;
+        bool bHasValidLoadable_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::CheckConsistency
 // Created: NLD 2004-10-07
 // -----------------------------------------------------------------------------
-struct sLoadedStateConsistency
-{
-    sLoadedStateConsistency()
-        : bHasValidCarriers_( false )
-        , bHasValidLoadable_( false )
-    {
-    }
-
-    void operator() ( const PHY_ComposantePion& composante )
-    {
-        if( composante.CanTransportHumans() )
-            bHasValidCarriers_ = true;
-
-        if( composante.CanBeLoaded() )
-            bHasValidLoadable_ = true;
-    }
-
-    bool bHasValidCarriers_;
-    bool bHasValidLoadable_;
-};
-
 void PHY_RoleAction_Loading::CheckConsistency()
 {
     sLoadedStateConsistency func;
@@ -266,10 +267,6 @@ void PHY_RoleAction_Loading::CheckConsistency()
             SetLoadedState();
     }
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::SendFullState
@@ -289,4 +286,110 @@ void PHY_RoleAction_Loading::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) 
 {
     if( bHasChanged_ )
         SendFullState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::ForceUnloadedState
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Loading::ForceUnloadedState()
+{
+    if( bIsLoaded_ )
+        SetUnloadedState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::GetLoadingTime
+// Created: NLD 2004-10-18
+// -----------------------------------------------------------------------------
+MT_Float PHY_RoleAction_Loading::GetLoadingTime() const
+{
+    return ComputeLoadingTime();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::GetUnloadingTime
+// Created: NLD 2004-10-18
+// -----------------------------------------------------------------------------
+MT_Float PHY_RoleAction_Loading::GetUnloadingTime() const
+{
+    return ComputeUnloadingTime();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::IsLoaded
+// Created: NLD 2004-10-07
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Loading::IsLoaded() const
+{
+    return bIsLoaded_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::GetInitialReturnCode
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Loading::GetInitialReturnCode() const
+{
+    return eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::GetFinalReturnCode
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Loading::GetFinalReturnCode() const
+{
+    return eEnd;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::HasChanged
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Loading::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::LoadSuspended
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Loading::LoadSuspended()
+{
+    if( nState_ == eLoading )
+        ++ nEndTimeStep_;
+    bHasBeenUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::UnloadSuspended
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Loading::UnloadSuspended()
+{
+    if( nState_ == eUnloading )
+        ++ nEndTimeStep_;
+    bHasBeenUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::Update
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Loading::Update( bool /*bIsDead*/ )
+{
+    if( !bHasBeenUpdated_ )
+        nState_ = eNothing;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::Clean
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Loading::Clean()
+{
+    bHasChanged_     = false;
+    bHasBeenUpdated_ = false;
 }

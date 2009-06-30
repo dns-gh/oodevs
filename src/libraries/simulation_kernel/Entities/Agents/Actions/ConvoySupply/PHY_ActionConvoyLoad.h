@@ -12,12 +12,10 @@
 #ifndef __PHY_ActionConvoyLoad_h_
 #define __PHY_ActionConvoyLoad_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
-class PHY_RolePion_Supply;
 class MIL_AgentPion;
+class PHY_RolePion_Supply;
 
 // =============================================================================
 // @class  PHY_ActionConvoyLoad
@@ -28,10 +26,10 @@ class PHY_ActionConvoyLoad : public PHY_Action_ABC
     MT_COPYNOTALLOWED( PHY_ActionConvoyLoad )
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_AgentPion ActorType;
 
 public:
-    PHY_ActionConvoyLoad( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionConvoyLoad( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionConvoyLoad();
 
     //! @name Operations
@@ -41,10 +39,11 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_RolePion_Supply& role_;
     DIA_Variable_ABC&    diaReturnCode_;
+    //@}
 };
-
-#include "PHY_ActionConvoyLoad.inl"
 
 #endif // __PHY_ActionConvoyLoad_h_

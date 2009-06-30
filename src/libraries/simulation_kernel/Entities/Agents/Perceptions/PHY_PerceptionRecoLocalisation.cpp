@@ -11,18 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoLocalisation.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-// #include "Entities/Objects/MIL_Object_ABC.h"
-
-#include "simulation_terrain/TER_World.h"
-
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisation::sReco constructor
@@ -33,6 +29,7 @@ PHY_PerceptionRecoLocalisation::sReco::sReco( const TER_Localisation& localisati
     , rRadius_         ( rRadius )
     , bShouldUseRadius_( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,23 +41,21 @@ PHY_PerceptionRecoLocalisation::sReco::sReco( const TER_Localisation& localisati
     , rRadius_         ( -1. )
     , bShouldUseRadius_( bUseDefaultRadius )
 {
+    // NOTHING
 }
  
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisation::sReco::IsInside
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-inline
 bool PHY_PerceptionRecoLocalisation::sReco::IsInside( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D& vPoint ) const
 {
     if ( bShouldUseRadius_ )
     {
         const MT_Float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
-        
         if ( perceiver.GetPion().GetRole< PHY_RolePion_Location >().GetPosition().SquareDistance( vPoint ) > rRadius * rRadius )
             return false;
     }
-    
     return localisation_.IsInside( vPoint );    
 }
 
@@ -68,12 +63,10 @@ bool PHY_PerceptionRecoLocalisation::sReco::IsInside( const PHY_RolePion_Perceiv
 // Name: PHY_PerceptionRecoLocalisation::sReco::GetAgentsInside
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-inline
 void PHY_PerceptionRecoLocalisation::sReco::GetAgentsInside( const PHY_RolePion_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& result ) const
 {
     result.clear();
-
-    if ( bShouldUseRadius_ )
+    if( bShouldUseRadius_ )
     {
         const MT_Float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), rRadius, result );
@@ -85,9 +78,7 @@ void PHY_PerceptionRecoLocalisation::sReco::GetAgentsInside( const PHY_RolePion_
                 it = result.erase( it ); 
     }
     else
-    {
         TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, result );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -97,6 +88,7 @@ void PHY_PerceptionRecoLocalisation::sReco::GetAgentsInside( const PHY_RolePion_
 PHY_PerceptionRecoLocalisation::PHY_PerceptionRecoLocalisation( PHY_RolePion_Perceiver& perceiver )
     : PHY_Perception_ABC( perceiver )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -165,10 +157,6 @@ void PHY_PerceptionRecoLocalisation::RemoveLocalisation( void* pId )
     }
 }
 
-// =============================================================================
-// AGENTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisation::Compute
 // Created: JVT 2004-10-21
@@ -184,7 +172,6 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MT_Vec
     
     return PHY_PerceptionLevel::notSeen_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisation::Execute
@@ -227,3 +214,11 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const DEC_Kn
     return Compute( knowledge.GetPosition() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoLocalisation::HasLocalisationToHandle
+// Created: JVT 2004-10-21
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionRecoLocalisation::HasLocalisationToHandle() const
+{
+    return !recos_.empty();
+}

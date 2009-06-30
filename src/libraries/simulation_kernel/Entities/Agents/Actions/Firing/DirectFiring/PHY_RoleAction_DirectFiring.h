@@ -100,6 +100,4 @@ private:
     MIL_AgentPion* pPion_;
 };
 
-#include "PHY_RoleAction_DirectFiring.inl"
-
 #endif // __PHY_RoleAction_DirectFiring_h_

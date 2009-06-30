@@ -12,8 +12,6 @@
 #ifndef __PHY_FireResults_Pion_h_
 #define __PHY_FireResults_Pion_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 
 class MIL_Agent_ABC;
@@ -30,9 +28,9 @@ class PHY_FireResults_Pion : public PHY_FireResults_ABC
     MT_COPYNOTALLOWED( PHY_FireResults_Pion )
 
 public:
-    PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Agent_ABC& target );
-    PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Population& target );
-    PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory );
+             PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Agent_ABC& target );
+             PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Population& target );
+             PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory );
     virtual ~PHY_FireResults_Pion();
 
     //! @name Accessors
@@ -41,10 +39,11 @@ public:
     //@}
 
 private:
-    const uint           nID_;
+    //! @name Member data
+    //@{
     const MIL_AgentPion& firer_;
+    const uint           nID_;
+    //@}
 };
-
-#include "PHY_FireResults_Pion.inl"
 
 #endif // __PHY_FireResults_Pion_h_

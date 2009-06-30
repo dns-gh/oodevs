@@ -11,9 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionFlyingShell.h"
-
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
@@ -21,8 +21,6 @@
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.h>
-
-
 
 MT_Float PHY_PerceptionFlyingShell::rRadius_ = 0;
 
@@ -40,7 +38,6 @@ void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
         xis.error( "cobra-radar: action-range < 0" );
     rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionFlyingShell constructor
@@ -90,10 +87,6 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( void* pId )
     }
 }
 
-// =============================================================================
-// AGENTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionFlyingShell::Execute
 // Created: JVT 2004-10-21
@@ -118,4 +111,13 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
         }
     }
     lastPerceivedFlyingShells_.swap( perceivedFlyingShells );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionFlyingShell::HasLocalisationToHandle
+// Created: JVT 2004-10-21
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionFlyingShell::HasLocalisationToHandle() const
+{
+    return !zones_.empty();
 }

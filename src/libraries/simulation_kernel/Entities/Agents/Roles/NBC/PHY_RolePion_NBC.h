@@ -12,8 +12,6 @@
 #ifndef __PHY_RolePion_NBC_h_
 #define __PHY_RolePion_NBC_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_NBC.h"
 
 class NET_ASN_MsgUnitAttributes;
@@ -87,7 +85,5 @@ private:
     MT_Float            rContaminationQuantity_;
     bool                bHasChanged_;
 };
-
-#include "PHY_RolePion_NBC.inl"
 
 #endif // __PHY_RolePion_NBC_h_

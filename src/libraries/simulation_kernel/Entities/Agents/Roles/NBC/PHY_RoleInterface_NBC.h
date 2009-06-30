@@ -12,7 +12,6 @@
 #ifndef __PHY_RoleInterface_NBC_h_
 #define __PHY_RoleInterface_NBC_h_
 
-#include "simulation_kernel/MIL.h"
 #include "MT_Tools/MT_Role_ABC.h"
 
 class MIL_ToxicEffectManipulator;
@@ -29,7 +28,7 @@ public:
     typedef PHY_RoleInterface_NBC RoleInterface;
 
 public:
-             PHY_RoleInterface_NBC( MT_RoleContainer& role );
+    explicit PHY_RoleInterface_NBC( MT_RoleContainer& role );
              PHY_RoleInterface_NBC();
     virtual ~PHY_RoleInterface_NBC();
 
@@ -48,6 +47,14 @@ public:
     //@}
 };
 
-#include "PHY_RoleInterface_NBC.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_NBC::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void PHY_RoleInterface_NBC::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __PHY_RoleInterface_NBC_h_

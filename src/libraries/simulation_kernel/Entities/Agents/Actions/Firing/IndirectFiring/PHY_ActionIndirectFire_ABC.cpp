@@ -10,12 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionIndirectFire_ABC.h"
-
 #include "PHY_RoleAction_IndirectFiring.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_ABC constructor

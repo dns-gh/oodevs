@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MaintenanceComposanteState.h"
 #include "PHY_MaintenanceConsign_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -278,4 +277,63 @@ void PHY_MaintenanceComposanteState::SendMsgDestruction() const
     asn().oid_consigne    = nID_;
     asn().oid_pion        = pPion_->GetID();
     asn.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::SetConsign
+// Created: NLD 2004-12-24
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceComposanteState::SetConsign( PHY_MaintenanceConsign_ABC* pConsign )
+{
+    if( pConsign == pConsign_ )
+        return;
+        
+    pConsign_    = pConsign;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::SetComposantePosition
+// Created: NLD 2004-12-27
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceComposanteState::SetComposantePosition( const MT_Vector2D& vPosition )
+{
+    vComposantePosition_ = vPosition;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::GetComposante
+// Created: NLD 2006-03-29
+// -----------------------------------------------------------------------------
+const PHY_ComposantePion& PHY_MaintenanceComposanteState::GetComposante() const
+{
+    assert( pComposante_ );
+    return *pComposante_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::GetComposantePosition
+// Created: NLD 2004-12-27
+// -----------------------------------------------------------------------------
+const MT_Vector2D& PHY_MaintenanceComposanteState::GetComposantePosition() const
+{
+    return vComposantePosition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::NeedDiagnosis
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceComposanteState::NeedDiagnosis() const
+{
+    return bDiagnosed_ == false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::NotifyDiagnosed
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceComposanteState::NotifyDiagnosed()
+{
+    bDiagnosed_ = true;
 }

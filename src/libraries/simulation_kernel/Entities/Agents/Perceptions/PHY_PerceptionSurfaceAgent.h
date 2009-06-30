@@ -6,7 +6,6 @@
 #define __PHY_PerceptionSurfaceAgent_h_
 
 #include "MIL.h"
-
 #include "MT_Tools/MT_Sector.h"
 
 class PHY_SensorTypeAgent;
@@ -81,7 +80,5 @@ private:
           MT_Float             rHeight_;
           T_SectorVector       sectors_;
 };
-
-#include "PHY_PerceptionSurfaceAgent.inl"
 
 #endif // __PHY_PerceptionSurfaceAgent_h_

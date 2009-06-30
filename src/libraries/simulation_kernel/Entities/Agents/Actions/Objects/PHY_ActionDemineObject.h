@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionDemineObject_h_
 #define __PHY_ActionDemineObject_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Objects;
@@ -31,7 +29,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-            PHY_ActionDemineObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionDemineObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionDemineObject();
 
     //! @name Operations
@@ -45,7 +43,5 @@ private:
     DIA_Variable_ABC&        diaReturnCode_;
     uint                     nKnowledgeID_;    
 };
-
-#include "PHY_ActionDemineObject.inl"
 
 #endif // __PHY_ActionDemineObject_h_

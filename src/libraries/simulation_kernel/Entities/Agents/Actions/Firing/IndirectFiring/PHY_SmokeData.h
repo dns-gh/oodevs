@@ -12,8 +12,6 @@
 #ifndef __PHY_SmokeData_h_
 #define __PHY_SmokeData_h_
 
-#include "MIL.h"
-
 class MIL_AgentPion;
 class PHY_Weapon;
 class PHY_ComposantePion;
@@ -33,17 +31,18 @@ public:
 
     //! @name Operations
     //@{
-    void        operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon );
+    void operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon );
     PHY_Weapon* GetWeapon () const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const MIL_AgentPion&                    firer_;
     const PHY_IndirectFireDotationClass& indirectWeaponCategory_;
     const uint                              nNbrAmmo_;
           PHY_Weapon*                       pWeapon_;
+    //@}
 };
-
-#include "PHY_SmokeData.inl"
 
 #endif // __PHY_SmokeData_h_

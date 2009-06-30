@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-10 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Hla/HLA_RoleLocalPion.cpp $
-// $Author: Age $
-// $Modtime: 29/11/04 17:59 $
-// $Revision: 8 $
-// $Workfile: HLA_RoleLocalPion.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_RoleLocalPion.h"

@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleInterface_Medical_h_
 #define __PHY_RoleInterface_Medical_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 // =============================================================================
@@ -41,6 +39,14 @@ public:
     //@}
 };
 
-#include "PHY_RoleInterface_Medical.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Medical::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RoleInterface_Medical::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __PHY_RoleInterface_Medical_h_

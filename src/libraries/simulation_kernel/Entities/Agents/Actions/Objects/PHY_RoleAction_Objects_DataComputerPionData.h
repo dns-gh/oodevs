@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleAction_Objects_DataComputerPionData_h_
 #define __PHY_RoleAction_Objects_DataComputerPionData_h_
 
-#include "MIL.h"
-
 class MIL_Object_ABC;
 class MIL_AgentPion;
 class PHY_ComposantePion;

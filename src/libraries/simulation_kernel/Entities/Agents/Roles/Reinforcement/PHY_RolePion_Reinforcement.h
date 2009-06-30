@@ -12,8 +12,6 @@
 #ifndef __PHY_RolePion_Reinforcement_h_
 #define __PHY_RolePion_Reinforcement_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Reinforcement.h"
 
 class MIL_AgentPion;
@@ -86,7 +84,5 @@ private:
     T_PionSet      reinforcements_;
     bool           bHasChanged_;
 };
-
-#include "PHY_RolePion_Reinforcement.inl"
 
 #endif // __PHY_RolePion_Reinforcement_h_

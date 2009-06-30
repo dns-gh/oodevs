@@ -22,6 +22,7 @@ PHY_RoleHLA_Refugee::PHY_RoleHLA_Refugee( MT_RoleContainer& role )
     : PHY_RoleInterface_Refugee( role )
     , bManaged_                ( false )
 {
+    // NOTHING
 }
   
 // -----------------------------------------------------------------------------
@@ -30,12 +31,8 @@ PHY_RoleHLA_Refugee::PHY_RoleHLA_Refugee( MT_RoleContainer& role )
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Refugee::~PHY_RoleHLA_Refugee()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Refugee::Orientate
@@ -76,10 +73,6 @@ bool PHY_RoleHLA_Refugee::IsManaged( const MIL_Object_ABC& /*camp*/ ) const
     return false;
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Refugee::ChangeStatus
 // Created: NLD 2005-03-10
@@ -87,4 +80,14 @@ bool PHY_RoleHLA_Refugee::IsManaged( const MIL_Object_ABC& /*camp*/ ) const
 void PHY_RoleHLA_Refugee::ChangeStatus( const std::vector< std::string >& statuses )
 {
     bManaged_ = std::find( statuses.begin(), statuses.end(), "refugie_prisencompte" ) != statuses.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Refugee::IsManaged
+// Created: NLD 2005-02-24
+// -----------------------------------------------------------------------------
+inline
+bool PHY_RoleHLA_Refugee::IsManaged() const
+{
+    return bManaged_;
 }

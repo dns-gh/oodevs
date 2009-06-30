@@ -11,8 +11,6 @@
 #include "PHY_MedicalResourcesAlarms.h"
 #include <xeumeuleu/xml.h>
 
-
-
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::evacuationResourcesLevels_;
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::collectionResourcesLevels_;
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::doctorsResourcesLevels_;
@@ -79,10 +77,6 @@ void PHY_MedicalResourcesAlarms::Terminate()
     doctorsResourcesLevels_   .clear();
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalResourcesAlarms::IsLevelReached
 // Created: NLD 2006-08-02
@@ -97,3 +91,29 @@ bool PHY_MedicalResourcesAlarms::IsLevelReached( const T_LevelSet& levels, MT_Fl
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached
+// Created: NLD 2006-08-02
+// -----------------------------------------------------------------------------
+bool PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+{
+    return IsLevelReached( evacuationResourcesLevels_, rPreviousRatio, rCurrentRatio );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached
+// Created: NLD 2006-08-02
+// -----------------------------------------------------------------------------
+bool PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+{
+    return IsLevelReached( collectionResourcesLevels_, rPreviousRatio, rCurrentRatio );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalResourcesAlarms::IsDoctorResourcesLevelReached
+// Created: NLD 2006-08-02
+// -----------------------------------------------------------------------------
+bool PHY_MedicalResourcesAlarms::IsDoctorResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+{
+    return IsLevelReached( doctorsResourcesLevels_, rPreviousRatio, rCurrentRatio );
+}

@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_PerceptionLevel.h"
 
 const PHY_PerceptionLevel PHY_PerceptionLevel::identified_( "Identified", eIdentified, EnumUnitIdentificationLevel::identifiee );
@@ -19,10 +18,6 @@ const PHY_PerceptionLevel PHY_PerceptionLevel::detected_  ( "Detected"  , eDetec
 const PHY_PerceptionLevel PHY_PerceptionLevel::notSeen_   ( "NotSeen"   , eNotSeen   , EnumUnitIdentificationLevel::signale    );
 
 PHY_PerceptionLevel::T_LevelMap PHY_PerceptionLevel::levels_;
-
-// =============================================================================
-// MANAGER
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionLevel::Initialize
@@ -45,10 +40,6 @@ void PHY_PerceptionLevel::Terminate()
     levels_.clear();
 }
 
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionLevel constructor
 // Created: NLD 2004-08-13
@@ -58,7 +49,7 @@ PHY_PerceptionLevel::PHY_PerceptionLevel( const std::string& strName, E_Level nL
     , nLevel_ ( nLevel  )
     , nAsnID_ ( nAsnID  )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,5 +58,106 @@ PHY_PerceptionLevel::PHY_PerceptionLevel( const std::string& strName, E_Level nL
 // -----------------------------------------------------------------------------
 PHY_PerceptionLevel::~PHY_PerceptionLevel()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::FindPerceptionLevel
+// Created: JVT 2005-03-16
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& PHY_PerceptionLevel::FindPerceptionLevel( uint nID )
+{
+    CIT_LevelMap it = levels_.find( nID );
+    
+    return it != levels_.end() ? *it->second : notSeen_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::IsBestLevel
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionLevel::IsBestLevel() const
+{
+    return nLevel_ == eIdentified;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::GetName
+// Created: NLD 2004-08-13
+// -----------------------------------------------------------------------------
+const std::string& PHY_PerceptionLevel::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::GetID
+// Created: NLD 2004-08-13
+// -----------------------------------------------------------------------------
+uint PHY_PerceptionLevel::GetID() const
+{
+    return (uint)nLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::Serialize
+// Created: SBO 2009-06-30
+// -----------------------------------------------------------------------------
+void PHY_PerceptionLevel::Serialize( ASN1T_EnumUnitIdentificationLevel& level ) const
+{
+    level = nAsnID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::operator==
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionLevel::operator==( const PHY_PerceptionLevel& rhs ) const
+{
+    return nLevel_ == rhs.nLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::operator!=
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionLevel::operator!=( const PHY_PerceptionLevel& rhs ) const
+{
+    return nLevel_ != rhs.nLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::operator<
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionLevel::operator<( const PHY_PerceptionLevel& rhs ) const
+{
+    return nLevel_ < rhs.nLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::operator<=
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionLevel::operator<=( const PHY_PerceptionLevel& rhs ) const
+{
+    return nLevel_ <= rhs.nLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::operator>
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionLevel::operator>( const PHY_PerceptionLevel& rhs ) const
+{
+    return nLevel_ > rhs.nLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionLevel::operator>=
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionLevel::operator>=( const PHY_PerceptionLevel& rhs ) const
+{
+    return nLevel_ >= rhs.nLevel_;
 }

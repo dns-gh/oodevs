@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-09 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Posture/PHY_RoleHLA_Posture.cpp $
-// $Author: Jvt $
-// $Modtime: 11/05/05 15:20 $
-// $Revision: 6 $
-// $Workfile: PHY_RoleHLA_Posture.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Posture.h"

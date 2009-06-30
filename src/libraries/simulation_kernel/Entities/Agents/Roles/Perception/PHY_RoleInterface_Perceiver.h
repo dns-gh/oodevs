@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleInterface_Perceiver_h_
 #define __PHY_RoleInterface_Perceiver_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 // =============================================================================
@@ -32,7 +30,7 @@ public:
     //@}
 
 public:
-             PHY_RoleInterface_Perceiver( MT_RoleContainer& role );
+    explicit PHY_RoleInterface_Perceiver( MT_RoleContainer& role );
              PHY_RoleInterface_Perceiver();
     virtual ~PHY_RoleInterface_Perceiver();
 
@@ -47,6 +45,14 @@ public:
     //@}
 };
 
-#include "PHY_RoleInterface_Perceiver.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Perceiver::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void PHY_RoleInterface_Perceiver::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __PHY_RoleInterface_Perceiver_h_

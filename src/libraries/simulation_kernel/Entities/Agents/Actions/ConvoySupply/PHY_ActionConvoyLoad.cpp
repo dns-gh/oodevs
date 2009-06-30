@@ -10,11 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionConvoyLoad.h"
-
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConvoyLoad constructor
@@ -36,10 +34,6 @@ PHY_ActionConvoyLoad::~PHY_ActionConvoyLoad()
 {
     diaReturnCode_.SetValue( true );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConvoyLoad::Execute

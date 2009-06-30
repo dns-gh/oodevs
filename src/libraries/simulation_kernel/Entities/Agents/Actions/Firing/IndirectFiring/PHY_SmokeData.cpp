@@ -10,15 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SmokeData.h"
-#include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SmokeData constructor
@@ -30,7 +29,7 @@ PHY_SmokeData::PHY_SmokeData( const MIL_AgentPion& firer, const PHY_IndirectFire
     , nNbrAmmo_              ( nNbrAmmo )
     , pWeapon_               ( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +38,7 @@ PHY_SmokeData::PHY_SmokeData( const MIL_AgentPion& firer, const PHY_IndirectFire
 // -----------------------------------------------------------------------------
 PHY_SmokeData::~PHY_SmokeData()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,14 +49,19 @@ void PHY_SmokeData::operator()( const PHY_ComposantePion& compFirer, PHY_Weapon&
 {
     if( pWeapon_ || !compFirer.CanFire() || !weapon.CanIndirectFire() )
         return;
-
     const PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData = weapon.GetDotationCategory().GetIndirectFireData();
     if( !pIndirectFireData || pIndirectFireData->GetIndirectFireDotationCategory() != indirectWeaponCategory_ )
         return;
-
     if( firer_.GetRole< PHY_RolePion_Dotations >().GetDotationValue( weapon.GetDotationCategory() ) < nNbrAmmo_ )
         return;
-    
     pWeapon_ = &weapon;
-    return;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SmokeData::GetWeapon
+// Created: NLD 2004-10-21
+// -----------------------------------------------------------------------------
+PHY_Weapon* PHY_SmokeData::GetWeapon() const
+{
+    return pWeapon_;
 }

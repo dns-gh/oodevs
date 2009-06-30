@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionTransportUnload.h"
-
 #include "PHY_RoleAction_Transport.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
@@ -36,10 +34,6 @@ PHY_ActionTransportUnload::~PHY_ActionTransportUnload()
 {
     diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionTransportUnload::Execute

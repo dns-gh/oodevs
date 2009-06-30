@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MedicalEvacuationAmbulance.h"
 #include "PHY_MedicalEvacuationConsign.h"
 #include "PHY_MedicalHumanState.h"
@@ -60,9 +59,6 @@ PHY_MedicalEvacuationAmbulance::~PHY_MedicalEvacuationAmbulance()
     pMedical_->StopUsingForLogistic( *pCompAmbulance_ );
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationAmbulance::serialize
 // Created: JVT 2005-04-11
@@ -77,10 +73,6 @@ void PHY_MedicalEvacuationAmbulance::serialize( Archive& file, const uint )
          & nTimer_
          & rNbrHumanHandled_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationAmbulance::RegisterHuman
@@ -121,10 +113,6 @@ void PHY_MedicalEvacuationAmbulance::UnregisterHuman( PHY_MedicalEvacuationConsi
     if( consigns_.empty() )
         EnterStateFinished();
 }
-
-// =============================================================================
-// 
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationAmbulance::EnterStateGoingTo

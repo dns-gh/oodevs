@@ -11,22 +11,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoSurveillance.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
-
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
-
-
-
 
 MT_Float PHY_PerceptionRecoSurveillance::rForestSurveillanceTime_ = std::numeric_limits< MT_Float >::max();
 MT_Float PHY_PerceptionRecoSurveillance::rUrbanSurveillanceTime_  = std::numeric_limits< MT_Float >::max();
@@ -147,6 +143,7 @@ void PHY_PerceptionRecoSurveillance::sReco::GetAgentsInside( TER_Agent_ABC::T_Ag
 PHY_PerceptionRecoSurveillance::PHY_PerceptionRecoSurveillance( PHY_RolePion_Perceiver& perceiver )
     : PHY_Perception_ABC( perceiver )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +170,6 @@ void* PHY_PerceptionRecoSurveillance::AddLocalisation( const TER_Localisation& l
     return pNewReco;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoSurveillance::RemoveLocalisation
 // Created: JVT 2004-10-22
@@ -190,10 +186,6 @@ void PHY_PerceptionRecoSurveillance::RemoveLocalisation( void* pId )
         recos_.erase( it );    
     }
 }
-
-// =============================================================================
-// AGENTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoSurveillance::Compute
@@ -243,7 +235,6 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MIL_Ag
     return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoSurveillance::Compute
 // Created: JVT 2004-10-21
@@ -251,4 +242,13 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MIL_Ag
 const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const DEC_Knowledge_Agent & knowledge ) const
 {
     return Compute( knowledge.GetPosition() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoSurveillance::HasLocalisationToHandle
+// Created: JVT 2004-10-21
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionRecoSurveillance::HasLocalisationToHandle() const
+{
+    return !recos_.empty();
 }

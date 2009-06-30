@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MedicalSortingConsign.h"
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
@@ -42,6 +41,7 @@ PHY_MedicalSortingConsign::PHY_MedicalSortingConsign()
     : PHY_MedicalConsign_ABC()
     , pDoctor_              ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,11 +50,9 @@ PHY_MedicalSortingConsign::PHY_MedicalSortingConsign()
 // -----------------------------------------------------------------------------
 PHY_MedicalSortingConsign::~PHY_MedicalSortingConsign()
 {
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalSortingConsign::serialize
 // Created: JVT 2005-04-11
@@ -65,10 +63,6 @@ void PHY_MedicalSortingConsign::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_MedicalConsign_ABC >( *this )
          & pDoctor_;
 }
-
-// =============================================================================
-// STATES
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalSortingConsign::EnterStateWaitingForSorting
@@ -178,10 +172,6 @@ bool PHY_MedicalSortingConsign::DoWaitingForCollection()
     return false;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalSortingConsign::Update
 // Created: NLD 2004-12-23
@@ -217,4 +207,22 @@ void PHY_MedicalSortingConsign::Cancel()
         pDoctor_ = 0;
     }    
     PHY_MedicalConsign_ABC::Cancel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalSortingConsign::CouldNeedCollectionAmbulance
+// Created: NLD 2005-01-13
+// -----------------------------------------------------------------------------
+bool PHY_MedicalSortingConsign::CouldNeedCollectionAmbulance() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalSortingConsign::IsATransportConsign
+// Created: NLD 2005-04-25
+// -----------------------------------------------------------------------------
+bool PHY_MedicalSortingConsign::IsATransportConsign() const
+{
+    return false;
 }

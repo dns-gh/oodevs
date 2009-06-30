@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MaintenanceConsign_ABC.h"
-
 #include "PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
@@ -43,6 +41,7 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC()
     , bHasChanged_     ( true )
     , nTimer_          ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,10 +53,6 @@ PHY_MaintenanceConsign_ABC::~PHY_MaintenanceConsign_ABC()
     if( pComposanteState_ )
         pComposanteState_->SetConsign( 0 );
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::GetComposanteType
@@ -78,10 +73,6 @@ const PHY_Breakdown& PHY_MaintenanceConsign_ABC::GetComposanteBreakdown() const
     assert( pComposanteState_ );
     return pComposanteState_->GetComposanteBreakdown();
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::Cancel
@@ -107,10 +98,6 @@ void PHY_MaintenanceConsign_ABC::EnterStateFinished()
     nTimer_ = 0;
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::SendFullState
 // Created: NLD 2005-01-04
@@ -134,4 +121,70 @@ void PHY_MaintenanceConsign_ABC::SendChangedState( NET_ASN_MsgLogMaintenanceHand
     assert( pComposanteState_ );
     if( bHasChanged_ )
         SendFullState( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::Clean
+// Created: NLD 2005-01-04
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceConsign_ABC::Clean()
+{
+    bHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::SetTimer
+// Created: NLD 2005-01-04
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceConsign_ABC::SetState( E_State nNewState )
+{
+    nState_ = nNewState;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::GetState
+// Created: NLD 2005-01-04
+// -----------------------------------------------------------------------------
+PHY_MaintenanceConsign_ABC::E_State PHY_MaintenanceConsign_ABC::GetState() const
+{
+    return nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::HasChanged
+// Created: NLD 2005-01-04
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceConsign_ABC::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::IsFinished
+// Created: NLD 2005-03-08
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceConsign_ABC::IsFinished() const
+{
+    return nState_ == eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::GetComposanteState
+// Created: JVT 2005-05-04
+// -----------------------------------------------------------------------------
+const PHY_MaintenanceComposanteState& PHY_MaintenanceConsign_ABC::GetComposanteState() const
+{
+    assert( pComposanteState_ );
+    return *pComposanteState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::GetPionMaintenance
+// Created: NLD 2006-08-11
+// -----------------------------------------------------------------------------
+PHY_RolePionLOG_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() const
+{
+    assert( pMaintenance_ );
+    return *pMaintenance_;
 }

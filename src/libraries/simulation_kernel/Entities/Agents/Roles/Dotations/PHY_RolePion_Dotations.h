@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 #include "PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 
 namespace xml
 {
@@ -127,7 +126,5 @@ private:
     const PHY_ConsumptionType*  pPreviousConsumptionMode_;
           T_DotationReservedMap reservedConsumptions_;
 };
-
-#include "PHY_RolePion_Dotations.inl"
 
 #endif // __PHY_RolePion_Dotations_h_

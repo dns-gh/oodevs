@@ -54,6 +54,4 @@ private:
           MT_Float              rHeight_;
 };
 
-#include "PHY_PerceptionSurfaceObject.inl"
-
 #endif // __PHY_PerceptionSurfaceObject_h_

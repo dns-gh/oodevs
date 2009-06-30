@@ -70,15 +70,10 @@ PHY_ActionMove::~PHY_ActionMove()
     }
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove::CreateJoiningPath
 // Created: NLD 2004-09-29
 // -----------------------------------------------------------------------------
-inline
 void PHY_ActionMove::CreateJoiningPath()
 {
     assert( pMainPath_ );
@@ -94,7 +89,6 @@ void PHY_ActionMove::CreateJoiningPath()
 // Name: PHY_ActionMove::DestroyJoiningPath
 // Created: NLD 2004-09-29
 // -----------------------------------------------------------------------------
-inline
 void PHY_ActionMove::DestroyJoiningPath()
 {
     if( !pJoiningPath_ )

@@ -13,7 +13,6 @@
 #define __PHY_RolePion_Transported_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_Transported.h"
 
 class MIL_AgentPion;
@@ -78,7 +77,5 @@ private:
     MT_Vector2D  vLoadingPosition_; 
     MT_Vector2D  vHumanTransporterPosition_; // position des 'VABs' quand seuls les humains sont héliportés
 };
-
-#include "PHY_RolePion_Transported.inl"
 
 #endif // __PHY_RolePion_Transported_h_

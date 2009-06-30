@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleInterface_Reinforcement_h_
 #define __PHY_RoleInterface_Reinforcement_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 // =============================================================================
@@ -38,6 +36,14 @@ public:
     //@}
 };
 
-#include "PHY_RoleInterface_Reinforcement.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Reinforcement::serialize
+// Created: JVT 2005-03-31
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RoleInterface_Reinforcement::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __PHY_RoleInterface_Reinforcement_h_

@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Perceiver.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
@@ -1255,4 +1253,119 @@ void PHY_RolePion_Perceiver::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) 
 {
     if( bRadarStateHasChanged_ )
         SendFullState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::IsPeriphericalVisionEnabled
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::IsPeriphericalVisionEnabled() const
+{
+    return bPeriphericalVisionEnabled_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::GetPion
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+const MIL_AgentPion& PHY_RolePion_Perceiver::GetPion() const
+{
+    assert( pPion_ );
+    return *pPion_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::SetVisionModeNormal
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::SetVisionModeNormal()
+{
+    nSensorMode_ = eNormal;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::SetVisionModeDirection
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::SetVisionModeDirection( const MT_Vector2D& vDirection )
+{
+    nSensorMode_ = eDirection;
+    vSensorInfo_ = vDirection;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::SetVisionModePoint
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::SetVisionModePoint( const MT_Vector2D& vPoint )
+{
+    nSensorMode_ = ePoint;
+    vSensorInfo_ = vPoint;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::HasChanged
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::GetMainPerceptionDirection
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::GetMainPerceptionDirection( MT_Vector2D& vDirection ) const
+{
+    ComputeMainPerceptionDirection( vDirection );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::HasRadarStateChanged
+// Created: NLD 2005-02-23
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::HasRadarStateChanged() const
+{
+    return bRadarStateHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::Clean
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::Clean()
+{
+    bHasChanged_           = false;
+    bRadarStateHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::GetSurfacesAgent
+// Created: NLD 2005-05-02
+// -----------------------------------------------------------------------------
+const PHY_RolePion_Perceiver::T_SurfaceAgentMap& PHY_RolePion_Perceiver::GetSurfacesAgent() const
+{
+    return surfacesAgent_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::GetSurfacesObject
+// Created: NLD 2005-05-02
+// -----------------------------------------------------------------------------
+const PHY_RolePion_Perceiver::T_SurfaceObjectMap& PHY_RolePion_Perceiver::GetSurfacesObject() const
+{
+    return surfacesObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::GetRadars
+// Created: NLD 2005-05-02
+// -----------------------------------------------------------------------------
+const PHY_RolePion_Perceiver::T_RadarSet& PHY_RolePion_Perceiver::GetRadars( const PHY_RadarClass& radarClass )
+{
+    return radars_[ &radarClass ];
 }

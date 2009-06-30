@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_FireResults_Default.h"
 
 // -----------------------------------------------------------------------------
@@ -20,6 +19,7 @@
 PHY_FireResults_Default::PHY_FireResults_Default()
     : PHY_FireResults_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,6 +28,5 @@ PHY_FireResults_Default::PHY_FireResults_Default()
 // -----------------------------------------------------------------------------
 PHY_FireResults_Default::~PHY_FireResults_Default()
 {
+    // NOTHING
 }
-
-

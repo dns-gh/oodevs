@@ -12,8 +12,6 @@
 #ifndef __PHY_IndirectFireData_h_
 #define __PHY_IndirectFireData_h_
 
-#include "MIL.h"
-
 class MIL_AgentPion;
 class MIL_Effect_IndirectFire;
 class PHY_ComposantePion;
@@ -88,7 +86,5 @@ private:
     bool                     bHasWeaponsNotReady_;
     bool                     bHasWeaponsAndNoAmmo_;
 };
-
-#include "PHY_IndirectFireData.inl"
 
 #endif // __PHY_IndirectFireData_h_

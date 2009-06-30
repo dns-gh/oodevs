@@ -95,6 +95,4 @@ private:
     T_RecoVector recos_;
 };
 
-#include "PHY_PerceptionRecoSurveillance.inl"
-
 #endif // __PHY_PerceptionRecoSurveillance_h_

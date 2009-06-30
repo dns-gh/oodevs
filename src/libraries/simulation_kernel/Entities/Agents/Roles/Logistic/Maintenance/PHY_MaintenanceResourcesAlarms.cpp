@@ -8,11 +8,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MaintenanceResourcesAlarms.h"
 #include <xeumeuleu/xml.h>
-
-
 
 PHY_MaintenanceResourcesAlarms::T_LevelSet PHY_MaintenanceResourcesAlarms::repairerResourcesLevels_;
 PHY_MaintenanceResourcesAlarms::T_LevelSet PHY_MaintenanceResourcesAlarms::haulerResourcesLevels_;
@@ -70,10 +67,6 @@ void PHY_MaintenanceResourcesAlarms::Terminate()
     haulerResourcesLevels_  .clear();
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceResourcesAlarms::IsLevelReached
 // Created: NLD 2006-08-02
@@ -86,3 +79,20 @@ bool PHY_MaintenanceResourcesAlarms::IsLevelReached( const T_LevelSet& levels, M
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached
+// Created: NLD 2006-08-02
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+{
+    return IsLevelReached( repairerResourcesLevels_, rPreviousRatio, rCurrentRatio );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceResourcesAlarms::IsHaulerResourcesLevelReached
+// Created: NLD 2006-08-02
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceResourcesAlarms::IsHaulerResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+{
+    return IsLevelReached( haulerResourcesLevels_, rPreviousRatio, rCurrentRatio );
+}

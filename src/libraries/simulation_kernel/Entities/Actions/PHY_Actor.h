@@ -12,8 +12,6 @@
 #ifndef __PHY_Actor_h_
 #define __PHY_Actor_h_
 
-#include "MIL.h"
-
 class PHY_Action_ABC;
 
 // =============================================================================
@@ -30,8 +28,8 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive >
-    void serialize( Archive&, const uint );
+    template< typename Archive > // Actions are not serialized
+    void serialize( Archive&, const uint ) {}
     //@}
 
     //! @name Operations
@@ -48,16 +46,7 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::set< PHY_Action_ABC* >  T_ActionSet;
-    typedef T_ActionSet::const_iterator  CIT_ActionSet;
-    //@}
-
-private:
-    T_ActionSet actions_;
+    std::set< PHY_Action_ABC* > actions_;
 };
-
-#include "PHY_Actor.inl"
 
 #endif // __PHY_Actor_h_

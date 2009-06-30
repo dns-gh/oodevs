@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleHLA_Surrender_h_
 #define __PHY_RoleHLA_Surrender_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Surrender.h"
 
 // =============================================================================
@@ -25,14 +23,14 @@ class PHY_RoleHLA_Surrender : public PHY_RoleInterface_Surrender
     MT_COPYNOTALLOWED( PHY_RoleHLA_Surrender )
 
 public:
-    PHY_RoleHLA_Surrender( MT_RoleContainer& role );
+    explicit PHY_RoleHLA_Surrender( MT_RoleContainer& role );
     virtual ~PHY_RoleHLA_Surrender();
 
     //! @name Main
     //@{
-    virtual bool Capture     ( const MIL_AgentPion& pionTakingPrisoner );
-    virtual bool Release     ();
-    virtual bool Imprison    ( const MIL_Object_ABC& camp );
+    virtual bool Capture( const MIL_AgentPion& pionTakingPrisoner );
+    virtual bool Release();
+    virtual bool Imprison( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Accessors
@@ -51,7 +49,5 @@ public:
 private:
     bool bPrisoner_;
 };
-
-#include "PHY_RoleHLA_Surrender.inl"
 
 #endif // __PHY_RoleHLA_Surrender_h_

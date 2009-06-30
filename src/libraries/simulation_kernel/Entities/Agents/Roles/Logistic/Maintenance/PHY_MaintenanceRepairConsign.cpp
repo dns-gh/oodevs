@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MaintenanceRepairConsign.h"
 #include "PHY_RolePion_Maintenance.h"
 #include "PHY_MaintenanceComposanteState.h"
@@ -40,6 +39,7 @@ PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign()
     : PHY_MaintenanceConsign_ABC()
     , pRepairer_                ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,11 +48,8 @@ PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign()
 // -----------------------------------------------------------------------------
 PHY_MaintenanceRepairConsign::~PHY_MaintenanceRepairConsign()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceRepairConsign::serialize
@@ -64,10 +61,6 @@ void PHY_MaintenanceRepairConsign::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_MaintenanceConsign_ABC >( *this )
          & pRepairer_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceRepairConsign::Cancel

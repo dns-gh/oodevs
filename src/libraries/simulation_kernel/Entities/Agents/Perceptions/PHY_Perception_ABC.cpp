@@ -3,12 +3,11 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Perception_ABC.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Perception_ABC constructor
@@ -17,7 +16,7 @@
 PHY_Perception_ABC::PHY_Perception_ABC( PHY_RolePion_Perceiver& perceiver )
     : perceiver_( perceiver )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -26,7 +25,7 @@ PHY_Perception_ABC::PHY_Perception_ABC( PHY_RolePion_Perceiver& perceiver )
 // -----------------------------------------------------------------------------
 PHY_Perception_ABC::~PHY_Perception_ABC()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,10 +45,6 @@ const MT_Vector2D& PHY_Perception_ABC::GetPerceiverDirection() const
 {
     return perceiver_.GetPion().GetRole< PHY_RolePion_Location >().GetDirection();
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Perception_ABC::Compute
@@ -140,4 +135,3 @@ void PHY_Perception_ABC::Execute( const TER_PopulationConcentration_ABC::T_Popul
 {
     // NOTHING
 }
-

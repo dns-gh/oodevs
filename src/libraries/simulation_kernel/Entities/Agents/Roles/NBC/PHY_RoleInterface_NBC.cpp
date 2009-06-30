@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleInterface_NBC.h"
 
 // -----------------------------------------------------------------------------
@@ -20,6 +19,7 @@
 PHY_RoleInterface_NBC::PHY_RoleInterface_NBC( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +29,7 @@ PHY_RoleInterface_NBC::PHY_RoleInterface_NBC( MT_RoleContainer& role )
 PHY_RoleInterface_NBC::PHY_RoleInterface_NBC()
      : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,5 +38,5 @@ PHY_RoleInterface_NBC::PHY_RoleInterface_NBC()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_NBC::~PHY_RoleInterface_NBC()
 {
-
+    // NOTHING
 }

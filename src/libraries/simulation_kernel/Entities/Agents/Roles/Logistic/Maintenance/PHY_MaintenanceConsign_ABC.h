@@ -12,8 +12,6 @@
 #ifndef __PHY_MaintenanceConsign_ABC_h_
 #define __PHY_MaintenanceConsign_ABC_h_
 
-#include "MIL.h"
-
 class PHY_MaintenanceComposanteState;
 class PHY_RolePionLOG_Maintenance;
 class PHY_ComposanteTypePion;
@@ -110,6 +108,18 @@ protected:
     PHY_MaintenanceComposanteState* pComposanteState_;
 };
 
-#include "PHY_MaintenanceConsign_ABC.inl"
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::serialize
+// Created: JVT 2005-04-11
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_MaintenanceConsign_ABC::serialize( Archive& file, const uint )
+{
+    file & pMaintenance_
+         & pComposanteState_
+         & nState_
+         & nTimer_;
+}
 
 #endif // __PHY_MaintenanceConsign_ABC_h_

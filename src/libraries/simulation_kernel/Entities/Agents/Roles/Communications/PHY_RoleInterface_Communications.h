@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleInterface_Communications_h_
 #define __PHY_RoleInterface_Communications_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 class MIL_Object_ABC;
@@ -30,7 +28,7 @@ public:
     typedef PHY_RoleInterface_Communications RoleInterface;
 
 public:
-             PHY_RoleInterface_Communications( MT_RoleContainer& role );
+    explicit PHY_RoleInterface_Communications( MT_RoleContainer& role );
              PHY_RoleInterface_Communications();
     virtual ~PHY_RoleInterface_Communications();
 
@@ -47,6 +45,14 @@ public:
     //@}
 };
 
-#include "PHY_RoleInterface_Communications.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Communications::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RoleInterface_Communications::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __PHY_RoleInterface_Communications_h_

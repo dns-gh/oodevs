@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePionLOG_Maintenance.h"
-
 #include "PHY_MaintenanceConsign_ABC.h"
 #include "PHY_MaintenanceRepairConsign.h"
 #include "PHY_MaintenanceTransportConsign.h"
@@ -743,4 +741,34 @@ void PHY_RolePionLOG_Maintenance::SendChangedState() const
 {
     if( bHasChanged_ || GetRole< PHY_RolePion_Composantes >().HasChanged() )
         SendFullState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetPion
+// Created: NLD 2004-12-29
+// -----------------------------------------------------------------------------
+const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Maintenance::GetPion() const
+{
+    assert( pPion_ );
+    return *pPion_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::EnableSystem
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Maintenance::EnableSystem()
+{
+    bSystemEnabled_ = true;
+    bHasChanged_    = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::DisableSystem
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Maintenance::DisableSystem()
+{
+    bSystemEnabled_ = false;
+    bHasChanged_    = true;
 }

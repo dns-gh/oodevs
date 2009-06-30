@@ -12,10 +12,7 @@
 #ifndef __PHY_RoleAction_Moving_h_
 #define __PHY_RoleAction_Moving_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
-
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 
 class PHY_RolePion_Location;
@@ -129,7 +126,5 @@ private:
     bool bCurrentPathHasChanged_;
     bool bEnvironmentHasChanged_;
 };
-
-#include "PHY_RoleAction_Moving.inl"
 
 #endif // __PHY_RoleAction_Moving_h_

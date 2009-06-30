@@ -12,8 +12,6 @@
 #ifndef __PHY_MedicalConsign_ABC_h_
 #define __PHY_MedicalConsign_ABC_h_
 
-#include "MIL.h"
-
 class PHY_RolePion_Medical;
 class PHY_RolePionLOG_Medical;
 class PHY_ComposantePion;
@@ -114,6 +112,17 @@ protected:
     int                      nTimer_;        
 };
 
-#include "PHY_MedicalConsign_ABC.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::serialize
+// Created: JVT 2005-04-11
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_MedicalConsign_ABC::serialize( Archive& file, const uint )
+{
+    file & pMedical_   
+         & pHumanState_
+         & nTimer_
+         & nState_;
+}
 
 #endif // __PHY_MedicalConsign_ABC_h_

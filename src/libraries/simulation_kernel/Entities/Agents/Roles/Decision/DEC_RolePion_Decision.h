@@ -114,6 +114,4 @@ private:
     DEC_AutomateDecision* pAutomate_;
 };
 
-#include "DEC_RolePion_Decision.inl"
-
 #endif // __DEC_RolePion_Decision_h_

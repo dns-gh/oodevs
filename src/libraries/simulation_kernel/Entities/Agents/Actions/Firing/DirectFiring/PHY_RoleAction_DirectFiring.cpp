@@ -328,3 +328,39 @@ void PHY_RoleAction_DirectFiring::FirePopulationSuspended( uint nTargetKnowledge
         pTarget->NotifyAttackedBy( *pPion_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_DirectFiring::GetInitialReturnCode
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_DirectFiring::GetInitialReturnCode() const
+{
+    return eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_DirectFiring::GetFinalReturnCode
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_DirectFiring::GetFinalReturnCode() const
+{
+    return eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_DirectFiring::Update
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_DirectFiring::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_DirectFiring::Clean
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_DirectFiring::Clean()
+{
+    // NOTHING
+}

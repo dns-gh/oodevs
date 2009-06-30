@@ -12,10 +12,7 @@
 #ifndef __PHY_RoleInterface_Composantes_h_
 #define __PHY_RoleInterface_Composantes_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
-
 #include "Knowledge/DEC_Knowledge_Def.h"
 
 class PHY_Composante_ABC;
@@ -46,7 +43,7 @@ public:
     //@}
 
 public:
-             PHY_RoleInterface_Composantes( MT_RoleContainer& role );
+    explicit PHY_RoleInterface_Composantes( MT_RoleContainer& role );
              PHY_RoleInterface_Composantes();
     virtual ~PHY_RoleInterface_Composantes();
 
@@ -77,6 +74,14 @@ public:
     //@}
 };
 
-#include "PHY_RoleInterface_Composantes.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Composantes::serialize
+// Created: JVT 2005-03-31
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RoleInterface_Composantes::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __PHY_RoleInterface_Composantes_h_

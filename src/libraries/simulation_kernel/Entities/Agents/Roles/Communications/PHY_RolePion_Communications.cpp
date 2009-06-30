@@ -10,14 +10,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Communications.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include <xeumeuleu/xml.h>
-
-
 
 MT_Float PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
 MT_Float PHY_RolePion_Communications::rCoefReloadingTimeModificator_ = 0.;
@@ -53,8 +50,8 @@ PHY_RolePion_Communications::PHY_RolePion_Communications( MT_RoleContainer& role
     , bHasChanged_                    ( true )
     , bBlackoutActivated_             ( false )
 {
+    // NOTHING
 }
- 
  
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications constructor
@@ -64,6 +61,7 @@ PHY_RolePion_Communications::PHY_RolePion_Communications()
     : PHY_RoleInterface_Communications()
     , pPion_                          ( 0 )
 {
+    // NOTHING
 }
  
 // -----------------------------------------------------------------------------
@@ -72,7 +70,7 @@ PHY_RolePion_Communications::PHY_RolePion_Communications()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Communications::~PHY_RolePion_Communications()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -126,9 +124,6 @@ void PHY_RolePion_Communications::serialize( Archive& file, const uint )
          & bBlackoutActivated_
          & bHasChanged_;
 }
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::Jam
@@ -151,10 +146,6 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
     bHasChanged_ = ( jammers_.erase( &jammer ) == 1 );
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::SendFullState
 // Created: NLD 2004-09-08
@@ -176,4 +167,86 @@ void PHY_RolePion_Communications::SendChangedState( NET_ASN_MsgUnitAttributes& m
 {
     if( bHasChanged_ )
         SendFullState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::Update
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::Clean
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::Clean()
+{
+    bHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::HasChanged
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Communications::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::ActivateBlackout
+// Created: NLD 2004-11-08
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::ActivateBlackout()
+{
+    if( bBlackoutActivated_ )
+        return;
+    bBlackoutActivated_ = true;
+    bHasChanged_        = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::DeactivateBlackout
+// Created: NLD 2004-11-08
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::DeactivateBlackout()
+{
+    if( !bBlackoutActivated_ )
+        return;
+    bBlackoutActivated_ = false;
+    bHasChanged_        = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::CanCommunicate
+// Created: NLD 2004-11-08
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Communications::CanCommunicate() const
+{
+    return jammers_.empty() && !bBlackoutActivated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::ModifySpeed
+// Created: NLD 2004-09-23
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Communications::ModifySpeed( MT_Float rSpeed ) const
+{
+    if( jammers_.empty() )
+        return rSpeed;
+    return rSpeed *= rCoefSpeedModificator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::ModifyReloadingDuration
+// Created: NLD 2004-10-07
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Communications::ModifyReloadingDuration( MT_Float rDuration ) const
+{
+    if( jammers_.empty() )
+        return rDuration;
+    return rDuration *= rCoefReloadingTimeModificator_;
 }

@@ -10,14 +10,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DirectFireData.h"
-#include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 
 MT_Random PHY_DirectFireData::randomGenerator_;
 
@@ -29,7 +28,7 @@ PHY_DirectFireData::sComposanteWeapons::sComposanteWeapons()
     : bIsFiring_   ( false )
     , weaponsReady_()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,14 +37,13 @@ PHY_DirectFireData::sComposanteWeapons::sComposanteWeapons()
 // -----------------------------------------------------------------------------
 PHY_DirectFireData::sComposanteWeapons::~sComposanteWeapons()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DirectFireData::sComposanteWeapons::AddWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-inline
 void PHY_DirectFireData::sComposanteWeapons::AddWeapon( PHY_Weapon& weapon )
 {
     if( weapon.IsReady() )
@@ -58,15 +56,10 @@ void PHY_DirectFireData::sComposanteWeapons::AddWeapon( PHY_Weapon& weapon )
 // Name: PHY_DirectFireData::sComposanteWeapons::RemoveWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-inline
 void PHY_DirectFireData::sComposanteWeapons::RemoveWeapon( PHY_Weapon& weapon )
 {
     weaponsReady_.erase( std::find( weaponsReady_.begin(), weaponsReady_.end(), &weapon ) );
 }
-
-// =============================================================================
-// 
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DirectFireData constructor
@@ -90,11 +83,8 @@ PHY_DirectFireData::PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiring
 // -----------------------------------------------------------------------------
 PHY_DirectFireData::~PHY_DirectFireData()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DirectFireData::GetNbrWeaponsUsable
@@ -304,4 +294,51 @@ void PHY_DirectFireData::ReleaseWeapon( const PHY_ComposantePion& firer, PHY_Wea
         default:
             assert( false );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::HasWeaponsNotReady
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+bool PHY_DirectFireData::HasWeaponsNotReady() const
+{
+    return bHasWeaponsNotReady_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::HasWeaponsAndNoAmmo
+// Created: NLD 2004-11-30
+// -----------------------------------------------------------------------------
+bool PHY_DirectFireData::HasWeaponsAndNoAmmo() const
+{
+    return bHasWeaponsAndNoAmmo_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::GetNbrWeaponsUsable
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+uint PHY_DirectFireData::sComposanteWeapons::GetNbrWeaponsUsable() const
+{
+    return weaponsReady_.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::IsFiring
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+bool PHY_DirectFireData::sComposanteWeapons::IsFiring() const
+{
+    return bIsFiring_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::sComposanteWeapons::GetUnusedWeapon
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+PHY_Weapon* PHY_DirectFireData::sComposanteWeapons::GetUnusedWeapon() const
+{
+    if( weaponsReady_.empty() )
+        return 0;
+    return weaponsReady_.front();
 }

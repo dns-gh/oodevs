@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_FireDamages_Population.h"
-
 #include "Entities/Populations/MIL_Population.h"
 
 // -----------------------------------------------------------------------------
@@ -34,10 +32,6 @@ PHY_FireDamages_Population::~PHY_FireDamages_Population()
     // NOTHING
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: PHY_FireDamages_Population::Serialize
 // Created: JVT 04-03-29
@@ -55,4 +49,22 @@ void PHY_FireDamages_Population::Serialize( const MIL_Population& target, ASN1T_
 void PHY_FireDamages_Population::CleanAfterSerialization( ASN1T_PopulationFireDamages& /*asn*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Population::NotifyHumansKilled
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+void PHY_FireDamages_Population::NotifyHumansKilled( uint nNbrHumans )
+{
+    nNbrKilledHumans_ += nNbrHumans;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Population::GetNbrKilledHumans
+// Created: NLD 2006-04-26
+// -----------------------------------------------------------------------------
+uint PHY_FireDamages_Population::GetNbrKilledHumans() const
+{
+    return nNbrKilledHumans_;
 }

@@ -12,11 +12,8 @@
 #ifndef __PHY_ActionLogistic_h_
 #define __PHY_ActionLogistic_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
-class PHY_RolePion_Supply;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -29,15 +26,15 @@ class PHY_ActionLogistic : public PHY_Action_ABC
     MT_COPYNOTALLOWED( PHY_ActionLogistic )
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_AgentPion ActorType;
 
 public:
-    PHY_ActionLogistic( T& entity );
+    explicit PHY_ActionLogistic( T& entity );
     virtual ~PHY_ActionLogistic();
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     //@}
 

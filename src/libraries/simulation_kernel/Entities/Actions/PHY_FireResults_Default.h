@@ -12,8 +12,6 @@
 #ifndef __PHY_FireResults_Default_h_
 #define __PHY_FireResults_Default_h_
 
-#include "MIL.h"
-
 #include "PHY_FireResults_ABC.h"
 
 // =============================================================================
@@ -25,10 +23,8 @@ class PHY_FireResults_Default : public PHY_FireResults_ABC
     MT_COPYNOTALLOWED( PHY_FireResults_Default )
 
 public:
-    PHY_FireResults_Default();
+             PHY_FireResults_Default();
     virtual ~PHY_FireResults_Default();
 };
-
-#include "PHY_FireResults_Default.inl"
 
 #endif // __PHY_FireResults_Default_h_

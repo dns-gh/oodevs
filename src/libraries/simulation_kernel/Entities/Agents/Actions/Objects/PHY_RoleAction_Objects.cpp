@@ -513,3 +513,95 @@ bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC&
     return capabilityComputer.HasCapability();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::GetInitialReturnCode
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::GetInitialReturnCode() const
+{
+    return eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::GetFinalReturnCode
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::GetFinalReturnCode() const
+{
+    return eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::Update
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::Clean
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::Clean()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::ResumeWorkSuspended
+// Created: NLD 2005-01-19
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::ResumeWorkSuspended()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::ConstructSuspended
+// Created: NLD 2004-09-15
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::ConstructSuspended()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::DestroySuspended
+// Created: NLD 2004-09-16
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::DestroySuspended()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::MineSuspended
+// Created: NLD 2004-09-16
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::MineSuspended()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::DemineSuspended
+// Created: NLD 2004-09-16
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::DemineSuspended()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::BypassSuspended
+// Created: NLD 2004-09-16
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::BypassSuspended()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::ExtinguishSuspended
+// Created: RFT 28/05/2008
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::ExtinguishSuspended()
+{
+}

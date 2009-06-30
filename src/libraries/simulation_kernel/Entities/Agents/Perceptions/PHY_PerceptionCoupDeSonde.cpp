@@ -3,15 +3,13 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_PerceptionCoupDeSonde.h"
-
 #include "PHY_PerceptionLevel.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "simulation_terrain/TER_World.h"
@@ -22,8 +20,8 @@
 // -----------------------------------------------------------------------------
 PHY_PerceptionCoupDeSonde::PHY_PerceptionCoupDeSonde( PHY_RolePion_Perceiver& perceiver )
     : PHY_Perception_ABC( perceiver )
-    , rWidth_            ( perceiver.GetPion().GetType().GetUnitType().GetCoupDeSondeWidth () )
-    , rLength_           ( perceiver.GetPion().GetType().GetUnitType().GetCoupDeSondeLength() )
+    , rWidth_           ( perceiver.GetPion().GetType().GetUnitType().GetCoupDeSondeWidth () )
+    , rLength_          ( perceiver.GetPion().GetType().GetUnitType().GetCoupDeSondeLength() )
 {
     assert( rLength_ >= rWidth_ );
 }
@@ -34,12 +32,8 @@ PHY_PerceptionCoupDeSonde::PHY_PerceptionCoupDeSonde( PHY_RolePion_Perceiver& pe
 // -----------------------------------------------------------------------------
 PHY_PerceptionCoupDeSonde::~PHY_PerceptionCoupDeSonde()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// PERCEPTION POINT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionCoupDeSonde::Compute
@@ -56,10 +50,6 @@ const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MT_Vector2D
 
     return PHY_PerceptionLevel::notSeen_;
 }
-
-// =============================================================================
-// PERCEPTION AGENTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionCoupDeSonde::Compute
@@ -116,4 +106,3 @@ void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
         perceiver_.NotifyPerception( agent, Compute( agent ) );
     }
 }
-

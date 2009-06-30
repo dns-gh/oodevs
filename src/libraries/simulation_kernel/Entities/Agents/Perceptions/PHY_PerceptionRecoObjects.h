@@ -24,7 +24,7 @@ class PHY_PerceptionRecoObjects : public PHY_Perception_ABC
     MT_COPYNOTALLOWED( PHY_PerceptionRecoObjects )
 
 public:
-             PHY_PerceptionRecoObjects( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionRecoObjects( PHY_RolePion_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoObjects();
 
     void Update();
@@ -77,7 +77,5 @@ private:
 private:
     T_RecoVector recos_;
 };
-
-#include "PHY_PerceptionRecoObjects.inl"
 
 #endif // __PHY_PerceptionRecoObjects_h_

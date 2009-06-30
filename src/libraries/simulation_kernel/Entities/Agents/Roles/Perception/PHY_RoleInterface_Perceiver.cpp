@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Perceiver.h"
 
 // -----------------------------------------------------------------------------
@@ -20,6 +19,7 @@
 PHY_RoleInterface_Perceiver::PHY_RoleInterface_Perceiver( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,6 +28,7 @@ PHY_RoleInterface_Perceiver::PHY_RoleInterface_Perceiver( MT_RoleContainer& role
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Perceiver::PHY_RoleInterface_Perceiver()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,4 +37,5 @@ PHY_RoleInterface_Perceiver::PHY_RoleInterface_Perceiver()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Perceiver::~PHY_RoleInterface_Perceiver()
 {
+    // NOTHING
 }

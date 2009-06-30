@@ -12,8 +12,6 @@
 #ifndef __PHY_RolePion_Perceiver_h_
 #define __PHY_RolePion_Perceiver_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Perceiver.h"
 
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceAgent.h"
@@ -235,7 +233,5 @@ private:
 private:
     static const uint nNbrStepsBetweenPeriphericalVision_;
 };
-
-#include "PHY_RolePion_Perceiver.inl"
 
 #endif // __PHY_RolePion_Perceiver_h_

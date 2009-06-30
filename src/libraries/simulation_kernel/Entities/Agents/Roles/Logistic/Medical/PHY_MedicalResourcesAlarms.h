@@ -10,8 +10,6 @@
 #ifndef __PHY_MedicalResourcesAlarms_h_
 #define __PHY_MedicalResourcesAlarms_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -62,7 +60,5 @@ private:
     static T_LevelSet collectionResourcesLevels_;
     static T_LevelSet doctorsResourcesLevels_;
 };
-
-#include "PHY_MedicalResourcesAlarms.inl"
 
 #endif // __PHY_MedicalResourcesAlarms_h_

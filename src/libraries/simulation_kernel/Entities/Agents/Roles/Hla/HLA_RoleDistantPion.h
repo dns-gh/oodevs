@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-10 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Hla/HLA_RoleDistantPion.h $
-// $Author: Age $
-// $Modtime: 24/11/04 16:03 $
-// $Revision: 4 $
-// $Workfile: HLA_RoleDistantPion.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_RoleDistantPion_h_
 #define __HLA_RoleDistantPion_h_

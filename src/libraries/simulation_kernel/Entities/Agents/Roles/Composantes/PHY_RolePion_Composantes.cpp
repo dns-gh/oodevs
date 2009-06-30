@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Composantes.h"
-
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
@@ -39,10 +37,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
 #include "MIL_AgentServer.h"
-
 #include <xeumeuleu/xml.h>
-
-
 
 MT_Float PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_             = 0.;
 MT_Float PHY_RolePion_Composantes::rOpStateWeightMajorComposante_                = 0.;
@@ -59,6 +54,7 @@ PHY_RolePion_Composantes::T_ComposanteTypeProperties::T_ComposanteTypeProperties
     : nbrsPerState_( PHY_ComposanteState::GetNbrStates(), 0 )
     , bHasChanged_ ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +131,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     , maintenanceComposanteStates_ ()
     , nTickRcMaintenanceQuerySent_ ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -148,10 +145,6 @@ PHY_RolePion_Composantes::~PHY_RolePion_Composantes()
     composantes_.clear();
 }
 
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
@@ -276,11 +269,6 @@ void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
 
     archive.EndSection(); // Equipements*/
 }
-
-
-// =============================================================================
-// INIT
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: PHY_UnitCanHaveComposante_ABC::DistributeCommanders
@@ -1709,11 +1697,6 @@ void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RolePion_Composantes&
     borrower.NotifyLentComposanteReturned( *this, composante );
 }
 
-
-// =============================================================================
-// PRISONERS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyCaptured
 // C: NLD 2005-03-07
@@ -1856,4 +1839,3 @@ void PHY_RolePion_Composantes::DestroyAllComposantes()
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         (**it).ReinitializeState( PHY_ComposanteState::dead_ );
 }
-

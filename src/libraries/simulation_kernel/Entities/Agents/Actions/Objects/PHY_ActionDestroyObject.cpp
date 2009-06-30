@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionDestroyObject.h"
-
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
@@ -39,10 +37,6 @@ PHY_ActionDestroyObject::~PHY_ActionDestroyObject()
 {
     diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDestroyObject::Execute

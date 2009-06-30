@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleInterface_Transported.h"
 
 // -----------------------------------------------------------------------------
@@ -20,6 +19,7 @@
 PHY_RoleInterface_Transported::PHY_RoleInterface_Transported( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +29,7 @@ PHY_RoleInterface_Transported::PHY_RoleInterface_Transported( MT_RoleContainer& 
 PHY_RoleInterface_Transported::PHY_RoleInterface_Transported()
     : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,6 +38,7 @@ PHY_RoleInterface_Transported::PHY_RoleInterface_Transported()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Transported::~PHY_RoleInterface_Transported()
 {
+    // NOTHING
 }
 
 

@@ -11,16 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoPoint.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-
 #include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
@@ -98,8 +97,6 @@ void PHY_PerceptionRecoPoint::Update()
     }  
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoPoint::Compute
 // Created: JVT 2004-10-21
@@ -111,7 +108,6 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MT_Vector2D& 
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoPoint::Execute
@@ -136,7 +132,6 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoPoint::Compute
 // Created: JVT 2004-10-21
@@ -147,7 +142,6 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MIL_Agent_ABC
         return PHY_PerceptionLevel::notSeen_;
     return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoPoint::Compute
@@ -202,4 +196,13 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Object_ABC::T_ObjectVector& /*p
                 perceiver_.NotifyPerception( object, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoPoint::HasPointToHandle
+// Created: JVT 2004-10-21
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionRecoPoint::HasPointToHandle() const
+{
+    return !recos_.empty();
 }

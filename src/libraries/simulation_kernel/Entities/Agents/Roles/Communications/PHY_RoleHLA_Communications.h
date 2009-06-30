@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-09 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Communications/PHY_RoleHLA_Communications.h $
-// $Author: Age $
-// $Modtime: 2/12/04 11:46 $
-// $Revision: 4 $
-// $Workfile: PHY_RoleHLA_Communications.h $
-//
-// *****************************************************************************
 
 #ifndef __PHY_RoleHLA_Communications_h_
 #define __PHY_RoleHLA_Communications_h_
@@ -33,7 +24,7 @@ class PHY_RoleHLA_Communications : public PHY_RoleInterface_Communications
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleHLA_Communications( MT_RoleContainer& roleContainer );
+    explicit PHY_RoleHLA_Communications( MT_RoleContainer& roleContainer );
     virtual ~PHY_RoleHLA_Communications();
     //@}
 

@@ -56,6 +56,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving( MT_RoleContainer& role, MIL_AgentP
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,6 +72,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving()
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -79,12 +81,8 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving()
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Moving::~PHY_RoleAction_Moving()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::serialize
@@ -98,15 +96,10 @@ void PHY_RoleAction_Moving::serialize( Archive& file, const uint )
          & pRoleLocation_;
 }
 
-// =============================================================================
-// SPEED CALCULATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::ApplyMaxSpeedModificators
 // Created: NLD 2004-11-04
 // -----------------------------------------------------------------------------
-inline
 MT_Float PHY_RoleAction_Moving::ApplyMaxSpeedModificators( MT_Float rSpeed ) const
 {
     rSpeed  = GetRole< PHY_RolePion_NBC          >().ModifyMaxSpeed( rSpeed );
@@ -120,7 +113,6 @@ MT_Float PHY_RoleAction_Moving::ApplyMaxSpeedModificators( MT_Float rSpeed ) con
 // Name: PHY_RoleAction_Moving::ApplySpeedModificators
 // Created: NLD 2004-11-04
 // -----------------------------------------------------------------------------
-inline
 MT_Float PHY_RoleAction_Moving::ApplySpeedModificators( MT_Float rSpeed ) const
 {
     rSpeed = GetRole< PHY_RolePion_Communications >().ModifySpeed( rSpeed );
@@ -131,10 +123,6 @@ MT_Float PHY_RoleAction_Moving::ApplySpeedModificators( MT_Float rSpeed ) const
 
 namespace 
 {
-    // -----------------------------------------------------------------------------
-    // Name: PHY_RoleAction_Moving::GetMaxSpeed
-    // Created: NLD 2004-09-06
-    // -----------------------------------------------------------------------------
     struct sMaxSpeedObjectCalculator
     {
         MT_COPYNOTALLOWED( sMaxSpeedObjectCalculator );
@@ -161,6 +149,10 @@ namespace
     };
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetMaxSpeed
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
     sMaxSpeedObjectCalculator functor( object );
@@ -173,10 +165,6 @@ MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) cons
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: PHY_RoleAction_Moving::GetMaxSpeed
-    // Created: NLD 2004-09-06
-    // -----------------------------------------------------------------------------
     struct sMaxSpeedEnvCalculator
     {
     public:
@@ -202,6 +190,10 @@ namespace
     };
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetMaxSpeed
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
     sMaxSpeedEnvCalculator functor( environment );
@@ -215,10 +207,6 @@ MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) co
 
 namespace 
 {
-    // -----------------------------------------------------------------------------
-    // Name: PHY_RoleAction_Moving::GetMaxSpeed
-    // Created: NLD 2004-09-06
-    // -----------------------------------------------------------------------------
     struct sMaxSpeedCalculator
     {
     public:
@@ -242,6 +230,10 @@ namespace
     };
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetMaxSpeed
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetMaxSpeed() const
 {
     sMaxSpeedCalculator functor;
@@ -253,10 +245,6 @@ MT_Float PHY_RoleAction_Moving::GetMaxSpeed() const
     return functor.rMaxSpeed_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetMaxSlope
-// Created: AGE 2005-04-13
-// -----------------------------------------------------------------------------
 namespace
 {
     struct sMaxSlopeCalculator
@@ -277,6 +265,10 @@ namespace
     };
 };
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetMaxSlope
+// Created: AGE 2005-04-13
+// -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetMaxSlope() const
 {
     sMaxSlopeCalculator calculator;
@@ -288,7 +280,6 @@ MT_Float PHY_RoleAction_Moving::GetMaxSlope() const
 // Name: PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-inline
 MT_Float PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
     MT_Float rSpeed = GetMaxSpeed();
@@ -302,7 +293,6 @@ MT_Float PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // Name: PHY_RoleAction_Moving::GetSpeedWithReinforcement
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-inline
 MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
     MT_Float rSpeed = GetMaxSpeed( environment );
@@ -318,7 +308,6 @@ MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& en
 // Name: PHY_RoleAction_Moving::GetSpeedWithReinforcement
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-inline
 MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const
 {    
     if( !object().HasMobilityInfluence() )
@@ -337,10 +326,6 @@ MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& en
     return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed );
 }
 
-// =============================================================================
-// PATH OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::ExtrapolatePosition
 // Created: NLD 2005-10-03
@@ -351,10 +336,6 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const MT_Float rTime, co
     const PHY_RolePion_Location& roleLocation = pPion_->GetRole< PHY_RolePion_Location >();
     return PHY_MovingEntity_ABC::ExtrapolatePosition( roleLocation.GetPosition(), roleLocation.GetCurrentSpeed(), rTime, bBoundOnPath );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::SendEnvironmentType
@@ -408,10 +389,6 @@ void PHY_RoleAction_Moving::SendChangedState() const
     if( bEnvironmentHasChanged_ )
         SendEnvironmentType();
 }
-
-
-
-///////////
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::GetPosition
@@ -548,4 +525,70 @@ void PHY_RoleAction_Moving::SendRC( int nReportID ) const
 {
     assert( pPion_ );
     MIL_Report::PostEvent( *pPion_, (MIL_Report::E_EngineReport)nReportID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::Update
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::Clean
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::Clean()
+{
+    PHY_MovingEntity_ABC::Clean();
+
+    bCurrentPathHasChanged_ = false;
+    bEnvironmentHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::HasChanged
+// Created: NLD 2004-09-23
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Moving::HasChanged() const
+{
+    return bCurrentPathHasChanged_ || bEnvironmentHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::NotifyEnvironmentChanged
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::NotifyEnvironmentChanged()
+{
+    bEnvironmentHasChanged_ = true;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::NotifyCurrentPathChanged
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::NotifyCurrentPathChanged()
+{
+    bCurrentPathHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::SetSpeedModificator
+// Created: NLD 2004-09-23
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::SetSpeedModificator( MT_Float rFactor )
+{
+    rSpeedModificator_ = rFactor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::SetMaxSpeedModificator
+// Created: NLD 2004-09-23
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::SetMaxSpeedModificator( MT_Float rFactor )
+{
+    rMaxSpeedModificator_ = rFactor;
 }

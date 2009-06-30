@@ -10,16 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionIndirectFire_Knowledge.h"
-
 #include "PHY_RoleAction_IndirectFiring.h"
 #include "MIL_AgentServer.h"
+#include "Decision/DEC_Tools.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Knowledge constructor
@@ -52,10 +50,6 @@ PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
         pEffect_->DecRef();
     }
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Knowledge::Execute

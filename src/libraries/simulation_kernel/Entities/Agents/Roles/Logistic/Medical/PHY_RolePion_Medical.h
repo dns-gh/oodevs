@@ -13,7 +13,6 @@
 #define __PHY_RolePion_Medical_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_Medical.h"
 
 class PHY_MedicalHumanState;
@@ -85,10 +84,6 @@ public:
     virtual void SendChangedState() const;
     virtual void SendFullState   () const;
     //@}
-
-private:
 };
-
-#include "PHY_RolePion_Medical.inl"
 
 #endif // __PHY_RolePion_Medical_h_

@@ -12,10 +12,7 @@
 #ifndef __PHY_FireDamages_Population_h_
 #define __PHY_FireDamages_Population_h_
 
-#include "MIL.h"
-
 class MIL_Population;
-
 struct ASN1T_FireResult;
 
 // =============================================================================
@@ -45,9 +42,10 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     uint nNbrKilledHumans_;
+    //@}
 };
-
-#include "PHY_FireDamages_Population.inl"
 
 #endif // __PHY_FireDamages_Population_h_

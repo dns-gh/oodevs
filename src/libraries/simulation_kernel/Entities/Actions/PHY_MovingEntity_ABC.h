@@ -6,20 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-30 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __PHY_MovingEntity_ABC_h_
 #define __PHY_MovingEntity_ABC_h_
-
-#include "MIL.h"
 
 #include "Decision/Path/DEC_PathWalker.h"
 
@@ -90,7 +79,7 @@ public:
     //! @name Serialization
     //@{
     template< typename Archive >
-    void serialize( Archive& file, const uint );
+    void serialize( Archive& /*file*/, const uint ) {}
     //@}
 
 protected:
@@ -106,9 +95,10 @@ protected:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     DEC_PathWalker pathWalker_;
+    //@}
 };
-
-#include "PHY_MovingEntity_ABC.inl"
 
 #endif // __PHY_MovingEntity_ABC_h_

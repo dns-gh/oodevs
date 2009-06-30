@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleInterface_Posture.h"
 
 // -----------------------------------------------------------------------------
@@ -20,6 +19,7 @@
 PHY_RoleInterface_Posture::PHY_RoleInterface_Posture( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +29,7 @@ PHY_RoleInterface_Posture::PHY_RoleInterface_Posture( MT_RoleContainer& role )
 PHY_RoleInterface_Posture::PHY_RoleInterface_Posture()
     : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,4 +38,5 @@ PHY_RoleInterface_Posture::PHY_RoleInterface_Posture()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Posture::~PHY_RoleInterface_Posture()
 {
+    // NOTHING
 }

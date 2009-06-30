@@ -12,8 +12,6 @@
 #ifndef __PHY_RolePion_Population_h_
 #define __PHY_RolePion_Population_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Population.h"
 
 class NET_ASN_MsgUnitAttributes;
@@ -75,7 +73,5 @@ private:
     bool           bInvulnerabilityEnabled_;
     bool           bHasChanged_;
 };
-
-#include "PHY_RolePion_Population.inl"
 
 #endif // __PHY_RolePion_Population_h_

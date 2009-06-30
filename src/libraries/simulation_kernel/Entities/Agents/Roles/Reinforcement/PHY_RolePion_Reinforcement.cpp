@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Reinforcement.h"
-
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -31,8 +29,8 @@ PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MT_RoleContainer& role, 
     , reinforcements_                ()
     , pPionReinforced_               ( 0 )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement constructor
@@ -45,6 +43,7 @@ PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement()
     , reinforcements_                ()
     , bHasChanged_                   ( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,11 +52,9 @@ PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Reinforcement::~PHY_RolePion_Reinforcement()
 {
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::serialize
 // Created: JVT 2005-03-31
@@ -69,10 +66,6 @@ void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
          & pPion_;
 }
 
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::CanReinforce
 // Created: NLD 2004-11-22
@@ -92,10 +85,6 @@ bool PHY_RolePion_Reinforcement::CanBeReinforced() const
     assert( pPion_ );
     return !pPion_->IsDead() && !GetRole< PHY_RolePion_Transported >().IsTransported();
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::IsReinforcedBy
@@ -155,10 +144,6 @@ void PHY_RolePion_Reinforcement::CancelReinforcement()
     }    
 }
 
-// =============================================================================
-// 
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::Update
 // Created: NLD 2004-09-13
@@ -182,10 +167,6 @@ void PHY_RolePion_Reinforcement::Clean()
 {
     bHasChanged_ = false;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::SendFullState
@@ -219,3 +200,60 @@ void PHY_RolePion_Reinforcement::SendChangedState( NET_ASN_MsgUnitAttributes& ms
         SendFullState( msg );
 }   
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::NotifyReinforcementAdded
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinforcement )
+{
+    bool bOut = reinforcements_.insert( &reinforcement ).second;
+    assert( bOut );
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::NotifyReinforcementRemoved
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::NotifyReinforcementRemoved( MIL_AgentPion& reinforcement )
+{
+    int nOut = reinforcements_.erase( &reinforcement );
+    assert( nOut == 1 );
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::IsReinforcing
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Reinforcement::IsReinforcing() const
+{
+    return pPionReinforced_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::IsReinforced
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Reinforcement::IsReinforced() const
+{
+    return !reinforcements_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::HasChanged
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Reinforcement::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::GetReinforcements
+// Created: NLD 2004-09-15
+// -----------------------------------------------------------------------------
+const PHY_RolePion_Reinforcement::T_PionSet& PHY_RolePion_Reinforcement::GetReinforcements() const
+{
+    return reinforcements_;
+}

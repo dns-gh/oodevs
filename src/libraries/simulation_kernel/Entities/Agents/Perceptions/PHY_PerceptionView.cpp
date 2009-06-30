@@ -3,16 +3,14 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_PerceptionView.h"
-
 #include "PHY_PerceptionLevel.h"
-
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -25,7 +23,7 @@ PHY_PerceptionView::PHY_PerceptionView( PHY_RolePion_Perceiver& perceiver )
     : PHY_Perception_ABC( perceiver )
     , bIsEnabled_       ( true )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,11 +32,8 @@ PHY_PerceptionView::PHY_PerceptionView( PHY_RolePion_Perceiver& perceiver )
 // -----------------------------------------------------------------------------
 PHY_PerceptionView::~PHY_PerceptionView()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// PERCEPTION POINT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::Compute
@@ -65,10 +60,6 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MT_Vector2D& vPoin
 
     return *pBestLevel;
 }
-
-// =============================================================================
-// PERCEPTION AGENTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::Compute
@@ -138,11 +129,6 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
     }
 }
 
-
-// =============================================================================
-// PERCEPTION OBJECTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::Compute
 // Created: NLD 2004-09-07
@@ -211,10 +197,6 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
         }
     }
 }
-
-// =============================================================================
-// PERCEPTION POPULATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::Compute
@@ -297,12 +279,27 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationConc
 void PHY_PerceptionView::Execute( const TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations )
 {
     if( bIsEnabled_ )
-    {
         for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = perceivableConcentrations.begin(); it != perceivableConcentrations.end(); ++it )
         {
             MIL_PopulationConcentration& concentration = static_cast< MIL_PopulationConcentration& >( **it );
             perceiver_.NotifyPerception( concentration, Compute( concentration ) );
         }
-    }
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionView::Enable
+// Created: JVT 2005-04-29
+// -----------------------------------------------------------------------------
+void PHY_PerceptionView::Enable()
+{
+    bIsEnabled_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionView::Disable
+// Created: JVT 2005-04-29
+// -----------------------------------------------------------------------------
+void PHY_PerceptionView::Disable()
+{
+    bIsEnabled_ = false;
+}

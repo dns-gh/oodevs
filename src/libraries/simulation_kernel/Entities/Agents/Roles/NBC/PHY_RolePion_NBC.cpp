@@ -10,16 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_NBC.h"
-
 #include "Network/NET_ASN_Messages.h"
-#include "Entities/Objects/MIL_ToxicEffectManipulator.h"
-#include "Entities/Objects/MIL_NbcAgentType.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Objects/MIL_NbcAgentType.h"
+#include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_NBC, "PHY_RolePion_NBC" )
 
@@ -36,6 +34,7 @@ PHY_RolePion_NBC::PHY_RolePion_NBC( MT_RoleContainer& role, MIL_AgentPion& pion 
     , rContaminationQuantity_     ( 0. )
     , bHasChanged_                ( true )
 {
+    // NOTHING
 }
  
 // -----------------------------------------------------------------------------
@@ -45,6 +44,7 @@ PHY_RolePion_NBC::PHY_RolePion_NBC( MT_RoleContainer& role, MIL_AgentPion& pion 
 PHY_RolePion_NBC::PHY_RolePion_NBC()
     : bHasChanged_( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +53,7 @@ PHY_RolePion_NBC::PHY_RolePion_NBC()
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::~PHY_RolePion_NBC()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -109,10 +110,6 @@ void PHY_RolePion_NBC::serialize( Archive& file, const uint )
          & bNbcProtectionSuitWorn_
          & rContaminationState_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::Poison
@@ -216,10 +213,6 @@ MT_Float PHY_RolePion_NBC::ModifyReloadingDuration( MT_Float rDuration ) const
     return rDuration;
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::SendFullState
 // Created: NLD 2004-09-08
@@ -254,4 +247,73 @@ void PHY_RolePion_NBC::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitCanBeContaminated::IsWearingNbcProtectionSuit
+// Created: NLD 2004-05-03
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_NBC::IsWearingNbcProtectionSuit() const
+{
+    return bNbcProtectionSuitWorn_;   
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitCanBeContaminated::IsContaminated
+// Created: NLD 2004-05-05
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_NBC::IsContaminated() const
+{
+    return !nbcAgentTypesContaminating_.empty();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::WearProtectionSuit
+// Created: NLD 2004-04-30
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::WearNbcProtectionSuit()
+{
+    if( bNbcProtectionSuitWorn_ )
+        return;
+    bNbcProtectionSuitWorn_ = true;      
+    bHasChanged_            = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::RemoveProtectionSuit
+// Created: NLD 2004-04-30
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::RemoveNbcProtectionSuit()
+{
+    if( !bNbcProtectionSuitWorn_ )
+        return;
+    bNbcProtectionSuitWorn_ = false;    
+    bHasChanged_            = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::Update
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::Clean
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::Clean()
+{
+    bHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::HasChanged
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_NBC::HasChanged() const
+{
+    return bHasChanged_;
 }

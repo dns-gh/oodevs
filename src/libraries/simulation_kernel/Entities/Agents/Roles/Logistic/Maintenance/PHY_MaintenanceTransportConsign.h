@@ -12,8 +12,6 @@
 #ifndef __PHY_MaintenanceTransportConsign_h_
 #define __PHY_MaintenanceTransportConsign_h_
 
-#include "MIL.h"
-
 #include "PHY_MaintenanceConsign_ABC.h"
 
 class PHY_RolePionLOG_Maintenance;
@@ -61,7 +59,5 @@ private:
 private:
     PHY_ComposantePion* pCarrier_;
 };
-
-#include "PHY_MaintenanceTransportConsign.inl"
 
 #endif // __PHY_MaintenanceTransportConsign_h_

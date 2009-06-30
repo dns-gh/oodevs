@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-09 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Location/PHY_RoleHLA_Location.cpp $
-// $Author: Mco $
-// $Modtime: 11/02/05 16:52 $
-// $Revision: 12 $
-// $Workfile: PHY_RoleHLA_Location.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Location.h"

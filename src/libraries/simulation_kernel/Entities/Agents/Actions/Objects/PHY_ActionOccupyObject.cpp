@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionOccupyObject.h"
-
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
@@ -38,10 +36,6 @@ PHY_ActionOccupyObject::~PHY_ActionOccupyObject()
 {
     role_.StopOccupyingObject( nKnowledgeID_ );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionOccupyObject::Execute

@@ -11,12 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoObjects.h"
-
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-
 #include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
@@ -89,6 +88,7 @@ void PHY_PerceptionRecoObjects::sReco::GetObjectsInside( TER_Object_ABC::T_Objec
 PHY_PerceptionRecoObjects::PHY_PerceptionRecoObjects( PHY_RolePion_Perceiver& perceiver )
     : PHY_Perception_ABC( perceiver )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +101,6 @@ PHY_PerceptionRecoObjects::~PHY_PerceptionRecoObjects()
         delete *it;
     recos_.clear();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoObjects::AddLocalisation
@@ -186,4 +185,13 @@ void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /
                 perceiver_.NotifyPerception( object, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoObjects::HasLocalisationToHandle
+// Created: JVT 2004-10-21
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionRecoObjects::HasLocalisationToHandle() const
+{
+    return !recos_.empty();
 }

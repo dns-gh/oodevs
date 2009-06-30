@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-09 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Dotations/PHY_RoleHLA_Dotations.cpp $
-// $Author: Nld $
-// $Modtime: 18/04/05 16:40 $
-// $Revision: 3 $
-// $Workfile: PHY_RoleHLA_Dotations.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Dotations.h"

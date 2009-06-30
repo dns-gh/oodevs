@@ -12,8 +12,6 @@
 #ifndef __PHY_RolePion_Refugee_h_
 #define __PHY_RolePion_Refugee_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Refugee.h"
 
 class NET_ASN_MsgUnitAttributes;
@@ -72,7 +70,5 @@ private:
     const MIL_Object_ABC*   pCamp_;
           bool              bHasChanged_;
 };
-
-#include "PHY_RolePion_Refugee.inl"
 
 #endif // __PHY_RolePion_Refugee_h_

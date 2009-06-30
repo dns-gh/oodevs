@@ -90,6 +90,4 @@ private:
           bool                        bDiagnosed_;
 };
 
-#include "PHY_MaintenanceComposanteState.inl"
-
 #endif // __PHY_MaintenanceComposanteState_h_

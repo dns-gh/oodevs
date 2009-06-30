@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-09 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Location/PHY_RoleHLA_Location.h $
-// $Author: Age $
-// $Modtime: 2/02/05 10:23 $
-// $Revision: 6 $
-// $Workfile: PHY_RoleHLA_Location.h $
-//
-// *****************************************************************************
 
 #ifndef __PHY_RoleHLA_Location_h_
 #define __PHY_RoleHLA_Location_h_
@@ -26,6 +17,7 @@ namespace hla
 {
     class AttributeIdentifier;    
 }
+
 class MIL_AgentHLA;
 
 // =============================================================================

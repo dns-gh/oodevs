@@ -260,3 +260,21 @@ void PHY_MedicalHealingConsign::Cancel()
     }
     PHY_MedicalConsign_ABC::Cancel();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHealingConsign::CouldNeedCollectionAmbulance
+// Created: NLD 2005-01-13
+// -----------------------------------------------------------------------------
+bool PHY_MedicalHealingConsign::CouldNeedCollectionAmbulance() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHealingConsign::IsATransportConsign
+// Created: NLD 2005-04-25
+// -----------------------------------------------------------------------------
+bool PHY_MedicalHealingConsign::IsATransportConsign() const
+{
+    return false;
+}

@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleAction_Objects_h_
 #define __PHY_RoleAction_Objects_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
@@ -116,7 +114,5 @@ private:
 private:
     MIL_AgentPion* pPion_;
 };
-
-#include "PHY_RoleAction_Objects.inl"
 
 #endif // __PHY_RoleAction_Objects_h_

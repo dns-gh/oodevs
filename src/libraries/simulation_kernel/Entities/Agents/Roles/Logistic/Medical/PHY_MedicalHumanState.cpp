@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MedicalHumanState.h"
 #include "PHY_MedicalConsign_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
@@ -65,6 +64,7 @@ PHY_MedicalHumanState::PHY_MedicalHumanState()
     , bShouldGoBackToWar_    ( false )
     , bEvacuatedByThirdParty_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,10 +75,6 @@ PHY_MedicalHumanState::~PHY_MedicalHumanState()
 {
     SendMsgDestruction();    
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState::load
@@ -118,10 +114,6 @@ void PHY_MedicalHumanState::save( MIL_CheckPointOutArchive& file, const uint ) c
          << bEvacuatedByThirdParty_;
 }
 
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState::IsAnEmergency
 // Created: NLD 2005-01-11
@@ -332,4 +324,108 @@ void PHY_MedicalHumanState::SendMsgDestruction() const
     asn().oid_consigne    = nID_;
     asn().oid_pion        = pPion_->GetID();
     asn.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::GetHuman
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+const PHY_Human& PHY_MedicalHumanState::GetHuman() const
+{
+    assert( pHuman_ );
+    return *pHuman_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::SetConsign
+// Created: NLD 2004-12-24
+// -----------------------------------------------------------------------------
+void PHY_MedicalHumanState::SetConsign( PHY_MedicalConsign_ABC* pConsign )
+{
+    if( pConsign == pConsign_ )
+        return;
+        
+    pConsign_    = pConsign;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::SetHumanPosition
+// Created: NLD 2004-12-27
+// -----------------------------------------------------------------------------
+void PHY_MedicalHumanState::SetHumanPosition( const MT_Vector2D& vPosition )
+{
+    vHumanPosition_ = vPosition;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::GetHumanPosition
+// Created: NLD 2004-12-27
+// -----------------------------------------------------------------------------
+const MT_Vector2D& PHY_MedicalHumanState::GetHumanPosition() const
+{
+    return vHumanPosition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::NeedDiagnosis
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+bool PHY_MedicalHumanState::NeedDiagnosis() const
+{
+    return !bDiagnosed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::NotifyDiagnosed
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+void PHY_MedicalHumanState::NotifyDiagnosed()
+{
+    bDiagnosed_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::NeedSorting
+// Created: NLD 2006-04-04
+// -----------------------------------------------------------------------------
+bool PHY_MedicalHumanState::NeedSorting() const
+{
+    return !bSorted_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::NotifySorted
+// Created: NLD 2006-04-04
+// -----------------------------------------------------------------------------
+void PHY_MedicalHumanState::NotifySorted()
+{
+    bSorted_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::NotifyHumanChanged
+// Created: NLD 2005-01-14
+// -----------------------------------------------------------------------------
+void PHY_MedicalHumanState::NotifyHumanChanged()
+{
+    bHumanStateHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::ShouldGoBackToWar
+// Created: JVT 2005-04-28
+// -----------------------------------------------------------------------------
+bool PHY_MedicalHumanState::ShouldGoBackToWar() const
+{
+    return bShouldGoBackToWar_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::EvacuatedByThirdParty
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+bool PHY_MedicalHumanState::EvacuatedByThirdParty() const
+{
+    return bEvacuatedByThirdParty_;
 }

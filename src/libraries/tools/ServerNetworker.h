@@ -14,7 +14,7 @@
 #include "MessageSender_ABC.h"
 #include "ConnectionCallback_ABC.h"
 #pragma warning( push )
-#pragma warning( disable : 4512 )
+#pragma warning( disable : 4244 4512 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <string>

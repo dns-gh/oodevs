@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionResumeWorkObject.h"
-
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
@@ -39,10 +37,6 @@ PHY_ActionResumeWorkObject::~PHY_ActionResumeWorkObject()
 {
     diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionResumeWorkObject::Execute

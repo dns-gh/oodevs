@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_RolePion_Decision.h"
-
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
@@ -97,6 +95,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision()
     , bStateHasChanged_         ( true                      )
     , pAutomate_                ( 0                            )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -108,11 +107,6 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
     StopDefaultBehavior();
     MT_DELETEOWNED( missionBehaviorParameters_.GetParameters() );
 }
-
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::load
@@ -261,10 +255,6 @@ void DEC_RolePion_Decision::NotifyRoePopulationChanged( const PHY_RoePopulation&
     }
 }
 
-// =============================================================================
-// UPDATE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::SendFullState
 // Created: NLD 2004-09-08
@@ -298,3 +288,123 @@ void DEC_RolePion_Decision::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) c
         SendFullState( msg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetPion
+// Created: NLD 2004-09-03
+// -----------------------------------------------------------------------------
+MIL_AgentPion& DEC_RolePion_Decision::GetPion() const
+{
+    assert( pEntity_ );
+    return *pEntity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::Clean
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::Clean()
+{
+    bStateHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::HasStateChanged
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+bool DEC_RolePion_Decision::HasStateChanged() const
+{
+    return bStateHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetRoePopulation
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+const PHY_RoePopulation& DEC_RolePion_Decision::GetRoePopulation() const
+{
+    assert( pRoePopulation_ );
+    return *pRoePopulation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::NotifyIndirectFireAvailabilityChanged
+// Created: NLD 2005-10-19
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::NotifyIndirectFireAvailabilityChanged( E_FireAvailability nState )
+{
+    if( nIndirectFireAvailability_ != nState )
+    {
+        nIndirectFireAvailability_ = nState;
+        bStateHasChanged_  = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::NotifyForceRatioStateChanged
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::NotifyForceRatioStateChanged( E_ForceRatioState nState )
+{
+    if( nForceRatioState_ != nState )
+    {
+        nForceRatioState_ = nState;
+        bStateHasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::NotifyRulesOfEngagementStateChanged
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState nState )
+{
+    if( nRulesOfEngagementState_ != nState )
+    {
+        nRulesOfEngagementState_ = nState;
+        bStateHasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::NotifyCloseCombatStateChanged
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::NotifyCloseCombatStateChanged( E_CloseCombatState nState )
+{
+    if( nCloseCombatState_ != nState )
+    {
+        nCloseCombatState_ = nState;
+        bStateHasChanged_  = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::NotifyOperationalStateChanged
+// Created: NLD 2005-07-26
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::NotifyOperationalStateChanged( E_OperationalState nState )
+{
+    if( nOperationalState_ != nState )
+    {
+        nOperationalState_ = nState;
+        bStateHasChanged_  = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetName
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+std::string DEC_RolePion_Decision::GetName() const
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetDecAutomate
+// Created: LDC 2009-04-09
+// -----------------------------------------------------------------------------
+DEC_AutomateDecision* DEC_RolePion_Decision::GetDecAutomate() const
+{
+    return pAutomate_;
+}

@@ -10,17 +10,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_HumanFactors.h"
 #include "Network/NET_ASN_Messages.h"
-
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
-
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_HumanFactors, "PHY_RolePion_HumanFactors" )
 
@@ -35,6 +30,7 @@ PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors( MT_RoleContainer& role )
     , pExperience_                  ( &PHY_Experience::veteran_ )
     , pTiredness_                   ( &PHY_Tiredness ::normal_  )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,8 +43,8 @@ PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors()
     , pMorale_                      ( 0 )
     , pExperience_                  ( 0 )
     , pTiredness_                   ( 0 )
-
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,12 +53,9 @@ PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors()
 // -----------------------------------------------------------------------------
 PHY_RolePion_HumanFactors::~PHY_RolePion_HumanFactors()
 {
+    // NOTHING
 }
 
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::load
 // Created: JVT 2005-03-30
@@ -166,9 +159,6 @@ void PHY_RolePion_HumanFactors::ReadExperience( xml::xistream& xis )
     if( !pExperience_ )
         xis.error( "Unknown experience type" );
 }
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::SendFullState
@@ -194,10 +184,6 @@ void PHY_RolePion_HumanFactors::SendChangedState( NET_ASN_MsgUnitAttributes& msg
     if( bHasChanged_ )
         SendFullState( msg );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::Update
@@ -225,10 +211,6 @@ bool PHY_RolePion_HumanFactors::HasChanged() const
 {
     return bHasChanged_;
 }
-
-// =============================================================================
-// SETTERS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::SetMorale
@@ -268,10 +250,6 @@ void PHY_RolePion_HumanFactors::SetTiredness( const PHY_Tiredness& tiredness )
     pTiredness_  = &tiredness;
     bHasChanged_ = true;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::ModifyMaxSpeed
@@ -347,5 +325,3 @@ const PHY_Tiredness& PHY_RolePion_HumanFactors::GetTiredness() const
     assert( pTiredness_ );
     return *pTiredness_;
 }
-
-

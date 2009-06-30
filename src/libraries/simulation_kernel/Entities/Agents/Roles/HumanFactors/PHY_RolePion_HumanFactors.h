@@ -13,7 +13,6 @@
 #define __PHY_RolePion_HumanFactors_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_HumanFactors.h"
 
 namespace xml
@@ -102,8 +101,4 @@ private:
     //@}
 };
 
-#include "PHY_RolePion_HumanFactors.inl"
-
 #endif // __PHY_RolePion_HumanFactors_h_
-
-void SetMorale      ( const PHY_Morale& morale );

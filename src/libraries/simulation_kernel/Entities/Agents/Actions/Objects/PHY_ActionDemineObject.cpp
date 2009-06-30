@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionDemineObject.h"
-
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
@@ -39,10 +37,6 @@ PHY_ActionDemineObject::~PHY_ActionDemineObject()
 {
     diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDemineObject::Execute

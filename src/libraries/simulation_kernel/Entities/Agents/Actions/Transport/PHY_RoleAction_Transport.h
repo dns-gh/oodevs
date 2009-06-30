@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleAction_Transport_h_
 #define __PHY_RoleAction_Transport_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
@@ -148,7 +146,5 @@ private:
           T_TransportedPionMap  transportedPions_;
           MT_Float              rWeightTransported_; 
 };
-
-#include "PHY_RoleAction_Transport.inl"
 
 #endif // __PHY_RoleAction_Transport_h_

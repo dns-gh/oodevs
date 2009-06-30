@@ -413,7 +413,7 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( ASN1T_MsgUnitKnowledgeUpdat
         for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
         {
             pPerceptions[i].oid_compagnie        = it->first->GetID();
-            pPerceptions[i].identification_level = it->second->GetAsnID();
+            it->second->Serialize( pPerceptions[i].identification_level );
             ++i;
         }
         asnMsg.perception_par_compagnie.elem = pPerceptions;
@@ -448,13 +448,13 @@ void DEC_Knowledge_Agent::SendChangedState()
     if( bCurrentPerceptionLevelUpdated_ )
     {
         asnMsg().m.identification_levelPresent = 1;
-        asnMsg().identification_level = pCurrentPerceptionLevel_->GetAsnID();
+        pCurrentPerceptionLevel_->Serialize( asnMsg().identification_level );
     }
 
     if( bMaxPerceptionLevelUpdated_ )
     {
         asnMsg().m.max_identification_levelPresent = 1;
-        asnMsg().max_identification_level = pMaxPerceptionLevel_->GetAsnID();
+        pMaxPerceptionLevel_->Serialize( asnMsg().max_identification_level );
     }
 
     if( bPerceptionPerAutomateUpdated )
@@ -487,10 +487,10 @@ void DEC_Knowledge_Agent::SendFullState()
     rLastRelevanceSent_ = rRelevance_;
     
     asnMsg().m.identification_levelPresent = 1;
-    asnMsg().identification_level = pCurrentPerceptionLevel_->GetAsnID();
+    pCurrentPerceptionLevel_->Serialize( asnMsg().identification_level );
 
     asnMsg().m.max_identification_levelPresent = 1;
-    asnMsg().max_identification_level = pMaxPerceptionLevel_->GetAsnID();
+    pMaxPerceptionLevel_->Serialize( asnMsg().max_identification_level );
 
     WriteMsgPerceptionSources( asnMsg() );
 

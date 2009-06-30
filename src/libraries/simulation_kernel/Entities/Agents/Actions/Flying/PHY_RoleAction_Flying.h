@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleAction_Flying_h_
 #define __PHY_RoleAction_Flying_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Effects/MIL_Effect_Fly.h"
 
@@ -37,7 +35,6 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
-
 
     //! @name Operations
     //@{
@@ -66,12 +63,14 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     MIL_AgentPion* pPion_;
     MIL_Effect_Fly effectFly_;
     PHY_ActionFly* pActionFly_;
     bool           bForceLanding_;
+    //@}
 };
 
-#include "PHY_RoleAction_Flying.inl"
 
 #endif // __PHY_RoleAction_Flying_h_

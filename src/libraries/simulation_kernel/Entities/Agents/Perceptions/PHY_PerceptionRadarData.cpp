@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRadarData.h"
-
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -27,7 +26,7 @@ PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData()
     : nFirstTimeStepPerceived_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , bUpdated_               ( true )
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +37,7 @@ PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData( const sAcquisitionD
     : nFirstTimeStepPerceived_( rhs.nFirstTimeStepPerceived_ )
     , bUpdated_               ( rhs.bUpdated_ )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +47,7 @@ PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData( const sAcquisitionD
 PHY_PerceptionRadarData::PHY_PerceptionRadarData()
     : pRadarType_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +57,7 @@ PHY_PerceptionRadarData::PHY_PerceptionRadarData()
 PHY_PerceptionRadarData::PHY_PerceptionRadarData( const PHY_RadarType& radarType )
     : pRadarType_( &radarType )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +66,7 @@ PHY_PerceptionRadarData::PHY_PerceptionRadarData( const PHY_RadarType& radarType
 // -----------------------------------------------------------------------------
 PHY_PerceptionRadarData::~PHY_PerceptionRadarData()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

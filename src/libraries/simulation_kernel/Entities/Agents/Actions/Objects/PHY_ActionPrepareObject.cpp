@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionPrepareObject.h"
-
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
@@ -44,10 +42,6 @@ PHY_ActionPrepareObject::~PHY_ActionPrepareObject()
 {
     diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionPrepareObject::Execute

@@ -112,6 +112,4 @@ private:
     bool bHeightHasChanged_;
 };
 
-#include "PHY_RolePion_Location.inl"
-
 #endif // __PHY_RolePion_Location_h_

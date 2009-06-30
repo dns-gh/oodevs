@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionDestroyObject_h_
 #define __PHY_ActionDestroyObject_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Objects;
@@ -32,7 +30,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-    PHY_ActionDestroyObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionDestroyObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionDestroyObject();
 
     //! @name Operations
@@ -43,10 +41,8 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    DIA_Variable_ABC&        diaReturnCode_;
-    uint                     nKnowledgeID_;    
+    DIA_Variable_ABC&       diaReturnCode_;
+    uint                    nKnowledgeID_;    
 };
-
-#include "PHY_ActionDestroyObject.inl"
 
 #endif // __PHY_ActionDestroyObject_h_

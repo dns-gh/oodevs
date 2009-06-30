@@ -13,7 +13,6 @@
 #define __PHY_RolePion_Maintenance_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_Maintenance.h"
 
 class PHY_MaintenanceComposanteState;
@@ -30,7 +29,7 @@ class PHY_RolePion_Maintenance : public PHY_RoleInterface_Maintenance
     MT_COPYNOTALLOWED( PHY_RolePion_Maintenance )
 
 public:
-             PHY_RolePion_Maintenance( MT_RoleContainer& role );
+    explicit PHY_RolePion_Maintenance( MT_RoleContainer& role );
              PHY_RolePion_Maintenance();
     virtual ~PHY_RolePion_Maintenance();
 
@@ -68,10 +67,6 @@ public:
     virtual void SendChangedState() const;
     virtual void SendFullState   () const;
     //@}
-
-private:
 };
-
-#include "PHY_RolePion_Maintenance.inl"
 
 #endif // __PHY_RolePion_Maintenance_h_

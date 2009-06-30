@@ -12,8 +12,6 @@
 #ifndef __PHY_MedicalCollectionAmbulance_h_
 #define __PHY_MedicalCollectionAmbulance_h_
 
-#include "MIL.h"
-
 class PHY_ComposantePion;
 class PHY_MedicalCollectionConsign;
 class PHY_RolePionLOG_Medical;
@@ -96,7 +94,5 @@ private:
     MT_Float                 rNbrHumanHandled_;
     PHY_RolePion_Medical*    pSortingArea_;
 };
-
-#include "PHY_MedicalCollectionAmbulance.inl"
 
 #endif // __PHY_MedicalCollectionAmbulance_h_

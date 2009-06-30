@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionIndirectFire_Position_h_
 #define __PHY_ActionIndirectFire_Position_h_
 
-#include "MIL.h"
-
 #include "PHY_ActionIndirectFire_ABC.h"
 
 class MIL_Effect_IndirectFire;
@@ -39,7 +37,5 @@ public:
 private:
     MIL_Effect_IndirectFire* pEffect_;
 };
-
-#include "PHY_ActionIndirectFire_Position.inl"
 
 #endif // __PHY_ActionIndirectFire_Position_h_

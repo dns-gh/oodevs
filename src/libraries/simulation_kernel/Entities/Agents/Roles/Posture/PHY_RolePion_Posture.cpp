@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Posture.h"
-
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -54,6 +52,7 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MT_RoleContainer& role, const MIL_Ag
     , bInstallationSetUpInProgress_        ( false )
     , bInstallationStateHasChanged_        ( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +80,7 @@ PHY_RolePion_Posture::PHY_RolePion_Posture()
     , bInstallationSetUpInProgress_        ( false )
     , bInstallationStateHasChanged_        ( true )
 {
-
+    // NOTHING
 }
   
 // -----------------------------------------------------------------------------
@@ -90,11 +89,8 @@ PHY_RolePion_Posture::PHY_RolePion_Posture()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Posture::~PHY_RolePion_Posture()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOITNS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::load
@@ -148,15 +144,10 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) co
          << rLastInstallationStateSent_;
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::GetPostureTime
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-inline
 MT_Float PHY_RolePion_Posture::GetPostureTime() const
 {
     assert( pCurrentPosture_ );
@@ -170,7 +161,6 @@ MT_Float PHY_RolePion_Posture::GetPostureTime() const
 // Name: PHY_RolePion_Posture::ChangePostureCompletionPercentage
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
-inline
 void PHY_RolePion_Posture::ChangePostureCompletionPercentage( const MT_Float rNewPercentage )
 {
     if( rPostureCompletionPercentage_ == rNewPercentage )
@@ -189,7 +179,6 @@ void PHY_RolePion_Posture::ChangePostureCompletionPercentage( const MT_Float rNe
 // Name: PHY_RolePion_Posture::ChangePosture
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
-inline
 void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
 {
     if( pCurrentPosture_ == &newPosture )
@@ -203,10 +192,6 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
     bPostureHasChanged_    = true;
     bPercentageHasChanged_ = true;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::Update
@@ -308,10 +293,6 @@ bool PHY_RolePion_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) cons
     return true;
 }
 
-// =============================================================================
-// INSTALLATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::Install
 // Created: NLD 2006-08-10
@@ -356,10 +337,6 @@ void PHY_RolePion_Posture::Uninstall()
     if( fabs( rLastInstallationStateSent_ - rInstallationState_ ) > rDeltaPercentageForNetwork || rInstallationState_ == 0. || rInstallationState_ == 1. )
         bInstallationStateHasChanged_ = true;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::SendChangedState
@@ -429,3 +406,151 @@ void PHY_RolePion_Posture::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "posture", HLAStatusHasChanged(), pPosture->GetName() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::GetLastPosture
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const PHY_Posture& PHY_RolePion_Posture::GetLastPosture() const
+{
+    assert( pLastPosture_ );
+    return *pLastPosture_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::GetCurrentPosture
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const PHY_Posture& PHY_RolePion_Posture::GetCurrentPosture() const
+{
+    assert( pCurrentPosture_ );
+    return *pCurrentPosture_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::GetPostureCompletionPercentage
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Posture::GetPostureCompletionPercentage() const
+{
+    return rPostureCompletionPercentage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::EnableDiscreteMode
+// Created: NLD 2004-10-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::EnableDiscreteMode()
+{
+    bDiscreteModeEnabled_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::DisableDiscreteMode
+// Created: NLD 2004-10-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::DisableDiscreteMode()
+{
+    bDiscreteModeEnabled_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::HasChanged
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Posture::HasChanged() const
+{
+    return bPostureHasChanged_ || bPercentageHasChanged_ || bInstallationStateHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::HLAStatusHasChanged
+// Created: AGE 2005-03-08
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Posture::HLAStatusHasChanged() const
+{
+    return bPostureHasChanged_ || bPercentageCrossed50_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::Clean
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Clean()
+{
+    bPostureHasChanged_           = false;
+    bPercentageHasChanged_        = false;
+    bStealthFactorHasChanged_     = false;
+    bInstallationSetUpInProgress_ = false;
+    bInstallationStateHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::SetStealthFactor
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::SetStealthFactor( MT_Float rValue )
+{
+    assert( rValue >= 0. && rValue <= 1. );
+    if( rValue != rStealthFactor_ )
+    {
+        bStealthFactorHasChanged_ = true;
+        rStealthFactor_ = rValue;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::SetTimingFactor
+// Created: JVT 2005-05-11
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::SetTimingFactor( MT_Float rFactor )
+{
+    assert( rFactor > 0. );
+    rTimingFactor_ = rFactor == 0. ? 1. : std::abs( rFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::SetElongationFactor
+// Created: JVT 2004-11-03
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::SetElongationFactor( MT_Float rFactor )
+{
+    assert( rFactor > 0. );
+    if ( rFactor > 0. )
+        rElongationFactor_ = rFactor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::GetElongationFactor
+// Created: JVT 2004-11-03
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Posture::GetElongationFactor() const
+{
+    return rElongationFactor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::IsStealth
+// Created: AGE 2004-12-08
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Posture::IsStealth() const
+{
+    return bIsStealth_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::IsInstalled
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Posture::IsInstalled() const
+{
+    return rInstallationState_ >= 1.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::IsUninstalled
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Posture::IsUninstalled() const
+{
+    return rInstallationState_ <= 0.;
+}

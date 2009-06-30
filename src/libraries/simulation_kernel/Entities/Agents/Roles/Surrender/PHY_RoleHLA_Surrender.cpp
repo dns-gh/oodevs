@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleHLA_Surrender.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -33,10 +32,6 @@ PHY_RoleHLA_Surrender::~PHY_RoleHLA_Surrender()
 {
     // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Surrender::Capture
@@ -78,10 +73,6 @@ bool PHY_RoleHLA_Surrender::IsImprisoned( const MIL_Object_ABC& /*camp*/ )
     return false;
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Surrender::ChangeStatus
 // Created: NLD 2005-03-10
@@ -90,4 +81,31 @@ void PHY_RoleHLA_Surrender::ChangeStatus( const std::vector< std::string >& stat
 {
     bPrisoner_    = std::find( statuses.begin(), statuses.end(), "prisonnier" ) != statuses.end();
     // $$$$ NLD 2007-02-14: Surrendered state
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Surrender::IsSurrendered
+// Created: NLD 2005-02-24
+// -----------------------------------------------------------------------------
+bool PHY_RoleHLA_Surrender::IsSurrendered() const
+{
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Surrender::IsPrisoner
+// Created: NLD 2005-02-24
+// -----------------------------------------------------------------------------
+bool PHY_RoleHLA_Surrender::IsPrisoner() const
+{
+    return bPrisoner_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Surrender::GetArmySurrenderedTo
+// Created: NLD 2007-02-14
+// -----------------------------------------------------------------------------
+const MIL_Army* PHY_RoleHLA_Surrender::GetArmySurrenderedTo() const
+{
+    return 0;
 }

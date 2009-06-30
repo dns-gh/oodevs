@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionBypassObject_h_
 #define __PHY_ActionBypassObject_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Objects;
@@ -45,7 +43,5 @@ private:
     DIA_Variable_ABC&        diaReturnCode_;
     uint                     nKnowledgeID_;    
 };
-
-#include "PHY_ActionBypassObject.inl"
 
 #endif // __PHY_ActionBypassObject_h_

@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleAction_Loading_h_
 #define __PHY_RoleAction_Loading_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
@@ -33,7 +31,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_Loading( MT_RoleContainer& role );
+    explicit PHY_RoleAction_Loading( MT_RoleContainer& role );
              PHY_RoleAction_Loading();
     virtual ~PHY_RoleAction_Loading();
 
@@ -108,13 +106,14 @@ private:
     //@}
     
 private:
+    //! @name Member data
+    //@{
     E_State nState_;
     bool    bIsLoaded_;
     uint    nEndTimeStep_; // Load or unload
     bool    bHasChanged_;
     bool    bHasBeenUpdated_; // Le trigger Load / Unload ou RecoverCarriers a été appelé durant le pas de temps
+    //@}
 };
-
-#include "PHY_RoleAction_Loading.inl"
 
 #endif // __PHY_RoleAction_Loading_h_

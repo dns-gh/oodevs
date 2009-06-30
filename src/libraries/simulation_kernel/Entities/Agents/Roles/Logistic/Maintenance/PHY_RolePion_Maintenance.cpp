@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Maintenance.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Maintenance, "PHY_RolePion_Maintenance" )
@@ -22,6 +21,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Maintenance, "PHY_RolePion_Maintenance" )
 PHY_RolePion_Maintenance::PHY_RolePion_Maintenance( MT_RoleContainer& role )
     : PHY_RoleInterface_Maintenance( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,8 +31,8 @@ PHY_RolePion_Maintenance::PHY_RolePion_Maintenance( MT_RoleContainer& role )
 PHY_RolePion_Maintenance::PHY_RolePion_Maintenance()
     : PHY_RoleInterface_Maintenance()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Maintenance destructor
@@ -40,7 +40,7 @@ PHY_RolePion_Maintenance::PHY_RolePion_Maintenance()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Maintenance::~PHY_RolePion_Maintenance()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -81,10 +81,6 @@ void PHY_RolePion_Maintenance::Clean()
     // NOTHING
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Maintenance::SendChangedState
 // Created: NLD 2004-12-30
@@ -99,6 +95,96 @@ void PHY_RolePion_Maintenance::SendChangedState() const
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Maintenance::SendFullState() const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::HandleComposanteForTransport
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+PHY_MaintenanceComposanteState* PHY_RolePion_Maintenance::HandleComposanteForTransport( MIL_AgentPion& /*pion*/, PHY_ComposantePion& /*composante*/ )
+{
+    return 0;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::HandleComposanteForTransport
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Maintenance::HandleComposanteForTransport( PHY_MaintenanceComposanteState& /*composanteState*/ )
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::GetAvailabilityScoreForTransport
+// Created: NLD 2006-03-29
+// -----------------------------------------------------------------------------
+int PHY_RolePion_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& /*composante*/ )
+{
+    return std::numeric_limits< int >::min();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::HandleComposanteForRepair
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComposanteState& /*composanteState*/ )
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::GetAvailabilityScoreForRepair
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+int PHY_RolePion_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& /*composanteState*/ )
+{
+    return std::numeric_limits< int >::min();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::EnableSystem
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Maintenance::EnableSystem()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::DisableSystem
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Maintenance::DisableSystem()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::ChangePriorities
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Maintenance::ChangePriorities( const T_MaintenancePriorityVector& /*priorities*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::ChangePriorities
+// Created: NLD 2005-04-27
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Maintenance::ChangePriorities( const T_AutomateVector& /*priorities*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::ChangeWorkRate
+// Created: NLD 2005-01-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Maintenance::ChangeWorkRate( const PHY_MaintenanceWorkRate& /*workRate*/ )
 {
     // NOTHING
 }

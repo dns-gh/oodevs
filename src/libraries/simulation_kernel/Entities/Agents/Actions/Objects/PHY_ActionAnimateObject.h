@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionAnimateObject_h_
 #define __PHY_ActionAnimateObject_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Objects;
@@ -44,7 +42,5 @@ private:
     PHY_RoleAction_Objects& role_;
     uint                    nKnowledgeID_;    
 };
-
-#include "PHY_ActionAnimateObject.inl"
 
 #endif // __PHY_ActionAnimateObject_h_

@@ -5,8 +5,6 @@
 #ifndef __PHY_PerceptionView_h_
 #define __PHY_PerceptionView_h_
 
-#include "MIL.h"
-
 #include "PHY_Perception_ABC.h"
 
 //*****************************************************************************
@@ -18,7 +16,7 @@ class PHY_PerceptionView : public PHY_Perception_ABC
     MT_COPYNOTALLOWED( PHY_PerceptionView )
 
 public:
-             PHY_PerceptionView( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionView( PHY_RolePion_Perceiver& perceiver );
     virtual ~PHY_PerceptionView();
 
     //! @name Tools
@@ -49,7 +47,5 @@ public:
 private:
     bool bIsEnabled_;
 };
-
-#include "PHY_PerceptionView.inl"
 
 #endif // __PHY_PerceptionView_h_

@@ -12,7 +12,6 @@
 #ifndef __PHY_RoleInterface_Location_h_
 #define __PHY_RoleInterface_Location_h_
 
-#include "simulation_kernel/MIL.h"
 #include "MT_Tools/MT_Role_ABC.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 
@@ -35,7 +34,7 @@ public:
     typedef PHY_RoleInterface_Location RoleInterface;
 
 public:
-             PHY_RoleInterface_Location( MT_RoleContainer& role );
+    explicit PHY_RoleInterface_Location( MT_RoleContainer& role );
              PHY_RoleInterface_Location();
     virtual ~PHY_RoleInterface_Location();
 
@@ -68,6 +67,14 @@ public:
     //@}
 };
 
-#include "PHY_RoleInterface_Location.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Location::serialize
+// Created: JVT 2005-03-31
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RoleInterface_Location::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __PHY_RoleInterface_Location_h_

@@ -15,6 +15,7 @@
 #include "PHY_Perception_ABC.h"
 #include "PHY_PerceptionRadarData.h"
 
+class PHY_RadarClass;
 class TER_Localisation;
 
 // =============================================================================
@@ -27,22 +28,22 @@ class PHY_PerceptionRadar : public PHY_Perception_ABC
     MT_COPYNOTALLOWED( PHY_PerceptionRadar )
 
 public:
-             PHY_PerceptionRadar( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionRadar( PHY_RolePion_Perceiver& perceiver );
     virtual ~PHY_PerceptionRadar();
 
     //! @name Add/Remove Points
     //@{
-    void* EnableRadar ( const PHY_RadarClass& radarClass, const TER_Localisation& );
-    void  DisableRadar( const PHY_RadarClass& radarClass, void* pID );
+    void* EnableRadar( const PHY_RadarClass& radarClass, const TER_Localisation& );
+    void DisableRadar( const PHY_RadarClass& radarClass, void* pID );
 
-    void  EnableRadar ( const PHY_RadarClass& radarClass );
-    void  DisableRadar( const PHY_RadarClass& radarClass );
+    void EnableRadar ( const PHY_RadarClass& radarClass );
+    void DisableRadar( const PHY_RadarClass& radarClass );
     //@}
 
     //! @name Tools
     //@{
-    bool  HasRadarToHandle  () const;
-    bool  IsUsingActiveRadar() const;
+    bool HasRadarToHandle  () const;
+    bool IsUsingActiveRadar() const;
     //@}
 
     //! @name Execution
@@ -69,7 +70,5 @@ private:
     T_RadarOnUnitPositionVector radarOnUnitPosition_;
     T_RadarDataMap              radarData_;
 };
-
-#include "PHY_PerceptionRadar.inl"
 
 #endif // __PHY_PerceptionRadar_h_

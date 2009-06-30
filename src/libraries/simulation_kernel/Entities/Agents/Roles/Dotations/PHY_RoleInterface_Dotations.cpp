@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleInterface_Dotations.h"
 
 // -----------------------------------------------------------------------------
@@ -20,6 +19,7 @@
 PHY_RoleInterface_Dotations::PHY_RoleInterface_Dotations( MT_RoleContainer& roleContainer )
     : MT_Role_ABC( roleContainer )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +29,7 @@ PHY_RoleInterface_Dotations::PHY_RoleInterface_Dotations( MT_RoleContainer& role
 PHY_RoleInterface_Dotations::PHY_RoleInterface_Dotations()
     : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,5 +38,5 @@ PHY_RoleInterface_Dotations::PHY_RoleInterface_Dotations()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Dotations::~PHY_RoleInterface_Dotations()
 {
-
+    // NOTHING
 }

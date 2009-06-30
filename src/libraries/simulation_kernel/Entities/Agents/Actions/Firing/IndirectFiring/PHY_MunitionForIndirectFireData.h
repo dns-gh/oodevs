@@ -12,11 +12,10 @@
 #ifndef __PHY_MunitionForIndirectFireData_h_
 #define __PHY_MunitionForIndirectFireData_h_
 
-#include "MIL.h"
-
 class MIL_AgentPion;
 class PHY_Weapon;
 class PHY_ComposantePion;
+class PHY_DotationCategory;
 class PHY_IndirectFireDotationClass;
 
 // =============================================================================
@@ -33,18 +32,18 @@ public:
 
     //! @name Operations
     //@{
-    void        operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon );
-
+    void operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon );
     const PHY_DotationCategory* GetChoosenMunition() const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const MIL_AgentPion&                    firer_;
     const PHY_IndirectFireDotationClass& indirectWeaponCategory_;
     const MT_Float                          rRange_;
     const PHY_DotationCategory*             pChoosenMunition_;
+    //@}
 };
-
-#include "PHY_MunitionForIndirectFireData.inl"
 
 #endif // __PHY_MunitionForIndirectFireData_h_

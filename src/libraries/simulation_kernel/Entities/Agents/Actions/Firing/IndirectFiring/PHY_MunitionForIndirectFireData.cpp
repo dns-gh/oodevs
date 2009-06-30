@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MunitionForIndirectFireData.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -30,7 +29,7 @@ PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( const MIL_Agen
     , rRange_                ( rRange )
     , pChoosenMunition_      ( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +38,7 @@ PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( const MIL_Agen
 // -----------------------------------------------------------------------------
 PHY_MunitionForIndirectFireData::~PHY_MunitionForIndirectFireData()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -65,4 +64,13 @@ void PHY_MunitionForIndirectFireData::operator()( const PHY_ComposantePion& comp
 
     if( !pChoosenMunition_ || roleDotations.GetDotationValue( *pChoosenMunition_ ) < roleDotations.GetDotationValue( weapon.GetDotationCategory() ) )
         pChoosenMunition_ = &weapon.GetDotationCategory();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MunitionForIndirectFireData::GetChoosenMunition
+// Created: NLD 2006-08-08
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* PHY_MunitionForIndirectFireData::GetChoosenMunition() const
+{
+    return pChoosenMunition_;
 }

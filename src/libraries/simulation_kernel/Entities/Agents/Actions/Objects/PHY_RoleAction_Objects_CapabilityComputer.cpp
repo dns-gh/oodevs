@@ -74,3 +74,12 @@ void PHY_RoleAction_Objects_CapabilityComputer::operator() ( const PHY_Composant
         default: assert( false );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects_CapabilityComputer::HasCapability
+// Created: NLD 2004-10-14
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Objects_CapabilityComputer::HasCapability() const
+{
+    return bHasCapability_;
+}

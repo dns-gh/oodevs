@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleHLA_Perceiver_h_
 #define __PHY_RoleHLA_Perceiver_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Perceiver.h"
 
 // =============================================================================
@@ -26,7 +24,7 @@ class PHY_RoleHLA_Perceiver : public PHY_RoleInterface_Perceiver
     MT_COPYNOTALLOWED( PHY_RoleHLA_Perceiver )
 
 public:
-    PHY_RoleHLA_Perceiver( MT_RoleContainer& role );
+    explicit PHY_RoleHLA_Perceiver( MT_RoleContainer& role );
     virtual ~PHY_RoleHLA_Perceiver();
 
     //! @name Operations
@@ -42,7 +40,5 @@ public:
 private:
     bool bIsUsingActiveRadar_; 
 };
-
-#include "PHY_RoleHLA_Perceiver.inl"
 
 #endif // __PHY_RoleHLA_Perceiver_h_

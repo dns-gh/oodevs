@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionTransportUnload_h_
 #define __PHY_ActionTransportUnload_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Transport;
@@ -31,7 +29,7 @@ public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-    PHY_ActionTransportUnload( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionTransportUnload( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionTransportUnload();
 
     //! @name Operations
@@ -44,7 +42,5 @@ private:
     PHY_RoleAction_Transport& role_;
     DIA_Variable_ABC&         diaReturnCode_;
 };
-
-#include "PHY_ActionTransportUnload.inl"
 
 #endif // __PHY_ActionTransportUnload_h_

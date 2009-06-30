@@ -12,8 +12,6 @@
 #ifndef __PHY_FireResults_ABC_h_
 #define __PHY_FireResults_ABC_h_
 
-#include "MIL.h"
-
 #include "PHY_FireDamages_Agent.h"
 #include "PHY_FireDamages_Population.h"
 
@@ -29,7 +27,7 @@ class PHY_FireResults_ABC
     MT_COPYNOTALLOWED( PHY_FireResults_ABC )
 
 public:
-    PHY_FireResults_ABC();
+             PHY_FireResults_ABC();
     virtual ~PHY_FireResults_ABC();
 
     //! @name Accessors
@@ -74,11 +72,12 @@ protected:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     T_AgentDamagesMap      agentsDamages_;
     T_PopulationDamagesMap populationsDamages_;
     uint                   nNbrRefs_;
+    //@}
 };
-
-#include "PHY_FireResults_ABC.inl"
 
 #endif // __PHY_FireResults_ABC_h_

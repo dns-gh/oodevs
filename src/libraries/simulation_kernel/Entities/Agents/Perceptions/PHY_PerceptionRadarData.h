@@ -12,8 +12,6 @@
 #ifndef __PHY_PerceptionRadarData_h_
 #define __PHY_PerceptionRadarData_h_
 
-#include "MIL.h"
-
 class PHY_RadarType;
 class PHY_RolePion_Perceiver;
 class TER_Localisation;
@@ -70,7 +68,5 @@ private:
     const PHY_RadarType*        pRadarType_;
           T_AgentAcquisitionMap acquisitionData_;
 };
-
-#include "PHY_PerceptionRadarData.inl"
 
 #endif // __PHY_PerceptionRadarData_h_

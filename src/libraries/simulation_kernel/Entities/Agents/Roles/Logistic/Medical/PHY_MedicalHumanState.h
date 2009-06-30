@@ -102,6 +102,4 @@ private:
           bool                    bEvacuatedByThirdParty_;
 };
 
-#include "PHY_MedicalHumanState.inl"
-
 #endif // __PHY_MedicalHumanState_h_

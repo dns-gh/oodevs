@@ -76,6 +76,4 @@ private:
     T_RecoVector recos_;
 };
 
-#include "PHY_PerceptionRecoLocalisation.inl"
-
 #endif // __PHY_PerceptionRecoLocalisation_h_

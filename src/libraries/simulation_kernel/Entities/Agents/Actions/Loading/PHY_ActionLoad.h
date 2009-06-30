@@ -12,12 +12,10 @@
 #ifndef __PHY_ActionLoad_h_
 #define __PHY_ActionLoad_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
-class PHY_RoleAction_Loading;
 class MIL_AgentPion;
+class PHY_RoleAction_Loading;
 
 // =============================================================================
 // @class  PHY_ActionLoad
@@ -31,7 +29,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-    PHY_ActionLoad( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionLoad( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionLoad();
 
     //! @name Operations
@@ -41,10 +39,11 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_RoleAction_Loading& role_;
     DIA_Variable_ABC&       diaReturnCode_;
+    //@}
 };
-
-#include "PHY_ActionLoad.inl"
 
 #endif // __PHY_ActionLoad_h_

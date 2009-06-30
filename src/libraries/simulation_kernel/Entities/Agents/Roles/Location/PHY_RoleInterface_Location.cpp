@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleInterface_Location.h"
 
 // -----------------------------------------------------------------------------
@@ -21,6 +20,7 @@ PHY_RoleInterface_Location::PHY_RoleInterface_Location( MT_RoleContainer& role )
     : MT_Role_ABC  ( role )
     , TER_Agent_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +31,7 @@ PHY_RoleInterface_Location::PHY_RoleInterface_Location()
     : MT_Role_ABC  ()
     , TER_Agent_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,5 +40,5 @@ PHY_RoleInterface_Location::PHY_RoleInterface_Location()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Location::~PHY_RoleInterface_Location()
 {
+    // NOTHING
 }
-

@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "NET_RoleInterface_Dotations.h"
 
 BOOST_CLASS_EXPORT_GUID( NET_RoleInterface_Dotations, "NET_RoleInterface_Dotations" )
@@ -22,6 +21,7 @@ BOOST_CLASS_EXPORT_GUID( NET_RoleInterface_Dotations, "NET_RoleInterface_Dotatio
 NET_RoleInterface_Dotations::NET_RoleInterface_Dotations( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +31,7 @@ NET_RoleInterface_Dotations::NET_RoleInterface_Dotations( MT_RoleContainer& role
 NET_RoleInterface_Dotations::NET_RoleInterface_Dotations()
     : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,14 +40,5 @@ NET_RoleInterface_Dotations::NET_RoleInterface_Dotations()
 // -----------------------------------------------------------------------------
 NET_RoleInterface_Dotations::~NET_RoleInterface_Dotations()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_RoleInterface_Dotations::serialize
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void NET_RoleInterface_Dotations::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+    // NOTHING
 }

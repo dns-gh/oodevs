@@ -23,7 +23,7 @@ class PHY_PerceptionRecoPoint : public PHY_Perception_ABC
     MT_COPYNOTALLOWED( PHY_PerceptionRecoPoint )
 
 public:
-             PHY_PerceptionRecoPoint( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionRecoPoint( PHY_RolePion_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoPoint();
 
     void Update();
@@ -83,7 +83,5 @@ private:
 private:
     T_RecoVector recos_;
 };
-
-#include "PHY_PerceptionRecoPoint.inl"
 
 #endif // __PHY_PerceptionRecoPoint_h_

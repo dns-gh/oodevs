@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "NET_RolePion_Dotations.h"
-
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
@@ -50,6 +48,7 @@ NET_RolePion_Dotations::NET_RolePion_Dotations( MT_RoleContainer& role, const MI
     , bLastStateDead_            ( false )
     , bLastStateNeutralized_     ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +61,7 @@ NET_RolePion_Dotations::NET_RolePion_Dotations()
     , bLastStateDead_            ( false )
     , bLastStateNeutralized_     ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -70,11 +70,8 @@ NET_RolePion_Dotations::NET_RolePion_Dotations()
 // -----------------------------------------------------------------------------
 NET_RolePion_Dotations::~NET_RolePion_Dotations()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: NET_RolePion_Dotations::serialize
@@ -88,10 +85,6 @@ void NET_RolePion_Dotations::serialize( Archive& file, const uint )
          & bLastStateDead_
          & bLastStateNeutralized_;
 }
-
-// =============================================================================
-// UPDATE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: NET_RolePion_Dotations::DataUpdated
@@ -128,7 +121,6 @@ bool NET_RolePion_Dotations::DataUpdated() const
 // Name: NET_RolePion_Dotations::SendMsg
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-inline
 void NET_RolePion_Dotations::SendMsg( NET_ASN_MsgUnitAttributes& asnMsg ) const
 {
     asnMsg.Send();

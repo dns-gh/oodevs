@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Surrender.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -173,10 +172,6 @@ bool PHY_RolePion_Surrender::IsImprisoned( const MIL_Object_ABC& camp )
     return pPrison_ == &camp; //$$$$
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::IsSurrendered
 // Created: NLD 2005-02-24
@@ -196,10 +191,6 @@ const MIL_Army* PHY_RolePion_Surrender::GetArmySurrenderedTo() const
     assert( pPion_ );
     return pPion_->GetAutomate().GetArmySurrenderedTo();
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::SendFullState
@@ -224,4 +215,31 @@ void PHY_RolePion_Surrender::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) 
 {
     if( bHasChanged_ )
         SendFullState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::Clean
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Surrender::Clean()
+{
+    bHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::HasChanged
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Surrender::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::IsPrisoner
+// Created: NLD 2005-02-24
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Surrender::IsPrisoner() const
+{
+    return bPrisoner_;
 }

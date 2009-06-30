@@ -138,6 +138,4 @@ private:
     static MT_Random  random_;
 };
 
-#include "PHY_RolePion_Posture.inl"
-
 #endif // __PHY_RolePion_Posture_h_

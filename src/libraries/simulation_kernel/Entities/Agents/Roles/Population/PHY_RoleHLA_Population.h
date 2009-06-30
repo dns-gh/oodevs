@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-09 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Nbc/PHY_RoleHLA_Population.h $
-// $Author: Age $
-// $Modtime: 2/12/04 11:45 $
-// $Revision: 3 $
-// $Workfile: PHY_RoleHLA_Population.h $
-//
-// *****************************************************************************
 
 #ifndef __PHY_RoleHLA_Population_h_
 #define __PHY_RoleHLA_Population_h_
@@ -30,7 +21,7 @@ class PHY_RoleHLA_Population : public PHY_RoleInterface_Population
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleHLA_Population( MT_RoleContainer& role );
+    explicit PHY_RoleHLA_Population( MT_RoleContainer& role );
     virtual ~PHY_RoleHLA_Population();
     //@}
     

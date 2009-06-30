@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleInterface_Posture_h_
 #define __PHY_RoleInterface_Posture_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 class PHY_Posture;
@@ -53,6 +51,14 @@ public:
     //@}
 };
 
-#include "PHY_RoleInterface_Posture.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Posture::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RoleInterface_Posture::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __PHY_RoleInterface_Posture_h_

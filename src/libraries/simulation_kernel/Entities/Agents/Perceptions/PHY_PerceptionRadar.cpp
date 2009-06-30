@@ -11,9 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRadar.h"
-
-#include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar constructor
@@ -24,6 +24,7 @@ PHY_PerceptionRadar::PHY_PerceptionRadar( PHY_RolePion_Perceiver& perceiver )
     , radarOnUnitPosition_( PHY_RadarClass::GetNbrClasses() )
     , radarZones_         ( PHY_RadarClass::GetNbrClasses() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -32,6 +33,7 @@ PHY_PerceptionRadar::PHY_PerceptionRadar( PHY_RolePion_Perceiver& perceiver )
 // -----------------------------------------------------------------------------
 PHY_PerceptionRadar::~PHY_PerceptionRadar()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -86,15 +88,11 @@ void PHY_PerceptionRadar::DisableRadar( const PHY_RadarClass& radarClass, void* 
 bool PHY_PerceptionRadar::HasRadarToHandle() const
 {
     for( CIT_RadarZonesVector it = radarZones_.begin(); it != radarZones_.end(); ++it )
-    {
-        if( !(*it).empty() )
+        if( !it->empty() )
             return true;
-    }
-    for( CIT_RadarOnUnitPositionVector it2 = radarOnUnitPosition_.begin(); it2 != radarOnUnitPosition_.end(); ++it2 )
-    {
-        if( *it2 )
+    for( CIT_RadarOnUnitPositionVector it = radarOnUnitPosition_.begin(); it != radarOnUnitPosition_.end(); ++it )
+        if( *it )
             return true;
-    }
     return false;
 }
 
@@ -136,10 +134,6 @@ const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const DEC_Knowledge_Age
 {
     return PHY_PerceptionLevel::notSeen_;
 }
-
-// =============================================================================
-// AGENTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar::Execute

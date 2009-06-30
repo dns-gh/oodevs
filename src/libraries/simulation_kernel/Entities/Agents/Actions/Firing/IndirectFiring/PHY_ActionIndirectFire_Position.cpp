@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionIndirectFire_Position.h"
-
 #include "PHY_RoleAction_IndirectFiring.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
@@ -53,10 +51,6 @@ PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
         pEffect_->DecRef();
     }
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Position::Execute

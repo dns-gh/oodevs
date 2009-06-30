@@ -19,6 +19,7 @@
 // -----------------------------------------------------------------------------
 PHY_Actor::PHY_Actor()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,20 +32,15 @@ PHY_Actor::~PHY_Actor()
         delete *actions_.begin();
 }
 
-// =============================================================================
-// UPDATES
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Actor::UpdateActions
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_Actor::UpdateActions()
 {
-    for( CIT_ActionSet itAction = actions_.begin(); itAction != actions_.end(); ++itAction )
-        (**itAction).Update();
+    for( std::set< PHY_Action_ABC* >::const_iterator it = actions_.begin(); it != actions_.end(); ++it )
+        (*it)->Update();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Actor::RegisterAction
@@ -64,4 +60,22 @@ void PHY_Actor::UnregisterAction( PHY_Action_ABC& action )
 {
     int nOut = actions_.erase( &action );
     assert( nOut == 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Actor::CancelAllActions
+// Created: NLD 2005-03-18
+// -----------------------------------------------------------------------------
+void PHY_Actor::CancelAllActions()
+{
+    actions_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Actor::HasAction
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+bool PHY_Actor::HasAction( PHY_Action_ABC& action ) const
+{
+    return actions_.find( &action ) != actions_.end();
 }

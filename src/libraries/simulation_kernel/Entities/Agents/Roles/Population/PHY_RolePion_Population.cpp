@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Population.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_PopulationCollision.h"
@@ -32,6 +30,7 @@ PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_Ag
     , bReloadingDurationModificationEnabled_( true )
     , bInvulnerabilityEnabled_              ( false )
 {
+    // NOTHING
 }
  
 // -----------------------------------------------------------------------------
@@ -46,6 +45,7 @@ PHY_RolePion_Population::PHY_RolePion_Population()
     , bReloadingDurationModificationEnabled_( true )
     , bInvulnerabilityEnabled_              ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,11 +54,8 @@ PHY_RolePion_Population::PHY_RolePion_Population()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Population::~PHY_RolePion_Population()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::serialize
@@ -73,10 +70,6 @@ void PHY_RolePion_Population::serialize( Archive& file, const uint )
          & bReloadingDurationModificationEnabled_
          & bInvulnerabilityEnabled_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::ModifyMaxSpeed
@@ -161,3 +154,101 @@ MT_Float PHY_RolePion_Population::GetCollidingPopulationDensity() const
 //    if( bHasChanged_ )
 //        SendFullState( msg );
 //}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::Update
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Population::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::Clean
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Population::Clean()
+{
+    bHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::HasChanged
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Population::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::EnableSlowDown
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Population::EnableSlowDown()
+{
+    bSlowDownEnabled_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::DisableSlowDown
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Population::DisableSlowDown()
+{
+    bSlowDownEnabled_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::EnableReloadingDurationModification
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Population::EnableReloadingDurationModification()
+{
+    bReloadingDurationModificationEnabled_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::DisableReloadingDurationModification
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Population::DisableReloadingDurationModification()
+{
+    bReloadingDurationModificationEnabled_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::EnableInvulnerability
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Population::EnableInvulnerability()
+{
+    if( ! bInvulnerabilityEnabled_ )
+    {
+        bHasChanged_ = true;
+        bInvulnerabilityEnabled_ = true;
+    }
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::DisableInvulnerability
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Population::DisableInvulnerability()
+{
+    if( bInvulnerabilityEnabled_ )
+    {
+        bHasChanged_ = true;
+        bInvulnerabilityEnabled_ = false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::IsInvulnerable
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Population::IsInvulnerable() const
+{
+    return bInvulnerabilityEnabled_;
+}

@@ -12,8 +12,6 @@
 #ifndef __PHY_RolePion_Humans_h_
 #define __PHY_RolePion_Humans_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Humans.h"
 
 class PHY_HumanRank;
@@ -149,7 +147,5 @@ private:
     uint                   nTickRcMedicalQuerySent_;
     E_EvacuationMode       nEvacuationMode_;
 };
-
-#include "PHY_RolePion_Humans.inl"
 
 #endif // __PHY_RolePion_Humans_h_

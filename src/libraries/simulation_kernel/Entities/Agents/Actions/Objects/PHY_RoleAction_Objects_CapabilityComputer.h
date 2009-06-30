@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleAction_Objects_CapabilityComputer_h_
 #define __PHY_RoleAction_Objects_CapabilityComputer_h_
 
-#include "MIL.h"
-
 class MIL_ObjectType_ABC;
 class PHY_ComposantePion;
 class MIL_AgentPion;
@@ -60,7 +58,5 @@ private:
     const MIL_ObjectType_ABC& objectType_;
           bool                bHasCapability_;
 };
-
-#include "PHY_RoleAction_Objects_CapabilityComputer.inl"
 
 #endif // __PHY_RoleAction_Objects_CapabilityComputer_h_

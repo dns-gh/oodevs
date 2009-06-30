@@ -10,8 +10,6 @@
 #ifndef __PHY_MaintenanceResourcesAlarms_h_
 #define __PHY_MaintenanceResourcesAlarms_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -59,7 +57,5 @@ private:
     static T_LevelSet repairerResourcesLevels_;
     static T_LevelSet haulerResourcesLevels_;
 };
-
-#include "PHY_MaintenanceResourcesAlarms.inl"
 
 #endif // __PHY_MaintenanceResourcesAlarms_h_

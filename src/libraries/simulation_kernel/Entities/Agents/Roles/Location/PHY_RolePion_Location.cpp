@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -23,18 +22,13 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_PopulationInteraction.h"
-
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-
 #include "Tools/MIL_Tools.h"
-
 #include "simulation_terrain/TER_World.h"
-
 #include "Hla/HLA_UpdateFunctor.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
@@ -475,3 +469,92 @@ void PHY_RolePion_Location::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "vitesse"  , bCurrentSpeedHasChanged_, rCurrentSpeed_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::GetHeight
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Location::GetHeight() const
+{
+    return rHeight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::GetPosition
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const MT_Vector2D& PHY_RolePion_Location::GetPosition() const
+{
+    return vPosition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::GetDirection
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const MT_Vector2D& PHY_RolePion_Location::GetDirection() const
+{
+    return vDirection_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::GetCurrentSpeed
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Location::GetCurrentSpeed() const
+{
+    return rCurrentSpeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::HasDoneMagicMove
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Location::HasDoneMagicMove() const
+{
+    return bHasDoneMagicMove_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::Update
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Location::Update( bool bIsDead )
+{
+    if( bIsDead || !bHasMove_ )
+    {
+        Move( vPosition_, vDirection_, 0. );
+        Fly ( 0. );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::Clean
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Location::Clean()
+{
+    bHasMove_                = false;
+    bHasDoneMagicMove_       = false;
+    bPositionHasChanged_     = false;
+    bDirectionHasChanged_    = false;
+    bCurrentSpeedHasChanged_ = false;
+    bHeightHasChanged_       = false;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::HasSpeedChanged
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Location::HasSpeedChanged() const
+{
+    return bCurrentSpeedHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::HasLocationChanged
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Location::HasLocationChanged() const
+{
+    return bPositionHasChanged_ || bDirectionHasChanged_ || bHeightHasChanged_;
+}

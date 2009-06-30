@@ -12,8 +12,6 @@
 #ifndef __PHY_MaintenanceRepairConsign_h_
 #define __PHY_MaintenanceRepairConsign_h_
 
-#include "MIL.h"
-
 #include "PHY_MaintenanceConsign_ABC.h"
 
 class PHY_RolePionLOG_Maintenance;
@@ -60,7 +58,5 @@ private:
 private:
     PHY_ComposantePion* pRepairer_;
 };
-
-#include "PHY_MaintenanceRepairConsign.inl"
 
 #endif // __PHY_MaintenanceRepairConsign_h_

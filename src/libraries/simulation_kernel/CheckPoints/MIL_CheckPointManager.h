@@ -101,6 +101,4 @@ private:
     T_CheckPointsQueue   currentCheckPoints_;
 };
 
-#include "MIL_CheckPointManager.inl"
-
 #endif // __MIL_CheckPointManager_h_

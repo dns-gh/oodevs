@@ -10,12 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionBypassObject.h"
-
 #include "PHY_RoleAction_Objects.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionBypassObject constructor
@@ -39,10 +37,6 @@ PHY_ActionBypassObject::~PHY_ActionBypassObject()
 {
     diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionBypassObject::Execute

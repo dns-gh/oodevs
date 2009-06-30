@@ -10,16 +10,15 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_Flying.h"
+#include "MIL_AgentServer.h"
 #include "PHY_ActionFly.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Flying, "PHY_RoleAction_Flying" )
 
@@ -34,6 +33,7 @@ PHY_RoleAction_Flying::PHY_RoleAction_Flying( MT_RoleContainer& role, MIL_AgentP
     , pActionFly_                   ( 0 )
     , bForceLanding_                ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +47,7 @@ PHY_RoleAction_Flying::PHY_RoleAction_Flying()
     , pActionFly_                   ( 0 )
     , bForceLanding_                ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,11 +56,9 @@ PHY_RoleAction_Flying::PHY_RoleAction_Flying()
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Flying::~PHY_RoleAction_Flying()
 {
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Flying::serialize
 // Created: JVT 2005-04-14
@@ -71,16 +70,10 @@ void PHY_RoleAction_Flying::serialize( Archive& file, const uint )
          & pPion_;
 }
 
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Flying::TakeOff
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-inline
 bool PHY_RoleAction_Flying::TakeOff()
 {
     if( pActionFly_ )
@@ -95,7 +88,6 @@ bool PHY_RoleAction_Flying::TakeOff()
 // Name: PHY_RoleAction_Flying::Land
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-inline
 bool PHY_RoleAction_Flying::Land()
 {
     if( !pActionFly_ ) 
@@ -148,3 +140,38 @@ void PHY_RoleAction_Flying::Apply( MT_Float rHeight )
         GetRole< PHY_RolePion_Location  >().Fly( rHeight );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Flying::Update
+// Created: NLD 2004-10-04
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Flying::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Flying::Clean
+// Created: NLD 2004-10-04
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Flying::Clean()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Flying::CanMove
+// Created: NLD 2004-10-04
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Flying::CanMove() const
+{
+    return pActionFly_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Flying::IsFlying
+// Created: JVT 2005-02-11
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Flying::IsFlying() const
+{
+    return pActionFly_ != 0;
+}

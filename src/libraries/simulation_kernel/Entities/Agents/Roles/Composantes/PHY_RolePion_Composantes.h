@@ -12,8 +12,8 @@
 #ifndef __PHY_RolePion_Composantes_h_
 #define __PHY_RolePion_Composantes_h_
 
-#include "MIL.h"
 #include "PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h" 
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
 class NET_ASN_MsgUnitAttributes;

@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Transported.h"
-
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -35,6 +33,7 @@ PHY_RolePion_Transported::PHY_RolePion_Transported( MT_RoleContainer& role, MIL_
     , vLoadingPosition_            ()
     , vHumanTransporterPosition_   ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +48,7 @@ PHY_RolePion_Transported::PHY_RolePion_Transported()
     , vLoadingPosition_            ()
     , vHumanTransporterPosition_   ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,12 +57,8 @@ PHY_RolePion_Transported::PHY_RolePion_Transported()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Transported::~PHY_RolePion_Transported()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::load
@@ -93,39 +89,34 @@ void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint 
          << vHumanTransporterPosition_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: sTransportedData
-// Created: JVT 2005-02-01
-// -----------------------------------------------------------------------------
-struct sTransportedData
+namespace
 {
-    sTransportedData( const MIL_AgentPion& transported, const bool bTransportOnlyLoadable )
-        : rTotalWeight_             ( 0. )
-        , rHeaviestComposanteWeight_( 0. )
-        , bTransportOnlyLoadable_   ( bTransportOnlyLoadable )
+    struct sTransportedData
     {
-        transported.GetRole< PHY_RolePion_Composantes >().Apply( *this );
-    }
-
-    void operator() ( const PHY_ComposantePion& composante )
-    {
-        if( composante.CanBeTransported() && ( !bTransportOnlyLoadable_ || composante.CanBeLoaded() ) )
+        sTransportedData( const MIL_AgentPion& transported, const bool bTransportOnlyLoadable )
+            : rTotalWeight_             ( 0. )
+            , rHeaviestComposanteWeight_( 0. )
+            , bTransportOnlyLoadable_   ( bTransportOnlyLoadable )
         {
-            rTotalWeight_             += composante.GetWeight();
-            rHeaviestComposanteWeight_ = std::max( rHeaviestComposanteWeight_, composante.GetWeight() );
+            transported.GetRole< PHY_RolePion_Composantes >().Apply( *this );
         }
-    }
 
-          MT_Float rTotalWeight_;
-          MT_Float rHeaviestComposanteWeight_;
-    const bool     bTransportOnlyLoadable_;
+        void operator() ( const PHY_ComposantePion& composante )
+        {
+            if( composante.CanBeTransported() && ( !bTransportOnlyLoadable_ || composante.CanBeLoaded() ) )
+            {
+                rTotalWeight_             += composante.GetWeight();
+                rHeaviestComposanteWeight_ = std::max( rHeaviestComposanteWeight_, composante.GetWeight() );
+            }
+        }
 
-    MT_COPYNOTALLOWED( sTransportedData );
-};
+              MT_Float rTotalWeight_;
+              MT_Float rHeaviestComposanteWeight_;
+        const bool     bTransportOnlyLoadable_;
+
+        MT_COPYNOTALLOWED( sTransportedData );
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::GetTransportWeight
@@ -163,9 +154,7 @@ bool PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
 bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
     if( pTransporter_ && pTransporter_ == &transporter)
-    {
         return true;
-    }
     if( pTransporter_ )
         return false;
 
@@ -197,7 +186,7 @@ bool PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
 
     assert( pTransporter_ );
     GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
-    GetRole< PHY_RolePion_Location  >().Show               ( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    GetRole< PHY_RolePion_Location  >().Show( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pTransporter_ = 0;
     bHasChanged_  = true;
     vLoadingPosition_.Reset();
@@ -233,21 +222,20 @@ void PHY_RolePion_Transported::RecoverHumanTransporters()
     bHasChanged_ = true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Transported::ComputeTimes
-// Created: JVT 2005-02-03
-// -----------------------------------------------------------------------------
-struct sTransporterComposantePresent
+namespace
 {
-    sTransporterComposantePresent() : bComposantePresent_( false ) {}
-
-    void operator () ( const PHY_ComposantePion& composante )
+    struct sTransporterComposantePresent
     {
-        bComposantePresent_ |= composante.CanTransportHumans();
-    }
+        sTransporterComposantePresent() : bComposantePresent_( false ) {}
 
-    bool bComposantePresent_;
-};
+        void operator () ( const PHY_ComposantePion& composante )
+        {
+            bComposantePresent_ |= composante.CanTransportHumans();
+        }
+
+        bool bComposantePresent_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::HasHumanTransportersReady
@@ -261,10 +249,6 @@ bool PHY_RolePion_Transported::HasHumanTransportersReady() const
     
     return vHumanTransporterPosition_.IsZero() && func.bComposantePresent_;
 }
-
-// =============================================================================
-// 
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::Update
@@ -285,10 +269,6 @@ void PHY_RolePion_Transported::Clean()
 {
     bHasChanged_ = false;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::SendFullState
@@ -313,4 +293,29 @@ void PHY_RolePion_Transported::SendChangedState( NET_ASN_MsgUnitAttributes& msg 
         SendFullState( msg );
 }   
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Transported::HasChanged
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Transported::HasChanged() const
+{
+    return bHasChanged_;
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Transported::IsTransported
+// Created: NLD 2004-11-22
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Transported::IsTransported() const
+{
+    return pTransporter_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Transported::HasHumanTransportersToRecover
+// Created: NLD 2004-11-22
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Transported::HasHumanTransportersToRecover() const
+{
+    return !vHumanTransporterPosition_.IsZero();
+}

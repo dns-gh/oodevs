@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleAction_IndirectFiring_h_
 #define __PHY_RoleAction_IndirectFiring_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 
@@ -80,9 +78,10 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     MIL_AgentPion* pPion_;
+    //@}
 };
-
-#include "PHY_RoleAction_IndirectFiring.inl"
 
 #endif // __PHY_RoleAction_IndirectFiring_h_

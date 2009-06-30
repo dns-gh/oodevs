@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_InterfaceFlying.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_InterfaceFlying, "PHY_RoleAction_InterfaceFlying" )
@@ -22,6 +21,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_InterfaceFlying, "PHY_RoleAction_Interfa
 PHY_RoleAction_InterfaceFlying::PHY_RoleAction_InterfaceFlying( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +31,7 @@ PHY_RoleAction_InterfaceFlying::PHY_RoleAction_InterfaceFlying( MT_RoleContainer
 PHY_RoleAction_InterfaceFlying::PHY_RoleAction_InterfaceFlying()
     : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,25 +40,8 @@ PHY_RoleAction_InterfaceFlying::PHY_RoleAction_InterfaceFlying()
 // -----------------------------------------------------------------------------
 PHY_RoleAction_InterfaceFlying::~PHY_RoleAction_InterfaceFlying()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_InterfaceFlying::serialize
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-template< typename Archive > 
-void PHY_RoleAction_InterfaceFlying::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_InterfaceFlying::Update
@@ -76,7 +60,6 @@ void PHY_RoleAction_InterfaceFlying::Clean()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_InterfaceFlying::Fly
@@ -112,4 +95,13 @@ bool PHY_RoleAction_InterfaceFlying::IsFlying() const
 void PHY_RoleAction_InterfaceFlying::Apply( MT_Float /*rHeight*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_InterfaceFlying::CanMove
+// Created: NLD 2004-10-04
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_InterfaceFlying::CanMove() const
+{
+    return true;
 }

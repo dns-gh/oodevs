@@ -15,16 +15,17 @@
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationConsumptions.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.h>
@@ -406,4 +407,144 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
     pCurrentConsumptionMode_  = 0;
 
     pDotations_->ConsumeFireReservations();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::HasChanged
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Dotations::HasChanged() const
+{
+    assert( pDotations_ );
+    return pDotations_->HasChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::Clean
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::Clean()
+{
+    assert( pDotations_ );
+    pDotations_->Clean();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::GetDotationValue
+// Created: NLD 2004-09-15
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Dotations::GetDotationValue( const PHY_DotationCategory& category ) const
+{
+    assert( pDotations_ );
+    return pDotations_->GetValue( category );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::HasDotation
+// Created: NLD 2005-04-18
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Dotations::HasDotation( const PHY_DotationCategory& category ) const
+{
+    assert( pDotations_ );
+    return pDotations_->GetValue( category ) > 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::GetDotationCapacity
+// Created: NLD 2004-09-16
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Dotations::GetDotationCapacity( const PHY_DotationCategory& category ) const
+{
+    assert( pDotations_ );
+    return pDotations_->GetCapacity( category );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::ConsumeDotation
+// Created: NLD 2004-09-15
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Dotations::ConsumeDotation( const PHY_DotationCategory& category, MT_Float rNbr )
+{
+    assert( pDotations_ );
+    return pDotations_->Consume( category, rNbr );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::SupplyDotation
+// Created: NLD 2005-05-11
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Dotations::SupplyDotation( const PHY_DotationCategory& category, MT_Float rNbr )
+{
+    assert( pDotations_ );
+    return pDotations_->Supply( category, rNbr );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::ResupplyDotations
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::ResupplyDotations()
+{
+    assert( pDotations_ );
+    pDotations_->Resupply();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::ResupplyDotations
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor )
+{
+    assert( pDotations_ );
+    pDotations_->Resupply( ammoDotationClass, rFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::ResupplyDotations
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::ResupplyDotations( const PHY_DotationType& type, MT_Float rFactor )
+{
+    assert( pDotations_ );
+    pDotations_->Resupply( type, rFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::AddFireReservation
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Dotations::AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr )
+{
+    assert( pDotations_ );
+    return pDotations_->AddFireReservation( category, rNbr );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::FillSupplyRequest
+// Created: NLD 2005-01-26
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::FillSupplyRequest( PHY_SupplyDotationRequestContainer& supplyRequestContainer ) const
+{
+    assert( pDotations_ );
+    pDotations_->FillSupplyRequest( supplyRequestContainer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::SendChangedState
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const
+{
+    assert( pDotations_ );
+    pDotations_->SendChangedState( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::SendFullState
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
+{
+    assert( pDotations_ );
+    pDotations_->SendFullState( asn );
 }

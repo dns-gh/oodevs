@@ -520,3 +520,86 @@ void PHY_RoleAction_Transport::SendChangedState( NET_ASN_MsgUnitAttributes& msg 
     if( bHasChanged_ )
         SendFullState( msg );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::GetInitialReturnCode
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Transport::GetInitialReturnCode() const
+{
+    return eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::GetFinalReturnCode
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Transport::GetFinalReturnCode() const
+{
+    return eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::Update
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::Update( bool /*bIsDead*/ )
+{
+    if( !bLoadUnloadHasBeenUpdated_ )
+        nState_ = eNothing;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::Clean
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::Clean()
+{
+    bLoadUnloadHasBeenUpdated_ = false;
+    bHasChanged_               = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::HasChanged
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Transport::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::LoadSuspended
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::LoadSuspended()
+{
+    bLoadUnloadHasBeenUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::UnloadSuspended
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::UnloadSuspended()
+{
+    bLoadUnloadHasBeenUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::IsFinished
+// Created: NLD 2005-04-19
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Transport::IsFinished() const
+{
+    return transportedPions_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::IsTransporting
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Transport::IsTransporting() const
+{
+    return rWeightTransported_ > 0.;
+}

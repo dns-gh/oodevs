@@ -13,7 +13,6 @@
 #define __PHY_MedicalCollectionConsign_h_
 
 #include "MIL.h"
-
 #include "PHY_MedicalConsign_ABC.h"
 
 class PHY_RolePionLOG_Medical;
@@ -70,7 +69,5 @@ private:
 private:
     PHY_MedicalCollectionAmbulance* pCollectionAmbulance_;
 };
-
-#include "PHY_MedicalCollectionConsign.inl"
 
 #endif // __PHY_MedicalCollectionConsign_h_

@@ -20,6 +20,7 @@
 PHY_RoleInterface_Population::PHY_RoleInterface_Population( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +30,7 @@ PHY_RoleInterface_Population::PHY_RoleInterface_Population( MT_RoleContainer& ro
 PHY_RoleInterface_Population::PHY_RoleInterface_Population()
      : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,5 +39,5 @@ PHY_RoleInterface_Population::PHY_RoleInterface_Population()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Population::~PHY_RoleInterface_Population()
 {
-
+    // NOTHING
 }

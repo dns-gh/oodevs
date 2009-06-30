@@ -12,8 +12,6 @@
 #ifndef __NET_RolePion_Dotations_h_
 #define __NET_RolePion_Dotations_h_
 
-#include "MIL.h"
-
 #include "NET_RoleInterface_Dotations.h"
 #include "game_asn/Simulation.h"
 
@@ -25,6 +23,7 @@ class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  NET_RolePion_Dotations
+// $$$$ SBO 2009-06-30: WTF? name doesn't match anything the class actually does
 // Created: JVT 2004-08-03
 // =============================================================================
 class NET_RolePion_Dotations : public NET_RoleInterface_Dotations
@@ -60,6 +59,5 @@ private:
     mutable bool         bLastStateNeutralized_;
 };
 
-#include "NET_RolePion_Dotations.inl"
 
 #endif // __NET_RolePion_Dotations_h_

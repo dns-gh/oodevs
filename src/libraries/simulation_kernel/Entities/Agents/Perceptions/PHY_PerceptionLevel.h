@@ -12,8 +12,6 @@
 #ifndef __PHY_PerceptionLevel_h_
 #define __PHY_PerceptionLevel_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 // =============================================================================
@@ -39,20 +37,20 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&                GetName    () const;
-    uint                              GetID      () const;
-    ASN1T_EnumUnitIdentificationLevel GetAsnID   () const;
-    bool                              IsBestLevel() const;
+    const std::string& GetName() const;
+    uint GetID() const;
+    bool IsBestLevel() const;
     //@}
 
     //! @name Operators
     //@{
-    bool operator == ( const PHY_PerceptionLevel& rhs ) const;
-    bool operator != ( const PHY_PerceptionLevel& rhs ) const;
-    bool operator <  ( const PHY_PerceptionLevel& rhs ) const;
-    bool operator <= ( const PHY_PerceptionLevel& rhs ) const;
-    bool operator >  ( const PHY_PerceptionLevel& rhs ) const;
-    bool operator >= ( const PHY_PerceptionLevel& rhs ) const;
+    void Serialize( ASN1T_EnumUnitIdentificationLevel& level ) const;
+    bool operator ==( const PHY_PerceptionLevel& rhs ) const;
+    bool operator !=( const PHY_PerceptionLevel& rhs ) const;
+    bool operator < ( const PHY_PerceptionLevel& rhs ) const;
+    bool operator <=( const PHY_PerceptionLevel& rhs ) const;
+    bool operator > ( const PHY_PerceptionLevel& rhs ) const;
+    bool operator >=( const PHY_PerceptionLevel& rhs ) const;
     //@}
 
 public:
@@ -81,7 +79,6 @@ private:
     typedef T_LevelMap::const_iterator                   CIT_LevelMap;
     //@}
 
-
 private:
     const std::string                       strName_;
     const E_Level                           nLevel_;
@@ -90,7 +87,5 @@ private:
 private:
     static T_LevelMap levels_;
 };
-
-#include "PHY_PerceptionLevel.inl"
 
 #endif // __PHY_PerceptionLevel_h_

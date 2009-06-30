@@ -18,7 +18,7 @@ PHY_ActionLogistic< T >::PHY_ActionLogistic( T& entity )
     : PHY_Action_ABC( entity )
     , entity_       ( entity )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,12 +28,8 @@ PHY_ActionLogistic< T >::PHY_ActionLogistic( T& entity )
 template< typename T >
 PHY_ActionLogistic< T >::~PHY_ActionLogistic()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionLogistic::Execute

@@ -3,13 +3,11 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_PerceptionAlat.h"
-
 #include "PHY_PerceptionLevel.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
@@ -24,6 +22,7 @@ PHY_PerceptionAlat::PHY_PerceptionAlat( PHY_RolePion_Perceiver& perceiver, const
     : PHY_Perception_ABC( perceiver )
     , localisation_     ( localisation )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -32,12 +31,8 @@ PHY_PerceptionAlat::PHY_PerceptionAlat( PHY_RolePion_Perceiver& perceiver, const
 // -----------------------------------------------------------------------------
 PHY_PerceptionAlat::~PHY_PerceptionAlat()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// PERCEPTION AGENTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionAlat::Execute

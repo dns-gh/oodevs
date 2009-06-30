@@ -12,12 +12,10 @@
 #ifndef __PHY_ActionFly_h_
 #define __PHY_ActionFly_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
-class PHY_RoleAction_InterfaceFlying;
 class MIL_AgentPion;
+class PHY_RoleAction_InterfaceFlying;
 
 // =============================================================================
 // @class  PHY_ActionFly
@@ -31,7 +29,7 @@ public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-    PHY_ActionFly( MIL_AgentPion& pion );
+    explicit PHY_ActionFly( MIL_AgentPion& pion );
     virtual ~PHY_ActionFly();
 
     //! @name Operations
@@ -41,9 +39,11 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_RoleAction_InterfaceFlying& role_;
+    //@}
 };
 
-#include "PHY_ActionFly.inl"
 
 #endif // __PHY_ActionFly_h_

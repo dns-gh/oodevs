@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleHLA_Perceiver.h"
 
 // -----------------------------------------------------------------------------
@@ -21,6 +20,7 @@ PHY_RoleHLA_Perceiver::PHY_RoleHLA_Perceiver( MT_RoleContainer& role )
     : PHY_RoleInterface_Perceiver( role )
     , bIsUsingActiveRadar_       ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +29,7 @@ PHY_RoleHLA_Perceiver::PHY_RoleHLA_Perceiver( MT_RoleContainer& role )
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Perceiver::~PHY_RoleHLA_Perceiver()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,4 +39,13 @@ PHY_RoleHLA_Perceiver::~PHY_RoleHLA_Perceiver()
 void PHY_RoleHLA_Perceiver::ChangeStatus( const std::vector< std::string >& statuses )
 {
     bIsUsingActiveRadar_ = std::find( statuses.begin(), statuses.end(), "radaractif" ) != statuses.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Perceiver::IsUsingActiveRadar
+// Created: NLD 2005-02-23
+// -----------------------------------------------------------------------------
+bool PHY_RoleHLA_Perceiver::IsUsingActiveRadar() const
+{
+    return bIsUsingActiveRadar_;
 }

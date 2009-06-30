@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ActionFly.h"
-
 #include "PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
@@ -23,7 +21,8 @@
 PHY_ActionFly::PHY_ActionFly( MIL_AgentPion& pion )
     : PHY_Action_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_InterfaceFlying >() )
-{    
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -32,11 +31,8 @@ PHY_ActionFly::PHY_ActionFly( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 PHY_ActionFly::~PHY_ActionFly()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionFly::Execute

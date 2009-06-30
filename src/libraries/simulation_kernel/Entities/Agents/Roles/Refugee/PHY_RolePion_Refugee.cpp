@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Refugee.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -56,10 +55,6 @@ PHY_RolePion_Refugee::~PHY_RolePion_Refugee()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee::serialize
 // Created: JVT 2005-03-31
@@ -72,10 +67,6 @@ void PHY_RolePion_Refugee::serialize( Archive& file, const uint )
          & bManaged_
          & const_cast< MIL_Object_ABC*& >( pCamp_ );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee::Update
@@ -149,10 +140,6 @@ bool PHY_RolePion_Refugee::IsManaged( const MIL_Object_ABC& camp ) const
     return pCamp_ == &camp; //$$$$
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee::SendFullState
 // Created: NLD 2004-09-08
@@ -171,4 +158,31 @@ void PHY_RolePion_Refugee::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) co
 {
     if( bHasChanged_ )
         SendFullState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::Clean
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Refugee::Clean()
+{
+    bHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::HasChanged
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Refugee::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::IsManaged
+// Created: NLD 2005-02-24
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Refugee::IsManaged() const
+{
+    return bManaged_;
 }

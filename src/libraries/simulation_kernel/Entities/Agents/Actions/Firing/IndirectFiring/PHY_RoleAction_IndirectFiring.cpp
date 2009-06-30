@@ -10,19 +10,17 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_IndirectFiring.h"
-
+#include "PHY_IndirectFireData.h"
+#include "PHY_MunitionForIndirectFireData.h"
+#include "PHY_SmokeData.h"
+#include "Entities/Actions/PHY_FireResults_Default.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
-#include "Entities/Actions/PHY_FireResults_Default.h"
-#include "PHY_IndirectFireData.h"
-#include "PHY_SmokeData.h"
-#include "PHY_MunitionForIndirectFireData.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_IndirectFiring, "PHY_RoleAction_IndirectFiring" )
 
@@ -34,6 +32,7 @@ PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MT_RoleContainer& 
     : MT_Role_ABC( role )
     , pPion_     ( &pion )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +43,7 @@ PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring()
     : MT_Role_ABC()
     , pPion_     ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,12 +52,9 @@ PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring()
 // -----------------------------------------------------------------------------
 PHY_RoleAction_IndirectFiring::~PHY_RoleAction_IndirectFiring()
 {
-
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_IndirectFiring::serialize
 // Created: JVT 2005-03-30
@@ -68,10 +65,6 @@ void PHY_RoleAction_IndirectFiring::serialize( Archive& archive , const uint )
     archive & boost::serialization::base_object< MT_Role_ABC >( *this )
             & pPion_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_IndirectFiring::Fire
@@ -167,4 +160,40 @@ const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirec
     GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( fireData );
 
     return fireData.GetChoosenMunition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_IndirectFiring::GetInitialReturnCode
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_IndirectFiring::GetInitialReturnCode() const
+{
+    return eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_IndirectFiring::GetFinalReturnCode
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_IndirectFiring::GetFinalReturnCode() const
+{
+    return eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_IndirectFiring::Update
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_IndirectFiring::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_IndirectFiring::Clean
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_IndirectFiring::Clean()
+{
+    // NOTHING
 }

@@ -20,6 +20,7 @@
 PHY_RoleInterface_Composantes::PHY_RoleInterface_Composantes( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +30,7 @@ PHY_RoleInterface_Composantes::PHY_RoleInterface_Composantes( MT_RoleContainer& 
 PHY_RoleInterface_Composantes::PHY_RoleInterface_Composantes()
     : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,4 +39,5 @@ PHY_RoleInterface_Composantes::PHY_RoleInterface_Composantes()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Composantes::~PHY_RoleInterface_Composantes()
 {
+    // NOTHING
 }

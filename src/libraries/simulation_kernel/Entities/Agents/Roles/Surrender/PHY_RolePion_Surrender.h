@@ -12,8 +12,6 @@
 #ifndef __PHY_RolePion_Surrender_h_
 #define __PHY_RolePion_Surrender_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Surrender.h"
 
 class NET_ASN_MsgUnitAttributes;
@@ -74,7 +72,5 @@ private:
     const MIL_Object_ABC*      pPrison_;
           bool                 bHasChanged_;
 };
-
-#include "PHY_RolePion_Surrender.inl"
 
 #endif // __PHY_RolePion_Surrender_h_

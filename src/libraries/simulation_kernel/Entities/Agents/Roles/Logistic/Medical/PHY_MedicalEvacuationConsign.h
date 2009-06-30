@@ -13,7 +13,6 @@
 #define __PHY_MedicalEvacuationConsign_h_
 
 #include "MIL.h"
-
 #include "PHY_MedicalConsign_ABC.h"
 
 class PHY_RolePionLOG_Medical;
@@ -75,7 +74,5 @@ private:
     PHY_ComposantePion*             pDoctor_;
     PHY_MedicalEvacuationAmbulance* pEvacuationAmbulance_;
 };
-
-#include "PHY_MedicalEvacuationConsign.inl"
 
 #endif // __PHY_MedicalEvacuationConsign_h_

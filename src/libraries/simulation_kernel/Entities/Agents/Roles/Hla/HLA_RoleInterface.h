@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-05 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Hla/HLA_RoleInterface.h $
-// $Author: Age $
-// $Modtime: 24/11/04 15:26 $
-// $Revision: 3 $
-// $Workfile: HLA_RoleInterface.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_RoleInterface_h_
 #define __HLA_RoleInterface_h_

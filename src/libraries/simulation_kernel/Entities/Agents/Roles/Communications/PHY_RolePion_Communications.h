@@ -12,8 +12,6 @@
 #ifndef __PHY_RolePion_Communications_h_
 #define __PHY_RolePion_Communications_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Communications.h"
 
 namespace xml
@@ -94,7 +92,5 @@ private:
     static MT_Float rCoefSpeedModificator_;
     static MT_Float rCoefReloadingTimeModificator_;
 };
-
-#include "PHY_RolePion_Communications.inl"
 
 #endif // __PHY_RolePion_Communications_h_

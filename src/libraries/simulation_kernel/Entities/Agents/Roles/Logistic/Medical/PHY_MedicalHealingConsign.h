@@ -13,7 +13,6 @@
 #define __PHY_MedicalHealingConsign_h_
 
 #include "MIL.h"
-
 #include "PHY_MedicalConsign_ABC.h"
 
 class PHY_RolePionLOG_Medical;
@@ -67,7 +66,5 @@ private:
 private:
     PHY_ComposantePion* pDoctor_;
 };
-
-#include "PHY_MedicalHealingConsign.inl"
 
 #endif // __PHY_MedicalHealingConsign_h_

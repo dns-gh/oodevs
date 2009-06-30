@@ -3,9 +3,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_PerceptionSurfaceAgent.h"
-
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -14,7 +12,6 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Network/NET_ASN_Tools.h"
-
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_PerceptionSurfaceAgent, "PHY_PerceptionSurfaceAgent" )
@@ -193,4 +190,24 @@ void PHY_PerceptionSurfaceAgent::SendFullState( ASN1T_VisionCone& msg ) const
         NET_ASN_Tools::WriteDirection( sectors_[i].GetDirection(), msg.directions.elem[i] );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::IsInitialized
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionSurfaceAgent::IsInitialized()
+{
+    return pSensorType_ != 0;
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::operator=
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+PHY_PerceptionSurfaceAgent& PHY_PerceptionSurfaceAgent::operator=( const PHY_PerceptionSurfaceAgent& rhs )
+{
+    pSensorType_ = rhs.pSensorType_;
+    vOrigin_     = rhs.vOrigin_;
+    rHeight_     = rhs.rHeight_;
+    sectors_     = rhs.sectors_;
+    return *this;
+}

@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionIndirectFire_ABC_h_
 #define __PHY_ActionIndirectFire_ABC_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_IndirectFiring;
@@ -41,7 +39,5 @@ protected:
     const PHY_DotationCategory*          pDotationCategory_;
     const MT_Float                       rNbInterventionType_;
 };
-
-#include "PHY_ActionIndirectFire_ABC.inl"
 
 #endif // __PHY_ActionIndirectFire_ABC_h_

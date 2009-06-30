@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleAction_InterfaceFlying_h_
 #define __PHY_RoleAction_InterfaceFlying_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 // =============================================================================
@@ -31,8 +29,8 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_InterfaceFlying( MT_RoleContainer& role );
              PHY_RoleAction_InterfaceFlying();
+    explicit PHY_RoleAction_InterfaceFlying( MT_RoleContainer& role );
     virtual ~PHY_RoleAction_InterfaceFlying();
 
     //! @name CheckPoints
@@ -58,10 +56,16 @@ public:
     //@{
     virtual void Apply( MT_Float rHeight );
     //@}
-
-private:
 };
 
-#include "PHY_RoleAction_InterfaceFlying.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_InterfaceFlying::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void PHY_RoleAction_InterfaceFlying::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __PHY_RoleAction_InterfaceFlying_h_

@@ -9,8 +9,6 @@
 //
 // *****************************************************************************
 
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h" 
-
 // -----------------------------------------------------------------------------
 // Name: template< typename T > void PHY_RolePion_Composantes::ApplyOnWeapons
 // Created: NLD 2006-08-07

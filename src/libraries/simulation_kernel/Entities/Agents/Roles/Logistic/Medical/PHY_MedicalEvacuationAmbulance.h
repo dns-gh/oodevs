@@ -12,8 +12,6 @@
 #ifndef __PHY_MedicalEvacuationAmbulance_h_
 #define __PHY_MedicalEvacuationAmbulance_h_
 
-#include "MIL.h"
-
 class PHY_ComposantePion;
 class PHY_MedicalEvacuationConsign;
 class PHY_RolePionLOG_Medical;
@@ -84,7 +82,5 @@ private:
 
     MT_Float                 rNbrHumanHandled_;
 };
-
-#include "PHY_MedicalEvacuationAmbulance.inl"
 
 #endif // __PHY_MedicalEvacuationAmbulance_h_

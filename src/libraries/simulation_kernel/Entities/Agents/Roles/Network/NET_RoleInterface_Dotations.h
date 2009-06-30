@@ -12,8 +12,6 @@
 #ifndef __NET_RoleInterface_Dotations_h_
 #define __NET_RoleInterface_Dotations_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Role_ABC.h"
 
 // =============================================================================
@@ -31,7 +29,7 @@ public:
     //@}
 
 public:
-             NET_RoleInterface_Dotations( MT_RoleContainer& role );
+    explicit NET_RoleInterface_Dotations( MT_RoleContainer& role );
              NET_RoleInterface_Dotations();
     virtual ~NET_RoleInterface_Dotations();
     
@@ -41,6 +39,14 @@ public:
     //@}
 };
 
-#include "NET_RoleInterface_Dotations.inl"
+// -----------------------------------------------------------------------------
+// Name: NET_RoleInterface_Dotations::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void NET_RoleInterface_Dotations::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+}
 
 #endif // __NET_RoleInterface_Dotations_h_

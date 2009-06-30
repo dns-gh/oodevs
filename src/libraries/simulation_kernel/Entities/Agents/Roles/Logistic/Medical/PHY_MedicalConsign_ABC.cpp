@@ -124,3 +124,69 @@ void PHY_MedicalConsign_ABC::SendChangedState( NET_ASN_MsgLogMedicalHandlingUpda
     if( bHasChanged_ )
         SendFullState( asn );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::Clean
+// Created: NLD 2005-01-04
+// -----------------------------------------------------------------------------
+void PHY_MedicalConsign_ABC::Clean()
+{
+    bHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::SetTimer
+// Created: NLD 2005-01-04
+// -----------------------------------------------------------------------------
+void PHY_MedicalConsign_ABC::SetState( E_State nNewState )
+{
+    nState_ = nNewState;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::GetState
+// Created: NLD 2005-01-04
+// -----------------------------------------------------------------------------
+PHY_MedicalConsign_ABC::E_State PHY_MedicalConsign_ABC::GetState() const
+{
+    return nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::GetHumanState
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+const PHY_MedicalHumanState& PHY_MedicalConsign_ABC::GetHumanState() const
+{
+    assert( pHumanState_ );
+    return *pHumanState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::HasChanged
+// Created: NLD 2005-01-04
+// -----------------------------------------------------------------------------
+bool PHY_MedicalConsign_ABC::HasChanged() const
+{
+    return bHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::IsFinished
+// Created: NLD 2005-03-08
+// -----------------------------------------------------------------------------
+bool PHY_MedicalConsign_ABC::IsFinished() const
+{
+    return nState_ == eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::GetPionMedical
+// Created: JVT 2005-04-11
+// -----------------------------------------------------------------------------
+PHY_RolePionLOG_Medical& PHY_MedicalConsign_ABC::GetPionMedical() const
+{
+    assert( pMedical_ );
+    return *pMedical_;
+}

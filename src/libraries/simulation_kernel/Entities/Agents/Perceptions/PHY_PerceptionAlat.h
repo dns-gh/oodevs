@@ -5,9 +5,8 @@
 #ifndef __PHY_PerceptionAlat_h_
 #define __PHY_PerceptionAlat_h_
 
-#include "MIL.h"
-
 #include "PHY_Perception_ABC.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 //*****************************************************************************
 // Created: DFT 02-02-26
@@ -29,7 +28,5 @@ public:
 private:
     TER_Localisation localisation_;
 };
-
-#include "PHY_PerceptionAlat.inl"
 
 #endif // __PHY_PerceptionAlat_h_

@@ -10,12 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_FireResults_Pion.h"
-
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_IDManager.h"
@@ -116,4 +114,11 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
     }
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: PHY_FireResults_Pion::GetID
+// Created: NLD 2005-02-21
+// -----------------------------------------------------------------------------
+uint PHY_FireResults_Pion::GetID() const
+{
+    return nID_;
+}

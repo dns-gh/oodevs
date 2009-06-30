@@ -3,14 +3,11 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_PerceptionSurfaceObject.h"
-
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_PerceptionSurfaceObject, "PHY_PerceptionSurfaceObject" )
@@ -24,6 +21,7 @@ PHY_PerceptionSurfaceObject::PHY_PerceptionSurfaceObject()
     , rHeight_    ( 0. )
     , vOrigin_    ( -1., -1. )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,6 +33,7 @@ PHY_PerceptionSurfaceObject::PHY_PerceptionSurfaceObject( const PHY_SensorTypeOb
     , pSensorType_( &sensorType )
     , rHeight_    ( rHeight    )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +42,7 @@ PHY_PerceptionSurfaceObject::PHY_PerceptionSurfaceObject( const PHY_SensorTypeOb
 // -----------------------------------------------------------------------------
 PHY_PerceptionSurfaceObject::~PHY_PerceptionSurfaceObject()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -90,4 +90,25 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceObject::ComputePerception( const
 const PHY_PerceptionLevel& PHY_PerceptionSurfaceObject::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const DEC_Knowledge_Object& target ) const
 {
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );  
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceObject::IsInitialized
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionSurfaceObject::IsInitialized() const
+{
+    return pSensorType_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceObject::operator=
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+PHY_PerceptionSurfaceObject& PHY_PerceptionSurfaceObject::operator=( const PHY_PerceptionSurfaceObject& rhs )
+{
+    pSensorType_ = rhs.pSensorType_;
+    vOrigin_     = rhs.vOrigin_;
+    rHeight_     = rhs.rHeight_;
+    return *this;
 }

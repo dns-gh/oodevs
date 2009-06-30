@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleInterface_Reinforcement.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleInterface_Reinforcement, "PHY_RoleInterface_Reinforcement" )
@@ -22,6 +21,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleInterface_Reinforcement, "PHY_RoleInterface_Rei
 PHY_RoleInterface_Reinforcement::PHY_RoleInterface_Reinforcement( MT_RoleContainer& role )
     : MT_Role_ABC( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +31,7 @@ PHY_RoleInterface_Reinforcement::PHY_RoleInterface_Reinforcement( MT_RoleContain
 PHY_RoleInterface_Reinforcement::PHY_RoleInterface_Reinforcement()
     : MT_Role_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,14 +40,5 @@ PHY_RoleInterface_Reinforcement::PHY_RoleInterface_Reinforcement()
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Reinforcement::~PHY_RoleInterface_Reinforcement()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Reinforcement::serialize
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_RoleInterface_Reinforcement::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
+    // NOTHING
 }

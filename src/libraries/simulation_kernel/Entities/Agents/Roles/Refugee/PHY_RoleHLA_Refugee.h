@@ -12,8 +12,6 @@
 #ifndef __PHY_RoleHLA_Refugee_h_
 #define __PHY_RoleHLA_Refugee_h_
 
-#include "MIL.h"
-
 #include "PHY_RoleInterface_Refugee.h"
 
 // =============================================================================
@@ -25,7 +23,7 @@ class PHY_RoleHLA_Refugee : public PHY_RoleInterface_Refugee
     MT_COPYNOTALLOWED( PHY_RoleHLA_Refugee )
 
 public:
-    PHY_RoleHLA_Refugee( MT_RoleContainer& role );
+    explicit PHY_RoleHLA_Refugee( MT_RoleContainer& role );
     virtual ~PHY_RoleHLA_Refugee();
 
     //! @name Accessors
@@ -49,7 +47,5 @@ public:
 private:
     bool bManaged_;
 };
-
-#include "PHY_RoleHLA_Refugee.inl"
 
 #endif // __PHY_RoleHLA_Refugee_h_
