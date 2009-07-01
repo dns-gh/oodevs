@@ -24,7 +24,7 @@ class PHY_SupplyState_ABC
 
 public:
              PHY_SupplyState_ABC();
-    virtual ~PHY_SupplyState_ABC() = 0;
+    virtual ~PHY_SupplyState_ABC();
 
     //! @name CheckPoints
     //@{
@@ -38,7 +38,5 @@ protected:
     const uint nID_;
     const uint nCreationTick_;
 };
-
-#include "PHY_SupplyState_ABC.inl"
 
 #endif // __PHY_SupplyState_ABC_h_

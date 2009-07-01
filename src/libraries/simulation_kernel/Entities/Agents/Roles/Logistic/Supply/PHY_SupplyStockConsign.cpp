@@ -42,6 +42,7 @@ PHY_SupplyStockConsign::PHY_SupplyStockConsign()
     , pSupplyState_        ( 0 )
     , pConvoy_             ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,10 +56,6 @@ PHY_SupplyStockConsign::~PHY_SupplyStockConsign()
     delete pConvoy_;
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockConsign::serialize
 // Created: JVT 2005-04-11
@@ -70,10 +67,6 @@ void PHY_SupplyStockConsign::serialize( Archive& file, const uint )
          & pSupplyState_
          & pConvoy_;
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyConsign_ABC::DoSupply
@@ -127,10 +120,6 @@ void PHY_SupplyStockConsign::CancelMerchandiseOverheadReservation()
     assert( pSupplyState_ );
     pSupplyState_->CancelMerchandiseOverheadReservation();
 }
-
-// =============================================================================
-// STATES
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockConsign::EnterStateConvoyWaitingForTransporters
@@ -267,10 +256,6 @@ void PHY_SupplyStockConsign::EnterStateFinished()
     pConvoy_->EmptyOut();
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockConsign::Update
 // Created: NLD 2004-12-23
@@ -298,10 +283,6 @@ bool PHY_SupplyStockConsign::Update()
     return GetState() == eFinished;
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockConsign::SendFullState
 // Created: NLD 2005-02-10
@@ -314,3 +295,22 @@ void PHY_SupplyStockConsign::SendFullState( NET_ASN_MsgLogSupplyHandlingUpdate& 
     asn().m.oid_pion_convoyantPresent = 1;
     asn().oid_pion_convoyant          = pConvoy_->GetPionConvoy() ? pConvoy_->GetPionConvoy()->GetID() : 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockConsign::IsLoadingDone
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+bool PHY_SupplyStockConsign::IsLoadingDone() const
+{
+    return GetState() > eConvoyLoading;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockConsign::IsUnloadingDone
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+bool PHY_SupplyStockConsign::IsUnloadingDone() const
+{
+    return GetState() > eConvoyUnloading;
+}
+

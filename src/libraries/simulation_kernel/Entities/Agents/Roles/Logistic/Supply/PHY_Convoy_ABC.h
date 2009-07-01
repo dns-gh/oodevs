@@ -12,7 +12,6 @@
 #ifndef __PHY_Convoy_ABC_h_
 #define __PHY_Convoy_ABC_h_
 
-#include "MIL.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"
 
 namespace xml
@@ -45,7 +44,7 @@ public:
     //@}
 
 public:
-             PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign );
+    explicit PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign );
              PHY_Convoy_ABC();
     virtual ~PHY_Convoy_ABC();
 
@@ -118,7 +117,5 @@ protected:
     static const MIL_AgentTypePion*                  pConvoyAgentType_;
     static const MIL_MissionType_ABC*                pConvoyMissionType_;
 };
-
-#include "PHY_Convoy_ABC.inl"
 
 #endif // __PHY_Convoy_ABC_h_

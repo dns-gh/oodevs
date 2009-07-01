@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SupplyDotationRequestContainer.h"
 #include "PHY_SupplyDotationState.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -41,6 +40,7 @@ PHY_SupplyDotationRequestContainer::PHY_SupplyDotationRequestContainer( MIL_Auto
 // -----------------------------------------------------------------------------
 PHY_SupplyDotationRequestContainer::~PHY_SupplyDotationRequestContainer()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

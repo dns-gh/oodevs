@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePionLOGConvoy_Supply.h"
 #include "PHY_StockConvoy.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -29,8 +28,8 @@ PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MT_RoleContainer& ro
     , pPion_             ( &pion )
     , pConvoy_           ( 0 )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply constructor
@@ -41,6 +40,7 @@ PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply()
     , pPion_             ( 0 )
     , pConvoy_           ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,11 +49,9 @@ PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply()
 // -----------------------------------------------------------------------------
 PHY_RolePionLOGConvoy_Supply::~PHY_RolePionLOGConvoy_Supply()
 {
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::serialize
 // Created: JVT 2005-03-30
@@ -65,10 +63,6 @@ void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const uint )
          & const_cast< MIL_AgentPion*& >( pPion_ )
          & pConvoy_;
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::Update
@@ -88,12 +82,8 @@ void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOGConvoy_Supply::Clean()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CONVOY
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::AssignConvoy
@@ -212,10 +202,6 @@ MT_Float PHY_RolePionLOGConvoy_Supply::ModifySpeed( MT_Float rSpeed ) const
         return rSpeed;
     return pConvoy_->ModifySpeed( rSpeed );
 }
-
-// =============================================================================
-// EVENTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::NotifyComposanteChanged

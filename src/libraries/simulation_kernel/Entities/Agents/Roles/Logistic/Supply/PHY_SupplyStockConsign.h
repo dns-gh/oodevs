@@ -12,8 +12,6 @@
 #ifndef __PHY_SupplyStockConsign_h_
 #define __PHY_SupplyStockConsign_h_
 
-#include "MIL.h"
-
 #include "PHY_SupplyConsign_ABC.h"
 #include "PHY_StockConvoy.h"
 
@@ -78,7 +76,5 @@ private:
     PHY_SupplyStockState* pSupplyState_;
     PHY_StockConvoy*      pConvoy_;
 };
-
-#include "PHY_SupplyStockConsign.inl"
 
 #endif // __PHY_SupplyStockConsign_h_

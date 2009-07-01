@@ -10,10 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SupplyDotationConsign.h"
 #include "PHY_SupplyDotationState.h"
-
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_SupplyDotationConsign, "PHY_SupplyDotationConsign" )
@@ -42,6 +40,7 @@ PHY_SupplyDotationConsign::PHY_SupplyDotationConsign()
     , pSupplyState_        ( 0 )
     , pConvoy_             ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,10 +54,6 @@ PHY_SupplyDotationConsign::~PHY_SupplyDotationConsign()
     delete pConvoy_;
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationConsign::serialize
 // Created: JVT 2005-04-11
@@ -70,10 +65,6 @@ void PHY_SupplyDotationConsign::serialize( Archive& file, const uint )
          & pSupplyState_
          & pConvoy_;
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyConsign_ABC::DoSupply
@@ -127,10 +118,6 @@ void PHY_SupplyDotationConsign::CancelMerchandiseOverheadReservation()
     assert( pSupplyState_ );
     pSupplyState_->CancelMerchandiseOverheadReservation();
 }
-
-// =============================================================================
-// STATES
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationConsign::EnterStateConvoyWaitingForTransporters
@@ -220,10 +207,6 @@ void PHY_SupplyDotationConsign::EnterStateFinished()
     SetState( eFinished );    
     pConvoy_->EmptyOut();
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationConsign::Update

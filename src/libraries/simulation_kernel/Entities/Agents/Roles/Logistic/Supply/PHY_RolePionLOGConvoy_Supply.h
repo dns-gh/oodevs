@@ -12,8 +12,6 @@
 #ifndef __PHY_RolePionLOGConvoy_Supply_h_
 #define __PHY_RolePionLOGConvoy_Supply_h_
 
-#include "MIL.h"
-
 #include "PHY_RolePion_Supply.h"
 
 class MIL_AgentPion;
@@ -69,7 +67,5 @@ private:
     const MIL_AgentPion*   pPion_;
           PHY_StockConvoy* pConvoy_;
 };
-
-#include "PHY_RolePionLOGConvoy_Supply.inl"
 
 #endif // __PHY_RolePionLOGConvoy_Supply_h_

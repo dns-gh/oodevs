@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Conveyor.h"
-
 #include "PHY_SupplyStockConsign.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -35,6 +33,7 @@ PHY_Conveyor::PHY_Conveyor()
     , dotationsConvoyed_( )
     , pLentTo_          ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -66,9 +65,6 @@ PHY_Conveyor::~PHY_Conveyor()
     pConveyorPion_->GetRole< PHY_RolePion_Supply >().StopUsingForLogistic( *pConveyorComp_ );
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
@@ -124,10 +120,6 @@ void PHY_Conveyor::serialize( Archive& file, const uint )
          & pLentTo_;
 }
 
-// =============================================================================
-// DOTATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Conveyor::Convoy
 // Created: NLD 2005-07-19
@@ -166,10 +158,6 @@ MT_Float PHY_Conveyor::Convoy( PHY_SupplyConsign_ABC& consign, const PHY_Dotatio
     consign.AddConvoyedMerchandise( dotationCategory, rNbrConvoyed );
     return rNbrConvoyed;
 }
-
-// =============================================================================
-// LEND
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Conveyor::LendTo
@@ -215,10 +203,6 @@ void PHY_Conveyor::EmptyOut()
     dotationsConvoyed_.clear();
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Conveyor::ApproximateTravelTime
 // Created: NLD 2005-07-19
@@ -227,10 +211,6 @@ uint PHY_Conveyor::ApproximateTravelTime( const MT_Vector2D& vStartPos, const MT
 {
     return pConveyorComp_->ApproximateTravelTime( vStartPos, vEndPos );
 }
-
-// =============================================================================
-// DEBUG
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Conveyor::Dump
@@ -241,4 +221,13 @@ void PHY_Conveyor::Dump() const
     printf( "Transporter type : %s (%p) (Pion %d)\n", pConveyorComp_->GetType().GetName().c_str(), &pConveyorComp_, pConveyorPion_->GetID() );
     for( CIT_DotationMap it = dotationsConvoyed_.begin(); it != dotationsConvoyed_.end(); ++it )
         printf( "\tDotation : %s : %.2f\n", it->first->GetName().c_str(), it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Conveyor::IsFull
+// Created: NLD 2005-07-19
+// -----------------------------------------------------------------------------
+bool PHY_Conveyor::IsFull() const
+{
+    return rWeightCapacity_ <= 0. || rVolumeCapacity_ <= 0.;
 }

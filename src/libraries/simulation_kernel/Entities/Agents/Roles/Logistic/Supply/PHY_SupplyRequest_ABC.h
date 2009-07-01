@@ -12,12 +12,10 @@
 #ifndef __PHY_SupplyRequest_ABC_h_
 #define __PHY_SupplyRequest_ABC_h_
 
-#include "MIL.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 class PHY_DotationCategory;
-class MIL_AutomateLOG;
-class PHY_RolePion_Supply;
-
 struct ASN1T_DotationQuery;
 
 // =============================================================================

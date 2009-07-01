@@ -98,6 +98,18 @@ protected:
     int              nTimer_;
 };
 
-#include "PHY_SupplyConsign_ABC.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyConsign_ABC::serialize
+// Created: JVT 2005-04-11
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_SupplyConsign_ABC::serialize( Archive& file, const uint )
+{
+    file & pSupplyingAutomate_
+         & const_cast< MIL_Automate*& >( pSuppliedAutomate_ )
+         & pConvoyingAutomate_
+         & nTimer_
+         & nState_;
+}
 
 #endif // __PHY_SupplyConsign_ABC_h_

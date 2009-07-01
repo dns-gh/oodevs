@@ -11,8 +11,6 @@
 #include "PHY_SupplyResourcesAlarms.h"
 #include <xeumeuleu/xml.h>
 
-
-
 PHY_SupplyResourcesAlarms::T_LevelSet PHY_SupplyResourcesAlarms::convoyTransporterResourcesLevels_;
 
 struct PHY_SupplyResourcesAlarms::LoadingWrapper
@@ -62,10 +60,6 @@ void PHY_SupplyResourcesAlarms::Terminate()
     convoyTransporterResourcesLevels_.clear();
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyResourcesAlarms::IsLevelReached
 // Created: NLD 2006-08-02
@@ -78,5 +72,14 @@ bool PHY_SupplyResourcesAlarms::IsLevelReached( const T_LevelSet& levels, MT_Flo
             return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyResourcesAlarms::IsRepairerResourcesLevelReached
+// Created: NLD 2006-08-02
+// -----------------------------------------------------------------------------
+bool PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+{
+    return IsLevelReached( convoyTransporterResourcesLevels_, rPreviousRatio, rCurrentRatio );
 }
 

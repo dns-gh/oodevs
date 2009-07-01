@@ -10,8 +10,6 @@
 #ifndef __PHY_SupplyResourcesAlarms_h_
 #define __PHY_SupplyResourcesAlarms_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -58,7 +56,5 @@ private:
 private:
     static T_LevelSet convoyTransporterResourcesLevels_;
 };
-
-#include "PHY_SupplyResourcesAlarms.inl"
 
 #endif // __PHY_SupplyResourcesAlarms_h_

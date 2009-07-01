@@ -13,7 +13,6 @@
 #define __PHY_StockConvoy_h_
 
 #include "MIL.h"
-
 #include "PHY_Convoy_ABC.h"
 
 namespace xml
@@ -40,9 +39,9 @@ public:
     //@}
 
 public:
-     PHY_StockConvoy( PHY_SupplyStockConsign& consign );
-     PHY_StockConvoy();
-    ~PHY_StockConvoy();
+    explicit PHY_StockConvoy( PHY_SupplyStockConsign& consign );
+             PHY_StockConvoy();
+    virtual ~PHY_StockConvoy();
 
     //! @name CheckPoints
     //@{
@@ -78,7 +77,5 @@ private:
     MIL_AgentPion*          pPionConvoy_;
     bool                    bMissionActivated_;
 };
-
-#include "PHY_StockConvoy.inl"
 
 #endif // __PHY_StockConvoy_h_

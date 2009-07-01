@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SupplyState_ABC.h"
 #include "Tools/MIL_IDManager.h"
 #include "MIL_AgentServer.h"
@@ -23,6 +22,7 @@ PHY_SupplyState_ABC::PHY_SupplyState_ABC()
     : nID_          ( MIL_IDManager::GetFreeId() )
     , nCreationTick_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +31,7 @@ PHY_SupplyState_ABC::PHY_SupplyState_ABC()
 // -----------------------------------------------------------------------------
 PHY_SupplyState_ABC::~PHY_SupplyState_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

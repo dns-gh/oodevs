@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SupplyStockRequest.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_SupplyStockRequest, "PHY_SupplyStockRequest" )
@@ -22,6 +21,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_SupplyStockRequest, "PHY_SupplyStockRequest" )
 PHY_SupplyStockRequest::PHY_SupplyStockRequest()
     : PHY_SupplyRequest_ABC< PHY_DotationStock >()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,25 +30,8 @@ PHY_SupplyStockRequest::PHY_SupplyStockRequest()
 // -----------------------------------------------------------------------------
 PHY_SupplyStockRequest::~PHY_SupplyStockRequest()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockRequest::serialize
-// Created: JVT 2005-04-11
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_SupplyStockRequest::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< PHY_SupplyRequest_ABC< PHY_DotationStock > >( *this );
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockRequest::AddStock

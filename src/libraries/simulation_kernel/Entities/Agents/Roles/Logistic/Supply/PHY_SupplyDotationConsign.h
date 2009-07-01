@@ -12,8 +12,6 @@
 #ifndef __PHY_SupplyDotationConsign_h_
 #define __PHY_SupplyDotationConsign_h_
 
-#include "MIL.h"
-
 #include "PHY_SupplyConsign_ABC.h"
 #include "PHY_DotationConvoy.h"
 
@@ -65,7 +63,5 @@ private:
     PHY_SupplyDotationState* pSupplyState_;
     PHY_DotationConvoy*      pConvoy_;
 };
-
-#include "PHY_SupplyDotationConsign.inl"
 
 #endif // __PHY_SupplyDotationConsign_h_

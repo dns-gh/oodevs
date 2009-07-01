@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_StockConvoy.h"
 #include "PHY_SupplyStockConsign.h"
 #include "PHY_Conveyor.h"
@@ -20,8 +19,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( PHY_StockConvoy, "PHY_StockConvoy" )
 
@@ -35,6 +32,7 @@ PHY_StockConvoy::PHY_StockConvoy( PHY_SupplyStockConsign& consign )
     , pPionConvoy_      ( 0 )
     , bMissionActivated_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,8 +45,9 @@ PHY_StockConvoy::PHY_StockConvoy()
     , pPionConvoy_      ( 0 )
     , bMissionActivated_( false )
 {
+    // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_StockConvoy destructor
 // Created: NLD 2005-01-24
@@ -66,10 +65,6 @@ PHY_StockConvoy::~PHY_StockConvoy()
         pPionConvoy_->GetAutomate().DestroyPion( *pPionConvoy_ );
     }
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGConvoy::load
@@ -98,10 +93,6 @@ void PHY_StockConvoy::save( MIL_CheckPointOutArchive& file, const uint ) const
          << bMissionActivated_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_StockConvoy::Form
 // Created: NLD 2005-02-08
@@ -118,10 +109,6 @@ bool PHY_StockConvoy::Form()
         it->second->LendTo( *pPionConvoy_ );
     return true;
 }
-
-// =============================================================================
-// REAL CONVOY OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_StockConvoy::ActivateConvoyMission
@@ -194,5 +181,11 @@ void PHY_StockConvoy::EndMission()
     return pConsign_->ConvoyEndMission();
 }
 
-
- 
+// -----------------------------------------------------------------------------
+// Name: PHY_StockConvoy::GetPionConvoy
+// Created: NLD 2005-02-10
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_StockConvoy::GetPionConvoy() const
+{
+    return pPionConvoy_;
+}

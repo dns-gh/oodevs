@@ -12,7 +12,6 @@
 #ifndef __PHY_RolePion_Supply_h_
 #define __PHY_RolePion_Supply_h_
 
-#include "MIL.h"
 #include "PHY_RoleInterface_Supply.h"
 
 namespace xml
@@ -38,7 +37,7 @@ class PHY_RolePion_Supply : public PHY_RoleInterface_Supply
     MT_COPYNOTALLOWED( PHY_RolePion_Supply )
 
 public:
-             PHY_RolePion_Supply( MT_RoleContainer& role );
+    explicit PHY_RolePion_Supply( MT_RoleContainer& role );
              PHY_RolePion_Supply();
     virtual ~PHY_RolePion_Supply();
 
@@ -114,6 +113,14 @@ public:
     //@}
 };
 
-#include "PHY_RolePion_Supply.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RolePion_Supply::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this );
+}
 
 #endif // __PHY_RolePion_Supply_h_

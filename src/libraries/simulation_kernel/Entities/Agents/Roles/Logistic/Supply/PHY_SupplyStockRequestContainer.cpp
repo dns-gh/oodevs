@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SupplyStockRequestContainer.h"
 #include "PHY_SupplyStockState.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -112,6 +111,7 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
 // -----------------------------------------------------------------------------
 PHY_SupplyStockRequestContainer::~PHY_SupplyStockRequestContainer()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

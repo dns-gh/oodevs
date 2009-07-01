@@ -33,9 +33,9 @@ class PHY_SupplyStockRequestContainer
     MT_COPYNOTALLOWED( PHY_SupplyStockRequestContainer )
 
 public:
-     PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate );
-     PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const ASN1T__SeqOfDotationStock& asnStocks );
-    ~PHY_SupplyStockRequestContainer();
+    explicit PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate );
+             PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const ASN1T__SeqOfDotationStock& asnStocks );
+            ~PHY_SupplyStockRequestContainer();
 
     //! @name Operations
     //@{
@@ -66,7 +66,5 @@ private:
           bool             bAtLeastOneSupplySatisfied_;
           bool             bExplicitSupplyFullSatisfied_;   
 };
-
-#include "PHY_SupplyStockRequestContainer.inl"
 
 #endif // __PHY_SupplyStockRequestContainer_h_

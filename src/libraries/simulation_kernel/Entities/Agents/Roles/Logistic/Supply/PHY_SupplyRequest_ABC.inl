@@ -9,9 +9,6 @@
 //
 // *****************************************************************************
 
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyRequest_ABC constructor
 // Created: NLD 2005-01-25

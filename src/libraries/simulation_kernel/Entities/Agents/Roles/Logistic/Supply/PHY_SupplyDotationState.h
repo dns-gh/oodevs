@@ -12,8 +12,6 @@
 #ifndef __PHY_SupplyDotationState_h_
 #define __PHY_SupplyDotationState_h_
 
-#include "MIL.h"
-
 #include "PHY_SupplyState_ABC.h"
 #include "PHY_SupplyDotationRequest.h"
 
@@ -31,9 +29,9 @@ class PHY_SupplyDotationState : public PHY_SupplyState_ABC
     MT_COPYNOTALLOWED( PHY_SupplyDotationState )
 
 public:
-     PHY_SupplyDotationState( MIL_Automate& suppliedAutomate );
-     PHY_SupplyDotationState();
-    ~PHY_SupplyDotationState();
+    explicit PHY_SupplyDotationState( MIL_Automate& suppliedAutomate );
+             PHY_SupplyDotationState();
+    virtual ~PHY_SupplyDotationState();
 
     //! @name CheckPoints
     //@{
@@ -88,7 +86,5 @@ private:
     bool                   bRequestsChanged_;
     T_RequestMap           requests_;
 };
-
-#include "PHY_SupplyDotationState.inl"
 
 #endif // __PHY_SupplyDotationState_h_

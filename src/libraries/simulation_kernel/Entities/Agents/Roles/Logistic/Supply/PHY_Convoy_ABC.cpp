@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Convoy_ABC.h"
 #include "PHY_Conveyor.h"
 #include "PHY_SupplyConsign_ABC.h"
@@ -23,8 +22,6 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
-
-
 
 struct PHY_Convoy_ABC::LoadingWrapper
 {
@@ -232,25 +229,6 @@ PHY_Convoy_ABC::~PHY_Convoy_ABC()
     UnlockConvoy();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::serialize
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_Convoy_ABC::serialize( Archive& file, const uint )
-{
-    file & const_cast< PHY_SupplyConsign_ABC*& >( pConsign_ )
-         & conveyors_;
-}
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::GetSupplyingAutomate
 // Created: NLD 2006-07-31
@@ -280,10 +258,6 @@ const MIL_Automate& PHY_Convoy_ABC::GetSuppliedAutomate() const
     assert( pConsign_ );
     return pConsign_->GetSuppliedAutomate();
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::UnlockConvoy
@@ -349,10 +323,6 @@ bool PHY_Convoy_ABC::ReserveTransporters()
     return true; 
 }
 
-// =============================================================================
-// EVENTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::EmptyOut
 // Created: NLD 2006-07-04
@@ -376,4 +346,52 @@ void PHY_Convoy_ABC::NotifyConveyorDestroyed( PHY_ComposantePion& composante )
     assert( pConsign_ );
     itConveyor->second->NotifyConveyorDestroyed( *pConsign_ );
 }
- 
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetFormingTime
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+uint PHY_Convoy_ABC::GetFormingTime() const
+{
+    return (uint)( formingTime_( conveyors_.size() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetLoadingTime
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+uint PHY_Convoy_ABC::GetLoadingTime() const
+{
+    return (uint)( loadingTime_( conveyors_.size() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetUnloadingTime
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+uint PHY_Convoy_ABC::GetUnloadingTime() const
+{
+    return (uint)( unloadingTime_( conveyors_.size() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::ModifySpeed
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+MT_Float PHY_Convoy_ABC::ModifySpeed( MT_Float rSpeed ) const
+{
+    if( conveyors_.empty() )
+        return rSpeed;
+    return rSpeed * coefSpeedModificator_( conveyors_.size() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::serialize
+// Created: JVT 2005-03-31
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_Convoy_ABC::serialize( Archive& file, const uint )
+{
+    file & const_cast< PHY_SupplyConsign_ABC*& >( pConsign_ )
+         & conveyors_;
+}

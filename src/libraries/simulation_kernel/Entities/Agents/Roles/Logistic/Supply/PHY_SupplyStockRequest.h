@@ -12,8 +12,6 @@
 #ifndef __PHY_SupplyStockRequest_h_
 #define __PHY_SupplyStockRequest_h_
 
-#include "MIL.h"
-
 #include "PHY_SupplyRequest_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 
@@ -24,8 +22,8 @@
 class PHY_SupplyStockRequest : public PHY_SupplyRequest_ABC< PHY_DotationStock >
 {
 public:
-     PHY_SupplyStockRequest();
-    ~PHY_SupplyStockRequest();
+             PHY_SupplyStockRequest();
+    virtual ~PHY_SupplyStockRequest();
 
     //! @name CheckPoints
     //@{
@@ -40,6 +38,14 @@ public:
     //@}
 };
 
-#include "PHY_SupplyStockRequest.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockRequest::serialize
+// Created: JVT 2005-04-11
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_SupplyStockRequest::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< PHY_SupplyRequest_ABC< PHY_DotationStock > >( *this );
+}
 
 #endif // __PHY_SupplyStockRequest_h_

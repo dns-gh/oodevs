@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationConvoy_h_
 #define __PHY_DotationConvoy_h_
 
-#include "MIL.h"
-
 #include "PHY_Convoy_ABC.h"
 
 namespace xml
@@ -39,9 +37,9 @@ public:
     //@}
 
 public:
-     PHY_DotationConvoy( PHY_SupplyDotationConsign& consign );
-     PHY_DotationConvoy();
-    ~PHY_DotationConvoy();
+    explicit PHY_DotationConvoy( PHY_SupplyDotationConsign& consign );
+             PHY_DotationConvoy();
+    virtual ~PHY_DotationConvoy();
 
     //! @name CheckPoints
     //@{
@@ -62,6 +60,14 @@ private:
     //@}
 };
 
-#include "PHY_DotationConvoy.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationConvoy::serialize
+// Created: JVT 2005-04-11
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_DotationConvoy::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< PHY_Convoy_ABC >( *this );
+}
 
 #endif // __PHY_DotationConvoy_h_

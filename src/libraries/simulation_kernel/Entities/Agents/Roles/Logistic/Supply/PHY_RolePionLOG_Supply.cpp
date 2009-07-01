@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePionLOG_Supply.h"
-
 #include "PHY_SupplyDotationConsign.h"
 #include "PHY_SupplyDotationRequest.h"
 #include "PHY_SupplyDotationRequestContainer.h"
@@ -25,8 +23,6 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Supply, "PHY_RolePionLOG_Supply" )
 
@@ -55,6 +51,7 @@ PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply()
     , bHasChanged_       ( true )
     , pStocks_           ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -428,4 +425,34 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
         delete [] asn().disponibilites_transporteurs_convois.elem;
     if( asn().m.stocksPresent && asn().stocks.n > 0 )
         delete [] asn().stocks.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::EnableSystem
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Supply::EnableSystem()
+{
+    bSystemEnabled_ = true;
+    bHasChanged_    = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::DisableSystem
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Supply::DisableSystem()
+{
+    bSystemEnabled_ = false;
+    bHasChanged_    = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::GetPion
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Supply::GetPion() const
+{
+    assert( pPion_ );
+    return *pPion_;
 }

@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SupplyDotationRequest.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_SupplyDotationRequest, "PHY_SupplyDotationRequest" )
@@ -22,7 +21,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_SupplyDotationRequest, "PHY_SupplyDotationRequest" 
 PHY_SupplyDotationRequest::PHY_SupplyDotationRequest()
     : PHY_SupplyRequest_ABC< PHY_Dotation >()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,26 +30,8 @@ PHY_SupplyDotationRequest::PHY_SupplyDotationRequest()
 // -----------------------------------------------------------------------------
 PHY_SupplyDotationRequest::~PHY_SupplyDotationRequest()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationRequest::serialize
-// Created: JVT 2005-04-11
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_SupplyDotationRequest::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< PHY_SupplyRequest_ABC< PHY_Dotation > >( *this );
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationRequest::AddDotation

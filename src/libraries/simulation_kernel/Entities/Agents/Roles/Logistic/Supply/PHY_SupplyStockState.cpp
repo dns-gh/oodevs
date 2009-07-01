@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SupplyStockState.h"
-
 #include "PHY_RolePion_Supply.h"
 #include "PHY_SupplyConsign_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -35,6 +33,7 @@ PHY_SupplyStockState::PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, b
     , bRequestsChanged_  ( true )
     , requests_          ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,6 +49,7 @@ PHY_SupplyStockState::PHY_SupplyStockState()
     , bRequestsChanged_  ( true )
     , requests_          ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -131,10 +131,6 @@ void PHY_SupplyStockState::serialize( Archive& file, const uint )
          & requests_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockState::GetMerchandiseToConvoy
 // Created: NLD 2005-07-13
@@ -211,10 +207,6 @@ void PHY_SupplyStockState::CancelSupply()
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
         it->second.Cancel();
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockState::SendMsgCreation
@@ -322,4 +314,55 @@ void PHY_SupplyStockState::SendMsgDestruction() const
     asn().oid_consigne = nID_;
     asn().oid_automate = pSuppliedAutomate_->GetID();
     asn.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::SetConsign
+// Created: NLD 2004-12-24
+// -----------------------------------------------------------------------------
+void PHY_SupplyStockState::SetConsign( PHY_SupplyConsign_ABC* pConsign )
+{
+    if( pConsign == pConsign_ )
+        return;
+        
+    pConsign_        = pConsign;
+    bConsignChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::GetSuppliedAutomate
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG& PHY_SupplyStockState::GetSuppliedAutomate() const
+{
+    assert( pSuppliedAutomate_ );
+    return *pSuppliedAutomate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::IsPushedFlow
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+bool PHY_SupplyStockState::IsPushedFlow() const
+{
+    return bPushedFlow_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::IsSupplying
+// Created: NLD 2005-02-02
+// -----------------------------------------------------------------------------
+bool PHY_SupplyStockState::IsSupplying( const PHY_DotationCategory& dotationCategory ) const
+{
+    return requests_.find( &dotationCategory ) != requests_.end();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::AddRequest
+// Created: NLD 2005-01-26
+// -----------------------------------------------------------------------------
+void PHY_SupplyStockState::AddRequest( const PHY_SupplyStockRequest& request )
+{
+    requests_[ &request.GetDotationCategory() ] = request;
+    bRequestsChanged_ = true;
 }

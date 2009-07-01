@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationConvoy.h"
 #include "PHY_SupplyDotationConsign.h"
 #include "PHY_Conveyor.h"
@@ -19,8 +18,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationConvoy, "PHY_DotationConvoy" )
 
@@ -31,6 +28,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_DotationConvoy, "PHY_DotationConvoy" )
 PHY_DotationConvoy::PHY_DotationConvoy( PHY_SupplyDotationConsign& consign )
     : PHY_Convoy_ABC( consign )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +38,7 @@ PHY_DotationConvoy::PHY_DotationConvoy( PHY_SupplyDotationConsign& consign )
 PHY_DotationConvoy::PHY_DotationConvoy()
     : PHY_Convoy_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,24 +47,8 @@ PHY_DotationConvoy::PHY_DotationConvoy()
 // -----------------------------------------------------------------------------
 PHY_DotationConvoy::~PHY_DotationConvoy()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationConvoy::serialize
-// Created: JVT 2005-04-11
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_DotationConvoy::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< PHY_Convoy_ABC >( *this );
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConvoy::GetTravelTime
@@ -119,4 +102,3 @@ uint PHY_DotationConvoy::GetTravelTimeToFormingPoint() const
 
     return GetTravelTime( unloadingPoint, formingPoint );
 }
-

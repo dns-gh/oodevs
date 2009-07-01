@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SupplyDotationState.h"
-
 #include "PHY_RolePion_Supply.h"
 #include "PHY_SupplyConsign_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -34,6 +32,7 @@ PHY_SupplyDotationState::PHY_SupplyDotationState( MIL_Automate& suppliedAutomate
     , bRequestsChanged_  ( true )
     , requests_          ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +47,7 @@ PHY_SupplyDotationState::PHY_SupplyDotationState()
     , bRequestsChanged_  ( true )
     , requests_          ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,9 +72,6 @@ void PHY_SupplyDotationState::Clean()
         pConsign_->Clean();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
@@ -127,11 +124,6 @@ void PHY_SupplyDotationState::serialize( Archive& file, const uint )
          & pConsign_
          & requests_;
 }
-
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationState::GetMerchandiseToConvoy
@@ -193,10 +185,6 @@ void PHY_SupplyDotationState::Supply() const
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
         it->second.Supply();
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationState::SendMsgCreation
@@ -306,3 +294,44 @@ void PHY_SupplyDotationState::SendMsgDestruction() const
     asn.Send();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationState::SetConsign
+// Created: NLD 2004-12-24
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationState::SetConsign( PHY_SupplyConsign_ABC* pConsign )
+{
+    if( pConsign == pConsign_ )
+        return;
+        
+    pConsign_        = pConsign;
+    bConsignChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationState::GetSuppliedAutomate
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+const MIL_Automate& PHY_SupplyDotationState::GetSuppliedAutomate() const
+{
+    assert( pSuppliedAutomate_ );
+    return *pSuppliedAutomate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationState::IsSupplying
+// Created: NLD 2005-02-02
+// -----------------------------------------------------------------------------
+bool PHY_SupplyDotationState::IsSupplying( const PHY_DotationCategory& dotationCategory ) const
+{
+    return requests_.find( &dotationCategory ) != requests_.end();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationState::AddRequest
+// Created: NLD 2005-01-26
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationState::AddRequest( const PHY_SupplyDotationRequest& request )
+{
+    requests_[ &request.GetDotationCategory() ] = request;
+    bRequestsChanged_ = true;
+}

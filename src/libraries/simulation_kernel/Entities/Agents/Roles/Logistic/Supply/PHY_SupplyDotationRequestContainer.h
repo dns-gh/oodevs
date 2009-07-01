@@ -12,10 +12,7 @@
 #ifndef __PHY_SupplyDotationRequestContainer_h_
 #define __PHY_SupplyDotationRequestContainer_h_
 
-#include "MIL.h"
-
 #include "PHY_SupplyDotationRequest.h"
-
 #include "Entities/Automates/MIL_Automate.h"
 
 class PHY_DotationCategory;
@@ -66,7 +63,5 @@ private:
     bool          bAtLeastOneSupplySatisfied_;
     bool          bExplicitSupplyFullSatisfied_;   
 };
-
-#include "PHY_SupplyDotationRequestContainer.inl"
 
 #endif // __PHY_SupplyDotationRequestContainer_h_

@@ -12,8 +12,6 @@
 #ifndef __PHY_SupplyDotationRequest_h_
 #define __PHY_SupplyDotationRequest_h_
 
-#include "MIL.h"
-
 #include "PHY_SupplyRequest_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 
@@ -24,8 +22,8 @@
 class PHY_SupplyDotationRequest : public PHY_SupplyRequest_ABC< PHY_Dotation >
 {
 public:
-     PHY_SupplyDotationRequest();
-    ~PHY_SupplyDotationRequest();
+             PHY_SupplyDotationRequest();
+    virtual ~PHY_SupplyDotationRequest();
 
     //! @name 
     //@{
@@ -38,6 +36,14 @@ public:
     //@}
 };
 
-#include "PHY_SupplyDotationRequest.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationRequest::serialize
+// Created: JVT 2005-04-11
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_SupplyDotationRequest::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< PHY_SupplyRequest_ABC< PHY_Dotation > >( *this );
+}
 
 #endif // __PHY_SupplyDotationRequest_h_

@@ -12,7 +12,6 @@
 #ifndef __PHY_RolePionLOG_Supply_h_
 #define __PHY_RolePionLOG_Supply_h_
 
-#include "MIL.h"
 #include "PHY_RolePion_Supply.h"
 
 namespace xml
@@ -92,7 +91,7 @@ public:
 private:
     //! @name Tools
     //@{
-    MT_Float GetStockValue                         ( const PHY_DotationCategory& category ) const;
+    MT_Float GetStockValue( const PHY_DotationCategory& category ) const;
     MT_Float GetConvoyTransportersAvailabilityRatio() const;
     //@}
 
@@ -102,7 +101,5 @@ private:
     bool                        bHasChanged_;
     PHY_DotationStockContainer* pStocks_; 
 };
-
-#include "PHY_RolePionLOG_Supply.inl"
 
 #endif // __PHY_RolePionLOG_Supply_h_

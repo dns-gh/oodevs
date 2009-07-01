@@ -10,11 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePion_Supply.h"
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Supply, "PHY_RolePion_Supply" )
 
@@ -25,6 +22,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Supply, "PHY_RolePion_Supply" )
 PHY_RolePion_Supply::PHY_RolePion_Supply( MT_RoleContainer& role )
     : PHY_RoleInterface_Supply( role )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,6 +32,7 @@ PHY_RolePion_Supply::PHY_RolePion_Supply( MT_RoleContainer& role )
 PHY_RolePion_Supply::PHY_RolePion_Supply()
     : PHY_RoleInterface_Supply()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,21 +41,7 @@ PHY_RolePion_Supply::PHY_RolePion_Supply()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Supply::~PHY_RolePion_Supply()
 {
-
-}
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Supply::serialize
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_RolePion_Supply::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,11 +52,6 @@ void PHY_RolePion_Supply::WriteODB( xml::xostream& xos ) const
 {
     // NOTHING
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Supply::Update
@@ -99,8 +79,6 @@ void PHY_RolePion_Supply::Clean()
 {
     // NOTHING
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Supply::EnableSystem
@@ -340,10 +318,6 @@ void PHY_RolePion_Supply::NotifyComposanteChanged( PHY_ComposantePion& /*composa
     // NOTHING
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Supply::SendChangedState
 // Created: NLD 2004-12-30
@@ -360,4 +334,13 @@ void PHY_RolePion_Supply::SendChangedState() const
 void PHY_RolePion_Supply::SendFullState() const
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::ModifySpeed
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Supply::ModifySpeed( MT_Float rSpeed ) const
+{
+    return rSpeed;
 }

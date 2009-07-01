@@ -12,8 +12,6 @@
 #ifndef __PHY_Conveyor_h_
 #define __PHY_Conveyor_h_
 
-#include "MIL.h"
-
 class PHY_ComposantePion;
 class MIL_AgentPion;
 class PHY_DotationCategory;
@@ -78,7 +76,5 @@ private:
 
     MIL_AgentPion*       pLentTo_;
 };
-
-#include "PHY_Conveyor.inl"
 
 #endif // __PHY_Conveyor_h_

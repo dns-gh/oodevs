@@ -12,8 +12,6 @@
 #ifndef __PHY_SupplyStockState_h_
 #define __PHY_SupplyStockState_h_
 
-#include "MIL.h"
-
 #include "PHY_SupplyState_ABC.h"
 #include "PHY_SupplyStockRequest.h"
 
@@ -30,9 +28,9 @@ class PHY_SupplyStockState : public PHY_SupplyState_ABC
     MT_COPYNOTALLOWED( PHY_SupplyStockState )
 
 public:
-     PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, bool bPushedFlow );
-     PHY_SupplyStockState();
-    ~PHY_SupplyStockState();
+             PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, bool bPushedFlow );
+             PHY_SupplyStockState();
+    virtual ~PHY_SupplyStockState();
 
     //! @name CheckPoints
     //@{
@@ -94,7 +92,5 @@ private:
           bool                   bRequestsChanged_;
           T_RequestMap           requests_;
 };
-
-#include "PHY_SupplyStockState.inl"
 
 #endif // __PHY_SupplyStockState_h_
