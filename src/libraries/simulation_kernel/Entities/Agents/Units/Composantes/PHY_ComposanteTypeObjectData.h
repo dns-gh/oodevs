@@ -12,8 +12,6 @@
 #ifndef __PHY_ComposanteTypeObjectData_h_
 #define __PHY_ComposanteTypeObjectData_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -66,7 +64,5 @@ private:
 
     const PHY_ConsumptionType* pConsumptionMode_;
 };
-
-#include "PHY_ComposanteTypeObjectData.inl"
 
 #endif // __PHY_ComposanteTypeObjectData_h_

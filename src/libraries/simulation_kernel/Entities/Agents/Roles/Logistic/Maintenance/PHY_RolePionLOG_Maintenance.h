@@ -31,7 +31,6 @@ class MIL_AutomateLOG;
 // =============================================================================
 class PHY_RolePionLOG_Maintenance : public PHY_RolePion_Maintenance
 {
-    MT_COPYNOTALLOWED( PHY_RolePionLOG_Maintenance )
 
 public:
              PHY_RolePionLOG_Maintenance( MT_RoleContainer& role, MIL_AgentPionLOG_ABC& pion );

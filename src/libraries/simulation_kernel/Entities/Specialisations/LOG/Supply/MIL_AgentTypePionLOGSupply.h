@@ -27,7 +27,6 @@ namespace xml
 // =============================================================================
 class MIL_AgentTypePionLOGSupply : public MIL_AgentTypePionLOG_ABC
 {
-    MT_COPYNOTALLOWED( MIL_AgentTypePionLOGSupply )
 
 public:
     MIL_AgentTypePionLOGSupply( const std::string& strName, xml::xistream& xis );

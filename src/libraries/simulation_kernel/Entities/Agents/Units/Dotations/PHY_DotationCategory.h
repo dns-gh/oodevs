@@ -34,9 +34,8 @@ class MIL_AgentPion;
 // @class  PHY_DotationCategory
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationCategory
+class PHY_DotationCategory : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationCategory )
 
 public:
      PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, xml::xistream& xis );

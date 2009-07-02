@@ -28,7 +28,6 @@ class NET_ASN_MsgUnitAttributes;
 // =============================================================================
 class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Humans )
 
 public:
     //! @name Types

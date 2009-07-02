@@ -10,12 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ComposanteState.h"
-
-// =============================================================================
-// STATIC INITIALIZATION (MANAGER)
-// =============================================================================
 
 const PHY_ComposanteState PHY_ComposanteState::undamaged_                  ( "Disponible"                  , eUndamaged                  , true  , false ); // bUsable, bDamaged
 const PHY_ComposanteState PHY_ComposanteState::repairableWithEvacuation_   ( "ReparableAvecEvacuation"     , eRepairableWithEvacuation   , true  , true  );
@@ -47,12 +42,8 @@ void PHY_ComposanteState::Initialize()
 // -----------------------------------------------------------------------------
 void PHY_ComposanteState::Terminate()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteState constructor
@@ -64,6 +55,7 @@ PHY_ComposanteState::PHY_ComposanteState( const std::string& strName, E_State nS
     , bUsable_ ( bUsable  )
     , bDamaged_( bDamaged )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,5 +64,119 @@ PHY_ComposanteState::PHY_ComposanteState( const std::string& strName, E_State nS
 // -----------------------------------------------------------------------------
 PHY_ComposanteState::~PHY_ComposanteState()
 {
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::GetStates
+// Created: NLD 2004-10-07
+// -----------------------------------------------------------------------------
+PHY_ComposanteState::T_ComposanteStateVector& PHY_ComposanteState::GetStates()
+{
+    return composanteStates_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::GetName
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const std::string& PHY_ComposanteState::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::CanTransport
+// Created: NLD 2004-10-07
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteState::CanTransport() const
+{
+    return IsUsable() && *this != repairableWithEvacuation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::IsUsable
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteState::IsUsable() const
+{
+    return bUsable_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::IsDamaged
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteState::IsDamaged() const
+{
+    return bDamaged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::GetID
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+uint PHY_ComposanteState::GetID() const
+{
+    return nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::GetNbrStates
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+uint PHY_ComposanteState::GetNbrStates()
+{
+    return eNbrStates;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::Find
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+const PHY_ComposanteState& PHY_ComposanteState::Find( uint nID )
+{
+    assert( composanteStates_.size() > nID );
+    return *composanteStates_[ nID ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::Find
+// Created: NLD 2006-07-25
+// -----------------------------------------------------------------------------
+const PHY_ComposanteState* PHY_ComposanteState::Find( const std::string& strName )
+{
+    for( CIT_ComposanteStateVector it = composanteStates_.begin(); it != composanteStates_.end(); ++it )
+    {
+        if( sCaseInsensitiveEqual()( (**it).GetName(), strName ) )
+            return *it;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::operator==
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteState::operator==( const PHY_ComposanteState& rhs ) const
+{
+    return nState_ == rhs.nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::operator!=
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteState::operator!=( const PHY_ComposanteState& rhs ) const
+{
+    return nState_ != rhs.nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::operator<
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteState::operator<( const PHY_ComposanteState& rhs ) const
+{
+    return nState_ < rhs.nState_;
+}

@@ -41,7 +41,6 @@ class MIL_EntityManager;
 class MIL_AgentPion : public MIL_Agent_ABC
                     , public PHY_Actor
 {
-    MT_COPYNOTALLOWED( MIL_AgentPion )
 
 public:
              MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );    // Pion dans ODB
@@ -83,13 +82,6 @@ public:
     virtual bool                      IsPC               () const;
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
-
-    const MT_Vector2D&   GetDirDanger         () const;
-    const MIL_Fuseau&    GetFuseau            () const;
-    const T_LimaVector&  GetLimas             () const;
-          MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function ) const;
-          MIL_LimaOrder* FindLima             ( uint nID ) const;
-          MIL_LimaOrder* FindNextScheduledLima() const;
 
     bool CanFly      () const;
     bool IsAutonomous() const; // Drones
@@ -174,7 +166,5 @@ private:
 
     MIL_PionOrderManager&    orderManager_;
 };
-
-#include "MIL_AgentPion.inl"
 
 #endif // __MIL_AgentPion_h_

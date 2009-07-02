@@ -26,7 +26,6 @@ class PHY_MedicalCollectionAmbulance;
 // =============================================================================
 class PHY_RolePion_Medical : public PHY_RoleInterface_Medical
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Medical )
 
 public:
              PHY_RolePion_Medical( MT_RoleContainer& role );

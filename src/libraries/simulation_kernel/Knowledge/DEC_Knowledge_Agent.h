@@ -44,7 +44,6 @@ class PHY_NatureAtlas;
 // =============================================================================
 class DEC_Knowledge_Agent : public DEC_Knowledge_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_Agent ) 
 
 public:
     // Parameters - $$$ Changer - ne devrait pas être public

@@ -22,9 +22,8 @@ class PHY_DotationCategory;
 // @class  PHY_DotationLogisticType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationLogisticType
+class PHY_DotationLogisticType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationLogisticType )
 
 public:
     //! @name Types

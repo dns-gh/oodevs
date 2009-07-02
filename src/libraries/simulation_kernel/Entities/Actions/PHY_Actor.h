@@ -18,9 +18,8 @@ class PHY_Action_ABC;
 // @class  PHY_Actor
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Actor
+class PHY_Actor : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Actor )
 
 public:
              PHY_Actor();

@@ -27,10 +27,9 @@ namespace xml
 // =============================================================================
 class MIL_AgentTypePionREFUGIE : public MIL_AgentTypePion
 {
-    MT_COPYNOTALLOWED( MIL_AgentTypePionREFUGIE )
 
 public:
-    MIL_AgentTypePionREFUGIE( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionREFUGIE( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionREFUGIE();
 
     //! @name Accessors

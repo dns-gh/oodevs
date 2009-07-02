@@ -19,16 +19,15 @@
 // @class  PHY_Breakdown
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Breakdown
+class PHY_Breakdown : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Breakdown )
 
 public:
     //! @name Contruction
     //@{
-     PHY_Breakdown( const PHY_BreakdownType& type );
-     PHY_Breakdown();
-    ~PHY_Breakdown();
+     explicit PHY_Breakdown( const PHY_BreakdownType& type );
+              PHY_Breakdown();
+             ~PHY_Breakdown();
     //@}
 
     //! @name CheckPoints

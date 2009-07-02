@@ -25,7 +25,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_RolePion_NBC : public PHY_RoleInterface_NBC
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_NBC )
 
 public:
              PHY_RolePion_NBC( MT_RoleContainer& role, MIL_AgentPion& pion );

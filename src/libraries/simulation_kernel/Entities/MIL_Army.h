@@ -39,8 +39,8 @@ struct ASN1T_MsgChangeDiplomacy;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_Army : public MIL_Army_ABC
+               , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_Army )
 
 public:
     //! @name Types

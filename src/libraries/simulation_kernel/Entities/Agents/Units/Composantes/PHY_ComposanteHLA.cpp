@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-22 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Composantes/PHY_ComposanteHLA.cpp $
-// $Author: Age $
-// $Modtime: 13/12/04 10:34 $
-// $Revision: 3 $
-// $Workfile: PHY_ComposanteHLA.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ComposanteHLA.h"

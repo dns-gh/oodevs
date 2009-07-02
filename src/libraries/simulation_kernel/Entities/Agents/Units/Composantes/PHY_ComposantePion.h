@@ -50,7 +50,6 @@ class MIL_Time_ABC;
 // =============================================================================
 class PHY_ComposantePion : public PHY_Composante_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ComposantePion )
 
 public:
              PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy );

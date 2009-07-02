@@ -39,12 +39,11 @@ class MIL_Population;
 // =============================================================================
 class DEC_KnowledgeBlackBoard_AgentPion : public DEC_KnowledgeBlackBoard_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KnowledgeBlackBoard_AgentPion )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KnowledgeBlackBoard_AgentPion( MIL_AgentPion& pion );
+    explicit DEC_KnowledgeBlackBoard_AgentPion( MIL_AgentPion& pion );
              DEC_KnowledgeBlackBoard_AgentPion();
     virtual ~DEC_KnowledgeBlackBoard_AgentPion();
     //@}

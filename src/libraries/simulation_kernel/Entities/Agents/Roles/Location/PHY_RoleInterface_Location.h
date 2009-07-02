@@ -27,8 +27,8 @@ class MIL_PopulationConcentration;
 // =============================================================================
 class PHY_RoleInterface_Location : public MT_Role_ABC
                                  , public TER_Agent_ABC
+                                 , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleInterface_Location )
 
 public:
     typedef PHY_RoleInterface_Location RoleInterface;

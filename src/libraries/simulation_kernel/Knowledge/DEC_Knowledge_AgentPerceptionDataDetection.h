@@ -24,9 +24,8 @@ class MIL_Army;
 // =============================================================================
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_Knowledge_AgentPerceptionDataDetection
+class DEC_Knowledge_AgentPerceptionDataDetection : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_AgentPerceptionDataDetection ) 
 
 public:
      DEC_Knowledge_AgentPerceptionDataDetection();

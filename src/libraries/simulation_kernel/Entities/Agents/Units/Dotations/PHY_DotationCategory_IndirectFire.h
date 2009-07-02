@@ -28,7 +28,6 @@ namespace xml
 // =============================================================================
 class PHY_DotationCategory_IndirectFire : public PHY_DotationCategory_IndirectFire_ABC
 {
-    MT_COPYNOTALLOWED( PHY_DotationCategory_IndirectFire )
 
 public:
     PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );

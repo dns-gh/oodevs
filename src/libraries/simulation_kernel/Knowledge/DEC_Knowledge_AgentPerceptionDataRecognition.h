@@ -22,13 +22,11 @@ class MIL_Army;
 class MIL_Army_ABC;
 class MIL_AgentType_ABC;
 
-
 // =============================================================================
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_Knowledge_AgentPerceptionDataRecognition
+class DEC_Knowledge_AgentPerceptionDataRecognition : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_AgentPerceptionDataRecognition ) 
 
 public:
      DEC_Knowledge_AgentPerceptionDataRecognition();

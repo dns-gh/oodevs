@@ -10,18 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ComposanteType_ABC.h"
-
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include <xeumeuleu/xml.h>
-
-
-
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteType_ABC constructor
@@ -52,4 +44,42 @@ PHY_ComposanteType_ABC::PHY_ComposanteType_ABC( const std::string& strName, xml:
 PHY_ComposanteType_ABC::~PHY_ComposanteType_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteType_ABC::GetMosID
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+ASN1T_EquipmentType PHY_ComposanteType_ABC::GetMosID() const
+{
+    return nMosID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteType_ABC::GetProtection
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+const PHY_Protection& PHY_ComposanteType_ABC::GetProtection() const
+{
+    assert( pProtection_ );
+    return *pProtection_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteType_ABC::GetVolume
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+const PHY_Volume& PHY_ComposanteType_ABC::GetVolume() const
+{
+    assert( pVolume_ );
+    return *pVolume_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteType_ABC::GetName
+// Created: NLD 2004-10-07
+// -----------------------------------------------------------------------------
+const std::string& PHY_ComposanteType_ABC::GetName() const
+{
+    return strName_;
 }

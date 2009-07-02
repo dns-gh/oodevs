@@ -612,9 +612,8 @@ bool PHY_RolePion_Perceiver::CanPerceive() const
 // =============================================================================
 // UPDATE
 // =============================================================================
-struct sPerceptionRotation
+struct sPerceptionRotation : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( sPerceptionRotation )
 
 public:
     sPerceptionRotation() 
@@ -637,9 +636,8 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-struct sPerceptionDataSensors
+struct sPerceptionDataSensors : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( sPerceptionDataSensors )
 
 public:
     sPerceptionDataSensors( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject, const MT_Vector2D& vOrigin, const MT_Vector2D& vDirection, MT_Float& rMaxAgentPerceptionDistance, MT_Float& rMaxObjectPerceptionDistance )
@@ -686,9 +684,8 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-struct sPerceptionDataComposantes
+struct sPerceptionDataComposantes : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( sPerceptionDataComposantes )
 
 public:
     sPerceptionDataComposantes( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject, const PHY_RolePion_Location& roleLocation, const MT_Vector2D& vMainPerceptionDirection, MT_Float rDirectionRotation, MT_Float& rMaxAgentPerceptionDistance, MT_Float& rMaxObjectPerceptionDistance )
@@ -733,9 +730,8 @@ private:
 
 
 // -----------------------------------------------------------------------------
-struct sRadarDataComposantes
+struct sRadarDataComposantes : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( sRadarDataComposantes )
 
 public:
     sRadarDataComposantes( PHY_RolePion_Perceiver::T_RadarsPerClassMap& radars )

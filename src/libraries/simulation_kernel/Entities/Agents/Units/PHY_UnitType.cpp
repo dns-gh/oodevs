@@ -340,3 +340,84 @@ void PHY_UnitType::InstanciateComposantes( PHY_RolePion_Composantes& role ) cons
             compType.InstanciateComposante( role, compData.nNbrHumanInCrew_, compData.bMajor_, compData.bLoadable_, compData.bCanBePartOfConvoy_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetTC1Capacities
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+const PHY_DotationCapacities& PHY_UnitType::GetTC1Capacities() const
+{
+    return dotationCapacitiesTC1_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetCommanderRepartition
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+const PHY_UnitType::T_CommanderRepartitionMap& PHY_UnitType::GetCommanderRepartition() const
+{
+    return commandersRepartition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetCoupDeSondeLength
+// Created: NLD 2004-10-14
+// -----------------------------------------------------------------------------
+MT_Float PHY_UnitType::GetCoupDeSondeLength() const
+{
+    return rCoupDeSondeLength_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetCoupDeSondeWidth
+// Created: NLD 2004-10-14
+// -----------------------------------------------------------------------------
+MT_Float PHY_UnitType::GetCoupDeSondeWidth() const
+{
+    return rCoupDeSondeWidth_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetCoefDecontaminationPerTimeStep
+// Created: NLD 2004-11-02
+// -----------------------------------------------------------------------------
+MT_Float PHY_UnitType::GetCoefDecontaminationPerTimeStep() const
+{
+    return rCoefDecontaminationPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::CanFly
+// Created: NLD 2005-03-07
+// -----------------------------------------------------------------------------
+bool PHY_UnitType::CanFly() const
+{
+    return bCanFly_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::IsAutonomous
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+bool PHY_UnitType::IsAutonomous() const
+{
+    return bIsAutonomous_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetInstallationTime
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_UnitType::GetInstallationTime() const
+{
+    return rInstallationTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetUninstallationTime
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_UnitType::GetUninstallationTime() const
+{
+    return rUninstallationTime_;
+}

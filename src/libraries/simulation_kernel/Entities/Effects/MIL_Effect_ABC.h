@@ -18,9 +18,8 @@
 // @class  MIL_Effect_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_Effect_ABC
+class MIL_Effect_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_Effect_ABC )
 
 public:
              MIL_Effect_ABC();

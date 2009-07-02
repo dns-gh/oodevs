@@ -20,9 +20,8 @@ class PHY_RolePionLOG_Medical;
 // @class  PHY_MedicalEvacuationAmbulance
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_MedicalEvacuationAmbulance
+class PHY_MedicalEvacuationAmbulance : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_MedicalEvacuationAmbulance )
 
 public:
      PHY_MedicalEvacuationAmbulance( PHY_RolePionLOG_Medical& medical, PHY_ComposantePion& compAmbulance );

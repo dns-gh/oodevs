@@ -32,7 +32,7 @@ class MIL_AgentPion;
 // =============================================================================
 class DEC_KS_PopulationInteraction : public DEC_KnowledgeSource_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KS_PopulationInteraction ) 
+
 public:
     //! @name Constructors/Destructor
     //@{

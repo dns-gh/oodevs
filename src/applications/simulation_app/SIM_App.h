@@ -26,9 +26,8 @@ class MT_FileLogger;
 //=============================================================================
 // Created: NLD 2002-08-07
 //=============================================================================
-class SIM_App
+class SIM_App : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( SIM_App );
 
 public:
      

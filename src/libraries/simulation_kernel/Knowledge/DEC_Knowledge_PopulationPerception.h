@@ -30,7 +30,6 @@ class DEC_Knowledge_Population;
 // =============================================================================
 class DEC_Knowledge_PopulationPerception : public DEC_Knowledge_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_PopulationPerception ) 
 
 public:
     //! @name Types

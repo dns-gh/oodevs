@@ -28,7 +28,6 @@ class MIL_Object_ABC;
 // =============================================================================
 class PHY_ActionControlZone : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionControlZone )
 
 public:
     typedef MIL_AgentPion ActorType;        

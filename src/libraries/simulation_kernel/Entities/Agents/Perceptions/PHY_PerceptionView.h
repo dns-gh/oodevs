@@ -13,7 +13,6 @@
 //*****************************************************************************
 class PHY_PerceptionView : public PHY_Perception_ABC
 {
-    MT_COPYNOTALLOWED( PHY_PerceptionView )
 
 public:
     explicit PHY_PerceptionView( PHY_RolePion_Perceiver& perceiver );

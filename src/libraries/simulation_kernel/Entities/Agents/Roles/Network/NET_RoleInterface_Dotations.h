@@ -19,8 +19,8 @@
 // Created: JVT 2004-08-03
 // =============================================================================
 class NET_RoleInterface_Dotations : public MT_Role_ABC
+                                  , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( NET_RoleInterface_Dotations )
 
 public:
     //! @name Types

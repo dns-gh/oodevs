@@ -35,11 +35,9 @@ class MIL_AgentType_ABC;
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_Knowledge_Object 
-    : public DEC_Knowledge_ABC
-    , private tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >
+class DEC_Knowledge_Object : public DEC_Knowledge_ABC
+                           , private tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_Object ) 
 
 public:
     //! @name Constructors/Destructor

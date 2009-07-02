@@ -31,8 +31,8 @@ enum E_FireAvailability;
 // Created: JVT 2004-08-03
 // =============================================================================
 class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
+                            , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_RolePion_Decision )
 
 public:
              DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentPion& pion );

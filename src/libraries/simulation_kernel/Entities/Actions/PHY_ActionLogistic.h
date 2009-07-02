@@ -23,7 +23,6 @@ class MIL_AgentPion;
 template< typename T >
 class PHY_ActionLogistic : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionLogistic )
 
 public:
     typedef MIL_AgentPion ActorType;

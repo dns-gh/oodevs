@@ -24,9 +24,8 @@ class PHY_ComposantePion;
 // @class  PHY_MedicalHumanState
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_MedicalHumanState
+class PHY_MedicalHumanState : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_MedicalHumanState )
 
 public:
      PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& humann, bool bEvacuatedByThirdParty = false );

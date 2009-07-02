@@ -29,8 +29,8 @@ class MIL_PopulationAttitude;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Composantes : public MT_Role_ABC
+                                    , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleInterface_Composantes )
 
 public:
     //! @name Types

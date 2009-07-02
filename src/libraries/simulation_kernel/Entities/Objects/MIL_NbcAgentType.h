@@ -27,9 +27,8 @@ class PHY_HumanWound;
 // Created: JVT 03-01-06
 // Modified: JVT 2004-10-28
 //*****************************************************************************
-class MIL_NbcAgentType
+class MIL_NbcAgentType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_NbcAgentType )
 
 public:
     //! @name Factory

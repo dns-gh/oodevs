@@ -10,14 +10,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
-
-
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
 uint                            PHY_Protection::nNextID_;
@@ -33,10 +30,6 @@ PHY_Protection::T_HumanEffect::T_HumanEffect()
 {
     // NOTHING
 }
-
-// =============================================================================
-// STATIC INITIALIZATION (MANAGER)
-// =============================================================================
 
 struct PHY_Protection::LoadingWrapper
 {
@@ -86,10 +79,6 @@ void PHY_Protection::Terminate()
         delete itProtection->second;
     protections_.clear();
 }
-
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Protection constructor
@@ -189,10 +178,6 @@ PHY_Protection::~PHY_Protection()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Protection::CanRandomlyBreaksDownEva
 // Created: NLD 2005-01-06
@@ -229,4 +214,61 @@ MT_Float PHY_Protection::GetHumanWoundedRatio( const PHY_ComposanteState& compos
 {
     assert( attritionEffectsOnHumans_.size() > composanteState.GetID() );
     return attritionEffectsOnHumans_[ composanteState.GetID() ].rWoundedRatio_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::Find
+// Created: NLD 2004-08-04
+// -----------------------------------------------------------------------------
+const PHY_Protection* PHY_Protection::Find( const std::string& strName )
+{
+    CIT_ProtectionMap itProtection = protections_.find( strName );
+    if( itProtection == protections_.end() )
+        return 0;
+    return itProtection->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::GetName
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const std::string& PHY_Protection::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::GetID
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+uint PHY_Protection::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::GetNeutralizationTime
+// Created: NLD 2004-10-12
+// -----------------------------------------------------------------------------
+uint PHY_Protection::GetNeutralizationTime() const
+{
+    return (uint)( neutralizationTime_.rand() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::GetProtections
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const PHY_Protection::T_ProtectionMap& PHY_Protection::GetProtections()
+{
+    return protections_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::IsHuman
+// Created: NLD 2005-03-11
+// -----------------------------------------------------------------------------
+bool PHY_Protection::IsHuman() const
+{
+    return nType_ == eHuman;
 }

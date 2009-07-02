@@ -24,7 +24,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_ActionConstructObject : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionConstructObject )
 
 public:
     typedef MIL_AgentPion ActorType;

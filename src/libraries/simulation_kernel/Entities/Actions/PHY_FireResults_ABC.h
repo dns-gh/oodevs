@@ -22,9 +22,8 @@ class MIL_Population;
 // @class  PHY_FireResults_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_FireResults_ABC
+class PHY_FireResults_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_FireResults_ABC )
 
 public:
              PHY_FireResults_ABC();

@@ -24,7 +24,6 @@ class MIL_Population;
 // =============================================================================
 class PHY_Population_ActionMove : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_Population_ActionMove )
 
 public:
     typedef MIL_Population ActorType;

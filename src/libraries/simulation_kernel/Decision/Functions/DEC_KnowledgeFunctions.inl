@@ -177,7 +177,7 @@ void DEC_KnowledgeFunctions::GetObjectsInFuseau( DIA_Call_ABC& call, const T& ca
     MIL_ObjectFilter filter( call.GetParameters(), 0 );
     
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, caller.GetFuseau() );
+    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, caller.GetOrderManager().GetFuseau() );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );

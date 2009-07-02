@@ -22,7 +22,6 @@ class MIL_Effect_IndirectFire;
 // =============================================================================
 class PHY_ActionIndirectFire_Knowledge : public PHY_ActionIndirectFire_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionIndirectFire_Knowledge )
 
 public:
              PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );

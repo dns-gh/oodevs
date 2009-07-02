@@ -24,7 +24,6 @@ class DEC_Representations;
 class DEC_Rep_PathPoint_Front  : public DEC_PathPoint
                                , public DIA_TypedObject
 {
-    MT_COPYNOTALLOWED( DEC_Rep_PathPoint_Front )
 
 public:
     explicit DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest );

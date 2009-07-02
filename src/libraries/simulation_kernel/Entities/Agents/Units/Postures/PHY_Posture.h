@@ -22,9 +22,8 @@ class PHY_ConsumptionType;
 // @class  PHY_Posture
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Posture
+class PHY_Posture : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Posture )
 
 public:
     //! @name Types

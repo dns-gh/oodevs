@@ -27,7 +27,6 @@ namespace xml
 // =============================================================================
 class MIL_AutomateTypeASA : public MIL_AutomateType
 {
-    MT_COPYNOTALLOWED( MIL_AutomateTypeASA )
 
 public:
     MIL_AutomateTypeASA( const std::string& strName, xml::xistream& xis );

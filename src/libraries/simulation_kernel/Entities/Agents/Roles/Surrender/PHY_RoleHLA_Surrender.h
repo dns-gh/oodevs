@@ -20,7 +20,6 @@
 // =============================================================================
 class PHY_RoleHLA_Surrender : public PHY_RoleInterface_Surrender
 {
-    MT_COPYNOTALLOWED( PHY_RoleHLA_Surrender )
 
 public:
     explicit PHY_RoleHLA_Surrender( MT_RoleContainer& role );

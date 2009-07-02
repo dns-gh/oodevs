@@ -270,11 +270,11 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
     assert( !pions.empty() );
 
     // 1. Vérifie si les pions sont bien dans le même fuseau
-    const MIL_Fuseau& fuseau = static_cast< DEC_RolePion_Decision& >( **pions.begin() ).GetPion().GetFuseau();
+    const MIL_Fuseau& fuseau = static_cast< DEC_RolePion_Decision& >( **pions.begin() ).GetPion().GetOrderManager().GetFuseau();
     IT_ObjectVector itPion = pions.begin();
     for( ++itPion; itPion != pions.end(); ++itPion )
     {
-        if( !( static_cast< DEC_RolePion_Decision& >( **itPion ).GetPion().GetFuseau() == fuseau ) ) //$$$ beark
+        if( !( static_cast< DEC_RolePion_Decision& >( **itPion ).GetPion().GetOrderManager().GetFuseau() == fuseau ) ) //$$$ beark
         {
             diaCall.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
             return;
@@ -510,7 +510,7 @@ void DEC_GeometryFunctions::ComputeSupportPosition( DIA_Call_ABC& call, const MI
     assert( pAgentToSupport != 0 );
 
     const MT_Vector2D& vUnitToSupportPos = pAgentToSupport->GetPion().GetRole< PHY_RolePion_Location >().GetPosition ();
-    const MIL_Fuseau& fuseau             = callerAgent.GetFuseau();
+    const MIL_Fuseau& fuseau             = callerAgent.GetOrderManager().GetFuseau();
 
     MT_Vector2D  vDirLooked;
     pAgentToSupport->GetPion().GetRole< PHY_RolePion_Perceiver >().GetMainPerceptionDirection( vDirLooked );
@@ -571,7 +571,7 @@ void DEC_GeometryFunctions::ComputeAmbushPosition( DIA_Call_ABC& call, const MIL
     MT_Vector2D* pResult = new MT_Vector2D();
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 
-    MT_Vector2D vDirAmbushPos = callerAgent.GetDirDanger();
+    MT_Vector2D vDirAmbushPos = callerAgent.GetOrderManager().GetDirDanger();
     vDirAmbushPos.Rotate90ClockWise();
     vDirAmbushPos.Normalize();
 
@@ -606,7 +606,7 @@ void DEC_GeometryFunctions::ComputeSafetyPosition( DIA_Call_ABC& call, const MIL
 
     MT_Vector2D vDirEniToAmi = ( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition() - vEnnemiPos).Normalize();
     if( vDirEniToAmi.IsZero() )
-        vDirEniToAmi = -callerAgent.GetDirDanger();
+        vDirEniToAmi = -callerAgent.GetOrderManager().GetDirDanger();
 
     MT_Vector2D vSafetyPos = vEnnemiPos + vDirEniToAmi * rMinDistance;
 
@@ -687,7 +687,7 @@ void DEC_GeometryFunctions::ComputeSafetyPositionWithObjective( DIA_Call_ABC& ca
 void DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     MT_Vector2D* pResult = new MT_Vector2D();
-    callerAgent.GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), *pResult );
+    callerAgent.GetOrderManager().GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), *pResult );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
 
@@ -725,7 +725,7 @@ void DEC_GeometryFunctions::ComputePosDeploiementASAOmni( DIA_Call_ABC& call, co
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
 
     const MT_Float    rAngle = 2. * MT_PI / nNbrPos;
-          MT_Vector2D vDir = automate.GetDirDanger() * rRadius;
+          MT_Vector2D vDir = automate.GetOrderManager().GetDirDanger() * rRadius;
 
     while ( nNbrPos-- )
     {
@@ -847,7 +847,7 @@ void DEC_GeometryFunctions::ComputePointsBeforeLima( DIA_Call_ABC& call, const M
 {
     assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
 
-    MIL_LimaOrder*    pLima           = callerAutomate.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    MIL_LimaOrder*    pLima           = callerAutomate.GetOrderManager().FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
     MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
     MT_Float          rNbPoints       = call.GetParameter( 2 ).ToFloat();
 
@@ -859,7 +859,7 @@ void DEC_GeometryFunctions::ComputePointsBeforeLima( DIA_Call_ABC& call, const M
 
     T_PointVector* pResult = new T_PointVector();
 
-    bool bResult = callerAutomate.GetFuseau().ComputePointsBeforeLima( *pLima, rDistBeforeLima, (uint)rNbPoints, *pResult );
+    bool bResult = callerAutomate.GetOrderManager().GetFuseau().ComputePointsBeforeLima( *pLima, rDistBeforeLima, (uint)rNbPoints, *pResult );
     if( bResult )
         call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
     else
@@ -900,7 +900,7 @@ void DEC_GeometryFunctions::ComputeDistanceFromMiddleLine( DIA_Call_ABC& call )
     const MT_Vector2D& vReferencePionPosition = pReferencePion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
 
     //
-    const MIL_Fuseau& fuseau = pReferencePion->GetPion().GetFuseau();
+    const MIL_Fuseau& fuseau = pReferencePion->GetPion().GetOrderManager().GetFuseau();
     MT_Float rDist;
     if( fuseau.IsNull() )
         rDist = vReferencePionPosition.Distance( vBarycenter );
@@ -1477,7 +1477,7 @@ namespace
 
     float ComputeOpenTerrainRatio( const TER_Localisation& location )
     {
-        return 1. - ComputeClosedTerrainRatio( location );
+        return 1.f - ComputeClosedTerrainRatio( location );
     }
 }
 

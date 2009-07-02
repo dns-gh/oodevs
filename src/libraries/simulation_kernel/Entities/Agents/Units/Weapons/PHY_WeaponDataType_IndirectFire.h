@@ -28,9 +28,8 @@ class MIL_AgentPion;
 // @class  PHY_WeaponDataType_IndirectFire
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_WeaponDataType_IndirectFire
+class PHY_WeaponDataType_IndirectFire : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_WeaponDataType_IndirectFire )
 
 public:
              PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis );

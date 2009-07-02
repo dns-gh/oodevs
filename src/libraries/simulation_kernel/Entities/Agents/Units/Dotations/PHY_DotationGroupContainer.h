@@ -35,9 +35,8 @@ class PHY_AmmoDotationClass;
 // @class  PHY_DotationGroupContainer
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationGroupContainer
+class PHY_DotationGroupContainer : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationGroupContainer )
 
 public:
      PHY_DotationGroupContainer( PHY_RolePion_Dotations& roleDotation );

@@ -25,9 +25,8 @@ class MIL_Army;
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_BlackBoard_CanContainKnowledgeObject
+class DEC_BlackBoard_CanContainKnowledgeObject : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_BlackBoard_CanContainKnowledgeObject )
 
 public:
     //! @name Constructors/Destructor

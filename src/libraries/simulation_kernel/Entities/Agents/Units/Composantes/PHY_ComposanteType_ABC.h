@@ -12,8 +12,6 @@
 #ifndef __PHY_ComposanteType_ABC_h_
 #define __PHY_ComposanteType_ABC_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -27,9 +25,8 @@ class MIL_Agent_ABC;
 // @class  PHY_ComposanteType_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_ComposanteType_ABC
+class PHY_ComposanteType_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_ComposanteType_ABC )
 
 public:
              PHY_ComposanteType_ABC( const std::string& strName, xml::xistream& xis );
@@ -56,7 +53,5 @@ private:
     const PHY_Volume*          pVolume_;
           ASN1T_EquipmentType nMosID_;
 };
-
-#include "PHY_ComposanteType_ABC.inl"
 
 #endif // __PHY_ComposanteType_ABC_h_

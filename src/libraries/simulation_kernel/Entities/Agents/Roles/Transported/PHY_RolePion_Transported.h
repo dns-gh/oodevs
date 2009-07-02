@@ -24,7 +24,6 @@ class NET_ASN_MsgUnitAttributes;
 // =============================================================================
 class PHY_RolePion_Transported : public PHY_RoleInterface_Transported
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Transported )
 
 public:
              PHY_RolePion_Transported( MT_RoleContainer& role, MIL_AgentPion& pion );

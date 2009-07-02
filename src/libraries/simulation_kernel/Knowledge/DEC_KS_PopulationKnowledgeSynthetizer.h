@@ -27,7 +27,6 @@ class MIL_Population;
 // =============================================================================
 class DEC_KS_PopulationKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KS_PopulationKnowledgeSynthetizer ) 
 
 public:
     //! @name Constructors/Destructor

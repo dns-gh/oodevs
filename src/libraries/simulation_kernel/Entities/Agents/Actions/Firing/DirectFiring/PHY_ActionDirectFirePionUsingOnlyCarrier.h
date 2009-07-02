@@ -22,10 +22,8 @@
 // =============================================================================
 class PHY_ActionDirectFirePionUsingOnlyCarrier : public PHY_ActionDirectFirePion_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionDirectFirePionUsingOnlyCarrier )
-
 public:
-    PHY_ActionDirectFirePionUsingOnlyCarrier( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionDirectFirePionUsingOnlyCarrier( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionDirectFirePionUsingOnlyCarrier();
 };
 #endif // __PHY_ActionDirectFirePionUsingOnlyCarrier_h_

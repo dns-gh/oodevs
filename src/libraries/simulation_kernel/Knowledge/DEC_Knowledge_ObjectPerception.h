@@ -31,7 +31,6 @@ class MIL_AgentPion;
 // =============================================================================
 class DEC_Knowledge_ObjectPerception : public DEC_Knowledge_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_ObjectPerception ) 
 
 public:
     //! @name Constructors/Destructor

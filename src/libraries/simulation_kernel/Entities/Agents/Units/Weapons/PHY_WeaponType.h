@@ -42,9 +42,8 @@ class MIL_EffectManager;
 // @class  PHY_WeaponType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_WeaponType
+class PHY_WeaponType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_WeaponType )
 
 public:
     //! @name Manager

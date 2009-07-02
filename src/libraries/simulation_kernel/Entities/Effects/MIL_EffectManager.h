@@ -21,9 +21,8 @@ class MIL_Effect_IndirectFire;
 // @class  MIL_EffectManager
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_EffectManager
+class MIL_EffectManager : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_EffectManager )
 
 public:
     //! @name Types

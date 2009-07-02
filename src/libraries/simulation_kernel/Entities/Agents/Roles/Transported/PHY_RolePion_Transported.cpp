@@ -91,7 +91,7 @@ void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint 
 
 namespace
 {
-    struct sTransportedData
+    struct sTransportedData : private boost::noncopyable
     {
         sTransportedData( const MIL_AgentPion& transported, const bool bTransportOnlyLoadable )
             : rTotalWeight_             ( 0. )
@@ -113,8 +113,6 @@ namespace
               MT_Float rTotalWeight_;
               MT_Float rHeaviestComposanteWeight_;
         const bool     bTransportOnlyLoadable_;
-
-        MT_COPYNOTALLOWED( sTransportedData );
     };
 }
 

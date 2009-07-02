@@ -26,7 +26,6 @@ class PHY_MaintenanceWorkRate;
 // =============================================================================
 class PHY_RolePion_Maintenance : public PHY_RoleInterface_Maintenance
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Maintenance )
 
 public:
     explicit PHY_RolePion_Maintenance( MT_RoleContainer& role );

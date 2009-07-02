@@ -25,9 +25,8 @@ namespace xml
 // @class  PHY_MaintenanceWorkRate
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_MaintenanceWorkRate
+class PHY_MaintenanceWorkRate : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_MaintenanceWorkRate )
 
 public:
     //! @name Types

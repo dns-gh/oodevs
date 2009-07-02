@@ -23,7 +23,6 @@ class PHY_RoleAction_InterfaceFlying;
 // =============================================================================
 class PHY_ActionFly : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionFly )
 
 public:
     typedef MIL_AgentPion ActorType;        

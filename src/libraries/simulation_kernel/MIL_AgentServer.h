@@ -38,8 +38,8 @@ class MIL_Folk;
 class MIL_AgentServer : public MT_Timer_ABC
                       , public NET_Simulation_ABC
                       , public MIL_Time_ABC
+                      , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_AgentServer )
 
 public:
     //! @name Type

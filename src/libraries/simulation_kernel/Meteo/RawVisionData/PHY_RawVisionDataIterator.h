@@ -18,9 +18,8 @@
 // Created: JVT 03-06-05
 // Last modified: JVT 03-08-05
 //*****************************************************************************
-class PHY_RawVisionDataIterator
+class PHY_RawVisionDataIterator : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RawVisionDataIterator )
 
 public:
     PHY_RawVisionDataIterator( const MT_Vector3D& beginPos, const MT_Vector3D& endPos );

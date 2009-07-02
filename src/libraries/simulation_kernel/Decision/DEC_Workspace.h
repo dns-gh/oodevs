@@ -22,9 +22,8 @@ class MIL_Config;
 // Created: JVT 02-06-28
 // Last modified: AGN 02-11-05
 //*****************************************************************************
-class DEC_Workspace
+class DEC_Workspace : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Workspace )
      
 public:
      DEC_Workspace( MIL_Config& config );

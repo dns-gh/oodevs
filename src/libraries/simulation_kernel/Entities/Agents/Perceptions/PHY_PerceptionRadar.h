@@ -25,7 +25,6 @@ class TER_Localisation;
 // =============================================================================
 class PHY_PerceptionRadar : public PHY_Perception_ABC
 {
-    MT_COPYNOTALLOWED( PHY_PerceptionRadar )
 
 public:
     explicit PHY_PerceptionRadar( PHY_RolePion_Perceiver& perceiver );

@@ -123,10 +123,8 @@ MT_Float PHY_RoleAction_Moving::ApplySpeedModificators( MT_Float rSpeed ) const
 
 namespace 
 {
-    struct sMaxSpeedObjectCalculator
+    struct sMaxSpeedObjectCalculator : private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( sMaxSpeedObjectCalculator );
-
     public:
         sMaxSpeedObjectCalculator( const MIL_Object_ABC& object ) 
             : rMaxSpeedObject_     ( std::numeric_limits< MT_Float >::max() )

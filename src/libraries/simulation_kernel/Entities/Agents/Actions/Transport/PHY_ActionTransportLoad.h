@@ -23,7 +23,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_ActionTransportLoad : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionTransportLoad )
 
 public:
     typedef MIL_AgentPion ActorType;        

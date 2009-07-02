@@ -20,11 +20,9 @@ class ConstructionAttribute;
 // =============================================================================
 // Created: NLD 2004-05-04
 // =============================================================================
-class DEC_Knowledge_ObjectAttributeConstruction 
-    : public DEC_Knowledge_ObjectAttribute_ABC
-    , public DEC_Knowledge_ObjectAttributeUpdatable_ABC
+class DEC_Knowledge_ObjectAttributeConstruction : public DEC_Knowledge_ObjectAttribute_ABC
+                                                , public DEC_Knowledge_ObjectAttributeUpdatable_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_ObjectAttributeConstruction ) 
 
 public:
     //! @name Constructors/Destructor

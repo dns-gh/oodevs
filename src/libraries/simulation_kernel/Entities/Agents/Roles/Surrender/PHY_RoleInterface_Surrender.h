@@ -23,8 +23,8 @@ class MIL_Army;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Surrender : public MT_Role_ABC
+                                  , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleInterface_Surrender )
 
 public:
     typedef PHY_RoleInterface_Surrender RoleInterface;

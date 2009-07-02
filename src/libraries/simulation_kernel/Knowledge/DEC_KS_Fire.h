@@ -33,7 +33,7 @@ class MIL_Population;
 // =============================================================================
 class DEC_KS_Fire : public DEC_KnowledgeSource_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KS_Fire ) 
+
 public:
     //! @name Constructors/Destructor
     //@{

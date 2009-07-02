@@ -21,9 +21,8 @@ class PHY_IndirectFireDotationClass;
 // @class  PHY_SmokeData
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SmokeData
+class PHY_SmokeData : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_SmokeData )
 
 public:
      PHY_SmokeData( const MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, uint nNbrAmmo );

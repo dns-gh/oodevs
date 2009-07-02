@@ -10,11 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Volume.h"
 #include <xeumeuleu/xml.h>
-
-
 
 PHY_Volume::T_VolumeMap PHY_Volume::volumes_;
 uint                    PHY_Volume::nNextID_ = 0;
@@ -26,10 +23,6 @@ struct PHY_Volume::LoadingWrapper
         PHY_Volume::ReadVolume( xis );
     }
 };
-
-// =============================================================================
-// STATIC INITIALIZATION (MANAGER)
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Volume::Initialize
@@ -74,10 +67,6 @@ void PHY_Volume::Terminate()
     volumes_.clear();
 }
 
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Volume constructor
 // Created: NLD 2004-08-04
@@ -86,6 +75,7 @@ PHY_Volume::PHY_Volume( const std::string& strName )
     : strName_( strName    )
     , nID_    ( nNextID_++ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -94,4 +84,54 @@ PHY_Volume::PHY_Volume( const std::string& strName )
 // -----------------------------------------------------------------------------
 PHY_Volume::~PHY_Volume()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Volume::FindVolume
+// Created: NLD 2004-08-04
+// -----------------------------------------------------------------------------
+const PHY_Volume* PHY_Volume::FindVolume( const std::string& strName )
+{
+    CIT_VolumeMap it = volumes_.find( strName );
+    return it == volumes_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Volume::FindVolume
+// Created: JVT 2005-04-14
+// -----------------------------------------------------------------------------
+const PHY_Volume* PHY_Volume::FindVolume( uint nID )
+{
+    CIT_VolumeMap it = std::find_if( volumes_.begin(), volumes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_Volume::GetID ), std::select2nd< T_VolumeMap::value_type >() ) ) );
+
+    return it == volumes_.end() ? 0 : it->second;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Volume::GetVolumes
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const PHY_Volume::T_VolumeMap& PHY_Volume::GetVolumes()
+{
+    return volumes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Volume::GetName
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const std::string& PHY_Volume::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Volume::GetID
+// Created: NLD 2004-08-06
+// -----------------------------------------------------------------------------
+uint PHY_Volume::GetID() const
+{
+    return nID_;
 }

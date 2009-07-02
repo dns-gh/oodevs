@@ -36,7 +36,6 @@ class DEC_Knowledge_PopulationCollision;
 // =============================================================================
 class DEC_Knowledge_Population : public DEC_Knowledge_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_Population ) 
 
 public:
     //! @name Constructors/Destructor

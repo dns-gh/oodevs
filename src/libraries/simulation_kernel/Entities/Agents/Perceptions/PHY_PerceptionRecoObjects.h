@@ -21,7 +21,6 @@
 // =============================================================================
 class PHY_PerceptionRecoObjects : public PHY_Perception_ABC
 {
-    MT_COPYNOTALLOWED( PHY_PerceptionRecoObjects )
 
 public:
     explicit PHY_PerceptionRecoObjects( PHY_RolePion_Perceiver& perceiver );

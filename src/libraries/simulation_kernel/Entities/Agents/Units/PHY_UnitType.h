@@ -13,7 +13,6 @@
 #define __PHY_UnitType_h_
 
 #include "MIL.h"
-
 #include "Dotations/PHY_DotationCapacities.h"
 
 namespace xml
@@ -31,9 +30,8 @@ class PHY_DotationLogisticType;
 // @class  PHY_UnitType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_UnitType
+class PHY_UnitType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_UnitType )
 
 public:
     //! @name Types
@@ -43,7 +41,7 @@ public:
     //@}
 
 public:
-    PHY_UnitType( xml::xistream& xis );
+    explicit PHY_UnitType( xml::xistream& xis );
     virtual ~PHY_UnitType();
 
     //! @name Instanciation
@@ -122,7 +120,5 @@ private:
           bool                           bCanFly_;
           bool                           bIsAutonomous_; // Drones
 };
-
-#include "PHY_UnitType.inl"
 
 #endif // __PHY_UnitType_h_

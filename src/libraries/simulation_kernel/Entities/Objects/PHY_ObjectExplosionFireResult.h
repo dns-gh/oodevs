@@ -22,7 +22,6 @@ class MIL_Object_ABC;
 // =============================================================================
 class PHY_ObjectExplosionFireResult : public PHY_FireResults_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ObjectExplosionFireResult )
 
 public:
     explicit PHY_ObjectExplosionFireResult( const MIL_Object_ABC& object );

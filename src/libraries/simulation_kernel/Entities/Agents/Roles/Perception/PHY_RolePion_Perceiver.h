@@ -47,7 +47,6 @@ class NET_ASN_MsgUnitAttributes;
 // =============================================================================
 class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Perceiver )
 
 public:
     //! @name Types

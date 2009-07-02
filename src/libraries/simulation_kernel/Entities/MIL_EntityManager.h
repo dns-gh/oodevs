@@ -70,9 +70,8 @@ class DIA_Parameters;
 // @class  MIL_EntityManager
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_EntityManager
+class MIL_EntityManager : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_EntityManager )
 
 public:
     //! @name Types

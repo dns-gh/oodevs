@@ -29,10 +29,6 @@ namespace population
 // =============================================================================
 class PHY_ActionInfluence : public PHY_Action_ABC
 {
-    //! @name Copy/Assignement
-    //@{
-    MT_COPYNOTALLOWED( PHY_ActionInfluence )
-    //@}
 
 public:
     //! @name Types

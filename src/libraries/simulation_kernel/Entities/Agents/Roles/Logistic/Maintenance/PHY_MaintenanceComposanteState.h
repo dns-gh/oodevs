@@ -23,9 +23,8 @@ class MIL_AgentPion;
 // @class  PHY_MaintenanceComposanteState
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_MaintenanceComposanteState
+class PHY_MaintenanceComposanteState : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_MaintenanceComposanteState )
 
 public:
      PHY_MaintenanceComposanteState( MIL_AgentPion& pion, PHY_ComposantePion& composante );

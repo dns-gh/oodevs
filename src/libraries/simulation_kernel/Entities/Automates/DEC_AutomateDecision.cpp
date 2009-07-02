@@ -292,3 +292,83 @@ std::string DEC_AutomateDecision::GetName() const
     assert( false );
     throw std::runtime_error( "Unexpected call to DEC_GetSzName on automate" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::Clean
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::Clean()
+{
+    bStateHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::HasStateChanged
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+bool DEC_AutomateDecision::HasStateChanged() const
+{
+    return bStateHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::NotifyForceRatioStateChanged
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::NotifyForceRatioStateChanged( E_ForceRatioState nState )
+{
+    if( nForceRatioState_ != nState )
+    {
+        nForceRatioState_ = nState;
+        bStateHasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::NotifyRulesOfEngagementStateChanged
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState nState )
+{
+    if( nRulesOfEngagementState_ != nState )
+    {
+        nRulesOfEngagementState_ = nState;
+        bStateHasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::NotifyCloseCombatStateChanged
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::NotifyCloseCombatStateChanged( E_CloseCombatState nState )
+{
+    if( nCloseCombatState_ != nState )
+    {
+        nCloseCombatState_ = nState;
+        bStateHasChanged_  = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::NotifyOperationalStateChanged
+// Created: NLD 2005-07-26
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::NotifyOperationalStateChanged( E_OperationalState nState )
+{
+    if( nOperationalState_ != nState )
+    {
+        nOperationalState_ = nState;
+        bStateHasChanged_  = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::GetAutomate
+// Created: NLD 2004-10-26
+// -----------------------------------------------------------------------------
+MIL_Automate& DEC_AutomateDecision::GetAutomate() const
+{
+    assert( pEntity_ );
+    return *pEntity_;
+}

@@ -32,9 +32,8 @@ class MIL_Config;
 // =============================================================================
 // Created: NLD 2003-08-05
 // =============================================================================
-class MIL_CheckPointManager
+class MIL_CheckPointManager : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_CheckPointManager )
     
 public:
               MIL_CheckPointManager();

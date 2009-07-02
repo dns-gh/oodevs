@@ -27,9 +27,8 @@ class PHY_RoleInterface_Posture;
 // @class  PHY_LauncherType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_LauncherType
+class PHY_LauncherType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_LauncherType )
 
 public:
     //! @name Manager

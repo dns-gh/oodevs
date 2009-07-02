@@ -28,7 +28,6 @@ class PHY_FireResults_ABC;
 // =============================================================================
 class MIL_Effect_PopulationFire : public MIL_Effect_ABC
 {
-    MT_COPYNOTALLOWED( MIL_Effect_PopulationFire )
 
 public:
              MIL_Effect_PopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult );

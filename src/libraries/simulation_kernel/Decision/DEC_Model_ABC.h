@@ -27,9 +27,8 @@ class MIL_FragOrderType;
 // =============================================================================
 // Created: NLD 2003-11-24
 // =============================================================================
-class DEC_Model_ABC
+class DEC_Model_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Model_ABC );
 
 public:
     //! @name Accessors

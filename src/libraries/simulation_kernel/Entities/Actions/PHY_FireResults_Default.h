@@ -20,7 +20,6 @@
 // =============================================================================
 class PHY_FireResults_Default : public PHY_FireResults_ABC
 {
-    MT_COPYNOTALLOWED( PHY_FireResults_Default )
 
 public:
              PHY_FireResults_Default();

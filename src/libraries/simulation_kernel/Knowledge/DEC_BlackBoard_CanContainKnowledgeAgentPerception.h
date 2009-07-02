@@ -26,9 +26,8 @@ class MIL_Agent_ABC;
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_BlackBoard_CanContainKnowledgeAgentPerception
+class DEC_BlackBoard_CanContainKnowledgeAgentPerception : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_BlackBoard_CanContainKnowledgeAgentPerception )
 
 public:
     //! @name Types

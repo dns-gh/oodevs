@@ -32,9 +32,8 @@ class MIL_ObjectFactory;
 // @class  MIL_ObjectManager
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_ObjectManager
+class MIL_ObjectManager : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_ObjectManager )
 
 public:
      MIL_ObjectManager();

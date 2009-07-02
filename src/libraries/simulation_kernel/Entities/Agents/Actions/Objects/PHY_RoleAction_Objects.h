@@ -28,8 +28,8 @@ class PHY_RoleAction_Objects_CapabilityComputer;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Objects : public MT_Role_ABC
+                             , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleAction_Objects )
 
 public:
     //! @name Types

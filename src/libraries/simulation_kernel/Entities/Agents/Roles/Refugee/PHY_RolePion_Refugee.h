@@ -23,7 +23,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_RolePion_Refugee : public PHY_RoleInterface_Refugee
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Refugee )
 
 public:
              PHY_RolePion_Refugee( MT_RoleContainer& role, MIL_AgentPion& pion );

@@ -20,9 +20,8 @@ class MIL_Automate;
 // =============================================================================
 // Created: NLD 2003-08-20
 // =============================================================================
-class DEC_FrontAndBackLinesComputer
+class DEC_FrontAndBackLinesComputer : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_FrontAndBackLinesComputer );
 
 public:
      DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, DIA_Call_ABC& call );

@@ -27,9 +27,8 @@ class PHY_Sensor;
 // @class  PHY_SensorType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SensorType
+class PHY_SensorType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_SensorType )
 
 public:
     //! @name Manager

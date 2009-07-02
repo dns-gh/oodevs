@@ -29,9 +29,8 @@ class MIL_Agent_ABC;
 // @class  PHY_DotationCategory_IndirectFire_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationCategory_IndirectFire_ABC
+class PHY_DotationCategory_IndirectFire_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationCategory_IndirectFire_ABC )
 
 public:
     PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );

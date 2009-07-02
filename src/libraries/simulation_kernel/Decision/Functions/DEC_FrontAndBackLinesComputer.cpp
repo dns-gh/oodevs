@@ -71,10 +71,10 @@ void DEC_FrontAndBackLinesComputer::Compute()
 
     nLastTimeComputed_ = nCurrentTime;
     
-    if( refAutomate_.GetFuseau().IsNull() || ( pions_.empty() && automates_.empty() ) )
+    if( refAutomate_.GetOrderManager().GetFuseau().IsNull() || ( pions_.empty() && automates_.empty() ) )
         return;
 
-    const MT_Line& fuseauGlobalDirLine = refAutomate_.GetFuseau().GetGlobalDirection();
+    const MT_Line& fuseauGlobalDirLine = refAutomate_.GetOrderManager().GetFuseau().GetGlobalDirection();
 
     // Vecteur perpendiculaire direction globale du fuseau
     MT_Vector2D vDirPerpendicularFuseau( fuseauGlobalDirLine.GetPosEnd() - fuseauGlobalDirLine.GetPosStart() );

@@ -26,9 +26,8 @@ class PHY_IndirectFireDotationClass;
 // Created: JVT 02-11-05
 // Last modified: JVT 04-03-24
 //*****************************************************************************
-class PHY_RawVisionData
+class PHY_RawVisionData : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RawVisionData )
 
 public:
     enum E_AlignType

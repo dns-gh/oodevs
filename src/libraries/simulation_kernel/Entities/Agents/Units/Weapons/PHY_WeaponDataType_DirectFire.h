@@ -41,9 +41,8 @@ class MIL_EffectManager;
 // @class  PHY_WeaponDataType_DirectFire
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_WeaponDataType_DirectFire
+class PHY_WeaponDataType_DirectFire : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_WeaponDataType_DirectFire )
 
 public:
              PHY_WeaponDataType_DirectFire( MIL_EffectManager& manager, const PHY_WeaponType& weaponType, xml::xistream& xis );

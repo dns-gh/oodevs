@@ -25,8 +25,8 @@ class NET_Simulation_ABC;
 // Last Modified : JVT 02-10-10
 //=============================================================================
 class NET_AS_MOSServerMsgMgr : public NET_Publisher_ABC
+                             , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( NET_AS_MOSServerMsgMgr );
 
 public:
 

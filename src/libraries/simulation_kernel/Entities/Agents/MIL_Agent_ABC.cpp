@@ -53,21 +53,28 @@ MIL_Agent_ABC::~MIL_Agent_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Agent_ABC::load
-// Created: JVT 2005-03-24
+// Name: MIL_Agent_ABC::GetID
+// Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-void MIL_Agent_ABC::load( MIL_CheckPointInArchive& file, const uint )
+uint MIL_Agent_ABC::GetID() const
 {
-    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    file >> nID_;
+    return nID_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Agent_ABC::save
-// Created: JVT 2005-03-24
+// Name: MIL_Agent_ABC::operator==
+// Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void MIL_Agent_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
+bool MIL_Agent_ABC::operator==( const MIL_Agent_ABC& rhs ) const
 {
-    file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    file << nID_;
+    return nID_ == rhs.nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Agent_ABC::operator!=
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool MIL_Agent_ABC::operator!=( const MIL_Agent_ABC& rhs ) const
+{
+    return nID_ != rhs.nID_;
 }

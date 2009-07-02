@@ -25,7 +25,6 @@ class MIL_CheckPointOutArchive;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeFire : public DEC_Knowledge_ObjectAttribute_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_ObjectAttributeFire ) 
 
 public:
     //! @name Constructors/Destructor

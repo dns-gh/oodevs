@@ -28,9 +28,8 @@ class DEC_Model_ABC;
 // @class  MIL_AutomateType
 // Created: JVT 2004-08-03
 // ============================================================================
-class MIL_AutomateType
+class MIL_AutomateType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_AutomateType )
 
 public:
     MIL_AutomateType( const std::string& strName, xml::xistream& xis );
@@ -123,7 +122,5 @@ private:
     static T_AutomateTypeAllocatorMap  automateTypeAllocators_;
     static T_AutomateTypeMap           automateTypes_;
 };
-
-#include "MIL_AutomateType.inl"
 
 #endif // __MIL_AutomateType_h_

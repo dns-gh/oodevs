@@ -34,7 +34,6 @@ class MIL_AutomateLOG;
 // =============================================================================
 class PHY_RolePion_Supply : public PHY_RoleInterface_Supply
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Supply )
 
 public:
     explicit PHY_RolePion_Supply( MT_RoleContainer& role );

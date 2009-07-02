@@ -31,8 +31,8 @@ class MIL_Config;
 // Created: NLD 2003-08-14
 // =============================================================================
 class DEC_PathFind_Manager : private tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >
+                           , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_PathFind_Manager )
 
 public:
     explicit DEC_PathFind_Manager( MIL_Config& config );

@@ -28,9 +28,8 @@ class PHY_DotationGroupContainer;
 // @class  PHY_DotationCapacities
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationCapacities
+class PHY_DotationCapacities : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationCapacities )
 
 public:
      PHY_DotationCapacities( const std::string& strParentTagName, xml::xistream& xis );

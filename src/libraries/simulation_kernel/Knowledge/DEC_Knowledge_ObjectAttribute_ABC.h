@@ -21,14 +21,13 @@ class DEC_Knowledge_Object;
 // =============================================================================
 // Created: NLD 2004-05-04
 // =============================================================================
-class DEC_Knowledge_ObjectAttribute_ABC
+class DEC_Knowledge_ObjectAttribute_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_ObjectAttribute_ABC ) 
 
 public:
     //! @name Constructors/Destructor
     //@{
-            DEC_Knowledge_ObjectAttribute_ABC() {}
+             DEC_Knowledge_ObjectAttribute_ABC() {}
     virtual ~DEC_Knowledge_ObjectAttribute_ABC() {}
     //@}
 

@@ -23,9 +23,8 @@ class MIL_Population;
 //*****************************************************************************
 // Created: AML 03-05-21
 //*****************************************************************************
-class MIL_ProfilerMgr
+class MIL_ProfilerMgr : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_ProfilerMgr );
 
 public:
     //! @name Constructor/Destructor

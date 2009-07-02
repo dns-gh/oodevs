@@ -28,9 +28,8 @@ namespace xml
 // @class  PHY_DotationType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationType
+class PHY_DotationType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationType )
 
 public:
     //! @name Types

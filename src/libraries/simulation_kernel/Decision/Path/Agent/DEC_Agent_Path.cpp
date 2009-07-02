@@ -43,7 +43,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
     , bRefine_                 ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
     , fuseau_                  () //$$$ Debile
     , automateFuseau_          () //$$$ Debile
-    , vDirDanger_              ( queryMaker.GetDirDanger() )
+    , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
     , unitSpeeds_              ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_               ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathKnowledgeAgents_     ()
@@ -55,8 +55,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
     , bDecPointsInserted_      ( false )
     , pathPoints_              ()
 {
-    fuseau_         = queryMaker.GetFuseau();
-    automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
+    fuseau_         = queryMaker.GetOrderManager().GetFuseau();
+    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     
     pathPoints_.reserve( 1 + points.size() );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
@@ -74,7 +74,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
     , bRefine_                  ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
     , fuseau_                   () //$$$ Debile
     , automateFuseau_           () //$$$ Debile
-    , vDirDanger_               ( queryMaker.GetDirDanger() )
+    , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
     , unitSpeeds_               ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_                ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathKnowledgeAgents_      ()
@@ -86,8 +86,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
     , bDecPointsInserted_       ( false )
     , pathPoints_               ()
 {
-    fuseau_         = queryMaker.GetFuseau();
-    automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
+    fuseau_         = queryMaker.GetOrderManager().GetFuseau();
+    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
 
     pathPoints_.reserve( 2 );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
@@ -492,7 +492,7 @@ void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
 //-----------------------------------------------------------------------------
 void DEC_Agent_Path::InsertLimas()
 {
-    const T_LimaVector& limas = queryMaker_.GetLimas();
+    const T_LimaVector& limas = queryMaker_.GetOrderManager().GetLimas();
     for( CIT_LimaVector it = limas.begin(); it != limas.end(); ++it )
         InsertLima( *it );
 }

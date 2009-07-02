@@ -23,9 +23,8 @@ class MIL_AgentType_ABC;
 // =============================================================================
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_Knowledge_AgentPerceptionDataIdentification
+class DEC_Knowledge_AgentPerceptionDataIdentification : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_AgentPerceptionDataIdentification ) 
 
 public:
      DEC_Knowledge_AgentPerceptionDataIdentification();

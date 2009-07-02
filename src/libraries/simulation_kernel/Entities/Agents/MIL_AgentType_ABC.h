@@ -12,8 +12,6 @@
 #ifndef __MIL_AgentType_ABC_h_
 #define __MIL_AgentType_ABC_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -26,9 +24,8 @@ class PHY_NatureAtlas;
 // @class  MIL_AgentType_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_AgentType_ABC
+class MIL_AgentType_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_AgentType_ABC )
 
 public:
              MIL_AgentType_ABC( const std::string& strName, xml::xistream& xis );
@@ -58,7 +55,5 @@ private:
     const PHY_NatureLevel* pNatureLevel_;
     const PHY_NatureAtlas* pNatureAtlas_;
 };
-
-#include "MIL_AgentType_ABC.inl"
 
 #endif // __MIL_AgentType_ABC_h_

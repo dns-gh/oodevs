@@ -27,7 +27,7 @@ class MIL_KnowledgeGroup;
 // =============================================================================
 class DEC_KS_Sharing : public DEC_KnowledgeSource_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KS_Sharing ) 
+
 public:
     //! @name Constructors/Destructor
     //@{

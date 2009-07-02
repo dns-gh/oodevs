@@ -34,7 +34,6 @@ class PHY_ComposanteUsePredicate;
 // =============================================================================
 class PHY_RolePionLOG_Medical : public PHY_RolePion_Medical
 {
-    MT_COPYNOTALLOWED( PHY_RolePionLOG_Medical )
 
 public:
              PHY_RolePionLOG_Medical( MT_RoleContainer& role, MIL_AgentPionLOG_ABC& pion );

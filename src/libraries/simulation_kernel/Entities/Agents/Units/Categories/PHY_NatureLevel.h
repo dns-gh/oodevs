@@ -12,17 +12,14 @@
 #ifndef __PHY_NatureLevel_h_
 #define __PHY_NatureLevel_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 // =============================================================================
 // @class  PHY_NatureLevel
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_NatureLevel
+class PHY_NatureLevel : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_NatureLevel )
 
 public:
     //! @name Manager
@@ -76,7 +73,5 @@ private:
 private:
     static T_NatureLevelMap natureLevels_;
 };
-
-#include "PHY_NatureLevel.inl"
 
 #endif // __PHY_NatureLevel_h_

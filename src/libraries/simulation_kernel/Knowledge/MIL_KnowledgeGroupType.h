@@ -26,9 +26,8 @@ class MIL_Army;
 // @class  MIL_KnowledgeGroupType
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_KnowledgeGroupType
+class MIL_KnowledgeGroupType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_KnowledgeGroupType )
 
 public:
     MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis );

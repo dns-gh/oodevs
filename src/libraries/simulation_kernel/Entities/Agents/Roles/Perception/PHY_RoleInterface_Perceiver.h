@@ -20,8 +20,8 @@
 // Modified: JVT 2004-10-28
 // =============================================================================
 class PHY_RoleInterface_Perceiver : public MT_Role_ABC
+                                  , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleInterface_Perceiver )
 
 public:
     //! @name Types

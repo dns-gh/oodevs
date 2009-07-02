@@ -21,9 +21,8 @@ class PHY_IndirectFireDotationClass;
 //*****************************************************************************
 // Created: JVT 04-03-24
 //*****************************************************************************
-class PHY_AmmoEffect
+class PHY_AmmoEffect : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_AmmoEffect )
 
 public:
      PHY_AmmoEffect( const PHY_IndirectFireDotationClass& ammoClass, PHY_AmmoEffect* pNextEffect );

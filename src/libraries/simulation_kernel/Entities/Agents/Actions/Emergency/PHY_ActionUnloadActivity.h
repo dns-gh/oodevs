@@ -30,10 +30,6 @@ namespace population
 // =============================================================================
 class PHY_ActionUnloadActivity : public PHY_Action_ABC
 {
-    //! @name Copy/Assignement
-    //@{
-    MT_COPYNOTALLOWED( PHY_ActionUnloadActivity )
-    //@}
 
 public:
     //! @name Types

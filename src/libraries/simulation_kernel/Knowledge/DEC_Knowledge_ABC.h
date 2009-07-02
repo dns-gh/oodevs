@@ -22,9 +22,8 @@
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_Knowledge_ABC
+class DEC_Knowledge_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_ABC )
 
 public:
     //! @name Constructors/Destructor

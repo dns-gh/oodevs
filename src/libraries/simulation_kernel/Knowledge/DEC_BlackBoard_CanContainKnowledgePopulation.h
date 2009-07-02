@@ -23,9 +23,8 @@ class MIL_Population;
 // =============================================================================
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_BlackBoard_CanContainKnowledgePopulation
+class DEC_BlackBoard_CanContainKnowledgePopulation : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_BlackBoard_CanContainKnowledgePopulation )
 
 private:
     //! @name Types

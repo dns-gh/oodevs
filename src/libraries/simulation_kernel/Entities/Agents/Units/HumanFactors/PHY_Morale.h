@@ -22,9 +22,8 @@ class PHY_ConsumptionType;
 // @class  PHY_Morale
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Morale
+class PHY_Morale : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Morale )
 
 public:
     //! @name Types

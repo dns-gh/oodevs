@@ -22,9 +22,8 @@ class MIL_Automate;
 // @class  PHY_SupplyConsign_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SupplyConsign_ABC
+class PHY_SupplyConsign_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_SupplyConsign_ABC )
 
 public:
              PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate );

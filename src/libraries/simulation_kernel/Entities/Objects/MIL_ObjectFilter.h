@@ -22,9 +22,8 @@ class MIL_ObjectType_ABC;
 // @class  MIL_ObjectFilter
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_ObjectFilter
+class MIL_ObjectFilter : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_ObjectFilter )
 
 public:
      MIL_ObjectFilter();

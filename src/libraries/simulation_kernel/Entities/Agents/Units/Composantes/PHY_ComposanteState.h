@@ -12,15 +12,12 @@
 #ifndef __PHY_ComposanteState_h_
 #define __PHY_ComposanteState_h_
 
-#include "MIL.h"
-
 // =============================================================================
 // @class  PHY_ComposanteState
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_ComposanteState
+class PHY_ComposanteState : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_ComposanteState )
 
 public:
     //! @name 
@@ -91,7 +88,5 @@ private:
 private:
     static T_ComposanteStateVector composanteStates_;
 };
-
-#include "PHY_ComposanteState.inl"
 
 #endif // __PHY_ComposanteState_h_

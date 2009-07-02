@@ -24,9 +24,8 @@ class MIL_IntelligenceOrdersVisitor_ABC;
 //=============================================================================
 // Created: NLD 2003-01-10
 //=============================================================================
-class MIL_OrderManager_ABC
+class MIL_OrderManager_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_OrderManager_ABC );
 
 public:
     MIL_OrderManager_ABC();

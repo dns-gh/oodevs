@@ -14,7 +14,6 @@
 //*****************************************************************************
 class PHY_PerceptionAlat : public PHY_Perception_ABC
 {
-    MT_COPYNOTALLOWED( PHY_PerceptionAlat )
 
 public:
              PHY_PerceptionAlat( PHY_RolePion_Perceiver& perceiver, const TER_Localisation& localisation );

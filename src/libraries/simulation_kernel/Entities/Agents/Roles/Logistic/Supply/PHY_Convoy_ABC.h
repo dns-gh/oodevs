@@ -32,9 +32,8 @@ class PHY_Conveyor;
 // @class  PHY_Convoy_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Convoy_ABC
+class PHY_Convoy_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Convoy_ABC )
 
 public:
     //! @name 

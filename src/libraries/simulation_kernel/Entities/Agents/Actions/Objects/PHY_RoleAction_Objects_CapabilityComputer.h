@@ -20,9 +20,8 @@ class MIL_AgentPion;
 // @class  PHY_RoleAction_Objects_CapabilityComputer
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_Objects_CapabilityComputer
+class PHY_RoleAction_Objects_CapabilityComputer : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleAction_Objects_CapabilityComputer )
 
 public:
     //! @name Types

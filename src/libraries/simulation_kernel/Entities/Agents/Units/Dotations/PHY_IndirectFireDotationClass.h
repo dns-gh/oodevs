@@ -26,9 +26,8 @@ class PHY_DotationCategory_IndirectFire_ABC;
 // @class  PHY_IndirectFireDotationClass
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_IndirectFireDotationClass
+class PHY_IndirectFireDotationClass : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_IndirectFireDotationClass )
 
 public:
     //! @name Statics

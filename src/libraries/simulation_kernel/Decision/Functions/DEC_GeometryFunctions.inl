@@ -64,7 +64,7 @@ void DEC_GeometryFunctions::SplitLocalisationInParts( DIA_Call_ABC& diaCall, con
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( diaCall.GetResult() );
 
     TER_Localisation clippedLocalisation;
-    if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetFuseau(), clippedLocalisation ) )
+    if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
         diaReturnCode.SetValue( eError_LocalisationPasDansFuseau );
         diaObjectList.SetValueUserType( T_LocalisationPtrVector(), DEC_Tools::GetTypeLocalisation() );
@@ -93,7 +93,7 @@ void DEC_GeometryFunctions::SplitLocalisationInSurfaces( DIA_Call_ABC& diaCall, 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( diaCall.GetResult() );
     
     TER_Localisation clippedLocalisation;
-    if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetFuseau(), clippedLocalisation ) )
+    if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
         diaReturnCode.SetValue( eError_LocalisationPasDansFuseau );
         diaObjectList.SetValueUserType( T_LocalisationPtrVector(), DEC_Tools::GetTypeLocalisation() );
@@ -114,10 +114,11 @@ void DEC_GeometryFunctions::SplitLocalisationInSections( DIA_Call_ABC& call, con
     const MT_Float                 rSectionLength = MIL_Tools::ConvertMeterToSim( call.GetParameter( 0 ).ToFloat() );
           DIA_Variable_ObjectList& diaObjectList  = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
 
-    MT_Vector2D vDirection( caller.GetFuseau().GetGlobalDirection().GetPosEnd() - caller.GetFuseau().GetGlobalDirection().GetPosStart() );
+    const MT_Line& globalDirection = caller.GetOrderManager().GetFuseau().GetGlobalDirection();
+    MT_Vector2D vDirection( globalDirection.GetPosEnd() - globalDirection.GetPosStart() );
     vDirection.Normalize();
 
-    SplitLocalisation( TER_Localisation( TER_Localisation::ePolygon, caller.GetFuseau().GetBorderPoints() ), caller.GetFuseau().GetGlobalDirection().GetPosStart(), vDirection , rSectionLength, diaObjectList );
+    SplitLocalisation( TER_Localisation( TER_Localisation::ePolygon, caller.GetOrderManager().GetFuseau().GetBorderPoints() ), globalDirection.GetPosStart(), vDirection , rSectionLength, diaObjectList );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,11 +137,11 @@ void DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau( DIA_Call_ABC&
 
     // 1. Clippe le polygone dans le fuseau
     T_PointVector clippedPointVector;
-    pLocalisation->GetPointsClippedByPolygon( caller.GetFuseau(), clippedPointVector );
+    pLocalisation->GetPointsClippedByPolygon( caller.GetOrderManager().GetFuseau(), clippedPointVector );
     // 2. Barycentre polygone clippé
     MT_Vector2D vBarycenter = MT_ComputeBarycenter( clippedPointVector );
 
-    if( clippedPointVector.empty() || ! caller.GetFuseau().IsInside( vBarycenter ) )
+    if( clippedPointVector.empty() || ! caller.GetOrderManager().GetFuseau().IsInside( vBarycenter ) )
     {
         diaReturnCode.SetValue( eError_LocalisationPasDansFuseau );
         diaCall.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
@@ -162,7 +163,7 @@ template< typename T >
 void DEC_GeometryFunctions::ComputeDestPoint( DIA_Call_ABC& call, const T& caller )
 {
     MT_Vector2D* pResult = new MT_Vector2D(); //$$$$ RAM
-    caller.GetFuseau().ComputeFurthestExtremityPoint( *pResult );
+    caller.GetOrderManager().GetFuseau().ComputeFurthestExtremityPoint( *pResult );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
 
@@ -174,7 +175,7 @@ template< typename T >
 void DEC_GeometryFunctions::ComputeStartPoint( DIA_Call_ABC& call, const T& caller )
 {
     MT_Vector2D* pResult = new MT_Vector2D(); //$$$$ RAM
-    caller.GetFuseau().ComputeClosestExtremityPoint( *pResult );
+    caller.GetOrderManager().GetFuseau().ComputeClosestExtremityPoint( *pResult );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
 
@@ -251,7 +252,7 @@ void DEC_GeometryFunctions::ComputeObstaclePosition( DIA_Call_ABC& call, const T
         const TerrainHeuristicCapacity* pCapacity = object.GetCapacity< TerrainHeuristicCapacity >();
         if ( pCapacity )
         {
-            sBestNodeForObstacle  costEvaluationFunctor( caller.GetFuseau(), *pCapacity, *pCenter, rRadius );
+            sBestNodeForObstacle  costEvaluationFunctor( caller.GetOrderManager().GetFuseau(), *pCapacity, *pCenter, rRadius );
             TER_World::GetWorld().GetPathFindManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );        
             if( costEvaluationFunctor.FoundAPoint() )
                 *pResultPos = costEvaluationFunctor.BestPosition();
@@ -274,7 +275,7 @@ void DEC_GeometryFunctions::IsPointInFuseau( DIA_Call_ABC& call, const T& caller
 
     MT_Vector2D* pVect = call.GetParameter( 0 ).ToUserPtr( pVect );
     assert( pVect != 0 );
-    call.GetResult().SetValue( caller.GetFuseau().IsInside( *pVect ) );
+    call.GetResult().SetValue( caller.GetOrderManager().GetFuseau().IsInside( *pVect ) );
 }
 
 // =============================================================================
@@ -377,7 +378,7 @@ void DEC_GeometryFunctions::ComputePointBeforeLima( DIA_Call_ABC& call, const T&
 {
     assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
 
-    MIL_LimaOrder*    pLima           = caller.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    MIL_LimaOrder*    pLima           = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
     MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
     DIA_Variable_ABC& diaReturnCode   = call.GetParameter( 2 );
 
@@ -390,7 +391,7 @@ void DEC_GeometryFunctions::ComputePointBeforeLima( DIA_Call_ABC& call, const T&
 
     MT_Vector2D vResult;
 
-    bool bResult = caller.GetFuseau().ComputePointBeforeLima( *pLima, rDistBeforeLima, vResult );
+    bool bResult = caller.GetOrderManager().GetFuseau().ComputePointBeforeLima( *pLima, rDistBeforeLima, vResult );
     diaReturnCode.SetValue( bResult );
     if( bResult )
     {
@@ -411,7 +412,7 @@ void DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau( DIA_Call_ABC& call, 
     assert( DEC_Tools::CheckTypeLima  ( call.GetParameter( 0 ) ) );
     assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 2 ) ) );
 
-    MIL_LimaOrder*    pLima           = caller.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    MIL_LimaOrder*    pLima           = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
     MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
     const MIL_Fuseau* pFuseau         = call.GetParameter( 2 ).ToUserPtr( pFuseau );
 
@@ -445,7 +446,7 @@ void DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( DIA_Call_AB
     assert( pLocalisation );
 
     TER_Localisation clippedLocalisation;
-    if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetFuseau(), clippedLocalisation ) )
+    if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return; 
@@ -476,7 +477,7 @@ void DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau( DI
     TER_Localisation* pLocalisation = param[0].ToUserPtr( pLocalisation );
     assert( pLocalisation );
 
-    TER_Localisation fuseauLocalisation = TER_Localisation( TER_Localisation::ePolygon, caller.GetFuseau().GetBorderPoints() );
+    TER_Localisation fuseauLocalisation = TER_Localisation( TER_Localisation::ePolygon, caller.GetOrderManager().GetFuseau().GetBorderPoints() );
 
     MT_Vector2D* pResult = new MT_Vector2D(); //$$$$ TMP
     bool bOut;
@@ -507,7 +508,7 @@ void DEC_GeometryFunctions::SortFuseauxAccordingToSchedule( DIA_Call_ABC& call, 
     const MIL_LimaOrder* pLima      = 0;
     const DEC_Objective* pObjective = 0;
     if( DEC_Tools::CheckTypeLima( call.GetParameter( 2 ) ) )
-        pLima = caller.FindLima( (uint)call.GetParameter( 2 ).ToPtr() ); 
+        pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 2 ).ToPtr() ); 
     else if( DEC_Tools::CheckTypeObjectif( call.GetParameter( 2 ) ) )
         pObjective = call.GetParameter( 2 ).ToUserPtr( pObjective );
     if( !pObjective && !pLima )
@@ -549,7 +550,7 @@ void DEC_GeometryFunctions::ComputeDelayFromSchedule( DIA_Call_ABC& call, const 
     uint     nSchedule              = 0;
     if( DEC_Tools::CheckTypeLima( call.GetParameter( 2 ) ) )
     {
-        const MIL_LimaOrder* pLima = caller.FindLima( (uint)call.GetParameter( 2 ).ToPtr() );
+        const MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 2 ).ToPtr() );
         if( pLima ) 
         {
             rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, _ComputeAutomatesBarycenter( automates ) );

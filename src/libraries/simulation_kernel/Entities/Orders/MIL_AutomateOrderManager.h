@@ -27,10 +27,9 @@ class MIL_PionMission;
 //=============================================================================
 class MIL_AutomateOrderManager : public MIL_OrderManager_ABC
 {
-    MT_COPYNOTALLOWED( MIL_AutomateOrderManager );
 
 public:
-    MIL_AutomateOrderManager( MIL_Automate& automate );
+    explicit MIL_AutomateOrderManager( MIL_Automate& automate );
     virtual ~MIL_AutomateOrderManager();
 
     // @name Events 

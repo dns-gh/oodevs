@@ -22,7 +22,6 @@ class MIL_MissionType_ABC;
 //=============================================================================
 class MIL_PopulationOrderManager : public MIL_OrderManager_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PopulationOrderManager );
 
 public:
     MIL_PopulationOrderManager( MIL_Population& population );

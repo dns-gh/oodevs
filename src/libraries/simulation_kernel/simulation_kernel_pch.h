@@ -28,6 +28,8 @@
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/export.hpp>
 
+#include <boost/utility.hpp>
+
 #pragma warning( pop )
 
 #include "MT/MT_Tools/MT_Tools_lib.h"

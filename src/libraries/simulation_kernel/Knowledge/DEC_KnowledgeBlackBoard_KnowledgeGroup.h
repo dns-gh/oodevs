@@ -36,7 +36,6 @@ class MIL_Object_ABC;
 // =============================================================================
 class DEC_KnowledgeBlackBoard_KnowledgeGroup : public DEC_KnowledgeBlackBoard_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KnowledgeBlackBoard_KnowledgeGroup )
 
 public:
     //! @name Constructors/Destructor

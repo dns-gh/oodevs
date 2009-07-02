@@ -27,10 +27,9 @@ namespace xml
 // =============================================================================
 class MIL_AgentTypePionALAT : public MIL_AgentTypePion
 {
-    MT_COPYNOTALLOWED( MIL_AgentTypePionALAT )
 
 public:
-    MIL_AgentTypePionALAT( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionALAT( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionALAT();
 
 public:

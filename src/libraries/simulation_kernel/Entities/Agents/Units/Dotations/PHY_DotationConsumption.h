@@ -25,9 +25,8 @@ class PHY_DotationCategory;
 // @class  PHY_DotationConsumption
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationConsumption
+class PHY_DotationConsumption : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationConsumption )
 
 public:
      PHY_DotationConsumption( const PHY_DotationCategory& category, xml::xistream& xis );

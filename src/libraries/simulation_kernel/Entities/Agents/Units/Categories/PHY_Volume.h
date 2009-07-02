@@ -12,8 +12,6 @@
 #ifndef __PHY_Volume_h_
 #define __PHY_Volume_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -23,9 +21,8 @@ namespace xml
 // @class  PHY_Volume
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Volume
+class PHY_Volume : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Volume )
 
 public:
     //! @name Types
@@ -67,7 +64,5 @@ private:
     struct LoadingWrapper;
     static void ReadVolume( xml::xistream& xis );
 };
-
-#include "PHY_Volume.inl"
 
 #endif // __PHY_Volume_h_

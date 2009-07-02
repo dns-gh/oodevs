@@ -27,10 +27,9 @@ namespace xml
 // =============================================================================
 class PHY_DotationCategory_IndirectWeatherFire : public PHY_DotationCategory_IndirectFire_ABC
 {
-    MT_COPYNOTALLOWED( PHY_DotationCategory_IndirectWeatherFire )
 
 public:
-    PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
+             PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     virtual ~PHY_DotationCategory_IndirectWeatherFire();
 
     //! @name 

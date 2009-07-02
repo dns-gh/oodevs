@@ -20,9 +20,8 @@ class DEC_Representations;
 //*****************************************************************************
 // Created: JVT 02-12-04
 //*****************************************************************************
-class DEC_PathPoint
+class DEC_PathPoint : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_PathPoint )
 
 public:
     //-------------------------------------------------------------------------

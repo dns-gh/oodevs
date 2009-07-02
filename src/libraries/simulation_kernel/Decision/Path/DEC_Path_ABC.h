@@ -23,8 +23,8 @@ class DEC_PathSection_ABC;
 // Created: NLD 2005-02-22
 // =============================================================================
 class DEC_Path_ABC : public TER_PathFindRequest_ABC
+                   , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Path_ABC );
 
 public:
     //! @name Types

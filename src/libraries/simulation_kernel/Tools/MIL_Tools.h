@@ -28,9 +28,8 @@ enum E_TerrainObjectTypeID;
 // Created: NLD 2002-08-06
 // Last modified: JVT 03-12-02
 //=============================================================================
-class MIL_Tools
+class MIL_Tools : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_Tools );
 
 public:
     //-------------------------------------------------------------------------

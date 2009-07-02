@@ -25,7 +25,6 @@ class PHY_DotationCategory;
 // =============================================================================
 class PHY_FireResults_Pion : public PHY_FireResults_ABC
 {
-    MT_COPYNOTALLOWED( PHY_FireResults_Pion )
 
 public:
              PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Agent_ABC& target );

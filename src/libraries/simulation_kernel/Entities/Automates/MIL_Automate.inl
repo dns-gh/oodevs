@@ -126,26 +126,6 @@ MIL_AutomateOrderManager& MIL_Automate::GetOrderManager()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetFuseau
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-inline
-const MIL_Fuseau& MIL_Automate::GetFuseau() const
-{
-    return orderManager_.GetFuseau();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetDirDanger
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-inline
-const MT_Vector2D& MIL_Automate::GetDirDanger() const
-{
-    return orderManager_.GetDirDanger();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetPions
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -184,10 +164,6 @@ bool MIL_Automate::IsEngaged() const
 {
     return bEngaged_;
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::RegisterPion
@@ -233,36 +209,6 @@ void MIL_Automate::UnregisterAutomate( MIL_Automate& automate )
     IT_AutomateVector it = std::find( automates_.begin(), automates_.end(), &automate );
     assert( it != automates_.end() );
     automates_.erase( it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::FindLima
-// Created: NLD 2006-11-16
-// -----------------------------------------------------------------------------
-inline
-MIL_LimaOrder* MIL_Automate::FindLima( const MIL_LimaFunction& function ) const
-{
-    return orderManager_.FindLima( function );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::FindLima
-// Created: NLD 2006-11-16
-// -----------------------------------------------------------------------------
-inline
-MIL_LimaOrder* MIL_Automate::FindLima( uint nID ) const
-{
-    return orderManager_.FindLima( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::FindLima
-// Created: NLD 2007-04-30
-// -----------------------------------------------------------------------------
-inline
-MIL_LimaOrder* MIL_Automate::FindNextScheduledLima() const
-{
-    return orderManager_.FindNextScheduledLima();
 }
 
 // -----------------------------------------------------------------------------

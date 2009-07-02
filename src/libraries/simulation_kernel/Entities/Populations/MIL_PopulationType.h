@@ -33,9 +33,8 @@ class MIL_Army;
 // @class  MIL_PopulationType
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_PopulationType
+class MIL_PopulationType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_PopulationType )
 
 public:
     //! @name Manager

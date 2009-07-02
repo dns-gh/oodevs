@@ -18,9 +18,8 @@
 // @class  PHY_Lighting
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Lighting
+class PHY_Lighting : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Lighting )
 
 public:
     //! @name Types

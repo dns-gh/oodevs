@@ -28,9 +28,8 @@ class MIL_AutomateLOG;
 // @class  PHY_Dotation
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Dotation
+class PHY_Dotation : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Dotation )
 
 public:
      PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group );

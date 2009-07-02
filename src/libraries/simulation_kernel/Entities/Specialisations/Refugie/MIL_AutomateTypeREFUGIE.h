@@ -27,10 +27,9 @@ namespace xml
 // =============================================================================
 class MIL_AutomateTypeREFUGIE : public MIL_AutomateType
 {
-    MT_COPYNOTALLOWED( MIL_AutomateTypeREFUGIE )
 
 public:
-    MIL_AutomateTypeREFUGIE( const std::string& strName, xml::xistream& xis );
+             MIL_AutomateTypeREFUGIE( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateTypeREFUGIE();
 
     //! @name Accessors

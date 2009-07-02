@@ -33,10 +33,9 @@ class MIL_RealObjectType;
 // =============================================================================
 class MIL_AgentTypePion : public MIL_AgentType_ABC
 {
-    MT_COPYNOTALLOWED( MIL_AgentTypePion )
 
 public:
-    MIL_AgentTypePion( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePion( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePion();
 
     //! @name Manager

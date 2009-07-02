@@ -33,7 +33,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_KS_AgentKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KS_AgentKnowledgeSynthetizer ) 
 
 public:
     //! @name Constructors/Destructor

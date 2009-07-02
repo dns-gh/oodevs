@@ -21,7 +21,6 @@
 // =============================================================================
 class PHY_RoleHLA_Perceiver : public PHY_RoleInterface_Perceiver
 {
-    MT_COPYNOTALLOWED( PHY_RoleHLA_Perceiver )
 
 public:
     explicit PHY_RoleHLA_Perceiver( MT_RoleContainer& role );

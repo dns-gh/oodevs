@@ -29,7 +29,6 @@ class MIL_AgentPion;
 // =============================================================================
 class MIL_Effect_IndirectFire : public MIL_Effect_ABC
 {
-    MT_COPYNOTALLOWED( MIL_Effect_IndirectFire )
 
 public:
              MIL_Effect_IndirectFire( const MIL_AgentPion& firer, uint nTargetKnowledgeID           , const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );

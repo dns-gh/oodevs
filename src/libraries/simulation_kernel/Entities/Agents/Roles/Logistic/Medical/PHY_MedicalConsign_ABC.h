@@ -24,9 +24,8 @@ class MIL_Automate;
 // @class  PHY_MedicalConsign_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_MedicalConsign_ABC
+class PHY_MedicalConsign_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_MedicalConsign_ABC )
 
 public:
              PHY_MedicalConsign_ABC( PHY_RolePionLOG_Medical& medical, PHY_MedicalHumanState& humanState );

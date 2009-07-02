@@ -22,9 +22,8 @@ class PHY_IndirectFireDotationClass;
 // @class  PHY_MunitionForIndirectFireData
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_MunitionForIndirectFireData
+class PHY_MunitionForIndirectFireData : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_MunitionForIndirectFireData )
 
 public:
      PHY_MunitionForIndirectFireData( const MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, MT_Float rRange );

@@ -27,10 +27,9 @@ namespace xml
 // =============================================================================
 class MIL_AgentTypePionMILICE : public MIL_AgentTypePion
 {
-    MT_COPYNOTALLOWED( MIL_AgentTypePionMILICE )
 
 public:
-    MIL_AgentTypePionMILICE( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionMILICE( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionMILICE();
 
     //! @name Accessors

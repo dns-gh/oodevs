@@ -30,10 +30,6 @@ namespace population
 // =============================================================================
 class PHY_ActionTriggerActivityInArea : public PHY_Action_ABC
 {
-    //! @name Copy/Assignement
-    //@{
-    MT_COPYNOTALLOWED( PHY_ActionTriggerActivityInArea )
-    //@}
 
 public:
     //! @name Types

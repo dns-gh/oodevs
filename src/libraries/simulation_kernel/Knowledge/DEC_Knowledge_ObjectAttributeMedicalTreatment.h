@@ -25,7 +25,7 @@ class MIL_CheckPointOutArchive;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeMedicalTreatment : public DEC_Knowledge_ObjectAttribute_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_ObjectAttributeMedicalTreatment ) 
+
 private:
     typedef std::list< int >                           T_MedicalTreatmentTypeList;
     typedef T_MedicalTreatmentTypeList::const_iterator CIT_MedicalTreatmentTypeList;

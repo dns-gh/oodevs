@@ -28,9 +28,8 @@ struct ASN1T__SeqOfDotationStock;
 // @class  PHY_SupplyStockRequestContainer
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SupplyStockRequestContainer
+class PHY_SupplyStockRequestContainer : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_SupplyStockRequestContainer )
 
 public:
     explicit PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate );

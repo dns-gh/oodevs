@@ -25,10 +25,8 @@ class PHY_IndirectFireDotationClass;
 // Created: JVT 02-10-21
 // Last modified: JVT 04-03-25
 //*****************************************************************************
-class PHY_MeteoDataManager
+class PHY_MeteoDataManager : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_MeteoDataManager );
-
     friend class PHY_Meteo; // For UnregisterMeteo
 
 public:

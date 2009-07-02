@@ -23,7 +23,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_RolePion_Population : public PHY_RoleInterface_Population
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Population )
 
 public:
              PHY_RolePion_Population( MT_RoleContainer& role, MIL_AgentPion& pion );

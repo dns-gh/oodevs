@@ -38,9 +38,8 @@ class PHY_SensorType;
 // Created: JVT 2004-08-03
 // Modified: JVT 2004-09-28
 // =============================================================================
-class PHY_SensorTypeAgent
+class PHY_SensorTypeAgent : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_SensorTypeAgent )
 
 public:
      PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis );

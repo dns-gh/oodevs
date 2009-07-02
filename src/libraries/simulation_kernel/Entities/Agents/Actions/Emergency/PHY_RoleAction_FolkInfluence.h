@@ -28,8 +28,8 @@ class MIL_AgentPion;
 // Created: JCR 2007-09-12
 // =============================================================================
 class PHY_RoleAction_FolkInfluence : public MT_Role_ABC
+                                   , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleAction_FolkInfluence )
 
 public:
     //! @name Types

@@ -39,7 +39,6 @@ class NET_ASN_MsgUnitAttributes;
 // =============================================================================
 class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Dotations )
 
 public:
              PHY_RolePion_Dotations( MT_RoleContainer& roleContainer, MIL_AgentPion& pion );

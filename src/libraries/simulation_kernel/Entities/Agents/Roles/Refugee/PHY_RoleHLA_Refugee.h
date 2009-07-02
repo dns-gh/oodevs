@@ -20,7 +20,6 @@
 // =============================================================================
 class PHY_RoleHLA_Refugee : public PHY_RoleInterface_Refugee
 {
-    MT_COPYNOTALLOWED( PHY_RoleHLA_Refugee )
 
 public:
     explicit PHY_RoleHLA_Refugee( MT_RoleContainer& role );

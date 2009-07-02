@@ -28,9 +28,8 @@ class PHY_DotationGroupContainer;
 // @class  PHY_DotationConsumptions
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationConsumptions
+class PHY_DotationConsumptions : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationConsumptions )
 
 public:
     //! @name types

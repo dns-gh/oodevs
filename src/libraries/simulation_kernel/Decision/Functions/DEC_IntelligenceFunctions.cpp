@@ -144,8 +144,8 @@ namespace
     struct FlankIntelligenceFinder : public MIL_IntelligenceOrdersVisitor_ABC
     {
         FlankIntelligenceFinder( const MIL_Fuseau& zone, const MIL_Automate& automat, const Filter& filter, Handler& handler )
-            : leftFlank_ ( automat.GetFuseau().IsLeftFlank ( zone ) )
-            , rightFlank_( automat.GetFuseau().IsRightFlank( zone ) )
+            : leftFlank_ ( automat.GetOrderManager().GetFuseau().IsLeftFlank ( zone ) )
+            , rightFlank_( automat.GetOrderManager().GetFuseau().IsRightFlank( zone ) )
             , zone_      ( &zone )
             , filter_    ( filter )
             , handler_   ( &handler )
@@ -216,8 +216,8 @@ namespace
         if( handler.closest_ )
             return handler.closest_->ComputeDirection( handler.origin_ );
         if( finder.leftFlank_ )
-            return automat.GetDirDanger().Rotated90();
-        return automat.GetDirDanger().Rotated90ClockWise();
+            return automat.GetOrderManager().GetDirDanger().Rotated90();
+        return automat.GetOrderManager().GetDirDanger().Rotated90ClockWise();
     }
 }
 
@@ -261,7 +261,7 @@ void DEC_IntelligenceFunctions::ComputeCoverDirection( DIA_Call_ABC& call, const
     else
     {
         // $$$$ SBO 2008-01-11: should not happen as a zone parameter is supposed to be provided
-        MT_Vector2D* result = new MT_Vector2D( caller.GetDirDanger() ); // $$$$ SBO 2008-01-11: RAM
+        MT_Vector2D* result = new MT_Vector2D( caller.GetOrderManager().GetDirDanger() ); // $$$$ SBO 2008-01-11: RAM
         call.GetResult().SetValue( (void*)result, &DEC_Tools::GetTypeDirection(), 1 );
     }
 }

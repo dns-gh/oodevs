@@ -25,9 +25,8 @@ class MIL_AutomateLOG;
 // @class  PHY_SupplyDotationRequestContainer
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SupplyDotationRequestContainer
+class PHY_SupplyDotationRequestContainer : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_SupplyDotationRequestContainer )
 
 public:
      PHY_SupplyDotationRequestContainer( MIL_Automate& suppliedAutomate, bool bForceRequestActivation );

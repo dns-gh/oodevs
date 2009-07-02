@@ -34,7 +34,6 @@ class MIL_Object_ABC;
 // =============================================================================
 class DEC_KS_ObjectKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KS_ObjectKnowledgeSynthetizer ) 
 
 public:
     //! @name Constructors/Destructor

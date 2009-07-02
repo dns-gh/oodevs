@@ -20,9 +20,8 @@
 // @class  PHY_Precipitation
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Precipitation
+class PHY_Precipitation : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Precipitation )
 
 public:
     //! @name Types

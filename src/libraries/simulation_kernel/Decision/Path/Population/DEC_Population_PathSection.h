@@ -26,7 +26,6 @@ class TerrainRule_ABC;
 // =============================================================================
 class DEC_Population_PathSection : public DEC_PathSection_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Population_PathSection );
 
 public:
              DEC_Population_PathSection( DEC_Population_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint );

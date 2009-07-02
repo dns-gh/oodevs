@@ -19,8 +19,8 @@
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_InterfaceFlying : public MT_Role_ABC
+                                     , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleAction_InterfaceFlying )
 
 public:
     //! @name Types

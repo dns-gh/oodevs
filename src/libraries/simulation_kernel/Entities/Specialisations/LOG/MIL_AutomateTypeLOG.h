@@ -27,10 +27,9 @@ namespace xml
 // =============================================================================
 class MIL_AutomateTypeLOG : public MIL_AutomateType
 {
-    MT_COPYNOTALLOWED( MIL_AutomateTypeLOG )
 
 public:
-    MIL_AutomateTypeLOG( const std::string& strName, xml::xistream& xis );
+             MIL_AutomateTypeLOG( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateTypeLOG();
 
     //! @name Accessors

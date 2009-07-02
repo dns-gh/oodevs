@@ -20,13 +20,12 @@ class PHY_Actor;
 // @class  PHY_Action_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Action_ABC
+class PHY_Action_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Action_ABC )
 
 public:
-    PHY_Action_ABC( PHY_Actor& actor, DIA_Call_ABC& diaCall );
-    PHY_Action_ABC( PHY_Actor& actor );
+             PHY_Action_ABC( PHY_Actor& actor, DIA_Call_ABC& diaCall );
+    explicit PHY_Action_ABC( PHY_Actor& actor );
     virtual ~PHY_Action_ABC();
 
     //! @name Operations

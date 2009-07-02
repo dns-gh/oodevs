@@ -24,9 +24,8 @@ class NET_ASN_MsgLogMaintenanceHandlingUpdate;
 // @class  PHY_MaintenanceConsign_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_MaintenanceConsign_ABC
+class PHY_MaintenanceConsign_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_MaintenanceConsign_ABC )
 
 public:
              PHY_MaintenanceConsign_ABC( PHY_RolePionLOG_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState );

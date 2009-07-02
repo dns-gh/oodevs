@@ -20,9 +20,8 @@
 // @class  PHY_HumanRank
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_HumanRank
+class PHY_HumanRank : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_HumanRank )
 
 public:
     //! @name Types

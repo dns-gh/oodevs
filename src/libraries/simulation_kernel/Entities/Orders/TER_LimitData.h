@@ -19,9 +19,8 @@ class MIL_Fuseau;
 // Created: NLD 2002-08-06
 // Last modified: JVT 03-02-27
 //=============================================================================
-class TER_LimitData
+class TER_LimitData : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( TER_LimitData )
 
 public:
      TER_LimitData( const T_PointVector& points );

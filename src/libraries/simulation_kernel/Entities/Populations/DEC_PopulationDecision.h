@@ -23,8 +23,8 @@ class NET_ASN_MsgPopulationUpdate;
 // Created: JVT 2004-08-03
 // =============================================================================
 class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
+                             , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_PopulationDecision )
 
 public:
              DEC_PopulationDecision( MIL_Population& population );

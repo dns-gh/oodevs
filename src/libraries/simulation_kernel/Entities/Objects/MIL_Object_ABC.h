@@ -45,12 +45,11 @@ class HLA_UpdateFunctor;
 // Created: NLD 2002-12-12
 // Last modified: JVT 03-07-15
 //=============================================================================
-class MIL_Object_ABC 
-    : public TER_Object_ABC
-    , public tools::Extendable< ObjectCapacity_ABC > 
-    , protected tools::Extendable< ObjectAttribute_ABC >
+class MIL_Object_ABC : public TER_Object_ABC
+                     , public tools::Extendable< ObjectCapacity_ABC > 
+                     , protected tools::Extendable< ObjectAttribute_ABC >
+                     , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_Object_ABC ); 
    
 public:
     explicit MIL_Object_ABC( MIL_Army_ABC& army, const MIL_ObjectType_ABC& type );

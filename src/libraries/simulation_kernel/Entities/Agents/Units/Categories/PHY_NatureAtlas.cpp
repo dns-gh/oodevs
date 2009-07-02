@@ -10,15 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_NatureAtlas.h"
 
 PHY_NatureAtlas::T_NatureAtlasMap PHY_NatureAtlas::natureAtlas_;
 const PHY_NatureAtlas             PHY_NatureAtlas::notDefined_ ( "None", PHY_NatureAtlas::eNatureAtlas_None, 0x20 );
-
-// =============================================================================
-// MANAGER
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_NatureAtlas::Initialize
@@ -46,11 +41,8 @@ void PHY_NatureAtlas::Initialize()
 // -----------------------------------------------------------------------------
 void PHY_NatureAtlas::Terminate()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_NatureAtlas constructor
@@ -61,6 +53,7 @@ PHY_NatureAtlas::PHY_NatureAtlas( const std::string& strName, E_Type nType, uint
     , nType_   ( nType   )
     , nAsnID_  ( nAsnID  )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -69,4 +62,44 @@ PHY_NatureAtlas::PHY_NatureAtlas( const std::string& strName, E_Type nType, uint
 // -----------------------------------------------------------------------------
 PHY_NatureAtlas::~PHY_NatureAtlas()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_NatureAtlas::Find
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+const PHY_NatureAtlas* PHY_NatureAtlas::Find( const std::string& strName )
+{
+    CIT_NatureAtlasMap it = natureAtlas_.find( strName );
+    return it == natureAtlas_.end() ? 0 : it->second;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_NatureAtlas::GetName
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+const std::string& PHY_NatureAtlas::GetName() const
+{
+    return strName_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_NatureAtlas::GetID
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+uint PHY_NatureAtlas::GetID() const
+{
+    return nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_NatureAtlas::GetAsnID
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+uint PHY_NatureAtlas::GetAsnID() const
+{
+    return nAsnID_;
 }

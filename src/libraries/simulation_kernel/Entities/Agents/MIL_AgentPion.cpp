@@ -964,10 +964,6 @@ void MIL_AgentPion::NotifyAttacking( MIL_Population& target ) const
     //$$$ CRS ??
 }
 
-// =============================================================================
-// $$$ DEGUEU - VOIR AVEC LES MODELISATEURS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::IsPerceiving
 // Created: NLD 2004-10-14
@@ -980,4 +976,71 @@ bool MIL_AgentPion::IsPerceived( const MIL_Agent_ABC& agent ) const
 int MIL_AgentPion::GetNumberOfFireHoses( int bestExtinguisherAgent )
 {
     return 4;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetKnowledge
+// Created: NLD 2004-09-01
+// -----------------------------------------------------------------------------
+DEC_KnowledgeBlackBoard_AgentPion& MIL_AgentPion::GetKnowledge() const
+{
+    assert( pKnowledgeBlackBoard_ );
+    return *pKnowledgeBlackBoard_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetAutomate
+// Created: NLD 2004-08-31
+// -----------------------------------------------------------------------------
+const MIL_Automate& MIL_AgentPion::GetAutomate() const
+{
+    assert( pAutomate_ );
+    return *pAutomate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetAutomate
+// Created: NLD 2004-12-27
+// -----------------------------------------------------------------------------
+MIL_Automate& MIL_AgentPion::GetAutomate()
+{
+    assert( pAutomate_ );
+    return *pAutomate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetType
+// Created: NLD 2004-08-31
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion& MIL_AgentPion::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::IsPC
+// Created: NLD 2004-08-31
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::IsPC() const
+{
+    return bIsPC_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetOrderManager
+// Created: NLD 2004-09-03
+// -----------------------------------------------------------------------------
+MIL_PionOrderManager& MIL_AgentPion::GetOrderManager()
+{
+    return orderManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetOrderManager
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
+const MIL_PionOrderManager& MIL_AgentPion::GetOrderManager() const
+{
+    return orderManager_;
 }

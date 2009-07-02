@@ -18,9 +18,8 @@
 // @class  PHY_PerceptionLevel
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_PerceptionLevel
+class PHY_PerceptionLevel : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_PerceptionLevel )
 
 public:
     static const PHY_PerceptionLevel identified_;

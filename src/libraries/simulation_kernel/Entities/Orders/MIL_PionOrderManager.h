@@ -22,10 +22,9 @@ class MIL_MissionType_ABC;
 //=============================================================================
 class MIL_PionOrderManager : public MIL_OrderManager_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PionOrderManager );
 
 public:
-    MIL_PionOrderManager( MIL_AgentPion& pion );
+    explicit MIL_PionOrderManager( MIL_AgentPion& pion );
     virtual ~MIL_PionOrderManager();
 
     // @name Events 

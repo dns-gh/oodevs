@@ -25,9 +25,8 @@ namespace xml
 // Created: JVT 03-08-05
 // Last modified: JVT 03-08-07
 //*****************************************************************************
-class PHY_Ephemeride
+class PHY_Ephemeride : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Ephemeride )
     
 public:
     PHY_Ephemeride( xml::xistream& xis );

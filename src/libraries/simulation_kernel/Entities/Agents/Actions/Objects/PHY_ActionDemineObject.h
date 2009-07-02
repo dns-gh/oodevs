@@ -23,7 +23,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_ActionDemineObject : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionDemineObject )
 
 public:
     typedef MIL_AgentPion ActorType;

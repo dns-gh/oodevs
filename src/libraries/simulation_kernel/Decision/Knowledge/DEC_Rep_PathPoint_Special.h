@@ -21,7 +21,6 @@
 //*****************************************************************************
 class DEC_Rep_PathPoint_Special : public DEC_Rep_PathPoint
 {
-    MT_COPYNOTALLOWED( DEC_Rep_PathPoint_Special )
 
 public:
     enum E_TypePointParticulier

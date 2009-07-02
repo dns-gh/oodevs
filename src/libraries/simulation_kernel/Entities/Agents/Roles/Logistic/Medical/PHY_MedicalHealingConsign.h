@@ -24,7 +24,6 @@ class PHY_MedicalHumanState;
 // =============================================================================
 class PHY_MedicalHealingConsign : public PHY_MedicalConsign_ABC
 {
-    MT_COPYNOTALLOWED( PHY_MedicalHealingConsign )
 
 public:
              PHY_MedicalHealingConsign( PHY_RolePionLOG_Medical& medical, PHY_MedicalHumanState& humanState );

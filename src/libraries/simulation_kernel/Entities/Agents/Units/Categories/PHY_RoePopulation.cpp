@@ -10,15 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoePopulation.h"
 
 PHY_RoePopulation::T_RoePopulationMap PHY_RoePopulation::roePopulations_;
 const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoePopulation::eNone, EnumPopulationRoe::none );
-
-// =============================================================================
-// MANAGER
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoePopulation::Initialize
@@ -45,10 +40,6 @@ void PHY_RoePopulation::Terminate()
     roePopulations_.clear();
 }
 
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoePopulation constructor
 // Created: JVT 2004-12-09
@@ -58,6 +49,7 @@ PHY_RoePopulation::PHY_RoePopulation( const std::string& strName, E_Type nType, 
     , nType_   ( nType   )
     , nAsnID_  ( nAsnID  )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -66,4 +58,83 @@ PHY_RoePopulation::PHY_RoePopulation( const std::string& strName, E_Type nType, 
 // -----------------------------------------------------------------------------
 PHY_RoePopulation::~PHY_RoePopulation()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoePopulation::GetRoePopulations
+// Created: NLD 2005-11-15
+// -----------------------------------------------------------------------------
+const PHY_RoePopulation::T_RoePopulationMap& PHY_RoePopulation::GetRoePopulations()
+{
+    return roePopulations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoePopulation::Find
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+const PHY_RoePopulation* PHY_RoePopulation::Find( const std::string& strName )
+{
+    CIT_RoePopulationMap it = roePopulations_.find( strName );
+    return it == roePopulations_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoePopulation::Find
+// Created: NLD 2005-11-15
+// -----------------------------------------------------------------------------
+const PHY_RoePopulation* PHY_RoePopulation::Find( uint nID )
+{
+    for( CIT_RoePopulationMap it = roePopulations_.begin(); it != roePopulations_.end(); ++it )
+    {
+        if( it->second->GetID() == nID )
+            return it->second;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoePopulation::GetName
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+const std::string& PHY_RoePopulation::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoePopulation::GetID
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+uint PHY_RoePopulation::GetID() const
+{
+    return nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoePopulation::GetAsnID
+// Created: NLD 2005-11-15
+// -----------------------------------------------------------------------------
+ASN1T_EnumPopulationRoe PHY_RoePopulation::GetAsnID() const
+{
+    return nAsnID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoePopulation::operator==
+// Created: NLD 2005-11-15
+// -----------------------------------------------------------------------------
+bool PHY_RoePopulation::operator==( const PHY_RoePopulation& rhs ) const
+{
+    return nType_ == rhs.nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoePopulation::operator!=
+// Created: NLD 2005-11-15
+// -----------------------------------------------------------------------------
+bool PHY_RoePopulation::operator!=( const PHY_RoePopulation& rhs ) const
+{
+    return nType_ != rhs.nType_;
 }

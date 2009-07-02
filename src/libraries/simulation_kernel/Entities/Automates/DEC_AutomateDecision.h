@@ -29,8 +29,8 @@ enum E_CloseCombatState;
 // Created: JVT 2004-08-03
 // =============================================================================
 class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
+                           , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_AutomateDecision )
 
 public:
     explicit DEC_AutomateDecision( MIL_Automate& automate );
@@ -104,7 +104,5 @@ private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Automate
     //    static int nDIANameIdx_;
 };
-
-#include "DEC_AutomateDecision.inl"
 
 #endif // __DEC_AutomateDecision_h_

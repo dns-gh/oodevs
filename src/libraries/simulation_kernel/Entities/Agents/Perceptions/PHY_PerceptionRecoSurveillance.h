@@ -27,7 +27,6 @@ namespace xml
 // =============================================================================
 class PHY_PerceptionRecoSurveillance : public PHY_Perception_ABC
 {
-    MT_COPYNOTALLOWED( PHY_PerceptionRecoSurveillance )
 
 public:
              PHY_PerceptionRecoSurveillance( PHY_RolePion_Perceiver& perceiver );

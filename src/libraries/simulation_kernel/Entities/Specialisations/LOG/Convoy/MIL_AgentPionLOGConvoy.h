@@ -27,7 +27,6 @@ namespace xml
 // =============================================================================
 class MIL_AgentPionLOGConvoy : public MIL_AgentPionLOG_ABC
 {
-    MT_COPYNOTALLOWED( MIL_AgentPionLOGConvoy )
 
 public:
              MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );

@@ -32,9 +32,8 @@ class MIL_Automate;
 // @class  MIL_KnowledgeGroup
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_KnowledgeGroup
+class MIL_KnowledgeGroup : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_KnowledgeGroup )
 
 public:
     //! @name Types

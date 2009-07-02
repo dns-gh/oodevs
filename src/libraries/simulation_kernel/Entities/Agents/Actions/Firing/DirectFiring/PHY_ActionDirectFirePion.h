@@ -24,10 +24,9 @@ class PHY_DirectFireResult;
 // =============================================================================
 class PHY_ActionDirectFirePion : public PHY_ActionDirectFirePion_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionDirectFirePion )
 
 public:
-    PHY_ActionDirectFirePion( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionDirectFirePion( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionDirectFirePion();
 };
 

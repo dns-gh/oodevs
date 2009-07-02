@@ -22,10 +22,9 @@
 // =============================================================================
 class MIL_AgentPionLOGSupply : public MIL_AgentPionLOG_ABC
 {
-    MT_COPYNOTALLOWED( MIL_AgentPionLOGSupply )
 
 public:
-    MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
+             MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
              MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
              MIL_AgentPionLOGSupply();
     virtual ~MIL_AgentPionLOGSupply();

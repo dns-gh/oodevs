@@ -23,7 +23,6 @@ class NET_ASN_MsgUnitAttributes;
 // =============================================================================
 class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Reinforcement )
 
 public:
     //! @name Types

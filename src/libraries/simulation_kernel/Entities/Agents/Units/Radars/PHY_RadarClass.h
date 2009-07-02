@@ -18,9 +18,8 @@
 // @class  PHY_RadarClass
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RadarClass
+class PHY_RadarClass : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RadarClass )
 
 public:
     //! @name Types

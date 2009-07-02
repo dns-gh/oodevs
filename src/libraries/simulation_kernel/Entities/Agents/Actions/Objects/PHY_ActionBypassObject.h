@@ -23,7 +23,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_ActionBypassObject : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionBypassObject )
 
 public:
     typedef MIL_AgentPion ActorType;

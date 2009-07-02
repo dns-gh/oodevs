@@ -27,9 +27,8 @@ class PHY_ConsumptionType;
 // @class  PHY_Tiredness
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Tiredness
+class PHY_Tiredness : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Tiredness )
 
 public:
     //! @name Types

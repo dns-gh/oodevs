@@ -22,8 +22,8 @@ class MIL_AgentPion;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Posture : public MT_Role_ABC
+                                , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleInterface_Posture )
 
 public:
     typedef PHY_RoleInterface_Posture RoleInterface;

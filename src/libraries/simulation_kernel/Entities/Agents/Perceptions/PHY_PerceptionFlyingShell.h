@@ -29,7 +29,6 @@ class MIL_Effect_IndirectFire;
 // =============================================================================
 class PHY_PerceptionFlyingShell : public PHY_Perception_ABC
 {
-    MT_COPYNOTALLOWED( PHY_PerceptionFlyingShell )
 
 public:
              PHY_PerceptionFlyingShell( PHY_RolePion_Perceiver& perceiver );

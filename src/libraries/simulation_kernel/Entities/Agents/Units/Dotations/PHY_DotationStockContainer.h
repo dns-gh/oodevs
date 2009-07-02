@@ -31,9 +31,8 @@ class PHY_SupplyStockRequestContainer;
 // @class  PHY_DotationStockContainer
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationStockContainer
+class PHY_DotationStockContainer : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationStockContainer )
 
 public:
      PHY_DotationStockContainer( PHY_RolePionLOG_Supply& roleSupply );

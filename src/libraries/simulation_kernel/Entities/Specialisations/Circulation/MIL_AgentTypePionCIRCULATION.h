@@ -26,7 +26,6 @@ namespace xml
 // =============================================================================
 class MIL_AgentTypePionCIRCULATION : public MIL_AgentTypePion
 {
-    MT_COPYNOTALLOWED( MIL_AgentTypePionCIRCULATION )
 
 public:
     MIL_AgentTypePionCIRCULATION( const std::string& strName, xml::xistream& xis );

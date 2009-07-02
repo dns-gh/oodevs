@@ -20,10 +20,9 @@ class DEC_Representations;
 //*****************************************************************************
 // Created: JDY 03-05-05
 //*****************************************************************************
-class DEC_Rep_PathPoint :   public DEC_PathPoint
-                          , public DIA_TypedObject
+class DEC_Rep_PathPoint : public DEC_PathPoint
+                        , public DIA_TypedObject
 {
-    MT_COPYNOTALLOWED( DEC_Rep_PathPoint )
 
 public:
     //-------------------------------------------------------------------------

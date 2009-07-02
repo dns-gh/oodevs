@@ -30,9 +30,8 @@ class PHY_RolePion_Posture;
 // @class  PHY_SensorTypeObjectData
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SensorTypeObjectData
+class PHY_SensorTypeObjectData : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_SensorTypeObjectData )
 
 public:
      PHY_SensorTypeObjectData( xml::xistream& xis );

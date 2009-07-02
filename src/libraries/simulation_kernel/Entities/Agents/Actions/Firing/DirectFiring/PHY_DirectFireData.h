@@ -25,10 +25,8 @@ class MIL_Agent_ABC;
 // @class  PHY_DirectFireData
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DirectFireData
+class PHY_DirectFireData : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DirectFireData )
-
 public:
     //! @name Types
     //@{

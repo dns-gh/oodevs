@@ -25,7 +25,6 @@ class DEC_Agent_Path;
 // =============================================================================
 class PHY_ActionMove : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionMove )
 
 public:
     typedef MIL_AgentPion ActorType;

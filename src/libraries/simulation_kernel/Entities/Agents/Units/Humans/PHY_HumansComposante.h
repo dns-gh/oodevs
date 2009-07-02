@@ -30,9 +30,8 @@ class MIL_Time_ABC;
 // @class  PHY_HumansComposante
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_HumansComposante
+class PHY_HumansComposante : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_HumansComposante )
 
 public:
      PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, uint nNbrMdr );

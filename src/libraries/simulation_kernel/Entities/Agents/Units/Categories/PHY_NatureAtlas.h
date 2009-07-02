@@ -12,17 +12,14 @@
 #ifndef __PHY_NatureAtlas_h_
 #define __PHY_NatureAtlas_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 // =============================================================================
 // @class  PHY_NatureAtlas
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_NatureAtlas
+class PHY_NatureAtlas : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_NatureAtlas )
 
 public:
     // default value
@@ -79,7 +76,5 @@ private:
 private:
     static T_NatureAtlasMap natureAtlas_;
 };
-
-#include "PHY_NatureAtlas.inl"
 
 #endif // __PHY_NatureAtlas_h_

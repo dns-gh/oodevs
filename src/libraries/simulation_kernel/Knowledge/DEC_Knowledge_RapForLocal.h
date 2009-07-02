@@ -23,7 +23,6 @@ class MIL_AgentPion;
 // =============================================================================
 class DEC_Knowledge_RapForLocal : public DEC_Knowledge_RapFor_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_RapForLocal );
 
 public:
     //! @name Constructors/Destructor

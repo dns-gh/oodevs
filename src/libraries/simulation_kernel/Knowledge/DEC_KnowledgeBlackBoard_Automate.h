@@ -27,12 +27,11 @@ class DEC_Knowledge_RapForGlobal;
 // =============================================================================
 class DEC_KnowledgeBlackBoard_Automate : public DEC_KnowledgeBlackBoard_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KnowledgeBlackBoard_Automate )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KnowledgeBlackBoard_Automate( MIL_Automate& automate );
+    explicit DEC_KnowledgeBlackBoard_Automate( MIL_Automate& automate );
              DEC_KnowledgeBlackBoard_Automate();
     virtual ~DEC_KnowledgeBlackBoard_Automate();
     //@}

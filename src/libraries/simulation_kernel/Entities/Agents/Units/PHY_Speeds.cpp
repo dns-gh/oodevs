@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-02-02 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/PHY_Speeds.cpp $
-// $Author: Age $
-// $Modtime: 29/03/05 18:23 $
-// $Revision: 11 $
-// $Workfile: PHY_Speeds.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Speeds.h"
@@ -22,8 +13,6 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include <algorithm>
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Speeds constructor

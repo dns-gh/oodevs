@@ -37,7 +37,7 @@ class PHY_PerceptionLevel;
 // =============================================================================
 class DEC_KS_Perception : public DEC_KnowledgeSource_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KS_Perception ) 
+
 public:
     //! @name Constructors/Destructor
     //@{

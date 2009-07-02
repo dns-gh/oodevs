@@ -27,9 +27,8 @@ class PHY_ConsumptionType;
 // @class  PHY_Experience
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Experience
+class PHY_Experience : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Experience )
 
 public:
     //! @name Types

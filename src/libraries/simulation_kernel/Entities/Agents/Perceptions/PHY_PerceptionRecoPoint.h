@@ -20,7 +20,6 @@
 // =============================================================================
 class PHY_PerceptionRecoPoint : public PHY_Perception_ABC
 {
-    MT_COPYNOTALLOWED( PHY_PerceptionRecoPoint )
 
 public:
     explicit PHY_PerceptionRecoPoint( PHY_RolePion_Perceiver& perceiver );

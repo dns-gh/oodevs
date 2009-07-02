@@ -23,8 +23,8 @@ class MIL_Agent_ABC;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Transported : public MT_Role_ABC
+                                    , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleInterface_Transported )
 
 public:
     typedef PHY_RoleInterface_Transported RoleInterface;

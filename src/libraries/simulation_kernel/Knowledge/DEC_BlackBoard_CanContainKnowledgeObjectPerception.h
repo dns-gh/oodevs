@@ -26,9 +26,8 @@ class MIL_Object_ABC;
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_BlackBoard_CanContainKnowledgeObjectPerception
+class DEC_BlackBoard_CanContainKnowledgeObjectPerception : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_BlackBoard_CanContainKnowledgeObjectPerception )
 
 private:
     //! @name Types

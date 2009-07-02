@@ -30,9 +30,8 @@ class PHY_SensorType;
 // @class  PHY_SensorTypeObject
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SensorTypeObject
+class PHY_SensorTypeObject : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_SensorTypeObject )
 
 public:
      PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis );

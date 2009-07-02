@@ -22,9 +22,8 @@ class PHY_BreakdownType;
 // @class  PHY_MaintenanceLevel
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_MaintenanceLevel
+class PHY_MaintenanceLevel : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_MaintenanceLevel )
 
 public:
     //! @name Types

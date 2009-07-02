@@ -20,9 +20,8 @@ class PHY_SensorType;
 // @class  PHY_Sensor
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Sensor
+class PHY_Sensor : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Sensor )
 
 public:
      PHY_Sensor( const PHY_SensorType& type, MT_Float rHeight );

@@ -27,8 +27,8 @@ class TerrainRule_ABC;
 // =============================================================================
 class DEC_PathSection_ABC : private tools::thread::Handler_ABC< TerrainPathPoint >
                           , private pathfind::AStarManagementCallback_ABC
+                          , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_PathSection_ABC );
 
 public:
     virtual ~DEC_PathSection_ABC();

@@ -25,7 +25,6 @@ class PHY_RolePion_Supply;
 // =============================================================================
 class PHY_SupplyStockState : public PHY_SupplyState_ABC
 {
-    MT_COPYNOTALLOWED( PHY_SupplyStockState )
 
 public:
              PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, bool bPushedFlow );

@@ -24,7 +24,6 @@ class DEC_PathWalker;
 // =============================================================================
 class MIL_Effect_Move : public MIL_Effect_ABC
 {
-    MT_COPYNOTALLOWED( MIL_Effect_Move )
 
 public:
              MIL_Effect_Move( DEC_PathWalker& roleMoving );

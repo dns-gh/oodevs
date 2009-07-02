@@ -22,8 +22,8 @@ class PHY_DotationCategory;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Dotations : public MT_Role_ABC
+                                  , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleInterface_Dotations )
 
 public:
     //! @name Types

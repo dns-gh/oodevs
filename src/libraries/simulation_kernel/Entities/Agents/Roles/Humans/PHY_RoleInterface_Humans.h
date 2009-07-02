@@ -19,8 +19,8 @@
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleInterface_Humans : public MT_Role_ABC
+                               , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleInterface_Humans )
 
 public:
     //! @name Types

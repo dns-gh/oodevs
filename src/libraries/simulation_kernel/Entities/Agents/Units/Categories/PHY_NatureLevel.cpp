@@ -10,14 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_NatureLevel.h"
 
 PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevels_;
-
-// =============================================================================
-// MANAGER
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_NatureLevel::Initialize
@@ -45,11 +40,8 @@ void PHY_NatureLevel::Initialize()
 // -----------------------------------------------------------------------------
 void PHY_NatureLevel::Terminate()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_NatureLevel constructor
@@ -60,6 +52,7 @@ PHY_NatureLevel::PHY_NatureLevel( const std::string& strName, E_Type nType, ASN1
     , nType_   ( nType   )
     , nAsnID_  ( nAsnID  )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,4 +61,55 @@ PHY_NatureLevel::PHY_NatureLevel( const std::string& strName, E_Type nType, ASN1
 // -----------------------------------------------------------------------------
 PHY_NatureLevel::~PHY_NatureLevel()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_NatureLevel::Find
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+const PHY_NatureLevel* PHY_NatureLevel::Find( const std::string& strName )
+{
+    CIT_NatureLevelMap it = natureLevels_.find( strName );
+    return it == natureLevels_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: phy_naturelevel::Find
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+const PHY_NatureLevel* PHY_NatureLevel::Find( uint nID )
+{
+    for( CIT_NatureLevelMap it = natureLevels_.begin(); it != natureLevels_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_NatureLevel::GetName
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+const std::string& PHY_NatureLevel::GetName() const
+{
+    return strName_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_NatureLevel::GetID
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+uint PHY_NatureLevel::GetID() const
+{
+    return nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_NatureLevel::GetAsnID
+// Created: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+ASN1T_EnumNatureLevel PHY_NatureLevel::GetAsnID() const
+{
+    return nAsnID_;
 }

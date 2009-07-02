@@ -68,7 +68,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
 
     // Découpage
     MIL_Fuseau::T_FuseauPtrList subFuseaux;
-    if( !callerAutomate.GetFuseau().SplitIntoSubFuseaux( pions.size(), subFuseaux ) )
+    if( !callerAutomate.GetOrderManager().GetFuseau().SplitIntoSubFuseaux( pions.size(), subFuseaux ) )
         return;
 
     // Affectation des fuseaux
@@ -178,7 +178,7 @@ void DEC_OrdersFunctions::SplitFuseau( DIA_Call_ABC& call, MIL_Automate& callerA
     DIA_Variable_ObjectList& result = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
 
     MIL_Fuseau::T_FuseauPtrList subFuseaux;
-    callerAutomate.GetFuseau().SplitIntoSubFuseaux( (uint)call.GetParameter( 0 ).ToFloat(), subFuseaux );
+    callerAutomate.GetOrderManager().GetFuseau().SplitIntoSubFuseaux( (uint)call.GetParameter( 0 ).ToFloat(), subFuseaux );
     result.SetValueUserType( subFuseaux, DEC_Tools::GetTypeFuseau() );
 }
 
@@ -239,7 +239,7 @@ namespace
         template< typename T >
         void operator() ( T& entity )
         {
-            MIL_LimaOrder* pLima = entity.FindLima( nLimaID_ );
+            MIL_LimaOrder* pLima = entity.GetOrderManager().FindLima( nLimaID_ );
             if( pLima )
                 pLima->Flag( bValue_ );
         }
@@ -256,7 +256,7 @@ namespace
         template< typename T >
         void operator() ( T& entity )
         {
-            MIL_LimaOrder* pLima = entity.FindLima( nLimaID_ );
+            MIL_LimaOrder* pLima = entity.GetOrderManager().FindLima( nLimaID_ );
             if( pLima )
                 pLima->FlagSchedule( bValue_ );
         }

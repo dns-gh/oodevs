@@ -23,7 +23,6 @@ class MIL_Automate;
 // =============================================================================
 class DEC_Knowledge_RapForGlobal : public DEC_Knowledge_RapFor_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_RapForGlobal );
 
 public:
     //! @name Constructors/Destructor

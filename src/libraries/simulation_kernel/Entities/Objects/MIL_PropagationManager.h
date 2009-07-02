@@ -26,9 +26,8 @@
 // Created: RFT 28/04/2008
 // Modified: RFT 05/05/2008
 // =============================================================================
-class MIL_PropagationManager
+class MIL_PropagationManager : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_PropagationManager );
 
 public:
     //! @name Constructors/Destructor

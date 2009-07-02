@@ -45,7 +45,6 @@ namespace xml
 // =============================================================================
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Composantes )
 
 public:
     //! @name Types

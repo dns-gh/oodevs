@@ -29,7 +29,7 @@
 void DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, callerAgent.GetFuseau() );
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
@@ -95,7 +95,7 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesPerceived( DIA_Call_ABC& call, cons
 void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledge().GetLivingEnemiesPerceivedInZone( knowledges, callerAgent.GetFuseau() );
+    callerAgent.GetKnowledge().GetLivingEnemiesPerceivedInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
@@ -142,7 +142,7 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesInZone( DIA_Call_ABC& call, const M
 void DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInZone( knowledges, callerAgent.GetFuseau() );
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );

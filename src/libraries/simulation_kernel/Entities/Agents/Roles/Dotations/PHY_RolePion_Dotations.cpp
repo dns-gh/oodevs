@@ -215,9 +215,8 @@ void PHY_RolePion_Dotations::NotifyReleased()
 // =============================================================================
 // CONSUMPTIONS
 // =============================================================================
-struct sConsumptionReservation
+struct sConsumptionReservation : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( sConsumptionReservation );
 
 public:
     sConsumptionReservation( const PHY_ConsumptionType& consumptionMode, PHY_DotationGroupContainer& dotations )
@@ -292,9 +291,8 @@ void PHY_RolePion_Dotations::RollbackConsumptionMode()
 // Name: PHY_RolePion_Dotations::sConsumptionTimeExpectancy
 // Created: JVT 2005-02-07
 // -----------------------------------------------------------------------------
-struct sConsumptionTimeExpectancy
+struct sConsumptionTimeExpectancy : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( sConsumptionTimeExpectancy );
     
 public:
     sConsumptionTimeExpectancy( const PHY_ConsumptionType& consumptionMode )

@@ -27,7 +27,6 @@ class HLA_UpdateFunctor;
 // =============================================================================
 class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Posture )
 
 public:
              PHY_RolePion_Posture( MT_RoleContainer& role, const MIL_AgentPion& pion );

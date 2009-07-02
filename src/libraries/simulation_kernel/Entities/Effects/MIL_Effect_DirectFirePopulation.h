@@ -25,7 +25,6 @@ class PHY_FireResults_ABC;
 // =============================================================================
 class MIL_Effect_DirectFirePopulation : public MIL_Effect_ABC
 {
-    MT_COPYNOTALLOWED( MIL_Effect_DirectFirePopulation )
 
 public:
              MIL_Effect_DirectFirePopulation( MIL_PopulationElement_ABC& target, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult );

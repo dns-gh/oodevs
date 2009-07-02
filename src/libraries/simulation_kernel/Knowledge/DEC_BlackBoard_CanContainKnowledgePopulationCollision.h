@@ -26,9 +26,8 @@ class MIL_AgentPion;
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_BlackBoard_CanContainKnowledgePopulationCollision
+class DEC_BlackBoard_CanContainKnowledgePopulationCollision : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_BlackBoard_CanContainKnowledgePopulationCollision )
 
 public:
     //! @name Types

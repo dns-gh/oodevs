@@ -26,7 +26,6 @@ class PHY_RolePion_Supply;
 // =============================================================================
 class PHY_SupplyDotationState : public PHY_SupplyState_ABC
 {
-    MT_COPYNOTALLOWED( PHY_SupplyDotationState )
 
 public:
     explicit PHY_SupplyDotationState( MIL_Automate& suppliedAutomate );

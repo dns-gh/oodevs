@@ -18,9 +18,8 @@
 // @class  PHY_ConsumptionType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_ConsumptionType
+class PHY_ConsumptionType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_ConsumptionType )
 
 public:
     //! @name Types

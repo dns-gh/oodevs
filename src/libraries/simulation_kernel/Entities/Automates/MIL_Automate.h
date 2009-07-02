@@ -49,7 +49,6 @@ class DEC_KnowledgeBlackBoard_Automate;
 class MIL_Automate : public MIL_Entity_ABC
                    , public PHY_Actor
 {
-    MT_COPYNOTALLOWED( MIL_Automate )
 
 public:
     //! @name Types
@@ -87,8 +86,8 @@ public:
 
     //! @name Initialize
     //@{
-                    void ReadOverloading ( xml::xistream& xis );
-            virtual void ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis );
+            void ReadOverloading ( xml::xistream& xis );
+    virtual void ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis );
     //@}
 
     //! @name Accessors
@@ -108,12 +107,6 @@ public:
           DEC_AutomateDecision&             GetDecision      () ;
           DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
           bool                              IsEngaged        () const;
-
-    const MIL_Fuseau&                       GetFuseau            () const;
-    const MT_Vector2D&                      GetDirDanger         () const;
-          MIL_LimaOrder*                    FindLima             ( const MIL_LimaFunction& function ) const;
-          MIL_LimaOrder*                    FindLima             ( uint nID ) const;
-          MIL_LimaOrder*                    FindNextScheduledLima() const;
     //@}
         
     //! @name Operations

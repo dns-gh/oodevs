@@ -32,7 +32,6 @@ class PHY_PerceptionLevel;
 // =============================================================================
 class DEC_Knowledge_AgentPerception : public DEC_Knowledge_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_AgentPerception ) 
 
 public:
     //! @name Constructors/Destructor

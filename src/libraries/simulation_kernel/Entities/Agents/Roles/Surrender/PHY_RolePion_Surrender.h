@@ -24,7 +24,6 @@ class MIL_Army;
 // =============================================================================
 class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Surrender )
 
 public:
              PHY_RolePion_Surrender( MT_RoleContainer& role, MIL_AgentPion& pion );

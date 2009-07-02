@@ -22,9 +22,8 @@ class PHY_PerceptionLevel;
 // =============================================================================
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_Knowledge_PopulationFlowPerception
+class DEC_Knowledge_PopulationFlowPerception : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_PopulationFlowPerception ) 
 
 public:
     //! @name Constructors/Destructor

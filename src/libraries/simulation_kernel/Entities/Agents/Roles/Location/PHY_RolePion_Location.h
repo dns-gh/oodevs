@@ -26,7 +26,6 @@ class HLA_UpdateFunctor;
 // =============================================================================
 class PHY_RolePion_Location : public PHY_RoleInterface_Location
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Location )
 
 public:
              PHY_RolePion_Location( MT_RoleContainer& role, MIL_AgentPion& pion );

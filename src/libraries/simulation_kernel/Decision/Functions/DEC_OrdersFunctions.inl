@@ -26,7 +26,7 @@ template< typename T >
 void DEC_OrdersFunctions::GetMissionLimaFlag( DIA_Call_ABC& call, const T& caller )
 {
     assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-    MIL_LimaOrder* pLima = caller.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
     if( !pLima )
     {
         call.GetResult().SetValue( false );
@@ -43,7 +43,7 @@ template< typename T >
 void DEC_OrdersFunctions::GetMissionLimaScheduleFlag( DIA_Call_ABC& call, const T& caller )
 {
     assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-    MIL_LimaOrder* pLima = caller.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
     if( !pLima )
     {
         call.GetResult().SetValue( false );
@@ -65,7 +65,7 @@ void DEC_OrdersFunctions::GetLima( DIA_Call_ABC& call, const T& caller )
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
         return;
     }
-    MIL_LimaOrder* pLima = caller.FindLima( *pFunction );
+    MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( *pFunction );
     if( !pLima )
     {
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
@@ -81,7 +81,7 @@ void DEC_OrdersFunctions::GetLima( DIA_Call_ABC& call, const T& caller )
 template< typename T >
 void DEC_OrdersFunctions::GetNextScheduledLima( DIA_Call_ABC& call, const T& caller )
 {
-    MIL_LimaOrder* pLima = caller.FindNextScheduledLima();
+    MIL_LimaOrder* pLima = caller.GetOrderManager().FindNextScheduledLima();
     if( !pLima )
     {
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
@@ -107,7 +107,7 @@ void DEC_OrdersFunctions::GetNextScheduledElement( DIA_Call_ABC& call, const T& 
 
     T_ObjectVariableVector& objectives = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 0 ) ).GetContainer() );
 
-    const MIL_LimaOrder* pNextLima = caller.FindNextScheduledLima();
+    const MIL_LimaOrder* pNextLima = caller.GetOrderManager().FindNextScheduledLima();
 
     const DIA_Variable_ABC* pNextObjective = 0;
     for( CIT_ObjectVariableVector it = objectives.begin(); it != objectives.end(); ++it )
@@ -136,7 +136,7 @@ void DEC_OrdersFunctions::GetNextScheduledElement( DIA_Call_ABC& call, const T& 
 template< typename T >
 static void DEC_OrdersFunctions::GetFuseau( DIA_Call_ABC& call, const T& caller )
 {
-    call.GetResult().SetValue( (void*)&caller.GetFuseau(), &DEC_Tools::GetTypeFuseau(), 1 );
+    call.GetResult().SetValue( (void*)&caller.GetOrderManager().GetFuseau(), &DEC_Tools::GetTypeFuseau(), 1 );
 }
 
 // -----------------------------------------------------------------------------

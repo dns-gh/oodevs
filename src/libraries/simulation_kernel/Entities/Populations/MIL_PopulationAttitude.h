@@ -20,9 +20,8 @@
 // @class  MIL_PopulationAttitude
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_PopulationAttitude
+class MIL_PopulationAttitude : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_PopulationAttitude )
 
 public:
     //! @name Types

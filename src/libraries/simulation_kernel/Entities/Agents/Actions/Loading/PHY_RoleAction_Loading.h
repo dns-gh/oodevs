@@ -21,8 +21,8 @@ class NET_ASN_MsgUnitAttributes;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Loading : public MT_Role_ABC
+                             , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleAction_Loading )
 
 public:
     //! @name Types

@@ -21,9 +21,8 @@ class MIL_PionMission;
 //=============================================================================
 // Created: NLD 2003-04-14
 //=============================================================================
-class MIL_AutomateMRT
+class MIL_AutomateMRT : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MIL_AutomateMRT )
         
 public:
      MIL_AutomateMRT();

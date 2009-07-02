@@ -29,9 +29,8 @@ struct ASN1T_MeteoAttributes;
 // Created: JVT 03-08-05
 // Last modified: JVT 03-08-07
 //*****************************************************************************
-class PHY_Meteo
+class PHY_Meteo : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Meteo )
 
 public:
     struct sWindData

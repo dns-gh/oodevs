@@ -30,7 +30,6 @@ class MIL_AgentPion;
 // =============================================================================
 class DEC_Knowledge_ObjectCollision : public DEC_Knowledge_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_ObjectCollision ) 
 
 public:
     //! @name Constructors/Destructor

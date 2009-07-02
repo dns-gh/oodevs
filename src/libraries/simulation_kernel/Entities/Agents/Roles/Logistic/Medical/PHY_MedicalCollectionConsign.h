@@ -24,8 +24,6 @@ class PHY_MedicalHumanState;
 // =============================================================================
 class PHY_MedicalCollectionConsign : public PHY_MedicalConsign_ABC
 {
-    MT_COPYNOTALLOWED( PHY_MedicalCollectionConsign )
-
     friend class PHY_MedicalCollectionAmbulance;
 
 public:

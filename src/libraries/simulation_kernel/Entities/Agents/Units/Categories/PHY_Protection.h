@@ -12,8 +12,6 @@
 #ifndef __PHY_Protection_h_
 #define __PHY_Protection_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_GaussianRandom.h"
 #include "MT_Tools/MT_Random.h"
 
@@ -28,9 +26,8 @@ class PHY_ComposanteState;
 // @class  PHY_Protection
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Protection
+class PHY_Protection : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Protection )
 
 public:
     //! @name Types
@@ -117,7 +114,5 @@ private:
     static uint            nNextID_;
     static MT_Random       random_;
 };
-
-#include "PHY_Protection.inl"
 
 #endif // __PHY_Protection_h_

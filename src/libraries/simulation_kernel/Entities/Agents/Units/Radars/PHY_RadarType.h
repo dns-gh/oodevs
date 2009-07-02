@@ -29,9 +29,8 @@ class MIL_Time_ABC;
 // @class  PHY_RadarType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RadarType
+class PHY_RadarType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RadarType )
 
 public:
     //! @name Manager

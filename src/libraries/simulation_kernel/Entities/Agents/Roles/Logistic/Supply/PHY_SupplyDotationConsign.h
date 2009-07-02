@@ -23,7 +23,6 @@ class PHY_SupplyDotationState;
 // =============================================================================
 class PHY_SupplyDotationConsign : public PHY_SupplyConsign_ABC
 {
-    MT_COPYNOTALLOWED( PHY_SupplyDotationConsign )
 
 public:
              PHY_SupplyDotationConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyDotationState& supplyState );

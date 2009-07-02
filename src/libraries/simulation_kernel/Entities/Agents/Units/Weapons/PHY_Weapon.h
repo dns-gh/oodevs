@@ -29,9 +29,8 @@ class MIL_Time_ABC;
 // @class  PHY_Weapon
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Weapon
+class PHY_Weapon : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Weapon )
 
 public:
              PHY_Weapon( const MIL_Time_ABC& time, const PHY_WeaponType& type, bool bMajor );

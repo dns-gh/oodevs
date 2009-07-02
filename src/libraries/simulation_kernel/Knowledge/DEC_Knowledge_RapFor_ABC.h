@@ -26,7 +26,6 @@ namespace xml
 // =============================================================================
 class DEC_Knowledge_RapFor_ABC : public DEC_Knowledge_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_RapFor_ABC );
 
 public:
     //! @name Constructors/Destructor

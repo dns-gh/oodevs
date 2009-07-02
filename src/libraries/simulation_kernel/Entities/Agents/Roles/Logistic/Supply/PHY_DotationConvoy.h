@@ -27,7 +27,6 @@ class PHY_SupplyDotationConsign;
 // =============================================================================
 class PHY_DotationConvoy : public PHY_Convoy_ABC
 {
-    MT_COPYNOTALLOWED( PHY_DotationConvoy )
 
 public:
     //! @name 

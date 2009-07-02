@@ -23,10 +23,8 @@ class MIL_KnowledgeGroup;
 // =============================================================================
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_BlackBoard_CanContainKnowledgeAgent
+class DEC_BlackBoard_CanContainKnowledgeAgent : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_BlackBoard_CanContainKnowledgeAgent )
-
 
 public:
     //! @name Types

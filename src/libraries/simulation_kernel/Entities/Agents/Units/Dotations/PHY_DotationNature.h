@@ -23,9 +23,8 @@ namespace xml
 // @class  PHY_DotationNature
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationNature
+class PHY_DotationNature : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationNature )
 
 public:
     //! @name Manager

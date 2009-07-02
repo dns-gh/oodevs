@@ -25,7 +25,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class MIL_Effect_KillOfficers : public MIL_Effect_ABC
 {
-    MT_COPYNOTALLOWED( MIL_Effect_KillOfficers )
 
 public:
              MIL_Effect_KillOfficers( MIL_Agent_ABC& target );

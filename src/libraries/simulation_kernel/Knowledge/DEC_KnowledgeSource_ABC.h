@@ -26,9 +26,8 @@ class DEC_KnowledgeBlackBoard_ABC;
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_KnowledgeSource_ABC
+class DEC_KnowledgeSource_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_KnowledgeSource_ABC )
 
 public:
     //! @name Constructors/Destructor

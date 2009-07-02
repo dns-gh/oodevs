@@ -26,9 +26,8 @@ struct ASN1T_MsgUnitKnowledgeUpdate;
 // =============================================================================
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_Knowledge_AgentDataIdentification
+class DEC_Knowledge_AgentDataIdentification : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_AgentDataIdentification ) 
 
 public:
      DEC_Knowledge_AgentDataIdentification();

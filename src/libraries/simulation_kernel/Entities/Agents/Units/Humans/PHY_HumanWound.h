@@ -27,9 +27,8 @@ namespace xml
 // @class  PHY_HumanWound
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_HumanWound
+class PHY_HumanWound : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_HumanWound )
 
 public:
     //! @name Types

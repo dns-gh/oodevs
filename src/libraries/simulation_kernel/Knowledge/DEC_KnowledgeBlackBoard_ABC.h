@@ -27,7 +27,6 @@ class DEC_KnowledgeSource_ABC;
 // =============================================================================
 class DEC_KnowledgeBlackBoard_ABC : public DEC_KnowledgeResolver_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KnowledgeBlackBoard_ABC )
 
 public:
     //! @name Constructors/Destructor

@@ -26,7 +26,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_ActionDirectFirePopulation : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionDirectFirePopulation )
 
 public:
     typedef MIL_AgentPion ActorType;        

@@ -54,7 +54,6 @@ class MIL_Time_ABC;
 // =============================================================================
 class PHY_ComposanteTypePion : public PHY_ComposanteType_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ComposanteTypePion )
 
 public:
              PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis );

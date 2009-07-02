@@ -29,7 +29,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_StockConvoy : public PHY_Convoy_ABC
 {
-    MT_COPYNOTALLOWED( PHY_StockConvoy )
 
 public:
     //! @name 

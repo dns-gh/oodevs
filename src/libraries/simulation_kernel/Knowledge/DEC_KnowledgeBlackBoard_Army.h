@@ -30,7 +30,6 @@ class MIL_ObjectFilter;
 // =============================================================================
 class DEC_KnowledgeBlackBoard_Army : public DEC_KnowledgeBlackBoard_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KnowledgeBlackBoard_Army )
 
 public:
     //! @name Constructors/Destructor

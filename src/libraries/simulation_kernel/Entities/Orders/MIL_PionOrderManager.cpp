@@ -112,7 +112,7 @@ const MIL_Fuseau& MIL_PionOrderManager::GetFuseau() const
     if( GetCurrentMission() )
         return GetCurrentMission()->GetFuseau();
 
-    return pion_.GetAutomate().GetFuseau();
+    return pion_.GetAutomate().GetOrderManager().GetFuseau();
 }
 
 // -----------------------------------------------------------------------------

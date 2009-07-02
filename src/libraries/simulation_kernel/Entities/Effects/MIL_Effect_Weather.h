@@ -25,7 +25,6 @@ class PHY_IndirectFireDotationClass;
 // =============================================================================
 class MIL_Effect_Weather : public MIL_Effect_ABC
 {
-    MT_COPYNOTALLOWED( MIL_Effect_Weather )
 
 public:
              MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, MT_Float rLifeDuration, MT_Float rDeploymentDuration );

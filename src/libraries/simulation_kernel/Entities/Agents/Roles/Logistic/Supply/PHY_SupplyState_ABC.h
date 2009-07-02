@@ -18,9 +18,8 @@
 // @class  PHY_SupplyState_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SupplyState_ABC
+class PHY_SupplyState_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_SupplyState_ABC )
 
 public:
              PHY_SupplyState_ABC();

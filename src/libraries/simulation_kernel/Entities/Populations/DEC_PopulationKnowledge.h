@@ -25,8 +25,8 @@ class MIL_AgentPion;
 // Created: JVT 2004-08-03
 // =============================================================================
 class DEC_PopulationKnowledge : public DEC_KnowledgeResolver_ABC
+                              , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_PopulationKnowledge )
 
 public:
     //! @name Types

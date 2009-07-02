@@ -24,8 +24,8 @@ class MIL_Effect_IndirectFire;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_IndirectFiring : public MT_Role_ABC
+                                    , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleAction_IndirectFiring )
 
 public:
     //! @name Types

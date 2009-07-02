@@ -22,7 +22,6 @@
 // =============================================================================
 class PHY_ActionDirectFirePionUsingOnlyLoadable : public PHY_ActionDirectFirePion_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionDirectFirePionUsingOnlyLoadable )
 
 public:
     PHY_ActionDirectFirePionUsingOnlyLoadable( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );

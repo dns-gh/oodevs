@@ -22,9 +22,8 @@ class PHY_DotationStockContainer;
 // @class  PHY_DotationStock
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationStock
+class PHY_DotationStock : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_DotationStock )
 
 public:
      PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity );

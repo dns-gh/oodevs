@@ -24,7 +24,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
 {
-    MT_COPYNOTALLOWED( PHY_RoleAction_Flying )
 
 public:
              PHY_RoleAction_Flying( MT_RoleContainer& role, MIL_AgentPion& pion );

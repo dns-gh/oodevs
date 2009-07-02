@@ -13,7 +13,6 @@
 //*****************************************************************************
 class PHY_PerceptionCoupDeSonde : public PHY_Perception_ABC
 {
-    MT_COPYNOTALLOWED( PHY_PerceptionCoupDeSonde )
 
 public:
     explicit PHY_PerceptionCoupDeSonde( PHY_RolePion_Perceiver& perceiver );

@@ -23,7 +23,6 @@ class PHY_StockConvoy;
 // =============================================================================
 class PHY_RolePionLOGConvoy_Supply : public PHY_RolePion_Supply
 {
-    MT_COPYNOTALLOWED( PHY_RolePionLOGConvoy_Supply )
 
 public:
              PHY_RolePionLOGConvoy_Supply( MT_RoleContainer& role, const MIL_AgentPion& pion );

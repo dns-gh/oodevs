@@ -12,15 +12,12 @@
 #ifndef __PHY_RoePopulation_h_
 #define __PHY_RoePopulation_h_
 
-#include "MIL.h"
-
 // =============================================================================
 // @class  PHY_RoePopulation
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoePopulation
+class PHY_RoePopulation : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoePopulation )
 
 public:
     //! @name Constants
@@ -83,7 +80,5 @@ private:
 private:
     static T_RoePopulationMap roePopulations_;
 };
-
-#include "PHY_RoePopulation.inl"
 
 #endif // __PHY_RoePopulation_h_

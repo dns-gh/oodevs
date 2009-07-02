@@ -28,9 +28,8 @@ class PHY_DotationCategory;
 // @class  PHY_BreakdownType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_BreakdownType
+class PHY_BreakdownType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_BreakdownType )
 
 public:
     //! @name Types

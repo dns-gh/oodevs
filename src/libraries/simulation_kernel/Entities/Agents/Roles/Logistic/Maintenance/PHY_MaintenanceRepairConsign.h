@@ -22,7 +22,6 @@ class PHY_RolePionLOG_Maintenance;
 // =============================================================================
 class PHY_MaintenanceRepairConsign : public PHY_MaintenanceConsign_ABC
 {
-    MT_COPYNOTALLOWED( PHY_MaintenanceRepairConsign )
 
 public:
              PHY_MaintenanceRepairConsign( PHY_RolePionLOG_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState );

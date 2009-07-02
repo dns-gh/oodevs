@@ -30,7 +30,7 @@ class DEC_Knowledge_ObjectCollision;
 // =============================================================================
 class DEC_KS_ObjectInteraction : public DEC_KnowledgeSource_ABC
 {
-    MT_COPYNOTALLOWED( DEC_KS_ObjectInteraction ) 
+
 public:
     //! @name Constructors/Destructor
     //@{   

@@ -23,9 +23,8 @@ class PHY_RolePion_Perceiver;
 // Created: DFT 02-02-26
 // Last modified: JVT 03-09-01
 //*****************************************************************************
-class PHY_Perception_ABC
+class PHY_Perception_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Perception_ABC )
 
 public:
     explicit PHY_Perception_ABC( PHY_RolePion_Perceiver& perceiver );

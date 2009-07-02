@@ -22,9 +22,8 @@ class PHY_ComposantePion;
 // @class  PHY_RoleAction_Objects_DataComputer
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_Objects_DataComputer
+class PHY_RoleAction_Objects_DataComputer : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleAction_Objects_DataComputer )
 
 public:
      PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_Object_ABC& object );

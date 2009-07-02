@@ -29,7 +29,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_RolePion_Communications : public PHY_RoleInterface_Communications
 {
-    MT_COPYNOTALLOWED( PHY_RolePion_Communications )
 
 public:
     //! @name Static

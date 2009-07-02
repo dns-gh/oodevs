@@ -22,10 +22,9 @@
 // =============================================================================
 class PHY_ActionDirectFirePionOnMajorComposantes : public PHY_ActionDirectFirePion_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionDirectFirePionOnMajorComposantes )
 
 public:
-    PHY_ActionDirectFirePionOnMajorComposantes( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionDirectFirePionOnMajorComposantes( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
     virtual ~PHY_ActionDirectFirePionOnMajorComposantes();
 };
 

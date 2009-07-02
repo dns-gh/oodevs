@@ -23,13 +23,12 @@ namespace boost
     class mutex; 
 }
 
-
 // =============================================================================
 // Created: NLD 2004-02-11
 // =============================================================================
 class SIM_NetworkLogger : public MT_Logger_ABC
+                        , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( SIM_NetworkLogger );
 
 public:
     //! @name Constructors/Destructor

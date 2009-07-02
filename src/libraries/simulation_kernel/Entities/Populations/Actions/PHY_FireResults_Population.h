@@ -24,10 +24,9 @@ class MIL_Population;
 // =============================================================================
 class PHY_FireResults_Population : public PHY_FireResults_ABC
 {
-    MT_COPYNOTALLOWED( PHY_FireResults_Population )
 
 public:
-    PHY_FireResults_Population( const MIL_Population& firer );
+    explicit PHY_FireResults_Population( const MIL_Population& firer );
     virtual ~PHY_FireResults_Population();
 
 private:

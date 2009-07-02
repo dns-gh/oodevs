@@ -26,8 +26,8 @@ class MIL_Object_ABC;
 // =============================================================================
 class PHY_RoleAction_Moving : public MT_Role_ABC
                             , public PHY_MovingEntity_ABC
+                            , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_RoleAction_Moving )
 
 public:
     //! @name Types

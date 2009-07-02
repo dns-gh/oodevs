@@ -20,9 +20,8 @@ class DEC_Agent_PathClass;
 //*****************************************************************************
 // Created: JDY 03-04-10
 //*****************************************************************************
-class DEC_PathType
+class DEC_PathType : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( DEC_PathType )
 
 public:
     //! @name Types

@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-02-02 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/PHY_Speeds.h $
-// $Author: Age $
-// $Modtime: 22/03/05 11:02 $
-// $Revision: 6 $
-// $Workfile: PHY_Speeds.h $
-//
-// *****************************************************************************
 
 #ifndef __PHY_Speeds_h_
 #define __PHY_Speeds_h_
@@ -40,8 +31,8 @@ class PHY_Speeds
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_Speeds( xml::xistream& xis );
-             PHY_Speeds( const PHY_RoleAction_Moving& role );
+    explicit PHY_Speeds( xml::xistream& xis );
+    explicit PHY_Speeds( const PHY_RoleAction_Moving& role );
     virtual ~PHY_Speeds();
     //@}
 

@@ -46,7 +46,6 @@ template < typename T > class PHY_ActionLogistic;
 // =============================================================================
 class MIL_AutomateLOG : public MIL_Automate
 {
-    MT_COPYNOTALLOWED( MIL_AutomateLOG )
 
 public:
     struct sDotationQuota

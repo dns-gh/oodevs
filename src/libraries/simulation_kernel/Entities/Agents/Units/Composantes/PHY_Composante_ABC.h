@@ -12,25 +12,22 @@
 #ifndef __PHY_Composante_ABC_h_
 #define __PHY_Composante_ABC_h_
 
-#include "MIL.h"
-
 class PHY_ComposanteType_ABC;
 
 // =============================================================================
 // @class  PHY_Composante_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Composante_ABC
+class PHY_Composante_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( PHY_Composante_ABC )
 
 public:
-             PHY_Composante_ABC();
-    virtual ~PHY_Composante_ABC();
+             PHY_Composante_ABC() {}
+    virtual ~PHY_Composante_ABC() {}
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const uint ) {}
     //@}
     
     //! @name Accessors
@@ -41,7 +38,5 @@ public:
     virtual uint                          GetMajorScore      () const = 0;
     //@}
 };
-
-#include "PHY_Composante_ABC.inl"
 
 #endif // __PHY_Composante_ABC_h_

@@ -27,10 +27,9 @@ namespace xml
 // =============================================================================
 class MIL_AgentTypePionLOGConvoy : public MIL_AgentTypePionLOG_ABC
 {
-    MT_COPYNOTALLOWED( MIL_AgentTypePionLOGConvoy )
 
 public:
-    MIL_AgentTypePionLOGConvoy( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionLOGConvoy( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOGConvoy();
 
     //! @name Instanciation
