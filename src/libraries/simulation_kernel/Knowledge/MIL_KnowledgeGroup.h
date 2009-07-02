@@ -101,6 +101,4 @@ private:
     static std::set< uint > ids_;
 };
 
-#include "MIL_KnowledgeGroup.inl"
-
 #endif // __MIL_KnowledgeGroup_h_

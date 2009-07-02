@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KS_ObjectInteraction.h"
-
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_ObjectCollision.h"
@@ -32,6 +31,7 @@ DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard_Agen
     , objectInteractions_    ()
     , objectCollisions_      ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +44,7 @@ DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction()
     , objectInteractions_    ()
     , objectCollisions_      ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,11 +53,8 @@ DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction()
 // -----------------------------------------------------------------------------
 DEC_KS_ObjectInteraction::~DEC_KS_ObjectInteraction()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
@@ -70,10 +68,6 @@ void DEC_KS_ObjectInteraction::serialize( Archive& archive, const uint )
             & objectInteractions_
             & objectCollisions_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::Prepare
@@ -142,10 +136,6 @@ void DEC_KS_ObjectInteraction::Talk()
     objectCollisions_.clear();
 }
 
-// =============================================================================
-// CLEAN
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision
 // Created: NLD 2004-05-03
@@ -169,4 +159,22 @@ void DEC_KS_ObjectInteraction::Clean()
     assert( pBlackBoard_ );
     class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> method( & DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, *this );        
     pBlackBoard_->GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( method );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectInteraction::NotifyObjectInteraction
+// Created: NLD 2004-03-26
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_Object_ABC& object )
+{
+    objectInteractions_.push_back( &object );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectInteraction::NotifyObjectCollision
+// Created: NLD 2004-04-29
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition )
+{
+    objectCollisions_.push_back( std::make_pair( &object, vPosition ) );
 }

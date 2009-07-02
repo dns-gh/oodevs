@@ -12,8 +12,6 @@
 #ifndef __DEC_KS_Fire_h_
 #define __DEC_KS_Fire_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_AgentPion;
@@ -74,6 +72,15 @@ private:
     T_PopulationSet                    populationsAttacking_;
 };
 
-#include "DEC_KS_Fire.inl"
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void DEC_KS_Fire::serialize( Archive& archive, const uint )
+{
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+            & pBlackBoard_;
+}
 
 #endif // __DEC_KS_Fire_h_

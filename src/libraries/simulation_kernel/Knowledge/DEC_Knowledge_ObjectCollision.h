@@ -12,8 +12,6 @@
 #ifndef __DEC_Knowledge_ObjectCollision_h_
 #define __DEC_Knowledge_ObjectCollision_h_
 
-#include "MIL.h"
-
 #include "DEC_Knowledge_ABC.h"
 
 class MIL_Object_ABC;
@@ -65,7 +63,5 @@ private:
           MT_Vector2D          vPosition_;
           bool                 bIsValid_;
 };
-
-#include "DEC_Knowledge_ObjectCollision.inl"
 
 #endif // __DEC_Knowledge_ObjectCollision_h_

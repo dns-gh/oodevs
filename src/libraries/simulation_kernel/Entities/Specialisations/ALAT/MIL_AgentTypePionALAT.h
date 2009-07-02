@@ -12,8 +12,6 @@
 #ifndef __MIL_AgentTypePionALAT_h_
 #define __MIL_AgentTypePionALAT_h_
 
-#include "MIL.h"
-
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
 namespace xml
@@ -32,10 +30,7 @@ public:
              MIL_AgentTypePionALAT( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionALAT();
 
-public:
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
-
-#include "MIL_AgentTypePionALAT.inl"
 
 #endif // __MIL_AgentTypePionALAT_h_

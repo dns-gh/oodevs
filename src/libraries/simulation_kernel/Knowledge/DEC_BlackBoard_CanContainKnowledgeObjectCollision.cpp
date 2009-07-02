@@ -11,10 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_ObjectCollision.h"
-
 #include "Entities/Objects/MIL_Object_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObjectCollision, "DEC_BlackBoard_CanContainKnowledgeObjectCollision" )
@@ -25,7 +23,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObjectCollision, "DEC
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObjectCollision::DEC_BlackBoard_CanContainKnowledgeObjectCollision()
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -98,10 +96,6 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::save( MIL_CheckPointOutA
     file << knowledgeObjectCollisionMap_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision
 // Created: NLD 2004-03-11
@@ -126,3 +120,26 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::DestroyKnowledgeObjectCo
     delete &knowledge;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObjectCollision::GetKnowledgesObjectCollision
+// Created: NLD 2004-03-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_ObjectCollision* DEC_BlackBoard_CanContainKnowledgeObjectCollision::GetKnowledgeObjectCollision( const MIL_Object_ABC& associatedObject ) const
+{
+    CIT_KnowledgeObjectCollisionMap itKnowledge = knowledgeObjectCollisionMap_.find( &associatedObject );
+    if( itKnowledge != knowledgeObjectCollisionMap_.end() )
+        return itKnowledge->second;
+    else
+        return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObjectCollision::GetKnowledgesObjectCollision
+// Created: NLD 2004-05-03
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObjectCollision::GetKnowledgesObjectCollision( T_KnowledgeObjectCollisionVector& container ) const
+{
+    container.clear(); container.reserve( knowledgeObjectCollisionMap_.size() );
+    for( CIT_KnowledgeObjectCollisionMap itKnowledge = knowledgeObjectCollisionMap_.begin(); itKnowledge != knowledgeObjectCollisionMap_.end(); ++itKnowledge )
+        container.push_back( itKnowledge->second );
+}

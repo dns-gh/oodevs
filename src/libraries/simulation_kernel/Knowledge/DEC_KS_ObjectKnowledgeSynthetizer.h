@@ -12,8 +12,6 @@
 #ifndef __DEC_KS_ObjectKnowledgeSynthetizer_h_
 #define __DEC_KS_ObjectKnowledgeSynthetizer_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_Army;
@@ -97,6 +95,15 @@ private:
     //@}
 };
 
-#include "DEC_KS_ObjectKnowledgeSynthetizer.inl"
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::serialize
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void DEC_KS_ObjectKnowledgeSynthetizer::serialize( Archive& archive, const uint )
+{
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+            & pBlackBoard_;
+}
 
 #endif // __DEC_KS_ObjectKnowledgeSynthetizer_h_

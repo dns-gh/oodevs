@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeBlackBoard_Army.h"
-
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "DEC_Knowledge_Object.h"
@@ -31,6 +30,7 @@ DEC_KnowledgeBlackBoard_Army::DEC_KnowledgeBlackBoard_Army( MIL_Army& army )
     , pKnowledgeObjectContainer_    ( new DEC_BlackBoard_CanContainKnowledgeObject() )
     , pKsObjectKnowledgeSynthetizer_( new DEC_KS_ObjectKnowledgeSynthetizer( *this ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ DEC_KnowledgeBlackBoard_Army::DEC_KnowledgeBlackBoard_Army()
     , pKnowledgeObjectContainer_    ( 0 )
     , pKsObjectKnowledgeSynthetizer_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,10 +55,6 @@ DEC_KnowledgeBlackBoard_Army::~DEC_KnowledgeBlackBoard_Army()
     delete pKnowledgeObjectContainer_;
     delete pKsObjectKnowledgeSynthetizer_;
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_Army::serialize
@@ -72,10 +68,6 @@ void DEC_KnowledgeBlackBoard_Army::serialize( Archive& archive, const uint )
             & pKnowledgeObjectContainer_
             & pKsObjectKnowledgeSynthetizer_;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::SendFullState
@@ -559,4 +551,34 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulati
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation( uint /*nID*/ ) const
 {
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeObjectContainer
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgeObject& DEC_KnowledgeBlackBoard_Army::GetKnowledgeObjectContainer() const
+{
+    assert( pKnowledgeObjectContainer_ );
+    return *pKnowledgeObjectContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetArmy
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+MIL_Army& DEC_KnowledgeBlackBoard_Army::GetArmy() const
+{
+    assert( pArmy_ );
+    return *pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetKSObjectKnowledgeSynthetizer
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_KS_ObjectKnowledgeSynthetizer& DEC_KnowledgeBlackBoard_Army::GetKsObjectKnowledgeSynthetizer() const
+{
+    assert( pKsObjectKnowledgeSynthetizer_ );
+    return *pKsObjectKnowledgeSynthetizer_;
 }

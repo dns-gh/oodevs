@@ -13,7 +13,6 @@
 #define __DEC_BlackBoard_CanContainKnowledgeAgent_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_Agent;
@@ -120,7 +119,5 @@ private:
     T_KnowledgeAgentVector surrenderedAgentsContainer_;
     //@}
 };
-
-#include "DEC_BlackBoard_CanContainKnowledgeAgent.inl"
 
 #endif // __DEC_BlackBoard_CanContainKnowledgeAgent_h_

@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_AgentPerceptionDataDetection_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class MIL_Agent_ABC;
@@ -81,7 +80,5 @@ private:
     const PHY_Posture*    pCurrentPosture_;
     MT_Float              rPostureCompletionPercentage_;
 };
-
-#include "DEC_Knowledge_AgentPerceptionDataDetection.inl"
 
 #endif // __DEC_Knowledge_AgentPerceptionDataDetection_h_

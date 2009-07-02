@@ -12,8 +12,6 @@
 #ifndef __MIL_KnowledgeGroupType_h_
 #define __MIL_KnowledgeGroupType_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -83,7 +81,5 @@ private:
     static T_KnowledgeGroupTypeMap knowledgeGroupTypes_;
     static uint                    nNextID_;
 };
-
-#include "MIL_KnowledgeGroupType.inl"
 
 #endif // __MIL_KnowledgeGroupType_h_

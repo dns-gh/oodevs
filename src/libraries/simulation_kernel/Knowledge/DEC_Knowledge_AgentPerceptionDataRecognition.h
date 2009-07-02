@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_AgentPerceptionDataRecognition_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class MIL_Agent_ABC;
@@ -65,7 +64,5 @@ private:
           bool                         bIsPC_;
     const MIL_AgentType_ABC*           pAgentType_; // For 'natures'
 };
-
-#include "DEC_Knowledge_AgentPerceptionDataRecognition.inl"
 
 #endif // __DEC_Knowledge_AgentPerceptionDataRecognition_h_

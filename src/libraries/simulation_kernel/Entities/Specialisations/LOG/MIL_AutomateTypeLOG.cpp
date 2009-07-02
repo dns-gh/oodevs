@@ -10,15 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AutomateTypeLOG.h"
 #include "MIL_AutomateLOG.h"
 #include "Decision/Functions/DEC_LogisticFunctions.h"
 #include "Decision/DEC_Tools.h"
-
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeLOG constructor
@@ -52,12 +47,8 @@ MIL_AutomateTypeLOG::MIL_AutomateTypeLOG( const std::string& strName, xml::xistr
 // -----------------------------------------------------------------------------
 MIL_AutomateTypeLOG::~MIL_AutomateTypeLOG()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeLOG::IsLogistic
@@ -67,10 +58,6 @@ bool MIL_AutomateTypeLOG::IsLogistic() const
 {
     return true;
 }
-
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeLOG::InstanciateAutomate
@@ -90,3 +77,11 @@ MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_Automate& 
     return *new MIL_AutomateLOG( *this, nID, parent, xis );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateTypeLOG::Create
+// Created: NLD 2004-12-27
+// -----------------------------------------------------------------------------
+const MIL_AutomateType* MIL_AutomateTypeLOG::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AutomateTypeLOG( strName, xis );
+}

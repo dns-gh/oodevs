@@ -12,8 +12,6 @@
 #ifndef __DEC_KnowledgeBlackBoard_AgentPion_h_
 #define __DEC_KnowledgeBlackBoard_AgentPion_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeBlackBoard_ABC.h"
 
 class MIL_AgentPion;
@@ -135,7 +133,5 @@ private:
     DEC_KS_Fire*                  pKsFire_;
     DEC_KS_Perception*            pKsPerception_;
 };
-
-#include "DEC_KnowledgeBlackBoard_AgentPion.inl"
 
 #endif // __DEC_KnowledgeBlackBoard_AgentPion_h_

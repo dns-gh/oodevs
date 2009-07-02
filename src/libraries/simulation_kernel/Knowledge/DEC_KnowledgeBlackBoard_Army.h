@@ -12,8 +12,6 @@
 #ifndef __DEC_KnowledgeBlackBoard_Army_h_
 #define __DEC_KnowledgeBlackBoard_Army_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeBlackBoard_ABC.h"
 
 class DEC_BlackBoard_CanContainKnowledgeObject;
@@ -34,9 +32,9 @@ class DEC_KnowledgeBlackBoard_Army : public DEC_KnowledgeBlackBoard_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit  DEC_KnowledgeBlackBoard_Army( MIL_Army& army );
-              DEC_KnowledgeBlackBoard_Army();
-     virtual ~DEC_KnowledgeBlackBoard_Army();
+    explicit DEC_KnowledgeBlackBoard_Army( MIL_Army& army );
+             DEC_KnowledgeBlackBoard_Army();
+    virtual ~DEC_KnowledgeBlackBoard_Army();
     //@}
 
     //! @name CheckPoints
@@ -101,7 +99,5 @@ private:
     // Knowledge sources
     DEC_KS_ObjectKnowledgeSynthetizer* pKsObjectKnowledgeSynthetizer_;
 };
-
-#include "DEC_KnowledgeBlackBoard_Army.inl"
 
 #endif // __DEC_KnowledgeBlackBoard_Army_h_

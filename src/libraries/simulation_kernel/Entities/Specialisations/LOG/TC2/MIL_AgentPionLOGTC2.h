@@ -13,7 +13,6 @@
 #define __MIL_AgentPionLOGTC2_h_
 
 #include "MIL.h"
-
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 namespace xml
@@ -42,7 +41,5 @@ public:
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 };
-
-#include "MIL_AgentPionLOGTC2.inl"
 
 #endif // __MIL_AgentPionLOGTC2_h_

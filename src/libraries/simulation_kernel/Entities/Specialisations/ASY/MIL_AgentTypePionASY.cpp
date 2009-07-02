@@ -10,11 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionASY.h"
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionASY constructor
@@ -23,6 +19,7 @@
 MIL_AgentTypePionASY::MIL_AgentTypePionASY( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePion( strName, xis )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,5 +28,23 @@ MIL_AgentTypePionASY::MIL_AgentTypePionASY( const std::string& strName, xml::xis
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionASY::~MIL_AgentTypePionASY()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionASY::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionASY::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionASY( strName, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionASY::IsTerrorist
+// Created: NLD 2006-02-23
+// -----------------------------------------------------------------------------
+bool MIL_AgentTypePionASY::IsTerrorist() const
+{
+    return true;
 }

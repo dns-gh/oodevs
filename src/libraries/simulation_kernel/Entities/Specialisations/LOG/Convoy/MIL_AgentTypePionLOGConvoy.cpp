@@ -10,13 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionLOGConvoy.h"
 #include "MIL_AgentPionLOGConvoy.h"
-
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGConvoy constructor
@@ -34,12 +29,8 @@ MIL_AgentTypePionLOGConvoy::MIL_AgentTypePionLOGConvoy( const std::string& strNa
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionLOGConvoy::~MIL_AgentTypePionLOGConvoy()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
@@ -57,4 +48,13 @@ MIL_AgentPion& MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automa
 MIL_AgentPion& MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
 {
     return *new MIL_AgentPionLOGConvoy( *this, nID, automate, vPosition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionINF::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionLOGConvoy::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionLOGConvoy( strName, xis );
 }

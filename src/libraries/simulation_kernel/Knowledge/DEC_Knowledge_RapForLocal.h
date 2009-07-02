@@ -12,9 +12,8 @@
 #ifndef __DEC_Knowledge_RapForLocal_h_
 #define __DEC_Knowledge_RapForLocal_h_
 
-#include "MIL.h"
-
 #include "DEC_Knowledge_RapFor_ABC.h"
+#include "DEC_Knowledge_Def.h"
 
 class MIL_AgentPion;
 
@@ -27,7 +26,7 @@ class DEC_Knowledge_RapForLocal : public DEC_Knowledge_RapFor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion );
+    explicit DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion );
              DEC_Knowledge_RapForLocal();
     virtual ~DEC_Knowledge_RapForLocal();
     //@}
@@ -53,7 +52,5 @@ private:
           T_KnowledgeAgentDiaIDVector dangerousEnemiesIDs_;
           T_KnowledgeAgentVector      dangerousEnemies_;
 };
-
-#include "DEC_Knowledge_RapForLocal.inl"
 
 #endif // __DEC_Knowledge_RapForLocal_h_

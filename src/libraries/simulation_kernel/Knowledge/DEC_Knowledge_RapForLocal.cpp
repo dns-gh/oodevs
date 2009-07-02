@@ -128,3 +128,23 @@ void DEC_Knowledge_RapForLocal::Update()
     
     ApplyValue( rTotalFightScoreFriend, rTotalFightScoreEnemy, pPion_->GetType().GetRapForIncreasePerTimeStepValue() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapForLocal::GetDangerousEnemies
+// Created: NLD 2006-01-24
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentVector& DEC_Knowledge_RapForLocal::GetDangerousEnemies()
+{
+    Update();
+    return dangerousEnemies_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapForLocal::GetDangerousEnemiesIDs
+// Created: NLD 2006-01-24
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentDiaIDVector& DEC_Knowledge_RapForLocal::GetDangerousEnemiesIDs()
+{
+    Update();
+    return dangerousEnemiesIDs_;
+}

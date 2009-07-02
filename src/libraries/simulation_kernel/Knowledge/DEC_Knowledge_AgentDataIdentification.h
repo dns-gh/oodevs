@@ -13,14 +13,12 @@
 #define __DEC_Knowledge_AgentDataIdentification_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_AgentPerceptionDataIdentification;
 class MIL_AgentType_ABC;
 class MIL_Army;
 class MIL_Agent_ABC;
-
 struct ASN1T_MsgUnitKnowledgeUpdate;
 
 // =============================================================================
@@ -76,7 +74,5 @@ private:
     // Network
     bool bAgentTypeUpdated_;
 };
-
-#include "DEC_Knowledge_AgentDataIdentification.inl"
 
 #endif // __DEC_Knowledge_AgentDataIdentification_h_

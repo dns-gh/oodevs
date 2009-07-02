@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Object.h"
 #include "Entities/MIL_Army.h"
@@ -25,7 +24,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObject, "DEC_BlackBoa
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject()
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -98,11 +97,6 @@ void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& f
          << knowledgeObjectFromIDMap_;
 }
 
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject
 // Created: NLD 2004-03-11
@@ -146,4 +140,46 @@ void DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedF
     assert( knowledge.GetObjectKnown() == 0 );
     int nOut = objectMap_.erase( &objectKnown );
     assert( nOut >= 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObject
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
+{
+    CIT_KnowledgeObjectMap itKnowledge = objectMap_.find( &objectKnown );   
+    if( itKnowledge == objectMap_.end() )
+        return 0;
+    return itKnowledge->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject
+// Created: NLD 2004-03-25
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( T_KnowledgeObjectVector& outContainer ) const
+{
+    outContainer.reserve( knowledgeObjectFromIDMap_.size() );
+    for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); ++itKnowledge )
+        outContainer.push_back( itKnowledge->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromID
+// Created: NLD 2004-03-24
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromID( uint nMosID ) const
+{
+    CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.find( nMosID );
+    return itKnowledge == knowledgeObjectFromIDMap_.end() ? 0 : itKnowledge->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::HasKnowledgeObject
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+bool DEC_BlackBoard_CanContainKnowledgeObject::HasKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
+{
+    return objectMap_.find( &objectKnown ) != objectMap_.end();
 }

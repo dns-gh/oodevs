@@ -13,6 +13,7 @@
 #define __DEC_GeometryFunctions_h_
 
 #include "MIL.h"
+#include "Entities\Objects\MIL_ObjectType_ABC.h"
 
 class MIL_AgentPion;
 class MIL_Automate;

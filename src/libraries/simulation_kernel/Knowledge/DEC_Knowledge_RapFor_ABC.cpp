@@ -15,21 +15,15 @@
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
-
-
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        = 5.0;
       MT_Float DEC_Knowledge_RapFor_ABC::rRapForIncreasePerTimeStepDefaultValue_ = 0.;
-
-// =============================================================================
-// STATIC
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapFor_ABC::Initialize
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-      void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
+void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
 {
     // Rapport de force
     xis >> xml::start( "force-ratio" );
@@ -40,10 +34,6 @@ const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                       
     xis >> xml::end();
 }
 
-// =============================================================================
-// INSTANCE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapFor_ABC constructor
 // Created: NLD 2004-03-11
@@ -53,6 +43,7 @@ DEC_Knowledge_RapFor_ABC::DEC_Knowledge_RapFor_ABC()
     , nLastCacheUpdateTick_( 0 )
     , rRapForValue_        ( rRapForBoundMax_ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,12 +51,9 @@ DEC_Knowledge_RapFor_ABC::DEC_Knowledge_RapFor_ABC()
 // Created: NLD 2004-04-07
 // -----------------------------------------------------------------------------
 DEC_Knowledge_RapFor_ABC::~DEC_Knowledge_RapFor_ABC()
-{   
+{
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapFor_ABC::ApplyValue
@@ -91,3 +79,33 @@ void DEC_Knowledge_RapFor_ABC::ApplyValue( MT_Float rTotalFightScoreFriend, MT_F
         rRapForValue_ += std::min( rNewRapForValue - rRapForValue_, rRapForIncreasePerTimeStepValue );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapFor_ABC::GetValue
+// Created: NLD 2004-04-07
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_RapFor_ABC::GetValue()
+{
+    Update();
+    return rRapForValue_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue
+// Created: NLD 2004-11-25
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue()
+{
+    return rRapForIncreasePerTimeStepDefaultValue_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue
+// Created: NLD 2004-11-25
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( MT_Float rBaseTimeValue )
+{
+    if( rBaseTimeValue <= 0. )
+        return rRapForBoundMax_ - rRapForBoundMin_;
+    else
+        return ( rRapForBoundMax_ - rRapForBoundMin_ ) / rBaseTimeValue;
+}

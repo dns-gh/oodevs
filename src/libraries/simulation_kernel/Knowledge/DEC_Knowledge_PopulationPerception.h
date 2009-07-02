@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_PopulationPerception_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 
@@ -97,7 +96,5 @@ private:
     T_FlowMap              flows_;
     bool                   bAttacker_;
 };
-
-#include "DEC_Knowledge_PopulationPerception.inl"
 
 #endif // __DEC_Knowledge_PopulationPerception_h_

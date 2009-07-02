@@ -12,14 +12,11 @@
 #ifndef __DEC_KS_AgentKnowledgeSynthetizer_h_
 #define __DEC_KS_AgentKnowledgeSynthetizer_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_Agent;
-
 class MIL_KnowledgeGroup;
 class MIL_Agent_ABC;
 
@@ -66,6 +63,15 @@ private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
 };
 
-#include "DEC_KS_AgentKnowledgeSynthetizer.inl"
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void DEC_KS_AgentKnowledgeSynthetizer::serialize
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void DEC_KS_AgentKnowledgeSynthetizer::serialize( Archive& archive, const uint )
+{
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+            & pBlackBoard_;
+}
 
 #endif // __DEC_KS_AgentKnowledgeSynthetizer_h_

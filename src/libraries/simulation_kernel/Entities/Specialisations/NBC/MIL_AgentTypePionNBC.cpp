@@ -10,14 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionNBC.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/Functions/DEC_AgentFunctions.h"
 #include "Decision/DEC_Tools.h"
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionNBC constructor
@@ -28,7 +24,6 @@ MIL_AgentTypePionNBC::MIL_AgentTypePionNBC( const std::string& strName, xml::xis
 {
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::DecontaminateZone, "DEC_DecontaminerZone"     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions          ::SelfDecontaminate, "DEC_Agent_SeDecontaminer" );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -37,5 +32,14 @@ MIL_AgentTypePionNBC::MIL_AgentTypePionNBC( const std::string& strName, xml::xis
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionNBC::~MIL_AgentTypePionNBC()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionNBC::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionNBC::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionNBC( strName, xis );
 }

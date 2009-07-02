@@ -13,7 +13,6 @@
 #define __MIL_AgentPionLOGMaintenance_h_
 
 #include "MIL.h"
-
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 namespace xml
@@ -29,7 +28,7 @@ class MIL_AgentPionLOGMaintenance : public MIL_AgentPionLOG_ABC
 {
 
 public:
-    MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
+             MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
              MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
              MIL_AgentPionLOGMaintenance();
     virtual ~MIL_AgentPionLOGMaintenance();
@@ -42,7 +41,5 @@ public:
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 };
-
-#include "MIL_AgentPionLOGMaintenance.inl"
 
 #endif // __MIL_AgentPionLOGMaintenance_h_

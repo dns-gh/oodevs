@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KS_ObjectKnowledgeSynthetizer.h"
-
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
@@ -36,6 +35,7 @@ DEC_KS_ObjectKnowledgeSynthetizer::DEC_KS_ObjectKnowledgeSynthetizer( DEC_Knowle
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
     , pBlackBoard_           ( &blackBoard )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +46,7 @@ DEC_KS_ObjectKnowledgeSynthetizer::DEC_KS_ObjectKnowledgeSynthetizer()
     : DEC_KnowledgeSource_ABC(  )
     , pBlackBoard_           ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,11 +55,8 @@ DEC_KS_ObjectKnowledgeSynthetizer::DEC_KS_ObjectKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 DEC_KS_ObjectKnowledgeSynthetizer::~DEC_KS_ObjectKnowledgeSynthetizer()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::Prepare
@@ -215,10 +213,6 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk()
     pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodRelevance );
 }
 
-// =============================================================================
-// CLEAN
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject
 // Created: NLD 2004-03-17
@@ -242,4 +236,33 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Clean()
 
     class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object > methodObject( & DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject, *this );
     pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge
+// Created: NLD 2004-03-30
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge( MIL_Object_ABC& objectKnown )
+{
+    ephemeralKnowledges_.push_back( &objectKnown );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget
+// Created: NLD 2004-06-04
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( MIL_Object_ABC& objectKnown )
+{
+    if( std::find( objectsToForget_.begin(), objectsToForget_.end(), &objectKnown ) == objectsToForget_.end() )
+        objectsToForget_.push_back( &objectKnown );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget
+// Created: NLD 2004-06-08
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( DEC_Knowledge_Object& knowledge )
+{
+    if( std::find( knowledgesObjectToForget_.begin(), knowledgesObjectToForget_.end(), &knowledge ) == knowledgesObjectToForget_.end() )
+        knowledgesObjectToForget_.push_back( &knowledge );
 }

@@ -10,16 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionALAT.h"
-
 #include "Decision/DEC_Tools.h"
-#include "Decision/Functions/DEC_AgentFunctions.h"
 #include "Decision/Functions/DEC_PerceptionFunctions.h"
-#include "Decision/Functions/DEC_GeometryFunctions.h"
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionALAT constructor
@@ -41,6 +34,14 @@ MIL_AgentTypePionALAT::MIL_AgentTypePionALAT( const std::string& strName, xml::x
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionALAT::~MIL_AgentTypePionALAT()
 {
-
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionINF::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionALAT::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionALAT( strName, xis );
+}

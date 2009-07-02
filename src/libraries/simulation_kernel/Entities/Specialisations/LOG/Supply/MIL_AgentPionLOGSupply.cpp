@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentPionLOGSupply.h"
-
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGSupply, "MIL_AgentPionLOGSupply" )
@@ -44,7 +42,7 @@ MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, u
 MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply()
     : MIL_AgentPionLOG_ABC()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

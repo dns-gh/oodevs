@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationFlow.h"
-
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"

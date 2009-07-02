@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_AgentDataRecognition_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_AgentPerceptionDataRecognition;
@@ -21,7 +20,6 @@ class MIL_AgentType_ABC;
 class MIL_Army_ABC;
 class MIL_Agent_ABC;
 class PHY_NatureAtlas;
-
 struct ASN1T_MsgUnitKnowledgeUpdate;
 
 // =============================================================================
@@ -90,7 +88,5 @@ private:
     bool bOperationalStateChanged_;
     bool bAgentTypeUpdated_;
 };
-
-#include "DEC_Knowledge_AgentDataRecognition.inl"
 
 #endif // __DEC_Knowledge_AgentDataRecognition_h_

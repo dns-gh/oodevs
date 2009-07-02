@@ -12,8 +12,6 @@
 #ifndef __DEC_Knowledge_PopulationCollision_h_
 #define __DEC_Knowledge_PopulationCollision_h_
 
-#include "MIL.h"
-
 #include "DEC_Knowledge_ABC.h"
 
 class MIL_Population;
@@ -85,7 +83,5 @@ private:
           T_PopulationFlowSet           previousFlows_;
           T_PopulationConcentrationSet  previousConcentrations_;
 };
-
-#include "DEC_Knowledge_PopulationCollision.inl"
 
 #endif // __DEC_Knowledge_PopulationCollision_h_

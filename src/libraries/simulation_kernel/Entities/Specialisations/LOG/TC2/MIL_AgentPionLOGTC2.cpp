@@ -10,16 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentPionLOGTC2.h"
-
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePionLOG_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
-
-#include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGTC2, "MIL_AgentPionLOGTC2" )
 
@@ -54,6 +48,7 @@ MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, uint nI
 MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2()
     : MIL_AgentPionLOG_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -92,4 +87,3 @@ void MIL_AgentPionLOGTC2::save( MIL_CheckPointOutArchive& file, const uint ) con
          << medical
          << supply;
 }
-

@@ -12,8 +12,6 @@
 #ifndef __MIL_AgentTypePionLOGConvoy_h_
 #define __MIL_AgentTypePionLOGConvoy_h_
 
-#include "MIL.h"
-
 #include "Entities/Specialisations/LOG/MIL_AgentTypePionLOG_ABC.h"
 
 namespace xml
@@ -38,10 +36,7 @@ public:
     virtual MIL_AgentPion& InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const; 
     //@}
 
-public:
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
-
-#include "MIL_AgentTypePionLOGConvoy.inl"
 
 #endif // __MIL_AgentTypePionLOGConvoy_h_

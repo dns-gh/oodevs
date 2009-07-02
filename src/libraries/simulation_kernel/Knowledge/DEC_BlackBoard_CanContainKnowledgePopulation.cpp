@@ -11,10 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Population.h"
-
 #include "Entities/Populations/MIL_Population.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgePopulation, "DEC_BlackBoard_CanContainKnowledgePopulation" )
@@ -26,7 +24,7 @@ BOOST_CLASS_TRACKING   ( DEC_BlackBoard_CanContainKnowledgePopulation, boost::se
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgePopulation::DEC_BlackBoard_CanContainKnowledgePopulation()
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,9 +37,6 @@ DEC_BlackBoard_CanContainKnowledgePopulation::~DEC_BlackBoard_CanContainKnowledg
         DestroyKnowledgePopulation( *knowledgePopulationMap_.begin()->second );        
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::load
 // Created: JVT 2005-03-23
@@ -72,10 +67,6 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchiv
              << it->second;
     }
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::CreateKnowledgePopulation
@@ -114,4 +105,17 @@ DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowl
             return &knowledge;
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgesPopulation
+// Created: NLD 2004-03-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulation( const MIL_Population& associatedPopulation ) const
+{
+    CIT_KnowledgePopulationMap itKnowledge = knowledgePopulationMap_.find( &associatedPopulation );
+    if( itKnowledge != knowledgePopulationMap_.end() )
+        return itKnowledge->second;
+    else
+        return 0;
 }

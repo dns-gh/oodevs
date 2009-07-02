@@ -10,11 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionMILICE.h"
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionMILICE constructor
@@ -23,6 +19,7 @@
 MIL_AgentTypePionMILICE::MIL_AgentTypePionMILICE( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePion( strName, xis )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,5 +28,23 @@ MIL_AgentTypePionMILICE::MIL_AgentTypePionMILICE( const std::string& strName, xm
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionMILICE::~MIL_AgentTypePionMILICE()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionMILICE::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionMILICE::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionMILICE( strName, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionMILICE::IsMilitia
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+bool MIL_AgentTypePionMILICE::IsMilitia() const
+{
+    return true;
 }

@@ -10,13 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionCIRCULATION.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionCIRCULATION constructor
@@ -25,8 +21,7 @@
 MIL_AgentTypePionCIRCULATION::MIL_AgentTypePionCIRCULATION( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePion( strName, xis )
 {
-    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::EquipLogisticRoute, "DEC_Circulation_EquiperItineraireLogistique"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::EquipLogisticRoute, "DEC_Circulation_EquiperItineraireLogistique" );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,5 +30,14 @@ MIL_AgentTypePionCIRCULATION::MIL_AgentTypePionCIRCULATION( const std::string& s
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionCIRCULATION::~MIL_AgentTypePionCIRCULATION()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionCIRCULATION::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionCIRCULATION::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionCIRCULATION( strName, xis );
 }

@@ -11,10 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ObjectCollision.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectCollision, "DEC_Knowledge_ObjectCollision" )
@@ -30,6 +28,7 @@ DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision( const MIL_AgentPio
     , vPosition_       ()
     , bIsValid_        ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,8 +42,8 @@ DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision()
     , vPosition_       ()
     , bIsValid_        ( false )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectCollision destructor
@@ -52,11 +51,9 @@ DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectCollision::~DEC_Knowledge_ObjectCollision()
 {
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectCollision::serialize
 // Created: JVT 2005-04-14
@@ -70,10 +67,6 @@ void DEC_Knowledge_ObjectCollision::serialize( Archive& file, const uint )
          & vPosition_
          & bIsValid_;    
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectCollision::Prepare
@@ -92,4 +85,51 @@ void DEC_Knowledge_ObjectCollision::Update( const MT_Vector2D& vPosition )
 {
     vPosition_ = vPosition;
     bIsValid_  = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectCollision::IsValid
+// Created: NLD 2004-05-03
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_ObjectCollision::IsValid() const
+{
+    return bIsValid_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectCollision::GetObject
+// Created: NLD 2004-05-03
+// -----------------------------------------------------------------------------
+MIL_Object_ABC& DEC_Knowledge_ObjectCollision::GetObject() const
+{
+    assert( pObject_ );
+    return *pObject_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectCollision::GetAgentColliding
+// Created: NLD 2004-05-03
+// -----------------------------------------------------------------------------
+const MIL_AgentPion& DEC_Knowledge_ObjectCollision::GetAgentColliding() const
+{
+    assert( pAgentColliding_ );
+    return *pAgentColliding_;   
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectCollision::GetPosition
+// Created: NLD 2004-11-03
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Knowledge_ObjectCollision::GetPosition() const
+{
+    return vPosition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectCollision::Clean
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_ObjectCollision::Clean()
+{
+    return !IsValid();
 }

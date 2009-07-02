@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_AgentPerception.h"
@@ -41,6 +40,7 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( 
     , pKsPopulationKnowledgeSynthetizer_( new DEC_KS_PopulationKnowledgeSynthetizer       ( *this ) )
     , pKsSharing_                       ( new DEC_KS_Sharing                              ( *this ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +55,7 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
     , pKsPopulationKnowledgeSynthetizer_( 0 )
     , pKsSharing_                       ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -69,10 +70,6 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::~DEC_KnowledgeBlackBoard_KnowledgeGroup(
     delete pKsPopulationKnowledgeSynthetizer_;
     delete pKsSharing_;                       
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize
@@ -89,10 +86,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
             & pKsPopulationKnowledgeSynthetizer_
             & pKsSharing_;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState
@@ -113,14 +106,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendChangedState() const
     pKnowledgeAgentContainer_     ->ApplyOnKnowledgesAgent     ( std::mem_fun_ref( & DEC_Knowledge_Agent     ::UpdateOnNetwork ) );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::UpdateOnNetwork ) );
 }
-
-// =============================================================================
-// QUERIES
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// KNOWLEDGE AGENTS
-// -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::IsKnown
@@ -319,10 +304,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle( T_Kno
 }
 
 // -----------------------------------------------------------------------------
-// KNOWLEDGE POPULATION
-// -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulationFromID
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
@@ -408,10 +389,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulati
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( functor );
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges
 // Created: NLD 2006-04-24
@@ -435,9 +412,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_Knowle
         }
     }
 }
-// =============================================================================
-// RESOLVER
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent
@@ -524,4 +498,44 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowled
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( uint nID ) const
 {
     return GetKnowledgePopulationFromID( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKsSharing
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_KS_Sharing& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKsSharing() const
+{
+    assert( pKsSharing_ );
+    return *pKsSharing_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeGroup
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeGroup() const
+{
+    assert( pKnowledgeGroup_ );
+    return *pKnowledgeGroup_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgentContainer
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgeAgent& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgentContainer() const
+{
+    assert( pKnowledgeAgentContainer_ );
+    return *pKnowledgeAgentContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulationContainer
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgePopulation& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulationContainer() const
+{
+    assert( pKnowledgePopulationContainer_ );
+    return *pKnowledgePopulationContainer_;
 }

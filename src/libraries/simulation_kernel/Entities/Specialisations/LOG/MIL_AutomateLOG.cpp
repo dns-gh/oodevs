@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AutomateLOG.h"
 #include "MIL_AutomateTypeLOG.h"
 #include "Entities/MIL_EntityManager.h"
@@ -33,8 +32,6 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
 
@@ -963,4 +960,34 @@ void MIL_AutomateLOG::SendLogisticLinks() const
     }
 
     asn.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetMaintenanceSuperior
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_AutomateLOG::GetMaintenanceSuperior() const
+{
+    return pMaintenanceSuperior_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetMedicalSuperior
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_AutomateLOG::GetMedicalSuperior() const
+{
+    return pMedicalSuperior_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetQuota
+// Created: NLD 2005-02-01
+// -----------------------------------------------------------------------------
+MT_Float MIL_AutomateLOG::GetQuota( const PHY_DotationCategory& dotationCategory ) const
+{
+    CIT_DotationQuotaMap it = stockQuotas_.find( &dotationCategory );
+    if( it == stockQuotas_.end() )
+        return 0.;
+    return it->second.rQuota_;
 }

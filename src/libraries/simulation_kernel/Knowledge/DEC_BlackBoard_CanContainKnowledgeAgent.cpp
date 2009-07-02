@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Agent.h"
 #include "MIL_AgentServer.h"
@@ -36,7 +35,7 @@ DEC_BlackBoard_CanContainKnowledgeAgent::DEC_BlackBoard_CanContainKnowledgeAgent
     , refugeesContainer_         ()
     , surrenderedAgentsContainer_()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +53,7 @@ DEC_BlackBoard_CanContainKnowledgeAgent::DEC_BlackBoard_CanContainKnowledgeAgent
     , refugeesContainer_         ()
     , surrenderedAgentsContainer_()
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -136,10 +135,6 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& fi
          << unitKnowledgeFromIDMap_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent
 // Created: NLD 2004-03-11
@@ -168,10 +163,6 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::DestroyKnowledgeAgent( DEC_Knowled
     assert( nOut == 1 );
     delete &knowledge;
 }
-
-// =============================================================================
-// QUERIES
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache
@@ -231,3 +222,103 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgent
+// Created: NLD 2004-03-16
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const
+{
+    CIT_KnowledgeAgentMap it = realAgentMap_.find( &agentKnown );
+    if( it == realAgentMap_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::HasKnowledgeAgent
+// Created: NLD 2004-04-01
+// -----------------------------------------------------------------------------
+bool DEC_BlackBoard_CanContainKnowledgeAgent::HasKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const
+{
+    return realAgentMap_.find( &agentKnown ) != realAgentMap_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID
+// Created: NLD 2004-03-24
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID( uint nID ) const
+{
+    CIT_KnowledgeAgentIDMap itKnowledge = unitKnowledgeFromIDMap_.find( nID );
+    return itKnowledge == unitKnowledgeFromIDMap_.end() ? 0 : itKnowledge->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetDetected
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetDetected()
+{
+    UpdateQueriesCache();
+    return detectedContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetFriends
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetFriends()
+{
+    UpdateQueriesCache();
+    return friendsContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetEnemies
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetEnemies()
+{
+    UpdateQueriesCache();
+    return enemiesContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetMilitias
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetMilitias()
+{
+    UpdateQueriesCache();
+    return militiasContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetTerrorists
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetTerrorists()
+{
+    UpdateQueriesCache();
+    return terroristsContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetRefugees
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetRefugees()
+{
+    UpdateQueriesCache();
+    return refugeesContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetSurrenderedAgents
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetSurrenderedAgents()
+{
+    UpdateQueriesCache();
+    return surrenderedAgentsContainer_;
+}

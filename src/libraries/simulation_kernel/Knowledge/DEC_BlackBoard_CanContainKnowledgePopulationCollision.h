@@ -13,7 +13,6 @@
 #define __DEC_BlackBoard_CanContainKnowledgePopulationCollision_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_PopulationCollision;
@@ -81,7 +80,5 @@ private:
     T_KnowledgePopulationCollisionMap   knowledgePopulationCollisionMap_;
     //@}
 };
-
-#include "DEC_BlackBoard_CanContainKnowledgePopulationCollision.inl"
 
 #endif // __DEC_BlackBoard_CanContainKnowledgePopulationCollision_h_

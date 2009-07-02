@@ -11,18 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
-
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_Objective.h"
-
 #include <xeumeuleu/xml.h>
 
 // =============================================================================

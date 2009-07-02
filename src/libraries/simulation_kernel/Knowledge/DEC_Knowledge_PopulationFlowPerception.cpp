@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
-
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_AgentServer.h"
@@ -37,6 +36,7 @@ DEC_Knowledge_PopulationFlowPerception::DEC_Knowledge_PopulationFlowPerception( 
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +51,7 @@ DEC_Knowledge_PopulationFlowPerception::DEC_Knowledge_PopulationFlowPerception()
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -59,11 +60,8 @@ DEC_Knowledge_PopulationFlowPerception::DEC_Knowledge_PopulationFlowPerception()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationFlowPerception::~DEC_Knowledge_PopulationFlowPerception()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPerception::load
@@ -99,10 +97,6 @@ void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& fil
          << current
          << previous;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPerception::Prepare
@@ -149,10 +143,6 @@ bool DEC_Knowledge_PopulationFlowPerception::IsPerceived() const
     assert( pCurrentPerceptionLevel_ );
     return *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_;
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans
@@ -213,10 +203,6 @@ MT_Float DEC_Knowledge_PopulationFlowPerception::GetSpeed() const
     return pPopulationFlowPerceived_->GetSpeed();
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPerception::UpdateOnNetwork
 // Created: NLD 2004-03-17
@@ -242,4 +228,34 @@ void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient() const
     NET_ASN_Tools::WritePath( shape_, asn().visible_flow );
     asn.Send();
     NET_ASN_Tools::Delete( asn().visible_flow );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetFlowPerceived
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+const MIL_PopulationFlow& DEC_Knowledge_PopulationFlowPerception::GetFlowPerceived() const
+{
+    assert( pPopulationFlowPerceived_ );
+    return *pPopulationFlowPerceived_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetCurrentPerceptionLevel
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& DEC_Knowledge_PopulationFlowPerception::GetCurrentPerceptionLevel() const
+{
+    assert( pCurrentPerceptionLevel_ );
+    return *pCurrentPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetKnowledge
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+const DEC_Knowledge_PopulationPerception& DEC_Knowledge_PopulationFlowPerception::GetKnowledge() const
+{
+    assert( pPopulationKnowledge_ );
+    return *pPopulationKnowledge_;
 }

@@ -13,7 +13,6 @@
 #define __DEC_BlackBoard_CanContainKnowledgeAgentPerception_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_AgentPerception;
@@ -80,7 +79,5 @@ private:
     T_KnowledgeAgentPerceptionMap unitKnowledgePerceptionMap_;
     //@}
 };
-
-#include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.inl"
 
 #endif // __DEC_BlackBoard_CanContainKnowledgeAgentPerception_h_

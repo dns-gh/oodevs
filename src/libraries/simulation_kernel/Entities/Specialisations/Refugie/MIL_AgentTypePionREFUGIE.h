@@ -12,8 +12,6 @@
 #ifndef __MIL_AgentTypePionREFUGIE_h_
 #define __MIL_AgentTypePionREFUGIE_h_
 
-#include "MIL.h"
-
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
 namespace xml
@@ -36,11 +34,8 @@ public:
     //@{
     virtual bool IsRefugee() const;
     //@}
-    
-public:
+
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
-
-#include "MIL_AgentTypePionREFUGIE.inl"
 
 #endif // __MIL_AgentTypePionREFUGIE_h_

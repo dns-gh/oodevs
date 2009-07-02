@@ -12,8 +12,6 @@
 #ifndef __MIL_AutomateTypeLOG_h_
 #define __MIL_AutomateTypeLOG_h_
 
-#include "MIL.h"
-
 #include "Entities/Automates/MIL_AutomateType.h"
 
 namespace xml
@@ -48,7 +46,5 @@ public:
     static const MIL_AutomateType* Create( const std::string& strName, xml::xistream& xis );
     //@}
 };
-
-#include "MIL_AutomateTypeLOG.inl"
 
 #endif // __MIL_AutomateTypeLOG_h_

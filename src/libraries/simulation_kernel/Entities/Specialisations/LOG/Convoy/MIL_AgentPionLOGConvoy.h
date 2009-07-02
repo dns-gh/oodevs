@@ -45,6 +45,4 @@ public:
     //@}
 };
 
-#include "MIL_AgentPionLOGConvoy.inl"
-
 #endif // __MIL_AgentPionLOGConvoy_h_

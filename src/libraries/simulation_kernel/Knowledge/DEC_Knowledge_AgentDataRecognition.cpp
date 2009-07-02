@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentDataRecognition.h"
-
 #include "DEC_Knowledge_AgentPerceptionDataRecognition.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/MIL_Army.h"
@@ -37,6 +36,7 @@ DEC_Knowledge_AgentDataRecognition::DEC_Knowledge_AgentDataRecognition()
     , bOperationalStateChanged_ ( false )
     , bAgentTypeUpdated_        ( false )
 {
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -45,12 +45,8 @@ DEC_Knowledge_AgentDataRecognition::DEC_Knowledge_AgentDataRecognition()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentDataRecognition::~DEC_Knowledge_AgentDataRecognition()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::load
@@ -90,10 +86,6 @@ void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, c
          << bOperationalStateChanged_
          << bAgentTypeUpdated_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::Prepare
@@ -157,10 +149,6 @@ void DEC_Knowledge_AgentDataRecognition::Update( const DEC_Knowledge_AgentDataRe
    DoUpdate( data );
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::SendChangedState
 // Created: NLD 2004-11-10
@@ -208,10 +196,6 @@ void DEC_Knowledge_AgentDataRecognition::SendFullState( ASN1T_MsgUnitKnowledgeUp
     asnMsg.nature_pc = bIsPC_;
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::GetNatureAtlas
 // Created: NLD 2004-11-10
@@ -232,4 +216,85 @@ bool DEC_Knowledge_AgentDataRecognition::IsHuman() const
         if( it->GetType().GetProtection().IsHuman() )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::HasChanged
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataRecognition::HasChanged() const
+{
+    return bOperationalStateChanged_ || bAgentTypeUpdated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::GetOperationalState
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentDataRecognition::GetOperationalState() const
+{
+    return rOperationalState_ == std::numeric_limits< MT_Float >::max() ? 1. : rOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::GetMajorOperationalState
+// Created: NLD 2005-11-30
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentDataRecognition::GetMajorOperationalState() const
+{
+    return rMajorOperationalState_ == std::numeric_limits< MT_Float >::max() ? 1. : rMajorOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::GetComposantes
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+const T_KnowledgeComposanteVector& DEC_Knowledge_AgentDataRecognition::GetComposantes() const
+{
+    return composantes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::GetArmy
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+const MIL_Army_ABC* DEC_Knowledge_AgentDataRecognition::GetArmy() const
+{
+    return pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::GetTimeLastUpdate
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_AgentDataRecognition::GetTimeLastUpdate() const
+{
+    return nTimeLastUpdate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::IsPC
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataRecognition::IsPC() const
+{
+    return bIsPC_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::GetAgentType
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+const MIL_AgentType_ABC* DEC_Knowledge_AgentDataRecognition::GetAgentType() const
+{
+    return pAgentType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::Extrapolate
+// Created: JVT 2004-11-29
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_AgentDataRecognition::Extrapolate( const MIL_Agent_ABC& /*agentKnown*/ )
+{
+    // NOTHING
 }

@@ -12,8 +12,6 @@
 #ifndef __MIL_AgentTypePionASA_h_
 #define __MIL_AgentTypePionASA_h_
 
-#include "MIL.h"
-
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
 namespace xml
@@ -29,13 +27,10 @@ class MIL_AgentTypePionASA : public MIL_AgentTypePion
 {
 
 public:
-    MIL_AgentTypePionASA( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionASA( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionASA();
 
-public:
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
-
-#include "MIL_AgentTypePionASA.inl"
 
 #endif // __MIL_AgentTypePionASA_h_

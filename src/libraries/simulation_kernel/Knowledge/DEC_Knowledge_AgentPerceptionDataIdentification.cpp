@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentPerceptionDataIdentification.h"
-
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
@@ -27,6 +26,7 @@ DEC_Knowledge_AgentPerceptionDataIdentification::DEC_Knowledge_AgentPerceptionDa
     : nTimeLastUpdate_( 0 )
     , pAgentType_     ( 0 )
 {
+    // NOTHING
 }
    
 // -----------------------------------------------------------------------------
@@ -35,12 +35,8 @@ DEC_Knowledge_AgentPerceptionDataIdentification::DEC_Knowledge_AgentPerceptionDa
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerceptionDataIdentification::~DEC_Knowledge_AgentPerceptionDataIdentification()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataIdentification::load
@@ -66,10 +62,6 @@ void DEC_Knowledge_AgentPerceptionDataIdentification::save( MIL_CheckPointOutArc
          << agentType;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataIdentification::Update
 // Created: NLD 2004-11-09
@@ -84,4 +76,22 @@ void DEC_Knowledge_AgentPerceptionDataIdentification::Update( const MIL_Agent_AB
         return;
     nTimeLastUpdate_ = nCurrentTimeStep;
     pAgentType_ = &agentPerceived.GetType();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataIdentification::GetTimeLastUpdate
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_AgentPerceptionDataIdentification::GetTimeLastUpdate() const
+{
+    return nTimeLastUpdate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataIdentification::GetAgentType
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+const MIL_AgentType_ABC* DEC_Knowledge_AgentPerceptionDataIdentification::GetAgentType() const
+{
+    return pAgentType_;
 }

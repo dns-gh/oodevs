@@ -67,6 +67,4 @@ private:
     uint            nTimeLastUpdate_;
 };
 
-#include "DEC_Knowledge_PopulationFlowPart.inl"
-
 #endif // __DEC_Knowledge_PopulationFlowPart_h_

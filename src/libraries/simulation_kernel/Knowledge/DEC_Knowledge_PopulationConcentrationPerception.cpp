@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
-
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
@@ -34,6 +33,7 @@ DEC_Knowledge_PopulationConcentrationPerception::DEC_Knowledge_PopulationConcent
     , pCurrentPerceptionLevel_          ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_         ( &PHY_PerceptionLevel::notSeen_ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +46,7 @@ DEC_Knowledge_PopulationConcentrationPerception::DEC_Knowledge_PopulationConcent
     , pCurrentPerceptionLevel_          ( 0 )
     , pPreviousPerceptionLevel_         ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,11 +55,8 @@ DEC_Knowledge_PopulationConcentrationPerception::DEC_Knowledge_PopulationConcent
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationConcentrationPerception::~DEC_Knowledge_PopulationConcentrationPerception()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentrationPerception::load
@@ -90,10 +88,6 @@ void DEC_Knowledge_PopulationConcentrationPerception::save( MIL_CheckPointOutArc
          << current
          << previous;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentrationPerception::Prepare
@@ -146,10 +140,6 @@ bool DEC_Knowledge_PopulationConcentrationPerception::IsPerceived() const
     return *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_;
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-        
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans
 // Created: NLD 2005-10-13
@@ -180,10 +170,6 @@ const MIL_PopulationAttitude& DEC_Knowledge_PopulationConcentrationPerception::G
     return pPopulationConcentrationPerceived_->GetAttitude();
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentrationPerception::UpdateOnNetwork
 // Created: NLD 2004-03-17
@@ -206,4 +192,24 @@ void DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient() con
     asn().concentration_oid = pPopulationConcentrationPerceived_->GetID();
     asn().visibility        = ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
     asn.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentrationPerception::GetConcentrationPerceived
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+const MIL_PopulationConcentration& DEC_Knowledge_PopulationConcentrationPerception::GetConcentrationPerceived() const
+{
+    assert( pPopulationConcentrationPerceived_ );
+    return *pPopulationConcentrationPerceived_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentrationPerception::GetCurrentPerceptionLevel
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& DEC_Knowledge_PopulationConcentrationPerception::GetCurrentPerceptionLevel() const
+{
+    assert( pCurrentPerceptionLevel_ );
+    return *pCurrentPerceptionLevel_;
 }

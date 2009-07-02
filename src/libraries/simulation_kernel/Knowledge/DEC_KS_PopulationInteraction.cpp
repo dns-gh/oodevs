@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KS_PopulationInteraction.h"
-
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
 #include "DEC_Knowledge_PopulationCollision.h"
@@ -28,6 +27,7 @@ DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBo
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
     , pBlackBoard_           ( &blackBoard )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,6 +38,7 @@ DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction()
     : DEC_KnowledgeSource_ABC ()
     , pBlackBoard_            ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,11 +47,8 @@ DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction()
 // -----------------------------------------------------------------------------
 DEC_KS_PopulationInteraction::~DEC_KS_PopulationInteraction()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KS_PopulationInteraction::serialize
@@ -64,10 +62,6 @@ void DEC_KS_PopulationInteraction::serialize( Archive& archive, const uint )
             & concentrationCollisions_
             & flowCollisions_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationInteraction::Prepare
@@ -119,10 +113,6 @@ void DEC_KS_PopulationInteraction::Talk()
     concentrationCollisions_.clear();
 }
 
-// =============================================================================
-// CLEAN
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision
 // Created: NLD 2004-05-03
@@ -146,4 +136,22 @@ void DEC_KS_PopulationInteraction::Clean()
     assert( pBlackBoard_ );
     class_mem_fun_void_t< DEC_KS_PopulationInteraction, DEC_Knowledge_PopulationCollision > method( & DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, *this );        
     pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( method );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationInteraction::NotifyPopulationCollision
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void DEC_KS_PopulationInteraction::NotifyPopulationCollision( MIL_PopulationFlow& flow )
+{
+    flowCollisions_.push_back( &flow );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationInteraction::NotifyPopulationCollision
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void DEC_KS_PopulationInteraction::NotifyPopulationCollision( MIL_PopulationConcentration& concentration )
+{
+    concentrationCollisions_.push_back( &concentration );
 }

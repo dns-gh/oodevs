@@ -12,10 +12,6 @@
 #ifndef __DEC_Knowledge_ABC_h_
 #define __DEC_Knowledge_ABC_h_
 
-#include "MIL.h"
-
-#include "DEC_Knowledge_Def.h"
-
 // =============================================================================
 /** @class  DEC_Knowledge_ABC
     @brief  The base class for a knowledge
@@ -34,7 +30,7 @@ public:
     
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive&, const uint );
+    template < typename Archive > void serialize( Archive&, const uint ) {}
     //@}
     
 protected:
@@ -43,7 +39,5 @@ protected:
     uint GetCurrentTimeStep() const; 
     //@}
 };
-
-#include "DEC_Knowledge_ABC.inl"
 
 #endif // __DEC_Knowledge_ABC_h_

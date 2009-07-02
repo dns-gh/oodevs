@@ -10,18 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentPionLOG_ABC.h"
-
+#include "MIL_AutomateLOG.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePion_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePion_Medical.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
-
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOG_ABC, "MIL_AgentPionLOG_ABC" )
 
@@ -56,6 +52,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC()
     : MIL_AgentPion   ()
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,10 +64,6 @@ MIL_AgentPionLOG_ABC::~MIL_AgentPionLOG_ABC()
     delete pLogisticAction_;
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOG_ABC::serialize
 // Created: JVT 2005-04-14
@@ -80,10 +73,6 @@ void MIL_AgentPionLOG_ABC::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< MIL_AgentPion >( *this );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOG_ABC::UpdateLogistic
@@ -95,4 +84,22 @@ void MIL_AgentPionLOG_ABC::UpdateLogistic()
     GetRole< PHY_RolePion_Maintenance >().UpdateLogistic( bIsDead );
     GetRole< PHY_RolePion_Medical     >().UpdateLogistic( bIsDead );
     GetRole< PHY_RolePion_Supply      >().UpdateLogistic( bIsDead );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPionLOG_ABC::GetLogAutomate
+// Created: NLD 2004-12-27
+// -----------------------------------------------------------------------------
+const MIL_AutomateLOG& MIL_AgentPionLOG_ABC::GetLogAutomate() const
+{
+    return static_cast< const MIL_AutomateLOG& >( MIL_AgentPion::GetAutomate() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPionLOG_ABC::GetLogAutomate
+// Created: NLD 2004-12-27
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG& MIL_AgentPionLOG_ABC::GetLogAutomate()
+{
+    return static_cast< MIL_AutomateLOG& >( MIL_AgentPion::GetAutomate() );
 }

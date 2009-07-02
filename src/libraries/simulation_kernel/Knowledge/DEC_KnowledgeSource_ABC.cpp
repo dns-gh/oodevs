@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeSource_ABC.h"
-
 #include "DEC_KnowledgeBlackBoard_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -33,6 +32,7 @@ DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC()
     : nPriority_  ( 0 )
     , pBlackBoard_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,12 +44,6 @@ DEC_KnowledgeSource_ABC::~DEC_KnowledgeSource_ABC()
     pBlackBoard_->RemoveFromScheduler( *this );
 }
 
-
-
-// =============================================================================
-// MAIN
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeSource_ABC::Talk
 // Created: NLD 2004-03-12
@@ -58,7 +52,6 @@ void DEC_KnowledgeSource_ABC::Talk()
 {
     // Nothing
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeSource_ABC::Prepare
@@ -76,4 +69,13 @@ void DEC_KnowledgeSource_ABC::Prepare()
 void DEC_KnowledgeSource_ABC::Clean()
 {
     // Nothing
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeSource_ABC::GetPriority
+// Created: NLD 2006-01-19
+// -----------------------------------------------------------------------------
+uint DEC_KnowledgeSource_ABC::GetPriority() const
+{
+    return nPriority_;
 }

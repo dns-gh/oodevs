@@ -10,12 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentPionLOGConvoy.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOGConvoy_Supply.h"
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGConvoy, "MIL_AgentPionLOGConvoy" )
 

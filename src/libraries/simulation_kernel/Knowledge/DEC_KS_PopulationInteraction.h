@@ -12,8 +12,6 @@
 #ifndef __DEC_KS_PopulationInteraction_h_
 #define __DEC_KS_PopulationInteraction_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_AgentPion;
@@ -85,7 +83,5 @@ private:
     T_PopulationFlowVector             flowCollisions_;
     T_PopulationConcentrationVector    concentrationCollisions_;
 };
-
-#include "DEC_KS_PopulationInteraction.inl"
 
 #endif // __DEC_KS_PopulationInteraction_h_

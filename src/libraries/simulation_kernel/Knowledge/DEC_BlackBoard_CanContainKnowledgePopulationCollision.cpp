@@ -11,10 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_PopulationCollision.h"
-
 #include "Entities/Populations/MIL_Population.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgePopulationCollision, "DEC_BlackBoard_CanContainKnowledgePopulationCollision" )
@@ -25,7 +23,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgePopulationCollision, 
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgePopulationCollision::DEC_BlackBoard_CanContainKnowledgePopulationCollision()
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,10 +35,6 @@ DEC_BlackBoard_CanContainKnowledgePopulationCollision::~DEC_BlackBoard_CanContai
     while ( !knowledgePopulationCollisionMap_.empty() )
         DestroyKnowledgePopulationCollision( *knowledgePopulationCollisionMap_.begin()->second );        
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision::load
@@ -73,10 +67,6 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPoint
     }
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision::CreateKnowledgePopulationCollision
 // Created: NLD 2004-03-11
@@ -100,3 +90,26 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::DestroyKnowledgePopu
     delete &knowledge;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision::GetKnowledgesPopulationCollision
+// Created: NLD 2004-03-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationCollision* DEC_BlackBoard_CanContainKnowledgePopulationCollision::GetKnowledgePopulationCollision( const MIL_Population& associatedPopulation ) const
+{
+    CIT_KnowledgePopulationCollisionMap itKnowledge = knowledgePopulationCollisionMap_.find( &associatedPopulation );
+    if( itKnowledge != knowledgePopulationCollisionMap_.end() )
+        return itKnowledge->second;
+    else
+        return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision::GetKnowledgesPopulationCollision
+// Created: NLD 2004-05-03
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgePopulationCollision::GetKnowledgesPopulationCollision( T_KnowledgePopulationCollisionVector& container ) const
+{
+    container.clear(); container.reserve( knowledgePopulationCollisionMap_.size() );
+    for( CIT_KnowledgePopulationCollisionMap itKnowledge = knowledgePopulationCollisionMap_.begin(); itKnowledge != knowledgePopulationCollisionMap_.end(); ++itKnowledge )
+        container.push_back( itKnowledge->second );
+}

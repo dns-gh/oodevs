@@ -445,7 +445,7 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const PHY_Human& human,
 MIL_AutomateLOG& PHY_RolePionLOG_Medical::GetAutomate() const
 {
     assert( pPion_ );
-    return pPion_->GetAutomate();
+    return pPion_->GetLogAutomate();
 }
 
 // =============================================================================

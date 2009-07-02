@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationFlowPart.h"
-
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
@@ -43,10 +42,6 @@ DEC_Knowledge_PopulationFlowPart::~DEC_Knowledge_PopulationFlowPart()
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPart::load
@@ -157,4 +152,32 @@ void DEC_Knowledge_PopulationFlowPart::Serialize( ASN1T_FlowPart& asn )
     NET_ASN_Tools::WritePath( shape_, asn.forme );
     asn.pertinence      = (uint)( rRelevance_ * 100. );
     rLastRelevanceSent_ = rRelevance_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::Clean
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationFlowPart::Clean()
+{
+    return rRelevance_ <= 0. || shape_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::ChangeRelevance
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationFlowPart::ChangeRelevance( MT_Float rNewRelevance )
+{
+    if( rRelevance_ == rNewRelevance )
+        return false;
+
+    static const MT_Float rDeltaForNetwork = 0.05;
+    if( fabs( rLastRelevanceSent_ - rNewRelevance ) > rDeltaForNetwork || rNewRelevance == 0. || rNewRelevance == 1. )
+    {
+        rRelevance_ = rNewRelevance;
+        return true;
+    }
+    rRelevance_ = rNewRelevance;
+    return false;
 }

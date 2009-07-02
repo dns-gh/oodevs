@@ -678,3 +678,123 @@ bool DEC_Knowledge_Object::CanCollideWith( const MIL_Agent_ABC& agent ) const
     return ( !IsReservedObstacle() || IsReservedObstacleActivated() ) && !IsBypassed() 
          && agent.GetRole< PHY_RolePion_Location >().GetHeight() <= GetMaxInteractionHeight();                    
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetID
+// Created: NLD 2004-03-24
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_Object::GetID() const
+{
+    return nID_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetArmy
+// Created: NLD 2006-01-05
+// -----------------------------------------------------------------------------
+const MIL_Army_ABC& DEC_Knowledge_Object::GetArmy() const
+{
+    assert( pOwnerArmy_ );
+    return *pOwnerArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetLocalisation
+// Created: NLD 2004-03-24
+// -----------------------------------------------------------------------------
+const TER_Localisation& DEC_Knowledge_Object::GetLocalisation() const
+{
+    return localisation_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetAvoidanceLocalisation
+// Created: NLD 2004-04-06
+// -----------------------------------------------------------------------------
+const TER_Localisation& DEC_Knowledge_Object::GetAvoidanceLocalisation() const
+{
+    return avoidanceLocalisation_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetType
+// Created: NLD 2004-03-24
+// -----------------------------------------------------------------------------
+const MIL_ObjectType_ABC& DEC_Knowledge_Object::GetType() const
+{
+    assert( pObjectType_ );
+    return *pObjectType_;   
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetRelevance
+// Created: NLD 2004-03-22
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_Object::GetRelevance() const
+{
+    return rRelevance_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetObjectKnown
+// Created: NLD 2004-03-24
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* DEC_Knowledge_Object::GetObjectKnown() const
+{
+    return pObjectKnown_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::NotifyAttributeUpdated
+// Created: NLD 2004-05-04
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::NotifyAttributeUpdated( E_Attributes nAttribute )
+{
+    nAttributesUpdated_ |= nAttribute;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsAttributeUpdated
+// Created: NLD 2004-05-04
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::IsAttributeUpdated( E_Attributes nAttribute ) const
+{
+    return ( nAttributesUpdated_ & nAttribute ) == nAttribute;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsReconBy
+// Created: NLD 2004-10-29
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::IsReconBy( const MIL_AgentType_ABC& agentType ) const
+{
+    return reconByAgentTypes_.find( &agentType ) != reconByAgentTypes_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsRecon
+// Created: NLD 2005-01-26
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::IsRecon() const
+{
+    return !reconByAgentTypes_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::Clean
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::Clean() const
+{
+    return GetRelevance() <= 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetArmyKnowing
+// Created: NLD 2007-02-07
+// -----------------------------------------------------------------------------
+const MIL_Army_ABC& DEC_Knowledge_Object::GetArmyKnowing() const
+{
+    assert( pArmyKnowing_ );
+    return *pArmyKnowing_;
+}

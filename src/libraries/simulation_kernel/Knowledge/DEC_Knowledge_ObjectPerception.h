@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectPerception_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 
@@ -76,7 +75,5 @@ private:
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
 };
-
-#include "DEC_Knowledge_ObjectPerception.inl"
 
 #endif // __DEC_Knowledge_ObjectPerception_h_

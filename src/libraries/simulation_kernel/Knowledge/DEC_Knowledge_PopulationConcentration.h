@@ -96,6 +96,4 @@ private:
     MT_Float rLastRelevanceSent_;
 };
 
-#include "DEC_Knowledge_PopulationConcentration.inl"
-
 #endif // __DEC_Knowledge_PopulationConcentration_h_

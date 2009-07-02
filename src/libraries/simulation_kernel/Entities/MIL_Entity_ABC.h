@@ -58,6 +58,7 @@ private:
     MIL_Entity_ABC& operator=( const MIL_Entity_ABC& ); //!< Assignment operator
     //@}
 
+private:
     //! @name data Members
     //@{
     std::string strName_;
@@ -65,6 +66,15 @@ private:
 
 };
 
-#include "MIL_Entity_ABC.inl"
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void MIL_Entity_ABC::serialize
+// Created: RDS 2008-05-09
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void MIL_Entity_ABC::serialize( Archive& archive, const uint )
+{
+    archive & boost::serialization::base_object< MT_RoleContainer >( *this )
+            & strName_ ; 
+}
 
 #endif // __MIL_Entity_ABC_h_

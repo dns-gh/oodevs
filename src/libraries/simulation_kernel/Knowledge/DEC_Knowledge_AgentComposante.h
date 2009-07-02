@@ -31,9 +31,9 @@ class DEC_Knowledge_AgentComposante
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Knowledge_AgentComposante();
-     DEC_Knowledge_AgentComposante( const PHY_Composante_ABC& composante );
-    ~DEC_Knowledge_AgentComposante();
+             DEC_Knowledge_AgentComposante();
+    explicit DEC_Knowledge_AgentComposante( const PHY_Composante_ABC& composante );
+            ~DEC_Knowledge_AgentComposante();
     //@}
 
     //! @name CheckPoints
@@ -63,8 +63,6 @@ private:
           bool                    bCanFireWhenUnloaded_;
           uint                    nMajorScore_;
 };
-
-#include "DEC_Knowledge_AgentComposante.inl"
 
 #endif // __DEC_Knowledge_AgentComposante_h_
 

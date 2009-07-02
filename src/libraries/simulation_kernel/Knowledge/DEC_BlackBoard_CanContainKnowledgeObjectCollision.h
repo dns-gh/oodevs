@@ -13,7 +13,6 @@
 #define __DEC_BlackBoard_CanContainKnowledgeObjectCollision_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_ObjectCollision;
@@ -81,7 +80,5 @@ private:
     T_KnowledgeObjectCollisionMap knowledgeObjectCollisionMap_;
     //@}
 };
-
-#include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.inl"
 
 #endif // __DEC_BlackBoard_CanContainKnowledgeObjectCollision_h_

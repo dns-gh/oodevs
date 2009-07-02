@@ -12,7 +12,6 @@
 #ifndef __MIL_AgentTypePionCIRCULATION_h_
 #define __MIL_AgentTypePionCIRCULATION_h_
 
-#include "MIL.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
 namespace xml
@@ -28,13 +27,10 @@ class MIL_AgentTypePionCIRCULATION : public MIL_AgentTypePion
 {
 
 public:
-    MIL_AgentTypePionCIRCULATION( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionCIRCULATION( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionCIRCULATION();
 
-public:
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
-
-#include "MIL_AgentTypePionCIRCULATION.inl"
 
 #endif // __MIL_AgentTypePionCIRCULATION_h_

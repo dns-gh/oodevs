@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_AgentDataDetection_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_AgentPerceptionDataDetection;
@@ -21,7 +20,6 @@ class MIL_KnowledgeGroupType;
 class PHY_Posture;
 class MIL_Agent_ABC;
 class MIL_Army;
-
 struct ASN1T_MsgUnitKnowledgeUpdate;
 
 // =============================================================================
@@ -109,7 +107,5 @@ private:
     bool bRefugeeManagedUpdated_;
     bool bDeadUpdated_;
 };
-
-#include "DEC_Knowledge_AgentDataDetection.inl"
 
 #endif // __DEC_Knowledge_AgentDataDetection_h_

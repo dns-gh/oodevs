@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KS_Sharing.h"
-
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "DEC_Knowledge_Agent.h"
@@ -29,6 +28,7 @@ DEC_KS_Sharing::sShareSource::sShareSource()
     , vSharedCircleCenter_( )
     , rSharedCircleRadius_( std::numeric_limits< MT_Float >::max() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +40,7 @@ DEC_KS_Sharing::sShareSource::sShareSource( const MIL_KnowledgeGroup& shareSourc
     , vSharedCircleCenter_( )
     , rSharedCircleRadius_( std::numeric_limits< MT_Float >::max() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +52,7 @@ DEC_KS_Sharing::sShareSource::sShareSource( const MIL_KnowledgeGroup& shareSourc
     , vSharedCircleCenter_( vSharedCircleCenter )
     , rSharedCircleRadius_( rSharedCircleRadius )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -61,6 +63,7 @@ DEC_KS_Sharing::DEC_KS_Sharing( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoa
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
     , pBlackBoard_           ( &blackBoard )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +74,7 @@ DEC_KS_Sharing::DEC_KS_Sharing()
     : DEC_KnowledgeSource_ABC()
     , pBlackBoard_          ( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -80,11 +83,8 @@ DEC_KS_Sharing::DEC_KS_Sharing()
 // -----------------------------------------------------------------------------
 DEC_KS_Sharing::~DEC_KS_Sharing()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Sharing::Prepare
@@ -95,38 +95,41 @@ void DEC_KS_Sharing::Prepare()
     // Nothing
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_ArmyQuerier::sKnowledgeSharer
-// Created: NLD 2004-05-06
-// -----------------------------------------------------------------------------
-class sKnowledgeSharer
+namespace
 {
-public:
-    sKnowledgeSharer( const MIL_KnowledgeGroup& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, const DEC_KS_Sharing::sShareSource& shareSource )
-        : knowledgeGroup_( knowledgeGroup )
-        , blackBoard_    ( blackBoard )
-        , shareSource_   ( shareSource )
+    // -----------------------------------------------------------------------------
+    // Name: DEC_KS_ArmyQuerier::sKnowledgeSharer
+    // Created: NLD 2004-05-06
+    // -----------------------------------------------------------------------------
+    class sKnowledgeSharer
     {
-    }
+    public:
+        sKnowledgeSharer( const MIL_KnowledgeGroup& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, const DEC_KS_Sharing::sShareSource& shareSource )
+            : knowledgeGroup_( knowledgeGroup )
+            , blackBoard_    ( blackBoard )
+            , shareSource_   ( shareSource )
+        {
+        }
 
-    void operator() ( DEC_Knowledge_Agent& knowledge )
-    {
-        if( knowledge.GetPosition().Distance( shareSource_.vSharedCircleCenter_ ) > shareSource_.rSharedCircleRadius_ )
-            return;
+        void operator() ( DEC_Knowledge_Agent& knowledge )
+        {
+            if( knowledge.GetPosition().Distance( shareSource_.vSharedCircleCenter_ ) > shareSource_.rSharedCircleRadius_ )
+                return;
 
-        MIL_Agent_ABC& agentKnown = knowledge.GetAgentKnown();
+            MIL_Agent_ABC& agentKnown = knowledge.GetAgentKnown();
 
-        DEC_Knowledge_Agent* pNewKnowledge = blackBoard_.GetKnowledgeAgent( agentKnown );
-        if( !pNewKnowledge )
-            pNewKnowledge = &blackBoard_.CreateKnowledgeAgent( knowledgeGroup_, agentKnown );
-        pNewKnowledge->Update( knowledge );
-    }
+            DEC_Knowledge_Agent* pNewKnowledge = blackBoard_.GetKnowledgeAgent( agentKnown );
+            if( !pNewKnowledge )
+                pNewKnowledge = &blackBoard_.CreateKnowledgeAgent( knowledgeGroup_, agentKnown );
+            pNewKnowledge->Update( knowledge );
+        }
 
-private:
-    const MIL_KnowledgeGroup&                      knowledgeGroup_;
-          DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard_;
-    const DEC_KS_Sharing::sShareSource&            shareSource_;
-};
+    private:
+        const MIL_KnowledgeGroup&                      knowledgeGroup_;
+              DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard_;
+        const DEC_KS_Sharing::sShareSource&            shareSource_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Sharing::Talk
@@ -143,4 +146,22 @@ void DEC_KS_Sharing::Talk()
         itShareSource->second.pShareSource_->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( func );
     }
     shareSources_.erase( shareSources_.begin(), itShareSourceEnd );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Sharing::ShareFromSource
+// Created: NLD 2005-04-20
+// -----------------------------------------------------------------------------
+void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep )
+{
+    shareSources_.insert( std::make_pair( nShareTimeStep, sShareSource( source ) ) );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Sharing::ShareFromSource
+// Created: NLD 2005-04-20
+// -----------------------------------------------------------------------------
+void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, MT_Float rSharedCircleRadius )
+{
+    shareSources_.insert( std::make_pair( nShareTimeStep, sShareSource( source, vSharedCircleCenter, rSharedCircleRadius ) ) );
 }

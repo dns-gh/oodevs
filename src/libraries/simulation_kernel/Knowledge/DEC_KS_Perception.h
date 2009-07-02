@@ -12,8 +12,6 @@
 #ifndef __DEC_KS_Perception_h_
 #define __DEC_KS_Perception_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_AgentPion;
@@ -98,7 +96,5 @@ private:
     bool                               bMakePerceptionsAvailable_;
     bool                               bMakePerceptionsAvailableTimed_;
 };
-
-#include "DEC_KS_Perception.inl"
 
 #endif // __DEC_KS_Perception_h_

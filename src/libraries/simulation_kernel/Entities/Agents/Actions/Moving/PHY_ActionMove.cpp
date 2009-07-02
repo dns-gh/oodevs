@@ -23,7 +23,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Objects/ContaminationCapacity.h"

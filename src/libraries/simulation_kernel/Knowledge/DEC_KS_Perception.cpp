@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KS_Perception.h"
-
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_ObjectPerception.h"
@@ -37,6 +36,7 @@ DEC_KS_Perception::DEC_KS_Perception( DEC_KnowledgeBlackBoard_AgentPion& blackBo
     , bMakePerceptionsAvailable_     ( false )
     , bMakePerceptionsAvailableTimed_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +49,7 @@ DEC_KS_Perception::DEC_KS_Perception ()
     , bMakePerceptionsAvailable_     ( false )
     , bMakePerceptionsAvailableTimed_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,12 +58,8 @@ DEC_KS_Perception::DEC_KS_Perception ()
 // -----------------------------------------------------------------------------
 DEC_KS_Perception::~DEC_KS_Perception()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 namespace boost
 {
@@ -121,10 +118,6 @@ void DEC_KS_Perception::serialize( Archive& archive, const uint )
             & bMakePerceptionsAvailableTimed_;
 }
 
-// =============================================================================
-// PREPARE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception::Prepare
 // Created: NLD 2004-03-16
@@ -136,10 +129,6 @@ void DEC_KS_Perception::Prepare()
     pBlackBoard_->GetKnowledgeObjectPerceptionContainer    ().ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::Prepare ) );
     pBlackBoard_->GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::Prepare ) );
 }
-
-// =============================================================================
-// CLEAN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception::CleanKnowledgeAgentPerception
@@ -197,11 +186,6 @@ void DEC_KS_Perception::Clean()
     class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_PopulationPerception > methodPopulation( & DEC_KS_Perception::CleanKnowledgePopulationPerception, *this );
     pBlackBoard_->GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( methodPopulation );
 }
-
-
-// =============================================================================
-// EVENTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception::NotifyExternalPerception
@@ -289,55 +273,56 @@ void DEC_KS_Perception::NotifyPerception( MIL_PopulationFlow& flowPerceived, con
 // =============================================================================
 // TALK
 // =============================================================================
-
-struct sReferenceTimeCalculator
+namespace
 {
-public:
-    sReferenceTimeCalculator( uint& nReferenceTimeStep )
-        : nReferenceTimeStep_( nReferenceTimeStep )
+    struct sReferenceTimeCalculator
     {
-    }
-
-    sReferenceTimeCalculator( sReferenceTimeCalculator& rhs )
-        : nReferenceTimeStep_( rhs.nReferenceTimeStep_ )
-    {
-    }
-
-    void operator() ( const DEC_Knowledge_AgentPerception& perception ) const
-    {
-        if( !perception.IsAvailable() )
+    public:
+        sReferenceTimeCalculator( uint& nReferenceTimeStep )
+            : nReferenceTimeStep_( nReferenceTimeStep )
         {
-            nReferenceTimeStep_ = std::min( nReferenceTimeStep_, perception.GetCreationTimeStep() );
         }
-    }
 
-    uint& nReferenceTimeStep_;
-
-private:
-    sReferenceTimeCalculator& operator=( sReferenceTimeCalculator& rhs );
-};
-
-struct sMakePerceptionAvailableTimedFunctor
-{
-public:
-    sMakePerceptionAvailableTimedFunctor( uint nReferenceTimeStep )
-        : nReferenceTimeStep_( nReferenceTimeStep )
-    {
-    }
-    
-    void operator() ( DEC_Knowledge_AgentPerception& perception ) const
-    {
-        if( !perception.IsAvailable() )
+        sReferenceTimeCalculator( sReferenceTimeCalculator& rhs )
+            : nReferenceTimeStep_( rhs.nReferenceTimeStep_ )
         {
-            assert( perception.GetCreationTimeStep() >= nReferenceTimeStep_ );
-            perception.MakeAvailable( perception.GetCreationTimeStep() - nReferenceTimeStep_ );
         }
-    }
 
-private:
-    uint nReferenceTimeStep_;
-};
+        void operator() ( const DEC_Knowledge_AgentPerception& perception ) const
+        {
+            if( !perception.IsAvailable() )
+            {
+                nReferenceTimeStep_ = std::min( nReferenceTimeStep_, perception.GetCreationTimeStep() );
+            }
+        }
 
+        uint& nReferenceTimeStep_;
+
+    private:
+        sReferenceTimeCalculator& operator=( sReferenceTimeCalculator& rhs );
+    };
+
+    struct sMakePerceptionAvailableTimedFunctor
+    {
+    public:
+        sMakePerceptionAvailableTimedFunctor( uint nReferenceTimeStep )
+            : nReferenceTimeStep_( nReferenceTimeStep )
+        {
+        }
+        
+        void operator() ( DEC_Knowledge_AgentPerception& perception ) const
+        {
+            if( !perception.IsAvailable() )
+            {
+                assert( perception.GetCreationTimeStep() >= nReferenceTimeStep_ );
+                perception.MakeAvailable( perception.GetCreationTimeStep() - nReferenceTimeStep_ );
+            }
+        }
+
+    private:
+        uint nReferenceTimeStep_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception::Talk
@@ -375,27 +360,29 @@ void DEC_KS_Perception::Talk()
     }
 }
 
+namespace
+{
+    struct sDelayedPerceptionFinder
+    {
+        sDelayedPerceptionFinder( bool& bResult ) : bHasDelayedPerceptions_( bResult ) {}
+        
+        void operator() ( DEC_Knowledge_AgentPerception& perception )
+        {
+            bHasDelayedPerceptions_ |= !perception.IsAvailable();
+        }
+        
+        private:
+            sDelayedPerceptionFinder& operator = ( const sDelayedPerceptionFinder& );
+            
+        private:
+            bool& bHasDelayedPerceptions_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception::HasDelayedPerceptions
 // Created: JVT 2004-12-03
 // -----------------------------------------------------------------------------
-struct sDelayedPerceptionFinder
-{
-    sDelayedPerceptionFinder( bool& bResult ) : bHasDelayedPerceptions_( bResult ) {}
-    
-    void operator() ( DEC_Knowledge_AgentPerception& perception )
-    {
-        bHasDelayedPerceptions_ |= !perception.IsAvailable();
-    }
-    
-    private:
-        sDelayedPerceptionFinder& operator = ( const sDelayedPerceptionFinder& );
-        
-    private:
-        bool& bHasDelayedPerceptions_;
-};
-
 bool DEC_KS_Perception::HasDelayedPerceptions() const
 {
     bool bHasDelayedPerceptions = false;
@@ -404,4 +391,21 @@ bool DEC_KS_Perception::HasDelayedPerceptions() const
     return bHasDelayedPerceptions;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Perception::MakePerceptionsAvailable
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+void DEC_KS_Perception::MakePerceptionsAvailable()
+{
+    bMakePerceptionsAvailable_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Perception::MakePerceptionsAvailableTimed
+// Created: NLD 2004-11-16
+// -----------------------------------------------------------------------------
+void DEC_KS_Perception::MakePerceptionsAvailableTimed()
+{
+    bMakePerceptionsAvailableTimed_ = true;
+}
 

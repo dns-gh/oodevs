@@ -11,9 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Agent.h"
-
 #include "DEC_Knowledge_AgentPerception.h"
-
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -872,4 +870,206 @@ E_Tristate DEC_Knowledge_Agent::IsAFriend( const MIL_Army_ABC& army ) const
     if( !pArmy )
         return eTristate_DontKnow;
     return army.IsAFriend( *pArmy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetID
+// Created: NLD 2004-03-24
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_Agent::GetID() const
+{
+    return nID_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetAgentPerceived
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+MIL_Agent_ABC& DEC_Knowledge_Agent::GetAgentKnown() const
+{
+    assert( pAgentKnown_ );
+    return *pAgentKnown_; 
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetPosition
+// Created: NLD 2004-03-22
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Knowledge_Agent::GetPosition() const
+{
+    return dataDetection_.GetPosition();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetDirection
+// Created: JVT 2005-02-17
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Knowledge_Agent::GetDirection() const
+{
+    return dataDetection_.GetDirection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetAltitude
+// Created: NLD 2004-06-07
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_Agent::GetAltitude() const
+{
+    return dataDetection_.GetAltitude();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetSpeed
+// Created: NLD 2004-03-25
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_Agent::GetSpeed() const
+{
+    return dataDetection_.GetSpeed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetRelevance
+// Created: NLD 2004-03-22
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_Agent::GetRelevance() const
+{
+    return rRelevance_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetPostureCompletionPercentage
+// Created: NLD 2004-04-01
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_Agent::GetPostureCompletionPercentage() const
+{
+    return dataDetection_.GetPostureCompletionPercentage();   
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetOldPosture
+// Created: NLD 2004-04-01
+// -----------------------------------------------------------------------------
+const PHY_Posture& DEC_Knowledge_Agent::GetLastPosture() const
+{
+    return dataDetection_.GetLastPosture();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetCurrentPosture
+// Created: NLD 2004-04-01
+// -----------------------------------------------------------------------------
+const PHY_Posture& DEC_Knowledge_Agent::GetCurrentPosture() const
+{
+    return dataDetection_.GetCurrentPosture();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetMaxPerceptionLevel
+// Created: NLD 2004-04-06
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetMaxPerceptionLevel() const
+{
+    assert( pMaxPerceptionLevel_ );
+    return *pMaxPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetCurrentPerceptionLevel
+// Created: NLD 2004-04-28
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel() const
+{
+    assert( pCurrentPerceptionLevel_ );
+    return *pCurrentPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetOperationalState
+// Created: NLD 2004-04-14
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_Agent::GetOperationalState() const
+{
+    return dataRecognition_.GetOperationalState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetMajorOperationalState
+// Created: NLD 2005-11-30
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_Agent::GetMajorOperationalState() const
+{
+    return dataRecognition_.GetMajorOperationalState();  
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsDead
+// Created: NLD 2004-04-01
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsDead() const
+{
+    return dataDetection_.IsDead();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsSurrendered
+// Created: NLD 2005-03-04
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsSurrendered() const
+{
+    return dataDetection_.IsSurrendered();
+}
+          
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsPrisoner
+// Created: NLD 2005-03-04
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsPrisoner() const
+{
+    return dataDetection_.IsPrisoner();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsRefugeeManaged
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsRefugeeManaged() const
+{
+    return dataDetection_.IsRefugeeManaged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetArmy
+// Created: NLD 2004-04-06
+// -----------------------------------------------------------------------------
+const MIL_Army_ABC* DEC_Knowledge_Agent::GetArmy() const
+{
+    return dataRecognition_.GetArmy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetNatureAtlas
+// Created: NLD 2004-03-31
+// Modified: JVT 2004-12-09
+// -----------------------------------------------------------------------------
+const PHY_NatureAtlas& DEC_Knowledge_Agent::GetNatureAtlas() const
+{
+    return dataRecognition_.GetNatureAtlas();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::Clean
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::Clean() const
+{
+    return GetRelevance() <= 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsHuman
+// Created: NLD 2007-04-19
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsHuman() const
+{
+    return dataRecognition_.IsHuman();
 }

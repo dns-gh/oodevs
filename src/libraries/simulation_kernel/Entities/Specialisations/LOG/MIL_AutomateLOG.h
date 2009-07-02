@@ -12,7 +12,6 @@
 #ifndef __MIL_AutomateLOG_h_
 #define __MIL_AutomateLOG_h_
 
-#include "MIL.h"
 #include "Entities/Automates/MIL_Automate.h"
 
 namespace xml
@@ -183,8 +182,6 @@ private:
 
     PHY_ActionLogistic< MIL_AutomateLOG >* pLogisticAction_;
 };
-
-#include "MIL_AutomateLOG.inl"
 
 #endif // __MIL_AutomateLOG_h_
 

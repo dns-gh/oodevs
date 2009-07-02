@@ -11,10 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_ObjectPerception.h"
-
 #include "Entities/Objects/MIL_Object_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObjectPerception, "DEC_BlackBoard_CanContainKnowledgeObjectPerception" )
@@ -25,7 +23,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObjectPerception, "DE
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObjectPerception::DEC_BlackBoard_CanContainKnowledgeObjectPerception()
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,9 +36,6 @@ DEC_BlackBoard_CanContainKnowledgeObjectPerception::~DEC_BlackBoard_CanContainKn
         DestroyKnowledgeObjectPerception( *knowledgeObjectPerceptionMap_.begin()->second );        
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception::load
 // Created: JVT 2005-03-23
@@ -72,11 +67,6 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOut
     }
 }
 
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception::CreateKnowledgeObjectPerception
 // Created: NLD 2004-03-11
@@ -89,7 +79,6 @@ DEC_Knowledge_ObjectPerception& DEC_BlackBoard_CanContainKnowledgeObjectPercepti
     return *pKnowledge;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception::DestroyKnowledgeObjectPerception
 // Created: NLD 2004-03-16
@@ -101,3 +90,15 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::DestroyKnowledgeObjectP
     delete &knowledge;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception::GetKnowledgesObjectPerception
+// Created: NLD 2004-03-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_ObjectPerception* DEC_BlackBoard_CanContainKnowledgeObjectPerception::GetKnowledgeObjectPerception( const MIL_Object_ABC& associatedObject ) const
+{
+    CIT_KnowledgeObjectPerceptionMap itKnowledge = knowledgeObjectPerceptionMap_.find( &associatedObject );
+    if( itKnowledge != knowledgeObjectPerceptionMap_.end() )
+        return itKnowledge->second;
+    else
+        return 0;
+}

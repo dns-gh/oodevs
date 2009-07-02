@@ -25,6 +25,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"

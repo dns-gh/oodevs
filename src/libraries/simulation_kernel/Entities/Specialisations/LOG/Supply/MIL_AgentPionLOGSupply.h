@@ -13,7 +13,6 @@
 #define __MIL_AgentPionLOGSupply_h_
 
 #include "MIL.h"
-
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 // =============================================================================
@@ -37,7 +36,5 @@ public:
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 };
-
-#include "MIL_AgentPionLOGSupply.inl"
 
 #endif // __MIL_AgentPionLOGSupply_h_

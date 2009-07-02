@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ObjectPerception.h"
-
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -30,6 +29,7 @@ DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception( const MIL_AgentP
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +43,7 @@ DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception()
     , pCurrentPerceptionLevel_ ( 0 )
     , pPreviousPerceptionLevel_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,11 +52,8 @@ DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectPerception::~DEC_Knowledge_ObjectPerception()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectPerception::load
@@ -91,10 +89,6 @@ void DEC_Knowledge_ObjectPerception::save( MIL_CheckPointOutArchive& file, const
          << current
          << previous;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectPerception::Prepare
@@ -139,4 +133,53 @@ void DEC_Knowledge_ObjectPerception::SendStateToNewClient() const
     asn().object_oid = pObjectPerceived_->GetID();
     asn().visibility = ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
     asn.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectPerception::GetObjectPerceived
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+MIL_Object_ABC& DEC_Knowledge_ObjectPerception::GetObjectPerceived() const
+{
+    assert( pObjectPerceived_ );
+    return *pObjectPerceived_; 
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectPerception::GetObjectPerceiving
+// Created: NLD 2004-03-19
+// -----------------------------------------------------------------------------
+const MIL_AgentPion& DEC_Knowledge_ObjectPerception::GetAgentPerceiving() const
+{
+    assert( pAgentPerceiving_ );
+    return *pAgentPerceiving_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectPerception::IsPerceived
+// Created: NLD 2004-03-23
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_ObjectPerception::IsPerceived() const
+{
+    assert( pCurrentPerceptionLevel_ );
+    return *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectPerception::GetCurrentPerceptionLevel
+// Created: NLD 2004-03-24
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& DEC_Knowledge_ObjectPerception::GetCurrentPerceptionLevel() const
+{
+    assert( pCurrentPerceptionLevel_ );
+    return *pCurrentPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectPerception::Clean
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_ObjectPerception::Clean()
+{
+    return !IsPerceived();
 }

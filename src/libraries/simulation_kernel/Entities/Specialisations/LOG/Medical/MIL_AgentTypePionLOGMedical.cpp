@@ -10,13 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionLOGMedical.h"
 #include "MIL_AgentPionLOGMedical.h"
-
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMedical constructor
@@ -24,7 +19,8 @@
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionLOGMedical::MIL_AgentTypePionLOGMedical( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePionLOG_ABC( strName, xis )
-{ 
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,12 +29,8 @@ MIL_AgentTypePionLOGMedical::MIL_AgentTypePionLOGMedical( const std::string& str
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionLOGMedical::~MIL_AgentTypePionLOGMedical()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMedical::InstanciatePion
@@ -56,4 +48,13 @@ MIL_AgentPion& MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Autom
 MIL_AgentPion& MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
 {
     return *new MIL_AgentPionLOGMedical( *this, nID, automate, vPosition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionINF::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionLOGMedical::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionLOGMedical( strName, xis );
 }

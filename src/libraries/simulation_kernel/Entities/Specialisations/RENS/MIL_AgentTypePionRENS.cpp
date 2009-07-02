@@ -10,13 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionRENS.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_PerceptionFunctions.h"
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionRENS constructor
@@ -35,5 +31,14 @@ MIL_AgentTypePionRENS::MIL_AgentTypePionRENS( const std::string& strName, xml::x
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionRENS::~MIL_AgentTypePionRENS()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionRENS::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionRENS::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionRENS( strName, xis );
 }

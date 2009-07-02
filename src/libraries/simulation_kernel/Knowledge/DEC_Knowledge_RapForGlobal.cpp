@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_RapForGlobal.h"
-
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_KnowledgeGroup.h"
@@ -30,7 +29,7 @@ DEC_Knowledge_RapForGlobal::DEC_Knowledge_RapForGlobal( const MIL_Automate& auto
     : DEC_Knowledge_RapFor_ABC()
     , pAutomate_              ( &automate )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +40,7 @@ DEC_Knowledge_RapForGlobal::DEC_Knowledge_RapForGlobal()
     : DEC_Knowledge_RapFor_ABC()
     , pAutomate_              ( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,12 +49,8 @@ DEC_Knowledge_RapForGlobal::DEC_Knowledge_RapForGlobal()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_RapForGlobal::~DEC_Knowledge_RapForGlobal()
 {
-    
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_Knowledge_RapForGlobal::serialize
@@ -67,11 +62,6 @@ void DEC_Knowledge_RapForGlobal::serialize( Archive& archive, const uint )
     archive & boost::serialization::base_object< DEC_Knowledge_RapFor_ABC >( *this )
             & const_cast< MIL_Automate*& >( pAutomate_ );
 }
-
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapForGlobal::Update

@@ -187,3 +187,45 @@ const MT_Vector2D& DEC_Knowledge_PopulationCollision::GetPosition() const
     assert( pAgentColliding_ );
     return pAgentColliding_->GetRole< PHY_RolePion_Location >().GetPosition(); //$$$
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::GetPopulation
+// Created: NLD 2004-05-03
+// -----------------------------------------------------------------------------
+MIL_Population& DEC_Knowledge_PopulationCollision::GetPopulation() const
+{
+    assert( pPopulation_ );
+    return *pPopulation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::GetAgentColliding
+// Created: NLD 2004-05-03
+// -----------------------------------------------------------------------------
+const MIL_AgentPion& DEC_Knowledge_PopulationCollision::GetAgentColliding() const
+{
+    assert( pAgentColliding_ );
+    return *pAgentColliding_;
+}  
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::Prepare
+// Created: NLD 2004-03-18
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationCollision::Prepare()
+{
+    previousFlows_         .clear();
+    previousConcentrations_.clear();
+
+    std::swap( previousFlows_         , flows_          );
+    std::swap( previousConcentrations_, concentrations_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::Clean
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationCollision::Clean()
+{
+    return flows_.empty() && concentrations_.empty();
+}

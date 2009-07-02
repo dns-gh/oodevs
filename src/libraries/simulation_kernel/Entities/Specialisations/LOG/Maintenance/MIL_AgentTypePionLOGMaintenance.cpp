@@ -10,13 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionLOGMaintenance.h"
 #include "MIL_AgentPionLOGMaintenance.h"
-
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMaintenance constructor
@@ -24,7 +19,8 @@
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionLOGMaintenance::MIL_AgentTypePionLOGMaintenance( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePionLOG_ABC( strName, xis )
-{ 
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,12 +29,8 @@ MIL_AgentTypePionLOGMaintenance::MIL_AgentTypePionLOGMaintenance( const std::str
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionLOGMaintenance::~MIL_AgentTypePionLOGMaintenance()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMaintenance::InstanciatePion
@@ -56,4 +48,13 @@ MIL_AgentPion& MIL_AgentTypePionLOGMaintenance::InstanciatePion( uint nID, MIL_A
 MIL_AgentPion& MIL_AgentTypePionLOGMaintenance::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
 {
     return *new MIL_AgentPionLOGMaintenance( *this, nID, automate, vPosition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionINF::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionLOGMaintenance::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionLOGMaintenance( strName, xis );
 }

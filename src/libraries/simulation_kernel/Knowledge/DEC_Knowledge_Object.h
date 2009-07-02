@@ -21,13 +21,14 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Extendable.h"
 
-class MIL_Army_ABC;
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_ObjectPerception;
-class MIL_ObjectType_ABC;
-class MIL_Object_ABC;
-class MIL_Automate;
+class MIL_Agent_ABC;
 class MIL_AgentType_ABC;
+class MIL_Army_ABC;
+class MIL_Automate;
+class MIL_Object_ABC;
+class MIL_ObjectType_ABC;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Object
@@ -203,6 +204,25 @@ private:
     T_AgentTypeSet reconByAgentTypes_;
 };
 
-#include "DEC_Knowledge_Object.inl"
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::Attach
+// Created: JCR 2008-08-12
+// -----------------------------------------------------------------------------
+template< typename Extension >  
+void DEC_Knowledge_Object::Attach( Extension& extension )
+{
+    attributes_.push_back( &extension );
+    tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Attach( extension );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::Retrieve
+// Created: JCR 2008-08-12
+// -----------------------------------------------------------------------------
+template< typename Extension >  
+const Extension* DEC_Knowledge_Object::Retrieve() const
+{
+    return tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Retrieve< Extension >();
+}
 
 #endif // __DEC_Knowledge_Object_h_

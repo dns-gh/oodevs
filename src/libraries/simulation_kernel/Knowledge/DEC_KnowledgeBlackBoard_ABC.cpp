@@ -18,8 +18,8 @@
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_ABC::DEC_KnowledgeBlackBoard_ABC()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_ABC destructor
@@ -27,12 +27,8 @@ DEC_KnowledgeBlackBoard_ABC::DEC_KnowledgeBlackBoard_ABC()
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_ABC::~DEC_KnowledgeBlackBoard_ABC()
 {
-    
+    // NOTHING
 }
-
-// =============================================================================
-// MAIN OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_ABC::Update
@@ -62,7 +58,6 @@ void DEC_KnowledgeBlackBoard_ABC::Clean()
     for( IT_KnowledgeSourceList itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
         (**itKS).Clean();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_ABC::AddToScheduler

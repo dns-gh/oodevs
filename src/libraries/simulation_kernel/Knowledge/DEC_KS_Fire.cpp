@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KS_Fire.h"
-
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
@@ -33,6 +32,7 @@ DEC_KS_Fire::DEC_KS_Fire( DEC_KnowledgeBlackBoard_AgentPion& blackBoard )
     , pionsAttacking_         ()
     , populationsAttacking_   ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +45,7 @@ DEC_KS_Fire::DEC_KS_Fire()
     , pionsAttacking_         ()
     , populationsAttacking_   ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,11 +54,8 @@ DEC_KS_Fire::DEC_KS_Fire()
 // -----------------------------------------------------------------------------
 DEC_KS_Fire::~DEC_KS_Fire()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Fire::Talk
@@ -94,3 +92,22 @@ void DEC_KS_Fire::Talk()
     }
     populationsAttacking_.clear();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Fire::NotifyHitByDirectFire
+// Created: NLD 2004-03-29
+// -----------------------------------------------------------------------------
+void DEC_KS_Fire::NotifyAttackedBy( MIL_AgentPion& attacker )
+{
+    pionsAttacking_.insert( &attacker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Fire::NotifyAttackedBy
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+void DEC_KS_Fire::NotifyAttackedBy( MIL_Population& attacker )
+{
+    populationsAttacking_.insert( &attacker );
+}
+

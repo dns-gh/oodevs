@@ -12,8 +12,6 @@
 #ifndef __DEC_Knowledge_RapForGlobal_h_
 #define __DEC_Knowledge_RapForGlobal_h_
 
-#include "MIL.h"
-
 #include "DEC_Knowledge_RapFor_ABC.h"
 
 class MIL_Automate;
@@ -27,7 +25,7 @@ class DEC_Knowledge_RapForGlobal : public DEC_Knowledge_RapFor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_RapForGlobal( const MIL_Automate& automate );
+    explicit DEC_Knowledge_RapForGlobal( const MIL_Automate& automate );
              DEC_Knowledge_RapForGlobal();
     virtual ~DEC_Knowledge_RapForGlobal();
     //@}
@@ -45,7 +43,5 @@ public:
 private:
     const MIL_Automate* pAutomate_;
 };
-
-#include "DEC_Knowledge_RapForGlobal.inl"
 
 #endif // __DEC_Knowledge_RapForGlobal_h_

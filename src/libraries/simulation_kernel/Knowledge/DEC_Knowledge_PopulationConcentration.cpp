@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationConcentration.h"
-
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "MIL_KnowledgeGroup.h"
@@ -390,4 +389,33 @@ void DEC_Knowledge_PopulationConcentration::SendStateToNewClient()
 {
     SendMsgCreation();
     SendFullState  ();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration::Clean
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationConcentration::Clean()
+{
+    bHumansUpdated_            = false;
+    bAttitudeUpdated_          = false;  
+    bRealConcentrationUpdated_ = false;
+    bRelevanceUpdated_         = false;
+    return rRelevance_ <= 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration::ChangeRelevance
+// Created: NLD 2005-08-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationConcentration::ChangeRelevance( MT_Float rNewRelevance )
+{
+    if( rRelevance_ == rNewRelevance )
+        return;
+
+    static const MT_Float rDeltaForNetwork = 0.05;
+    if( fabs( rLastRelevanceSent_ - rNewRelevance ) > rDeltaForNetwork || rNewRelevance == 0. || rNewRelevance == 1. )
+        bRelevanceUpdated_ = true;
+
+    rRelevance_ = rNewRelevance;
 }

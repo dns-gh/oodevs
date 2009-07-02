@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionLOG_ABC.h"
 #include "Decision/Functions/DEC_LogisticFunctions.h"
 #include "Decision/Functions/DEC_ActionFunctions.h"
@@ -20,8 +19,6 @@
 #include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyUnload.h"
 #include <functional>
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOG_ABC constructor
@@ -64,6 +61,5 @@ MIL_AgentTypePionLOG_ABC::MIL_AgentTypePionLOG_ABC( const std::string& strName, 
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionLOG_ABC::~MIL_AgentTypePionLOG_ABC()
 {
-
+    // NOTHING
 }
-

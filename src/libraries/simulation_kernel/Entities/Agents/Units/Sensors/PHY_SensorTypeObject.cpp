@@ -16,6 +16,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include <xeumeuleu/xml.h>
 

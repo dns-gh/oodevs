@@ -10,13 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionLOGSupply.h"
 #include "MIL_AgentPionLOGSupply.h"
-
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGSupply constructor
@@ -25,9 +20,8 @@
 MIL_AgentTypePionLOGSupply::MIL_AgentTypePionLOGSupply( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePionLOG_ABC( strName, xis )
 { 
+    // NOTHING
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGSupply destructor
@@ -35,12 +29,8 @@ MIL_AgentTypePionLOGSupply::MIL_AgentTypePionLOGSupply( const std::string& strNa
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionLOGSupply::~MIL_AgentTypePionLOGSupply()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGSupply::InstanciatePion
@@ -58,4 +48,13 @@ MIL_AgentPion& MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automa
 MIL_AgentPion& MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
 {
     return *new MIL_AgentPionLOGSupply( *this, nID, automate, vPosition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionINF::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionLOGSupply::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionLOGSupply( strName, xis );
 }

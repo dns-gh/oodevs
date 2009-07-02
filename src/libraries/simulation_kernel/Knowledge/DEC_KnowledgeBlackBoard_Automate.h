@@ -12,8 +12,6 @@
 #ifndef __DEC_KnowledgeBlackBoard_Automate_h_
 #define __DEC_KnowledgeBlackBoard_Automate_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeBlackBoard_ABC.h"
 
 class MIL_Automate;
@@ -73,7 +71,5 @@ private:
     // Containers
     DEC_Knowledge_RapForGlobal* pKnowledgeRapForGlobal_;
 };
-
-#include "DEC_KnowledgeBlackBoard_Automate.inl"
 
 #endif // __DEC_KnowledgeBlackBoard_Automate_h_

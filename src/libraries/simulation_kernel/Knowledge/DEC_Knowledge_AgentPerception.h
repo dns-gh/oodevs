@@ -13,9 +13,7 @@
 #define __DEC_Knowledge_AgentPerception_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_ABC.h"
-
 #include "DEC_Knowledge_AgentPerceptionDataDetection.h"
 #include "DEC_Knowledge_AgentPerceptionDataRecognition.h"
 #include "DEC_Knowledge_AgentPerceptionDataIdentification.h"
@@ -105,7 +103,5 @@ private:
 
           bool                                            bAttacker_;
 };
-
-#include "DEC_Knowledge_AgentPerception.inl"
 
 #endif // __DEC_Knowledge_AgentPerception_h_

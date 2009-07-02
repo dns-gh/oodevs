@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Population.h"
-
 #include "DEC_Knowledge_PopulationConcentration.h"
 #include "DEC_Knowledge_PopulationFlow.h"
 #include "DEC_Knowledge_PopulationPerception.h"
@@ -459,3 +458,58 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
         it->second->SendStateToNewClient();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetDominationState
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_Population::GetDominationState() const
+{
+    return rDominationState_;   
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetID
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_Population::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetKnowledgeGroup
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+const MIL_KnowledgeGroup& DEC_Knowledge_Population::GetKnowledgeGroup() const
+{
+    assert( pKnowledgeGroup_ );
+    return *pKnowledgeGroup_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetPopulationKnown
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+MIL_Population& DEC_Knowledge_Population::GetPopulationKnown() const
+{
+    assert( pPopulationKnown_ );
+    return *pPopulationKnown_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::IsRecon
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Population::IsRecon() const
+{
+    return bIsRecon_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Recon
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Recon()
+{
+    bIsRecon_ = true;
+}

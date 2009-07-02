@@ -10,14 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentPionLOGMedical.h"
-
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
-
-#include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMedical, "MIL_AgentPionLOGMedical" )
 
@@ -48,7 +42,7 @@ MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type,
 MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical()
     : MIL_AgentPionLOG_ABC()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

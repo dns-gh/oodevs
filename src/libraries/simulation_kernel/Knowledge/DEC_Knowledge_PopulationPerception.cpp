@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationPerception.h"
-
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_Population.h"
@@ -36,6 +35,7 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MI
     , flows_               ()
     , bAttacker_           ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,6 +50,7 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception()
     , flows_               ()
     , bAttacker_           ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,11 +59,8 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationPerception::~DEC_Knowledge_PopulationPerception()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 namespace boost
 {
@@ -162,11 +160,6 @@ void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, c
          << flows_
          << bAttacker_;
 }
-
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationPerception::Prepare
@@ -281,10 +274,6 @@ void DEC_Knowledge_PopulationPerception::PublishKnowledges( DEC_Knowledge_Popula
         knowledge.Update( *it->second );
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationPerception::UpdateOnNetwork
 // Created: NLD 2004-03-17
@@ -309,4 +298,43 @@ void DEC_Knowledge_PopulationPerception::SendStateToNewClient() const
 
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->SendStateToNewClient();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::GetPopulationPerceived
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+MIL_Population& DEC_Knowledge_PopulationPerception::GetPopulationPerceived() const
+{
+    assert( pPopulationPerceived_ );
+    return *pPopulationPerceived_; 
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::GetPopulationPerceiving
+// Created: NLD 2004-03-19
+// -----------------------------------------------------------------------------
+const MIL_AgentPion& DEC_Knowledge_PopulationPerception::GetAgentPerceiving() const
+{
+    assert( pAgentPerceiving_ );
+    return *pAgentPerceiving_;    
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::NotifyAttacker
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationPerception::NotifyAttacker()
+{
+    bAttacker_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::IsAttacker
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationPerception::IsAttacker() const
+{
+    return bAttacker_;
 }

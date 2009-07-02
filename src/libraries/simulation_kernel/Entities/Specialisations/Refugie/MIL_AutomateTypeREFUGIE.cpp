@@ -10,13 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AutomateTypeREFUGIE.h"
-#include "Decision/DEC_Model_ABC.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeREFUGIE constructor
@@ -25,6 +20,7 @@
 MIL_AutomateTypeREFUGIE::MIL_AutomateTypeREFUGIE( const std::string& strName, xml::xistream& xis )
     : MIL_AutomateType( strName, xis )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,6 +29,23 @@ MIL_AutomateTypeREFUGIE::MIL_AutomateTypeREFUGIE( const std::string& strName, xm
 // -----------------------------------------------------------------------------
 MIL_AutomateTypeREFUGIE::~MIL_AutomateTypeREFUGIE()
 {
-
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateTypeREFUGIE::Create
+// Created: NLD 2004-12-27
+// -----------------------------------------------------------------------------
+const MIL_AutomateType* MIL_AutomateTypeREFUGIE::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AutomateTypeREFUGIE( strName, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateTypeREFUGIE::IsRefugee
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+bool MIL_AutomateTypeREFUGIE::IsRefugee() const
+{
+    return true;
+}

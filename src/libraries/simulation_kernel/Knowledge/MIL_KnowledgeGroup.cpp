@@ -10,21 +10,15 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_KnowledgeGroup.h"
-
 #include "Network/NET_ASN_Messages.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
-
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include <xeumeuleu/xml.h>
-
-
 
 std::set< uint > MIL_KnowledgeGroup::ids_;
 
@@ -57,6 +51,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , pKnowledgeBlackBoard_( 0 )
     , automates_           ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -69,10 +64,6 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
     delete pKnowledgeBlackBoard_;
     ids_.erase( nID_ );
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::load
@@ -119,10 +110,6 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "type", pType_->GetName() )
         << xml::end();
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::UpdateKnowledges
@@ -180,11 +167,6 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) co
     return false;
 }
 
-
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::SendCreation
 // Created: NLD 2004-09-06
@@ -219,4 +201,91 @@ void MIL_KnowledgeGroup::SendKnowledge() const
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendKnowledge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::operator==
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+bool MIL_KnowledgeGroup::operator==( const MIL_KnowledgeGroup& rhs ) const
+{
+    return nID_ == rhs.nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::operator!=
+// Created: NLD 2004-09-10
+// -----------------------------------------------------------------------------
+bool MIL_KnowledgeGroup::operator!=( const MIL_KnowledgeGroup& rhs ) const
+{
+    return nID_ != rhs.nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetID
+// Created: NLD 2004-08-31
+// -----------------------------------------------------------------------------
+uint MIL_KnowledgeGroup::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetAutomates
+// Created: NLD 2004-09-01
+// -----------------------------------------------------------------------------
+const MIL_KnowledgeGroup::T_AutomateVector& MIL_KnowledgeGroup::GetAutomates() const
+{
+    return automates_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetKnowledge
+// Created: NLD 2004-11-08
+// -----------------------------------------------------------------------------
+const DEC_KnowledgeBlackBoard_KnowledgeGroup& MIL_KnowledgeGroup::GetKnowledge() const
+{
+    assert( pKnowledgeBlackBoard_ );
+    return *pKnowledgeBlackBoard_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetArmy
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+MIL_Army& MIL_KnowledgeGroup::GetArmy() const
+{
+    assert( pArmy_ );
+    return *pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::RegisterAutomate
+// Created: NLD 2004-09-01
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::RegisterAutomate( MIL_Automate& automate )
+{
+    assert( std::find( automates_.begin(), automates_.end(), &automate ) == automates_.end() );
+    automates_.push_back( &automate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UnregisterAutomate
+// Created: NLD 2004-09-01
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UnregisterAutomate( MIL_Automate& automate )
+{
+    IT_AutomateVector it = std::find( automates_.begin(), automates_.end(), &automate );
+    assert( it != automates_.end() );
+    automates_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetType
+// Created: JVT 2004-11-29
+// -----------------------------------------------------------------------------
+const MIL_KnowledgeGroupType& MIL_KnowledgeGroup::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
 }

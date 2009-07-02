@@ -12,9 +12,7 @@
 #ifndef __MIL_Army_h_
 #define __MIL_Army_h_
 
-#include "simulation_kernel/MIL.h"
-#include "simulation_kernel/Entities/MIL_Army_ABC.h"
-
+#include "Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_Converter.h"
 
 namespace xml
@@ -114,8 +112,6 @@ public:
     E_Tristate IsAnEnemy  ( const DEC_Knowledge_Population & knowledge ) const;
     E_Tristate IsAnEnemy  ( const MIL_Army_ABC& army )                   const;
     E_Tristate IsNeutral  ( const MIL_Army_ABC& army )                   const;
-//    bool       operator== ( const MIL_Army& rhs )                        const;
-//    bool       operator!= ( const MIL_Army& rhs )                        const;
     //@}
 
     //! @name Accessors
@@ -161,7 +157,5 @@ private:
 private:
     static MT_Converter< std::string, E_Diplomacy > diplomacyConverter_;
 };
-
-#include "MIL_Army.inl"
 
 #endif // __MIL_Army_h_

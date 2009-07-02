@@ -12,10 +12,7 @@
 #ifndef __DEC_KnowledgeBlackBoard_KnowledgeGroup_h_
 #define __DEC_KnowledgeBlackBoard_KnowledgeGroup_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeBlackBoard_ABC.h"
-
 #include "DEC_Knowledge_RapForLocal.h"
 
 class MIL_KnowledgeGroup;
@@ -40,7 +37,7 @@ class DEC_KnowledgeBlackBoard_KnowledgeGroup : public DEC_KnowledgeBlackBoard_AB
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KnowledgeBlackBoard_KnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
+    explicit DEC_KnowledgeBlackBoard_KnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
              DEC_KnowledgeBlackBoard_KnowledgeGroup();
     virtual ~DEC_KnowledgeBlackBoard_KnowledgeGroup();
     //@}
@@ -140,7 +137,5 @@ private:
     T_KnowledgeAgentDiaIDVector  surrenderedAgentsContainer_;
     //@}
 };
-
-#include "DEC_KnowledgeBlackBoard_KnowledgeGroup.inl"
 
 #endif // __DEC_KnowledgeBlackBoard_KnowledgeGroup_h_

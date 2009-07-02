@@ -75,6 +75,4 @@ private:
     const PHY_PerceptionLevel*                 pPreviousPerceptionLevel_;
 };
 
-#include "DEC_Knowledge_PopulationConcentrationPerception.inl"
-
 #endif // __DEC_Knowledge_PopulationConcentrationPerception_h_

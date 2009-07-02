@@ -12,8 +12,6 @@
 #ifndef __DEC_Knowledge_RapFor_ABC_h_
 #define __DEC_Knowledge_RapFor_ABC_h_
 
-#include "MIL.h"
-
 #include "DEC_Knowledge_ABC.h"
 
 namespace xml
@@ -69,6 +67,16 @@ private:
     static       MT_Float rRapForIncreasePerTimeStepDefaultValue_;
 };
 
-#include "DEC_Knowledge_RapFor_ABC.inl"
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapFor_ABC::serialize
+// Created: JVT 2005-03-25
+// -----------------------------------------------------------------------------
+template < typename Archive > 
+void DEC_Knowledge_RapFor_ABC::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+         & nLastCacheUpdateTick_
+         & rRapForValue_;
+}
 
 #endif // __DEC_Knowledge_RapFor_ABC_h_

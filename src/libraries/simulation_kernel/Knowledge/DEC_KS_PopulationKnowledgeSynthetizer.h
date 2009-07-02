@@ -12,14 +12,11 @@
 #ifndef __DEC_KS_PopulationKnowledgeSynthetizer_h_
 #define __DEC_KS_PopulationKnowledgeSynthetizer_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_PopulationPerception;
 class DEC_Knowledge_Population;
-
 class MIL_Population;
 
 // =============================================================================
@@ -61,6 +58,15 @@ private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
 };
 
-#include "DEC_KS_PopulationKnowledgeSynthetizer.inl"
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationKnowledgeSynthetizer::serialize
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void DEC_KS_PopulationKnowledgeSynthetizer::serialize( Archive& archive, const uint )
+{
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+            & pBlackBoard_;
+}
 
 #endif // __DEC_KS_PopulationKnowledgeSynthetizer_h_

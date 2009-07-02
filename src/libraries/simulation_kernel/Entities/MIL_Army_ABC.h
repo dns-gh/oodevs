@@ -12,7 +12,7 @@
 #ifndef __MIL_Army_ABC_h_
 #define __MIL_Army_ABC_h_
 
-#include "simulation_kernel/MIL.h" // only for E_Tristate !!!
+#include "MIL.h" // only for E_Tristate !!!
 
 class MIL_Object_ABC;
 class DEC_Knowledge_Object;

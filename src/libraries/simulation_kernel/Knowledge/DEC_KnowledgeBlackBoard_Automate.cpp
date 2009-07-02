@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeBlackBoard_Automate.h"
-
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_Knowledge_RapForGlobal.h"
@@ -30,6 +29,7 @@ DEC_KnowledgeBlackBoard_Automate::DEC_KnowledgeBlackBoard_Automate( MIL_Automate
     : pAutomate_             ( &automate )
     , pKnowledgeRapForGlobal_( new DEC_Knowledge_RapForGlobal( automate ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,8 +40,8 @@ DEC_KnowledgeBlackBoard_Automate::DEC_KnowledgeBlackBoard_Automate()
     : pAutomate_             ( 0 )
     , pKnowledgeRapForGlobal_()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Automate destructor
@@ -49,12 +49,8 @@ DEC_KnowledgeBlackBoard_Automate::DEC_KnowledgeBlackBoard_Automate()
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_Automate::~DEC_KnowledgeBlackBoard_Automate()
 {
-    
+    // NOTHING    
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_Automate::serialize
@@ -68,10 +64,6 @@ void DEC_KnowledgeBlackBoard_Automate::serialize( Archive& archive, const uint )
             & pKnowledgeRapForGlobal_;
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Automate::GetRapForGlobalValue
 // Created: NLD 2004-04-08
@@ -81,10 +73,6 @@ MT_Float DEC_KnowledgeBlackBoard_Automate::GetRapForGlobalValue() const
     assert( pKnowledgeRapForGlobal_ );
     return pKnowledgeRapForGlobal_->GetValue();
 }
-
-// =============================================================================
-// RESOLVER
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent
@@ -172,11 +160,6 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopu
 {
     return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nID );
 }
-
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Automate::SendFullState

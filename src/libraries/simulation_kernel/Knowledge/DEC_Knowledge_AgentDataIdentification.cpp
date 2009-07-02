@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentDataIdentification.h"
-
 #include "DEC_Knowledge_AgentPerceptionDataIdentification.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
@@ -27,7 +26,7 @@ DEC_Knowledge_AgentDataIdentification::DEC_Knowledge_AgentDataIdentification()
     , pAgentType_       ( 0 )
     , bAgentTypeUpdated_( false )
 {
-
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -36,12 +35,8 @@ DEC_Knowledge_AgentDataIdentification::DEC_Knowledge_AgentDataIdentification()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentDataIdentification::~DEC_Knowledge_AgentDataIdentification()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataIdentification::load
@@ -69,10 +64,6 @@ void DEC_Knowledge_AgentDataIdentification::save( MIL_CheckPointOutArchive& file
          << agentType
          << bAgentTypeUpdated_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataIdentification::Prepare
@@ -121,10 +112,6 @@ void DEC_Knowledge_AgentDataIdentification::Update( const DEC_Knowledge_AgentDat
     DoUpdate( data );
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataIdentification::SendChangedState
 // Created: NLD 2004-11-10
@@ -148,3 +135,38 @@ void DEC_Knowledge_AgentDataIdentification::SendFullState( ASN1T_MsgUnitKnowledg
     // NOTHING for now ...
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataIdentification::HasChanged
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataIdentification::HasChanged() const
+{
+    return bAgentTypeUpdated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataIdentification::GetTimeLastUpdate
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_AgentDataIdentification::GetTimeLastUpdate() const
+{
+    return nTimeLastUpdate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataIdentification::GetAgentType
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+const MIL_AgentType_ABC* DEC_Knowledge_AgentDataIdentification::GetAgentType() const
+{
+    return pAgentType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataIdentification::Extrapolate
+// Created: JVT 2004-11-29
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_AgentDataIdentification::Extrapolate( const MIL_Agent_ABC& /*agentKnown*/ )
+{
+    // NOTHING
+}

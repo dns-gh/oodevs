@@ -12,10 +12,8 @@
 #ifndef __MIL_AgentPionLOG_ABC_h_
 #define __MIL_AgentPionLOG_ABC_h_
 
-#include "MIL.h"
-
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "MIL_AutomateLOG.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
 namespace xml
 {
@@ -23,6 +21,8 @@ namespace xml
 }
 
 template < typename T > class PHY_ActionLogistic;
+
+class MIL_AutomateLOG;
 
 // =============================================================================
 // @class  MIL_AgentPionType
@@ -44,8 +44,8 @@ public:
     
     //! @name Accessors
     //@{
-    virtual const MIL_AutomateLOG& GetAutomate() const;
-    virtual       MIL_AutomateLOG& GetAutomate();
+    virtual const MIL_AutomateLOG& GetLogAutomate() const;
+    virtual       MIL_AutomateLOG& GetLogAutomate();
     //@}
 
     //! @name Operations
@@ -56,7 +56,5 @@ public:
 private:
     PHY_ActionLogistic< MIL_AgentPionLOG_ABC >* pLogisticAction_;
 };
-
-#include "MIL_AgentPionLOG_ABC.inl"
 
 #endif // __MIL_AgentPionLOG_ABC_h_

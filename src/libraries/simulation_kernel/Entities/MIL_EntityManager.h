@@ -259,7 +259,5 @@ private:
     //@}
 };
 
-#include "MIL_EntityManager.inl"
-
 #endif // __MIL_EntityManager_h_
 

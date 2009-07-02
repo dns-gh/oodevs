@@ -11,10 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_PopulationPerception.h"
-
 #include "Entities/Populations/MIL_Population.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgePopulationPerception, "DEC_BlackBoard_CanContainKnowledgePopulationPerception" )
@@ -25,7 +23,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgePopulationPerception,
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgePopulationPerception::DEC_BlackBoard_CanContainKnowledgePopulationPerception()
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,9 +36,6 @@ DEC_BlackBoard_CanContainKnowledgePopulationPerception::~DEC_BlackBoard_CanConta
         DestroyKnowledgePopulationPerception( *knowledgePopulationPerceptionMap_.begin()->second );        
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationPerception::load
 // Created: JVT 2005-03-23
@@ -72,11 +67,6 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPoin
     }
 }
 
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationPerception::CreateKnowledgePopulationPerception
 // Created: NLD 2004-03-11
@@ -89,7 +79,6 @@ DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulation
     return *pKnowledge;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationPerception::DestroyKnowledgePopulationPerception
 // Created: NLD 2004-03-16
@@ -101,3 +90,15 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::DestroyKnowledgePop
     delete &knowledge;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulationPerception::GetKnowledgesPopulationPerception
+// Created: NLD 2004-03-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationPerception* DEC_BlackBoard_CanContainKnowledgePopulationPerception::GetKnowledgePopulationPerception( const MIL_Population& associatedPopulation ) const
+{
+    CIT_KnowledgePopulationPerceptionMap itKnowledge = knowledgePopulationPerceptionMap_.find( &associatedPopulation );
+    if( itKnowledge != knowledgePopulationPerceptionMap_.end() )
+        return itKnowledge->second;
+    else
+        return 0;
+}

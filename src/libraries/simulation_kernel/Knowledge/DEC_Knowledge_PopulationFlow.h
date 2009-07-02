@@ -102,6 +102,4 @@ private:
     const PHY_PerceptionLevel*       pCurrentPerceptionLevel_;
 };
 
-#include "DEC_Knowledge_PopulationFlow.inl"
-
 #endif // __DEC_Knowledge_PopulationFlow_h_

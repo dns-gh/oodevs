@@ -11,10 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_AgentPerception.h"
-
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeAgentPerception, "DEC_BlackBoard_CanContainKnowledgeAgentPerception" )
@@ -25,6 +23,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeAgentPerception, "DEC
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeAgentPerception::DEC_BlackBoard_CanContainKnowledgeAgentPerception()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -121,4 +120,17 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::DestroyKnowledgeAgentPer
     int nOut = unitKnowledgePerceptionMap_.erase( &knowledge.GetAgentPerceived() );
     assert( nOut == 1 );
     delete &knowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::GetKnowledgesAgentPerception
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_AgentPerception* DEC_BlackBoard_CanContainKnowledgeAgentPerception::GetKnowledgeAgentPerception( const MIL_Agent_ABC& associatedAgent ) const
+{
+    CIT_KnowledgeAgentPerceptionMap itKnowledge = unitKnowledgePerceptionMap_.find( &associatedAgent );
+    if ( itKnowledge != unitKnowledgePerceptionMap_.end() )
+        return itKnowledge->second;
+    else
+        return 0;
 }

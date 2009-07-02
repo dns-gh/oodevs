@@ -81,6 +81,4 @@ private:
           
 };
 
-#include "DEC_Knowledge_PopulationFlowPerception.inl"
-
 #endif // __DEC_Knowledge_PopulationFlowPerception_h_

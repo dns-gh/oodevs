@@ -13,16 +13,16 @@
 #define __DEC_Knowledge_Population_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_ABC.h"
 
+class MIL_Agent_ABC;
+class MIL_AgentPion;
+class MIL_Army_ABC;
+class MIL_KnowledgeGroup;
 class MIL_Population;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
-class MIL_KnowledgeGroup;
-class MIL_AgentPion;
-class MIL_Army_ABC;
 class DEC_Knowledge_PopulationConcentration;
 class DEC_Knowledge_PopulationFlow;
 class DEC_Knowledge_PopulationPerception;
@@ -136,7 +136,5 @@ private:
           MT_Float            rDominationState_;
           bool                bDecStateUpdated_;
 };
-
-#include "DEC_Knowledge_Population.inl"
 
 #endif // __DEC_Knowledge_Population_h_

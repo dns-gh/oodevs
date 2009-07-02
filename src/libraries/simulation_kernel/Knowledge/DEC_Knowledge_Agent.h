@@ -13,15 +13,11 @@
 #define __DEC_Knowledge_Agent_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_ABC.h"
-
 #include "DEC_Knowledge_AgentDataDetection.h"
 #include "DEC_Knowledge_AgentDataRecognition.h"
 #include "DEC_Knowledge_AgentDataIdentification.h"
-
 #include "game_asn/Simulation.h"
-
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 
 class MIL_AgentPion;
@@ -192,7 +188,5 @@ private:
     bool     bMaxPerceptionLevelUpdated_;
     MT_Float rLastRelevanceSent_;
 };
-
-#include "DEC_Knowledge_Agent.inl"
 
 #endif // __DEC_Knowledge_Agent_h_

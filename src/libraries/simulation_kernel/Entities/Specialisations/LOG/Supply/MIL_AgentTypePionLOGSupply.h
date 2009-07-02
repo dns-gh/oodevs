@@ -12,8 +12,6 @@
 #ifndef __MIL_AgentTypePionLOGSupply_h_
 #define __MIL_AgentTypePionLOGSupply_h_
 
-#include "MIL.h"
-
 #include "Entities/Specialisations/LOG/MIL_AgentTypePionLOG_ABC.h"
 
 namespace xml
@@ -29,7 +27,7 @@ class MIL_AgentTypePionLOGSupply : public MIL_AgentTypePionLOG_ABC
 {
 
 public:
-    MIL_AgentTypePionLOGSupply( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionLOGSupply( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOGSupply();
 
     //! @name Instanciation
@@ -38,10 +36,7 @@ public:
     virtual MIL_AgentPion& InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const; 
     //@}
 
-public:
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
-
-#include "MIL_AgentTypePionLOGSupply.inl"
 
 #endif // __MIL_AgentTypePionLOGSupply_h_

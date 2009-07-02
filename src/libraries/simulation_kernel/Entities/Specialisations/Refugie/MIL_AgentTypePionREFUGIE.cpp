@@ -10,11 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionREFUGIE.h"
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionREFUGIE constructor
@@ -23,6 +19,7 @@
 MIL_AgentTypePionREFUGIE::MIL_AgentTypePionREFUGIE( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePion( strName, xis )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,5 +28,23 @@ MIL_AgentTypePionREFUGIE::MIL_AgentTypePionREFUGIE( const std::string& strName, 
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionREFUGIE::~MIL_AgentTypePionREFUGIE()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionREFUGIE::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePionREFUGIE::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AgentTypePionREFUGIE( strName, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionREFUGIE::IsRefugee
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+bool MIL_AgentTypePionREFUGIE::IsRefugee() const
+{
+    return true;
 }

@@ -12,9 +12,8 @@
 #ifndef __DEC_KnowledgeBlackBoard_ABC_h_
 #define __DEC_KnowledgeBlackBoard_ABC_h_
 
-#include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
+#include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_KnowledgeResolver_ABC.h"
 
 class DEC_KnowledgeSource_ABC;
@@ -73,6 +72,14 @@ private:
     //@}
 };
 
-#include "DEC_KnowledgeBlackBoard_ABC.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::serialize
+// Created: JVT 2005-03-31
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void DEC_KnowledgeBlackBoard_ABC::serialize( Archive& file, const uint )
+{
+    file & talkingKnowledgeSources_;
+}
 
 #endif // __DEC_KnowledgeBlackBoard_ABC_h_

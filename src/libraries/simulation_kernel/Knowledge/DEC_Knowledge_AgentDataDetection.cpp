@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentDataDetection.h"
-
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -48,6 +47,7 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     , bRefugeeManagedUpdated_      ( true )
     , bDeadUpdated_                ( true )
 {
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -56,12 +56,8 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentDataDetection::~DEC_Knowledge_AgentDataDetection()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::load
@@ -141,10 +137,6 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << bRefugeeManagedUpdated_
          << bDeadUpdated_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::Prepare
@@ -262,10 +254,6 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
     }
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::SendFullState
 // Created: NLD 2004-11-09
@@ -341,4 +329,141 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( ASN1T_MsgUnitKnowledgeU
         asnMsg.m.mortPresent = 1;
         asnMsg.mort          = bDead_;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::IsDead
+// Created: NLD 2006-02-01
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataDetection::IsDead() const
+{
+    return bDead_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::IsSurrendered
+// Created: NLD 2005-02-24
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataDetection::IsSurrendered() const
+{
+    return pArmySurrenderedTo_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetArmySurrenderedTo
+// Created: NLD 2007-02-14
+// -----------------------------------------------------------------------------
+const MIL_Army* DEC_Knowledge_AgentDataDetection::GetArmySurrenderedTo() const
+{
+    return pArmySurrenderedTo_;
+}
+          
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::IsPrisoner
+// Created: NLD 2005-02-24
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataDetection::IsPrisoner() const
+{
+    return bPrisoner_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::IsRefugeeManaged
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataDetection::IsRefugeeManaged() const
+{
+    return bRefugeeManaged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetSpeed
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentDataDetection::GetSpeed() const
+{
+    return rSpeed_ == std::numeric_limits< MT_Float >::max() ? 0. : rSpeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetAltitude
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentDataDetection::GetAltitude() const
+{
+    return rAltitude_ == std::numeric_limits< MT_Float >::max() ? 0. : rAltitude_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetDirection
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Knowledge_AgentDataDetection::GetDirection() const
+{
+    return vDirection_;
+}
+   
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetPosition
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Knowledge_AgentDataDetection::GetPosition() const
+{
+    return vPosition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetLastPosture
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+const PHY_Posture& DEC_Knowledge_AgentDataDetection::GetLastPosture() const
+{
+    assert( pLastPosture_ );
+    return *pLastPosture_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetCurrentPosture
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+const PHY_Posture& DEC_Knowledge_AgentDataDetection::GetCurrentPosture() const
+{
+    assert( pCurrentPosture_ );
+    return *pCurrentPosture_;
+}
+          
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetPostureCompletionPercentage
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentDataDetection::GetPostureCompletionPercentage() const
+{
+    return rPostureCompletionPercentage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetVisionVolumes
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+const T_ComposanteVolumeSet& DEC_Knowledge_AgentDataDetection::GetVisionVolumes() const
+{
+    return visionVolumes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetTimeLastUpdate
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_AgentDataDetection::GetTimeLastUpdate() const
+{
+    return nTimeLastUpdate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::HasChanged
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataDetection::HasChanged() const
+{
+    return bDirectionUpdated_ || bSpeedUpdated_ || bPositionUpdated_ || bPrisonerUpdated_ || bSurrenderedUpdated_ || bRefugeeManagedUpdated_;
 }

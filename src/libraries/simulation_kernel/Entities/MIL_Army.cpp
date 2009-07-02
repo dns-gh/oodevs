@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Army.h"
-
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
@@ -631,4 +629,69 @@ void MIL_Army::UnregisterPopulation( MIL_Population& population )
 {
     int nOut = populations_.erase( &population );
     assert( nOut == 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::FindKnowledgeGroup
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( uint nID ) const
+{
+    CIT_KnowledgeGroupMap it = knowledgeGroups_.find( nID );
+    if( it == knowledgeGroups_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::GetID
+// Created: NLD 2004-08-31
+// -----------------------------------------------------------------------------
+uint MIL_Army::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::GetKnowledgeGroups
+// Created: NLD 2004-09-01
+// -----------------------------------------------------------------------------
+const MIL_Army::T_KnowledgeGroupMap& MIL_Army::GetKnowledgeGroups() const
+{
+    return knowledgeGroups_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::GetKnowledge
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_KnowledgeBlackBoard_Army& MIL_Army::GetKnowledge() const
+{
+    assert( pKnowledgeBlackBoard_ );
+    return *pKnowledgeBlackBoard_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_Army::GetDiplomacy
+// Created: NLD 2004-03-24
+//-----------------------------------------------------------------------------
+MIL_Army_ABC::E_Diplomacy MIL_Army::GetDiplomacy( const MIL_Army_ABC& otherArmy ) const
+{
+    if( &otherArmy == this )
+        return eFriend;
+
+    CIT_DiplomacyMap it = diplomacies_.find( &otherArmy );
+    if( it == diplomacies_.end() )
+        return eUnknown;
+    else
+        return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::GetName
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
+const std::string& MIL_Army::GetName() const
+{
+    return strName_;
 }

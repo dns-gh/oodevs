@@ -13,7 +13,6 @@
 #define __DEC_BlackBoard_CanContainKnowledgePopulationPerception_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_PopulationPerception;
@@ -77,7 +76,5 @@ private:
     T_KnowledgePopulationPerceptionMap knowledgePopulationPerceptionMap_;
     //@}
 };
-
-#include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.inl"
 
 #endif // __DEC_BlackBoard_CanContainKnowledgePopulationPerception_h_

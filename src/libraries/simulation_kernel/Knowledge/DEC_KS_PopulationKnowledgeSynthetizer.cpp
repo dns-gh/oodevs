@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KS_PopulationKnowledgeSynthetizer.h"
-
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
@@ -20,7 +19,6 @@
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "DEC_Knowledge_Population.h"
-
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -35,6 +33,7 @@ DEC_KS_PopulationKnowledgeSynthetizer::DEC_KS_PopulationKnowledgeSynthetizer( DE
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
     , pBlackBoard_           ( &blackBoard )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ DEC_KS_PopulationKnowledgeSynthetizer::DEC_KS_PopulationKnowledgeSynthetizer()
     : DEC_KnowledgeSource_ABC( )
     , pBlackBoard_           ( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,11 +53,8 @@ DEC_KS_PopulationKnowledgeSynthetizer::DEC_KS_PopulationKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 DEC_KS_PopulationKnowledgeSynthetizer::~DEC_KS_PopulationKnowledgeSynthetizer()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationKnowledgeSynthetizer::Prepare
@@ -131,10 +127,6 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Talk()
     // Relevance
     pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::UpdateRelevance ) );
 }
-
-// =============================================================================
-// CLEAN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationKnowledgeSynthetizer::CleanKnowledgePopulation

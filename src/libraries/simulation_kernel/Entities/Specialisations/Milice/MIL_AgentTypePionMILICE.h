@@ -12,8 +12,6 @@
 #ifndef __MIL_AgentTypePionMILICE_h_
 #define __MIL_AgentTypePionMILICE_h_
 
-#include "MIL.h"
-
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
 namespace xml
@@ -37,10 +35,7 @@ public:
     virtual bool IsMilitia() const;
     //@}
 
-public:
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
-
-#include "MIL_AgentTypePionMILICE.inl"
 
 #endif // __MIL_AgentTypePionMILICE_h_

@@ -13,7 +13,6 @@
 #define __DEC_BlackBoard_CanContainKnowledgePopulation_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_Population;
@@ -78,7 +77,5 @@ private:
     T_KnowledgePopulationMap knowledgePopulationMap_;
     //@}
 };
-
-#include "DEC_BlackBoard_CanContainKnowledgePopulation.inl"
 
 #endif // __DEC_BlackBoard_CanContainKnowledgePopulation_h_

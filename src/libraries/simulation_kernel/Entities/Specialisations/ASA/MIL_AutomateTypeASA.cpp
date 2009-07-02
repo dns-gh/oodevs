@@ -10,14 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AutomateTypeASA.h"
-
 #include "Decision/Functions/DEC_GeometryFunctions.h"
 #include "Decision/DEC_Tools.h"
-#include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeASA constructor
@@ -37,5 +32,14 @@ MIL_AutomateTypeASA::MIL_AutomateTypeASA( const std::string& strName, xml::xistr
 // -----------------------------------------------------------------------------
 MIL_AutomateTypeASA::~MIL_AutomateTypeASA()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateTypeASA::Create
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+const MIL_AutomateType* MIL_AutomateTypeASA::Create( const std::string& strName, xml::xistream& xis )
+{
+    return new MIL_AutomateTypeASA( strName, xis );
 }

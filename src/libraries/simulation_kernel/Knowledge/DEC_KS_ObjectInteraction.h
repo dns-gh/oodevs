@@ -12,8 +12,6 @@
 #ifndef __DEC_KS_ObjectInteraction_h_
 #define __DEC_KS_ObjectInteraction_h_
 
-#include "MIL.h"
-
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_AgentPion;
@@ -85,7 +83,5 @@ private:
     T_ObjectVector                     objectInteractions_;
     T_ObjectCollisionVector            objectCollisions_;
 };
-
-#include "DEC_KS_ObjectInteraction.inl"
 
 #endif // __DEC_KS_ObjectInteraction_h_

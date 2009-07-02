@@ -12,8 +12,6 @@
 #ifndef __MIL_AgentTypePionNBC_h_
 #define __MIL_AgentTypePionNBC_h_
 
-#include "MIL.h"
-
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
 namespace xml
@@ -32,10 +30,7 @@ public:
              MIL_AgentTypePionNBC( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionNBC();
 
-public:
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
-
-#include "MIL_AgentTypePionNBC.inl"
 
 #endif // __MIL_AgentTypePionNBC_h_

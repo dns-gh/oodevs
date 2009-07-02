@@ -13,6 +13,7 @@
 #define __DEC_KnowledgeObjectFunctions_h_
 
 #include "MIL.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 
 class MIL_AgentPion;
 class DEC_Knowledge_Object;

@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentComposante.h"
-
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentComposante, "DEC_Knowledge_AgentComposante" )
@@ -26,6 +25,7 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante()
     , bCanFireWhenUnloaded_( false )
     , nMajorScore_         ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,6 +38,7 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante( const PHY_Composan
     , bCanFireWhenUnloaded_( composante .CanFireWhenUnloaded() )
     , nMajorScore_         ( composante.GetMajorScore() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,12 +47,8 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante( const PHY_Composan
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentComposante::~DEC_Knowledge_AgentComposante()
 {
-    
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentComposante::load
@@ -80,10 +77,6 @@ void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const 
          << bCanFireWhenUnloaded_
          << nMajorScore_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentComposante::GetDangerosity
@@ -119,4 +112,23 @@ MT_Float DEC_Knowledge_AgentComposante::GetMaxRangeToFireOn( const MIL_Agent_ABC
     if( !bCanFire_ )
         return 0.;
     return pType_->GetMaxRangeToFireOn( firer, compTarget.GetType(), rWantedPH );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentComposante::GetType
+// Created: NLD 2004-04-01
+// -----------------------------------------------------------------------------
+const PHY_ComposanteType_ABC& DEC_Knowledge_AgentComposante::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentComposante::GetMajorScore
+// Created: NLD 2004-08-31
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_AgentComposante::GetMajorScore() const
+{
+    return nMajorScore_;
 }

@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentPerceptionDataDetection.h"
-
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -23,7 +22,6 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/MIL_Army.h"
 #include "MIL_AgentServer.h"
-
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentPerceptionDataDetection, "DEC_Knowledge_AgentPerceptionDataDetection" )
@@ -44,8 +42,8 @@ DEC_Knowledge_AgentPerceptionDataDetection::DEC_Knowledge_AgentPerceptionDataDet
     , bRefugeeManaged_             ( false )
     , bDead_                       ( false )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataDetection destructor
@@ -53,12 +51,8 @@ DEC_Knowledge_AgentPerceptionDataDetection::DEC_Knowledge_AgentPerceptionDataDet
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerceptionDataDetection::~DEC_Knowledge_AgentPerceptionDataDetection()
 {
+    // NOTHING
 }
-
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::load
@@ -127,11 +121,6 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
     file << last << current;
 }
 
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::Prepare
 // Created: NLD 2004-11-09
@@ -177,4 +166,123 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Update( const MIL_Agent_ABC& ag
 
     bRefugeeManaged_ = agentPerceived.GetRole< PHY_RoleInterface_Refugee >().IsManaged();
     bDead_           = agentPerceived.IsDead();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::IsDead
+// Created: NLD 2006-02-01
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentPerceptionDataDetection::IsDead() const
+{
+    return bDead_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetTimeLastUpdate
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_AgentPerceptionDataDetection::GetTimeLastUpdate() const
+{
+    return nTimeLastUpdate_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetDirection
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Knowledge_AgentPerceptionDataDetection::GetDirection() const
+{
+    return vDirection_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetSpeed
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentPerceptionDataDetection::GetSpeed() const
+{
+    return rSpeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetPosition
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Knowledge_AgentPerceptionDataDetection::GetPosition() const
+{
+    return vPosition_;
+}
+          
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetAltitude
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentPerceptionDataDetection::GetAltitude() const
+{
+    return rAltitude_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetLastPosture
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+const PHY_Posture& DEC_Knowledge_AgentPerceptionDataDetection::GetLastPosture() const
+{
+    assert( pLastPosture_ );
+    return *pLastPosture_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetCurrentPosture
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+const PHY_Posture& DEC_Knowledge_AgentPerceptionDataDetection::GetCurrentPosture() const
+{
+    assert( pCurrentPosture_ );
+    return *pCurrentPosture_;
+}
+          
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetPostureCompletionPercentage
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentPerceptionDataDetection::GetPostureCompletionPercentage() const
+{
+    return rPostureCompletionPercentage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetVisionVolumes
+// Created: NLD 2004-11-09
+// -----------------------------------------------------------------------------
+const T_ComposanteVolumeSet& DEC_Knowledge_AgentPerceptionDataDetection::GetVisionVolumes() const
+{
+    return visionVolumes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetArmySurrenderedTo
+// Created: NLD 2007-02-14
+// -----------------------------------------------------------------------------
+const MIL_Army* DEC_Knowledge_AgentPerceptionDataDetection::GetArmySurrenderedTo() const
+{
+    return pArmySurrenderedTo_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::IsPrisoner
+// Created: NLD 2005-02-24
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentPerceptionDataDetection::IsPrisoner() const
+{
+    return bPrisoner_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::IsRefugeeManaged
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentPerceptionDataDetection::IsRefugeeManaged() const
+{
+    return bRefugeeManaged_;
 }

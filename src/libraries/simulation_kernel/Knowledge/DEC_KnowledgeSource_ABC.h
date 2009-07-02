@@ -12,8 +12,6 @@
 #ifndef __DEC_KnowledgeSource_ABC_h_
 #define __DEC_KnowledgeSource_ABC_h_
 
-#include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class DEC_KnowledgeBlackBoard_ABC;
@@ -59,6 +57,15 @@ private:
     DEC_KnowledgeBlackBoard_ABC* pBlackBoard_;
 };
 
-#include "DEC_KnowledgeSource_ABC.inl"
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeSource_ABC::serialize
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void DEC_KnowledgeSource_ABC::serialize( Archive& archive, const uint )
+{
+    archive & nPriority_
+            & pBlackBoard_;
+}
 
 #endif // __DEC_KnowledgeSource_ABC_h_

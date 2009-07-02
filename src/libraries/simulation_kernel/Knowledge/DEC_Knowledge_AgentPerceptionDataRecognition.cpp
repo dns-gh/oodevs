@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentPerceptionDataRecognition.h"
-
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -33,6 +32,7 @@ DEC_Knowledge_AgentPerceptionDataRecognition::DEC_Knowledge_AgentPerceptionDataR
     , bIsPC_                 ( false )
     , pAgentType_            ( 0 )
 {
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -41,11 +41,8 @@ DEC_Knowledge_AgentPerceptionDataRecognition::DEC_Knowledge_AgentPerceptionDataR
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerceptionDataRecognition::~DEC_Knowledge_AgentPerceptionDataRecognition()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition::load
@@ -81,10 +78,6 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::save( MIL_CheckPointOutArchiv
          << agentType;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition::Update
 // Created: NLD 2004-11-09
@@ -117,4 +110,58 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::Update( const MIL_Agent_ABC& 
 const MIL_Army_ABC* DEC_Knowledge_AgentPerceptionDataRecognition::GetArmy() const
 {
     return pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetTimeLastUpdate
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_AgentPerceptionDataRecognition::GetTimeLastUpdate() const
+{
+    return nTimeLastUpdate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataRecognition::IsPC
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentPerceptionDataRecognition::IsPC() const
+{
+    return bIsPC_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetAgentType
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+const MIL_AgentType_ABC* DEC_Knowledge_AgentPerceptionDataRecognition::GetAgentType() const
+{
+    return pAgentType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetOperationalState
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentPerceptionDataRecognition::GetOperationalState() const
+{
+    return rOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetMajorOperationalState
+// Created: NLD 2005-11-30
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_AgentPerceptionDataRecognition::GetMajorOperationalState() const
+{
+    return rMajorOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetComposantes
+// Created: NLD 2004-11-10
+// -----------------------------------------------------------------------------
+const T_KnowledgeComposanteVector& DEC_Knowledge_AgentPerceptionDataRecognition::GetComposantes() const
+{
+    return composantes_;
 }

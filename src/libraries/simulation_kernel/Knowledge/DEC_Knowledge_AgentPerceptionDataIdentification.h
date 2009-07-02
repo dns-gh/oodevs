@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_AgentPerceptionDataIdentification_h_
 
 #include "MIL.h"
-
 #include "DEC_Knowledge_Def.h"
 
 class MIL_Agent_ABC;
@@ -53,7 +52,5 @@ private:
           uint               nTimeLastUpdate_;
     const MIL_AgentType_ABC* pAgentType_; // For 'natures'
 };
-
-#include "DEC_Knowledge_AgentPerceptionDataIdentification.inl"
 
 #endif // __DEC_Knowledge_AgentPerceptionDataIdentification_h_

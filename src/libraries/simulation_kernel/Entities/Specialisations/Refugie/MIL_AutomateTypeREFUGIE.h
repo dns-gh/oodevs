@@ -12,8 +12,6 @@
 #ifndef __MIL_AutomateTypeREFUGIE_h_
 #define __MIL_AutomateTypeREFUGIE_h_
 
-#include "MIL.h"
-
 #include "Entities/Automates/MIL_AutomateType.h"
 
 namespace xml
@@ -42,7 +40,5 @@ public:
     static const MIL_AutomateType* Create( const std::string& strName, xml::xistream& xis );
     //@}
 };
-
-#include "MIL_AutomateTypeREFUGIE.inl"
 
 #endif // __MIL_AutomateTypeREFUGIE_h_

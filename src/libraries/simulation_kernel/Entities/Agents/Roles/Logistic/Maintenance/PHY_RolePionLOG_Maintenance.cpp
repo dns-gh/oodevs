@@ -371,7 +371,7 @@ const MT_Vector2D& PHY_RolePionLOG_Maintenance::GetPosition() const
 MIL_AutomateLOG& PHY_RolePionLOG_Maintenance::GetAutomate() const
 {
     assert( pPion_ );
-    return pPion_->GetAutomate();
+    return pPion_->GetLogAutomate();
 }
     
 // =============================================================================
