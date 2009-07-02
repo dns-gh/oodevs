@@ -8,12 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_LimaFunction.h"
-
-// =============================================================================
-// FACTORY
-// =============================================================================
 
 MIL_LimaFunction::T_LimaFunctionMap MIL_LimaFunction::limaFunctions_;
 
@@ -59,10 +54,6 @@ void MIL_LimaFunction::Terminate()
     limaFunctions_.clear();
 }
 
-// =============================================================================
-// INSTANCE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LimaFunction constructor
 // Created: NLD 2006-11-14
@@ -72,6 +63,7 @@ MIL_LimaFunction::MIL_LimaFunction( const ASN1T_EnumLimaType& asn, uint nID, con
     , nID_    ( nID )
     , strName_( strName )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -80,4 +72,47 @@ MIL_LimaFunction::MIL_LimaFunction( const ASN1T_EnumLimaType& asn, uint nID, con
 // -----------------------------------------------------------------------------
 MIL_LimaFunction::~MIL_LimaFunction()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaFunction::Find
+// Created: NLD 2006-11-14
+// -----------------------------------------------------------------------------
+const MIL_LimaFunction* MIL_LimaFunction::Find( const ASN1T_EnumLimaType& asn )
+{
+    CIT_LimaFunctionMap it = limaFunctions_.find( asn );
+    if( it == limaFunctions_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaFunction::Find
+// Created: NLD 2006-11-14
+// -----------------------------------------------------------------------------
+const MIL_LimaFunction* MIL_LimaFunction::Find( uint nID )
+{
+    for( CIT_LimaFunctionMap it = limaFunctions_.begin(); it != limaFunctions_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaFunction::GetID
+// Created: NLD 2006-11-14
+// -----------------------------------------------------------------------------
+uint MIL_LimaFunction::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaFunction::GetAsnID
+// Created: NLD 2006-11-14
+// -----------------------------------------------------------------------------
+ASN1T_EnumLimaType MIL_LimaFunction::GetAsnID() const
+{
+    return nAsnID_;
 }

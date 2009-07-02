@@ -15,8 +15,6 @@
 #include "Network/NET_AsnException.h"
 #include <xeumeuleu/xml.h>
 
-
-
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC constructor
 // Created: NLD 2006-11-19
@@ -47,10 +45,6 @@ MIL_OrderType_ABC::~MIL_OrderType_ABC()
     // NOTHING
 }
 
-// =============================================================================
-// COPY
-// =============================================================================
-    
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC::Copy
 // Created: NLD 2006-11-19
@@ -120,4 +114,32 @@ void MIL_OrderType_ABC::CleanAfterSerialization( ASN1T_MissionParameters& to, co
 
     if( to.n > 0 )
         delete [] to.elem;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC::GetDIAType
+// Created: NLD 2003-04-10
+//-----------------------------------------------------------------------------
+const DIA_TypeDef& MIL_OrderType_ABC::GetDIAType() const
+{
+    assert( pDIAType_ );
+    return *pDIAType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC::GetID
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+uint MIL_OrderType_ABC::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC::GetName
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+const std::string& MIL_OrderType_ABC::GetName() const
+{
+    return strName_;
 }

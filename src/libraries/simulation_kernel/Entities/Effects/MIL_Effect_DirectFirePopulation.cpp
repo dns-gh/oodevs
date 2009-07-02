@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Effect_DirectFirePopulation.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"

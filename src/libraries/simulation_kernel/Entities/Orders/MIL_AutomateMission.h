@@ -10,13 +10,10 @@
 #ifndef __MIL_AutomateMission_h_
 #define __MIL_AutomateMission_h_
 
-#include "MIL.h"
-
 #include "MIL_Mission_ABC.h"
-
 #include "MIL_MissionType_ABC.h"
 
-class MIL_AgentPion;
+class MIL_Automate;
 
 // =============================================================================
 /** @class  MIL_AutomateMission
@@ -42,7 +39,7 @@ public:
 
     //! @name Accessors
     //@{
-                  MIL_Automate&        GetAutomate() const;
+    MIL_Automate& GetAutomate() const;
     //@}
 
     //! @name Operations
@@ -81,7 +78,5 @@ private:
           bool                 bDIAMrtBehaviorActivated_;
           bool                 bDIACdtBehaviorActivated_;
 };
-
-#include "MIL_AutomateMission.inl"
 
 #endif // __MIL_AutomateMission_h_

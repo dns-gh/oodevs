@@ -10,8 +10,6 @@
 #ifndef __MIL_OrderType_ABC_h_
 #define __MIL_OrderType_ABC_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -70,7 +68,5 @@ private:
     const DIA_TypeDef*             pDIAType_;
           T_MissionParameterVector parameters_;
 };
-
-#include "MIL_OrderType_ABC.inl"
 
 #endif // __MIL_OrderType_ABC_h_

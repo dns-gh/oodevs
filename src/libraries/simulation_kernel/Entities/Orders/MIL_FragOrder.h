@@ -10,8 +10,6 @@
 #ifndef __MIL_FragOrder_h_
 #define __MIL_FragOrder_h_
 
-#include "MIL.h"
-
 class MIL_FragOrderType;
 class DEC_KnowledgeResolver_ABC;
 class DEC_Representations;
@@ -51,7 +49,5 @@ private:
     const MIL_FragOrderType&   type_;
           DEC_Representations& diaEngine_;
 };
-
-#include "MIL_FragOrder.inl"
 
 #endif // __MIL_FragOrder_h_

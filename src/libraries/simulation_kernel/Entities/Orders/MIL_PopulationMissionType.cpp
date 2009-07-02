@@ -11,14 +11,8 @@
 #include "MIL_PopulationMissionType.h"
 #include <xeumeuleu/xml.h>
 
-
-
 MIL_MissionType_ABC::T_MissionIDMap   MIL_PopulationMissionType::missionIDs_;
 MIL_MissionType_ABC::T_MissionNameMap MIL_PopulationMissionType::missionNames_;
-
-// =============================================================================
-// FACTORY
-// =============================================================================
 
 struct MIL_PopulationMissionType::LoadingWrapper
 {
@@ -65,10 +59,6 @@ MIL_PopulationMissionType::~MIL_PopulationMissionType()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationMissionType::IsAvailableForModel
 // Created: NLD 2006-11-21
@@ -76,4 +66,46 @@ MIL_PopulationMissionType::~MIL_PopulationMissionType()
 bool MIL_PopulationMissionType::IsAvailableForModel( const DIA_Model& model ) const
 {
     return IsMissionAvailableForModel( model, strDIABehavior_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateMissionType::Find
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+const MIL_MissionType_ABC* MIL_PopulationMissionType::Find( uint nID )
+{
+    CIT_MissionIDMap it = missionIDs_.find( nID );
+    if( it == missionIDs_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateMissionType::Find
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+const MIL_MissionType_ABC* MIL_PopulationMissionType::Find( const std::string& strName )
+{
+    CIT_MissionNameMap it = missionNames_.find( strName );
+    if( it == missionNames_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationMissionType::GetDIABehavior
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+const std::string& MIL_PopulationMissionType::GetDIABehavior( Phase ) const
+{
+    return strDIABehavior_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationMissionType::MissionNames
+// Created: LDC 2009-02-24
+// -----------------------------------------------------------------------------
+MIL_MissionType_ABC::T_MissionNameMap& MIL_PopulationMissionType::MissionNames()
+{
+    return missionNames_;
 }

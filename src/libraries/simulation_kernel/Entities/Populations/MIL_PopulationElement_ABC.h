@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-28 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __MIL_PopulationElement_ABC_h_
 #define __MIL_PopulationElement_ABC_h_
@@ -163,7 +154,5 @@ private:
 private:
     static MT_Random randomGenerator_;
 };
-
-#include "MIL_PopulationElement_ABC.inl"
 
 #endif // __MIL_PopulationElement_ABC_h_

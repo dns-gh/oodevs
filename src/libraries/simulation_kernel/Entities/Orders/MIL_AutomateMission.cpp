@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AutomateMission.h"
-
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
@@ -41,6 +39,7 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +52,7 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -65,6 +65,7 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +78,7 @@ MIL_AutomateMission::MIL_AutomateMission( MIL_Automate& automate, const MIL_Auto
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -87,10 +89,6 @@ MIL_AutomateMission::~MIL_AutomateMission()
 {
     Stop();
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission::CreateCopy
@@ -109,10 +107,6 @@ bool MIL_AutomateMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrd
 {
     return automate_.GetType().GetModel().IsFragOrderAvailableForMission( GetType(), fragOrderType );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission::Start
@@ -160,10 +154,6 @@ void MIL_AutomateMission::GoToCdt()
     bDIACdtBehaviorActivated_ = true;
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission::SendNoMission
 // Created: NLD 2007-04-25
@@ -204,4 +194,13 @@ void MIL_AutomateMission::Send() const
 void MIL_AutomateMission::AffectDirection( const MT_Vector2D& direction )
 {
     MIL_Mission_ABC::AffectDirection( direction );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateMission::GetAutomate
+// Created: NLD 2007-04-03
+// -----------------------------------------------------------------------------
+MIL_Automate& MIL_AutomateMission::GetAutomate() const
+{
+    return automate_;
 }

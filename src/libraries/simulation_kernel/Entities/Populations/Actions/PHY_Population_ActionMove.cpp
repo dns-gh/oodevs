@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Population_ActionMove.h"
-
 #include "Entities/Populations/MIL_Population.h"
 #include "Decision/DEC_Tools.h"
 
@@ -41,10 +39,6 @@ PHY_Population_ActionMove::~PHY_Population_ActionMove()
 {
     //diaReturnCode_.SetValue( PHY_RoleAction_Moving::eFinished );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Population_ActionMove::Execute

@@ -12,8 +12,6 @@
 #ifndef __MIL_Effect_Weather_h_
 #define __MIL_Effect_Weather_h_
 
-#include "MIL.h"
-
 #include "MIL_Effect_ABC.h"
 #include "MT_Tools/MT_Ellipse.h"
 
@@ -50,7 +48,5 @@ private:
     const uint                           nLifeLastTimeStep_;
           bool                           bIsDeployed_;
 };
-
-#include "MIL_Effect_Weather.inl"
 
 #endif // __MIL_Effect_Weather_h_

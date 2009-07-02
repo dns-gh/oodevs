@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-29 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Effects/MIL_Effect_HLAIndirectFire.h $
-// $Author: Age $
-// $Modtime: 29/11/04 15:44 $
-// $Revision: 1 $
-// $Workfile: MIL_Effect_HLAIndirectFire.h $
-//
-// *****************************************************************************
 
 #ifndef __MIL_Effect_HLAIndirectFire_h_
 #define __MIL_Effect_HLAIndirectFire_h_

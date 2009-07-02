@@ -10,8 +10,6 @@
 #ifndef __MIL_PopulationMissionType_h_
 #define __MIL_PopulationMissionType_h_
 
-#include "MIL.h"
-
 #include "MIL_MissionType_ABC.h"
 
 namespace xml
@@ -66,7 +64,5 @@ private:
     static T_MissionIDMap   missionIDs_;
     static T_MissionNameMap missionNames_;
 };
-
-#include "MIL_PopulationMissionType.inl"
 
 #endif // __MIL_PopulationMissionType_h_

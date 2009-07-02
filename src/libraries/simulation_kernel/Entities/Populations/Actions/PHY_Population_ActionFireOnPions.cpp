@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Population_ActionFireOnPions.h"
-
 #include "Entities/Populations/MIL_Population.h"
 #include "Decision/DEC_Tools.h"
 
@@ -35,11 +33,8 @@ PHY_Population_ActionFireOnPions::PHY_Population_ActionFireOnPions( MIL_Populati
 // -----------------------------------------------------------------------------
 PHY_Population_ActionFireOnPions::~PHY_Population_ActionFireOnPions()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Population_ActionFireOnPions::Execute

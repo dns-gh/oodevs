@@ -10,10 +10,7 @@
 #ifndef __MIL_PopulationMission_h_
 #define __MIL_PopulationMission_h_
 
-#include "MIL.h"
-
 #include "MIL_Mission_ABC.h"
-
 #include "MIL_MissionType_ABC.h"
 
 class MIL_Population;
@@ -57,10 +54,8 @@ private:
     //@}
 
 private:
-          MIL_Population&      population_;
-          bool                 bDIABehaviorActivated_;
+    MIL_Population& population_;
+    bool            bDIABehaviorActivated_;
 };
-
-#include "MIL_PopulationMission.inl"
 
 #endif // __MIL_PopulationMission_h_

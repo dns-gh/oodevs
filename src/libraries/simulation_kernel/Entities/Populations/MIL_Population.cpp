@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Population.h"
-
 #include "MIL_PopulationType.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationFlow.h"
@@ -1103,4 +1102,101 @@ uint MIL_Population::GetBoundedPeople( MT_Float rPeople )
     if( pPeopleCounter_->nPeople_ < 0. )
         pPeopleCounter_->nPeople_ = 0;
     return nResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetKnowledge
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+const DEC_PopulationKnowledge& MIL_Population::GetKnowledge() const
+{
+    assert( pKnowledge_ );
+    return *pKnowledge_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetDefaultAttitude
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+const MIL_PopulationAttitude& MIL_Population::GetDefaultAttitude() const
+{
+    assert( pDefaultAttitude_ );
+    return *pDefaultAttitude_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetID
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+uint MIL_Population::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetType
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+const MIL_PopulationType& MIL_Population::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetOrderManager
+// Created: NLD 2005-09-29
+// -----------------------------------------------------------------------------
+const MIL_PopulationOrderManager& MIL_Population::GetOrderManager() const
+{
+    return orderManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetOrderManager
+// Created: NLD 2005-09-29
+// -----------------------------------------------------------------------------
+MIL_PopulationOrderManager& MIL_Population::GetOrderManager()
+{
+    return orderManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetArmy
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+const MIL_Army& MIL_Population::GetArmy() const
+{
+    assert( pArmy_ );
+    return *pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetPionMaxSpeed
+// Created: NLD 2005-10-24
+// -----------------------------------------------------------------------------
+void MIL_Population::SetPionMaxSpeed( MT_Float rSpeed )
+{
+    assert( rSpeed >= 0. );
+    bPionMaxSpeedOverloaded_ = true;
+    rOverloadedPionMaxSpeed_ = rSpeed;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::ResetPionMaxSpeed
+// Created: NLD 2005-10-24
+// -----------------------------------------------------------------------------
+void MIL_Population::ResetPionMaxSpeed()
+{
+    bPionMaxSpeedOverloaded_ = false;
+    rOverloadedPionMaxSpeed_ = 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::HasDoneMagicMove
+// Created: NLD 2005-12-07
+// -----------------------------------------------------------------------------
+bool MIL_Population::HasDoneMagicMove() const
+{
+    return bHasDoneMagicMove_;
 }

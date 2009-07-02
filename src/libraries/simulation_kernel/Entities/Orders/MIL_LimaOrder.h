@@ -10,8 +10,6 @@
 #ifndef __MIL_LimaOrder_h_
 #define __MIL_LimaOrder_h_
 
-#include "MIL.h"
-
 class MIL_LimaFunction;
 
 // =============================================================================
@@ -32,8 +30,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_LimaOrder( const ASN1T_LimaOrder& asn );
-    ~MIL_LimaOrder();
+    explicit MIL_LimaOrder( const ASN1T_LimaOrder& asn );
+            ~MIL_LimaOrder();
     //@}
 
     //! @name Operations
@@ -76,6 +74,8 @@ private:
     static uint nNextID_;
 };
 
-#include "MIL_LimaOrder.inl"
+typedef std::vector< MIL_LimaOrder  > T_LimaVector;
+typedef T_LimaVector::iterator        IT_LimaVector;
+typedef T_LimaVector::const_iterator  CIT_LimaVector;
 
 #endif // __MIL_LimaOrder_h_

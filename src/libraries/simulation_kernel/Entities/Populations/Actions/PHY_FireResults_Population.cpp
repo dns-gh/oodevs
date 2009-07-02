@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_FireResults_Population.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_ASN_Messages.h"

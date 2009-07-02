@@ -15,8 +15,6 @@
 #include "Network/NET_AsnException.h"
 #include <xeumeuleu/xml.h>
 
-
-
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderTypeParameter constructor
 // Created: SBO 2008-03-03

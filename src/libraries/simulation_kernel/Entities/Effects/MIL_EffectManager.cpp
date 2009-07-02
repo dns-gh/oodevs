@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_EffectManager.h"
-
 #include "MIL_Effect_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -21,7 +19,7 @@
 // -----------------------------------------------------------------------------
 MIL_EffectManager::MIL_EffectManager()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,12 +28,8 @@ MIL_EffectManager::MIL_EffectManager()
 // -----------------------------------------------------------------------------
 MIL_EffectManager::~MIL_EffectManager()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EffectManager::Register
@@ -56,17 +50,12 @@ void MIL_EffectManager::Update()
     for( IT_EffectSet it = effects_.begin(); it != effects_.end(); )
     {
         MIL_Effect_ABC& effect = **it;
-        bool bContinueEffect = effect.Execute();
-        if( bContinueEffect )
+        if( effect.Execute() )
             ++it;
         else
             it = effects_.erase( it );
     }
 }
-
-// =============================================================================
-// FLYING SHELLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EffectManager::RegisterFlyingShell
@@ -88,3 +77,11 @@ void MIL_EffectManager::UnregisterFlyingShell( const MIL_Effect_IndirectFire& ef
     assert( nOut == 1 );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EffectManager::GetFlyingShells
+// Created: NLD 2005-02-21
+// -----------------------------------------------------------------------------
+const MIL_EffectManager::T_FlyingShellSet& MIL_EffectManager::GetFlyingShells() const
+{
+    return flyingShells_;
+}

@@ -10,11 +10,9 @@
 #ifndef __MIL_OrderContext_h_
 #define __MIL_OrderContext_h_
 
-#include "MIL.h"
 #include "MIL_Fuseau.h"
 #include "MIL_LimaOrder.h"
 
-class MIL_LimaOrder;
 class MIL_LimaFunction;
 class MIL_IntelligenceOrder;
 class MIL_IntelligenceOrdersVisitor_ABC;
@@ -88,7 +86,5 @@ private:
     MIL_Fuseau           fuseau_;
     MT_Vector2D          dirDanger_;
 };
-
-#include "MIL_OrderContext.inl"
 
 #endif // __MIL_OrderContext_h_

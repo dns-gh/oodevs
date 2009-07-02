@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Effect_Weather.h"
-
 #include "MIL_AgentServer.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
@@ -44,10 +42,6 @@ MIL_Effect_Weather::~MIL_Effect_Weather()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_Weather::Execute
 // Created: NLD 2004-09-23
@@ -69,13 +63,8 @@ bool MIL_Effect_Weather::Execute()
         delete this;
         return false;
     }
-    
     return true; 
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Effect_Weather::SendMsgStartEffect

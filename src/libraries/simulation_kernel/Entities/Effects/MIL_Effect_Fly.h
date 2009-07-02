@@ -12,8 +12,6 @@
 #ifndef __MIL_Effect_Fly_h_
 #define __MIL_Effect_Fly_h_
 
-#include "MIL.h"
-
 #include "MIL_Effect_ABC.h"
 
 class PHY_RoleAction_InterfaceFlying;
@@ -26,7 +24,7 @@ class MIL_Effect_Fly : public MIL_Effect_ABC
 {
 
 public:
-    MIL_Effect_Fly( PHY_RoleAction_InterfaceFlying& roleFlying );
+    explicit MIL_Effect_Fly( PHY_RoleAction_InterfaceFlying& roleFlying );
     virtual ~MIL_Effect_Fly();
 
     //! @name Operations
@@ -40,7 +38,5 @@ private:
     PHY_RoleAction_InterfaceFlying& roleFlying_;
     MT_Float                        rHeight_;
 };
-
-#include "MIL_Effect_Fly.inl"
 
 #endif // __MIL_Effect_Fly_h_

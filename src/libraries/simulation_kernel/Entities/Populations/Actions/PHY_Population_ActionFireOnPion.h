@@ -12,8 +12,6 @@
 #ifndef __PHY_Population_ActionFireOnPion_h_
 #define __PHY_Population_ActionFireOnPion_h_
 
-#include "MIL.h"
-
 #include "PHY_FireResults_Population.h"
 #include "Entities/Actions/PHY_Action_ABC.h"
 
@@ -46,7 +44,5 @@ private:
     const MT_Float             rIntensity_;
     MIL_Agent_ABC*             pTarget_;
 };
-
-#include "PHY_Population_ActionFireOnPion.inl"
 
 #endif // __PHY_Population_ActionFireOnPion_h_

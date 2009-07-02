@@ -12,8 +12,6 @@
 #ifndef __MIL_PopulationType_h_
 #define __MIL_PopulationType_h_
 
-#include "MIL.h"
-
 #include "MIL_PopulationPionAttritionData.h"
 
 namespace xml
@@ -139,7 +137,5 @@ private:
     static MT_Float        rEffectReloadingTimeDensity_;
     static MT_Float        rEffectReloadingTimeFactor_;    
 };
-
-#include "MIL_PopulationType.inl"
 
 #endif // __MIL_PopulationType_h_

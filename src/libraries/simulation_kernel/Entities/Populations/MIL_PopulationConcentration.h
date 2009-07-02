@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-28 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __MIL_PopulationConcentration_h_
 #define __MIL_PopulationConcentration_h_
@@ -44,7 +35,7 @@ class MIL_PopulationConcentration : public MIL_PopulationElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
+     MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
      MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position );
      MIL_PopulationConcentration();
     ~MIL_PopulationConcentration();
@@ -136,7 +127,5 @@ private:
     const MIL_Object_ABC* pSplittingObject_;
     MT_Float                  rPullingFlowsDensity_;
 };
-
-#include "MIL_PopulationConcentration.inl"
 
 #endif // __MIL_PopulationConcentration_h_

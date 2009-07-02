@@ -12,8 +12,6 @@
 #ifndef __MIL_Effect_DirectFirePopulation_h_
 #define __MIL_Effect_DirectFirePopulation_h_
 
-#include "MIL.h"
-
 #include "MIL_Effect_ABC.h"
 
 class MIL_PopulationElement_ABC;
@@ -40,7 +38,5 @@ private:
     const uint                       nNbrAmmoFired_;
           PHY_FireResults_ABC&       fireResult_;
 };
-
-#include "MIL_Effect_DirectFirePopulation.inl"
 
 #endif // __MIL_Effect_DirectFirePopulation_h_

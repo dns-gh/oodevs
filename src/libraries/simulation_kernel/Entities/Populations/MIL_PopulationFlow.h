@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-28 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __MIL_PopulationFlow_h_
 #define __MIL_PopulationFlow_h_
@@ -175,7 +166,5 @@ private:
     // Split
     const MIL_Object_ABC* pSplittingObject_;
 };
-
-#include "MIL_PopulationFlow.inl"
 
 #endif // __MIL_PopulationFlow_h_

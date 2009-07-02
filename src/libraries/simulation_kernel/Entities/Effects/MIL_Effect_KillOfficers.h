@@ -12,11 +12,8 @@
 #ifndef __MIL_Effect_KillOfficers_h_
 #define __MIL_Effect_KillOfficers_h_
 
-#include "MIL.h"
-
 #include "MIL_Effect_ABC.h"
 
-class PHY_Composante_ABC;
 class MIL_Agent_ABC;
 
 // =============================================================================
@@ -27,7 +24,7 @@ class MIL_Effect_KillOfficers : public MIL_Effect_ABC
 {
 
 public:
-             MIL_Effect_KillOfficers( MIL_Agent_ABC& target );
+    explicit MIL_Effect_KillOfficers( MIL_Agent_ABC& target );
     virtual ~MIL_Effect_KillOfficers();
 
     //! @name Operations

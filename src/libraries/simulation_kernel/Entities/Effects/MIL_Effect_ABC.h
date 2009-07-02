@@ -12,8 +12,6 @@
 #ifndef __MIL_Effect_ABC_h_
 #define __MIL_Effect_ABC_h_
 
-#include "MIL.h"
-
 // =============================================================================
 // @class  MIL_Effect_ABC
 // Created: JVT 2004-08-03
@@ -22,15 +20,13 @@ class MIL_Effect_ABC : private boost::noncopyable
 {
 
 public:
-             MIL_Effect_ABC();
-    virtual ~MIL_Effect_ABC();
+             MIL_Effect_ABC() {}
+    virtual ~MIL_Effect_ABC() {}
 
     //! @name Operations
     //@{
     virtual bool Execute() = 0;
     //@}
 };
-
-#include "MIL_Effect_ABC.inl"
 
 #endif // __MIL_Effect_ABC_h_

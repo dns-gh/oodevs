@@ -12,8 +12,6 @@
 #ifndef __MIL_Effect_PopulationFire_h_
 #define __MIL_Effect_PopulationFire_h_
 
-#include "MIL.h"
-
 #include "MIL_Effect_ABC.h"
 
 class MIL_Agent_ABC;
@@ -45,7 +43,5 @@ private:
           PHY_Composante_ABC&     compTarget_;
           PHY_FireResults_ABC&    fireResult_;
 };
-
-#include "MIL_Effect_PopulationFire.inl"
 
 #endif // __MIL_Effect_PopulationFire_h_

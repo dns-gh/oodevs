@@ -12,8 +12,6 @@
 #ifndef __MIL_EffectManager_h_
 #define __MIL_EffectManager_h_
 
-#include "MIL.h"
-
 class MIL_Effect_ABC;
 class MIL_Effect_IndirectFire;
 
@@ -59,7 +57,5 @@ private:
     T_EffectSet      effects_;
     T_FlyingShellSet flyingShells_;
 };
-
-#include "MIL_EffectManager.inl"
 
 #endif // __MIL_EffectManager_h_

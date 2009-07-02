@@ -10,7 +10,6 @@
 #ifndef __MIL_Mission_ABC_h_
 #define __MIL_Mission_ABC_h_
 
-#include "MIL.h"
 #include "MIL_OrderContext.h"
 
 class MIL_MissionType_ABC;
@@ -74,7 +73,5 @@ private:
     const MIL_MissionType_ABC&       type_;
           MIL_OrderContext           context_;
 };
-
-#include "MIL_Mission_ABC.inl"
 
 #endif // __MIL_Mission_ABC_h_

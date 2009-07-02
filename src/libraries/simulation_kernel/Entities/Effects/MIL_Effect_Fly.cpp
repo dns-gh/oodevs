@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Effect_Fly.h"
-
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 
 // -----------------------------------------------------------------------------
@@ -24,7 +22,7 @@ MIL_Effect_Fly::MIL_Effect_Fly( PHY_RoleAction_InterfaceFlying& roleFlying )
     , roleFlying_   ( roleFlying )
     , rHeight_      ( 0. )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,12 +31,8 @@ MIL_Effect_Fly::MIL_Effect_Fly( PHY_RoleAction_InterfaceFlying& roleFlying )
 // -----------------------------------------------------------------------------
 MIL_Effect_Fly::~MIL_Effect_Fly()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_Fly::Execute
@@ -48,4 +42,13 @@ bool MIL_Effect_Fly::Execute()
 {
     roleFlying_.Apply( rHeight_ );
     return false; // Effect must be stopped
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_Fly::SetFlyingHeight
+// Created: JVT 2004-11-02
+// -----------------------------------------------------------------------------
+void MIL_Effect_Fly::SetFlyingHeight( MT_Float rHeight )
+{
+    rHeight_ = rHeight;
 }

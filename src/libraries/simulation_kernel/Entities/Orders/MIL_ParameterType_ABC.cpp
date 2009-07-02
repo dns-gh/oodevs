@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_ParameterType_ABC.h"
-
 #include "MIL_ParameterType_Bool.h"
 #include "MIL_ParameterType_Enumeration.h"
 #include "MIL_ParameterType_Point.h"
@@ -128,3 +126,23 @@ MIL_ParameterType_ABC::~MIL_ParameterType_ABC()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_ParameterType_ABC::Find
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+const MIL_ParameterType_ABC* MIL_ParameterType_ABC::Find( const std::string& strName )
+{
+    CIT_ParameterMap it = parameters_.find( strName );
+    if( it == parameters_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ParameterType_ABC::GetName
+// Created: NLD 2006-12-05
+// -----------------------------------------------------------------------------
+const std::string& MIL_ParameterType_ABC::GetName() const
+{
+    return strName_;
+}

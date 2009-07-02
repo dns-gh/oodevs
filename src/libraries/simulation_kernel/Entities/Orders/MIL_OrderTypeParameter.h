@@ -10,8 +10,6 @@
 #ifndef __MIL_OrderTypeParameter_h_
 #define __MIL_OrderTypeParameter_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;

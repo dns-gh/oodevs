@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Effect_KillOfficers.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
@@ -21,8 +20,9 @@
 // Created: SBO 2005-12-21
 // -----------------------------------------------------------------------------
 MIL_Effect_KillOfficers::MIL_Effect_KillOfficers( MIL_Agent_ABC& target )
-    : target_  ( target     )
+    : target_( target )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +31,7 @@ MIL_Effect_KillOfficers::MIL_Effect_KillOfficers( MIL_Agent_ABC& target )
 // -----------------------------------------------------------------------------
 MIL_Effect_KillOfficers::~MIL_Effect_KillOfficers()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

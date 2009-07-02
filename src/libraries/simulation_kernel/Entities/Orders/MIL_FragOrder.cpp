@@ -66,4 +66,3 @@ void MIL_FragOrder::Launch()
 {
     diaEngine_.AddToCategory( "ordres_recus", this );
 }
-

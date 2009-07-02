@@ -12,8 +12,6 @@
 #ifndef __PHY_Population_ActionMove_h_
 #define __PHY_Population_ActionMove_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class MIL_Population;
@@ -43,7 +41,5 @@ private:
     //DIA_Variable_ABC&      diaReturnCode_;
     MT_Vector2D            destination_;
 };
-
-#include "PHY_Population_ActionMove.inl"
 
 #endif // __PHY_Population_ActionMove_h_

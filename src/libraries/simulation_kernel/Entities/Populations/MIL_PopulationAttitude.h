@@ -12,8 +12,6 @@
 #ifndef __MIL_PopulationAttitude_h_
 #define __MIL_PopulationAttitude_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 // =============================================================================
@@ -83,7 +81,5 @@ private:
 private:
     static T_AttitudeMap attitudes_;
 };
-
-#include "MIL_PopulationAttitude.inl"
 
 #endif // __MIL_PopulationAttitude_h_

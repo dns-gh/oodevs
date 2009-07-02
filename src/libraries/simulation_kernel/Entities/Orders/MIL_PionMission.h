@@ -10,8 +10,6 @@
 #ifndef __MIL_PionMission_h_
 #define __MIL_PionMission_h_
 
-#include "MIL.h"
-
 #include "MIL_Mission_ABC.h"
 
 class MIL_MissionType_ABC;
@@ -42,7 +40,7 @@ public:
 
     //! @name Accessors
     //@{
-                  MIL_AgentPion&       GetPion() const;
+    MIL_AgentPion& GetPion() const;
     //@}
 
     //! @name Operations
@@ -71,10 +69,8 @@ private:
     //@}
 
 private:
-          MIL_AgentPion&       pion_;
-          bool                 bDIABehaviorActivated_;
+    MIL_AgentPion& pion_;
+    bool           bDIABehaviorActivated_;
 };
-
-#include "MIL_PionMission.inl"
 
 #endif // __MIL_PionMission_h_

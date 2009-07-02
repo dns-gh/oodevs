@@ -12,8 +12,6 @@
 #ifndef __MIL_Effect_Move_h_
 #define __MIL_Effect_Move_h_
 
-#include "MIL.h"
-
 #include "MIL_Effect_ABC.h"
 
 class DEC_PathWalker;
@@ -26,7 +24,7 @@ class MIL_Effect_Move : public MIL_Effect_ABC
 {
 
 public:
-             MIL_Effect_Move( DEC_PathWalker& roleMoving );
+    explicit MIL_Effect_Move( DEC_PathWalker& roleMoving );
     virtual ~MIL_Effect_Move();
 
     //! @name Operations
@@ -37,7 +35,5 @@ public:
 private:
     DEC_PathWalker& roleMoving_;
 };
-
-#include "MIL_Effect_Move.inl"
 
 #endif // __MIL_Effect_Move_h_

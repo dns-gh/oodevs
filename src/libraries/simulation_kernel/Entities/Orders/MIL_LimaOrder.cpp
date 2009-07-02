@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_LimaOrder.h"
-
 #include "MIL_LimaFunction.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
@@ -48,12 +46,8 @@ MIL_LimaOrder::MIL_LimaOrder( const ASN1T_LimaOrder& asn )
 // -----------------------------------------------------------------------------
 MIL_LimaOrder::~MIL_LimaOrder()
 {
+    // NOTHING
 }
-
-
-// =============================================================================
-// GEOMETRY
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: MIL_LimaOrder::Intersect2D
@@ -100,10 +94,6 @@ bool MIL_LimaOrder::Intersect2D( const T_PointVector& polyline, T_PointSet& inte
     return !intersectionSet.empty();
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LimaOrder::Serialize
 // Created: NLD 2006-11-14
@@ -121,4 +111,85 @@ void MIL_LimaOrder::Serialize( ASN1T_LimaOrder& asn ) const
         for( CIT_LimaFunctions it = functions_.begin(); it != functions_.end(); ++it )
             asn.fonctions.elem[ i++ ] = (**it).GetAsnID();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::HasFunction
+// Created: NLD 2006-11-14
+// -----------------------------------------------------------------------------
+bool MIL_LimaOrder::HasFunction( const MIL_LimaFunction& function ) const
+{
+    return functions_.find( &function ) != functions_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::GetPoints
+// Created: NLD 2006-11-14
+// -----------------------------------------------------------------------------
+const T_PointVector& MIL_LimaOrder::GetPoints() const
+{
+    return points_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::GetSchedule
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+uint MIL_LimaOrder::GetSchedule() const
+{
+    return nSchedule_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::FlagSchedule
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+void MIL_LimaOrder::FlagSchedule( bool bFlag )
+{
+    bScheduleFlag_ = bFlag;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::IsScheduleFlagged
+// Created: NLD 2007-04-24
+// -----------------------------------------------------------------------------
+bool MIL_LimaOrder::IsScheduleFlagged() const
+{
+    return bScheduleFlag_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::Flag
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+void MIL_LimaOrder::Flag( bool bFlag )
+{
+    bFlag_ = bFlag;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::IsFlagged
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+bool MIL_LimaOrder::IsFlagged() const
+{
+    return bFlag_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::GetID
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+uint MIL_LimaOrder::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::GetFunctions
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+const MIL_LimaOrder::T_LimaFunctions& MIL_LimaOrder::GetFunctions() const
+{
+    return functions_;
 }

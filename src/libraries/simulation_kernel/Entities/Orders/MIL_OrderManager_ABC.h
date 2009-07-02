@@ -12,7 +12,7 @@
 #ifndef __MIL_OrderManager_ABC_h_
 #define __MIL_OrderManager_ABC_h_
 
-#include "MIL.h"
+#include "MIL_LimaOrder.h"
 
 class MIL_KnowledgeGroup;
 class MIL_Mission_ABC;
@@ -28,7 +28,7 @@ class MIL_OrderManager_ABC : private boost::noncopyable
 {
 
 public:
-    MIL_OrderManager_ABC();
+             MIL_OrderManager_ABC();
     virtual ~MIL_OrderManager_ABC();
 
    // @name Main
@@ -73,7 +73,5 @@ private:
     MIL_Mission_ABC* pNextMission_;
     bool             bNewMissionStarted_;
 };
-
-#include "MIL_OrderManager_ABC.inl"
 
 #endif // __MIL_OrderManager_ABC_h_

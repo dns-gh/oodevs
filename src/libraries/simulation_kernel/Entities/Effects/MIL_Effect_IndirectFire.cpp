@@ -10,10 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Effect_IndirectFire.h"
 #include "MIL_AgentServer.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponDataType_IndirectFire.h"
@@ -79,10 +77,6 @@ MIL_Effect_IndirectFire::~MIL_Effect_IndirectFire()
     StopFlying();
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_IndirectFire::UpdateTargetPositionFromKnowledge
 // Created: NLD 2004-10-11
@@ -138,10 +132,6 @@ void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_Indirect
     if( indirectDotationCategory_.ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
         StartFlying();
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_IndirectFire::Execute
@@ -246,3 +236,69 @@ uint MIL_Effect_IndirectFire::GetFireID() const
     assert( pFireResult_ );
     return pFireResult_->GetID();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::GetIndirectDotationCategory
+// Created: NLD 2006-08-07
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory_IndirectFire_ABC& MIL_Effect_IndirectFire::GetIndirectDotationCategory() const
+{
+    return indirectDotationCategory_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::IsTargetValid
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+bool MIL_Effect_IndirectFire::IsTargetValid() const
+{
+    return vTargetPosition_.rX_ != -1. && vTargetPosition_.rY_ != -1.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::IsInterventionTypeFired
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+bool MIL_Effect_IndirectFire::IsInterventionTypeFired() const
+{
+    return bFired_ || GetNbrAmmoToCompleteInterventionType() == 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::IncRef
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+void MIL_Effect_IndirectFire::IncRef()
+{
+    ++nNbrRefs_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::DecRef
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+void MIL_Effect_IndirectFire::DecRef()
+{
+    assert( nNbrRefs_ > 0 );
+    if( --nNbrRefs_ == 0 )
+        delete this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::ForceFlying
+// Created: NLD 2004-10-12
+// -----------------------------------------------------------------------------
+void MIL_Effect_IndirectFire::ForceFlying()
+{
+    StartFlying();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::GetNbrAmmoFired
+// Created: NLD 2004-10-12
+// -----------------------------------------------------------------------------
+uint MIL_Effect_IndirectFire::GetNbrAmmoFired() const
+{
+    return nNbrAmmoFired_;
+}
+

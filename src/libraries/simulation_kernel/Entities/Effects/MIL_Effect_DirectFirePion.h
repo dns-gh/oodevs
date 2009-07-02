@@ -12,8 +12,6 @@
 #ifndef __MIL_Effect_DirectFirePion_h_
 #define __MIL_Effect_DirectFirePion_h_
 
-#include "MIL.h"
-
 #include "MIL_Effect_ABC.h"
 
 class PHY_DotationCategory;
@@ -43,7 +41,5 @@ private:
           PHY_Composante_ABC&   compTarget_;
           PHY_FireResults_ABC&  fireResult_;
 };
-
-#include "MIL_Effect_DirectFirePion.inl"
 
 #endif // __MIL_Effect_DirectFirePion_h_

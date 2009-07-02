@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_PionMission.h"
-
 #include "MIL_AutomateMission.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -39,6 +37,7 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +48,8 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
     : MIL_Mission_ABC       ( type, pion.GetKnowledge(), parent )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
-{   
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,8 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
     : MIL_Mission_ABC       ( type, pion.GetKnowledge() )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
-{  
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +73,7 @@ MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rh
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -82,10 +84,6 @@ MIL_PionMission::~MIL_PionMission()
 {
     Stop();
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionMission::CreateCopy
@@ -104,10 +102,6 @@ bool MIL_PionMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderTy
 {
     return pion_.GetType().GetModel().IsFragOrderAvailableForMission( GetType(), fragOrderType );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionMission::Start
@@ -135,10 +129,6 @@ void MIL_PionMission::Stop()
     }
     SendNoMission( pion_ );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionMission::SendNoMission
@@ -175,4 +165,13 @@ void MIL_PionMission::Send() const
 void MIL_PionMission::AffectDirection( const MT_Vector2D& direction )
 {
     MIL_Mission_ABC::AffectDirection( direction );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMission::GetPion
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+MIL_AgentPion& MIL_PionMission::GetPion() const
+{
+    return pion_;
 }

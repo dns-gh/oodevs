@@ -11,7 +11,6 @@
 #ifndef __MIL_Fuseau_h_
 #define __MIL_Fuseau_h_
 
-#include "MIL.h"
 #include "simulation_terrain/TER_Polygon.h"
 
 class TER_Localisation;
@@ -131,7 +130,5 @@ private:
 private:
     static uint nNbrMeterPerSample_;
 };
-
-#include "MIL_Fuseau.inl"
 
 #endif // __MIL_Fuseau_h_

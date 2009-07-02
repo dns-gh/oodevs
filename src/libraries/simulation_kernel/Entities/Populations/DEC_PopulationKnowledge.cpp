@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_PopulationKnowledge.h"
-
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_PopulationKnowledge, "DEC_PopulationKnowledge" )
@@ -31,7 +29,7 @@ DEC_PopulationKnowledge::DEC_PopulationKnowledge()
     , bNewChannelingChanged_ ( false )
     , bChannelingChanged_    ( false )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,12 +38,9 @@ DEC_PopulationKnowledge::DEC_PopulationKnowledge()
 // -----------------------------------------------------------------------------
 DEC_PopulationKnowledge::~DEC_PopulationKnowledge()
 {
-
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
@@ -96,10 +91,6 @@ void DEC_PopulationKnowledge::serialize( Archive& file, const uint )
          //& newChannelingLocations_;
 }
 
-// =============================================================================
-// MAIN
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::Update
 // Created: NLD 2005-12-01
@@ -146,10 +137,6 @@ void DEC_PopulationKnowledge::GetPionsSecuring( T_PopulationKnowledgeAgentDiaIDV
     for( CIT_AgentSet it = securers_.begin(); it != securers_.end(); ++it )
         container.push_back( (void*)(**it).GetID() );
 }
-
-// =============================================================================
-// RESOLVER
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
@@ -230,4 +217,52 @@ DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( c
 DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( uint /*nID*/ ) const
 {
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::NotifyAttackedBy
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+void DEC_PopulationKnowledge::NotifyAttackedBy( const MIL_Agent_ABC& attacker )
+{
+    newAttackers_.insert( & attacker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::NotifySecuredBy
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+void DEC_PopulationKnowledge::NotifySecuredBy( const MIL_Agent_ABC& securer )
+{
+    newSecurers_.insert( & securer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::GetChannelingLocations
+// Created: SBO 2006-01-16
+// -----------------------------------------------------------------------------
+const DEC_PopulationKnowledge::T_LocationVector& DEC_PopulationKnowledge::GetChannelingLocations() const
+{
+    return channelingLocations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::HasChannelingChanged
+// Created: SBO 2006-01-17
+// -----------------------------------------------------------------------------
+bool DEC_PopulationKnowledge::HasChannelingChanged() const
+{
+    return bChannelingChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::NotifyChanneling
+// Created: SBO 2006-01-16
+// -----------------------------------------------------------------------------
+void DEC_PopulationKnowledge::NotifyChanneled( const TER_Localisation& location )
+{
+    CIT_LocationVector it = std::find( channelingLocations_.begin(), channelingLocations_.end(), location );
+    if( it == channelingLocations_.end() )
+        bNewChannelingChanged_ = true;
+    newChannelingLocations_.push_back( location );
 }

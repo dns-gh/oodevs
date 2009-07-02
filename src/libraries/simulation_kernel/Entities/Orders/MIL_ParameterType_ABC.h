@@ -10,8 +10,6 @@
 #ifndef __MIL_ParameterType_ABC_h_
 #define __MIL_ParameterType_ABC_h_
 
-#include "MIL.h"
-
 class MIL_OrderType_ABC;
 class DEC_KnowledgeResolver_ABC;
 
@@ -47,7 +45,7 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    MIL_ParameterType_ABC( const std::string& strName );
+    explicit MIL_ParameterType_ABC( const std::string& strName );
     virtual ~MIL_ParameterType_ABC();
     //@}
 
@@ -70,7 +68,5 @@ private:
 private:
     static T_ParameterMap parameters_;
 };
-
-#include "MIL_ParameterType_ABC.inl"
 
 #endif // __MIL_ParameterType_ABC_h_

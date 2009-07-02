@@ -12,8 +12,6 @@
 #ifndef __MIL_AutomateMRT_h_
 #define __MIL_AutomateMRT_h_
 
-#include "MIL.h"
-
 class MIL_AgentPion;
 class MIL_Fuseau;
 class MIL_PionMission;
@@ -55,7 +53,5 @@ private:
     T_MissionPionMap missionsPion_;
     T_FuseauPionMap  fuseauxPion_;    
 };
-
-#   include "MIL_AutomateMRT.inl"
 
 #endif // __MIL_AutomateMRT_h_

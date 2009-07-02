@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Population_ActionFireOnPion.h"
-
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/MIL_EntityManager.h"
@@ -42,11 +40,8 @@ PHY_Population_ActionFireOnPion::PHY_Population_ActionFireOnPion( MIL_Population
 // -----------------------------------------------------------------------------
 PHY_Population_ActionFireOnPion::~PHY_Population_ActionFireOnPion()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Population_ActionFireOnPion::Execute

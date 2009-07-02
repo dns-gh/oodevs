@@ -6,20 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-11-02 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __MIL_PopulationPionAttritionData_h_
 #define __MIL_PopulationPionAttritionData_h_
-
-#include "MIL.h"
 
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 
@@ -93,7 +82,5 @@ private:
 private:
     T_AttitudeAttritionDataVector attitudeAttritionData_;
 };
-
-#include "MIL_PopulationPionAttritionData.inl"
 
 #endif // __MIL_PopulationPionAttritionData_h_

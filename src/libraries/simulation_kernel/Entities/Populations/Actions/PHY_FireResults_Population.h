@@ -12,8 +12,6 @@
 #ifndef __PHY_FireResults_Population_h_
 #define __PHY_FireResults_Population_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 
 class MIL_Population;
@@ -33,7 +31,5 @@ private:
     const MIL_Population& firer_;
     const uint            nID_;
 };
-
-#include "PHY_FireResults_Population.inl"
 
 #endif // __PHY_FireResults_Population_h_

@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationFlow.h"
-
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationKnowledge.h"
@@ -119,6 +118,7 @@ MIL_PopulationFlow::MIL_PopulationFlow()
     , bSpeedUpdated_           ( true )
     , pSplittingObject_        ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -133,10 +133,6 @@ MIL_PopulationFlow::~MIL_PopulationFlow()
     SendDestruction();
     RemoveFromPatch();
 }
-
-// =============================================================================
-// ACTIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::DetachFromDestConcentration
@@ -548,10 +544,6 @@ void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
     agent.GetRole< PHY_RoleInterface_Location >().NotifyPopulationCollision( *this );
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::GetMaxSpeed
 // Created: NLD 2005-10-03
@@ -599,10 +591,6 @@ MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, M
     TER_World::GetWorld().ClipPointInsideWorld( safetyPos );
     return safetyPos;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::SendCreation
@@ -720,10 +708,6 @@ void MIL_PopulationFlow::SendChangedState() const
         NET_ASN_Tools::Delete( asnMsg().itineraire );
 }
 
-// =============================================================================
-// CHECKPOINT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::load
 // Created: SBO 2005-10-18
@@ -758,4 +742,222 @@ void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << flowShape_
          << direction_
          << rSpeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetSpeedWithReinforcement
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/ ) const
+{
+    return GetMaxSpeed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::NotifyMovingOnSpecialPoint
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::NotifyMovingOnSpecialPoint( const DEC_PathPoint& /*point*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::NotifyEnvironmentChanged
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::NotifyEnvironmentChanged()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::NotifyCurrentPathChanged
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::NotifyCurrentPathChanged()
+{
+    bPathUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::CanMove
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::CanMove() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::HasResources
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::HasResources()
+{
+    return true;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::Clean
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::Clean()
+{
+    PHY_MovingEntity_ABC     ::Clean();
+    MIL_PopulationElement_ABC::Clean();
+
+    bPathUpdated_       = false;
+    bFlowShapeUpdated_  = false;
+    bDirectionUpdated_  = false;
+    bSpeedUpdated_      = false;
+    bHeadMoveFinished_  = false;
+    pSplittingObject_   = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::HasChanged
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::HasChanged() const
+{
+    return    HasHumansChanged  () 
+           || HasAttitudeChanged()
+           || bFlowShapeUpdated_
+           || bDirectionUpdated_
+           || bSpeedUpdated_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::UnregisterSourceConcentration
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::UnregisterSourceConcentration( MIL_PopulationConcentration& concentration )
+{
+    assert( pSourceConcentration_ == &concentration );
+    pSourceConcentration_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetHeadPosition
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+const MT_Vector2D& MIL_PopulationFlow::GetHeadPosition() const
+{
+    assert( flowShape_.size() >= 2 );
+    return flowShape_.back();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetTailPosition
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+const MT_Vector2D& MIL_PopulationFlow::GetTailPosition() const
+{
+    assert( flowShape_.size() >= 2 );
+    return flowShape_.front();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetPosition
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+const MT_Vector2D& MIL_PopulationFlow::GetPosition() const
+{
+    return GetHeadPosition();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetDirection
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+const MT_Vector2D& MIL_PopulationFlow::GetDirection() const
+{
+    return direction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SetDirection
+// Created: NLD 2005-10-20
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::SetDirection( const MT_Vector2D& direction )
+{
+    if( direction_ == direction )
+        return;
+    direction_         = direction;
+    bDirectionUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SetSpeed
+// Created: NLD 2005-10-20
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::SetSpeed( const MT_Float rSpeed )
+{
+    if( rSpeed_ == rSpeed )
+        return;
+    rSpeed_        = rSpeed;
+    bSpeedUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SetHeadPosition
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::SetHeadPosition( const MT_Vector2D& position )
+{
+    assert( flowShape_.size() >= 2 );
+    if( flowShape_.back() == position )
+        return;
+    bFlowShapeUpdated_ = true;
+    flowShape_.back() = position;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SetTailPosition
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::SetTailPosition( const MT_Vector2D& position )
+{
+    assert( flowShape_.size() >= 2 );
+    if( flowShape_.front() == position )
+        return;
+    bFlowShapeUpdated_ = true;
+    flowShape_.front() = position;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetLocation
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+const TER_Localisation& MIL_PopulationFlow::GetLocation() const
+{
+    return location_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetSpeed
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationFlow::GetSpeed() const
+{
+    return rSpeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::IsValid
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::IsValid() const
+{
+    return GetNbrHumans() > 0. || pSourceConcentration_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::CanBePerceived
+// Created: NLD 2005-12-07
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::CanBePerceived() const
+{
+    return IsValid();
 }

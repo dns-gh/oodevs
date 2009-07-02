@@ -6,24 +6,12 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-11-02 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationPionAttritionData.h"
-
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationPionAttritionData::sAttritionData
@@ -117,10 +105,6 @@ void MIL_PopulationPionAttritionData::ReadAttritionUnitEffect( xml::xistream& xi
     assert( attitudeData.attritions_.size() > pProtection->GetID() );
     attitudeData.attritions_[ pProtection->GetID() ] = PHY_AttritionData( xis );
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationPionAttritionData::GetAttritionData

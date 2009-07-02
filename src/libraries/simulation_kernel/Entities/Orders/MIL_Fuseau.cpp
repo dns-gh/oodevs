@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Fuseau.h"
-
 #include "MIL_LimaOrder.h"
 #include "TER_LimitData.h"
 #include "MIL_TacticalLineManager.h"
@@ -1125,4 +1123,87 @@ bool MIL_Fuseau::IsOnFlank( const MT_Vector2D& position, bool left, bool right )
     if( left && pLeftLimit_->Distance( position ) < pRightLimit_->Distance( position ) )
         return true;
     return right && pRightLimit_->Distance( position ) < pLeftLimit_->Distance( position );
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_Fuseau::GetLeftLimit
+// Created: NLD 2003-04-23
+//-----------------------------------------------------------------------------
+const TER_LimitData* MIL_Fuseau::GetLeftLimit() const
+{
+    return pLeftLimit_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_Fuseau::GetRightLimit
+// Created: NLD 2003-04-23
+//-----------------------------------------------------------------------------
+const TER_LimitData* MIL_Fuseau::GetRightLimit() const
+{
+    return pRightLimit_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::GetGlobalDirection
+// Created: NLD 2003-09-29
+// -----------------------------------------------------------------------------
+const MT_Line& MIL_Fuseau::GetGlobalDirection() const
+{
+    return globalDirectionLine_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_Fuseau::IsNull
+// Created: NLD 2003-04-23
+//-----------------------------------------------------------------------------
+bool MIL_Fuseau::IsNull() const
+{
+    return !pLeftLimit_ || !pRightLimit_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_Fuseau::IsInside
+// Created: NLD 2003-07-27
+//-----------------------------------------------------------------------------
+bool MIL_Fuseau::IsInside( const MT_Vector2D& vPos  ) const
+{
+    return TER_Polygon::IsInside( vPos, 0.1 ); //$$$
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_Fuseau::IntersectWithBorder
+// Created: NLD 2003-07-27
+//-----------------------------------------------------------------------------
+bool MIL_Fuseau::IntersectWithBorder( const MT_Line& line ) const
+{
+    return TER_Polygon::IntersectWithBorder( line, 0.1 ); //$$$$$
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::IntersectWithBorder
+// Created: NLD 2003-10-15
+// -----------------------------------------------------------------------------
+bool MIL_Fuseau::IntersectWithBorder( const MT_Line& line,T_PointSet& res ) const
+{
+    return TER_Polygon::IntersectWithBorder( line, res, 0.1 ); //$$$$
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::operator==
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+bool MIL_Fuseau::operator==( const MIL_Fuseau& rhs ) const
+{
+    return (   pLeftLimit_ == rhs.pLeftLimit_
+            && pRightLimit_ == rhs.pRightLimit_
+            && pMiddleLimit_ == rhs.pMiddleLimit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::operator!=
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+bool MIL_Fuseau::operator!=( const MIL_Fuseau& rhs ) const
+{
+    return !this->operator==( rhs );
 }

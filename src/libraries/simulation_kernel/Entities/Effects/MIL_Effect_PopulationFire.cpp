@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Effect_PopulationFire.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -27,6 +26,7 @@ MIL_Effect_PopulationFire::MIL_Effect_PopulationFire( const MIL_PopulationType& 
     , compTarget_        ( compTarget )
     , fireResult_        ( fireResult )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,6 +35,7 @@ MIL_Effect_PopulationFire::MIL_Effect_PopulationFire( const MIL_PopulationType& 
 // -----------------------------------------------------------------------------
 MIL_Effect_PopulationFire::~MIL_Effect_PopulationFire()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

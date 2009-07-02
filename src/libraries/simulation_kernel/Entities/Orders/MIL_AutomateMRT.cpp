@@ -8,11 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AutomateMRT.h"
-
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "MIL_PionMission.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMRT constructor
@@ -23,7 +21,7 @@ MIL_AutomateMRT::MIL_AutomateMRT()
     , missionsPion_()
     , fuseauxPion_ ()
 {
-    
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -34,10 +32,6 @@ MIL_AutomateMRT::~MIL_AutomateMRT()
 {
     Cancel();
 }
-
-//=============================================================================
-// MISC
-//=============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMRT::SetMissionForPion
@@ -81,10 +75,6 @@ const MIL_Fuseau* MIL_AutomateMRT::GetFuseauForPion( MIL_AgentPion& pion ) const
     return 0;
 }
 
-//=============================================================================
-// ACTIONS
-//=============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMRT::Activate
 // Created: NLD 2006-11-23
@@ -125,4 +115,13 @@ void MIL_AutomateMRT::Cancel()
     for( CIT_FuseauPionMap it = fuseauxPion_.begin(); it != fuseauxPion_.end(); ++it )
         delete it->second;
     fuseauxPion_ .clear();
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AutomateMRT::IsActivated
+// Created: NLD 2003-04-16
+//-----------------------------------------------------------------------------
+bool MIL_AutomateMRT::IsActivated() const
+{
+    return bActivated_;
 }

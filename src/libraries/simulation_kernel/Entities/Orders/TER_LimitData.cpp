@@ -19,11 +19,6 @@
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
 
-
-// =============================================================================
-// DISTANCE DATA
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: TER_LimitData::DistanceData constructor
 // Created: AGE 2005-05-12
@@ -52,10 +47,6 @@ MT_Float TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p ) con
     return v.SquareMagnitude() - rDotProduct * rDotProduct / rSquareLength_;
 }
 
-// =============================================================================
-// TER_LIMITDATA
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: TER_LimitData constructor
 // Created: NLD 2006-11-13
@@ -81,10 +72,6 @@ TER_LimitData::~TER_LimitData()
     // Asynchronous deletion of TER_DynamicData
     TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathFindData_ ); 
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: TER_LimitData::InitializeDistanceData
@@ -128,10 +115,6 @@ MT_Float TER_LimitData::Distance( const MT_Vector2D& p ) const
     return std::sqrt( SquareDistance( p ) );
 }
 
-// =============================================================================
-// REFERENCES
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: TER_LimitData::AddRef
 // Created: NLD 2006-11-16
@@ -152,4 +135,32 @@ void TER_LimitData::DecRef( const MIL_Fuseau& /*fuseau*/ ) const
     if( nNbRefs_ == 0 )
         MIL_AgentServer::GetWorkspace().GetTacticalLineManager().DestroyLimitData( *this );
     // delete this ...
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_LimitData::GetPoints
+// Created: NLD 2006-11-14
+// -----------------------------------------------------------------------------
+const T_PointVector& TER_LimitData::GetPoints() const
+{
+    return points_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: TER_LimitData::GetLength
+// Created: NLD 2003-04-22
+//-----------------------------------------------------------------------------
+MT_Float TER_LimitData::GetLength() const
+{
+    MT_Float rLength = 0.;
+    const MT_Vector2D* pPrevPoint = 0;
+    for( CIT_PointVector itPoint = points_.begin(); itPoint != points_.end(); ++itPoint )
+    {
+        const MT_Vector2D& curPoint = *itPoint;
+
+        if( pPrevPoint )
+            rLength += pPrevPoint->Distance( curPoint );
+        pPrevPoint = &curPoint;
+    }
+    return rLength;
 }

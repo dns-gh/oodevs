@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationConcentration.h"
-
 #include "MIL_PopulationAttitude.h"
 #include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
@@ -27,8 +26,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentration" )
 
@@ -111,10 +108,6 @@ MIL_PopulationConcentration::~MIL_PopulationConcentration()
     RemoveFromPatch();
 } 
 
-// =============================================================================
-// UPDATE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::Update
 // Created: NLD 2005-10-04
@@ -167,10 +160,6 @@ void MIL_PopulationConcentration::NotifyCollision( MIL_Agent_ABC& agent )
     agent.GetRole< PHY_RoleInterface_Location >().NotifyPopulationCollision( *this );
 }
 
-// =============================================================================
-// ACTIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::MagicMove
 // Created: NLD 2005-12-06
@@ -202,10 +191,6 @@ void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
     pPullingFlow_ = &GetPopulation().CreateFlow( *this );
     pPullingFlow_->Move( destination );
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::IsNearPosition
@@ -274,10 +259,6 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_Object_ABC& 
     else
         MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Filtered );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::SendCreation
@@ -356,10 +337,6 @@ void MIL_PopulationConcentration::SendChangedState() const
     asnMsg.Send();
 }
 
-// =============================================================================
-// CHECKPOINT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::load
 // Created: SBO 2005-10-18
@@ -392,4 +369,86 @@ void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const ui
          << pushingFlows_
          << rPullingFlowsDensity_
          << pSplittingObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetSplittingObject
+// Created: NLD 2006-04-27
+// -----------------------------------------------------------------------------
+const MIL_Object_ABC* MIL_PopulationConcentration::GetSplittingObject() const
+{
+    return pSplittingObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetPosition
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+const MT_Vector2D& MIL_PopulationConcentration::GetPosition() const
+{
+    return position_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::Clean
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::Clean()
+{
+    MIL_PopulationElement_ABC::Clean();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::HasChanged
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+bool MIL_PopulationConcentration::HasChanged() const
+{
+    return HasAttitudeChanged() || HasHumansChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::UnregisterPushingFlow
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::UnregisterPushingFlow( MIL_PopulationFlow& flow )
+{
+    int nOut = pushingFlows_.erase( &flow );
+    assert( nOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetLocation
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+const TER_Localisation& MIL_PopulationConcentration::GetLocation() const
+{
+    return location_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetSecuringPoint
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+MT_Vector2D MIL_PopulationConcentration::GetSecuringPoint( const MIL_Agent_ABC& /*securingAgent*/ ) const
+{
+    return position_; // $$$$ SBO 2005-12-16: should maybe return a random point into concentration
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::IsValid
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+bool MIL_PopulationConcentration::IsValid() const
+{
+    return GetNbrHumans() > 0. || !pushingFlows_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::CanBePerceived
+// Created: NLD 2005-12-07
+// -----------------------------------------------------------------------------
+bool MIL_PopulationConcentration::CanBePerceived() const
+{
+    return IsValid();
 }

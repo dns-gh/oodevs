@@ -12,8 +12,6 @@
 #ifndef __MIL_Effect_IndirectFire_h_
 #define __MIL_Effect_IndirectFire_h_
 
-#include "MIL.h"
-
 #include "MIL_Effect_ABC.h"
 
 class PHY_Composante_ABC;
@@ -81,7 +79,5 @@ private:
           MT_Float                               rImpactTimeStep_;
           PHY_FireResults_Pion*                  pFireResult_;
 };
-
-#include "MIL_Effect_IndirectFire.inl"
 
 #endif // __MIL_Effect_IndirectFire_h_

@@ -10,8 +10,6 @@
 #ifndef __TER_LimitData_h_
 #define __TER_LimitData_h_
 
-#include "MIL.h"
-
 class TER_DynamicData;
 class MIL_Fuseau;
 
@@ -74,7 +72,5 @@ private:
           T_DistancesData  distancesData_;
     mutable uint           nNbRefs_;
 };
-
-#include "TER_LimitData.inl"
 
 #endif // __TER_LimitData_h_

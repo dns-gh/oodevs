@@ -91,6 +91,4 @@ private:
     static T_LimaFunctionMap limaFunctions_;
 };
 
-#include "MIL_LimaFunction.inl"
-
 #endif // __MIL_LimaFunction_h_

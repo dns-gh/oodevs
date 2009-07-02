@@ -10,8 +10,6 @@
 #ifndef __MIL_FragOrderType_h_
 #define __MIL_FragOrderType_h_
 
-#include "MIL.h"
-
 #include "MIL_OrderType_ABC.h"
 
 namespace xml
@@ -44,7 +42,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    MIL_FragOrderType( uint nID, xml::xistream& xis );
+             MIL_FragOrderType( uint nID, xml::xistream& xis );
     virtual ~MIL_FragOrderType();
     //@}
 
@@ -57,7 +55,6 @@ private:
 private:
     bool bAvailableWithoutMission_;
     bool bAvailableForAllMissions_;
-
 
 private:
     //! @name Types
@@ -73,7 +70,5 @@ private:
     static T_MissionIDMap   missionIDs_;
     static T_MissionNameMap missionNames_;
 };
-
-#include "MIL_FragOrderType.inl"
 
 #endif // __MIL_FragOrderType_h_

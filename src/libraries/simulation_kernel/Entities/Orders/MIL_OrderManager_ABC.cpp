@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_OrderManager_ABC.h"
-
 #include "MIL_Mission_ABC.h"
 #include "Network/NET_AsnException.h"
 
@@ -35,10 +33,6 @@ MIL_OrderManager_ABC::~MIL_OrderManager_ABC()
 {
     StopAllMissions();
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderManager_ABC::Update
@@ -95,10 +89,6 @@ void MIL_OrderManager_ABC::StopAllMissions()
         pMission_ = 0;
     }
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderManager_ABC::GetMissionName
@@ -188,4 +178,22 @@ void MIL_OrderManager_ABC::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) 
 {
     if( pMission_ )
         pMission_->Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderManager_ABC::IsNewMissionStarted
+// Created: NLD 2005-09-19
+// -----------------------------------------------------------------------------
+bool MIL_OrderManager_ABC::IsNewMissionStarted() const
+{
+    return bNewMissionStarted_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderManager_ABC::GetCurrentMission
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+MIL_Mission_ABC* MIL_OrderManager_ABC::GetCurrentMission() const
+{
+    return pMission_;
 }
