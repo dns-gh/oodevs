@@ -25,15 +25,15 @@
 PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DIA_Call_ABC& call, T_ComposantePredicate predicate )
     : PHY_Action_ABC    ( pion, call )
     , role_             ( pion.GetRole< PHY_RolePion_Composantes >() )
-    , nNbrToLend_       ( (uint)call.GetParameter( 1 ).ToFloat() )
+    , nNbrToLend_       ( (uint)call.GetParameter( 2 ).ToFloat() )
     , bLoanDone_        ( false )
     , pTarget_          ( 0 )
-    , diaReturnVariable_( call.GetParameter( 2 ) )
+    , diaReturnVariable_( call.GetParameter( 0 ) )
     , predicate_        ( predicate )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 1 ) ) );
 
-    DEC_RolePion_Decision* pAgent = call.GetParameter( 0 ).ToUserObject( pAgent );
+    DEC_RolePion_Decision* pAgent = call.GetParameter( 1 ).ToUserObject( pAgent );
     assert( pAgent );
     
     pTarget_ = &pAgent->GetPion().GetRole< PHY_RolePion_Composantes >();

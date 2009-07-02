@@ -320,10 +320,10 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionMineObject                       >, "DEC_StartValoriserObjet"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDemineObject                     >, "DEC_StartDevaloriserObjet"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionBypassObject                     >, "DEC_StartCreerContournementObjet"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionOccupyObject                     >, "DEC_StartOccuperObjet"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionOccupyObject                     >, "DEC__StartOccuperObjet"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionResumeWorkObject                 >, "DEC_StartReprendreTravauxObjet"           );  
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionAnimateObject                    >, "DEC_StartAnimerObjet"                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionControlZone                      >, "DEC_StartControlerZone"                   );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionAnimateObject                    >, "DEC__StartAnimerObjet"                     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionControlZone                      >, "DEC__StartControlerZone"                   );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionLoad                             >, "DEC_StartEmbarquement"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionUnload                           >, "DEC_StartDebarquement"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionExtinguishObject                 >, "DEC_StartEteindreObjet"                   );
@@ -629,8 +629,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::ChangeAutomate             , "DEC_Pion_ChangeAutomate"        );
 
     // Logistique
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendCollectionComposantes >, "DEC_StartPreterVSRAM"        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendHaulerComposantes     >, "DEC_StartPreterRemorqueurs"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendCollectionComposantes >, "DEC__StartPreterVSRAM"        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendHaulerComposantes     >, "DEC__StartPreterRemorqueurs"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::UndoLendCollectionComposantes                     , "DEC_RecupererVSRAM"          );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::UndoLendHaulerComposantes                         , "DEC_RecupererRemorqueurs"    );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionGetTC2                                        , "DEC_Pion_TC2"                );

@@ -261,9 +261,9 @@ void MIL_PopulationType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_Population                   >, "DEC_StopAction"       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_Population                   >, "DEC_PauseAction"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_Population                   >, "DEC_ReprendAction"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionMove        >, "DEC_StartDeplacement" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionFireOnPions >, "DEC_StartTirSurPions" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionFireOnPion  >, "DEC_StartTirSurPion"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionMove        >, "DEC__StartDeplacement" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionFireOnPions >, "DEC__StartTirSurPions" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionFireOnPion  >, "DEC__StartTirSurPion"  );
 
     // Knowledge agents
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation, "DEC_ConnaissanceAgent_RoePopulation"   );
