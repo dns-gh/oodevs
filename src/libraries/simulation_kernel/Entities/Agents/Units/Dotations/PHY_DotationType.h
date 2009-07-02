@@ -12,12 +12,8 @@
 #ifndef __PHY_DotationType_h_
 #define __PHY_DotationType_h_
 
-#include "MIL.h"
-
 class PHY_DotationCategory;
 class PHY_DotationLogisticType;
-
-#include "MT_Tools/MT_Converter.h"
 
 namespace xml
 {
@@ -121,7 +117,5 @@ private:
     static T_DotationTypeMap       dotationTypes_;
     static T_DotationCategoryIDMap dotationCategorieIDs_;
 };
-
-#include "PHY_DotationType.inl"
 
 #endif // __PHY_DotationType_h_

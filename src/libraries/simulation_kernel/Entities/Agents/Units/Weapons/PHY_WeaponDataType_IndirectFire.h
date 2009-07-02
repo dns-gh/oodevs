@@ -12,8 +12,6 @@
 #ifndef __PHY_WeaponDataType_IndirectFire_h_
 #define __PHY_WeaponDataType_IndirectFire_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xostream;
@@ -54,7 +52,5 @@ private:
           MT_Float        rMinRange_;
           MT_Float        rMaxRange_;
 };
-
-#include "PHY_WeaponDataType_IndirectFire.inl"
 
 #endif // __PHY_WeaponDataType_IndirectFire_h_

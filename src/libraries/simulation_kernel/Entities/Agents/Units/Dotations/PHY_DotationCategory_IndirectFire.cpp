@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationCategory_IndirectFire.h"
 #include "PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -29,8 +28,6 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.h>
-
-
 
 MT_Random PHY_DotationCategory_IndirectFire::random_;
 

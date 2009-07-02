@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationCategory_IndirectFire_h_
 #define __PHY_DotationCategory_IndirectFire_h_
 
-#include "MIL.h"
-
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 #include "MT_Tools/MT_Random.h"
 
@@ -30,7 +28,7 @@ class PHY_DotationCategory_IndirectFire : public PHY_DotationCategory_IndirectFi
 {
 
 public:
-    PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
+             PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     virtual ~PHY_DotationCategory_IndirectFire();
 
     //! @name 
@@ -62,7 +60,5 @@ private:
 private:
     static MT_Random random_;
 };
-
-#include "PHY_DotationCategory_IndirectFire.inl"
 
 #endif // __PHY_DotationCategory_IndirectFire_h_

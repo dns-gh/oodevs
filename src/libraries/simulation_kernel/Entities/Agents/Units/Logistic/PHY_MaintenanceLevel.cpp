@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MaintenanceLevel.h"
 #include "PHY_BreakdownType.h"
 
@@ -47,6 +46,7 @@ void PHY_MaintenanceLevel::Terminate()
 PHY_MaintenanceLevel::PHY_MaintenanceLevel( const std::string& strName )
     : strName_                                ( strName )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,5 +55,42 @@ PHY_MaintenanceLevel::PHY_MaintenanceLevel( const std::string& strName )
 // -----------------------------------------------------------------------------
 PHY_MaintenanceLevel::~PHY_MaintenanceLevel()
 {
-
+    // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceLevel::GetMaintenanceLevels
+// Created: NLD 2004-12-20
+// -----------------------------------------------------------------------------
+const PHY_MaintenanceLevel::T_MaintenanceLevelMap& PHY_MaintenanceLevel::GetMaintenanceLevels()
+{
+    return maintenanceLevels_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceLevel::GetName
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const std::string& PHY_MaintenanceLevel::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceLevel::operator==
+// Created: NLD 2004-12-20
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceLevel::operator==( const PHY_MaintenanceLevel& rhs ) const
+{
+    return this == &rhs;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceLevel::operator!=
+// Created: NLD 2004-12-20
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceLevel::operator!=( const PHY_MaintenanceLevel& rhs ) const
+{
+    return this != &rhs;
+}
+

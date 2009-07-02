@@ -12,13 +12,10 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_WeaponType.h"
-
 #include "PHY_LauncherType.h"
-
 #include "PHY_WeaponDataType_IndirectFire.h"
 #include "PHY_WeaponDataType_DirectFire.h"
 #include "PHY_Weapon.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -27,18 +24,11 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-
 #include "Tools/MIL_Tools.h"
 #include "Tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
-
-
 PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
-
-// =============================================================================
-// MANAGER
-// =============================================================================
 
 struct PHY_WeaponType::LoadingWrapper
 {
@@ -92,10 +82,6 @@ void PHY_WeaponType::Terminate()
         delete it->second;
     weaponTypes_.clear();
 }
-
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType constructor
@@ -215,10 +201,6 @@ void PHY_WeaponType::ReadIndirect( xml::xistream& xis )
     pIndirectFireData_ = new PHY_WeaponDataType_IndirectFire( *this, xis );
 }
 
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::InstanciateWeapon
 // Created: NLD 2004-08-12
@@ -227,11 +209,6 @@ PHY_Weapon& PHY_WeaponType::InstanciateWeapon( bool bMajor ) const
 {
     return *new PHY_Weapon( time_, *this, bMajor );
 }
-
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::GetPHModificator
@@ -419,4 +396,89 @@ MT_Float PHY_WeaponType::GetMinRangeToIndirectFire() const
 {
     assert( pDotationCategory_ );
     return pIndirectFireData_ ? pIndirectFireData_->GetMinRange() : std::numeric_limits< MT_Float >::max();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::FindWeaponType
+// Created: NLD 2004-08-06
+// -----------------------------------------------------------------------------
+const PHY_WeaponType* PHY_WeaponType::FindWeaponType( const std::string& strLauncher, const std::string& strAmmunition )
+{
+    CIT_WeaponTypeMap it = weaponTypes_.find( std::make_pair( strLauncher, strAmmunition ) );
+    if( it == weaponTypes_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetDotationCategory
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory& PHY_WeaponType::GetDotationCategory() const
+{
+    assert( pDotationCategory_ );
+    return *pDotationCategory_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetNbrAmmoPerLoader
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+uint PHY_WeaponType::GetNbrAmmoPerLoader() const
+{
+    return nNbrAmmoPerLoader_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetNbrAmmoPerBurst
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+uint PHY_WeaponType::GetNbrAmmoPerBurst() const
+{
+    return nNbrAmmoPerBurst_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetBurstDuration
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponType::GetBurstDuration() const
+{
+    return rBurstDuration_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetReloadingDuration
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponType::GetReloadingDuration() const
+{
+    return rReloadingDuration_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetName
+// Created: NLD 2004-10-07
+// -----------------------------------------------------------------------------
+const std::string& PHY_WeaponType::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::CanDirectFire
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+bool PHY_WeaponType::CanDirectFire() const
+{
+    return pDirectFireData_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::CanIndirectFire
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+bool PHY_WeaponType::CanIndirectFire() const
+{
+    return pIndirectFireData_ != 0;
 }

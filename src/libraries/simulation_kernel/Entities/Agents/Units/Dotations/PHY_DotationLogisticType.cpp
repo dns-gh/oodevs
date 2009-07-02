@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationLogisticType.h"
 
 PHY_DotationLogisticType::T_DotationLogisticTypeMap PHY_DotationLogisticType::dotationLogisticTypes_;
@@ -20,9 +19,6 @@ PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuTD_    ( "Unite feu T
 PHY_DotationLogisticType PHY_DotationLogisticType::uniteFeuSansTD_( "Unite feu -TD", eUniteFeuSansTD );
 PHY_DotationLogisticType PHY_DotationLogisticType::uniteVivre_    ( "Unite vivre"  , eUniteVivre     );
 PHY_DotationLogisticType PHY_DotationLogisticType::pieces_        ( "Pieces"       , ePieces         );
-//=============================================================================
-// STATIC INITIALIZATION 
-//=============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationLogisticType::Initialize
@@ -48,10 +44,6 @@ void PHY_DotationLogisticType::Terminate()
     dotationLogisticTypes_.clear();
 }
 
-//=============================================================================
-// 
-//=============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationLogisticType constructor
 // Created: NLD 2006-01-03
@@ -60,7 +52,7 @@ PHY_DotationLogisticType::PHY_DotationLogisticType( const std::string& strName, 
     : strName_( strName )
     , nType_  ( nType   )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -69,5 +61,58 @@ PHY_DotationLogisticType::PHY_DotationLogisticType( const std::string& strName, 
 // -----------------------------------------------------------------------------
 PHY_DotationLogisticType::~PHY_DotationLogisticType()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationLogisticType::Find
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( const std::string& strName )
+{
+    CIT_DotationLogisticTypeMap it = dotationLogisticTypes_.find( strName );
+    if( it == dotationLogisticTypes_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationLogisticType::Find
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( uint nID )
+{
+    for( CIT_DotationLogisticTypeMap it = dotationLogisticTypes_.begin(); it != dotationLogisticTypes_.end(); ++it )
+    {
+        if( it->second->GetID() == nID )
+            return it->second;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationLogisticType::GetDotationLogisticTypes
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+const PHY_DotationLogisticType::T_DotationLogisticTypeMap& PHY_DotationLogisticType::GetDotationLogisticTypes()
+{
+    return dotationLogisticTypes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationLogisticType::GetID
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+uint PHY_DotationLogisticType::GetID() const
+{
+    return nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationLogisticType::GetName
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+const std::string& PHY_DotationLogisticType::GetName() const
+{
+    return strName_;
 }

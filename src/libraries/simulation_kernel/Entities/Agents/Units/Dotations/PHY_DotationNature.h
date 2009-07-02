@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationNature_h_
 #define __PHY_DotationNature_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xostream;
@@ -69,7 +67,5 @@ private:
     static T_DotationNatureMap natures_;
     static uint                nNextID_;
 };
-
-#include "PHY_DotationNature.inl"
 
 #endif // __PHY_DotationNature_h_

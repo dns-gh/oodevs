@@ -12,8 +12,6 @@
 #ifndef __PHY_HumanRank_h_
 #define __PHY_HumanRank_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 // =============================================================================
@@ -85,7 +83,5 @@ private:
 private:
     static T_HumanRankMap humanRanks_;
 };
-
-#include "PHY_HumanRank.inl"
 
 #endif // __PHY_HumanRank_h_

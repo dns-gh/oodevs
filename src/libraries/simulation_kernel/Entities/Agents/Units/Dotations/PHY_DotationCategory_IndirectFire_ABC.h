@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationCategory_IndirectFire_ABC_h_
 #define __PHY_DotationCategory_IndirectFire_ABC_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xostream;
@@ -33,7 +31,7 @@ class PHY_DotationCategory_IndirectFire_ABC : private boost::noncopyable
 {
 
 public:
-    PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
+             PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     virtual ~PHY_DotationCategory_IndirectFire_ABC();
 
     //! @name Accessors
@@ -57,7 +55,5 @@ protected:
           MT_Float                       rDispersionX_;
           MT_Float                       rDispersionY_;
 };
-
-#include "PHY_DotationCategory_IndirectFire_ABC.inl"
 
 #endif // __PHY_DotationCategory_IndirectFire_ABC_h_

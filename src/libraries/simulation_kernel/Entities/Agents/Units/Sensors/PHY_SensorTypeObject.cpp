@@ -10,19 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SensorTypeObject.h"
-
 #include "PHY_SensorTypeObjectData.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObject constructor
@@ -67,11 +62,6 @@ PHY_SensorTypeObject::~PHY_SensorTypeObject()
     objectData_.clear();
 }
 
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
@@ -102,4 +92,22 @@ const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Ag
     if( !pObjectData )
         return PHY_PerceptionLevel::notSeen_;
     return pObjectData->ComputePerception( perceiver, target, rSensorHeight );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeObject::GetMaxDistance
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+MT_Float PHY_SensorTypeObject::GetMaxDistance() const
+{
+    return rMaxDistance_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeObject::GetType
+// Created: JVT 2005-04-12
+// -----------------------------------------------------------------------------
+const PHY_SensorType& PHY_SensorTypeObject::GetType() const
+{
+    return type_;
 }

@@ -12,8 +12,6 @@
 #ifndef __PHY_MaintenanceWorkRate_h_
 #define __PHY_MaintenanceWorkRate_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 namespace xml
@@ -80,7 +78,5 @@ private:
 private:
     static T_WorkRateMap workRates_;
 };
-
-#include "PHY_MaintenanceWorkRate.inl"
 
 #endif // __PHY_MaintenanceWorkRate_h_

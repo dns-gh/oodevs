@@ -12,12 +12,6 @@
 #ifndef __PHY_MaintenanceLevel_h_
 #define __PHY_MaintenanceLevel_h_
 
-#include "MIL.h"
-
-#include "MT_Tools/MT_Random.h"
-
-class PHY_BreakdownType;
-
 // =============================================================================
 // @class  PHY_MaintenanceLevel
 // Created: JVT 2004-08-03
@@ -57,8 +51,8 @@ public:
     //@}
 
 private:
-     PHY_MaintenanceLevel( const std::string& strName );
-    ~PHY_MaintenanceLevel();
+    explicit PHY_MaintenanceLevel( const std::string& strName );
+            ~PHY_MaintenanceLevel();
 
 private:
     const std::string strName_;
@@ -66,7 +60,5 @@ private:
 private:
     static T_MaintenanceLevelMap maintenanceLevels_;
 };
-
-#include "PHY_MaintenanceLevel.inl"
 
 #endif // __PHY_MaintenanceLevel_h_

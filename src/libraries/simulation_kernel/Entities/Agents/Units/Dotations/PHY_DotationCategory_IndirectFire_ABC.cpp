@@ -10,13 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
-
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC
@@ -49,4 +45,50 @@ PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC( co
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire_ABC::~PHY_DotationCategory_IndirectFire_ABC()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::GetDotationCategory
+// Created: NLD 2006-08-07
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory& PHY_DotationCategory_IndirectFire_ABC::GetDotationCategory() const
+{
+    return dotationCategory_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::GetIndirectFireDotationCategory
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+const PHY_IndirectFireDotationClass& PHY_DotationCategory_IndirectFire_ABC::GetIndirectFireDotationCategory() const
+{
+    return category_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType( uint nNbr ) const
+{
+    return (float)nNbr / (float)nInterventionType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo
+// Created: NLD 2004-10-12
+// -----------------------------------------------------------------------------
+MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo( MT_Float rNbrIT ) const
+{
+    return nInterventionType_ * rNbrIT;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::HasHit
+// Created: NLD 2005-08-04
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*target*/ ) const
+{
+    return true;
 }

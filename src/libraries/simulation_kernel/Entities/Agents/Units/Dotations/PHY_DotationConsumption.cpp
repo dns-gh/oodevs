@@ -10,13 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationConsumption.h"
-
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumption constructor
@@ -34,12 +30,20 @@ PHY_DotationConsumption::PHY_DotationConsumption( const PHY_DotationCategory& ca
         rConsumption_ = 1. / MIL_Tools::ConvertHoursToSim( 1. / rConsumption_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumption destructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
 PHY_DotationConsumption::~PHY_DotationConsumption()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationConsumption::GetConsumption
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+MT_Float PHY_DotationConsumption::GetConsumption() const
+{
+    return rConsumption_;
 }

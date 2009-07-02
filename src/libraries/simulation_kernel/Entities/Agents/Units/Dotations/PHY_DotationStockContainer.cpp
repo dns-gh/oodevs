@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationStockContainer.h"
-
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationStock.h"
@@ -27,8 +25,6 @@
 #include "Network/NET_ASN_Messages.h"
 #include <xeumeuleu/xml.h>
 
-
-
 BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer" )
 
 // -----------------------------------------------------------------------------
@@ -41,6 +37,7 @@ PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RolePionLOG_Supply& 
     , stocksChanged_        ()
     , bCheckStockCapacities_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +50,7 @@ PHY_DotationStockContainer::PHY_DotationStockContainer()
     , stocksChanged_        ()
     , bCheckStockCapacities_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -61,11 +59,9 @@ PHY_DotationStockContainer::PHY_DotationStockContainer()
 // -----------------------------------------------------------------------------
 PHY_DotationStockContainer::~PHY_DotationStockContainer()
 {
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
@@ -170,10 +166,6 @@ void PHY_DotationStockContainer::WriteODB( xml::xostream& xos ) const
     xos << xml::end(); // stocks
 }
 
-// =============================================================================
-// INIT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::ReadValues
 // Created: NLD 2005-01-26
@@ -200,10 +192,6 @@ void PHY_DotationStockContainer::ReadStock( xml::xistream& xis )
 
     AddStock( *pDotationCategory, xis );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::AddReservation
@@ -308,10 +296,6 @@ void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category,
         pStock->Supply( rNbr - pStock->GetValue() ); // set to rNbr
 }
 
-// =============================================================================
-// STOCK CAPACITIES CHECKER
-// =============================================================================
-
 namespace
 {
     struct T_StockData
@@ -382,10 +366,6 @@ void PHY_DotationStockContainer::CheckStockCapacities()
     }
 }
 
-// =============================================================================
-// LOG
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::NotifySupplyNeeded
 // Created: NLD 2005-01-21
@@ -405,10 +385,6 @@ void PHY_DotationStockContainer::FillSupplyRequest( PHY_SupplyStockRequestContai
     for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
         supplyRequest.AddStock( *it->second );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 //------------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::SendChangedState
@@ -458,4 +434,44 @@ void PHY_DotationStockContainer::SendFullState( NET_ASN_MsgLogSupplyState& asn )
 
     asn().stocks.elem     = pResources;
     asn().m.stocksPresent = 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::NotifyDotationChanged
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::NotifyDotationChanged( const PHY_DotationStock& dotationStock, MT_Float rDelta )
+{
+    stocksChanged_.insert( &dotationStock );
+    if( rDelta > 0 )
+        bCheckStockCapacities_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::HasChanged
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+bool PHY_DotationStockContainer::HasChanged() const
+{
+    return !stocksChanged_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::Clean
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::Clean()
+{
+    stocksChanged_.clear();
+    bCheckStockCapacities_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::Update
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::Update()
+{
+    if( bCheckStockCapacities_ )
+        CheckStockCapacities();
 }

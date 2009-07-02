@@ -12,8 +12,6 @@
 #ifndef __PHY_SensorTypeAgent_h_
 #define __PHY_SensorTypeAgent_h_
 
-#include "MIL.h"
-
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 
@@ -128,7 +126,5 @@ private:
     MT_Float rPopulationDensity_;
     MT_Float rPopulationFactor_;    
 };
-
-#include "PHY_SensorTypeAgent.inl"
 
 #endif // __PHY_SensorTypeAgent_h_

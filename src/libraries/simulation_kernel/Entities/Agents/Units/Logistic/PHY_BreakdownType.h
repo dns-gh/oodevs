@@ -12,8 +12,6 @@
 #ifndef __PHY_BreakdownType_h_
 #define __PHY_BreakdownType_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_GaussianRandom.h"
 
 namespace xml
@@ -104,7 +102,5 @@ private:
     static T_BreakdownMap breakdowns_;
     static uint           nDiagnosticTime_;
 };
-
-#include "PHY_BreakdownType.inl"
 
 #endif // __PHY_BreakdownType_h_

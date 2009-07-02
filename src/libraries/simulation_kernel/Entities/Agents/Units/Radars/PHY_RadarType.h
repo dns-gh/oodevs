@@ -12,8 +12,6 @@
 #ifndef __PHY_RadarType_h_
 #define __PHY_RadarType_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -109,7 +107,5 @@ private:
     static T_RadarTypeMap radarTypes_;
     static uint           nNextID_;
 };
-
-#include "PHY_RadarType.inl"
 
 #endif // __PHY_RadarType_h_

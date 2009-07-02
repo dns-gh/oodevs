@@ -10,22 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SensorType.h"
-
 #include "PHY_SensorTypeAgent.h"
 #include "PHY_SensorTypeObject.h"
 #include "PHY_Sensor.h"
 #include <xeumeuleu/xml.h>
 
-
-
 PHY_SensorType::T_SensorTypeMap PHY_SensorType::sensorTypes_;
 uint                            PHY_SensorType::nNextID_ = 0;
-
-// =============================================================================
-// MANAGER
-// =============================================================================
 
 struct PHY_SensorType::LoadingWrapper
 {
@@ -74,9 +66,6 @@ void PHY_SensorType::Terminate()
     sensorTypes_.clear();
 }
 
-// =============================================================================
-// INIT
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorType constructor
 // Created: NLD 2004-08-06
@@ -122,10 +111,6 @@ PHY_SensorType::~PHY_SensorType()
         delete pTypeObject_;
 }
 
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorType::InstanciateSensor
 // Created: NLD 2004-08-12
@@ -133,4 +118,63 @@ PHY_SensorType::~PHY_SensorType()
 PHY_Sensor& PHY_SensorType::InstanciateSensor( MT_Float rHeight ) const
 {
     return *new PHY_Sensor( *this, rHeight );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::FindSensorType
+// Created: NLD 2004-08-09
+// -----------------------------------------------------------------------------
+const PHY_SensorType* PHY_SensorType::FindSensorType( const std::string& strType )
+{
+    CIT_SensorTypeMap it = sensorTypes_.find( strType );
+
+    return it == sensorTypes_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::FindSensorType
+// Created: JVT 2005-04-14
+// -----------------------------------------------------------------------------
+const PHY_SensorType* PHY_SensorType::FindSensorType( const uint nID )
+{ 
+    // $$$$ JVT : Recherche linéaire, mais n'est utilisé que lors de la reprise de la sim depuis un checkpoint
+    CIT_SensorTypeMap it = std::find_if( sensorTypes_.begin(), sensorTypes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_SensorType::GetID ), std::select2nd< T_SensorTypeMap::value_type >() ) ) );
+
+    return it == sensorTypes_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::GetTypeObject
+// Created: NLD 2004-08-20
+// -----------------------------------------------------------------------------
+const PHY_SensorTypeObject* PHY_SensorType::GetTypeObject() const
+{
+    return pTypeObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::GetTypeAgent
+// Created: NLD 2004-08-20
+// -----------------------------------------------------------------------------
+const PHY_SensorTypeAgent* PHY_SensorType::GetTypeAgent() const
+{
+    return pTypeAgent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::GetName
+// Created: NLD 2004-09-10
+// -----------------------------------------------------------------------------
+const std::string& PHY_SensorType::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::GetID
+// Created: JVT 2005-04-14
+// -----------------------------------------------------------------------------
+uint PHY_SensorType::GetID() const
+{
+    return nID_;
 }

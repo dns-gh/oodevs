@@ -12,8 +12,6 @@
 #ifndef __PHY_Posture_h_
 #define __PHY_Posture_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 class PHY_ConsumptionType;
@@ -105,7 +103,5 @@ private:
 private:
     static T_PostureMap postures_;
 };
-
-#include "PHY_Posture.inl"
 
 #endif // __PHY_Posture_h_

@@ -12,8 +12,6 @@
 #ifndef __PHY_LauncherType_h_
 #define __PHY_LauncherType_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -92,7 +90,5 @@ private:
 private:
     static T_LauncherTypeMap  launcherTypes_;
 };
-
-#include "PHY_LauncherType.inl"
 
 #endif // __PHY_LauncherType_h_

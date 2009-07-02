@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationGroupContainer_h_
 #define __PHY_DotationGroupContainer_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xostream;
@@ -39,9 +37,9 @@ class PHY_DotationGroupContainer : private boost::noncopyable
 {
 
 public:
-     PHY_DotationGroupContainer( PHY_RolePion_Dotations& roleDotation );
-     PHY_DotationGroupContainer();
-    ~PHY_DotationGroupContainer();
+    explicit PHY_DotationGroupContainer( PHY_RolePion_Dotations& roleDotation );
+             PHY_DotationGroupContainer();
+            ~PHY_DotationGroupContainer();
 
     //! @name CheckPoints
     //@{
@@ -124,7 +122,5 @@ private:
     T_DotationGroupMap      dotationGroups_;
     T_DotationSet           dotationsChanged_;
 };
-
-#include "PHY_DotationGroupContainer.inl"
 
 #endif // __PHY_DotationGroupContainer_h_

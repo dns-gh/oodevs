@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_BreakdownType.h"
 #include "PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -18,14 +17,8 @@
 #include "Tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
-
-
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
 uint                              PHY_BreakdownType::nDiagnosticTime_ = 0;
-
-// =============================================================================
-// STATIC INITIALIZATION (MANAGER)
-// =============================================================================
 
 struct PHY_BreakdownType::LoadingWrapper
 {
@@ -128,10 +121,6 @@ void PHY_BreakdownType::Terminate()
     breakdowns_.clear();
 }
 
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_BreakdownType constructor
 // Created: NLD 2004-12-20
@@ -188,4 +177,109 @@ void PHY_BreakdownType::ReadPart( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 PHY_BreakdownType::~PHY_BreakdownType()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::GetDiagnosticTime
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+uint PHY_BreakdownType::GetDiagnosticTime()
+{
+    return nDiagnosticTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::GetName
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const std::string& PHY_BreakdownType::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::GetMosID
+// Created: NLD 2004-12-20
+// -----------------------------------------------------------------------------
+uint PHY_BreakdownType::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::Find
+// Created: NLD 2004-12-20
+// -----------------------------------------------------------------------------
+const PHY_BreakdownType* PHY_BreakdownType::Find( const std::string& strName )
+{
+    CIT_BreakdownMap it = breakdowns_.find( strName );
+    
+    return it == breakdowns_.end() ? 0 :  it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::Find
+// Created: JVT 2005-04-14
+// -----------------------------------------------------------------------------
+const PHY_BreakdownType* PHY_BreakdownType::Find( uint nID )
+{
+    CIT_BreakdownMap it = std::find_if( breakdowns_.begin(), breakdowns_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_BreakdownType::GetID ), std::select2nd< T_BreakdownMap::value_type >() ) ) );
+
+    return it == breakdowns_.end() ? 0 :  it->second;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::AffectMobility
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+bool PHY_BreakdownType::AffectMobility() const
+{
+    return nType_ == eMobility;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::AffectElectronic
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+bool PHY_BreakdownType::AffectElectronic() const
+{
+    return nType_ == eElectronic;   
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::GetMaintenanceLevel
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+const PHY_MaintenanceLevel& PHY_BreakdownType::GetMaintenanceLevel() const
+{
+    return maintenanceLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::GetParts
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+const PHY_BreakdownType::T_PartMap& PHY_BreakdownType::GetParts() const
+{
+    return parts_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::ChooseARepairTime
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+uint PHY_BreakdownType::ChooseARepairTime() const
+{
+    return (uint)repairTime_.rand();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::GetTheoricRepairTime
+// Created: NLD 2006-06-01
+// -----------------------------------------------------------------------------
+uint PHY_BreakdownType::GetTheoricRepairTime() const
+{
+    return nTheoricRepairTime_;
 }

@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationCategory_IndirectWeatherFire_h_
 #define __PHY_DotationCategory_IndirectWeatherFire_h_
 
-#include "MIL.h"
-
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 
 namespace xml
@@ -46,7 +44,5 @@ private:
     MT_Float rDeploymentDuration_;
     MT_Float rLifeDuration_;
 };
-
-#include "PHY_DotationCategory_IndirectWeatherFire.inl"
 
 #endif // __PHY_DotationCategory_IndirectWeatherFire_h_

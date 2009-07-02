@@ -12,11 +12,7 @@
 #ifndef __PHY_DotationLogisticType_h_
 #define __PHY_DotationLogisticType_h_
 
-#include "MIL.h"
-
 class PHY_DotationCategory;
-
-#include "MT_Tools/MT_Converter.h"
 
 // =============================================================================
 // @class  PHY_DotationLogisticType
@@ -58,11 +54,6 @@ public:
           uint         GetID  () const;
     //@}
 
-    //! @name Operators
-    //@{
-//    bool operator==( const PHY_DotationLogisticType& rhs ) const;
-    //@}
-
 private:
     //! @name Types
     //@{
@@ -87,7 +78,5 @@ private:
 private:
     static T_DotationLogisticTypeMap dotationLogisticTypes_;
 };
-
-#include "PHY_DotationLogisticType.inl"
 
 #endif // __PHY_DotationLogisticType_h_

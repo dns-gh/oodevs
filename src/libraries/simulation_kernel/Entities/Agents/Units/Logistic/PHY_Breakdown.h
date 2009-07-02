@@ -55,6 +55,4 @@ private:
     const uint               nRepairTime_;
 };
 
-#include "PHY_Breakdown.inl"
-
 #endif // __PHY_Breakdown_h_

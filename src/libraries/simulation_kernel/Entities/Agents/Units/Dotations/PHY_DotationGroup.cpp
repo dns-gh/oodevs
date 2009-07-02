@@ -10,10 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationGroupContainer.h"
 #include "PHY_DotationGroup.h"
-
 #include "PHY_Dotation.h"
 #include "PHY_DotationType.h"
 #include "PHY_DotationCapacity.h"
@@ -21,8 +19,6 @@
 #include "PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationRequestContainer.h"
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationGroup, "PHY_DotationGroup" )
 
@@ -34,6 +30,7 @@ PHY_DotationGroup::PHY_DotationGroup( const PHY_DotationType& type, PHY_Dotation
     : pType_          ( &type )
     , pGroupContainer_( &groupContainer )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +41,7 @@ PHY_DotationGroup::PHY_DotationGroup()
     : pType_          ( 0 )
     , pGroupContainer_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

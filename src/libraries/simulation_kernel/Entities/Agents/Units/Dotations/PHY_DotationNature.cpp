@@ -10,18 +10,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationNature.h"
 #include <xeumeuleu/xml.h>
 
-
-
 PHY_DotationNature::T_DotationNatureMap PHY_DotationNature::natures_;
 uint                                    PHY_DotationNature::nNextID_ = 0;
-
-// =============================================================================
-// MANAGER
-// =============================================================================
 
 struct PHY_DotationNature::LoadingWrapper
 {
@@ -71,10 +64,6 @@ void PHY_DotationNature::Terminate()
     natures_.clear();
 }
 
-// =============================================================================
-// INSTANCE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationNature constructor
 // Created: NLD 2006-03-21
@@ -83,7 +72,7 @@ PHY_DotationNature::PHY_DotationNature( const std::string& strName )
     : strName_( strName )
     , nID_    ( nNextID_++ )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -92,5 +81,44 @@ PHY_DotationNature::PHY_DotationNature( const std::string& strName )
 // -----------------------------------------------------------------------------
 PHY_DotationNature::~PHY_DotationNature()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationNature::GetName
+// Created: NLD 2006-03-21
+// -----------------------------------------------------------------------------
+const std::string& PHY_DotationNature::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationNature::Find
+// Created: NLD 2006-03-21
+// -----------------------------------------------------------------------------
+const PHY_DotationNature* PHY_DotationNature::Find( const std::string& strName )
+{
+    CIT_DotationNatureMap it = natures_.find( strName );
+    if( it == natures_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationNature::operator==
+// Created: NLD 2006-03-21
+// -----------------------------------------------------------------------------
+bool PHY_DotationNature::operator==( const PHY_DotationNature& rhs ) const
+{
+    return nID_ == rhs.nID_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationNature::operator!=
+// Created: NLD 2006-03-21
+// -----------------------------------------------------------------------------
+bool PHY_DotationNature::operator!=( const PHY_DotationNature& rhs ) const
+{
+    return nID_ != rhs.nID_;
 }

@@ -12,8 +12,6 @@
 #ifndef __PHY_Morale_h_
 #define __PHY_Morale_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 class PHY_ConsumptionType;
@@ -82,15 +80,13 @@ private:
     ~PHY_Morale();
 
 private:
-    const std::string         strName_;
-    const E_MoraleType        nType_;
+    const std::string          strName_;
+    const E_MoraleType         nType_;
     const ASN1T_EnumUnitMorale nAsnID_;
-    const MT_Float            rDIAWeight_;
+    const MT_Float             rDIAWeight_;
 
 private:
     static T_MoraleMap morales_;
 };
-
-#include "PHY_Morale.inl"
 
 #endif // __PHY_Morale_h_

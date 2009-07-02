@@ -10,20 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationCategory_IndirectMineFire.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/ConstructionAttribute.h"
-
-//#include "Entities/Objects/MIL_ZoneMineeParDispersion.h"
-
 #include "simulation_terrain/TER_Localisation.h"
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
@@ -50,12 +44,8 @@ PHY_DotationCategory_IndirectMineFire::PHY_DotationCategory_IndirectMineFire( co
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectMineFire::~PHY_DotationCategory_IndirectMineFire()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
   
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectMineFire::ApplyEffect

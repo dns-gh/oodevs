@@ -12,8 +12,6 @@
 #ifndef __PHY_HumansComposante_h_
 #define __PHY_HumansComposante_h_
 
-#include "MIL.h"
-
 class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_ComposantePion;
@@ -101,6 +99,17 @@ private:
     uint                nNbrUsableHumans_;
 };
 
-#include "PHY_HumansComposante.inl"
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::serialize
+// Created: JVT 2005-04-01
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_HumansComposante::serialize( Archive& file, const uint )
+{
+    file & pComposante_
+         & humans_
+         & nNbrUsableHumans_;
+    assert( pComposante_ );
+}
 
 #endif // __PHY_HumansComposante_h_

@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationCapacities_h_
 #define __PHY_DotationCapacities_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -62,7 +60,5 @@ private:
 private:
     T_DotationCapacityMap dotationCapacities_;
 };
-
-#include "PHY_DotationCapacities.inl"
 
 #endif // __PHY_DotationCapacities_h_

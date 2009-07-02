@@ -74,6 +74,4 @@ private:
           MT_Float                    rSupplyThreshold_;    
 };
 
-#include "PHY_DotationStock.inl"
-
 #endif // __PHY_DotationStock_h_

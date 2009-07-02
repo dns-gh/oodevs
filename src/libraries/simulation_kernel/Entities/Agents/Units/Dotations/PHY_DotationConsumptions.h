@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationConsumptions_h_
 #define __PHY_DotationConsumptions_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -67,7 +65,5 @@ private:
 private:
     T_DotationConsumptionMap dotationConsumptions_;
 };
-
-#include "PHY_DotationConsumptions.inl"
 
 #endif // __PHY_DotationConsumptions_h_

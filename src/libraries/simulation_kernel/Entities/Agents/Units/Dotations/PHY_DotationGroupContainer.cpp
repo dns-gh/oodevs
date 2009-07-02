@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationGroupContainer.h"
-
 #include "PHY_DotationType.h"
 #include "PHY_DotationGroup.h"
 #include "PHY_DotationCapacity.h"
@@ -21,8 +19,6 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Network/NET_ASN_Messages.h"
 #include <xeumeuleu/xml.h>
-
-
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationGroupContainer, "PHY_DotationGroupContainer" )
 
@@ -33,6 +29,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_DotationGroupContainer, "PHY_DotationGroupContainer
 PHY_DotationGroupContainer::PHY_DotationGroupContainer( PHY_RolePion_Dotations& roleDotation )
     : pRoleDotation_( &roleDotation )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,6 +39,7 @@ PHY_DotationGroupContainer::PHY_DotationGroupContainer( PHY_RolePion_Dotations& 
 PHY_DotationGroupContainer::PHY_DotationGroupContainer()
     : pRoleDotation_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,9 +53,6 @@ PHY_DotationGroupContainer::~PHY_DotationGroupContainer()
     dotationGroups_.clear();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
@@ -139,10 +134,6 @@ void PHY_DotationGroupContainer::serialize( Archive& file, const uint )
          & dotationsChanged_;
 }
 
-// =============================================================================
-// INIT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::ReadValues
 // Created: NLD 2004-08-16
@@ -191,10 +182,6 @@ void PHY_DotationGroupContainer::WriteODB( xml::xostream& xos ) const
         it->second->WriteODB( xos );
     xos << xml::end(); // dotations
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::CreateDotationGroup
@@ -351,10 +338,6 @@ void PHY_DotationGroupContainer::ConsumeFireReservations()
         it->second->ConsumeFireReservations();
 }
 
-// =============================================================================
-// LOG
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::NotifySupplyNeeded
 // Created: NLD 2005-01-21
@@ -387,10 +370,6 @@ void PHY_DotationGroupContainer::ChangeDotationsValueUsingTC2( const PHY_Dotatio
     it->second->ChangeDotationsValueUsingTC2( pAmmoDotationClass, rCapacityFactor, tc2 );
 }
 
-// =============================================================================
-// MISC
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::NotifyCaptured
 // Created: NLD 2005-02-28
@@ -410,10 +389,6 @@ void PHY_DotationGroupContainer::NotifyReleased()
     for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->NotifyReleased();
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::SendChangedState
@@ -473,4 +448,43 @@ void PHY_DotationGroupContainer::SendFullState( NET_ASN_MsgUnitAttributes& asn )
     asn().dotation_eff_ressource.n        = nNbrDotations;
     asn().dotation_eff_ressource.elem     = pResources;
     asn().m.dotation_eff_ressourcePresent = 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::GetDotationGroup
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+PHY_DotationGroup* PHY_DotationGroupContainer::GetDotationGroup( const PHY_DotationType& dotationType ) const
+{
+    CIT_DotationGroupMap it = dotationGroups_.find( &dotationType );
+    if( it == dotationGroups_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::NotifyDotationChanged
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::NotifyDotationChanged( const PHY_Dotation& dotation )
+{
+    dotationsChanged_.insert( &dotation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::HasChanged
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+bool PHY_DotationGroupContainer::HasChanged() const
+{
+    return !dotationsChanged_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::Clean
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::Clean()
+{
+    dotationsChanged_.clear();
 }

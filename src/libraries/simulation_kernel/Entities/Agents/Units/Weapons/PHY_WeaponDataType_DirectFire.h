@@ -12,8 +12,6 @@
 #ifndef __PHY_WeaponDataType_DirectFire_h_
 #define __PHY_WeaponDataType_DirectFire_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_InterpolatedFunction.h"
 #include "MT_Tools/MT_Random.h"
 
@@ -95,7 +93,5 @@ private:
 private:
     static MT_Random randomGenerator_;
 };
-
-#include "PHY_WeaponDataType_DirectFire.inl"
 
 #endif // __PHY_WeaponDataType_DirectFire_h_

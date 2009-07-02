@@ -94,6 +94,4 @@ private:
           bool                  bDotationBlocked_; // Prisoner
 };
 
-#include "PHY_Dotation.inl"
-
 #endif // __PHY_Dotation_h_

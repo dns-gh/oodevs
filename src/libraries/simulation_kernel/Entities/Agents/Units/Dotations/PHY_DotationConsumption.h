@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationConsumption_h_
 #define __PHY_DotationConsumption_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -41,7 +39,5 @@ private:
     const PHY_DotationCategory& category_;
     MT_Float                    rConsumption_;
 };
-
-#include "PHY_DotationConsumption.inl"
 
 #endif // __PHY_DotationConsumption_h_

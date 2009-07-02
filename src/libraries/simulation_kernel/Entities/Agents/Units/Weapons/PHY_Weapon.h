@@ -12,8 +12,6 @@
 #ifndef __PHY_Weapon_h_
 #define __PHY_Weapon_h_
 
-#include "MIL.h"
-
 class PHY_WeaponType;
 class PHY_Composante_ABC;
 class MIL_AgentPion;
@@ -72,7 +70,5 @@ private:
     uint        nNbrAmmoFiredFromLoader_;
     MT_Float    rNextTimeStepToFire_;
 };
-
-#include "PHY_Weapon.inl"
 
 #endif // __PHY_Weapon_h_

@@ -12,8 +12,6 @@
 #ifndef __PHY_SensorTypeObject_h_
 #define __PHY_SensorTypeObject_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -66,7 +64,5 @@ private:
     T_ObjectDataVector    objectData_;
     MT_Float              rMaxDistance_;
 };
-
-#include "PHY_SensorTypeObject.inl"
 
 #endif // __PHY_SensorTypeObject_h_

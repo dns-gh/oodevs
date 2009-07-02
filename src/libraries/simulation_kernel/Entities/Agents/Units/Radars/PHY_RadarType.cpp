@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RadarType.h"
-
 #include "PHY_RadarClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -26,14 +24,8 @@
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
-
-
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;
 uint                          PHY_RadarType::nNextID_ = 0;
-
-// =============================================================================
-// MANAGER
-// =============================================================================
 
 struct PHY_RadarType::LoadingWrapper
 {
@@ -105,9 +97,6 @@ void PHY_RadarType::Terminate()
     radarTypes_.clear();
 }
 
-// =============================================================================
-// INIT
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RadarType constructor
 // Created: NLD 2004-08-06
@@ -139,6 +128,7 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
 // -----------------------------------------------------------------------------
 PHY_RadarType::~PHY_RadarType()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -303,10 +293,6 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
         xis.error( "Unknown acquisition-time: " + acquisitionType );
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RadarType::CanAcquire
 // Created: NLD 2005-05-02
@@ -365,4 +351,41 @@ const PHY_PerceptionLevel& PHY_RadarType::ComputeAcquisitionLevel( const MIL_Age
             return PHY_PerceptionLevel::detected_;
         return PHY_PerceptionLevel::notSeen_;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::FindRadarType
+// Created: NLD 2004-08-09
+// -----------------------------------------------------------------------------
+const PHY_RadarType* PHY_RadarType::Find( const std::string& strType )
+{
+    CIT_RadarTypeMap it = radarTypes_.find( strType );
+    return it == radarTypes_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::GetName
+// Created: NLD 2004-09-10
+// -----------------------------------------------------------------------------
+const std::string& PHY_RadarType::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::GetClass
+// Created: NLD 2005-05-02
+// -----------------------------------------------------------------------------
+const PHY_RadarClass& PHY_RadarType::GetClass() const
+{
+    return class_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::GetRadius
+// Created: NLD 2005-05-02
+// -----------------------------------------------------------------------------
+MT_Float PHY_RadarType::GetRadius() const
+{
+    return rRadius_;
 }

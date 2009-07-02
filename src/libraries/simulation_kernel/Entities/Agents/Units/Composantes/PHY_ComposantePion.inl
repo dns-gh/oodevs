@@ -9,8 +9,6 @@
 //
 // *****************************************************************************
 
-#include "Entities/Agents/Units/Categories/PHY_Protection.h"
-
 // -----------------------------------------------------------------------------
 // Name: template< typename T > void PHY_ComposantePion::FillFireData
 // Created: NLD 2006-08-07

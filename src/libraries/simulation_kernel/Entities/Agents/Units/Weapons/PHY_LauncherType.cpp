@@ -10,18 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_LauncherType.h"
-
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include <xeumeuleu/xml.h>
-
-
-
-// =============================================================================
-// MANAGER
-// =============================================================================
 
 PHY_LauncherType::T_LauncherTypeMap PHY_LauncherType::launcherTypes_;
 
@@ -74,10 +66,6 @@ void PHY_LauncherType::Terminate()
         delete it->second;
     launcherTypes_.clear();
 }
-
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_LauncherType constructor
@@ -184,10 +172,6 @@ void PHY_LauncherType::RegisterPHModificator( const PHY_Posture& postureSource, 
     phModificatorValues[ postureTarget.GetID() ] = rModificatorValue;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_LauncherType::GetPHModificator
 // Created: NLD 2004-10-05
@@ -216,4 +200,43 @@ MT_Float PHY_LauncherType::GetPHModificator( const PHY_RolePion_Posture& firerPo
 MT_Float PHY_LauncherType::GetPHModificator( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture ) const
 {
     return phModificators_[ firerPosture.GetID() ][ targetPosture.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LauncherType::FindLauncherType
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const PHY_LauncherType* PHY_LauncherType::FindLauncherType( const std::string& strName )
+{
+    CIT_LauncherTypeMap it = launcherTypes_.find( strName );
+    if( it == launcherTypes_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LauncherType::GetName
+// Created: NLD 2004-10-07
+// -----------------------------------------------------------------------------
+const std::string& PHY_LauncherType::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LauncherType::CanDirectFire
+// Created: NLD 2004-10-08
+// -----------------------------------------------------------------------------
+bool PHY_LauncherType::CanDirectFire() const
+{
+    return bDirectFire_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LauncherType::CanIndirectFire
+// Created: NLD 2004-10-08
+// -----------------------------------------------------------------------------
+bool PHY_LauncherType::CanIndirectFire() const
+{
+    return bIndirectFire_;
 }

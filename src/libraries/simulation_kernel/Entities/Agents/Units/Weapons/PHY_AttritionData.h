@@ -12,8 +12,6 @@
 #ifndef __PHY_AttritionData_h_
 #define __PHY_AttritionData_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Random.h"
 
 namespace xml
@@ -52,7 +50,5 @@ private:
 private:
     static MT_Random randomGenerator_;
 };
-
-#include "PHY_AttritionData.inl"
 
 #endif // __PHY_AttritionData_h_

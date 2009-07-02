@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Sensor.h"
 
 // -----------------------------------------------------------------------------
@@ -21,7 +20,7 @@ PHY_Sensor::PHY_Sensor( const PHY_SensorType& type, MT_Float rHeight )
     : type_   ( type )
     , rHeight_( rHeight )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,5 +29,23 @@ PHY_Sensor::PHY_Sensor( const PHY_SensorType& type, MT_Float rHeight )
 // -----------------------------------------------------------------------------
 PHY_Sensor::~PHY_Sensor()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_Sensor::GetHeight
+// Created: NLD 2004-08-20
+// -----------------------------------------------------------------------------
+MT_Float PHY_Sensor::GetHeight() const
+{
+    return rHeight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Sensor::GetType
+// Created: NLD 2004-08-20
+// -----------------------------------------------------------------------------
+const PHY_SensorType& PHY_Sensor::GetType() const
+{
+    return type_;
 }

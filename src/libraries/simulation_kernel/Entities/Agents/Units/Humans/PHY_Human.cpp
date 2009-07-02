@@ -10,10 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Human.h"
 #include "PHY_HumanRank.h"
-
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -21,7 +19,6 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Singletons.h"
-
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_GUID( PHY_Human, "PHY_Human" )
@@ -88,10 +85,6 @@ PHY_Human::~PHY_Human()
     if( pComposante_ )
         pComposante_->NotifyHumanRemoved( *this );
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::load
@@ -369,10 +362,6 @@ void PHY_Human::NotifyHandledByMedical()
     NotifyHumanChanged( oldHumanState );
 }
 
-// =============================================================================
-// COMPOSANTE MAINTENANCE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::NotifyComposanteHandledByMaintenance
 // Created: NLD 2005-01-14
@@ -402,10 +391,6 @@ void PHY_Human::NotifyComposanteBackFromMaintenance()
     }
 }
 
-// =============================================================================
-// UPDATE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::Update
 // Created: NLD 2005-01-10
@@ -431,4 +416,107 @@ void PHY_Human::Update()
     // Demande santé
     if( NeedMedical() && !pMedicalState_ )
         pMedicalState_ = pComposante_->NotifyHumanWaitingForMedical( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::GetRank
+// Created: NLD 2005-01-07
+// -----------------------------------------------------------------------------
+const PHY_HumanRank& PHY_Human::GetRank() const
+{
+    assert( pRank_ );
+    return *pRank_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::GetWound
+// Created: NLD 2005-01-07
+// -----------------------------------------------------------------------------
+const PHY_HumanWound& PHY_Human::GetWound() const
+{
+    assert( pWound_ );
+    return *pWound_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::GetLocation
+// Created: NLD 2005-01-13
+// -----------------------------------------------------------------------------
+PHY_Human::E_Location PHY_Human::GetLocation() const
+{
+    return nLocation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::IsDead
+// Created: NLD 2005-01-07
+// -----------------------------------------------------------------------------
+bool PHY_Human::IsDead() const
+{
+    return *pWound_ == PHY_HumanWound::killed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::IsAvailable
+// Created: NLD 2005-01-07
+// -----------------------------------------------------------------------------
+bool PHY_Human::IsUsable() const
+{
+    return !IsDead() && nLocation_ != eMedical;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::IsWounded
+// Created: NLD 2005-01-07
+// -----------------------------------------------------------------------------
+bool PHY_Human::IsWounded() const
+{
+    assert( pWound_ );
+    return *pWound_ != PHY_HumanWound::killed_ && *pWound_ != PHY_HumanWound::notWounded_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::IsContaminated
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+bool PHY_Human::IsContaminated() const
+{
+    return bContamined_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::IsMentalDiseased
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+bool PHY_Human::IsMentalDiseased() const
+{
+    return bMentalDiseased_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::IsAnEmergency
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+bool PHY_Human::IsAnEmergency() const
+{
+    assert( pWound_ );
+    return *pWound_ == PHY_HumanWound::woundedU1_ || *pWound_ == PHY_HumanWound::woundedUE_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::NeedMedical
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+bool PHY_Human::NeedMedical() const
+{
+    return !IsDead() && ( IsWounded() || IsContaminated() || IsMentalDiseased() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::NeedEvacuation
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+bool PHY_Human::NeedEvacuation()
+{
+    return NeedMedical() && !pMedicalState_;
 }

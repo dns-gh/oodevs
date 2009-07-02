@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SensorTypeObjectData.h"
-
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -24,8 +22,6 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
-
-
 
 struct PHY_SensorTypeObjectData::LoadingWrapper
 {
@@ -101,10 +97,6 @@ PHY_SensorTypeObjectData::~PHY_SensorTypeObjectData()
     // NOTHING
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObjectData::InitializePopulationFactors
 // Created: NLD 2005-10-27
@@ -126,7 +118,6 @@ void PHY_SensorTypeObjectData::InitializePopulationFactors( xml::xistream& xis )
 // Name: PHY_SensorTypeObjectData::GetPopulationFactor
 // Created: NLD 2005-10-28
 // -----------------------------------------------------------------------------
-inline
 MT_Float PHY_SensorTypeObjectData::GetPopulationFactor( MT_Float rDensity ) const
 {
     if( rDensity == 0. || rPopulationDensity_ == 0. )
@@ -164,10 +155,6 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
     return rModificator;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
@@ -194,4 +181,13 @@ const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MI
     if( rDistanceMaxModificator == 0. || !target.GetLocalisation().Intersect2DWithCircle( vSourcePos, rDD_ * rDistanceMaxModificator ) )
         return PHY_PerceptionLevel::notSeen_;
     return PHY_PerceptionLevel::identified_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeObjectData::GetMaxDistance
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+MT_Float PHY_SensorTypeObjectData::GetMaxDistance() const
+{
+    return rDD_;
 }

@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationCapacity_h_
 #define __PHY_DotationCapacity_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -44,7 +42,5 @@ private:
     MT_Float                    rCapacity_;
     MT_Float                    rSupplyThreshold_;
 };
-
-#include "PHY_DotationCapacity.inl"
 
 #endif // __PHY_DotationCapacity_h_

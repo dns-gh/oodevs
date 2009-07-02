@@ -12,8 +12,6 @@
 #ifndef __PHY_ConsumptionType_h_
 #define __PHY_ConsumptionType_h_
 
-#include "MIL.h"
-
 // =============================================================================
 // @class  PHY_ConsumptionType
 // Created: JVT 2004-08-03
@@ -81,7 +79,5 @@ private:
 private:
     static T_ConsumptionTypeMap consumptionTypes_;
 };
-
-#include "PHY_ConsumptionType.inl"
 
 #endif // __PHY_ConsumptionType_h_

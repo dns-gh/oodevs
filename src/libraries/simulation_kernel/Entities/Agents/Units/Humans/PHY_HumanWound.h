@@ -12,10 +12,7 @@
 #ifndef __PHY_HumanWound_h_
 #define __PHY_HumanWound_h_
 
-#include "MIL.h"
-
 #include "MT_Tools/MT_Random.h"
-
 #include "game_asn/Simulation.h"
 
 namespace xml
@@ -140,7 +137,5 @@ private:
     static uint               nMentalDiseaseRestingTime_;
     static MT_Float        rMentalDiseaseFactor_;
 };
-
-#include "PHY_HumanWound.inl"
 
 #endif // __PHY_HumanWound_h_

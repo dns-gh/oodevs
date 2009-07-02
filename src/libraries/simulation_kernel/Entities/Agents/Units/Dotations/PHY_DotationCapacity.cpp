@@ -10,11 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationCapacity.h"
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacity constructor
@@ -38,12 +35,38 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
     rSupplyThreshold_ = (float)( rCapacity_ * rSupplyThresholdPercentage / 100. );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacity destructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
 PHY_DotationCapacity::~PHY_DotationCapacity()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacity::GetCapacity
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+MT_Float PHY_DotationCapacity::GetCapacity() const
+{
+    return rCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacity::GetSupplyThreshold
+// Created: NLD 2005-01-21
+// -----------------------------------------------------------------------------
+MT_Float PHY_DotationCapacity::GetSupplyThreshold() const
+{
+    return rSupplyThreshold_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacity::GetCategory
+// Created: NLD 2005-01-26
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory& PHY_DotationCapacity::GetCategory() const
+{
+    return category_;
 }

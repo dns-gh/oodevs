@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationCategory.h"
-
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 #include "PHY_IndirectFireDotationClass.h"
@@ -21,9 +19,6 @@
 #include "PHY_DotationNature.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include <xeumeuleu/xml.h>
-
-
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationType::Initialize
@@ -75,7 +70,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
 //-----------------------------------------------------------------------------
 PHY_DotationCategory::~PHY_DotationCategory()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -180,10 +175,6 @@ void PHY_DotationCategory::InitializeLogisticType( xml::xistream& xis )
         pLogisticType_ = &PHY_DotationLogisticType::uniteFeuTD_;
 }
 
-// =============================================================================
-// FIRE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::GetAttritionData
 // Created: NLD 2004-10-06
@@ -214,3 +205,130 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_AgentPion& firer, 
     pIndirectFireData_->ApplyEffect( firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetNature
+// Created: NLD 2006-03-21
+// -----------------------------------------------------------------------------
+const PHY_DotationNature& PHY_DotationCategory::GetNature() const
+{
+    assert( pNature_ );
+    return *pNature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetLogisticType
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+const PHY_DotationLogisticType& PHY_DotationCategory::GetLogisticType() const
+{
+    assert( pLogisticType_ );
+    return *pLogisticType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetAmmoDotationClass
+// Created: NLD 2005-03-17
+// -----------------------------------------------------------------------------
+const PHY_AmmoDotationClass* PHY_DotationCategory::GetAmmoDotationClass() const
+{
+    return pAmmoDotationClass_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetMosID
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+uint PHY_DotationCategory::GetMosID() const
+{
+    return nMosID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetType
+// Created: NLD 2004-09-15
+// -----------------------------------------------------------------------------
+const PHY_DotationType& PHY_DotationCategory::GetType() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetName
+// Created: NLD 2004-10-07
+// -----------------------------------------------------------------------------
+const std::string& PHY_DotationCategory::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::CanBeUsedForDirectFire
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::CanBeUsedForDirectFire() const
+{
+    return !attritions_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::HasAttritions
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::HasAttritions() const
+{
+    return !attritions_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::CanBeUsedForIndirectFire
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::CanBeUsedForIndirectFire() const
+{
+    return pIndirectFireData_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetIndirectFireData
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory_IndirectFire_ABC* PHY_DotationCategory::GetIndirectFireData() const
+{
+    return pIndirectFireData_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::operator==
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::operator==( const PHY_DotationCategory& rhs ) const
+{
+    return this == &rhs;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::operator!=
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::operator!=( const PHY_DotationCategory& rhs ) const
+{
+    return this != &rhs;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetWeight
+// Created: NLD 2005-07-13
+// -----------------------------------------------------------------------------
+MT_Float PHY_DotationCategory::GetWeight() const
+{
+    return rWeight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetVolume
+// Created: NLD 2005-07-13
+// -----------------------------------------------------------------------------
+MT_Float PHY_DotationCategory::GetVolume() const
+{
+    return rVolume_;
+}

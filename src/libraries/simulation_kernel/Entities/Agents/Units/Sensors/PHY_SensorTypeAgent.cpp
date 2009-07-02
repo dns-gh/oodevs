@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_SensorTypeAgent.h"
-
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -29,7 +27,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
-
 
 namespace
 {
@@ -254,10 +251,6 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis, unsigned int&
         xis.error( "population-modifier: modifier not in [0..1]" );
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::GetPopulationFactor
 // Created: NLD 2005-10-28
@@ -382,10 +375,6 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpreteExtinction( MT_Float r
          return PHY_PerceptionLevel::detected_;
     return PHY_PerceptionLevel::notSeen_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::RayTrace
@@ -516,4 +505,83 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if( !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator, shape ) )
         return PHY_PerceptionLevel::notSeen_;
     return PHY_PerceptionLevel::identified_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::GetSquareProximityDistance
+// Created: NLD 2004-10-14
+// -----------------------------------------------------------------------------
+MT_Float PHY_SensorTypeAgent::GetSquareProximityDistance() const
+{
+    return rSquareProximityDist_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::GetMaxDistance
+// Created: NLD 2004-08-20
+// -----------------------------------------------------------------------------
+MT_Float PHY_SensorTypeAgent::GetMaxDistance() const
+{
+    return rDetectionDist_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::GetAngle
+// Created: NLD 2004-08-20
+// -----------------------------------------------------------------------------
+MT_Float PHY_SensorTypeAgent::GetAngle() const
+{
+    return rAngle_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::GetType
+// Created: NLD 2004-09-10
+// -----------------------------------------------------------------------------
+const PHY_SensorType& PHY_SensorTypeAgent::GetType() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::GetFactor
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+MT_Float PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
+{
+    assert( volumeFactors_.size() > volume.GetID() );
+    return volumeFactors_[ volume.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::CanScan
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+bool PHY_SensorTypeAgent::CanScan() const
+{
+    return bScanningAllowed_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx
+// Created: JVT 03-04-28
+//-----------------------------------------------------------------------------
+uint PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx( PHY_RawVisionData::E_VisionObject obj )
+{
+    if ( obj == PHY_RawVisionData::eVisionEmpty )
+        return 0;
+
+    uint res = 1;
+    for ( uint idx = 1; !( idx & obj ); idx <<= 1 )
+        ++res;
+    return res;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ConvertObjectIdxToEnvironnement
+// Created: JVT 03-08-07
+//-----------------------------------------------------------------------------
+PHY_RawVisionData::E_VisionObject PHY_SensorTypeAgent::ConvertObjectIdxToEnvironnement( uint val )
+{
+    return (PHY_RawVisionData::E_VisionObject)( val ? 1 << ( val - 1 ) : 0 );
 }

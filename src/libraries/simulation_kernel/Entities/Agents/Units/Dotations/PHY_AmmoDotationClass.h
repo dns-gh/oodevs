@@ -12,11 +12,6 @@
 #ifndef __PHY_AmmoDotationClass_h_
 #define __PHY_AmmoDotationClass_h_
 
-#include "MIL.h"
-
-class PHY_DotationCategory;
-class PHY_DotationCategory_IndirectFire_ABC;
-
 // =============================================================================
 // @class  PHY_AmmoDotationClass
 // Created: JVT 2004-08-03
@@ -84,7 +79,5 @@ private:
 private:
     static T_TypeMap types_;
 };
-
-#include "PHY_AmmoDotationClass.inl"
 
 #endif // __PHY_AmmoDotationClass_h_

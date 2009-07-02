@@ -12,8 +12,6 @@
 #ifndef __PHY_Tiredness_h_
 #define __PHY_Tiredness_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 namespace xml
@@ -107,14 +105,12 @@ private:
     MT_Float rCoefSensorDistanceModificator_;
 
 private:
-    static T_TirednessMap tirednesses_;
-    //! @name Helpers
+    //! @name Statics
     //@{
+    static T_TirednessMap tirednesses_;
     struct LoadingWrapper;
     static void ReadTiredness( xml::xistream& xis );
     //@}
 };
-
-#include "PHY_Tiredness.inl"
 
 #endif // __PHY_Tiredness_h_

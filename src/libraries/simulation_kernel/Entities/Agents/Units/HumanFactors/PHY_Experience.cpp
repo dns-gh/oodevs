@@ -10,15 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Experience.h"
 #include <xeumeuleu/xml.h>
-
-
-
-// =============================================================================
-// STATIC INITIALIZATION (MANAGER)
-// =============================================================================
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
 
@@ -77,10 +70,6 @@ void PHY_Experience::Terminate()
     experiences_.clear();
 }
 
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Experience constructor
 // Created: NLD 2004-08-05
@@ -130,4 +119,137 @@ void PHY_Experience::Read( xml::xistream& xis )
         xis.error( "posture-setup-time <= 0" );
     if( rCoefSensorDistanceModificator_ <= 0 )
         xis.error( "sensor-distance <= 0" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::Find
+// Created: JVT 2005-04-14
+// -----------------------------------------------------------------------------
+const PHY_Experience* PHY_Experience::Find( ASN1T_EnumUnitExperience nAsnID )
+{
+    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< ASN1T_EnumUnitExperience >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Experience::GetAsnID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
+
+    return it == experiences_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::Find
+// Created: JVT 2005-04-14
+// -----------------------------------------------------------------------------
+const PHY_Experience* PHY_Experience::Find( uint nID )
+{
+    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_Experience::GetID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
+
+    return it == experiences_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::Find
+// Created: NLD 2004-11-29
+// -----------------------------------------------------------------------------
+const PHY_Experience* PHY_Experience::Find( const std::string& strName )
+{
+    CIT_ExperienceMap it = experiences_.find( strName );
+    if( it == experiences_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::GetName
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const std::string& PHY_Experience::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::GetAsnID
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+ASN1T_EnumUnitExperience PHY_Experience::GetAsnID() const
+{
+    return nAsnID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::GetCoefMaxSpeedModificator
+// Created: NLD 2004-11-29
+// -----------------------------------------------------------------------------
+MT_Float PHY_Experience::GetCoefMaxSpeedModificator() const
+{
+    return rCoefMaxSpeedModificator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::GetCoefReloadingTimeModificator
+// Created: NLD 2004-11-29
+// -----------------------------------------------------------------------------
+MT_Float PHY_Experience::GetCoefReloadingTimeModificator() const
+{
+    return rCoefReloadingTimeModificator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::GetCoefPhModificator
+// Created: NLD 2004-11-29
+// -----------------------------------------------------------------------------
+MT_Float PHY_Experience::GetCoefPhModificator() const
+{
+    return rCoefPhModificator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::GetCoefPostureTimeModificator
+// Created: NLD 2004-11-29
+// -----------------------------------------------------------------------------
+MT_Float PHY_Experience::GetCoefPostureTimeModificator() const
+{
+    return rCoefPostureTimeModificator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::GetCoefSensorDistanceModificator
+// Created: NLD 2004-11-29
+// -----------------------------------------------------------------------------
+MT_Float PHY_Experience::GetCoefSensorDistanceModificator() const
+{
+    return rCoefSensorDistanceModificator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::operator==
+// Created: NLD 2004-11-29
+// -----------------------------------------------------------------------------
+bool PHY_Experience::operator==( const PHY_Experience& rhs ) const
+{
+    return nType_ == rhs.nType_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::operator!=
+// Created: NLD 2004-11-29
+// -----------------------------------------------------------------------------
+bool PHY_Experience::operator!=( const PHY_Experience& rhs ) const
+{
+    return nType_ != rhs.nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::GetID
+// Created: JVT 2004-11-30
+// -----------------------------------------------------------------------------
+uint PHY_Experience::GetID() const
+{
+    return (uint)nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Experience::GetWeight
+// Created: NLD 2004-12-01
+// -----------------------------------------------------------------------------
+MT_Float PHY_Experience::GetWeight() const
+{
+    return rDIAWeight_;
 }

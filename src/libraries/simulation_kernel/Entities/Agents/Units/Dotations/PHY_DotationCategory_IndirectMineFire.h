@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationCategory_IndirectMineFire_h_
 #define __PHY_DotationCategory_IndirectMineFire_h_
 
-#include "MIL.h"
-
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 
 namespace xml
@@ -45,7 +43,5 @@ public:
 private:
     uint nNbrObjects_;
 };
-
-#include "PHY_DotationCategory_IndirectMineFire.inl"
 
 #endif // __PHY_DotationCategory_IndirectMineFire_h_

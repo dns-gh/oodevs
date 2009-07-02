@@ -10,14 +10,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MaintenanceWorkRate.h"
 #include "PHY_Breakdown.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
-
-
 
 PHY_MaintenanceWorkRate::T_WorkRateMap PHY_MaintenanceWorkRate::workRates_;
 
@@ -108,4 +105,54 @@ void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
     xis >> xml::optional() >> xml::attribute( "time-before-warning", time );
     if( tools::DecodeTime( time, workRate.nDelayBeforeWarningRC_ ) && workRate.nDelayBeforeWarningRC_ == 0 )
         xis.error( "Time before warning is null" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceWorkRate::Find
+// Created: NLD 2005-01-06
+// -----------------------------------------------------------------------------
+const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( ASN1T_EnumLogMaintenanceRegimeTravail nID )
+{
+    for( CIT_WorkRateMap it = workRates_.begin(); it != workRates_.end(); ++it )
+    {
+        if( it->second->GetAsnID() == nID )
+            return it->second;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceWorkRate::GetAsnID
+// Created: NLD 2005-01-06
+// -----------------------------------------------------------------------------
+ASN1T_EnumLogMaintenanceRegimeTravail PHY_MaintenanceWorkRate::GetAsnID() const
+{
+    return asn_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceWorkRate::GetName
+// Created: NLD 2005-01-06
+// -----------------------------------------------------------------------------
+const std::string& PHY_MaintenanceWorkRate::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceWorkRate::GetNbrWorkerAllowedToWork
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+uint PHY_MaintenanceWorkRate::GetNbrWorkerAllowedToWork( uint nNbrAvailable ) const
+{
+    return std::min( nNbrAvailable, (uint)ceil( rWorkerRatio_ * nNbrAvailable ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceWorkRate::GetDelayBeforeWarningRC
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+uint PHY_MaintenanceWorkRate::GetDelayBeforeWarningRC() const
+{
+    return nDelayBeforeWarningRC_;
 }

@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_HumansComposante.h"
-
 #include "PHY_Human.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
@@ -54,10 +52,6 @@ PHY_HumansComposante::~PHY_HumansComposante()
 {
     // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::IsViable
@@ -151,16 +145,16 @@ uint PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, uint nNbrToCh
 
 namespace {
 
-MT_Float round( MT_Float rValue )
-{
-    MT_Float rIntegralPart;
-    MT_Float rFractionalPart = modf( rValue, &rIntegralPart );
+    MT_Float round( MT_Float rValue )
+    {
+        MT_Float rIntegralPart;
+        MT_Float rFractionalPart = modf( rValue, &rIntegralPart );
 
-    if( rFractionalPart >= 0.5 )
-        return rIntegralPart + 1.;
-    else
-        return rIntegralPart;
-}
+        if( rFractionalPart >= 0.5 )
+            return rIntegralPart + 1.;
+        else
+            return rIntegralPart;
+    }
 
 }
 
@@ -220,10 +214,6 @@ void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& con
         (**it).ApplyPoisonous( contamination );
 }
 
-// =============================================================================
-// COMPOSANTE NOTIFICATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::NotifyComposanteHandledByMaintenance
 // Created: NLD 2005-01-14
@@ -257,10 +247,6 @@ void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RolePion_Composantes&
         dest.NotifyHumanAdded  ( **it );
     }
 }
-
-// =============================================================================
-// NOTIFICATIONS HUMANS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::NotifyHumanAdded
@@ -318,11 +304,6 @@ void PHY_HumansComposante::NotifyHumanChanged( PHY_Human& human, const PHY_Human
         pComposante_->ReinitializeState( PHY_ComposanteState::dead_ );
 }
 
-
-// =============================================================================
-// MEDICAL
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::NotifyHumanBackFromMedical
 // Created: NLD 2006-02-09
@@ -375,4 +356,34 @@ bool PHY_HumansComposante::HasWoundedHumansToEvacuate() const
             return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::GetOperationalState
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+MT_Float PHY_HumansComposante::GetOperationalState() const
+{
+    if( humans_.empty() )
+        return 0.;
+    return (float)nNbrUsableHumans_ / (float)humans_.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::GetNbrUsableHumans
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+uint PHY_HumansComposante::GetNbrUsableHumans() const
+{
+    return nNbrUsableHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::GetComposante
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+const PHY_ComposantePion& PHY_HumansComposante::GetComposante() const
+{
+    assert( pComposante_ );
+    return *pComposante_;
 }

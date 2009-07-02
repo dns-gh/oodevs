@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationStockContainer_h_
 #define __PHY_DotationStockContainer_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -21,7 +19,6 @@ namespace xml
 }
 
 class PHY_DotationCategory;
-class PHY_DotationCapacity;
 class PHY_DotationStock;
 class PHY_RolePionLOG_Supply;
 class NET_ASN_MsgLogSupplyState;
@@ -35,9 +32,9 @@ class PHY_DotationStockContainer : private boost::noncopyable
 {
 
 public:
-     PHY_DotationStockContainer( PHY_RolePionLOG_Supply& roleSupply );
-     PHY_DotationStockContainer();
-    ~PHY_DotationStockContainer();
+    explicit PHY_DotationStockContainer( PHY_RolePionLOG_Supply& roleSupply );
+             PHY_DotationStockContainer();
+            ~PHY_DotationStockContainer();
 
     //! @name CheckPoints
     //@{
@@ -113,7 +110,5 @@ private:
     T_StockSet              stocksChanged_;
     bool                    bCheckStockCapacities_;
 };
-
-#include "PHY_DotationStockContainer.inl"
 
 #endif // __PHY_DotationStockContainer_h_

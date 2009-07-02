@@ -10,13 +10,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_AttritionData.h"
-
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include <xeumeuleu/xml.h>
-
-
 
 MT_Random PHY_AttritionData::randomGenerator_;
 
@@ -101,4 +97,26 @@ const PHY_ComposanteState& PHY_AttritionData::ComputeComposanteState() const
            rRand <= rReparableWithEvacuationBound_    ? PHY_ComposanteState::repairableWithEvacuation_   :
            rRand <= rReparableWithoutEvacuationBound_ ? PHY_ComposanteState::repairableWithoutEvacuation_:
                                                         PHY_ComposanteState::undamaged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_AttritionData::operator=
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+PHY_AttritionData& PHY_AttritionData::operator=( const PHY_AttritionData& rhs )
+{
+    rScore_                           = rhs.rScore_;
+    rDestroyedBound_                  = rhs.rDestroyedBound_;
+    rReparableWithEvacuationBound_    = rhs.rReparableWithEvacuationBound_;
+    rReparableWithoutEvacuationBound_ = rhs.rReparableWithoutEvacuationBound_;
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_AttritionData::GetScore
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+MT_Float PHY_AttritionData::GetScore() const
+{
+    return rScore_;
 }

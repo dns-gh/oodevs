@@ -12,7 +12,6 @@
 #ifndef __PHY_SensorTypeObjectData_h_
 #define __PHY_SensorTypeObjectData_h_
 
-#include "MIL.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 
 namespace xml
@@ -34,8 +33,8 @@ class PHY_SensorTypeObjectData : private boost::noncopyable
 {
 
 public:
-     PHY_SensorTypeObjectData( xml::xistream& xis );
-    ~PHY_SensorTypeObjectData();
+    explicit PHY_SensorTypeObjectData( xml::xistream& xis );
+            ~PHY_SensorTypeObjectData();
 
     //! @name Tools
     //@{
@@ -76,7 +75,5 @@ private:
     MT_Float rPopulationDensity_;
     MT_Float rPopulationFactor_;
 };
-
-#include "PHY_SensorTypeObjectData.inl"
 
 #endif // __PHY_SensorTypeObjectData_h_

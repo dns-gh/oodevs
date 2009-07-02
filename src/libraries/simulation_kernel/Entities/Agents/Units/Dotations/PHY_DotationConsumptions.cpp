@@ -10,15 +10,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationConsumptions.h"
-
 #include "PHY_DotationType.h"
 #include "PHY_DotationConsumption.h"
 #include "PHY_DotationGroupContainer.h"
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumptions constructor
@@ -64,10 +60,6 @@ PHY_DotationConsumptions::~PHY_DotationConsumptions()
     dotationConsumptions_.clear();
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumptions::RegisterConsumptionReservations
 // Created: NLD 2004-08-16
@@ -92,7 +84,6 @@ void PHY_DotationConsumptions::AddConsumptionValues( T_ConsumptionValue& result 
     for( CIT_DotationConsumptionMap it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
     {
         const PHY_DotationConsumption* pConsumption = it->second;
-
         if( pConsumption )
             result[ it->first ] += pConsumption->GetConsumption();
     }

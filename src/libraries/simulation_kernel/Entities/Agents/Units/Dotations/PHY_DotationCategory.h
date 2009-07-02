@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationCategory_h_
 #define __PHY_DotationCategory_h_
 
-#include "MIL.h"
-
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 
 namespace xml
@@ -113,7 +111,5 @@ private:
     T_AttritionVector                      attritions_;
     PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData_;     
 };
-
-#include "PHY_DotationCategory.inl"
 
 #endif // __PHY_DotationCategory_h_

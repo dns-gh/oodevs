@@ -19,6 +19,7 @@
 #include "PHY_ComposanteState.h"
 #include "PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Humans/PHY_HumansComposante.h"
+#include "Entities/Agents/Units/Categories/PHY_Protection.h"
 
 #include "MT_Tools/MT_Random.h"
 

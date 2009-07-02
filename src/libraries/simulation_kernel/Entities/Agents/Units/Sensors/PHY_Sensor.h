@@ -12,8 +12,6 @@
 #ifndef __PHY_Sensor_h_
 #define __PHY_Sensor_h_
 
-#include "MIL.h"
-
 class PHY_SensorType;
 
 // =============================================================================
@@ -37,7 +35,5 @@ private:
     const PHY_SensorType& type_;
     const MT_Float        rHeight_;
 };
-
-#include "PHY_Sensor.inl"
 
 #endif // __PHY_Sensor_h_

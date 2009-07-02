@@ -10,16 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Posture.h"
-
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 
 PHY_Posture::T_PostureMap PHY_Posture::postures_;
-
-// =============================================================================
-// STATIC INITIALIZATION (MANAGER)
-// =============================================================================
 
 const PHY_Posture PHY_Posture::mouvement_        ( "Mouvement"        , ePostureMouvement        , EnumUnitPosture::posture_mouvement          , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
 const PHY_Posture PHY_Posture::mouvementDiscret_ ( "MouvementDiscret" , ePostureMouvementDiscret , EnumUnitPosture::posture_mouvement_discret  , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
@@ -54,10 +48,6 @@ void PHY_Posture::Terminate()
     postures_.clear();
 }
 
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Posture constructor
 // Created: NLD 2004-08-05
@@ -70,6 +60,7 @@ PHY_Posture::PHY_Posture( const std::string& strName, E_PostureType nType, ASN1T
     , consumptionMode_ ( consumptionMode  )
     , pNextAutoPosture_( pNextAutoPosture )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,4 +69,106 @@ PHY_Posture::PHY_Posture( const std::string& strName, E_PostureType nType, ASN1T
 // -----------------------------------------------------------------------------
 PHY_Posture::~PHY_Posture()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::GetPostures
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const PHY_Posture::T_PostureMap& PHY_Posture::GetPostures()
+{
+    return postures_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::CanModifyPH
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+bool PHY_Posture::CanModifyPH() const
+{
+    return ( nFlags_ & ePostureCanModifyPH ) == ePostureCanModifyPH;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::CanModifyDetection
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+bool PHY_Posture::CanModifyDetection() const
+{
+    return ( nFlags_ & ePostureCanModifyDetection ) == ePostureCanModifyDetection;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::IsInstantaneous
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+bool PHY_Posture::IsInstantaneous() const
+{
+    return ( nFlags_ & ePostureInstantaneous ) == ePostureInstantaneous;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::FindPosture
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const PHY_Posture* PHY_Posture::FindPosture( const std::string& strName )
+{
+    CIT_PostureMap it = postures_.find( strName );
+    return it == postures_.end() ? 0: it->second;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::FindPosture
+// Created: JVT 2005-04-14
+// -----------------------------------------------------------------------------
+const PHY_Posture* PHY_Posture::FindPosture( uint nID )
+{
+    CIT_PostureMap it = std::find_if( postures_.begin(), postures_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_Posture::GetID ), std::select2nd< T_PostureMap::value_type >() ) ) );
+    return it == postures_.end() ? 0: it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::GetName
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const std::string& PHY_Posture::GetName() const
+{
+    return strName_;
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::GetID
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+uint PHY_Posture::GetID() const
+{
+    return (uint)nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::GetAsnID
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+ASN1T_EnumUnitPosture PHY_Posture::GetAsnID() const
+{
+    return nAsnID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::GetNextAutoPosture
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const PHY_Posture* PHY_Posture::GetNextAutoPosture() const
+{
+    return pNextAutoPosture_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::GetConsumptionMode
+// Created: NLD 2004-09-30
+// -----------------------------------------------------------------------------
+const PHY_ConsumptionType& PHY_Posture::GetConsumptionMode() const
+{
+    return consumptionMode_;
 }

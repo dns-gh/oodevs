@@ -12,8 +12,6 @@
 #ifndef __PHY_WeaponType_h_
 #define __PHY_WeaponType_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -139,7 +137,5 @@ private:
 private:
     static T_WeaponTypeMap   weaponTypes_;
 };
-
-#include "PHY_WeaponType.inl"
 
 #endif // __PHY_WeaponType_h_

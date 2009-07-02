@@ -12,8 +12,6 @@
 #ifndef __PHY_RadarClass_h_
 #define __PHY_RadarClass_h_
 
-#include "MIL.h"
-
 // =============================================================================
 // @class  PHY_RadarClass
 // Created: JVT 2004-08-03
@@ -79,7 +77,5 @@ private:
 private:
     static T_RadarClassMap radarClasses_;
 };
-
-#include "PHY_RadarClass.inl"
 
 #endif // __PHY_RadarClass_h_

@@ -10,17 +10,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
 #include "Entities/Effects/MIL_Effect_Weather.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_EntityManager.h"
-
-#include "Tools/MIL_Tools.h"
+#include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.h>
 #include "Tools/xmlcodecs.h"
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
@@ -57,10 +53,6 @@ PHY_DotationCategory_IndirectWeatherFire::~PHY_DotationCategory_IndirectWeatherF
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectWeatherFire::ApplyEffect
 // Created: NLD 2004-10-21
@@ -80,4 +72,3 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_AgentPion&
     MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, rLifeDuration_, rDeploymentDuration_ );
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
 }
-

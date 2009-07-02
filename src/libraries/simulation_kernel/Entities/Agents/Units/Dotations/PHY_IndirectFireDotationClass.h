@@ -12,8 +12,6 @@
 #ifndef __PHY_IndirectFireDotationClass_h_
 #define __PHY_IndirectFireDotationClass_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -96,7 +94,5 @@ private:
 private:
     static T_TypeMap types_;
 };
-
-#include "PHY_IndirectFireDotationClass.inl"
 
 #endif // __PHY_IndirectFireDotationClass_h_

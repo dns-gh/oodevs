@@ -10,18 +10,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_WeaponDataType_IndirectFire.h"
-
 #include "PHY_WeaponType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
-
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_IndirectFire constructor
@@ -54,11 +49,8 @@ PHY_WeaponDataType_IndirectFire::PHY_WeaponDataType_IndirectFire( const PHY_Weap
 // -----------------------------------------------------------------------------
 PHY_WeaponDataType_IndirectFire::~PHY_WeaponDataType_IndirectFire()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_IndirectFire::Fire
@@ -76,4 +68,31 @@ void PHY_WeaponDataType_IndirectFire::Fire( MIL_AgentPion& /*firer*/, MIL_Effect
 void PHY_WeaponDataType_IndirectFire::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {
     weaponType_.GetDotationCategory().ApplyIndirectFireEffect( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_IndirectFire::GetAverageSpeed
+// Created: NLD 2004-10-11
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponDataType_IndirectFire::GetAverageSpeed() const
+{
+    return rAverageSpeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_IndirectFire::GetMinRange
+// Created: JVT 2005-05-02
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponDataType_IndirectFire::GetMinRange() const
+{
+    return rMinRange_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_IndirectFire::GetMaxRange
+// Created: JVT 2005-05-02
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponDataType_IndirectFire::GetMaxRange() const
+{
+    return rMaxRange_;
 }

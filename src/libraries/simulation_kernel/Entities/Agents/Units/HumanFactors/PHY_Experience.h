@@ -12,8 +12,6 @@
 #ifndef __PHY_Experience_h_
 #define __PHY_Experience_h_
 
-#include "MIL.h"
-
 #include "game_asn/Simulation.h"
 
 namespace xml
@@ -107,14 +105,12 @@ private:
     MT_Float rCoefSensorDistanceModificator_;
 
 private:
-    static T_ExperienceMap experiences_;
-    //! @name Helpers
+    //! @name Statics
     //@{
+    static T_ExperienceMap experiences_;
     struct LoadingWrapper;
     static void ReadExperience( xml::xistream& xis );
     //@}
 };
-
-#include "PHY_Experience.inl"
 
 #endif // __PHY_Experience_h_

@@ -12,8 +12,6 @@
 #ifndef __PHY_SensorType_h_
 #define __PHY_SensorType_h_
 
-#include "MIL.h"
-
 namespace xml
 {
     class xistream;
@@ -82,7 +80,5 @@ private:
     static T_SensorTypeMap sensorTypes_;
     static uint            nNextID_;
 };
-
-#include "PHY_SensorType.inl"
 
 #endif // __PHY_SensorType_h_

@@ -10,14 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationType.h"
-
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationLogisticType.h"
 #include <xeumeuleu/xml.h>
-
-
 
 PHY_DotationType PHY_DotationType::munition_ ( "munition" , eMunition , EnumDotationFamily::munition , PHY_DotationLogisticType::uniteFeuSansTD_ );
 PHY_DotationType PHY_DotationType::carburant_( "carburant", eCarburant, EnumDotationFamily::carburant, PHY_DotationLogisticType::uniteEssence_   );
@@ -29,10 +25,6 @@ PHY_DotationType PHY_DotationType::ration_   ( "ration"   , eRation   , EnumDota
 
 PHY_DotationType::T_DotationTypeMap       PHY_DotationType::dotationTypes_;
 PHY_DotationType::T_DotationCategoryIDMap PHY_DotationType::dotationCategorieIDs_;
-
-//=============================================================================
-// STATIC INITIALIZATION
-//=============================================================================
 
 struct PHY_DotationType::LoadingWrapper
 {
@@ -95,10 +87,6 @@ void PHY_DotationType::Terminate()
     dotationTypes_.clear();
 }
 
-//=============================================================================
-//
-//=============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
@@ -137,6 +125,7 @@ void PHY_DotationType::RegisterDotationCategory( const std::string& strCategoryN
 //-----------------------------------------------------------------------------
 PHY_DotationType::~PHY_DotationType()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -163,4 +152,117 @@ const PHY_DotationCategory* PHY_DotationType::InternalFindDotationCategory( cons
     if( it == dotationCategories_.end() )
         return 0;
     return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::FindDotationType
+// Created: NLD 2004-08-04
+// -----------------------------------------------------------------------------
+const PHY_DotationType* PHY_DotationType::FindDotationType( const std::string& strName )
+{
+    CIT_DotationTypeMap itDotationType = dotationTypes_.find( strName );
+    if( itDotationType == dotationTypes_.end() )
+        return 0;
+    return itDotationType->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::FindDotationType
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+const PHY_DotationType* PHY_DotationType::FindDotationType( ASN1T_EnumDotationFamily nAsnID )
+{
+    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
+        if( it->second->GetAsnID() == nAsnID )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::FindDotationType
+// Created: NLD 2005-03-17
+// -----------------------------------------------------------------------------
+const PHY_DotationType* PHY_DotationType::FindDotationType( uint nID )
+{
+    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
+    {
+        if( it->second->GetID() == nID )
+            return it->second;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::FindDotationCategory
+// Created: NLD 2005-02-03
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( uint nID )
+{
+    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
+    {
+        const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( nID );
+        if( pDotationCategory ) 
+            return pDotationCategory;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::FindDotationCategory
+// Created: NLD 2006-10-19
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( const std::string& strName )
+{
+    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
+    {
+        const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( strName );
+        if( pDotationCategory ) 
+            return pDotationCategory;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::GetName
+// Created: NLD 2005-03-17
+// -----------------------------------------------------------------------------
+const std::string& PHY_DotationType::GetName() const
+{
+    return strName_;
+}
+          
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::GetID
+// Created: NLD 2005-03-17
+// -----------------------------------------------------------------------------
+uint PHY_DotationType::GetID() const
+{
+    return nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::GetAsnID
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+ASN1T_EnumDotationFamily PHY_DotationType::GetAsnID() const
+{
+    return nAsnID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::GetDefaultLogisticType
+// Created: NLD 2006-01-04
+// -----------------------------------------------------------------------------
+const PHY_DotationLogisticType& PHY_DotationType::GetDefaultLogisticType() const
+{
+    return defaultLogisticType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::operator==
+// Created: NLD 2005-02-28
+// -----------------------------------------------------------------------------
+bool PHY_DotationType::operator==( const PHY_DotationType& rhs ) const
+{
+    return rhs.nType_ == nType_;
 }

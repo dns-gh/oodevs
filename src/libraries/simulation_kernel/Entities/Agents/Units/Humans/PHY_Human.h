@@ -127,8 +127,4 @@ private:
           uint                   nDeathTimeStep_;
 };
 
-
-
-#include "PHY_Human.inl"
-
 #endif // __PHY_Human_h_
