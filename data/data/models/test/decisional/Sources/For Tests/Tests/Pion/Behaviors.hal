@@ -56,28 +56,14 @@ default Default()
         DEC_Debug( "Points d'esquive à 500m... cherchez les croix" );
 
         T_ListePoints points = DEC_Geometrie_CreerListePoints();
-        E_ValiditeRequete   nValidite;
         with( p in popus )
         {
-            T_Point point = DEC_Geometrie_CalculerPositionSureteAvecPopulation( p, 500, nValidite );
+            T_Point point = DEC_Geometrie_CalculerPositionSureteAvecPopulation( p, 500 );
             DEC_ListePoints_PushBack( points, point );
         }
         DEC_DebugAffichePoints( points );
     }
              
-
-    E_ValiditeRequete   nValidite;
-    
-    /*T_ListeConnaissancesPopulation pop2 = DEC_Connaissances_Populations();
-    if( DIA_Size( pop2 ) > 0 )
-    {
-        with( p in pop2 )
-        {
-            if( DEC_ConnaissancePopulation_EstPercueParUnite( p, nValidite ) )
-                DEC_Debug( "-- Population percue" );
-        }
-    }*/
-   
     persistent T_Action              popuFire;
     persistent E_EtatActionTirDirect nTirDirectState;
     
@@ -88,12 +74,12 @@ default Default()
     }
     with( x in popus )
     {
-        DEC_ConnaissancePopulation_Reconnaitre( x, nValidite );
-        float dangerosite = DEC_ConnaissancePopulation_Dangerosite( x, nValidite );
+        DEC_ConnaissancePopulation_Reconnaitre( x );
+        float dangerosite = DEC_ConnaissancePopulation_Dangerosite( x );
         DEC_Debug( "Dangerosite : " + FloatToString( dangerosite ) );
         
         if( popuFire == 0 )
-            popuFire = DEC_StartTirSurPopulation( nTirDirectState, x );
+            popuFire = DEC__StartTirSurPopulation( nTirDirectState, x );
     }        
     
     popus = DEC_Connaissances_PopulationsPrenantAPartie();
@@ -138,72 +124,6 @@ default Default()
     if( DEC_NecessiteEvacuationBlesses( myself ) )
         DEC_Debug( "-== Necessite Evacuation Blesses ==-" );
         
-//    DEC_RC( eRC_PreparationMission );
-//    DEC_Message( eRC_PreparationMission, 654 );
-
-    /*
-    selection carreux;
-    for( float i = 0 ; i < 1000; ++i )
-    	DIA_PushBack( carreux, myself );
-    */
-    
-    /*
-    DEC_Debug( "DEC_Agent_PeutConstruireObjet " + BoolToString( DEC_Agent_PeutConstruireObjet( eTypeObjectBouchonMines ) ) );
-    DEC_Debug( "DEC_Agent_PeutDetruireObjet "   + BoolToString( DEC_Agent_PeutDetruireObjet( eTypeObjectBouchonMines ) ) );
-    DEC_Debug( "DEC_Agent_PeutValoriserObjet "  + BoolToString( DEC_Agent_PeutValoriserObjet( eTypeObjectBouchonMines ) ) );
-    DEC_Debug( "DEC_Agent_PeutActiverObjet "    + BoolToString( DEC_Agent_PeutActiverObjet( eTypeObjectBouchonMines ) ) );    
-    */
-               
-                  
-//    T_ListeConnaissancesAgent perceivedAgents = DEC_Connaissances_AgentsPercus();
-//    DEC_Debug( FloatToString( DIA_Size( perceivedAgents ) ) );
-
-    /*
-    persistent T_ListePoints points = DEC_Geometrie_CreerListePoints();
-    DEC_ListePoints_PushBack( points, DEC_Geometrie_PositionAleatoireDansCercle( DEC_Agent_Position(), 800 ) );
-    DEC_DebugAffichePoints( points );
-    */
-
-    // DEC_Warning( eRC_Trace, "cock" );
-    // DEC_RC( eRC_Trace, "cock" );
-    
-    // DEC_RC( eRC_ReussiteRenforcement, myself, myself.automate_ );
-    
-
-    // DEC_Debug( FloatToString( DIA_Size( DEC_Renforts() ) ) + " Renforts" );
-//    DEC_Agent_ChangeEtatRapportDeForce   ( eEtatRapportDeForce_Neutre );
-    //DEC_Agent_ChangeEtatROE              ( eEtatROE_TirSurRiposte );
-    //DEC_Agent_ChangeEtatCombatDeRencontre( eEtatCombatDeRencontre_Esquive );
-    
-//  DEC_Copie_Point( DEC_Agent_Position(), DEC_Agent_Direction() );
-//  DEC_Copie_Point( DEC_Agent_Direction(), DEC_Agent_Direction() );
-
-//    T_ListeConnaissancesObjet test = DEC_Connaissances_Objets( eTypeObjectBouchonMines );
-//    DEC_Debug( FloatToString( DIA_Size( test ) ) );
-
-    //DEC_Debug( BoolToString( DEC_Agent_EstMilice() ) );
-
-    
-    //DEC_Geometrie_PositionAleatoireSurCercle   ( DEC_Agent_Position(), 800 );
-    //DEC_Geometrie_PositionAleatoireDansCercle  ( DEC_Agent_Position(), 800 );
-    
-    //DEC_DemandeDeRavitaillement();
-    
-    /*T_ListeConnaissancesAgent fusse = DEC_Connaissances_AgentsPotentiellementDangereux();
-    with( x in fusse )
-    {
-        E_ValiditeRequete   nValidite;
-        E_NiveauPerception nPerceptionLevel = DEC_ConnaissanceAgent_NiveauPerceptionMax( x, nValidite );
-        DEC_Debug( "Pot dangereux : " + EnumToString( nPerceptionLevel, E_NiveauPerception ) );
-    }    */
-
-/*    T_ListeConnaissancesObjet fusse2 = DEC_Connaissances_CollisionsObjets();
-    DEC_Debug( "Collisions avec " + FloatToString( DIA_Size( fusse2 ) ) + " objets" );    
-    */    
-    // DEC_Debug( BoolToString( DEC_Agent_PeutConstruireObjet( eTypeObjectBouchonMines ) ) );
-    
-    
-    
     behavior BEH_GererOrdreConduite();
 }
 
@@ -376,12 +296,11 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
                    
                 T_ConnaissanceObjet objet;
                 float               rDist;
-                E_ValiditeRequete   nValidite;
                 if( DEC_Itineraire_ProchainObjet( objet, rDist, 
                             S_TypeObject_ToString( eTypeObjectPontFlottantContinu ), 
                             S_TypeObject_ToString( eTypeObjectNuageNBC ), 
                             S_TypeObject_ToString( eTypeObjectBouchonMines ) ) )
-                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + DEC_ConnaissanceObjet_Type( objet, nValidite ) );
+                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + DEC_ConnaissanceObjet_Type( objet ) );
                 else
                     DEC_Debug( "PAS D'OBJET SUR L'ITINERAIRE" );                
                 
@@ -628,7 +547,8 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
             // DEC_DebugAffichePoint( DEC_Geometrie_CalculeBarycentreLocalisation( mission.forme_ ) );
             
             T_Point fusse;
-            if( DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( mission.forme_, fusse ) )
+            fusse = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( mission.forme_ );
+            if (fusse != 0 )
                 DEC_DebugAffichePoint( fusse );
         }
 
@@ -638,12 +558,7 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
 
         if( DIA_ModuleBegins() )
         {
-            //T_Localisation prout = DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), 800 );
             currentAction = DEC_StartCreerObjet( nState, repObjet, S_TypeObject_ToString( mission.type_ ), mission.forme_, mission.param1_, mission.param2_, false );
-            
-            //currentAction =  DEC_StartControlerZone( mission.forme_, 12000, true );
-            
-            //DEC_CreerObjetSansDelais( mission.type_, mission.forme_, mission.param1_, mission.param2_, false );
         }
         
         DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
@@ -668,15 +583,14 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         DEC_Debug( BoolToString( DEC_Connaissances_PresenceEnnemieDansCercle( DEC_Geometrie_CalculerBarycentreLocalisation( mission.forme_ ), 2000 ) ) + " unites ennemies dans cercle" );        
                 
         // connaissance popu / securisation
-        E_ValiditeRequete              nFusse;
         T_ListeConnaissancesPopulation popus = DEC_Connaissances_Populations();
      
         with( x in popus )
         {
-            T_Point pPt = DEC_ConnaissancePopulation_PointPlusProche( x, nFusse );
+            T_Point pPt = DEC_ConnaissancePopulation_PointPlusProche( x );
             DEC_Debug( "Pt plus proche : " + DEC_PointToString( pPt ) );
             if( DEC_ConnaissancePopulation_EstDansZone( x, mission.forme_ ) )
-                DEC_ConnaissancePopulation_Securiser( x, nFusse );
+                DEC_ConnaissancePopulation_Securiser( x );
         }
         
     }
@@ -702,7 +616,6 @@ behavior MIS_Pion_Test_DestroyObject( T_Mission_Pion_Test_DestroyObject mission,
         if( DIA_ModuleBegins() )
         {
             currentAction = DEC_StartDetruireObjet( nState, mission.objet_ );
-            //DEC_DetruireObjetSansDelais( mission.objet_ );
         }
         
         DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
@@ -729,31 +642,23 @@ behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, i
 
         if( DIA_ModuleBegins() )
         {
-            //currentAction = DEC_StartCreerContournementObjet( nState, mission.objet_ );
-            //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
-            //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
-            //nState  = DEC_ActiverObjet( mission.objet_ );
-            //DEC_Debug( "MIS_Pion_Test_CreateBypass PeutOccuperObjet : " + BoolToString( DEC_ConnaissanceObjet_PeutOccuperObjet( mission.objet_ ) ) );
-            //currentAction = DEC_StartOccuperObjet( mission.objet_ );
-            currentAction = DEC_StartAnimerObjet( mission.objet_ );
+            currentAction = DEC__StartAnimerObjet( mission.objet_ );
             
-            E_ValiditeRequete nFusse;
-            
-            DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante( mission.objet_, nFusse, 1.5 );
+            DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante( mission.objet_, 1.5 );
             
             
-            DEC_ConnaissanceObjet_Reconnaitre( mission.objet_, nFusse );
+            DEC_ConnaissanceObjet_Reconnaitre( mission.objet_ );
             
-            if( DEC_ConnaissanceObjet_EstObstacleDeManoeuvre( mission.objet_, nFusse ) )
+            if( DEC_ConnaissanceObjet_EstObstacleDeManoeuvre( mission.objet_ ) )
             {
-                if( DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif( mission.objet_, nFusse ) )
+                if( DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif( mission.objet_ ) )
                     DEC_Debug( "Obstacle de manoeuvre actif" );
                 else
                     DEC_Debug( "Obstacle de manoeuvre inactif" );
             }
 
                 
-            if( DEC_ConnaissanceObjet_EstContourne( mission.objet_, nFusse ) )
+            if( DEC_ConnaissanceObjet_EstContourne( mission.objet_ ) )
                 DEC_Debug( "Objet contourné" );
             else
                 DEC_Debug( "Objet non contourné" );
@@ -893,89 +798,71 @@ action ACT_TirDirect( T_ConnaissanceAgent target, bool bOnlyTransporteurs )
                 currentAction = DEC_StartTirDirect( nTirDirectState, target, 1.0, eTirDirectNormal/*, eMunitionClasse_Obus*/ ); 
             return;
         }
-/*        if( currentAction != 0 )
-        {
-            DEC_StopAction( currentAction );
-            currentAction = 0;
-        }*/
-            
         
-        E_ValiditeRequete nValidite;
-        float rDanger = DEC_ConnaissanceAgent_Dangerosite( target, nValidite );
-        if( nValidite == eRequeteValide )
-        {
-            DEC_Trace( "Dangerosité : " + FloatToString( rDanger ) );
-            DEC_Debug( "Dangerosité : " + FloatToString( rDanger ) );
-        }
-        else
-        {
-            DEC_Trace( "Connaissance non valide " );
-            DEC_Debug( "Connaissance non valide " );
-        }
+        float rDanger = DEC_ConnaissanceAgent_Dangerosite( target );
+        DEC_Trace( "Dangerosité : " + FloatToString( rDanger ) );
+        DEC_Debug( "Dangerosité : " + FloatToString( rDanger ) );
 
         DEC_Debug( "Etat tir direct : " + EnumToString( nTirDirectState, E_EtatActionTirDirect ) );
-        float rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite );
+        float rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target );
         DEC_Debug( "Portee max myself=>eni : " + FloatToString( rPorteeMoiSurLui ) );
-        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, nValidite );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target );
         DEC_Debug( "Portee min myself=>eni : " + FloatToString( rPorteeMoiSurLui ) );
-        float rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite );
+        float rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target );
         DEC_Debug( "Portee max myself=>eni debarque: " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        float rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, nValidite );
+        float rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target );
         DEC_Debug( "Portee max eni=>myself: " + FloatToString( rPorteeLuiSurMoi ) );
 
-        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite, 0.5 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target , 0.5 );
         DEC_Debug( "Portee max myself=>eni (PH 0.5): " + FloatToString( rPorteeMoiSurLui ) );
-        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, nValidite );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target );
         DEC_Debug( "Portee min myself=>eni (PH 0.5): " + FloatToString( rPorteeMoiSurLui ) );                
-        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite, 0.5 );
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, 0.5 );
         DEC_Debug( "Portee max myself=>eni debarque (PH 0.5): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, nValidite, 0.5 );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, 0.5 );
         DEC_Debug( "Portee max eni=>myself (PH 0.5): " + FloatToString( rPorteeLuiSurMoi ) );
 
-        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite, 0.1 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, 0.1 );
         DEC_Debug( "Portee max myself=>eni (PH 0.1): " + FloatToString( rPorteeMoiSurLui ) );        
-        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, nValidite, 0.1 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, 0.1 );
         DEC_Debug( "Portee min myself=>eni (PH 0.1): " + FloatToString( rPorteeMoiSurLui ) );                
-        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite, 0.1 );
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, 0.1 );
         DEC_Debug( "Portee max myself=>eni debarque (PH 0.1): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, nValidite, 0.1 );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, 0.1 );
         DEC_Debug( "Portee max eni=>myself (PH 0.1): " + FloatToString( rPorteeLuiSurMoi ) );
         
-        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite, 0 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, 0 );
         DEC_Debug( "Portee max myself=>eni (PH 0): " + FloatToString( rPorteeMoiSurLui ) );        
-        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, nValidite, 0 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, 0 );
         DEC_Debug( "Portee min myself=>eni (PH 0): " + FloatToString( rPorteeMoiSurLui ) );                
-        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite, 0 );
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, 0 );
         DEC_Debug( "Portee max myself=>eni debarque (PH 0): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite ( target, nValidite, 0 );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite ( target, 0 );
         DEC_Debug( "Portee max eni=>myself (PH 0): " + FloatToString( rPorteeLuiSurMoi ) );        
 
         float rEtatOpsMoi= DEC_Agent_EtatOps();
         DEC_Debug( "Etat OPS: " + FloatToString( rEtatOpsMoi ) );
         DEC_Trace( "Etat OPS: " + FloatToString( rEtatOpsMoi ) );
     
-        float rEtatOpsEni = DEC_ConnaissanceAgent_EtatOps( target, nValidite );
+        float rEtatOpsEni = DEC_ConnaissanceAgent_EtatOps( target );
         DEC_Debug( "Etat OPS ENI: " + FloatToString( rEtatOpsEni ) );
         DEC_Trace( "Etat OPS ENI: " + FloatToString( rEtatOpsEni ) );
         
-        DEC_Debug( "ENI Mort: " + BoolToString( DEC_ConnaissanceAgent_EstMort( target, nValidite ) ) );
-        DEC_Trace( "ENI Mort: " + BoolToString( DEC_ConnaissanceAgent_EstMort( target, nValidite ) ) );
+        DEC_Debug( "ENI Mort: " + BoolToString( DEC_ConnaissanceAgent_EstMort( target ) ) );
+        DEC_Trace( "ENI Mort: " + BoolToString( DEC_ConnaissanceAgent_EstMort( target ) ) );
     
         float rRapForLocal = DEC_RapportDeForceLocal();
         DEC_Debug( "Rapfor Local: " + FloatToString( rRapForLocal ) );
         DEC_Trace( "Rapfor Local: " + FloatToString( rRapForLocal ) );        
         
-        T_Point position = DEC_ConnaissanceAgent_Position( target, nValidite );
-        if( nValidite == eRequeteValide )
-        {
-            bool bEstVisible = DEC_Perception_PointEstVisible(  position );
-            if( nValidite == eRequeteValide && bEstVisible )
-                DEC_Debug( "Point visible" );
-            else
-                DEC_Debug( "Point non visible" );
-        }
+        T_Point position = DEC_ConnaissanceAgent_Position( target );
+        bool bEstVisible = DEC_Perception_PointEstVisible(  position );
+        if( bEstVisible )
+            DEC_Debug( "Point visible" );
+        else
+            DEC_Debug( "Point non visible" );
 
-        if( DEC_ConnaissanceAgent_PercoitUnite( target, nValidite ) )
+        if( DEC_ConnaissanceAgent_PercoitUnite( target ) )
             DEC_Debug( "Percu par target" );
         else
             DEC_Debug( "Non Percu par target" );        
@@ -998,17 +885,14 @@ action ACT_TirIndirect( T_Mission_Pion_Test_Fire mission )
     {
         persistent E_EtatActionTirIndirect nEtatTirIndirect;
         persistent T_Action                currentAction;
-        
+
         if( DIA_ModuleBegins() )
         {
-            //if( DIA_Size( mission.targets_ ) > 0 )
-            //    currentAction = DEC_StartTirIndirectSurConnaissance( nEtatTirIndirect, mission.munitions_, mission.nbIt_, DEC_UserTypeList_GetAt( mission.targets_, 0 ) );
-            //else
-                currentAction = DEC_StartTirIndirectSurPosition( nEtatTirIndirect, mission.munitions_, mission.nbIt_, mission.point_ );
+            currentAction = DEC_StartTirIndirectSurPosition( nEtatTirIndirect, mission.munitions_, mission.nbIt_, mission.point_ );
         }
         DEC_Debug( "Etat tir indirect : " + EnumToString( nEtatTirIndirect, E_EtatActionTirIndirect ) );
     }
-    
+
     on focus loss:
     {
         DEC_Debug( "ACT_TirIndirect on focus loss" );
@@ -1017,9 +901,9 @@ action ACT_TirIndirect( T_Mission_Pion_Test_Fire mission )
     {
         DEC_Debug( "ACT_TirIndirect on spontaneous end" );
         if( currentAction != 0 )
-          DEC_StopAction( currentAction );
+            DEC_StopAction( currentAction );
     }     
-    
+
 }
 
 behavior BEH_MoveToTmp( T_Point point )
@@ -1077,21 +961,20 @@ behavior BEH_Esquive( T_ConnaissanceAgent ennemi )
     when updated:
     {
         persistent T_Point ptSurete = 0;
-        E_ValiditeRequete nValidite;    
         
         if( DIA_ModuleBegins() )
         {
-            float rDistanceEsquive = DEC_Tir_PorteeMaxPourEtreTireParUnite( ennemi, nValidite, 0 );
+            float rDistanceEsquive = DEC_Tir_PorteeMaxPourEtreTireParUnite( ennemi, 0 );
             DEC_Debug( "Portee eni=>myself (PH 0): " + FloatToString( rDistanceEsquive ) );        
             
-            ptSurete = DEC_Geometrie_CalculerPositionSurete( ennemi, rDistanceEsquive, nValidite );
+            ptSurete = DEC_Geometrie_CalculerPositionSurete( ennemi, rDistanceEsquive );
         }
         
         behavior BEH_MoveToTmp( ptSurete );
         
-        DEC_Debug( "Dangerosité ENI: " + FloatToString( DEC_ConnaissanceAgent_Dangerosite( ennemi, nValidite  ) ) );
+        DEC_Debug( "Dangerosité ENI: " + FloatToString( DEC_ConnaissanceAgent_Dangerosite( ennemi ) ) );
         DEC_Debug( "Rapfor Local: " + FloatToString( DEC_RapportDeForceLocal() ) );
-        DEC_Debug( "Distance sureté : " + FloatToString( DEC_Tir_PorteeMaxPourEtreTireParUnite( ennemi, nValidite, 0 ) ) );
+        DEC_Debug( "Distance sureté : " + FloatToString( DEC_Tir_PorteeMaxPourEtreTireParUnite( ennemi , 0 ) ) );
     }
     
     on spontaneous end:
@@ -1156,7 +1039,6 @@ behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
             with( target in mission.targets_ )
             {
                 T_ConnaissanceAgent tmp = target;
-                E_ValiditeRequete nValidite;
                 
                 DEC_Tir_LancerFumigeneSurConnaissance( tmp );
             }
@@ -1178,37 +1060,34 @@ behavior MIS_Pion_PrendreEnComptePrisonniers( T_Mission_Pion_PrendreEnComptePris
     
         if( DIA_ModuleBegins() )
         {
-            E_ValiditeRequete nValidite;
-            ptCamp = DEC_Geometrie_CalculerBarycentreLocalisation( DEC_ConnaissanceObjet_Localisation( mission.campPrisonniers_, nValidite ) );           
+            ptCamp = DEC_Geometrie_CalculerBarycentreLocalisation( DEC_ConnaissanceObjet_Localisation( mission.campPrisonniers_ ) );           
             with( prisonnier in mission.unitesRendues_ )
             {
-                DEC_Debug( "DEC_Prisonniers_EstEmbarque before: " + BoolToString( DEC_Prisonniers_EstEmbarque( prisonnier, nValidite ) ) );
-                DEC_Prisonniers_CapturerEtEmbarquer( prisonnier, nValidite );
-                DEC_Debug( "DEC_Prisonniers_EstEmbarque after: " + BoolToString( DEC_Prisonniers_EstEmbarque( prisonnier, nValidite ) ) );
+                DEC_Debug( "DEC_Prisonniers_EstEmbarque before: " + BoolToString( DEC_Prisonniers_EstEmbarque( prisonnier ) ) );
+                DEC_Prisonniers_CapturerEtEmbarquer( prisonnier );
+                DEC_Debug( "DEC_Prisonniers_EstEmbarque after: " + BoolToString( DEC_Prisonniers_EstEmbarque( prisonnier ) ) );
             }
         }
         
         behavior BEH_MoveToTmp( ptCamp );
         if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), ptCamp ) )
         {
-            E_ValiditeRequete nValidite;
             with( prisonnier in mission.unitesRendues_ )
             {                            
-                DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp before: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_, nValidite ) ) );
-                DEC_Prisonniers_DebarquerDansCamp( prisonnier, mission.campPrisonniers_, nValidite );
-                DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp after: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_, nValidite ) ) );
+                DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp before: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_ ) ) );
+                DEC_Prisonniers_DebarquerDansCamp( prisonnier, mission.campPrisonniers_ );
+                DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp after: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_ ) ) );
             }
         }
     }
     on spontaneous end:
     {
         DEC_Debug( "MIS_Pion_PrendreEnComptePrisonniers : on spontaneous end" );
-        E_ValiditeRequete nValidite;
         with( prisonnier in mission.unitesRendues_ )
         {
-            DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp before: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_, nValidite ) ) );
-            DEC_Prisonniers_Debarquer( prisonnier, nValidite );
-            DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp after: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_, nValidite ) ) );
+            DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp before: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_ ) ) );
+            DEC_Prisonniers_Debarquer( prisonnier );
+            DEC_Debug( "DEC_Prisonniers_EstDebarqueDansCamp after: " + BoolToString( DEC_Prisonniers_EstDebarqueDansCamp( prisonnier, mission.campPrisonniers_ ) ) );
         }            
     }
 }
@@ -1222,37 +1101,34 @@ behavior MIS_Pion_OrienterRefugies( T_Mission_Pion_OrienterRefugies mission, id 
     
         if( DIA_ModuleBegins() )
         {
-            E_ValiditeRequete nValidite;
-            ptCamp = DEC_Geometrie_CalculerBarycentreLocalisation( DEC_ConnaissanceObjet_Localisation( mission.campRefugies_, nValidite ) );
+            ptCamp = DEC_Geometrie_CalculerBarycentreLocalisation( DEC_ConnaissanceObjet_Localisation( mission.campRefugies_ ) );
             with( refugie in mission.refugies_ )
             {
-                DEC_Debug( "DEC_Refugies_EstEmbarque before: " + BoolToString( DEC_Refugies_EstEmbarque( refugie, nValidite ) ) );
-                DEC_Refugies_OrienterEtEmbarquer( refugie, nValidite );
-                DEC_Debug( "DEC_Refugies_EstEmbarque after: " + BoolToString( DEC_Refugies_EstEmbarque( refugie, nValidite ) ) );
+                DEC_Debug( "DEC_Refugies_EstEmbarque before: " + BoolToString( DEC_Refugies_EstEmbarque( refugie ) ) );
+                DEC_Refugies_OrienterEtEmbarquer( refugie );
+                DEC_Debug( "DEC_Refugies_EstEmbarque after: " + BoolToString( DEC_Refugies_EstEmbarque( refugie ) ) );
             }            
         }
         
         behavior BEH_MoveToTmp( ptCamp );
         if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), ptCamp ) )
         {
-            E_ValiditeRequete nValidite;
             with( refugie in mission.refugies_ )
             {
-                DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp before: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_, nValidite ) ) );
-                DEC_Refugies_DebarquerDansCamp( refugie, mission.campRefugies_, nValidite );
-                DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp after: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_, nValidite ) ) );
+                DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp before: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_ ) ) );
+                DEC_Refugies_DebarquerDansCamp( refugie, mission.campRefugies_ );
+                DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp after: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_ ) ) );
             }
         }
     }
     on spontaneous end:
     {
         DEC_Debug( "MIS_Pion_PrendreEnComptePrisonniers : on spontaneous end" );
-        E_ValiditeRequete nValidite;
         with( refugie in mission.refugies_ )
         {
-            DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp before: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_, nValidite ) ) );        
-            DEC_Refugies_Debarquer( refugie, nValidite );
-            DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp after: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_, nValidite ) ) );            
+            DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp before: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_ ) ) );        
+            DEC_Refugies_Debarquer( refugie );
+            DEC_Debug( "DEC_Refugies_EstDebarqueDansCamp after: " + BoolToString( DEC_Refugies_EstDebarqueDansCamp( refugie, mission.campRefugies_ ) ) );            
         }
     }
 }

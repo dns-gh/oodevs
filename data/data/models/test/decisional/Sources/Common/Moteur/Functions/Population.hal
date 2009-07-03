@@ -4,16 +4,16 @@
 signatures
 {
     // Actions
-    V                                         A::DEC_StopAction   ( U /*T_Action*/ );
+    U /*T_Action*/                            A::DEC_StopAction   ( U /*T_Action*/ );
     V                                         A::DEC_PauseAction  ( U /*T_Action*/ );
     V                                         A::DEC_ReprendAction( U /*T_Action*/ );        
 
     // Déplacement            
-    U /*T_Action*/                            A::DEC_StartDeplacement( U /*T_Point*/ );
+    U /*T_Action*/                            A::DEC__StartDeplacement( U /*T_Point*/ );
 
     // Tir                                  
-    U /*T_Action*/                            A::DEC_StartTirSurPions( R /* intensite */ );
-    U /*T_Action*/                            A::DEC_StartTirSurPion ( R /* intensite */, U /* T_Population_ConnaissanceAgent */ );
+    U /*T_Action*/                            A::DEC__StartTirSurPions( R /* intensite */ );
+    U /*T_Action*/                            A::DEC__StartTirSurPion ( R /* intensite */, U /* T_Population_ConnaissanceAgent */ );
                                             
     // Effets sur les pions
     V                                         A::DEC_Population_RalentissementPion_ChangeVitesse   ( R /*vitesse*/ );
@@ -29,12 +29,12 @@ signatures
     S /*T_ListePopulationConnaissancesAgent*/ A::DEC_Connaissances_PionsSecurisant    (); 
     
     S /*T_ListePopulationConnaissancesObjet*/ A::DEC_Connaissances_ObjetsDansZone     ( U /*T_Localisation*/, * /*E_TypeObjects*/ );
-    U /*T_Localisation*/                      A::DEC_ConnaissanceObjet_Localisation   ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Localisation*/                      A::DEC_ConnaissanceObjet_Localisation   ( U /*T_Population_ConnaissanceObjet*/ );
     B                                         A::DEC_ConnaissanceObjet_EstValide      ( U /*T_Population_ConnaissanceObjet*/ );
-    V                                         A::DEC_ConnaissanceObjet_Degrader       ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/, R /*facteur de degradation 0..1*/ );
-    R                                         A::DEC_ConnaissanceObjet_Distance       ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                             A::DEC_ConnaissanceObjet_PointPlusProche( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
-    I /*E_Tristate*/                          A::DEC_ConnaissanceObjet_EstEnnemi( U /*T_ConnaissanceObjet*/, I /*E_ValiditeRequete*/ );
+    I /*E_ValiditeRequete&*/                  A::DEC_ConnaissanceObjet_Degrader       ( U /*T_Population_ConnaissanceObjet*/, R /*facteur de degradation 0..1*/ );
+    R                                         A::DEC_ConnaissanceObjet_Distance       ( U /*T_Population_ConnaissanceObjet*/ );
+    U /*T_Point*/                             A::DEC_ConnaissanceObjet_PointPlusProche( U /*T_Population_ConnaissanceObjet*/ );
+    I /*E_Tristate*/                          A::DEC_ConnaissanceObjet_EstEnnemi( U /*T_ConnaissanceObjet*/ );
     
     // Etat decisionnel
     V                                         A::DEC_Population_ChangeEtatDomination( R /*domination entre 0 et 1*/ );
@@ -50,10 +50,14 @@ signatures
     V                                         A::DEC_DecisionalState   ( X, X );
     V                                         A::DEC_DebugAffichePoint ( U /*T_Point*/ );
     V                                         A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );        
-    
+
     // Migration Representations
     S                                         A::DEC_GetCategory( X );
     V                                         A::DEC_RemoveFromCategory( X, A );
     V                                         A::DEC_DeleteRepresentation( A );
+
+    A                                         A::DEC_GetMission( A );
+    V                                         A::DEC_SetMission( A, A );
+    X                                         A::DEC_GetSzName( A );
 }
 

@@ -629,8 +629,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::ChangeAutomate             , "DEC_Pion_ChangeAutomate"        );
 
     // Logistique
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendCollectionComposantes >, "DEC__StartPreterVSRAM"        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendHaulerComposantes     >, "DEC__StartPreterRemorqueurs"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendCollectionComposantes >, "DEC_StartPreterVSRAM"        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendHaulerComposantes     >, "DEC_StartPreterRemorqueurs"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::UndoLendCollectionComposantes                     , "DEC_RecupererVSRAM"          );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::UndoLendHaulerComposantes                         , "DEC_RecupererRemorqueurs"    );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionGetTC2                                        , "DEC_Pion_TC2"                );

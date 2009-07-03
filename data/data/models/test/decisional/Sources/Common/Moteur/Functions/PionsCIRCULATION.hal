@@ -3,6 +3,6 @@
 // *****************************************************************************
 signatures
 {
-    V A::DEC_Circulation_EquiperItineraireLogistique( U /*T_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
+    I /*E_ValiditeRequete&*/ A::DEC_Circulation_EquiperItineraireLogistique( U /*T_ConnaissanceObjet*/ );
 }
 

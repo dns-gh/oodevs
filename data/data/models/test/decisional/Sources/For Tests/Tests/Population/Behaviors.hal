@@ -23,34 +23,10 @@ behavior BEH_Defaut( id nDummy )
     {              
         persistent T_Action actionFire;
         
-//        DEC_Trace( "aelkruzer ! aelkruzer !" );
-//        DEC_Debug( "Attitude : " + EnumToString( DEC_Population_Attitude(), E_AttitudePopulation ) );
-//        DEC_Debug( "Humans: " + FloatToString( DEC_Population_Vivants() ) + " / " + FloatToString( DEC_Population_Morts() ) );
-        
         if( actionFire != 0 )
         {
             DEC_StopAction( actionFire );
             actionFire = 0;
-        }
-                
-        if( DIA_ModuleBegins() )
-        {
-          //  actionFire = DEC_StartTirSurPions();
-        }
-        
-        T_ListePopulationConnaissancesAgent attackers = DEC_Connaissances_PionsPrenantAPartie();
-        if( DIA_Size( attackers ) > 0 )
-        {
-            DEC_Debug( "Pris à partie par " + FloatToString( DIA_Size( attackers ) ) + " pions" );
-            DEC_Debug( "ROE 1er pion prenant à partie : " + EnumToString( DEC_ConnaissanceAgent_RoePopulation( DEC_UserTypeList_GetAt( attackers, 0 ) ), E_EtatROEPopulation ) );
-            
-            actionFire = DEC_StartTirSurPion( 1, DEC_UserTypeList_GetAt( attackers, 0 ) );
-        }
-
-        T_ListePopulationConnaissancesAgent securers = DEC_Connaissances_PionsSecurisant();
-        if( DIA_Size( securers ) > 0 )
-        {
-            DEC_Debug( "Sécurisé par " + FloatToString( DIA_Size( securers ) ) + " pions" );
         }
     }
     
@@ -73,8 +49,8 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
         if( DIA_ModuleBegins() )
         {
             DEC_Debug( "MIS_Population_FaireMouvement - DIA_ModuleBegins" );
-            actionMove = DEC_StartDeplacement( mission.destination_ );
-            actionFire = DEC_StartTirSurPions( 1 );
+            actionMove = DEC__StartDeplacement( mission.destination_ );
+            actionFire = DEC__StartTirSurPions( 1 );
         }
         
 /*        if( rDummy == 53 )
@@ -104,9 +80,6 @@ behavior MIS_Population_CommettreExactions( T_Mission_Population_CommettreExacti
         
         if( DIA_ModuleBegins() )
         {
-          //  ptDest = DEC_Geometrie_CalculeBarycentreLocalisation( mission.zone );
-          //  actionMove = DEC_StartDeplacement( ptDest );           
-          
           T_ListePopulationConnaissancesObjet objets = DEC_Connaissances_ObjetsDansZone( mission.zone_, eTypeObjectInstallation );
           with( x in objets )
           {
@@ -114,11 +87,11 @@ behavior MIS_Population_CommettreExactions( T_Mission_Population_CommettreExacti
             {
                 E_ValiditeRequete nFusse;
                 DEC_Debug( "Exaction en cours !" );
-                float rDistance = DEC_ConnaissanceObjet_Distance( x, nFusse );
+                float rDistance = DEC_ConnaissanceObjet_Distance( x );
                 DEC_Debug( "Distance objet = " + FloatToString( rDistance ) );
-                T_Point closestPoint = DEC_ConnaissanceObjet_PointPlusProche( x, nFusse );
+                T_Point closestPoint = DEC_ConnaissanceObjet_PointPlusProche( x );
                 DEC_DebugAffichePoint( closestPoint );
-                DEC_ConnaissanceObjet_Degrader( x, nFusse, 0.03 );
+                DEC_ConnaissanceObjet_Degrader( x, 0.03 );
             }
           }
           

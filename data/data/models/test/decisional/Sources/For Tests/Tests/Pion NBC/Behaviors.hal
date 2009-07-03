@@ -14,14 +14,6 @@ default Default()
 //  DEC_Copie_Point( DEC_Agent_Position(), DEC_Agent_Direction() );
 //  DEC_Copie_Point( DEC_Agent_Direction(), DEC_Agent_Direction() );
 
-/*           T_ConnaissanceObjet objet;
-                float               rDist;
-                E_ValiditeRequete   nValidite;
-                if( DEC_Itineraire_ProchainObjet( objet, rDist, eTypeObjectNuageNBC, eTypeObjectBouchonMines ) )
-                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + DEC_ConnaissanceObjet_Type( objet, nValidite ) );
-                else
-                    DEC_Debug( "PAS D'OBJET SUR L'ITINERAIRE" );                */
-                     
 }
 
 behavior BEH_Defaut( id nDummy )
@@ -322,15 +314,10 @@ behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, i
 
         if( DIA_ModuleBegins() )
         {
-            //currentAction = DEC_StartCreerContournementObjet( nState, mission.objet_ );
-            //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
-            //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
-            //nState = DEC_ActiverObjet( mission.objet_ );
-            E_ValiditeRequete nValidite;
-            DEC_ConnaissanceObjet_Reconnaitre( mission.objet_, nValidite );
+            DEC_ConnaissanceObjet_Reconnaitre( mission.objet_ );
             
             
-            currentAction = DEC_StartAnimerObjet( mission.objet_ );
+            currentAction = DEC__StartAnimerObjet( mission.objet_ );
         }
         
         
@@ -397,40 +384,36 @@ action ACT_TirDirect( T_ConnaissanceAgent target, T_Mission_Pion_Test_Fire missi
                 currentAction = DEC_StartTirDirect( nTirDirectState, target, 1.0, eTirDirectLibre );
         }
         
-        E_ValiditeRequete nValidite;
-        float rDanger = DEC_ConnaissanceAgent_Dangerosite( target, nValidite );
-        if( nValidite == eRequeteValide )
-            DEC_Debug( "Dangerosité de la connaissance : " + FloatToString( rDanger ) );
-        else
-            DEC_Debug( "Connaissance non valide " );
+        float rDanger = DEC_ConnaissanceAgent_Dangerosite( target );
+        DEC_Debug( "Dangerosité de la connaissance : " + FloatToString( rDanger ) );
                 
         DEC_Debug( "Etat tir direct : " + EnumToString( nTirDirectState, E_EtatActionTirDirect ) );
-        float rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite );
+        float rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target );
         DEC_Debug( "Portee myself=>eni : " + FloatToString( rPorteeMoiSurLui ) );
-        float rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite );
+        float rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target );
         DEC_Debug( "Portee myself=>eni debarque: " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        float rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, nValidite );
+        float rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target );
         DEC_Debug( "Portee eni=>myself: " + FloatToString( rPorteeLuiSurMoi ) );
 
-        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite, 0.5 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, 0.5 );
         DEC_Debug( "Portee myself=>eni (PH 0.5): " + FloatToString( rPorteeMoiSurLui ) );
-        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite, 0.5 );
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, 0.5 );
         DEC_Debug( "Portee myself=>eni debarque (PH 0.5): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, nValidite, 0.5 );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, 0.5 );
         DEC_Debug( "Portee eni=>myself (PH 0.5): " + FloatToString( rPorteeLuiSurMoi ) );
 
-        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite, 0.1 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, 0.1 );
         DEC_Debug( "Portee myself=>eni (PH 0.1): " + FloatToString( rPorteeMoiSurLui ) );
-        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite, 0.1 );
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, 0.1 );
         DEC_Debug( "Portee myself=>eni debarque (PH 0.1): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, nValidite, 0.1 );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, 0.1 );
         DEC_Debug( "Portee eni=>myself (PH 0.1): " + FloatToString( rPorteeLuiSurMoi ) );
 
          float rEtatOpsMoi= DEC_Agent_EtatOps();
         DEC_Debug( "Etat OPS: " + FloatToString( rEtatOpsMoi ) );
         DEC_Trace( "Etat OPS: " + FloatToString( rEtatOpsMoi ) );
     
-        float rEtatOpsEni = DEC_ConnaissanceAgent_EtatOps( target, nValidite );
+        float rEtatOpsEni = DEC_ConnaissanceAgent_EtatOps( target );
         DEC_Debug( "Etat OPS ENI: " + FloatToString( rEtatOpsEni ) );
         DEC_Trace( "Etat OPS ENI: " + FloatToString( rEtatOpsEni ) );
     
@@ -438,17 +421,12 @@ action ACT_TirDirect( T_ConnaissanceAgent target, T_Mission_Pion_Test_Fire missi
         DEC_Debug( "Rapfor Local: " + FloatToString( rRapForLocal ) );
         DEC_Trace( "Rapfor Local: " + FloatToString( rRapForLocal ) );        
         
-        T_Point position = DEC_ConnaissanceAgent_Position( target, nValidite );
-        if( nValidite == eRequeteValide )
-        {
-            bool bEstVisible = DEC_Perception_PointEstVisible(  position );
-            if( nValidite == eRequeteValide && bEstVisible )
-                DEC_Debug( "Point visible" );
-            else
-                DEC_Debug( "Point non visible" );
-        }
+        T_Point position = DEC_ConnaissanceAgent_Position( target );
+        bool bEstVisible = DEC_Perception_PointEstVisible(  position );
+        if( bEstVisible )
+            DEC_Debug( "Point visible" );
 
-        if( DEC_ConnaissanceAgent_PercoitUnite( target, nValidite ) )
+        if( DEC_ConnaissanceAgent_PercoitUnite( target ) )
             DEC_Debug( "Percu par target" );
         else
             DEC_Debug( "Non Percu par target" );        
@@ -470,7 +448,7 @@ action ACT_TirIndirect( T_Mission_Pion_Test_Fire mission )
     {
         persistent E_EtatActionTirIndirect nEtatTirIndirect;
         persistent T_Action                currentAction;
-        
+
         if( DIA_ModuleBegins() )
         {
             if( DIA_Size( mission.targets_ ) > 0 )

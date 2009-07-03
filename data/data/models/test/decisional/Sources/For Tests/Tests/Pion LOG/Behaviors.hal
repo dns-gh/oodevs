@@ -72,7 +72,7 @@ default Default()
         		    DEC_DeleteRepresentation( ordre );
         		    
         		    bool bDummy;
-        		    actionPreterVSRAM = DEC_StartPreterVSRAM( tmp.pionARenforcer_, tmp.nbrAmbulances_, bDummy );
+        		    actionPreterVSRAM = DEC_StartPreterVSRAM( bDummy, tmp.pionARenforcer_, tmp.nbrAmbulances_ );
                     break;
                 }                
                 
@@ -93,7 +93,7 @@ default Default()
         		    DEC_DeleteRepresentation( ordre );
         		    
         		    bool bDummy;
-        		    actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( tmp.pionARenforcer_, tmp.nbrRemorqueurs_, bDummy );
+        		    actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( bDummy, tmp.pionARenforcer_, tmp.nbrRemorqueurs_ );
                     break;
                 }                
                 
@@ -234,7 +234,7 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
                 float               rDist;
                 E_ValiditeRequete   nValidite;
                 if( DEC_Itineraire_ProchainObjet( objet, rDist, eTypeObjectNuageNBC, eTypeObjectBouchonMines ) )
-                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + DEC_ConnaissanceObjet_Type( objet, nValidite ) );
+                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + DEC_ConnaissanceObjet_Type( objet ) );
                 else
                     DEC_Debug( "PAS D'OBJET SUR L'ITINERAIRE" );                
                         

@@ -76,12 +76,7 @@ functions
         E_ValiditeRequete	eValidite = eRequeteInvalide;
         T_Point 			positionA;
         
-        positionA = DEC_ConnaissanceAgent_Position( ksA, eValidite );       
-        if( eValidite == eRequeteInvalide )
-        {        
-        	S_Connaissance_ForceDistance = 0;
-            return;
-        }
+        positionA = DEC_ConnaissanceAgent_Position( ksA );       
  
         S_Connaissance_ForceDistance = 1;
     } 
