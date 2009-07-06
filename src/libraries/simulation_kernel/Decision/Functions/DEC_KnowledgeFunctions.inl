@@ -279,7 +279,7 @@ namespace
 template< typename T > 
 void DEC_KnowledgeFunctions::SortAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
 
     call.GetResult() = call.GetParameter( 0 );
     
@@ -294,7 +294,7 @@ void DEC_KnowledgeFunctions::SortAccordingToUnloadedEnemies( DIA_Call_ABC& call,
 template< typename T >
 void DEC_KnowledgeFunctions::SortAccordingToLoadedEnemies( DIA_Call_ABC& call, const T& caller )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
 
     call.GetResult() = call.GetParameter( 0 );
     
