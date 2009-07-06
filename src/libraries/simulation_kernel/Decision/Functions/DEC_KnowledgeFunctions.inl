@@ -241,44 +241,6 @@ float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& bou
     return (float)nNbrSelectedLivingEnemies / (float)nNbrTotalLivingEnemies;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::ComputeUnloadedEnemiesRatio
-// Created: NLD 2007-04-19
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_KnowledgeFunctions::ComputeUnloadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
-{
-    if( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) )
-    {
-        if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
-            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *pFuseau, true ) );
-    }
-    else if( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) )
-    {
-        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
-            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *location, true ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::ComputeLoadedEnemiesRatio
-// Created: NLD 2007-04-19
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_KnowledgeFunctions::ComputeLoadedEnemiesRatio( DIA_Call_ABC& call, const T& caller )
-{
-    if( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) )
-    {
-        if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
-            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *pFuseau, false ) );
-    }
-    else if( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) )
-    {
-        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
-            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *location, false ) );
-    }
-}
-
 namespace 
 {
     template< typename T >

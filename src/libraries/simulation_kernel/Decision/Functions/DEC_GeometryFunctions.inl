@@ -539,58 +539,79 @@ void DEC_GeometryFunctions::ComputeDelayFromSchedule( DIA_Call_ABC& call, const 
 {   
     assert( DEC_Tools::CheckTypeFuseau        ( call.GetParameter( 0 ) ) );
     assert( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 1 ) ) );
-    assert( DEC_Tools::CheckTypeLima          ( call.GetParameter( 2 ) ) || DEC_Tools::CheckTypeObjectif( call.GetParameter( 2 ) ) );
-
-    const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
-    const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
-    assert( pFuseau );
+    assert( DEC_Tools::CheckTypeLima          ( call.GetParameter( 2 ) ) );
 
     // Calcul distance entre barycentre automates et element schedulé
     MT_Float rDistanceFromScheduled = std::numeric_limits< MT_Float >::max();
     uint     nSchedule              = 0;
-    if( DEC_Tools::CheckTypeLima( call.GetParameter( 2 ) ) )
+    const MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 2 ).ToPtr() );
+    if( pLima ) 
     {
-        const MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 2 ).ToPtr() );
-        if( pLima ) 
-        {
-            rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, _ComputeAutomatesBarycenter( automates ) );
-            nSchedule = pLima->GetSchedule();
-        }
+        const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+        const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
+        rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, _ComputeAutomatesBarycenter( automates ) );
+        nSchedule = pLima->GetSchedule();
     }
-    else if( DEC_Tools::CheckTypeObjectif( call.GetParameter( 2 ) ) )
+
+    ComputeDelayFromSchedule( call, rDistanceFromScheduled, nSchedule );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( DIA_Call_ABC& call, const T& caller                    )
+{
+    assert( DEC_Tools::CheckTypeFuseau        ( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 1 ) ) );
+    assert( DEC_Tools::CheckTypeObjectif      ( call.GetParameter( 2 ) ) );
+
+    //
+    typedef std::vector< DEC_Objective* >     T_ObjectiveVector;
+    typedef T_ObjectiveVector::iterator       IT_ObjectiveVector;
+    typedef T_ObjectiveVector::const_iterator CIT_ObjectiveVector;
+    //
+    T_ObjectVariableVector& objectives = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 2 ) ).GetContainer() );
+
+    const MIL_LimaOrder* pNextLima = caller.GetOrderManager().FindNextScheduledLima();
+
+    const DIA_Variable_ABC* pNextObjective = 0;
+    for( CIT_ObjectVariableVector it = objectives.begin(); it != objectives.end(); ++it )
+    {
+        const DEC_Objective* pObjective = (**it).ToUserPtr( pObjective );
+        if( pObjective->GetSchedule() == 0 || pObjective->IsFlagged() )
+            continue;
+
+        if( ( !pNextObjective || pObjective->GetSchedule() < static_cast< DEC_Objective* >( pNextObjective->ToPtr() )->GetSchedule() )
+         && ( !pNextLima      || pObjective->GetSchedule() < pNextLima->GetSchedule() ) )
+            pNextObjective = *it;
+    }
+
+    MT_Float rDistanceFromScheduled = std::numeric_limits< MT_Float >::max();
+    uint     nSchedule              = 0;
+    if( pNextObjective )
     {
         const DEC_Objective* pObjective = call.GetParameter( 2 ).ToUserPtr( pObjective );
         if( pObjective )
         {
+            const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+            const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
             rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromObjective( *pObjective, _ComputeAutomatesBarycenter( automates ) );
             nSchedule = pObjective->GetSchedule();
         }
     }
-
-    // Calcul vitesse moyenne de l'automate
-    MT_Float rSpeed = std::numeric_limits< MT_Float >::max();
-    for( CIT_ObjectVector it = automates.begin(); it != automates.end(); ++it )
+    else if( pNextLima )
     {
-        const MIL_Automate& automate = static_cast< DEC_AutomateDecision& >( **it ).GetAutomate();
-        rSpeed = std::min( rSpeed, automate.GetAlivePionsMaxSpeed() );
+        const MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 2 ).ToPtr() );
+        if( pLima ) 
+        {
+            const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+            const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
+            rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, _ComputeAutomatesBarycenter( automates ) );
+            nSchedule = pLima->GetSchedule();
+        }
     }
-
-    if( rDistanceFromScheduled == std::numeric_limits< MT_Float >::max() || rSpeed == 0. )
-    {
-        call.GetResult().SetValue( (float)0. );
-        return;
-    }
-
-    const MT_Float rTimeToGoToElement = 1.439 * rDistanceFromScheduled / rSpeed; //$$$ Deplacer la formule magique (Cf. PHY_ComposantePion où elle existe aussi...)
-    const MT_Float rTimeLeeway        = 1.439 * 2000. / rSpeed;
-
-    // Valeur de retour : = 0 : en avance, ou à 2km de la lima
-    //                    = 1 : en retard
-    //              entre les 2 : marge de sécurité
-
-    const MT_Float rDelay = nSchedule - ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + rTimeToGoToElement );
-    if( rDelay < 0 )
-        call.GetResult().SetValue( (float)1. );
-    else
-        call.GetResult().SetValue( (float)( 1. - std::min( 1., rDelay / rTimeLeeway ) ) );
+    
+    ComputeDelayFromSchedule( call, rDistanceFromScheduled, nSchedule );
 }

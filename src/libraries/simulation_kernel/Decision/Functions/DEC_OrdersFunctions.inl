@@ -91,45 +91,6 @@ void DEC_OrdersFunctions::GetNextScheduledLima( DIA_Call_ABC& call, const T& cal
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::GetNextScheduledElement
-// Created: NLD 2007-05-14
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_OrdersFunctions::GetNextScheduledElement( DIA_Call_ABC& call, const T& caller )
-{
-    //
-    typedef std::vector< DEC_Objective* >     T_ObjectiveVector;
-    typedef T_ObjectiveVector::iterator       IT_ObjectiveVector;
-    typedef T_ObjectiveVector::const_iterator CIT_ObjectiveVector;
-    //
-
-    assert( DEC_Tools::CheckTypeListeObjectifs( call.GetParameter( 0 ) ) );
-
-    T_ObjectVariableVector& objectives = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 0 ) ).GetContainer() );
-
-    const MIL_LimaOrder* pNextLima = caller.GetOrderManager().FindNextScheduledLima();
-
-    const DIA_Variable_ABC* pNextObjective = 0;
-    for( CIT_ObjectVariableVector it = objectives.begin(); it != objectives.end(); ++it )
-    {
-        const DEC_Objective* pObjective = (**it).ToUserPtr( pObjective );
-        if( pObjective->GetSchedule() == 0 || pObjective->IsFlagged() )
-            continue;
-
-        if( ( pObjective->GetSchedule() != 0 ) && ( !pNextObjective || pObjective->GetSchedule() < static_cast< DEC_Objective* >( pNextObjective->ToPtr() )->GetSchedule() )
-                                               && ( !pNextLima      || pObjective->GetSchedule() < pNextLima                                               ->GetSchedule() ) )
-            pNextObjective = *it;
-    }
-
-    if( pNextObjective )
-        call.GetResult() = *pNextObjective;
-    else if( pNextLima )
-        call.GetResult().SetValue( (void*)pNextLima->GetID(), &DEC_Tools::GetTypeLima() );
-    else 
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() ); ///
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::GetFuseau
 // Created: NLD 2007-04-11
 // -----------------------------------------------------------------------------

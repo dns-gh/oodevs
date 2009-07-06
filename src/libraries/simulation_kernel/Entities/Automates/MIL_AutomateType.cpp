@@ -335,9 +335,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetDangerousEnemiesInZoneOfPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetRapForGlobal                                       , "DEC_RapportDeForceGlobal"                                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetPopulations                        < MIL_Automate >, "DEC_Connaissances_Populations"                              );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeUnloadedEnemiesRatio           < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisDebarquesDansZone"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ComputeLoadedEnemiesRatio             < MIL_Automate >, "DEC_Connaissances_PourcentageEnnemisEmbarquesDansZone"      );
-
+    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortAccordingToUnloadedEnemies        < MIL_Automate >, "DEC_Connaissances_TrierZonesSelonPresenceEnnemisDebarques"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortAccordingToLoadedEnemies          < MIL_Automate >, "DEC_Connaissances_TrierZonesSelonPresenceEnnemisEmbarques"  );
 
@@ -379,13 +377,13 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                             < MIL_Automate >, "DEC_Geometrie_PionDerriere"                                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SortFuseauxAccordingToSchedule                  < MIL_Automate >, "DEC_Geometrie_TrierFuseauxSelonHoraire"                              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDelayFromSchedule                        < MIL_Automate >, "DEC_Geometrie_CalculerRetard"                                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives           < MIL_Automate >, "DEC_Geometrie_CalculerRetardSurObjectifs"                            );
 
     // Orders
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted               < MIL_Automate >, "DEC_NouvelleMission"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission                     < MIL_Automate >, "DEC_FinMission"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima                           < MIL_Automate >, "DEC_GetLima"                        );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetNextScheduledLima              < MIL_Automate >, "DEC_ProchaineLimaHoraireNonFlagee"  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetNextScheduledElement           < MIL_Automate >, "DEC_ProchainElementHoraireNonFlage" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetFuseau                         < MIL_Automate >, "DEC_Fuseau"                         );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateSetMissionLimaFlag                        , "DEC_SetMissionLimaFlag"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag                < MIL_Automate >, "DEC_GetMissionLimaFlag"             );

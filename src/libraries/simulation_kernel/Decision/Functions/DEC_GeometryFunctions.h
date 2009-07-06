@@ -102,6 +102,7 @@ public:
     template< typename T > static void ComputeBackestAgent                              ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void SortFuseauxAccordingToSchedule                   ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void ComputeDelayFromSchedule                         ( DIA_Call_ABC& call, const T& caller                    );
+    template< typename T > static void ComputeDelayFromScheduleAndObjectives            ( DIA_Call_ABC& call, const T& caller                    );
 
     // ASA
     static void ComputePosDeploiementASANasseDBG    ( DIA_Call_ABC& );
@@ -127,6 +128,7 @@ private:
     //! @name Tools
     //@{
     static DEC_RolePion_Decision* GetFrontestPion( const T_ObjectVector& pions, const MT_Vector2D& vDirection );
+    static void ComputeDelayFromSchedule( DIA_Call_ABC& call, float rDistanceFromScheduled, int nSchedule );
     //@}
 
 private:

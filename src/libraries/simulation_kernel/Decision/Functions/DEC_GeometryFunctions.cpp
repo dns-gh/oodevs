@@ -1680,3 +1680,43 @@ void DEC_GeometryFunctions::ComputeAreaInZone( DIA_Call_ABC& call )
     else
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLocalisation() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDelayFromSchedule
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeDelayFromSchedule( DIA_Call_ABC& call, float rDistanceFromScheduled, int nSchedule )
+{
+    assert( DEC_Tools::CheckTypeFuseau        ( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 1 ) ) );
+
+    const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+    const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
+    assert( pFuseau );
+
+    // Calcul vitesse moyenne de l'automate
+    MT_Float rSpeed = std::numeric_limits< MT_Float >::max();
+    for( CIT_ObjectVector it = automates.begin(); it != automates.end(); ++it )
+    {
+        const MIL_Automate& automate = static_cast< DEC_AutomateDecision& >( **it ).GetAutomate();
+        rSpeed = std::min( rSpeed, automate.GetAlivePionsMaxSpeed() );
+    }
+
+    if( rDistanceFromScheduled == std::numeric_limits< MT_Float >::max() || rSpeed == 0. )
+        call.GetResult().SetValue( 0.f );
+    else
+    {
+        const MT_Float rTimeToGoToElement = 1.439 * rDistanceFromScheduled / rSpeed; //$$$ Deplacer la formule magique (Cf. PHY_ComposantePion où elle existe aussi...)
+        const MT_Float rTimeLeeway        = 1.439 * 2000. / rSpeed;
+
+        // Valeur de retour : = 0 : en avance, ou à 2km de la lima
+        //                    = 1 : en retard
+        //              entre les 2 : marge de sécurité
+
+        const MT_Float rDelay = nSchedule - ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + rTimeToGoToElement );
+        if( rDelay < 0 )
+            call.GetResult().SetValue( 1.f );
+        else
+            call.GetResult().SetValue( (float)( 1. - std::min( 1., rDelay / rTimeLeeway ) ) );
+    }
+}

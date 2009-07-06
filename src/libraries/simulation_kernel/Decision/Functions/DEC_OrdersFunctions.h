@@ -31,7 +31,6 @@ public:
 
     // Limas
     template< typename T > static void GetLima                           ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetNextScheduledElement           ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetNextScheduledLima              ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetFuseau                         ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetMissionLimaFlag                ( DIA_Call_ABC& call, const T& caller );

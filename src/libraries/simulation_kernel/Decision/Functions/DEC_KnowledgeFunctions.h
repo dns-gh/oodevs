@@ -42,8 +42,6 @@ public:
     static void GetLivingEnemiesInFuseau         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesInCircle         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
-    template< typename T > static void ComputeUnloadedEnemiesRatio   ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void ComputeLoadedEnemiesRatio     ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void SortAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void SortAccordingToLoadedEnemies  ( DIA_Call_ABC& call, const T& caller );
 
