@@ -131,12 +131,24 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_IntelligenceFunctions::SortZonesAccordingToUnloadedEnemies
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_IntelligenceFunctions::SortZonesAccordingToUnloadedEnemies( DIA_Call_ABC& call, const MIL_Automate& caller )
+{
+    assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
+    call.GetResult() = call.GetParameter( 0 );   
+    T_ObjectVariableVector& boundariesList = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
+    std::sort( boundariesList.begin(), boundariesList.end(), CompareBoundariesEnemies( caller, false ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_IntelligenceFunctions::SortAccordingToUnloadedEnemies
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------
 void DEC_IntelligenceFunctions::SortAccordingToUnloadedEnemies( DIA_Call_ABC& call, const MIL_Automate& caller )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );
     call.GetResult() = call.GetParameter( 0 );   
     T_ObjectVariableVector& boundariesList = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
     std::sort( boundariesList.begin(), boundariesList.end(), CompareBoundariesEnemies( caller, false ) );

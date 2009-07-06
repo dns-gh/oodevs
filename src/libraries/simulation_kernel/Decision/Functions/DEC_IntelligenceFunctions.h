@@ -28,6 +28,7 @@ public:
     static void ComputeLoadedEnemiesRatio        ( DIA_Call_ABC& call, const MIL_Automate& caller );
     static void ComputeFuseauUnloadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller );
     static void ComputeFuseauLoadedEnemiesRatio  ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void SortZonesAccordingToUnloadedEnemies( DIA_Call_ABC& call, const MIL_Automate& caller );
     static void SortAccordingToUnloadedEnemies   ( DIA_Call_ABC& call, const MIL_Automate& caller );
     static void SortAccordingToLoadedEnemies     ( DIA_Call_ABC& call, const MIL_Automate& caller );
     static void IsEnemyOnFlank                   ( DIA_Call_ABC& call, const MIL_Automate& caller );
