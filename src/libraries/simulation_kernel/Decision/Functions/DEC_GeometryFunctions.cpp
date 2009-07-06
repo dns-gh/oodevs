@@ -1585,17 +1585,22 @@ namespace {
 
     bool CompareTerrainOpening( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
     {
+        if( DEC_Tools::CheckTypeLocalisation( *dia1 ) && DEC_Tools::CheckTypeLocalisation( *dia2 ) )
+        {
+            TER_Localisation* location1 = dia1->ToUserPtr( location1 );
+            TER_Localisation* location2 = dia2->ToUserPtr( location2 );
+            return ComputeOpenTerrainRatio( *location1 ) < ComputeOpenTerrainRatio( *location2 );
+        }
+        return false;
+    }
+
+    bool CompareFuseauxOpening( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
+    {
         if( DEC_Tools::CheckTypeFuseau( *dia1 ) && DEC_Tools::CheckTypeFuseau( *dia2 ) )
         {
             MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
             MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
             return pFuseau1->ComputeOpenTerrainRatio() < pFuseau2->ComputeOpenTerrainRatio();
-        }
-        else if( DEC_Tools::CheckTypeLocalisation( *dia1 ) && DEC_Tools::CheckTypeLocalisation( *dia2 ) )
-        {
-            TER_Localisation* location1 = dia1->ToUserPtr( location1 );
-            TER_Localisation* location2 = dia2->ToUserPtr( location2 );
-            return ComputeOpenTerrainRatio( *location1 ) < ComputeOpenTerrainRatio( *location2 );
         }
         return false;
     }
@@ -1607,12 +1612,26 @@ namespace {
 // -----------------------------------------------------------------------------
 void DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening( DIA_Call_ABC& call )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
 
     call.GetResult() = call.GetParameter( 0 );
 
     T_ObjectVariableVector& zones = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
     std::sort( zones.begin(), zones.end(), CompareTerrainOpening );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );
+
+    call.GetResult() = call.GetParameter( 0 );
+
+    T_ObjectVariableVector& zones = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
+    std::sort( zones.begin(), zones.end(), CompareFuseauxOpening );
 }
 
 // -----------------------------------------------------------------------------

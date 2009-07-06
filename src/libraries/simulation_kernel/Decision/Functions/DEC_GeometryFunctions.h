@@ -64,6 +64,7 @@ public:
     static void ComputeClosedTerrainRatioInFuseau   ( DIA_Call_ABC& );
     static void ComputeOpenTerrainRatioInFuseau     ( DIA_Call_ABC& );
     static void SortZonesAccordingToTerrainOpening  ( DIA_Call_ABC& );
+    static void SortFuseauxAccordingToTerrainOpening( DIA_Call_ABC& );
     static void IsLocalisationInFuseau              ( DIA_Call_ABC& );
     static void ConvertFuseauToLocalisation         ( DIA_Call_ABC& );
     static void ComputeAutomatesBarycenter          ( DIA_Call_ABC& );
