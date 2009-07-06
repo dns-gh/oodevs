@@ -340,7 +340,9 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortAccordingToLoadedEnemies          < MIL_Automate >, "DEC_Connaissances_TrierZonesSelonPresenceEnnemisEmbarques"  );
 
     // Intelligence
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::ComputeFuseauUnloadedEnemiesRatio                     , "DEC_Rens_PourcentageEnnemisDebarquesDansFuseau"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::ComputeUnloadedEnemiesRatio                           , "DEC_Rens_PourcentageEnnemisDebarquesDansZone"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::ComputeFuseauLoadedEnemiesRatio                       , "DEC_Rens_PourcentageEnnemisEmbarquesDansFuseau"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::ComputeLoadedEnemiesRatio                             , "DEC_Rens_PourcentageEnnemisEmbarquesDansZone"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::SortAccordingToUnloadedEnemies                        , "DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::SortAccordingToLoadedEnemies                          , "DEC_Rens_TrierZonesSelonPresenceEnnemisEmbarques"  );

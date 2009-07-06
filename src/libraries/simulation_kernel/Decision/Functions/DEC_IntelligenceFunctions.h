@@ -24,13 +24,15 @@ class DEC_IntelligenceFunctions
 public:
     //! @name Operations
     //@{
-    static void ComputeUnloadedEnemiesRatio   ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void ComputeLoadedEnemiesRatio     ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void SortAccordingToUnloadedEnemies( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void SortAccordingToLoadedEnemies  ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void IsEnemyOnFlank                ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void IsFriendOnFlank               ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void ComputeCoverDirection         ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void ComputeUnloadedEnemiesRatio      ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void ComputeLoadedEnemiesRatio        ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void ComputeFuseauUnloadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void ComputeFuseauLoadedEnemiesRatio  ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void SortAccordingToUnloadedEnemies   ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void SortAccordingToLoadedEnemies     ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void IsEnemyOnFlank                   ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void IsFriendOnFlank                  ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static void ComputeCoverDirection            ( DIA_Call_ABC& call, const MIL_Automate& caller );
     //@}
 };
 

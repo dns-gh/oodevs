@@ -53,16 +53,14 @@ namespace
 
     void ComputeEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller, bool embarked )
     {
-        if( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) )
-        {
-            if( const MIL_Fuseau* fuseau = call.GetParameter( 0 ).ToUserPtr( fuseau ) )
-                call.GetResult().SetValue( ComputeEnemiesRatio( caller, *fuseau, embarked ) );
-        }
-        else if( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) )
-        {
-            if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
-                call.GetResult().SetValue( ComputeEnemiesRatio( caller, *location, embarked ) );
-        }
+        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
+            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *location, embarked ) );
+    }
+
+    void ComputeFuseauEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller, bool embarked )
+    {
+        if( const MIL_Fuseau* fuseau = call.GetParameter( 0 ).ToUserPtr( fuseau ) )
+            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *fuseau, embarked ) );
     }
 }
 
@@ -82,6 +80,24 @@ void DEC_IntelligenceFunctions::ComputeUnloadedEnemiesRatio( DIA_Call_ABC& call,
 void DEC_IntelligenceFunctions::ComputeLoadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller )
 {
     ComputeEnemiesRatio( call, caller, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_IntelligenceFunctions::ComputeFuseauUnloadedEnemiesRatio
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_IntelligenceFunctions::ComputeFuseauUnloadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller )
+{
+    ComputeFuseauEnemiesRatio( call, caller, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_IntelligenceFunctions::ComputeFuseauLoadedEnemiesRatio
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_IntelligenceFunctions::ComputeFuseauLoadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller )
+{
+    ComputeFuseauEnemiesRatio( call, caller, true );
 }
 
 namespace
