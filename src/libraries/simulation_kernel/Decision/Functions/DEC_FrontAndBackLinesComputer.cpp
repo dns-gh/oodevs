@@ -23,30 +23,32 @@
 
 // -----------------------------------------------------------------------------
 // Name: DEC_FrontAndBackLinesComputer constructor
-// Created: NLD 2004-10-19
+// Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
-DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, DIA_Call_ABC& call )
+DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, const std::vector< MIL_AgentPion*>& pions )
     : refAutomate_      ( caller )
     , nLastTimeComputed_( 0 )
-    , pions_            ()
+    , pions_            ( pions )
     , automates_        ()
     , backLineDroite_   ()
     , frontLineDroite_  ()
 {
-    if( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) )
-    {
-        T_ObjectVector sel = call.GetParameter( 0 ).ToSelection();
-        pions_.reserve( sel.size() );
-        for( IT_ObjectVector it = sel.begin(); it != sel.end(); ++it )
-            pions_.push_back( &static_cast< DEC_RolePion_Decision& >( **it ).GetPion() );
-    }
-    else if( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 0 ) ) )
-    {
-        T_ObjectVector sel = call.GetParameter( 0 ).ToSelection();
-        automates_.reserve( sel.size() );
-        for( IT_ObjectVector it = sel.begin(); it != sel.end(); ++it )
-            automates_.push_back( &static_cast< DEC_AutomateDecision& >( **it ).GetAutomate() );
-    }
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FrontAndBackLinesComputer constructor
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, const std::vector< MIL_Automate*>& automats )
+    : refAutomate_      ( caller )
+    , nLastTimeComputed_( 0 )
+    , pions_            ()
+    , automates_        ( automats )
+    , backLineDroite_   ()
+    , frontLineDroite_  ()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

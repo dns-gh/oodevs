@@ -365,6 +365,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointsBeforeLima                                         , "DEC_Geometrie_CalculerPositionsParRapportALima"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau                       , "DEC_Geometrie_PositionsParRapportALocalisation"                      );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StartComputingFrontAndBackLines                                 , "DEC_Geometrie_StartCalculLignesAvantEtArriere"                       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StartComputingAutomatFrontAndBackLines                          , "DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StopComputingFrontAndBackLines                                  , "DEC_Geometrie_StopCalculLignesAvantEtArriere"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceFromFrontLine                                    , "DEC_Geometrie_CalculerDistanceLigneAvant"                            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceFromBackLine                                     , "DEC_Geometrie_CalculerDistanceLigneArriere"                          );

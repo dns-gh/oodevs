@@ -71,6 +71,7 @@ public:
     
                            static void ComputeChantierPosition                          ( DIA_Call_ABC& call, const MIL_AgentPion& );
                            static void StartComputingFrontAndBackLines                  ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+                           static void StartComputingAutomatFrontAndBackLines           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void StopComputingFrontAndBackLines                   ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistanceFromFrontLine                     ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistanceFromBackLine                      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );

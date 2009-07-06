@@ -919,9 +919,29 @@ void DEC_GeometryFunctions::ComputeDistanceFromMiddleLine( DIA_Call_ABC& call )
 // -----------------------------------------------------------------------------
 void DEC_GeometryFunctions::StartComputingFrontAndBackLines( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
 {
-    DEC_FrontAndBackLinesComputer* pComputer = new DEC_FrontAndBackLinesComputer( callerAutomate, call );
+    T_ObjectVector sel = call.GetParameter( 0 ).ToSelection();
+    std::vector< MIL_AgentPion*> pions;
+    pions.reserve( sel.size() );
+    for( IT_ObjectVector it = sel.begin(); it != sel.end(); ++it )
+        pions.push_back( &static_cast< DEC_RolePion_Decision& >( **it ).GetPion() );
+    DEC_FrontAndBackLinesComputer* pComputer = new DEC_FrontAndBackLinesComputer( callerAutomate, pions );
     call.GetResult().SetValue( (void*)pComputer, &DEC_Tools::GetTypeCalculLignesAvantArriere() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::StartComputingAutomatFrontAndBackLines
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::StartComputingAutomatFrontAndBackLines( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+{
+    std::vector< MIL_Automate*> automats;
+    T_ObjectVector sel = call.GetParameter( 0 ).ToSelection();
+    automats.reserve( sel.size() );
+    for( IT_ObjectVector it = sel.begin(); it != sel.end(); ++it )
+        automats.push_back( &static_cast< DEC_AutomateDecision& >( **it ).GetAutomate() );
+    DEC_FrontAndBackLinesComputer* pComputer = new DEC_FrontAndBackLinesComputer( callerAutomate, automats );
+    call.GetResult().SetValue( (void*)pComputer, &DEC_Tools::GetTypeCalculLignesAvantArriere() );
+}                           
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::StopComputingFrontAndBackLines
