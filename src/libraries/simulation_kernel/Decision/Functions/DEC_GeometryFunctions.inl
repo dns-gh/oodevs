@@ -524,7 +524,7 @@ void DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( DIA_Call_ABC&
 {
     assert( DEC_Tools::CheckTypeFuseau        ( call.GetParameter( 0 ) ) );
     assert( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 1 ) ) );
-    assert( DEC_Tools::CheckTypeObjectif      ( call.GetParameter( 2 ) ) );
+    assert( DEC_Tools::CheckTypeListeObjectifs( call.GetParameter( 2 ) ) );
 
     //
     typedef std::vector< DEC_Objective* >     T_ObjectiveVector;
@@ -551,25 +551,17 @@ void DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( DIA_Call_ABC&
     uint     nSchedule              = 0;
     if( pNextObjective )
     {
-        const DEC_Objective* pObjective = call.GetParameter( 2 ).ToUserPtr( pObjective );
-        if( pObjective )
-        {
-            const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
-            const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
-            rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromObjective( *pObjective, _ComputeAutomatesBarycenter( automates ) );
-            nSchedule = pObjective->GetSchedule();
-        }
+        const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+        const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
+        rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromObjective( *pNextObjective, _ComputeAutomatesBarycenter( automates ) );
+        nSchedule = pNextObjective->GetSchedule();
     }
     else if( pNextLima )
     {
-        const MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 2 ).ToPtr() );
-        if( pLima ) 
-        {
-            const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
-            const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
-            rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, _ComputeAutomatesBarycenter( automates ) );
-            nSchedule = pLima->GetSchedule();
-        }
+        const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
+        const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
+        rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pNextLima, _ComputeAutomatesBarycenter( automates ) );
+        nSchedule = pNextLima->GetSchedule();
     }
     
     ComputeDelayFromSchedule( call, rDistanceFromScheduled, nSchedule );
