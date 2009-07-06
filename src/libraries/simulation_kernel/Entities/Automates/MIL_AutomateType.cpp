@@ -365,10 +365,12 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointsBeforeLima                                         , "DEC_Geometrie_CalculerPositionsParRapportALima"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau                       , "DEC_Geometrie_PositionsParRapportALocalisation"                      );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StartComputingFrontAndBackLines                                 , "DEC_Geometrie_StartCalculLignesAvantEtArriere"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StartComputingAutomatFrontAndBackLines                          , "DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere"                       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StartComputingAutomatFrontAndBackLines                          , "DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StopComputingFrontAndBackLines                                  , "DEC_Geometrie_StopCalculLignesAvantEtArriere"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceFromFrontLine                                    , "DEC_Geometrie_CalculerDistanceLigneAvant"                            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine                             , "DEC_Geometrie_CalculerAutomateDistanceLigneAvant"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceFromBackLine                                     , "DEC_Geometrie_CalculerDistanceLigneArriere"                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine                              , "DEC_Geometrie_CalculerAutomateDistanceLigneArriere"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistancePointFromFrontLine                               , "DEC_Geometrie_CalculerDistancePointLigneAvant"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistancePointFromBackLine                                , "DEC_Geometrie_CalculerDistancePointLigneArriere"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPointForPion                                         , "DEC_Geometrie_CalculerPointArriveePourPion"                          );
@@ -376,7 +378,6 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >, "DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeFrontestAgent                            < MIL_Automate >, "DEC_Geometrie_PionDevant"                                            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                             < MIL_Automate >, "DEC_Geometrie_PionDerriere"                                          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SortFuseauxAccordingToSchedule                  < MIL_Automate >, "DEC_Geometrie_TrierFuseauxSelonHoraire"                              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDelayFromSchedule                        < MIL_Automate >, "DEC_Geometrie_CalculerRetard"                                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives           < MIL_Automate >, "DEC_Geometrie_CalculerRetardSurObjectifs"                            );
 

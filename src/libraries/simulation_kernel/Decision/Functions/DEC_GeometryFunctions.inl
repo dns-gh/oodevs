@@ -490,47 +490,6 @@ void DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau( DI
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_GeometryFunctions::SortFuseauxAccordingToSchedule
-// Created: NLD 2007-05-14
-// -----------------------------------------------------------------------------
-template< typename T > inline
-void DEC_GeometryFunctions::SortFuseauxAccordingToSchedule( DIA_Call_ABC& call, const T& caller )
-{   
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );   
-    assert( DEC_Tools::CheckTypePoint       ( call.GetParameter( 1 ) ) );
-    assert( DEC_Tools::CheckTypeLima        ( call.GetParameter( 2 ) ) || DEC_Tools::CheckTypeObjectif( call.GetParameter( 2 ) ) );
-
-    const MT_Vector2D* pRefPoint = call.GetParameter( 1 ).ToUserPtr( pRefPoint );
-    assert( pRefPoint );
-
-    call.GetResult() = call.GetParameter( 0 );
-
-    const MIL_LimaOrder* pLima      = 0;
-    const DEC_Objective* pObjective = 0;
-    if( DEC_Tools::CheckTypeLima( call.GetParameter( 2 ) ) )
-        pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 2 ).ToPtr() ); 
-    else if( DEC_Tools::CheckTypeObjectif( call.GetParameter( 2 ) ) )
-        pObjective = call.GetParameter( 2 ).ToUserPtr( pObjective );
-    if( !pObjective && !pLima )
-        return;
-
-    std::multimap< MT_Float, DIA_Variable_ABC* > sortedFuseaux;
-    T_ObjectVariableVector& fuseaux = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    for( CIT_ObjectVariableVector it = fuseaux.begin(); it != fuseaux.end(); ++it )
-    {
-        const MIL_Fuseau* pFuseau = (**it).ToUserPtr( pFuseau );
-        if( pLima )        
-            sortedFuseaux.insert( std::make_pair( pFuseau->ComputeAverageDistanceFromLima( *pLima, *pRefPoint ), *it ) );
-        else // if( pObjective )
-            sortedFuseaux.insert( std::make_pair( pFuseau->ComputeAverageDistanceFromObjective( *pObjective, *pRefPoint ), *it ) );
-    }
-
-    fuseaux.clear();
-    for( std::multimap< MT_Float, DIA_Variable_ABC* >::const_iterator it = sortedFuseaux.begin(); it != sortedFuseaux.end(); ++it )
-        fuseaux.push_back( it->second );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDelayFromSchedule
 // Created: NLD 2007-04-29
 // -----------------------------------------------------------------------------

@@ -74,7 +74,9 @@ public:
                            static void StartComputingAutomatFrontAndBackLines           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void StopComputingFrontAndBackLines                   ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistanceFromFrontLine                     ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+                           static void ComputeDistanceAutomatFromFrontLine              ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistanceFromBackLine                      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+                           static void ComputeDistanceAutomatFromBackLine               ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistancePointFromFrontLine                ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistancePointFromBackLine                 ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeNearestFuseauEntryPoint                   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
@@ -101,7 +103,6 @@ public:
                            static void ComputeKnowledgeAgentBarycenter                  ( DIA_Call_ABC& call, const MIL_AgentPion& caller        );
     template< typename T > static void ComputeFrontestAgent                             ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void ComputeBackestAgent                              ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void SortFuseauxAccordingToSchedule                   ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void ComputeDelayFromSchedule                         ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void ComputeDelayFromScheduleAndObjectives            ( DIA_Call_ABC& call, const T& caller                    );
 

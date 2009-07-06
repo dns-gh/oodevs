@@ -934,7 +934,7 @@ void DEC_GeometryFunctions::StartComputingFrontAndBackLines( DIA_Call_ABC& call,
 // -----------------------------------------------------------------------------
 void DEC_GeometryFunctions::StartComputingAutomatFrontAndBackLines( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
 {
-    std::vector< MIL_Automate*> automats;
+    std::vector< MIL_Automate* > automats;
     T_ObjectVector sel = call.GetParameter( 0 ).ToSelection();
     automats.reserve( sel.size() );
     for( IT_ObjectVector it = sel.begin(); it != sel.end(); ++it )
@@ -973,7 +973,25 @@ void DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DIA_Call_ABC& call, co
         assert( pPion );
         rDist = pComputer->ComputeDistanceFromFrontLine( pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition() );
     }
-    else if( DEC_Tools::CheckTypeAutomate( call.GetParameter( 1 ) ) )
+    else
+        assert( false );
+
+    call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+{
+    assert( DEC_Tools::CheckTypeCalculLignesAvantArriere( call.GetParameter( 0 ) ) );
+
+    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr( pComputer );
+    assert( pComputer );
+
+    MT_Float rDist = 0;
+    if( DEC_Tools::CheckTypeAutomate( call.GetParameter( 1 ) ) )
     {
         DEC_AutomateDecision* pAutomate = call.GetParameter( 1 ).ToUserObject( pAutomate );
         assert( pAutomate );
@@ -1024,7 +1042,25 @@ void DEC_GeometryFunctions::ComputeDistanceFromBackLine( DIA_Call_ABC& call, con
         assert( pPion );
         rDist = pComputer->ComputeDistanceFromBackLine( pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition() );
     }
-    else if( DEC_Tools::CheckTypeAutomate( call.GetParameter( 1 ) ) )
+    else
+        assert( false );
+
+    call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+{
+    assert( DEC_Tools::CheckTypeCalculLignesAvantArriere( call.GetParameter( 0 ) ) );
+
+    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr( pComputer );
+    assert( pComputer );
+
+    MT_Float rDist = 0;
+    if( DEC_Tools::CheckTypeAutomate( call.GetParameter( 1 ) ) )
     {
         DEC_AutomateDecision* pAutomate = call.GetParameter( 1 ).ToUserObject( pAutomate );
         assert( pAutomate );
