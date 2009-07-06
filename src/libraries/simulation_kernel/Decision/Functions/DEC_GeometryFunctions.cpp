@@ -1543,17 +1543,20 @@ namespace
 // -----------------------------------------------------------------------------
 void DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone( DIA_Call_ABC& call )
 {
-    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    if( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) )
-    {
-        if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
-            call.GetResult().SetValue( pFuseau->ComputeClosedTerrainRatio() );
-    }
-    else if( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) )
-    {
-        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
-            call.GetResult().SetValue( ComputeClosedTerrainRatio( *location ) );
-    }
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );    
+    if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
+        call.GetResult().SetValue( ComputeClosedTerrainRatio( *location ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
+    if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
+        call.GetResult().SetValue( pFuseau->ComputeClosedTerrainRatio() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1562,19 +1565,21 @@ void DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone( DIA_Call_ABC& call 
 // -----------------------------------------------------------------------------
 void DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone( DIA_Call_ABC& call )
 {
-    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    if( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) )
-    {
-        if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
-            call.GetResult().SetValue( pFuseau->ComputeOpenTerrainRatio() );
-    }
-    else if( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) )
-    {
-        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
-            call.GetResult().SetValue( ComputeOpenTerrainRatio( *location ) );
-    }
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
+        call.GetResult().SetValue( ComputeOpenTerrainRatio( *location ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau
+// Created: LDC 2009-07-06
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
+    if( const MIL_Fuseau* pFuseau = call.GetParameter( 0 ).ToUserPtr( pFuseau ) )
+        call.GetResult().SetValue( pFuseau->ComputeOpenTerrainRatio() );
+}
 
 namespace {
 

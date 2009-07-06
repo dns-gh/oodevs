@@ -127,8 +127,10 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateCircleLocalisation            , "DEC_Geometrie_CreerLocalisationCercle"           );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPionCoordinated                   , "DEC_Geometrie_PionEstCoordonne"                  );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationArea             , "DEC_Geometrie_AireLocalisation"                  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone     , "DEC_Geometrie_PourcentageTerrainCompartimente"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone       , "DEC_Geometrie_PourcentageTerrainOuvert"          );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau   , "DEC_Geometrie_PourcentageTerrainCompartimente"   );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau     , "DEC_Geometrie_PourcentageTerrainOuvert"          );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone     , "DEC_Geometrie_PourcentageZoneTerrainCompartimente"   );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone       , "DEC_Geometrie_PourcentageZoneTerrainOuvert"          );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening  , "DEC_Geometrie_TrierZonesSelonOuvertureTerrain"   );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsLocalisationInFuseau              , "DEC_Geometrie_EstLocalisationDansFuseau"         );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertFuseauToLocalisation         , "DEC_Geometrie_ConvertirFuseauEnLocalisation"     );

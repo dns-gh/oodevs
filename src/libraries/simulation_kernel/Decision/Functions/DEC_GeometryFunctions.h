@@ -61,6 +61,8 @@ public:
     static void SplitPath                           ( DIA_Call_ABC& );
     static void ComputeClosedTerrainRatioInZone     ( DIA_Call_ABC& );
     static void ComputeOpenTerrainRatioInZone       ( DIA_Call_ABC& );
+    static void ComputeClosedTerrainRatioInFuseau   ( DIA_Call_ABC& );
+    static void ComputeOpenTerrainRatioInFuseau     ( DIA_Call_ABC& );
     static void SortZonesAccordingToTerrainOpening  ( DIA_Call_ABC& );
     static void IsLocalisationInFuseau              ( DIA_Call_ABC& );
     static void ConvertFuseauToLocalisation         ( DIA_Call_ABC& );
