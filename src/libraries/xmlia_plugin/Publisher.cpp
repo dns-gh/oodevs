@@ -72,7 +72,7 @@ Publisher::~Publisher()
 std::string Publisher::GetUrlReports()
 {
     boost::asio::io_service io_service;
-    std::string webServicePath = "/ServiceXmlIa/xmlias/type?fromDate="+lastRequestTime_;
+    std::string webServicePath = "/ServiceXmlIa/xmlias"/*/type?fromDate="+lastRequestTime_*/;
     TCP_Client client(io_service, "reception", webServicePath, webServiceHost_, webservicePort_ );
     io_service.run();
     std::string content = client.GetContent();
@@ -93,7 +93,7 @@ std::string Publisher::GetUrlReports()
 std::string Publisher::GetXmliaMessage( const std::string& url )
 {
     
-    std::string webServicePath = url.substr( 36, 35); 
+    std::string webServicePath = url.substr( 20/*36*/, 35); 
     boost::asio::io_service io_service;
     
     TCP_Client client(io_service, "reception", webServicePath, webServiceHost_, webservicePort_ );

@@ -31,6 +31,7 @@ namespace xmlia
 {
   class Sitrep;
   class Publisher_ABC;
+  class LdapClient;
 
 // =============================================================================
 /** @class  ReportManager
@@ -44,7 +45,7 @@ class ReportManager
 public:
     //! @name Constructors/Destructor
     //@{
-    ReportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher );
+    ReportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher, LdapClient& Ldap );
     virtual ~ReportManager();
     //@}
 
@@ -56,6 +57,7 @@ public:
     void SetClientProfile( dispatcher::Profile_ABC& profile );
     dispatcher::ClientPublisher_ABC* GetClientPublisher() const;
     void SetClientPublisher( dispatcher::ClientPublisher_ABC& clientPublisher );
+    bool IsTakenIntoAccount( const std::string messageType );
     //@}
 
     ///! @name Export Operations
@@ -80,9 +82,10 @@ private:
     std::map< unsigned, Sitrep* > reports_;//@refactor when new report type will be added
     std::vector< Sitrep* > receivedRapports_;
     dispatcher::Model& model_;
-	  dispatcher::SimulationPublisher_ABC& simulationPublisher_;
+	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
     dispatcher::Profile_ABC* clientProfile_;
     dispatcher::ClientPublisher_ABC* clientPublisher_;
+    LdapClient& ldap_;
     //@}
 };
 

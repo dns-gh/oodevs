@@ -10,6 +10,7 @@
 #include "xmlia_plugin_pch.h"
 #include "ReportManager.h"
 #include "Publisher_ABC.h"
+#include "LdapClient.h"
 
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
@@ -29,9 +30,10 @@ using namespace plugins::xmlia;
 // Name: ReportManager constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-ReportManager::ReportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher )
+ReportManager::ReportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher, LdapClient& Ldap )
 : model_( model )
 , simulationPublisher_( simulationPublisher )
+, ldap_( Ldap )
 , clientProfile_( 0 )
 , clientPublisher_( 0 )
 {
@@ -266,7 +268,6 @@ void ReportManager::SetClientPublisher( dispatcher::ClientPublisher_ABC& publish
 // Name: ReportManager::CleanReceivedRapport
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
-
 void ReportManager::CleanReceivedRapport()
 {
   for( std::vector< Sitrep* >::iterator it = receivedRapports_.begin(); it != receivedRapports_.end(); it++ )
@@ -274,4 +275,14 @@ void ReportManager::CleanReceivedRapport()
     delete (*it);
   }
   receivedRapports_.clear();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ReportManager::IsTakenIntoAccount
+// Created: SLG 2009-06-12
+// -----------------------------------------------------------------------------
+bool ReportManager::IsTakenIntoAccount( const std::string messageType )
+{
+    return ldap_.IsTakenIntoAccount( messageType );
 }

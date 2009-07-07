@@ -11,6 +11,7 @@
 #include "xmliaPlugin.h"
 #include "ExtensionFactory.h"
 #include "Publisher.h"
+#include "LdapClient.h"
 #include "ReportManager.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
@@ -31,7 +32,8 @@ XmliaPlugin::XmliaPlugin( dispatcher::Model& model,
 	, simulationPublisher_ ( simulationPublisher )
     , publisher_( new Publisher( xis ) ) 
     , simulation_( new Simulation() )
-    , reportManager_( new ReportManager( model_, simulationPublisher_ ) )
+    , ldap_ ( new LdapClient ())
+    , reportManager_( new ReportManager( model_, simulationPublisher_, *ldap_ ) )
     , extensionFactory_( new ExtensionFactory( *publisher_, *reportManager_, *simulation_, model_ ) )
     , nCptTick_(0)
 {
@@ -40,7 +42,19 @@ XmliaPlugin::XmliaPlugin( dispatcher::Model& model,
     xis >> xml::attribute( "export", bExportActivation_ )
         >> xml::attribute( "import", bImportActivation_ )
         >> xml::attribute( "nbTicks", nTick_ );
-  
+
+    if( bImportActivation_ && false )
+    {
+        try
+        {
+            ldap_->LdapConnection();
+            ldap_->ReadLdapContent();
+        }
+        catch( std::exception& e )
+        {
+        MT_LOG_ERROR_MSG( "Ldap error : " << e.what() );
+        }  
+    }
 }
 
 // -----------------------------------------------------------------------------

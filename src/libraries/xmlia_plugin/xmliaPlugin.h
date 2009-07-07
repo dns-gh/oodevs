@@ -31,10 +31,11 @@ namespace xmlia
     class Publisher;
     class ReportManager;
     class Simulation;
+    class LdapClient;
 
 // =============================================================================
-/** @class  BmlPlugin
-    @brief  BmlPlugin
+/** @class  XmliaPlugin
+    @brief  XmliaPlugin
 */
 // Created: SLG 2009-06-12
 // =============================================================================
@@ -75,6 +76,7 @@ private:
     std::auto_ptr< Simulation > simulation_;
     std::auto_ptr< ReportManager > reportManager_;
     std::auto_ptr< ExtensionFactory > extensionFactory_;
+    std::auto_ptr< LdapClient > ldap_;
     bool  bExportActivation_;
     bool  bImportActivation_;
     unsigned int nTick_;
