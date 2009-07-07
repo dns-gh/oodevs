@@ -553,8 +553,9 @@ void DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( DIA_Call_ABC&
     {
         const MIL_Fuseau*    pFuseau   = call.GetParameter( 0 ).ToUserPtr( pFuseau );
         const T_ObjectVector automates = call.GetParameter( 1 ).ToSelection();
-        rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromObjective( *pNextObjective, _ComputeAutomatesBarycenter( automates ) );
-        nSchedule = pNextObjective->GetSchedule();
+        const DEC_Objective* pObjective = pNextObjective->ToUserPtr( pObjective );
+        rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromObjective( *pObjective, _ComputeAutomatesBarycenter( automates ) );
+        nSchedule = pObjective->GetSchedule();
     }
     else if( pNextLima )
     {
