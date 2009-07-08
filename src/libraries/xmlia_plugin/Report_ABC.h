@@ -10,6 +10,8 @@
 #ifndef __Report_h_
 #define __Report_h_
 
+#include "game_asn/Simulation.h"
+
 namespace dispatcher
 {
   class Automat;
@@ -33,6 +35,7 @@ namespace plugins
 {
   namespace xmlia
   {
+    class Point;
     class ReportManager;
     class Unit_ABC;
     class UnitAutomate;
@@ -62,7 +65,7 @@ namespace plugins
       virtual void InsertOrUpdateFriendly( dispatcher::Agent& agent ){};
       virtual void InsertOrUpdateEnemy( dispatcher::Agent& agent ){};
       virtual void InsertOrUpdateNBC( dispatcher::Object& agent ){};
-      virtual void UpdateMission( kernel::MissionType& mission ){};
+      virtual void UpdateMission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 ){};
       virtual void UpdateSimulation() = 0 ;
       //@}
 

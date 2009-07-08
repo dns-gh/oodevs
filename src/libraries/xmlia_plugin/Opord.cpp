@@ -93,9 +93,9 @@ void Opord::SerializeContent( xml::xostream& xos ) const
 // Name: Opord::UpdateMission
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Opord::UpdateMission( kernel::MissionType& mission )
+void Opord::UpdateMission( kernel::MissionType& mission,  std::vector< Point >& limit1, std::vector< Point >& limit2  )
 {
-  author_->UpdateMission( mission );
+  author_->UpdateMission( mission, limit1, limit2 );
 }
 
 

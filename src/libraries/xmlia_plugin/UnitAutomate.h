@@ -32,6 +32,7 @@ namespace plugins
 {
 namespace xmlia
 {
+  class Point;
   class Mission;
 // =============================================================================
 /** @class  UniteAutomat
@@ -53,7 +54,7 @@ public:
     ///! @name Operations
     //@{
     virtual void SerializeMission( xml::xostream& xos ) const;
-    void UpdateMission( kernel::MissionType& mission );
+    void UpdateMission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 );
     //@}
 
 private:

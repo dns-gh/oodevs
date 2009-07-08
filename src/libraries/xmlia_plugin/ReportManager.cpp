@@ -228,7 +228,7 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent,  dispatcher::Object& det
 // Name: ReportManager::DoUpdate
 // Created: MGD 2009-07-06
 // -----------------------------------------------------------------------------
-void ReportManager::DoUpdate( dispatcher::Agent& agent,  kernel::MissionType& mission )
+void ReportManager::DoUpdate( dispatcher::Agent& agent, kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
 {
   std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.automat_->GetId() );
   if( itAutomat == reports_.end() )
@@ -241,15 +241,27 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent,  kernel::MissionType& mi
     itAutomat->second.insert( std::pair< std::string, Frago*>( "Frago", new  Frago( *this, *agent.automat_ ) ) );
   }
 
-  itReport = itAutomat->second.find( "Opord" );
-  if( itReport == itAutomat->second.end() )
-  {
-    itAutomat->second.insert( std::pair< std::string, Opord*>( "Opord", new  Opord( *this, *agent.automat_ ) ) );
-  }
-
-  reports_[ agent.automat_->GetId() ]["Frago"]->UpdateMission( mission );
-  reports_[ agent.automat_->GetId() ]["Opord"]->UpdateMission( mission );
+  reports_[ agent.automat_->GetId() ]["Frago"]->UpdateMission( mission, limit1, limit2  );
 }
+ // -----------------------------------------------------------------------------
+ // Name: ReportManager::DoUpdate
+ // Created: MGD 2009-07-06
+ // -----------------------------------------------------------------------------
+ void ReportManager::DoUpdate( dispatcher::Automat& agent, kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
+ {
+     std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.GetId() );
+     if( itAutomat == reports_.end() )
+     {
+         itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >() ).first;
+     }
+     std::map< std::string, Report_ABC* >::iterator itReport = itAutomat->second.find( "Opord" );
+     if( itReport == itAutomat->second.end() )
+     {
+         itAutomat->second.insert( std::pair< std::string, Opord*>( "Opord", new  Opord( *this, agent ) ) );
+     }
+
+     reports_[ agent.GetId() ]["Opord"]->UpdateMission( mission, limit1, limit2 );
+ }
 
 // -----------------------------------------------------------------------------
 // Name: ReportManager::DoUpdate

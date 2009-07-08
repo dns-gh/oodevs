@@ -31,6 +31,7 @@ namespace xmlia
 public:
     //! @name Constructors/Destructor
     //@{
+    Point();
     Point( xml::xistream& xis );
     Point( const double& latitude, const double& longitude );
     virtual ~Point();

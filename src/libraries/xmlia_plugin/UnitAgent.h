@@ -58,7 +58,7 @@ public:
     virtual void SerializeEtatOps( xml::xostream& xos ) const;
     virtual void SerializeMission( xml::xostream& xos ) const;
     void Update( dispatcher::Agent& agent );
-    void UpdateMission( kernel::MissionType& mission );
+    void UpdateMission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 );
     bool IsSide( unsigned int idSide) const;
     Point* GetLocalization() const;
     XmliaOperationalState* GetOperationalState() const;

@@ -10,7 +10,9 @@
 #include "xmlia_plugin_pch.h"
 #include "ExtensionFactory.h"
 #include "AgentExtension.h"
+#include "AutomatExtension.h"
 #include "dispatcher/Agent.h"
+#include "dispatcher/Automat.h"
 
 using namespace plugins::xmlia;
 
@@ -43,4 +45,13 @@ ExtensionFactory::~ExtensionFactory()
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
     entity.Attach< XmliaExtension_ABC >( *new AgentExtension( entity, publisher_, reportManager_, simulation_, model_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionFactory::Create
+// Created: SBO 2008-05-22
+// -----------------------------------------------------------------------------
+void ExtensionFactory::Create( dispatcher::Automat& entity )
+{
+    entity.Attach< XmliaExtension_ABC >( *new AutomatExtension( entity, publisher_, reportManager_, model_ ) );
 }

@@ -10,6 +10,8 @@
 #include "xmlia_plugin_pch.h"
 #include "Mission.h"
 
+#include "clients_kernel/MissionType.h"
+
 #include "dispatcher/Agent.h"
 
 #include "xmlia_plugin/Point.h"
@@ -26,14 +28,12 @@ Mission::Mission( xml::xistream& xis )
 {
   xis >> xml::start( "Mission" )
     >> xml::attribute( "nom", name_ )
-    >> xml::start( "LimiteGauche" );
-  gaucheDebut_ = new Point( xis );
-  gaucheFin_ = new Point( xis );
-  xis >> xml::end()
-    >> xml::start( "LimiteDroite" );
-  droiteDebut_ = new Point( xis );
-  droiteFin_ = new Point( xis );
-  xis >> xml::end()
+    >> xml::start( "LimiteGauche" )
+        >> xml::list( "mpia:PointGeographique", *this, &Mission::ReadPoint, limiteGauche_ )
+    >> xml::end()
+    >> xml::start( "LimiteDroite" )
+        >> xml::list( "mpia:PointGeographique", *this, &Mission::ReadPoint, limiteDroite_ )
+    >> xml::end()
     >> xml::end();
 }
 
@@ -41,8 +41,11 @@ Mission::Mission( xml::xistream& xis )
 // Name: Mission constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Mission::Mission( kernel::MissionType& mission )
+Mission::Mission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
 : Entity_ABC()
+, name_( mission.GetName() )
+, limiteGauche_( limit1 )
+, limiteDroite_( limit2 )
 {}
 
 // -----------------------------------------------------------------------------
@@ -50,11 +53,16 @@ Mission::Mission( kernel::MissionType& mission )
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
 Mission::~Mission()
-{//@TODO REMOVE PT!!!
-  delete gaucheDebut_;
-  delete gaucheFin_;
-  delete droiteDebut_;
-  delete droiteFin_;
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission ReadPoint
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+void Mission::ReadPoint( xml::xistream& xis, std::vector< Point >& limite )
+{
+    limite.push_back( Point( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,12 +74,16 @@ void Mission::Serialize( xml::xostream& xos ) const
   xos << xml::start( "Mission" )
     << xml::attribute( "nom", name_ )
     << xml::start( "LimiteGauche" );
-  gaucheDebut_->Serialize( xos );
-  gaucheFin_->Serialize( xos );
+  for( std::vector< Point >::const_iterator it = limiteGauche_.begin(); it != limiteGauche_.end(); it++ )
+  {
+      it->Serialize( xos );
+  }
   xos << xml::end()
     << xml::start( "LimiteDroite" );
-  droiteDebut_->Serialize( xos );
-  droiteFin_->Serialize( xos );
+  for( std::vector< Point >::const_iterator it = limiteDroite_.begin(); it != limiteDroite_.end(); it++ )
+  {
+      it->Serialize( xos );
+  }
   xos << xml::end()
     << xml::end();
 }

@@ -7,14 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionFactory_h_
-#define __ExtensionFactory_h_
+#ifndef __AutomatExtension_h_
+#define __AutomatExtension_h_
 
-#include "dispatcher/ExtensionFactory_ABC.h"
+#include "xmliaExtension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "game_asn/Simulation.h"
 
 namespace dispatcher
 {
-    class Agent;
     class Automat;
     class Model;
 }
@@ -25,44 +26,42 @@ namespace xmlia
 {
     class Publisher_ABC;
     class ReportManager;
-    class Simulation;
 
 // =============================================================================
-/** @class  ExtensionFactory
-    @brief  ExtensionFactory
+/** @class  AutomatExtension
+    @brief  AutomatExtension
 */
-// Created: SBO 2008-02-29
+// Created: MGD 2009-07-08
 // =============================================================================
-class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
-                       , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
+class AutomatExtension : public XmliaExtension_ABC
+                       , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory( Publisher_ABC& publisher, ReportManager& reportManager, const Simulation& simulation, const dispatcher::Model& model );
-    virtual ~ExtensionFactory();
+             AutomatExtension( dispatcher::Automat& holder, Publisher_ABC& publisher, ReportManager& reportManager, const dispatcher::Model& model );
+    virtual ~AutomatExtension();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Create( dispatcher::Agent& entity );
-    virtual void Create( dispatcher::Automat& entity );
+    virtual void DoUpdate( const ASN1T_MsgAutomatOrder& message );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ExtensionFactory( const ExtensionFactory& );            //!< Copy constructor
-    ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
+    AutomatExtension( const AutomatExtension& );            //!< Copy constructor
+    AutomatExtension& operator=( const AutomatExtension& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
+    dispatcher::Automat& holder_;
     Publisher_ABC& publisher_;
     ReportManager& reportManager_;
-    const Simulation& simulation_;
     const dispatcher::Model& model_;
     //@}
 };
@@ -70,4 +69,4 @@ private:
 }
 }
 
-#endif // __ExtensionFactory_h_
+#endif // __AutomatExtension_h_

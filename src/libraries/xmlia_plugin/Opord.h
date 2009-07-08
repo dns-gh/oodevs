@@ -50,7 +50,7 @@ public:
     ///! @name Operations
     //@{
     virtual void SerializeContent( xml::xostream& xos ) const;
-    virtual void UpdateMission( kernel::MissionType& mission );
+    virtual void UpdateMission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2  );
     virtual void UpdateSimulation();
     //@}
 

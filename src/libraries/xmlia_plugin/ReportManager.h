@@ -10,10 +10,13 @@
 #ifndef __ReportManager_h_
 #define __ReportManager_h_
 
+#include "game_asn/Simulation.h"
+
 namespace dispatcher
 {
   class Model;
   class Agent;
+  class Automat;
   class Object;
   class SimulationPublisher_ABC;
   class ClientPublisher_ABC;
@@ -35,6 +38,7 @@ namespace plugins
 {
 namespace xmlia
 {
+  class Point;
   class Report_ABC;
   class Publisher_ABC;
   class LdapClient;
@@ -73,7 +77,8 @@ public:
     void DoUpdate( dispatcher::Agent& agent );
     void DoUpdate( dispatcher::Agent& agent,  dispatcher::Agent& detected );
     void DoUpdate( dispatcher::Agent& agent,  dispatcher::Object& detected );
-    void DoUpdate( dispatcher::Agent& agent,  kernel::MissionType& mission );
+    void DoUpdate( dispatcher::Agent& agent,  kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 );
+    void DoUpdate( dispatcher::Automat& agent,  kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 );
     void DoUpdateIntrep( dispatcher::Agent& agent,  dispatcher::Agent& fired );
     void DoUpdateLog( dispatcher::Agent& agent );
     //@}

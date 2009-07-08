@@ -92,7 +92,7 @@ void Frago::SerializeContent( xml::xostream& xos ) const
 // Name: Frago::UpdateMission
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Frago::UpdateMission( dispatcher::Agent agent, kernel::MissionType& mission )
+void Frago::UpdateMission( dispatcher::Agent agent, kernel::MissionType& mission,  std::vector< Point >& limit1, std::vector< Point >& limit2 )
 {
   std::map< unsigned, UnitAgent* >::iterator itFind = unitesAMI_.find( agent.GetId() );
   if( itFind == unitesAMI_.end() )
@@ -100,7 +100,7 @@ void Frago::UpdateMission( dispatcher::Agent agent, kernel::MissionType& mission
     unitesAMI_.insert( std::pair< unsigned, UnitAgent* >( agent.GetId(), new UnitAgent( agent ) ) );
   }
 
-  unitesAMI_[agent.GetId()]->UpdateMission( mission );
+  unitesAMI_[agent.GetId()]->UpdateMission( mission, limit1, limit2 );
 }
 
 

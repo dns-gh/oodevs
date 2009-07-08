@@ -51,9 +51,12 @@ UnitAutomate::~UnitAutomate()
 // Name: UnitAutomate::UpdateMission
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UnitAutomate::UpdateMission( kernel::MissionType& mission )
+void UnitAutomate::UpdateMission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
 {
-  mission_->Update( mission );
+    if( mission_ )
+        mission_->Update( mission );
+    else
+        mission_ = new Mission( mission, limit1, limit2 );
 }
 
 // -----------------------------------------------------------------------------

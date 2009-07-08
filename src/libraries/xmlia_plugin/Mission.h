@@ -35,24 +35,23 @@ public:
     //! @name Constructors/Destructor
     //@{
     Mission( xml::xistream& xis );
-    Mission( kernel::MissionType& mission );
+    Mission::Mission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 );
     virtual ~Mission();
     //@}
 
     ///! @name Operations
     //@{
     void Serialize( xml::xostream& xos ) const;
-    void Update( kernel::MissionType& agent );
+    void ReadPoint( xml::xistream& xis, std::vector< Point >& limite );
+    void Update( kernel::MissionType& mission );
     //@}
 
 private:
     //! @name Member data
     //@{
     std::string name_;
-    Point* gaucheDebut_;
-    Point* gaucheFin_;
-    Point* droiteDebut_;
-    Point* droiteFin_;
+    std::vector< Point > limiteGauche_;
+    std::vector< Point > limiteDroite_;
     //@}
 };
 

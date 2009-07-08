@@ -20,6 +20,15 @@ using namespace plugins::xmlia;
 // Name: Point constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
+Point::Point( )
+: latitude_(0)
+, longitude_(0)
+{}
+
+// -----------------------------------------------------------------------------
+// Name: Point constructor
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
 Point::Point( xml::xistream& xis )
 {
   xis >> xml::start( "mpia:PointGeographique" )

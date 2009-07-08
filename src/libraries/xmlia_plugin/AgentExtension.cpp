@@ -10,6 +10,7 @@
 #include "xmlia_plugin_pch.h"
 #include "AgentExtension.h"
 
+#include "Point.h"
 #include "ReportManager.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
@@ -106,7 +107,8 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
    try
    {
-     reportManager_.DoUpdate( holder_, model_.GetMissionTypes().Get( message.mission ) ); //@TODO ADD LIMIT
+       //@TODO recup limite
+       reportManager_.DoUpdate( holder_, model_.GetMissionTypes().Get( message.mission ), std::vector< Point >(0), std::vector< Point >(0) );
    }
    catch( std::exception& e )
    {
