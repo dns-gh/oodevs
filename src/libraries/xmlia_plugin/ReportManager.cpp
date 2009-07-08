@@ -165,7 +165,7 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent )
   std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.automat_->GetId() );
   if( itAutomat == reports_.end() )
   {
-    itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >() ).first;
+    itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >( agent.automat_->GetId(), std::map< std::string, Report_ABC* > () ) ).first;
   }
   std::map< std::string, Report_ABC* >::iterator itReport = itAutomat->second.find( "Sitrep" );
   if( itReport == itAutomat->second.end() )
@@ -183,7 +183,7 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent, dispatcher::Agent& detec
   std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.automat_->GetId() );
   if( itAutomat == reports_.end() )
   {
-    itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >() ).first;
+      itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >( agent.automat_->GetId(), std::map< std::string, Report_ABC* > () ) ).first;
   }
   std::map< std::string, Report_ABC* >::iterator itReport = itAutomat->second.find( "Sitrep" );
   if( itReport == itAutomat->second.end() )
@@ -214,7 +214,7 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent,  dispatcher::Object& det
     std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.automat_->GetId() );
     if( itAutomat == reports_.end() )
     {
-      itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >() ).first;
+        itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >( agent.automat_->GetId(), std::map< std::string, Report_ABC* > () ) ).first;
     }
     std::map< std::string, Report_ABC* >::iterator itReport = itAutomat->second.find( "NBC" );
     if( itReport == itAutomat->second.end() )
@@ -233,7 +233,7 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent,  kernel::MissionType& mi
   std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.automat_->GetId() );
   if( itAutomat == reports_.end() )
   {
-    itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >() ).first;
+      itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >( agent.automat_->GetId(), std::map< std::string, Report_ABC* > () ) ).first;
   }
   std::map< std::string, Report_ABC* >::iterator itReport = itAutomat->second.find( "Frago" );
   if( itReport == itAutomat->second.end() )
@@ -260,7 +260,7 @@ void ReportManager::DoUpdateIntrep( dispatcher::Agent& agent,  dispatcher::Agent
   std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.automat_->GetId() );
   if( itAutomat == reports_.end() )
   {
-    itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >() ).first;
+      itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >( agent.automat_->GetId(), std::map< std::string, Report_ABC* > () ) ).first;
   }
   std::map< std::string, Report_ABC* >::iterator itReport = itAutomat->second.find( "Intrep" );
   if( itReport == itAutomat->second.end() )
@@ -279,7 +279,7 @@ void ReportManager::DoUpdateLog( dispatcher::Agent& agent )
   std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.automat_->GetId() );
   if( itAutomat == reports_.end() )
   {
-    itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >() ).first;
+      itAutomat = reports_.insert( std::pair< unsigned, std::map< std::string, Report_ABC* > >( agent.automat_->GetId(), std::map< std::string, Report_ABC* > () ) ).first;
   }
   std::map< std::string, Report_ABC* >::iterator itReport = itAutomat->second.find( "Logassessrep" );
   if( itReport == itAutomat->second.end() )
