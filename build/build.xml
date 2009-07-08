@@ -192,6 +192,9 @@
     <target name="library.xmlia_plugin" description="build XMLIA dispatcher plugin static library" depends="library.dispatcher">
         <build-lib name="xmlia_plugin" pattern="lib${ant.project.name}_xmlia_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
+            <defineset>
+              <define name="LDAP_UNICODE"/>
+            </defineset>
         </build-lib>
     </target>
 
@@ -289,7 +292,7 @@
                          lib${ant.project.name}_3a-${platform}-mt
                          lib${ant.project.name}_score_plugin-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,Wldap32"/>
             <includepath path="${include.dir}/masasn"/>
             <defineset define="DISPATCHER_DLL_EXPORTS"/>
             <linkerarg value="/FIXED:NO"/>
