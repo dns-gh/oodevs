@@ -17,6 +17,11 @@ namespace dispatcher
   class Agent;
 }
 
+namespace kernel
+{
+  class MissionType;
+}
+
 namespace xml
 {
   class xistream;
@@ -27,6 +32,7 @@ namespace plugins
 {
 namespace xmlia
 {
+  class Mission;
   class Point;
   class XmliaOperationalState;
 // =============================================================================
@@ -48,22 +54,14 @@ public:
 
     ///! @name Operations
     //@{
-    virtual void SerializeExtension( xml::xostream& xos, const std::string& sQnameRapport  ) const;
-    virtual void SerializeIncludeEntities( xml::xostream& xos, const std::string& sQnameRapport  ) const;
+    virtual void SerializePosition( xml::xostream& xos ) const;
+    virtual void SerializeEtatOps( xml::xostream& xos ) const;
+    virtual void SerializeMission( xml::xostream& xos ) const;
     void Update( dispatcher::Agent& agent );
+    void UpdateMission( kernel::MissionType& mission );
     bool IsSide( unsigned int idSide) const;
     Point* GetLocalization() const;
     XmliaOperationalState* GetOperationalState() const;
-    void SetPosition( Point* pt );
-    void SetEtatOps( XmliaOperationalState* etatOps );
-    //@}
-
-private:
-    ///! @name Operations
-    //@{
-    void SerializeEtatOps( xml::xostream& xos, std::string sQnameRapport   ) const;
-    void SerializeAssociationLocalisation( xml::xostream& xos ) const;
-    void SerializeSideAssociation( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -73,6 +71,7 @@ private:
     
     Point* localisation_;
     XmliaOperationalState* etatOps_;
+    Mission* mission_;
     //@}
 };
 

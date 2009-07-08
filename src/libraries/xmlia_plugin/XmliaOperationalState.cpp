@@ -87,33 +87,23 @@ namespace
 // -----------------------------------------------------------------------------
 XmliaOperationalState::XmliaOperationalState( xml::xistream& xis )
 {
- // xis >> xml::start( "mpia:EtatOperationnelEntiteOrganisationnelle" )
-   xis  >> xml::attribute( "id", sQname_ )
+   xis >> xml::start( "mpia:EtatOperationnelEntiteOrganisationnelle" )
         >> xml::content( "mpia:EtatCarburants", iEtatCarburants_ )
         >> xml::content( "mpia:EtatEquipements", iEtatEquipements_)
         >> xml::content( "mpia:EtatMunitions", iEtatMunitions_)
         >> xml::content( "mpia:EtatOperationnel", etatOpsGeneral_ )
-        >> xml::content( "mpia:EtatPersonnel", iEtatPersonnel_);
-    //  >> xml::end();
-  std::string sId = sQname_.substr( 5 );
-  std::istringstream is( sId );
-  is >> id_;
+        >> xml::content( "mpia:EtatPersonnel", iEtatPersonnel_)
+       >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: XmliaOperationalState constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-XmliaOperationalState::XmliaOperationalState(  const dispatcher::Agent& agent, const std::string& sQnameParent  )
+XmliaOperationalState::XmliaOperationalState(  const dispatcher::Agent& agent  )
 : Entity_ABC()
 , etatOpsGeneral_( GetXmliaOperationalStateFromAsn( agent.nOperationalState_ ) )
 {
-  std::ostringstream os;
-  os << agent.GetId();
-  std::string sId = os.str();
-  sQname_ = "etat-" + sId;
-  sQnameParent_ = sQnameParent;
-
   AvailabilityComputer computer1;
   agent.equipments_.Apply( boost::bind( &AvailabilityComputer::AddEquipment, boost::ref( computer1 ), _1 ) );
   iEtatEquipements_ = computer1.GetValue();
@@ -138,32 +128,16 @@ XmliaOperationalState::~XmliaOperationalState()
 // Name: XmliaOperationalState::Serialize
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void XmliaOperationalState::Serialize( xml::xostream& xos, const std::string& sQnameRapport ) const
+void XmliaOperationalState::Serialize( xml::xostream& xos ) const
 {
   xos << xml::start( "mpia:EtatOperationnelEntiteOrganisationnelle" )
-        << xml::attribute( "id", QName())
-        << xml::content( "mpia:Comportement", "SUSPCT" )//@TODOFORCE
-        << xml::start( "mpia:EstEtat_InstanceObjet" )
-          << xml::content( "mpia:refid", sQnameParent_ )
-        << xml::end()
-        << xml::start( "mpia:EstRapporteePar_Rapport" )
-          << xml::content( "mpia:refid", sQnameRapport )
-        << xml::end()
+        << xml::content( "mpia:Comportement", "NEUTRL" )//@TODOFORCE
         << xml::content( "mpia:EtatCarburants", iEtatCarburants_ )
         << xml::content( "mpia:EtatEquipements", iEtatEquipements_)
         << xml::content( "mpia:EtatMunitions", iEtatMunitions_)
         << xml::content( "mpia:EtatOperationnel", etatOpsGeneral_ )
         << xml::content( "mpia:EtatPersonnel", iEtatPersonnel_)
       << xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: XmliaOperationalState::QName
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-std::string XmliaOperationalState::QName() const
-{
-  return sQname_;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,15 +159,6 @@ void XmliaOperationalState::Update( dispatcher::Agent& agent )
   //@TODO add Dotation
   iEtatCarburants_ = 4;
   iEtatMunitions_  = 4;
-}
-
-// -----------------------------------------------------------------------------
-// Name: XmliaOperationalState GetId
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-unsigned int XmliaOperationalState::GetId() const
-{
-  return id_;
 }
 
 // -----------------------------------------------------------------------------

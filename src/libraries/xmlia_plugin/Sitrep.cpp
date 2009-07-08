@@ -38,9 +38,28 @@ using namespace plugins::xmlia;
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
 Sitrep::Sitrep( ReportManager& manager, xml::xistream& xis )
-:  Report_ABC( manager, xis )
+:  Report_ABC( manager, xis, "Sitrep" )
 {
-   //NOTHING
+  xis >> xml::start( "SituationAMI" )
+        >> xml::start( "Unites" )
+          >> xml::list( "Unite", *this, &Sitrep::ReadUnite, unitesAMI_ )
+        >> xml::end()
+      >> xml::end()
+      >> xml::start( "SituationENI" )
+        >> xml::start( "Unites" )
+          >> xml::list( "Unite", *this, &Sitrep::ReadUnite, unitesENI_ )
+        >> xml::end()
+      >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sitrep ReadUnite
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+void Sitrep::ReadUnite( xml::xistream& xis, std::map< unsigned, UnitAgent* >& map )
+{
+  UnitAgent* agent = new UnitAgent( xis );
+  map[agent->GetId()] = agent;
 }
 
 // -----------------------------------------------------------------------------
@@ -56,96 +75,80 @@ Sitrep::Sitrep( ReportManager& manager, dispatcher::Automat& author )
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
 Sitrep::~Sitrep()
-{}
+{
+  for( std::map< unsigned, UnitAgent* >::iterator it = unitesAMI_.begin(); it != unitesAMI_.end(); it++ )
+  {
+    delete it->second;
+  }
+  unitesAMI_.clear();
+  for( std::map< unsigned, UnitAgent* >::iterator it = unitesENI_.begin(); it != unitesENI_.end(); it++ )
+  {
+    delete it->second;
+  }
+  unitesENI_.clear();
+}
 
 // -----------------------------------------------------------------------------
 // Name: Sitrep::Serialize
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Sitrep::InsertOrUpdate( dispatcher::Agent& agent )
+void Sitrep::InsertOrUpdateFriendly( dispatcher::Agent& agent )
 {
-  std::map< unsigned, UnitAgent* >::iterator itFind = unites_.find( agent.GetId() );
-  if( itFind == unites_.end() )
+  std::map< unsigned, UnitAgent* >::iterator itFind = unitesAMI_.find( agent.GetId() );
+  if( itFind == unitesAMI_.end() )
   {
-    unites_.insert( std::pair< unsigned, UnitAgent* >( agent.GetId(), new UnitAgent( agent ) ) );
+    unitesAMI_.insert( std::pair< unsigned, UnitAgent* >( agent.GetId(), new UnitAgent( agent ) ) );
   }
 
-  unites_[agent.GetId()]->Update( agent );
+  unitesAMI_[agent.GetId()]->Update( agent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Sitrep::Serialize
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Sitrep::SerializeOtherEntities( xml::xostream& xos ) const
+void Sitrep::InsertOrUpdateEnemy( dispatcher::Agent& agent )
 {
-    std::string sQnameRapport = QName();
+  std::map< unsigned, UnitAgent* >::iterator itFind = unitesENI_.find( agent.GetId() );
+  if( itFind == unitesENI_.end() )
+  {
+    unitesENI_.insert( std::pair< unsigned, UnitAgent* >( agent.GetId(), new UnitAgent( agent ) ) );
+  }
 
-    for( std::map< unsigned, UnitAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
-    {
-      it->second->Serialize( xos, sQnameRapport );
-    }
+  unitesENI_[agent.GetId()]->Update( agent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sitrep::SerializeSide
+// Name: Sitrep::Serialize
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Sitrep::SerializeSide( const dispatcher::Side& side, xml::xostream& xos, std::string sQnameRapport ) const
+void Sitrep::SerializeContent( xml::xostream& xos ) const
 {
-  std::ostringstream os;
-  os << side.GetId();
-  std::string sIdSide = os.str();
-  std::string sQnameSide = "camp-" + sIdSide;
-
-  xos << xml::start( "mpia:GroupeFonctionnel" )
-      << xml::attribute( "id", sQnameSide )
-      << xml::content( "mpia:Nom", side.GetName() )
-      << xml::start( "mpia:EstRapporteePar_Rapport" )
-      << xml::content( "mpia:refid", sQnameRapport )
+  xos << xml::start( "SituationAMI" )
+        << xml::start( "Unites" );
+        for( std::map< unsigned, UnitAgent* >::const_iterator it = unitesAMI_.begin(); it != unitesAMI_.end(); it++ )
+        {
+          xos << xml::start( "Unite" );
+          it->second->Serialize( xos );
+          it->second->SerializePosition( xos );
+          it->second->SerializeEtatOps( xos );
+          xos << xml::end();
+        }
+    xos << xml::end()
       << xml::end();
-  for( std::map< unsigned, UnitAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
+
+  xos << xml::start( "SituationENI" )
+    << xml::start( "Unites" );
+  for( std::map< unsigned, UnitAgent* >::const_iterator it = unitesENI_.begin(); it != unitesENI_.end(); it++ )
   {
-    if( it->second->IsSide( side.GetId() ) )
-    {
-      std::ostringstream os2;
-      os2 << it->second->GetId();
-      std::string sIdUnite = os2.str();
-      xos << xml::start( "mpia:EstAffiliationDe_AssociationAffiliationInstanceObjet" )
-          << xml::content( "mpia:refid", "association-" + sIdSide + "-" + sIdUnite)
-          << xml::end();
-    }
+    xos << xml::start( "Unite" );
+    it->second->Serialize( xos );
+    it->second->SerializePosition( xos );
+    it->second->SerializeEtatOps( xos );
+    xos << xml::end();
   }
-  xos << xml::content( "Categorie", "NKN" )//@TODOFORCE
+  xos << xml::end()
     << xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sitrep::UpdateSimulation
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-void Sitrep::ReadEntities( xml::xistream& xis )
-{
-  xis >> xml::list( "mpia:PointGeographique", *this, &Sitrep::ReadPosition );
-  xis >> xml::list( "mpia:EtatOperationnelEntiteOrganisationnelle", *this, &Sitrep::ReadEtatOps );
-  //@TODO move in rapport if others report have same data
-}
-
-void Sitrep::ReadPosition( xml::xistream& xis )
-{
-  Point* pt = new Point( xis );
-  unites_[pt->GetId()]->SetPosition( pt );
-}
-
-void Sitrep::ReadEtatOps( xml::xistream& xis )
-{
-  XmliaOperationalState* etatOps = new XmliaOperationalState( xis );
-  unites_[etatOps->GetId()]->SetEtatOps( etatOps );
-}
-
-unsigned int Sitrep::GetAuthorID() const
-{
-	return author_->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,60 +156,77 @@ unsigned int Sitrep::GetAuthorID() const
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
 void Sitrep::UpdateSimulation()
-{
+{//@TODO share action with other report and call reportManager With push 
   dispatcher::SimulationPublisher_ABC& simPublisher = reportManager_.GetSimulationPublisher();
   dispatcher::ClientPublisher_ABC& clientPublisher = *reportManager_.GetClientPublisher();
 	unsigned int authorID = author_->GetId();
 	unsigned long authorSideID = reportManager_.GetModel().automats_.Find( authorID )->team_.GetId();
 	dispatcher::Agent* simAuthorAgent = reportManager_.GetModel().agents_.Find( authorID );
-  for( std::map< unsigned, UnitAgent* >::const_iterator it = unites_.begin(); it != unites_.end(); it++ )
+
+
+  for( std::map< unsigned, UnitAgent* >::const_iterator it = unitesAMI_.begin(); it != unitesAMI_.end(); it++ )
   {
-    //@TODO link to magic action
+    UnitAgent* reportAgent = it-> second;
+    dispatcher::Agent* simAgent = reportManager_.GetModel().agents_.Find( it->first );
+
+    if ( simAgent != 0 )
+    {
+      simulation::UnitMagicAction asnMsg;
+      ASN1T_CoordLatLong utm;
+      asnMsg().oid = reportAgent->GetId();
+      asnMsg().action.t                        = T_MsgUnitMagicAction_action_move_to;
+      reportAgent->GetLocalization()->FillLatLong( utm );
+      asnMsg().action.u.move_to = &utm;
+      asnMsg.Send( simPublisher );
+    
+      if ( reportAgent->GetOperationalState()->GetGeneralOperationalState() == "NOP" )
+      {
+        simulation::UnitMagicAction asnMsg;
+        ASN1T_MagicActionPartialRecovery asnPartialRecovery;
+        asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
+        asnMsg().oid = reportAgent->GetId();
+        asnMsg().action.u.recompletement_partiel = &asnPartialRecovery;
+        asnPartialRecovery.m.equipementsPresent = 0;
+        asnPartialRecovery.m.personnelsPresent = 0;
+        asnPartialRecovery.m.dotationsPresent = 0;
+        asnPartialRecovery.m.munitionsPresent = 0;
+        asnPartialRecovery.m.stocksPresent = 0;
+        asnMsg.Send( simPublisher );
+      }
+    }
+  }
+
+  for( std::map< unsigned, UnitAgent* >::const_iterator it = unitesENI_.begin(); it != unitesENI_.end(); it++ )
+  {
     UnitAgent* reportAgent = it-> second;
     dispatcher::Agent* simAgent = reportManager_.GetModel().agents_.Find( it->first );
     if ( simAgent != 0 )
     {
-      unsigned long agentSideID = reportManager_.GetModel().agents_.Find( reportAgent->GetId())->automat_->team_.GetId();
-      {
-        if ( agentSideID == authorSideID )
-        {
-          simulation::UnitMagicAction asnMsg;
-          ASN1T_CoordLatLong utm;
-          asnMsg().oid = reportAgent->GetId();
-          asnMsg().action.t                        = T_MsgUnitMagicAction_action_move_to;
-          reportAgent->GetLocalization()->FillLatLong( utm );
-          asnMsg().action.u.move_to = &utm;
-          asnMsg.Send( simPublisher );
-        }
-        else //create raw intelligence or knowledge on client for ENIs
-        {
-          ASN1T_MsgsMessengerToClient asnMsg;
-          ASN1T_MsgIntelligenceCreation asnTmp;
-          ASN1T_CoordLatLong utm;
-          asnMsg.t              = T_MsgsMessengerToClient_msg_intelligence_creation;
-          asnTmp.oid = reportAgent->GetId();
-          asnMsg.u.msg_intelligence_creation = &asnTmp;
-          reportAgent->GetLocalization()->FillLatLong( utm );
-          asnTmp.intelligence.name = reportAgent->GetName().c_str();
-          asnTmp.intelligence.nature = "ENI";
-          asnTmp.intelligence.location = utm;
-          clientPublisher.Send( asnMsg );
-        }
+      ASN1T_MsgsMessengerToClient asnMsg;
+      ASN1T_MsgIntelligenceCreation asnTmp;
+      ASN1T_CoordLatLong utm;
+      asnMsg.t              = T_MsgsMessengerToClient_msg_intelligence_creation;
+      asnTmp.oid = reportAgent->GetId();
+      asnMsg.u.msg_intelligence_creation = &asnTmp;
+      reportAgent->GetLocalization()->FillLatLong( utm );
+      asnTmp.intelligence.name = reportAgent->GetName().c_str();
+      asnTmp.intelligence.nature = "ENI";
+      asnTmp.intelligence.location = utm;
+      clientPublisher.Send( asnMsg );
 
-        if ( reportAgent->GetOperationalState()->GetGeneralOperationalState() == "NOP" )
-        {
-          simulation::UnitMagicAction asnMsg;
-          ASN1T_MagicActionPartialRecovery asnPartialRecovery;
-          asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
-          asnMsg().oid = reportAgent->GetId();
-          asnMsg().action.u.recompletement_partiel = &asnPartialRecovery;
-          asnPartialRecovery.m.equipementsPresent = 0;
-          asnPartialRecovery.m.personnelsPresent = 0;
-          asnPartialRecovery.m.dotationsPresent = 0;
-          asnPartialRecovery.m.munitionsPresent = 0;
-          asnPartialRecovery.m.stocksPresent = 0;
-          asnMsg.Send( simPublisher );
-        }
+      if ( reportAgent->GetOperationalState()->GetGeneralOperationalState() == "NOP" )
+      {
+        simulation::UnitMagicAction asnMsg;
+        ASN1T_MagicActionPartialRecovery asnPartialRecovery;
+        asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
+        asnMsg().oid = reportAgent->GetId();
+        asnMsg().action.u.recompletement_partiel = &asnPartialRecovery;
+        asnPartialRecovery.m.equipementsPresent = 0;
+        asnPartialRecovery.m.personnelsPresent = 0;
+        asnPartialRecovery.m.dotationsPresent = 0;
+        asnPartialRecovery.m.munitionsPresent = 0;
+        asnPartialRecovery.m.stocksPresent = 0;
+        asnMsg.Send( simPublisher );
       }
     }
   }

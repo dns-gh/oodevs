@@ -38,8 +38,7 @@ class Entity_ABC
 public:
     ///! @name Operations / Destructor
     //@{
-    virtual void Serialize( xml::xostream& xos, const std::string& sQnameRapport  ) const = 0;
-    virtual std::string QName() const = 0 ;
+    virtual void Serialize( xml::xostream& xos ) const = 0;
     //@}
 
     //! @name Destructor

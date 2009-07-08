@@ -17,6 +17,11 @@ namespace dispatcher
   class Automat;
 }
 
+namespace kernel
+{
+  class MissionType;
+}
+
 namespace xml
 {
   class xistream;
@@ -27,7 +32,7 @@ namespace plugins
 {
 namespace xmlia
 {
-
+  class Mission;
 // =============================================================================
 /** @class  UniteAutomat
     @brief  UniteAutomat
@@ -44,6 +49,15 @@ public:
     UnitAutomate( xml::xistream& xis );
     virtual ~UnitAutomate();
     //@}
+
+    ///! @name Operations
+    //@{
+    virtual void SerializeMission( xml::xostream& xos ) const;
+    void UpdateMission( kernel::MissionType& mission );
+    //@}
+
+private:
+    Mission* mission_;
 };
 
 }// xmlia

@@ -30,26 +30,20 @@ namespace plugins
       //! @name Constructors/Destructor
       //@{
       XmliaOperationalState( xml::xistream& xis );
-      XmliaOperationalState( const dispatcher::Agent& agent, const std::string& sQnameParent );
+      XmliaOperationalState( const dispatcher::Agent& agent );
       virtual ~XmliaOperationalState();
       //@}
 
       ///! @name Operations
       //@{
-      void Serialize( xml::xostream& xos, const std::string& sQnameRapport ) const;
-      virtual std::string QName() const;
+      void Serialize( xml::xostream& xos ) const;
       void Update( dispatcher::Agent& agent );
-      unsigned int GetId() const;
       std::string& GetGeneralOperationalState();
       //@}
 
     private:
       //! @name Member data
       //@{
-      unsigned int id_;
-      std::string sQname_;
-      std::string sQnameParent_;
-
       unsigned int iEtatCarburants_;
       unsigned int iEtatEquipements_;
       unsigned int iEtatMunitions_;

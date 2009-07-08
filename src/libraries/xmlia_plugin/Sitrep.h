@@ -51,15 +51,21 @@ public:
 
     ///! @name Operations
     //@{
-    virtual void SerializeOtherEntities( xml::xostream& xos ) const;
-    void SerializeSide( const dispatcher::Side& side, xml::xostream& xos, std::string sQnameRapport ) const;
-    virtual void InsertOrUpdate( dispatcher::Agent& agent );
+    virtual void InsertOrUpdateFriendly( dispatcher::Agent& agent );
+    virtual void InsertOrUpdateEnemy( dispatcher::Agent& agent );
     virtual void UpdateSimulation();
-    virtual void ReadEntities( xml::xistream& xis );
-    void ReadPosition( xml::xistream& xis );
-    void ReadEtatOps( xml::xistream& xis );
-	virtual unsigned int GetAuthorID() const;
     //@}
+
+private:
+  ///! @name Operations
+  //@{
+  virtual void SerializeContent( xml::xostream& xos ) const;
+  void ReadUnite( xml::xistream& xis, std::map< unsigned, UnitAgent* >& map );
+  //@}
+
+  private:
+    std::map< unsigned, UnitAgent* > unitesAMI_;
+    std::map< unsigned, UnitAgent* > unitesENI_;
 };
 
 }// xmlia

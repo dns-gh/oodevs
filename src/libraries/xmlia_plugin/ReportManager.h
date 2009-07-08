@@ -14,9 +14,15 @@ namespace dispatcher
 {
   class Model;
   class Agent;
+  class Object;
   class SimulationPublisher_ABC;
   class ClientPublisher_ABC;
   class Profile_ABC;
+}
+
+namespace kernel
+{
+  class MissionType;
 }
 
 namespace xml
@@ -29,7 +35,7 @@ namespace plugins
 {
 namespace xmlia
 {
-  class Sitrep;
+  class Report_ABC;
   class Publisher_ABC;
   class LdapClient;
 
@@ -66,6 +72,10 @@ public:
     void Receive( Publisher_ABC& publisher);
     void DoUpdate( dispatcher::Agent& agent );
     void DoUpdate( dispatcher::Agent& agent,  dispatcher::Agent& detected );
+    void DoUpdate( dispatcher::Agent& agent,  dispatcher::Object& detected );
+    void DoUpdate( dispatcher::Agent& agent,  kernel::MissionType& mission );
+    void DoUpdateIntrep( dispatcher::Agent& agent,  dispatcher::Agent& fired );
+    void DoUpdateLog( dispatcher::Agent& agent );
     //@}
 
     ///! @name Import Operations
@@ -79,8 +89,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::map< unsigned, Sitrep* > reports_;//@refactor when new report type will be added
-    std::vector< Sitrep* > receivedRapports_;
+    std::map< unsigned, std::map< std::string, Report_ABC* > > reports_;
+    std::vector< Report_ABC* > receivedRapports_;
     dispatcher::Model& model_;
 	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
     dispatcher::Profile_ABC* clientProfile_;

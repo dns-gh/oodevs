@@ -40,12 +40,10 @@ class Unit_ABC : public Entity_ABC
 public:
     ///! @name Operations
     //@{
-    void Serialize( xml::xostream& xos, const std::string& sQnameRapport  ) const;
-    virtual void SerializeExtension( xml::xostream& xos, const std::string& sQnameRapport  ) const {};
-    virtual void SerializeIncludeEntities( xml::xostream& xos, const std::string& sQnameRapport  ) const {};
+    void Serialize( xml::xostream& xos ) const;
     std::string QName() const;
     unsigned int GetId() const;
-	std::string GetName();
+	  std::string GetName();
     static unsigned int QNameToId( std::string sQname );
     //@}
 

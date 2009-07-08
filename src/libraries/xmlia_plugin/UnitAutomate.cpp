@@ -12,6 +12,8 @@
 
 #include "dispatcher/Automat.h"
 
+#include "xmlia_plugin/Mission.h"
+
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::xmlia;
@@ -39,4 +41,27 @@ UnitAutomate::UnitAutomate( xml::xistream& xis )
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
 UnitAutomate::~UnitAutomate()
-{}
+{
+  if( mission_ )
+    delete mission_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: UnitAutomate::UpdateMission
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+void UnitAutomate::UpdateMission( kernel::MissionType& mission )
+{
+  mission_->Update( mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitAutomate::SerializeMission
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+void UnitAutomate::SerializeMission( xml::xostream& xos ) const
+{
+  if( mission_ )
+    mission_->Serialize( xos );
+}

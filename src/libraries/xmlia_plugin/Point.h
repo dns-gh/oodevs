@@ -32,24 +32,20 @@ public:
     //! @name Constructors/Destructor
     //@{
     Point( xml::xistream& xis );
-    Point( const double& latitude, const double& longitude,  unsigned idParent );
+    Point( const double& latitude, const double& longitude );
     virtual ~Point();
     //@}
 
     ///! @name Operations
     //@{
-    void Serialize( xml::xostream& xos, const std::string& sQnameRapport ) const;
-    virtual std::string QName() const;
+    void Serialize( xml::xostream& xos ) const;
     void Update( dispatcher::Agent& agent );
     void FillLatLong( ASN1T_CoordLatLong& utm );
-    unsigned int GetId() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned int id_;
-    std::string sQname_;
     double latitude_;
     double longitude_;
     //@}

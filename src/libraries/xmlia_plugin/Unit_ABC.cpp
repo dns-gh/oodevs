@@ -30,8 +30,12 @@ Unit_ABC::Unit_ABC( unsigned int id, const std::string& name )
 Unit_ABC::Unit_ABC( xml::xistream& xis )
 {
   std::string qName;
-  xis >> xml::attribute( "id", qName )
-      >> xml::content( "mpia:Nom", name_ );
+
+  xis >> xml::start( "mpia:Unite" )
+        >> xml::attribute( "id", qName )
+        >> xml::content( "mpia:Nom", name_ )
+      >> xml::end;
+
   std::string sId = qName.substr( 6 );
   std::istringstream is( sId );
   is >> id_;
@@ -90,15 +94,10 @@ std::string Unit_ABC::GetName()
 // Name: Unit_ABC Serialize
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Unit_ABC::Serialize( xml::xostream& xos, const std::string& sQnameRapport  ) const
+void Unit_ABC::Serialize( xml::xostream& xos ) const
 {
   xos << xml::start( "mpia:Unite" )
         << xml::attribute( "id", QName() )
         << xml::content( "mpia:Nom", name_ )
-        << xml::start( "mpia:EstRapporteePar_Rapport" )
-          << xml::content( "mpia:refid", sQnameRapport )
-        << xml::end();
-        SerializeExtension( xos, sQnameRapport );
-  xos << xml::end();
-  SerializeIncludeEntities( xos, sQnameRapport );
+      << xml::end();
 }

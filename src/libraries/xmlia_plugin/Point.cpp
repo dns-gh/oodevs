@@ -22,30 +22,21 @@ using namespace plugins::xmlia;
 // -----------------------------------------------------------------------------
 Point::Point( xml::xistream& xis )
 {
-   //xis >> xml::start( "mpia:PointGeographique" )
-       xis >> xml::attribute( "id", sQname_ )
-         >> xml::content( "mpia:Latitude", latitude_ )
-         >> xml::content( "mpia:Latitude", longitude_ );
-     //  >> xml::end();
-   std::string sId = sQname_.substr( 5 );
-   std::istringstream is( sId );
-   is >> id_;
+  xis >> xml::start( "mpia:PointGeographique" )
+        >> xml::content( "mpia:Latitude", latitude_ )
+        >> xml::content( "mpia:Latitude", longitude_ )
+      >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Point constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-Point::Point( const double& latitude, const double& longitude, unsigned idParent )
+Point::Point( const double& latitude, const double& longitude )
 : Entity_ABC()
 , latitude_( latitude )
 , longitude_( longitude )
-{
-  std::ostringstream os;
-  os << idParent;
-  std::string sId = os.str();
-  sQname_ = "loca-" + sId;
-}
+{}
 
 // -----------------------------------------------------------------------------
 // Name: Point destructor
@@ -60,22 +51,12 @@ Point::~Point()
 // Name: Point::Serialize
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Point::Serialize( xml::xostream& xos, const std::string& sQnameRapport ) const
+void Point::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "mpia:PointGeographique" )
-          << xml::attribute( "id", QName() )
           << xml::content( "mpia:Latitude" , latitude_ )
           << xml::content( "mpia:Longitude", longitude_ )
         << xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Point::QName
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-std::string Point::QName() const
-{
-  return sQname_;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,11 +79,3 @@ void Point::FillLatLong( ASN1T_CoordLatLong& utm )
     utm.longitude = ( ASN1REAL ) longitude_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: Point GetId
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-unsigned int Point::GetId() const
-{
-  return id_;
-}

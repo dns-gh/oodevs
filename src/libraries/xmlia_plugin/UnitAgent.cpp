@@ -16,6 +16,7 @@
 
 #include "Point.h"
 #include "XmliaOperationalState.h"
+#include "xmlia_plugin/Mission.h"
 
 #include "boost/bind.hpp"
 #include <xeumeuleu/xml.h>
@@ -29,9 +30,18 @@ using namespace plugins::xmlia;
 UnitAgent::UnitAgent( xml::xistream& xis )
 : Unit_ABC( xis )
 {
-  //xis >> xml::end(); //</Unite>
-  //localisation_ = new Point( xis );
-  //etatOps_ = new EtatOperationnel( xis );
+  if( xis.has_child( "mpia:PointGeographique" ) )
+  {
+    localisation_ = new Point( xis );
+  }
+  if( xis.has_child( "mpia:EtatOperationnelEntiteOrganisationnelle" ) )
+  {
+    etatOps_ = new XmliaOperationalState( xis );
+  }
+  if( xis.has_child( "Mission" ) )
+  {
+    mission_ = new Mission( xis );
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -42,8 +52,8 @@ UnitAgent::UnitAgent( dispatcher::Agent& agent )
 : Unit_ABC( agent.GetId(), agent.name_ )
 , idSide_(agent.automat_->team_.GetId() )
 {
-  localisation_ = new Point( agent.position_.latitude, agent.position_.longitude, id_ );
-  etatOps_      = new XmliaOperationalState( agent, QName() );
+  localisation_ = new Point( agent.position_.latitude, agent.position_.longitude );
+  etatOps_      = new XmliaOperationalState( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,89 +62,42 @@ UnitAgent::UnitAgent( dispatcher::Agent& agent )
 // -----------------------------------------------------------------------------
 UnitAgent::~UnitAgent()
 {
-    delete localisation_;
-    delete etatOps_;
+    if( localisation_ )
+      delete localisation_;
+    if( etatOps_ )
+      delete etatOps_;
+    if( mission_ )
+      delete mission_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitAgent::SerializeExtension
+// Name: UnitAgent::SerializePosition
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UnitAgent::SerializeExtension( xml::xostream& xos, const std::string& sQnameRapport  ) const
+void UnitAgent::SerializePosition( xml::xostream& xos ) const
 {
-  std::ostringstream os;
-  os << id_;
-  std::string sId = os.str();
-  std::string sQnameEtatOps = "etat-" + sId;
-  std::string sQnameAssociationLoca = "asso-loca-" + sId;
-
-  xos << xml::start( "mpia:APourEtat_EtatOperationnel" )
-        << xml::content( "mpia:refid", sQnameEtatOps )
-      << xml::end()
-      << xml::start( "mpia:EstLocalisePar_AssocInstanceObjetLocalisation" )
-        << xml::content( "mpia:refid", sQnameAssociationLoca )
-      << xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitAgent::SerializeInfo
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-void UnitAgent::SerializeIncludeEntities( xml::xostream& xos, const std::string& sQnameRapport  ) const
-{
-  SerializeSideAssociation( xos );
-  etatOps_->Serialize( xos, sQnameRapport );
-  localisation_->Serialize( xos, sQnameRapport );
-  SerializeAssociationLocalisation( xos );
+  if( localisation_ )
+    localisation_->Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UnitAgent::SerializeEtatOps
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UnitAgent::SerializeSideAssociation( xml::xostream& xos ) const
+void UnitAgent::SerializeEtatOps( xml::xostream& xos ) const
 {
-  std::ostringstream os;
-  os << id_;
-  std::string sIdUniteAgent = os.str();
-  std::ostringstream os2;
-  os2 << idSide_;
-  std::string sIdSide = os2.str();
-
-  xos << xml::start( "mpia:AssociationAffiliationInstanceObjet" )
-    << xml::attribute( "id", "association-" + sIdSide + "-" + sIdUniteAgent)
-    << xml::start( "mpia:Concerne_Affiliation" )
-    << xml::content( "mpia:refid", "camp-" + sIdSide )
-    << xml::end()
-    << xml::start( "mpia:Concerne_InstanceObjet" )
-    << xml::content( "mpia:refid", "UniteAgent-" + sIdUniteAgent )
-    << xml::end()
-    << xml::end();
+  if( etatOps_ )
+    etatOps_->Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitAgent::SerializeAssociationLocalisation
+// Name: UnitAgent::SerializeMission
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void UnitAgent::SerializeAssociationLocalisation( xml::xostream& xos ) const
+void UnitAgent::SerializeMission( xml::xostream& xos ) const
 {
-  std::ostringstream os;
-  os << id_;
-  std::string sId = os.str();
-  std::string sQnameAssociationLoca = "asso-loca-" + sId;
-  std::string sQnameLoca = "loca-" + sId;
-  std::string sQnameUniteAgent = "UniteAgent-" + sId;
-
-  xos << xml::start( "mpia:AssocInstanceObjetLocalisation" )
-        << xml::attribute( "id", sQnameAssociationLoca )
-        << xml::content( "mpia:Categorie", "CEOFMA" )//@TODOFORCE Value
-        << xml::start( "mpia:EstLocalisation_InstanceObjet")
-          << xml::content( "mpia:refid", sQnameUniteAgent )
-        << xml::end()
-        << xml::start( "mpia:EstLocaliseEn_Localisation")
-          << xml::content( "mpia:refid", sQnameLoca )
-        << xml::end()
-      << xml::end();
+  if( mission_ )
+    mission_->Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,6 +112,15 @@ void UnitAgent::Update( dispatcher::Agent& agent )
   
   localisation_->Update( agent );
   etatOps_->Update( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitAgent::UpdateMission
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+void UnitAgent::UpdateMission( kernel::MissionType& mission )
+{
+  mission_->Update( mission );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,22 +148,4 @@ Point* UnitAgent::GetLocalization() const
 XmliaOperationalState* UnitAgent::GetOperationalState() const
 {
   return etatOps_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitAgent::SetPosition
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-void UnitAgent::SetPosition( Point* pt )
-{
-  localisation_ = pt;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitAgent::SetEtatOps
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-void UnitAgent::SetEtatOps( XmliaOperationalState* etatOps )
-{
-  etatOps_ = etatOps;
 }
