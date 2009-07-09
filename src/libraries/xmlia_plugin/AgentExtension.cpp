@@ -106,9 +106,8 @@ void AgentExtension::DoUpdate( const ASN1T_MsgObjectDetection& message )
 void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
    try
-   {
-       //@TODO recup limite
-       reportManager_.DoUpdate( holder_, model_.GetMissionTypes().Get( message.mission ), std::vector< Point >(0), std::vector< Point >(0) );
+   { 
+       reportManager_.DoUpdate( holder_, message );
    }
    catch( std::exception& e )
    {
@@ -146,4 +145,5 @@ void AgentExtension::DoUpdate( const ASN1T_DotationQuery& message )
     MT_LOG_ERROR_MSG( "XMLIA error storing report information: " << e.what() );
   }
 }
+
 

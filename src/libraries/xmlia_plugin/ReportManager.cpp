@@ -28,6 +28,7 @@
 #include "xmlia_plugin/NBCReport.h"
 #include "xmlia_plugin/Opord.h"
 #include "xmlia_plugin/Sitrep.h"
+#include "xmlia_plugin/Point.h"
 
 #include "boost/bind.hpp"
 #include <xeumeuleu/xml.h>
@@ -228,8 +229,20 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent,  dispatcher::Object& det
 // Name: ReportManager::DoUpdate
 // Created: MGD 2009-07-06
 // -----------------------------------------------------------------------------
-void ReportManager::DoUpdate( dispatcher::Agent& agent, kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
+void ReportManager::DoUpdate( dispatcher::Agent& agent, const ASN1T_MsgUnitOrder& message )
 {
+  if( message.parametres.n < 4 
+    || message.parametres.elem[2].value.t != T_MissionParameter_value_line 
+    || message.parametres.elem[3].value.t != T_MissionParameter_value_line )
+    return;
+
+  std::vector< Point > limit1, limit2;
+
+  if( !ReadLine( *message.parametres.elem[2].value.u.line, limit1 ) )
+      return;
+  if( !ReadLine( *message.parametres.elem[3].value.u.line, limit2 ) )
+      return;
+
   std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.automat_->GetId() );
   if( itAutomat == reports_.end() )
   {
@@ -241,14 +254,26 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent, kernel::MissionType& mis
     itAutomat->second.insert( std::pair< std::string, Frago*>( "Frago", new  Frago( *this, *agent.automat_ ) ) );
   }
 
-  reports_[ agent.automat_->GetId() ]["Frago"]->UpdateMission( mission, limit1, limit2  );
+  reports_[ agent.automat_->GetId() ]["Frago"]->UpdateMission( model_.GetMissionTypes().Get( message.mission ), limit1, limit2  );
 }
  // -----------------------------------------------------------------------------
  // Name: ReportManager::DoUpdate
  // Created: MGD 2009-07-06
  // -----------------------------------------------------------------------------
- void ReportManager::DoUpdate( dispatcher::Automat& agent, kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
+ void ReportManager::DoUpdate( dispatcher::Automat& agent, const ASN1T_MsgAutomatOrder& message )
  {
+     if( message.parametres.n < 4 
+         || message.parametres.elem[2].value.t != T_MissionParameter_value_line 
+         || message.parametres.elem[3].value.t != T_MissionParameter_value_line )
+         return;
+
+     std::vector< Point > limit1, limit2;
+
+     if( !ReadLine( *message.parametres.elem[2].value.u.line, limit1 ) )
+         return;
+     if( !ReadLine( *message.parametres.elem[3].value.u.line, limit2 ) )
+        return;
+
      std::map< unsigned, std::map< std::string, Report_ABC* > >::iterator itAutomat = reports_.find( agent.GetId() );
      if( itAutomat == reports_.end() )
      {
@@ -260,7 +285,7 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent, kernel::MissionType& mis
          itAutomat->second.insert( std::pair< std::string, Opord*>( "Opord", new  Opord( *this, agent ) ) );
      }
 
-     reports_[ agent.GetId() ]["Opord"]->UpdateMission( mission, limit1, limit2 );
+     reports_[ agent.GetId() ]["Opord"]->UpdateMission( model_.GetMissionTypes().Get( message.mission ), limit1, limit2 );
  }
 
 // -----------------------------------------------------------------------------
@@ -445,4 +470,22 @@ void ReportManager::CleanReceivedRapport()
 bool ReportManager::IsTakenIntoAccount( const std::string messageType )
 {
     return ldap_.IsTakenIntoAccount( messageType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportManager::ReadLine
+// Created: MGD 2009-07-09
+// -----------------------------------------------------------------------------
+bool ReportManager::ReadLine( const ASN1T_Line& asn, std::vector< Point >& points )
+{
+    if( asn.type != EnumLocationType::line || asn.coordinates.n < 2 )
+        return false;
+
+    points.clear();   
+    points.reserve( asn.coordinates.n );
+    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
+    {
+        points.push_back( Point( asn.coordinates.elem[i].latitude, asn.coordinates.elem[i].longitude ) );
+    }
+    return true;
 }

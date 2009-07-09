@@ -75,12 +75,13 @@ public:
     void Send( Publisher_ABC& publisher )const;
     void Receive( Publisher_ABC& publisher);
     void DoUpdate( dispatcher::Agent& agent );
-    void DoUpdate( dispatcher::Agent& agent,  dispatcher::Agent& detected );
-    void DoUpdate( dispatcher::Agent& agent,  dispatcher::Object& detected );
-    void DoUpdate( dispatcher::Agent& agent,  kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 );
-    void DoUpdate( dispatcher::Automat& agent,  kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 );
+    void DoUpdate( dispatcher::Agent& agent, dispatcher::Agent& detected );
+    void DoUpdate( dispatcher::Agent& agent, dispatcher::Object& detected );
+    void DoUpdate( dispatcher::Agent& agent, const ASN1T_MsgUnitOrder& message );
+    void DoUpdate( dispatcher::Automat& agent, const ASN1T_MsgAutomatOrder& message );
     void DoUpdateIntrep( dispatcher::Agent& agent,  dispatcher::Agent& fired );
     void DoUpdateLog( dispatcher::Agent& agent );
+    bool ReadLine( const ASN1T_Line& asn, std::vector< Point >& points );
     //@}
 
     ///! @name Import Operations
