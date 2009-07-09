@@ -26,6 +26,7 @@ NBCPrototype::NBCPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& res
     : NBCPrototype_ABC( parent, resolver, maxToxic )
     , msg_      ( msg ) 
 {
+    msg_.attributes.nbc.danger_level = 0;
     msg_.attributes.nbc.nbc_agents.n = 0;
 }
     
