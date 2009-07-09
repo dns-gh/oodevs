@@ -244,30 +244,8 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_Composantes::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
+void PHY_RolePion_Composantes::WriteODB( xml::xostream& /*xos*/ ) const
 {
-    /*
-    archive.Section( "Equipements" );
-
-    for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
-    {
-        const PHY_ComposanteTypePion&     compType       = *it->first;
-        const T_ComposanteTypeProperties& compProperties =  it->second;
-
-        const uint nNbrRepairable  =   compProperties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_   .GetID() ] 
-                                     + compProperties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ]
-                                     + compProperties.nbrsPerState_[ PHY_ComposanteState::maintenance_                .GetID() ];
-        const uint nNbrDead        =   compProperties.nbrsPerState_[ PHY_ComposanteState::dead_    .GetID() ]
-                                     + compProperties.nbrsPerState_[ PHY_ComposanteState::prisoner_.GetID() ];
-    
-        archive.Section( "Equipement" );
-        archive.WriteAttribute( "type"        , compType.GetName() );
-        archive.WriteAttribute( "indisponible", nNbrDead           );
-        archive.WriteAttribute( "reparable"   , nNbrRepairable     );
-        archive.EndSection(); // Equipement
-    }
-
-    archive.EndSection(); // Equipements*/
 }
 
 //-----------------------------------------------------------------------------
