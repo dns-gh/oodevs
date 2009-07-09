@@ -1,0 +1,31 @@
+--
+-- file name : PluginMessages.asn
+--
+-- plug-in messages list
+--
+
+PluginMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS PluginExports FROM Plugin;
+
+PluginMessagesIncludes ::= SEQUENCE
+{ PluginExports }
+PluginMessagesExports  ::= NULL
+-- END includes
+
+
+-- 
+-- 
+-- 
+MsgsPluginToClient ::= SEQUENCE
+{
+    context INTEGER DEFAULT 0,
+    msg     CHOICE
+    {
+        plugin-text-message                              MsgPluginTextMessage,
+        plugin-intelligence-creation                    MsgPluginIntelligenceCreation
+    }
+}
+
+END

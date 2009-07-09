@@ -12,7 +12,6 @@ IMPORTS BaseExports                   FROM Base
         ControlExports                FROM Control
         KnowledgeGroupExports         FROM KnowledgeGroup
         FormationExports              FROM Formation
-        InfoMessageExports              FROM InfoMessage
         FireExports                   FROM Fire
         UnitExports                   FROM Unit
         UnitKnowledgeExports          FROM UnitKnowledge
@@ -30,7 +29,7 @@ IMPORTS BaseExports                   FROM Base
 
 SimMessagesIncludes ::= SEQUENCE
 { BaseExports, OrderExports, ControlExports, KnowledgeGroupExports,
-  FormationExports, InfoMessageExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
+  FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
   ObjectKnowledgeExports, PopulationExports, PopulationKnowledgeExports, LogMaintenanceExports,
   LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports}
 SimMessagesExports  ::= NULL
@@ -174,9 +173,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-population-flow-knowledge-update                    MsgPopulationFlowKnowledgeUpdate,
 
         msg-folk-creation                                       MsgFolkCreation,
-        msg-folk-graph-update                                   MsgFolkGraphUpdate,
-        
-        msg-xmlia-text-message                              MsgXmliaTextMessage
+        msg-folk-graph-update                                   MsgFolkGraphUpdate
     }
 }
 

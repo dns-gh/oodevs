@@ -1,0 +1,29 @@
+--
+-- file name : Plugin.asn
+--
+-- Messages provenant d'un plug-in Sword
+--
+
+Plugin DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base
+        ArmyExports FROM Army
+        IntelligenceExports FROM Intelligence;
+PluginIncludes ::= SEQUENCE { BaseExports, ArmyExports, IntelligenceExports }
+PluginExports  ::= NULL
+-- END includes
+
+MsgPluginTextMessage ::= SEQUENCE
+{
+    destinataire                     VisibleString ,    
+    message                     VisibleString          
+}
+
+MsgPluginIntelligenceCreation ::= SEQUENCE
+{
+    oid          OID,
+    intelligence Intelligence
+}
+
+END -- Plugin
