@@ -32,6 +32,7 @@ namespace xmlia
     class ReportManager;
     class Simulation;
     class LdapClient;
+    class ClientManager;
 
 // =============================================================================
 /** @class  XmliaPlugin
@@ -55,10 +56,10 @@ public:
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     //@}
-    dispatcher::Profile_ABC* GetClientProfile() const;
-    void SetClientProfile( dispatcher::Profile_ABC& profile );
-    dispatcher::ClientPublisher_ABC* GetClientPublisher() const;
-    void SetClientPublisher( dispatcher::ClientPublisher_ABC& publisher );
+    //dispatcher::Profile_ABC* GetClientProfile() const;
+    //void SetClientProfile( dispatcher::Profile_ABC& profile );
+    //dispatcher::ClientPublisher_ABC* GetClientPublisher() const;
+    //void SetClientPublisher( dispatcher::ClientPublisher_ABC& publisher );
 
 private:
     //! @name Copy/Assignment
@@ -83,6 +84,7 @@ private:
     std::auto_ptr< ReportManager > reportManager_;
     std::auto_ptr< ExtensionFactory > extensionFactory_;
     std::auto_ptr< LdapClient > ldap_;
+    std::auto_ptr< ClientManager > clientManager_;
     bool  bExportActivation_;
     bool  bImportActivation_;
     unsigned int nTick_;

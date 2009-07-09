@@ -11,6 +11,7 @@
 #include "ReportManager.h"
 #include "Publisher_ABC.h"
 #include "LdapClient.h"
+#include "ClientManager.h"
 
 #include "clients_kernel/ObjectType.h"
 
@@ -39,12 +40,11 @@ using namespace plugins::xmlia;
 // Name: ReportManager constructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-ReportManager::ReportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher, LdapClient& Ldap )
+ReportManager::ReportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher, LdapClient& Ldap, ClientManager& clientManager )
 : model_( model )
 , simulationPublisher_( simulationPublisher )
 , ldap_( Ldap )
-, clientProfile_( 0 )
-, clientPublisher_( 0 )
+, clientManager_ ( clientManager )
 {
     // NOTHING
 }
@@ -129,8 +129,9 @@ void ReportManager::ReadUrl( xml::xistream& xis, Publisher_ABC& publisher )
 
     if( true /*type == "SITREP"*/ )
     {
-      dispatcher::Profile_ABC* profile = GetClientProfile();
-      dispatcher::ClientPublisher_ABC* target = GetClientPublisher();
+        
+        dispatcher::Profile_ABC* profile = clientManager_.GetClientProfile();
+        dispatcher::ClientPublisher_ABC* target = clientManager_.GetClientPublisher();
 
       if ( profile != 0 && target != 0 )
       {
@@ -412,44 +413,6 @@ dispatcher::SimulationPublisher_ABC& ReportManager::GetSimulationPublisher() con
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReportManager::GetClientProfile
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-dispatcher::Profile_ABC* ReportManager::GetClientProfile() const
-{
-  return clientProfile_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportManager::SetClientProfile
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-void ReportManager::SetClientProfile( dispatcher::Profile_ABC& profile )
-{
-  clientProfile_ = &profile;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportManager::GetClientPublisher
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-dispatcher::ClientPublisher_ABC* ReportManager::GetClientPublisher() const
-{
-    return clientPublisher_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportManager::SetClientPublisher
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-void ReportManager::SetClientPublisher( dispatcher::ClientPublisher_ABC& publisher )
-{
-    clientPublisher_ = &publisher;
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: ReportManager::CleanReceivedRapport
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
@@ -462,7 +425,6 @@ void ReportManager::CleanReceivedRapport()
   receivedRapports_.clear();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ReportManager::IsTakenIntoAccount
 // Created: SLG 2009-06-12
@@ -470,6 +432,15 @@ void ReportManager::CleanReceivedRapport()
 bool ReportManager::IsTakenIntoAccount( const std::string messageType )
 {
     return ldap_.IsTakenIntoAccount( messageType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportManager::GetClientPublisher
+// Created: SLG 2009-06-12
+// -----------------------------------------------------------------------------
+dispatcher::ClientPublisher_ABC& ReportManager::GetClientPublisher() const
+{
+    return *clientManager_.GetClientPublisher();
 }
 
 // -----------------------------------------------------------------------------

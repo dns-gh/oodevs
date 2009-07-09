@@ -158,7 +158,7 @@ void Sitrep::SerializeContent( xml::xostream& xos ) const
 void Sitrep::UpdateSimulation()
 {//@TODO share action with other report and call reportManager With push 
   dispatcher::SimulationPublisher_ABC& simPublisher = reportManager_.GetSimulationPublisher();
-  dispatcher::ClientPublisher_ABC& clientPublisher = *reportManager_.GetClientPublisher();
+  dispatcher::ClientPublisher_ABC& clientPublisher = reportManager_.GetClientPublisher();
 	unsigned int authorID = author_->GetId();
 	unsigned long authorSideID = reportManager_.GetModel().automats_.Find( authorID )->team_.GetId();
 	dispatcher::Agent* simAuthorAgent = reportManager_.GetModel().agents_.Find( authorID );

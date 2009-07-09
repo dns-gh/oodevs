@@ -42,6 +42,8 @@ namespace xmlia
   class Report_ABC;
   class Publisher_ABC;
   class LdapClient;
+  class XmliaPlugin;
+  class ClientManager;
 
 // =============================================================================
 /** @class  ReportManager
@@ -55,7 +57,7 @@ class ReportManager
 public:
     //! @name Constructors/Destructor
     //@{
-    ReportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher, LdapClient& Ldap );
+    ReportManager( dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulationPublisher, LdapClient& Ldap, ClientManager& clientManager );
     virtual ~ReportManager();
     //@}
 
@@ -63,10 +65,7 @@ public:
     //@{
     dispatcher::Model& GetModel() const;
     dispatcher::SimulationPublisher_ABC& GetSimulationPublisher() const;
-    dispatcher::Profile_ABC* GetClientProfile() const;
-    void SetClientProfile( dispatcher::Profile_ABC& profile );
-    dispatcher::ClientPublisher_ABC* GetClientPublisher() const;
-    void SetClientPublisher( dispatcher::ClientPublisher_ABC& clientPublisher );
+    dispatcher::ClientPublisher_ABC& GetClientPublisher() const;
     bool IsTakenIntoAccount( const std::string messageType );
     //@}
 
@@ -99,9 +98,8 @@ private:
     std::vector< Report_ABC* > receivedRapports_;
     dispatcher::Model& model_;
 	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
-    dispatcher::Profile_ABC* clientProfile_;
-    dispatcher::ClientPublisher_ABC* clientPublisher_;
     LdapClient& ldap_;
+    ClientManager& clientManager_;
     //@}
 };
 

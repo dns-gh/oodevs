@@ -12,6 +12,7 @@
 #include "ExtensionFactory.h"
 #include "Publisher.h"
 #include "LdapClient.h"
+#include "ClientManager.h"
 #include "ReportManager.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
@@ -42,8 +43,9 @@ XmliaPlugin::XmliaPlugin( dispatcher::Model& model,
     , clientPublisher_ ( 0 )
     , publisher_( new Publisher( xis ) ) 
     , simulation_( new Simulation() )
-    , ldap_ ( new LdapClient ())
-    , reportManager_( new ReportManager( model_, simulationPublisher_, *ldap_ ) )
+    , ldap_ ( new LdapClient() )
+    , clientManager_ ( new ClientManager() )
+    , reportManager_( new ReportManager( model_, simulationPublisher_, *ldap_, *clientManager_ ) )
     , extensionFactory_( new ExtensionFactory( *publisher_, *reportManager_, *simulation_, model_ ) )
     , nCptTick_(0)
 {
@@ -92,24 +94,8 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
           //HACK de TEST 
           if( true /*type == "SITREP"*/ )
           {
-              dispatcher::Profile_ABC* profile = GetClientProfile();
-              dispatcher::ClientPublisher_ABC* target = GetClientPublisher();
-
-              if ( profile != 0 && target != 0 )
-              {
-                  ASN1T_MsgsSimToClient msgToClient;
-
-                  msgToClient.msg.t = T_MsgsSimToClient_msg_msg_xmlia_text_message;
-                  ASN1T_MsgXmliaTextMessage report;
-                  msgToClient.msg.u.msg_xmlia_text_message = &report;
-
-                  std::string content ("TOTO!");
-                  std::string dest ("Supervisor");
-
-                  report.message = content.c_str();
-                  report.destinataire = dest.c_str();
-                  target->Send( msgToClient );
-              }
+              dispatcher::Profile_ABC* profile = clientManager_->GetClientProfile();
+              dispatcher::ClientPublisher_ABC* target = clientManager_->GetClientPublisher();
           }
           //$$ HACK de TEST 
 
@@ -146,15 +132,14 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: xmliaPlugin::NotifyClientAuthenticated
+// Name: XmliaPlugin::NotifyClientAuthenticated
 // Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
 {
-    reportManager_->SetClientPublisher( client );
-    reportManager_->SetClientProfile( profile );
-    SetClientPublisher( client );
-    SetClientProfile( profile );
+    clientManager_->NotifyClient( client, profile );
+    /*SetClientPublisher( client );
+    SetClientProfile( profile );*/
 }
 
 // -----------------------------------------------------------------------------
@@ -163,46 +148,5 @@ void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& cl
 // -----------------------------------------------------------------------------
 void XmliaPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client )
 {
-    // NOTHING
-}
-
-
-
-// Hack de test
-
-// -----------------------------------------------------------------------------
-// Name: ReportManager::GetClientProfile
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-dispatcher::Profile_ABC* XmliaPlugin::GetClientProfile() const
-{
-    return clientProfile_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportManager::SetClientProfile
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-void XmliaPlugin::SetClientProfile( dispatcher::Profile_ABC& profile )
-{
-    clientProfile_ = &profile;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportManager::GetClientProfile
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-dispatcher::ClientPublisher_ABC* XmliaPlugin::GetClientPublisher() const
-{
-    return clientPublisher_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportManager::SetClientProfile
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-void XmliaPlugin::SetClientPublisher( dispatcher::ClientPublisher_ABC& publisher )
-{
-    clientPublisher_ = &publisher;
+    clientManager_->NotifyClientLeft( client );
 }
