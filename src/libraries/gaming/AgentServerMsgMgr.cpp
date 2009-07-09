@@ -1464,6 +1464,14 @@ void AgentServerMsgMgr::OnReceiveMsgTextMessage( const ASN1T_MsgTextMessage& mes
     commands_.Receive( message.source.profile, message.target.profile, message.message );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgXmlia
+// Created: RPD 2009-07-12
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgXmlia  ( const ASN1T_MsgXmliaTextMessage& asnMsg )
+{
+       //commands_.Receive( message.source.profile, message.target.profile, message.message );
+}
 
 namespace
 {
@@ -1612,6 +1620,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
 
         case T_MsgsSimToClient_msg_msg_folk_creation                                  : OnReceiveMsgFolkCreation   ( *message.msg.u.msg_folk_creation ); break;
         case T_MsgsSimToClient_msg_msg_folk_graph_update                              : OnReceiveMsgFolkGraphUpdate( *message.msg.u.msg_folk_graph_update ); break;
+        case T_MsgsSimToClient_msg_msg_xmlia_text_message                              : OnReceiveMsgXmlia( *message.msg.u.msg_xmlia_text_message ); break;
 
         default:
             UnhandledMessage( message.msg.t );

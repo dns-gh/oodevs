@@ -55,6 +55,10 @@ public:
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     //@}
+    dispatcher::Profile_ABC* GetClientProfile() const;
+    void SetClientProfile( dispatcher::Profile_ABC& profile );
+    dispatcher::ClientPublisher_ABC* GetClientPublisher() const;
+    void SetClientPublisher( dispatcher::ClientPublisher_ABC& publisher );
 
 private:
     //! @name Copy/Assignment
@@ -71,7 +75,9 @@ private:
     //! @name Member data
     //@{
     dispatcher::Model& model_;
-	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
+    dispatcher::SimulationPublisher_ABC& simulationPublisher_;
+    dispatcher::Profile_ABC* clientProfile_;
+    dispatcher::ClientPublisher_ABC* clientPublisher_;
     std::auto_ptr< Publisher > publisher_;
     std::auto_ptr< Simulation > simulation_;
     std::auto_ptr< ReportManager > reportManager_;

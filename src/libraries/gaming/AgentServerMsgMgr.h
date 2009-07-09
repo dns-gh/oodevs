@@ -266,6 +266,10 @@ private:
     void OnReceiveMsgAarInformation( const ASN1T_MsgAarInformation& asnMsg );
     void OnReceiveMsgAarResult     ( const ASN1T_MsgPlotResult& asnMsg );
     void OnReceiveMsgAarIndicator  ( const ASN1T_MsgIndicator& asnMsg );
+
+    // XMLIA
+    void OnReceiveMsgXmlia  ( const ASN1T_MsgXmliaTextMessage& asnMsg );
+
     //@}
 
     //! @name Helpers
