@@ -202,12 +202,12 @@ void Sitrep::UpdateSimulation()
     dispatcher::Agent* simAgent = reportManager_.GetModel().agents_.Find( it->first );
     if ( simAgent != 0 )
     {
-      ASN1T_MsgsMessengerToClient asnMsg;
-      ASN1T_MsgIntelligenceCreation asnTmp;
+      ASN1T_MsgsPluginToClient asnMsg;
+      ASN1T_MsgPluginIntelligenceCreation asnTmp;
       ASN1T_CoordLatLong utm;
-      asnMsg.t              = T_MsgsMessengerToClient_msg_intelligence_creation;
+      asnMsg.msg.t              = T_MsgsPluginToClient_msg_plugin_intelligence_creation;
       asnTmp.oid = reportAgent->GetId();
-      asnMsg.u.msg_intelligence_creation = &asnTmp;
+      asnMsg.msg.u.plugin_intelligence_creation = &asnTmp;
       reportAgent->GetLocalization()->FillLatLong( utm );
       asnTmp.intelligence.name = reportAgent->GetName().c_str();
       asnTmp.intelligence.nature = "ENI";

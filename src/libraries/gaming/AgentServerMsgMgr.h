@@ -14,6 +14,7 @@
 #include "game_asn/Simulation.h"
 #include "game_asn/Messenger.h"
 #include "game_asn/Aar.h"
+#include "game_asn/Plugin.h"
 #include "game_asn/Messenger.h"
 #include "game_asn/Dispatcher.h"
 #include "game_asn/Replay.h"
@@ -77,6 +78,7 @@ private:
     void OnReceiveMsgAarToClient           ( const std::string& from, const ASN1T_MsgsAarToClient& message );
     void OnReceiveMsgMessengerToClient     ( const std::string& from, const ASN1T_MsgsMessengerToClient& message );
     void OnReceiveMsgDispatcherToClient    ( const std::string& from, const ASN1T_MsgsDispatcherToClient& message );
+    void OnReceiveMsgPluginToClient    ( const std::string& from, const ASN1T_MsgsPluginToClient& message );
 
     void OnReceiveMsgUnitVisionCones                       ( const ASN1T_MsgUnitVisionCones& message );
     void OnReceiveMsgUnitInterVisibility                   ( const ASN1T_MsgUnitDetection& message );
@@ -267,8 +269,9 @@ private:
     void OnReceiveMsgAarResult     ( const ASN1T_MsgPlotResult& asnMsg );
     void OnReceiveMsgAarIndicator  ( const ASN1T_MsgIndicator& asnMsg );
 
-    // XMLIA
-    void OnReceiveMsgXmlia  ( const ASN1T_MsgXmliaTextMessage& asnMsg );
+    // Plugin
+    void OnReceiveMsgPluginTextMessage  ( const ASN1T_MsgPluginTextMessage& asnMsg );
+    void OnReceiveMsgPluginIntelligenceCreation  ( const ASN1T_MsgPluginIntelligenceCreation& asnMsg );
 
     //@}
 

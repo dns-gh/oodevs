@@ -29,6 +29,7 @@
 #include "xmlia_plugin/NBCReport.h"
 #include "xmlia_plugin/Opord.h"
 #include "xmlia_plugin/Sitrep.h"
+#include "game_asn/plugin.h"
 #include "xmlia_plugin/Point.h"
 
 #include "boost/bind.hpp"
@@ -135,13 +136,11 @@ void ReportManager::ReadUrl( xml::xistream& xis, Publisher_ABC& publisher )
 
       if ( profile != 0 && target != 0 )
       {
-        ASN1T_MsgsMessengerToClient answer;
-        answer.t = T_MsgsMessengerToClient_msg_text_message;
-        ASN1T_MsgTextMessage asnMessage;
-        answer.u.msg_text_message = &asnMessage;
+        ASN1T_MsgsPluginToClient answer;
+        answer.msg.t = T_MsgsPluginToClient_msg_plugin_text_message;
+        ASN1T_MsgPluginTextMessage asnMessage;
+        answer.msg.u.plugin_text_message = &asnMessage;
 
-        asnMessage.source.profile = ""; //profile->GetName().c_str();
-        asnMessage.target.profile = ""; //profile->GetName().c_str();
         std::string xmlContent;
         std::string strTmp (message);
         xmlContent = strTmp.substr(0, 64) + " [...]";

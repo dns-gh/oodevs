@@ -44,6 +44,7 @@ public:
     virtual void Send( const ASN1T_MsgsAarToClient& msg );
     virtual void Send( const ASN1T_MsgsMessengerToClient& msg );
     virtual void Send( const ASN1T_MsgsDispatcherToClient& msg );
+    virtual void Send( const ASN1T_MsgsPluginToClient& msg );
     //@}
 
     //! @name Accessors

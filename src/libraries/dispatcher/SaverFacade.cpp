@@ -120,6 +120,7 @@ namespace
         virtual void Send( const ASN1T_MsgsAarToClient& ) {}
         virtual void Send( const ASN1T_MsgsMessengerToClient& ) {}
         virtual void Send( const ASN1T_MsgsDispatcherToClient& ) {}
+        virtual void Send( const ASN1T_MsgsPluginToClient& ) {}
         virtual std::string GetEndpoint() const { return ""; }
         Model* model_;
         tools::OutputBinaryWrapper* output_;

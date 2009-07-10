@@ -16,6 +16,7 @@
 #include "game_asn/AarSenders.h"
 #include "game_asn/MessengerSenders.h"
 #include "game_asn/DispatcherSenders.h"
+#include "game_asn/Plugin.h"
 
 namespace dispatcher
 {
@@ -44,6 +45,7 @@ public:
     virtual void Send( const ASN1T_MsgsAarToClient&            msg ) = 0;
     virtual void Send( const ASN1T_MsgsMessengerToClient&      msg ) = 0;
     virtual void Send( const ASN1T_MsgsDispatcherToClient&     msg ) = 0;
+    virtual void Send( const ASN1T_MsgsPluginToClient&     msg ) = 0;
     //@}
 
     //! @name Accessors

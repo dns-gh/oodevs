@@ -18,6 +18,7 @@
 #include "game_asn/MessengerSenders.h"
 #include "game_asn/AuthenticationSenders.h"
 #include "game_asn/AarSenders.h"
+#include "game_asn/PluginSenders.h"
 #include "Tools.h"
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
@@ -79,6 +80,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, Message
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAarToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgMessengerToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgDispatcherToClient );
+    dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgPluginToClient );
 }
 
 //-----------------------------------------------------------------------------
@@ -1465,13 +1467,23 @@ void AgentServerMsgMgr::OnReceiveMsgTextMessage( const ASN1T_MsgTextMessage& mes
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgXmlia
+// Name: AgentServerMsgMgr::OnReceiveMsgXmliaTextMessage
 // Created: RPD 2009-07-12
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgXmlia  ( const ASN1T_MsgXmliaTextMessage& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPluginTextMessage  ( const ASN1T_MsgPluginTextMessage& asnMsg )
 {
        //commands_.Receive( message.source.profile, message.target.profile, message.message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgXmliaTextMessage
+// Created: RPD 2009-07-12
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPluginIntelligenceCreation  ( const ASN1T_MsgPluginIntelligenceCreation& asnMsg )
+{
+    //commands_.Receive( message.source.profile, message.target.profile, message.message );
+}
+
 
 namespace
 {
@@ -1620,7 +1632,6 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
 
         case T_MsgsSimToClient_msg_msg_folk_creation                                  : OnReceiveMsgFolkCreation   ( *message.msg.u.msg_folk_creation ); break;
         case T_MsgsSimToClient_msg_msg_folk_graph_update                              : OnReceiveMsgFolkGraphUpdate( *message.msg.u.msg_folk_graph_update ); break;
-        case T_MsgsSimToClient_msg_msg_xmlia_text_message                              : OnReceiveMsgXmlia( *message.msg.u.msg_xmlia_text_message ); break;
 
         default:
             UnhandledMessage( message.msg.t );
@@ -1744,6 +1755,22 @@ void AgentServerMsgMgr::OnReceiveMsgDispatcherToClient( const std::string& , con
     case T_MsgsDispatcherToClient_msg_services_description: services_.Update( *message.u.msg_services_description ); break;
     default:
         UnhandledMessage( message.t );
+    }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPluginToClient
+// Created: RPD 2009-08-13
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPluginToClient( const std::string& , const ASN1T_MsgsPluginToClient& message )
+{
+    switch( message.msg.t )
+    {
+    case T_MsgsPluginToClient_msg_plugin_text_message:       OnReceiveMsgPluginTextMessage( *message.msg.u.plugin_text_message ); break;
+    case T_MsgsPluginToClient_msg_plugin_intelligence_creation:       OnReceiveMsgPluginIntelligenceCreation( *message.msg.u.plugin_intelligence_creation ); break;
+    default:
+        UnhandledMessage( message.msg.t );
     }
 }
 

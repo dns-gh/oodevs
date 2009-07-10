@@ -18,6 +18,7 @@
 #include "game_asn/AuthenticationSenders.h"
 #include "game_asn/ReplaySenders.h"
 #include "game_asn/AarSenders.h"
+#include "game_asn/PluginSenders.h"
 #include "game_asn/MessengerSenders.h"
 #include "game_asn/DispatcherSenders.h"
 
@@ -94,6 +95,15 @@ void Client::Send( const ASN1T_MsgsMessengerToClient& msg )
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
 void Client::Send( const ASN1T_MsgsDispatcherToClient& msg )
+{
+    sender_.Send( endpoint_, msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Send
+// Created: RPD 2009-08-13
+// -----------------------------------------------------------------------------
+void Client::Send( const ASN1T_MsgsPluginToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }

@@ -212,6 +212,23 @@ void ClientsNetworker::Send( const ASN1T_MsgsDispatcherToClient& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ClientsNetworker::Send
+// Created: RPD 2009-08-13
+// -----------------------------------------------------------------------------
+void ClientsNetworker::Send( const ASN1T_MsgsPluginToClient& msg )
+{
+    try
+    {
+        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+            it->second->Send( msg );
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ClientsNetworker::GetProfile
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
