@@ -177,7 +177,7 @@
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_EO_AcquerirObjectifs" dia-type="T_Mission_Pion_ASS_EO_AcquerirObjectifs" id="33" name="ASS EO Acquerir Objectifs">
       <parameter dia-name="zoneAObserver_" name="Zone a observer" optional="false" type="Polygon"/>
-      <parameter dia-name="uniteAAppuyer_" name="Unite a appuyer" optional="false" type="Automate"/>
+      <parameter dia-name="automateAAppuyer_" name="Unite a appuyer" optional="false" type="Automate"/>
       <parameter dia-name="categories_" name="Categories" optional="false" type="NatureAtlas"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_EOP_AcquerirObjectifs" dia-type="T_Mission_Pion_ASS_EOP_AcquerirObjectifs" id="34" name="ASS EOP Acquerir Objectifs">
@@ -331,7 +331,7 @@
       <parameter dia-name="travaux_" name="Travaux" optional="false" type="GenObjectList"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReprendreTravaux" dia-type="T_Mission_Pion_GEN_ReprendreTravaux" id="78" name="GEN Reprendre Travaux">
-      <parameter dia-name="travaux_" name="Travaux" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="travail_" name="Travaux" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_AmeliorerMobilite" dia-type="T_Mission_Pion_GEN_AmeliorerMobilite" id="79" name="GEN Ameliorer Mobilite">
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
@@ -377,7 +377,7 @@
       <parameter dia-name="preparerTerrain_" name="Preparer terrain" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Semparer" dia-type="T_Mission_Pion_INF_Semparer" id="92" name="INF Semparer">
-      <parameter dia-name="objectif_" name="Objectif" optional="false" type="Point"/>
+      <parameter dia-name="pointObjectif_" name="Objectif" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_PrendrePreciserContact" dia-type="T_Mission_Pion_INF_PrendrePreciserContact" id="93" name="INF Prendre Preciser Contact">
       <parameter dia-name="ennemi_" name="Ennemi" optional="false" type="AgentKnowledge"/>
@@ -455,7 +455,7 @@
       </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_DetruireParCoupDeMain" dia-type="T_Mission_Pion_INF_DetruireParCoupDeMain" id="101" name="INF Detruire Par Coup De Main">
-      <parameter dia-name="objectif_" name="Objectif" optional="false" type="Point"/>
+      <parameter dia-name="pointObjectif_" name="Objectif" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="heureDestruction_" name="Heure destruction" optional="false" type="Datetime"/>
       <parameter dia-name="natureDestruction_" name="Nature destruction" optional="false" type="Enumeration">
@@ -1411,7 +1411,7 @@
     <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AppliquerFeux" id="358" name="Pion Appliquer Feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="nbIT_" name="Nb IT" optional="false" type="Numeric"/>
-      <parameter dia-name="cible_" name="Cible" optional="false" type="Point"/>
+      <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="359" name="Pion Executer Tir"/>
     <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Emettre" id="360" name="Pion Emettre"/>
