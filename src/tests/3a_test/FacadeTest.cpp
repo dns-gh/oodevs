@@ -65,6 +65,7 @@ namespace
         };
         virtual void Send( const ASN1T_MsgsMessengerToClient& msg ) { }
         virtual void Send( const ASN1T_MsgsDispatcherToClient& msg ) { }
+        virtual void Send(const ASN1T_MsgsPluginToClient & msg ) { }
         virtual std::string GetEndpoint() const { return "";}
 
         mockpp::ChainableMockMethod< void, double > Send_mocker;
