@@ -11,6 +11,7 @@
 #define __MIL_ObjectLoader_h_
 
 #include "MIL_ObjectTypeHandler_ABC.h"
+#include "game_asn/generated/Object.h"
 #include <boost/shared_ptr.hpp>
 
 namespace xml

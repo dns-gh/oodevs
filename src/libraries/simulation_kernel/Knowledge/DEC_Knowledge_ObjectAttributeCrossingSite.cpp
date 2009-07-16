@@ -81,7 +81,7 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::serialize( Archive& file, const 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeCrossingSite::Register( DEC_Knowledge_Object& knObject )
 {
-    knObject.Attach( *this );
+    knObject.AttachExtension( *this );
 }
 
 // =============================================================================

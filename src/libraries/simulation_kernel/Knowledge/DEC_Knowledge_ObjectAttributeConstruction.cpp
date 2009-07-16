@@ -74,7 +74,7 @@ void DEC_Knowledge_ObjectAttributeConstruction::serialize( Archive& file, const 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeConstruction::Register( DEC_Knowledge_Object& knObject )
 {
-    knObject.Attach( *this );
+    knObject.AttachExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

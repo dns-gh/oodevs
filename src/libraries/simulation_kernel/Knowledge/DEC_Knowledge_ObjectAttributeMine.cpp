@@ -79,7 +79,7 @@ void DEC_Knowledge_ObjectAttributeMine::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMine::Register( DEC_Knowledge_Object& knObject )
 {
-    knObject.Attach( *this );
+    knObject.AttachExtension( *this );
 }
 
 

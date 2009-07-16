@@ -50,7 +50,7 @@ void DEC_Knowledge_ObjectAttributeInputToxicCloud::serialize( Archive&, const ui
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeInputToxicCloud::Register( DEC_Knowledge_Object& knObject )
 {
-    knObject.Attach( *this );
+    knObject.AttachExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

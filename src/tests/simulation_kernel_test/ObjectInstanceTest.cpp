@@ -13,7 +13,6 @@
 struct ASN1T_MagicActionCreateObject;
 struct ASN1T_ObjectAttributes;
 struct ASN1T_Location;
-enum ASN1T_EnumObjectErrorCode;
 
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/Object.h"

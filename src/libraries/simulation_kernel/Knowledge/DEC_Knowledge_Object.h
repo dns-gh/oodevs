@@ -104,6 +104,7 @@ public:
     //! @name Extension
     //@{
     template< typename Extension >  void              Attach( Extension& extension );
+    template< typename Extension >  void              AttachExtension( Extension& extension );
     template< typename Extension >  const Extension*  Retrieve() const;
     //@}
     
@@ -212,6 +213,16 @@ template< typename Extension >
 void DEC_Knowledge_Object::Attach( Extension& extension )
 {
     attributes_.push_back( &extension );
+    tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Attach( extension );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Extension >  void DEC_Knowledge_Object::AttachExtension
+// Created: LDC 2009-07-16
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void DEC_Knowledge_Object::AttachExtension( Extension& extension )
+{
     tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Attach( extension );
 }
 

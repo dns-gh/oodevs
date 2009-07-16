@@ -410,7 +410,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
 }
 
 // -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
+// Name: VerifyObjectCapacity_Interaction_Mine
 // Created: SBO 2009-06-08
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Mine )

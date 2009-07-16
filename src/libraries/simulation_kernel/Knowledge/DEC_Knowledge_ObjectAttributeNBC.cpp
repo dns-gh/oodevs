@@ -80,7 +80,7 @@ void DEC_Knowledge_ObjectAttributeNBC::save( MIL_CheckPointOutArchive& file, con
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeNBC::Register( DEC_Knowledge_Object& /*knObject*/ )
 {
-//    knObject.Attach( *this );
+//    knObject.AttachExtension( *this );
 }
 
 // =============================================================================

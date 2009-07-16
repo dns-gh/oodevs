@@ -120,7 +120,7 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::save( MIL_CheckPointOutArchi
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMedicalTreatment::Register( DEC_Knowledge_Object& knObject )
 {
-    knObject.Attach( *this );
+    knObject.AttachExtension( *this );
 }
 
 

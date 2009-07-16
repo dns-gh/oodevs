@@ -89,7 +89,7 @@ void DEC_Knowledge_ObjectAttributeFire::save( MIL_CheckPointOutArchive& file, co
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeFire::Register( DEC_Knowledge_Object& knObject )
 {
-    knObject.Attach( *this );
+    knObject.AttachExtension( *this );
 }
 
 // =============================================================================

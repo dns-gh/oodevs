@@ -86,7 +86,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::serialize( Archive& file, const u
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::Register( DEC_Knowledge_Object& knObject )
 {
-    knObject.Attach( *this );
+    knObject.AttachExtension( *this );
 }
 
 // =============================================================================

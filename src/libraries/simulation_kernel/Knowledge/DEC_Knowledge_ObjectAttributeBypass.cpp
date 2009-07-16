@@ -72,7 +72,7 @@ void DEC_Knowledge_ObjectAttributeBypass::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeBypass::Register( DEC_Knowledge_Object& knObject )
 {
-    knObject.Attach( *this );
+    knObject.AttachExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

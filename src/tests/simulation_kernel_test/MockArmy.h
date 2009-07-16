@@ -31,7 +31,7 @@ public:
     explicit MockArmy() 
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockArmy" ), 0 )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetNameShadow )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetID )
+        , GetID_mocker                      ( "GetID", this )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetKnowledgeShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( RegisterObject )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( UnregisterObject )        
@@ -60,7 +60,12 @@ public:
         throw;
     }
 
-    MOCKPP_CONST_CHAINABLE0          ( MockArmy, uint, GetID );
+    virtual uint GetID() const
+    {
+        return GetID_mocker.forward();
+    }
+
+    mockpp::ChainableMockMethod< uint > GetID_mocker;
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockArmy, const std::string*, GetNameShadow, std::string, );   
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockArmy, DEC_KnowledgeBlackBoard_Army*, GetKnowledgeShadow, DEC_KnowledgeBlackBoard_Army, );   
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, RegisterObject, MIL_Object_ABC&, , MIL_Object_ABC );   

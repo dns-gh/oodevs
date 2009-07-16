@@ -97,8 +97,6 @@ void MineAttribute::load( MIL_CheckPointInArchive& ar, const uint )
        >> nCurrentNbrDotation_
        >> rMiningPercentage_;
     dotation_ = PHY_DotationType::FindDotationCategory( dotation );
-    if ( !dotation_ )
-       throw std::runtime_error( "Unknown dotation category - " + dotation + " - " ); 
 }
     
 // -----------------------------------------------------------------------------

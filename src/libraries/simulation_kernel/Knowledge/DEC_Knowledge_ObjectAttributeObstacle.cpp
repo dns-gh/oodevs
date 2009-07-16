@@ -74,7 +74,7 @@ void DEC_Knowledge_ObjectAttributeObstacle::serialize( Archive& file, const uint
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeObstacle::Register( DEC_Knowledge_Object& knObject )
 {
-    knObject.Attach( *this );
+    knObject.AttachExtension( *this );
 }
 
 // =============================================================================
