@@ -349,6 +349,8 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << pCheckPointManager_
 //         << pAgentServer_         // moi-même ( static )
 //         << pFederate_            // reloadé à la main ( cf. MIL_AgentServer::Initialize )
+         << nInitialRealTime_         
+         << nRealTime_
     ;
 }
 
@@ -374,6 +376,8 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> pCheckPointManager_
 //         >> pAgentServer_
 //         >> pFederate_
+         >> nInitialRealTime_ 
+         >> nRealTime_
     ;
 
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
