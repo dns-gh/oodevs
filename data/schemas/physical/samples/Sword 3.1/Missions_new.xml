@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<missions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<missions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\Missions.xsd">
 	<units>
 		<mission dia-behavior="MIS_Pion_LOG_SeDeployer" dia-type="T_Mission_Pion_LOG_SeDeployer" id="1" name="LOG Se Deployer">
+			<descriptions>
+				<doctrine><![CDATA[Doctine description]]></doctrine>
+				<usage><![CDATA[Usage description]]></usage>
+			</descriptions>
 			<parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
 		</mission>
 		<mission dia-behavior="MIS_Pion_LOG_Renforcer" dia-type="T_Mission_Pion_LOG_Renforcer" id="2" name="LOG Renforcer">

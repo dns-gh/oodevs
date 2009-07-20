@@ -3,77 +3,79 @@
 	<xs:element name="missions">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="units" type="T_units_pop"/>
-				<xs:element name="automats" type="T_automat"/>
-				<xs:element name="populations" type="T_units_pop"/>
-				<xs:element name="fragorders" type="T_frags"/>
+				<xs:element name="units" type="T_SimpleMissions"/>
+				<xs:element name="automats" type="T_AutomatMissions"/>
+				<xs:element name="populations" type="T_SimpleMissions"/>
+				<xs:element name="fragorders" type="T_FragOrders"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-	<xs:complexType name="T_units_pop">
+	<xs:complexType name="T_Order" abstract="true">
 		<xs:sequence>
-			<xs:element name="mission" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="descriptions" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="T_param"/>
+						<xs:element name="doctrine" type="xs:string" minOccurs="0"/>
+						<xs:element name="usage" type="xs:string" minOccurs="0"/>
 					</xs:sequence>
-					<xs:attribute name="dia-behavior" use="required" type="xs:string"/>
-					<xs:attribute name="dia-type" use="required" type="xs:string"/>
-					<xs:attribute name="id" use="required" type="xs:integer"/>
-					<xs:attribute name="name" use="required" type="xs:string"/>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="parameter" type="T_Parameter" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
+		<xs:attribute name="dia-type" type="xs:string" use="required"/>
+		<xs:attribute name="id" type="xs:integer" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
-	
-	<xs:complexType name="T_automat">
+	<xs:complexType name="T_SimpleMissions">
 		<xs:sequence>
-			<xs:element name="mission" minOccurs="0" maxOccurs="unbounded">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="T_param"/>
-					</xs:sequence>
-					<xs:attribute name="cdt-dia-behavior" use="required" type="xs:string"/>
-					<xs:attribute name="dia-type" use="required" type="xs:string"/>
-					<xs:attribute name="id" use="required" type="xs:integer"/>
-					<xs:attribute name="mrt-dia-behavior" use="required" type="xs:string"/>
-					<xs:attribute name="name" use="required" type="xs:string"/>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="mission" minOccurs="0" maxOccurs="unbounded" type="T_SimpleMission"/>
 		</xs:sequence>
 	</xs:complexType>
-	
-	<xs:complexType name="T_frags">
+	<xs:complexType name="T_SimpleMission">
+		<xs:complexContent>
+			<xs:extension base="T_Order">
+				<xs:attribute name="dia-behavior" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="T_AutomatMissions">
 		<xs:sequence>
-			<xs:element name="fragorder" minOccurs="0" maxOccurs="unbounded">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="T_param"/>
-					</xs:sequence>
-					<xs:attribute name="available-for-all-mission" use="required" type="xs:boolean"/>
-					<xs:attribute name="available-without-mission" use="required" type="xs:boolean"/>
-					<xs:attribute name="dia-type" use="required" type="xs:string"/>
-					<xs:attribute name="id" use="required" type="xs:integer"/>
-					<xs:attribute name="name" use="required" type="xs:string"/>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="mission" minOccurs="0" maxOccurs="unbounded" type="T_AutomatMission"/>
 		</xs:sequence>
 	</xs:complexType>
-	
-	<xs:complexType name="T_param">
+	<xs:complexType name="T_AutomatMission">
+		<xs:complexContent>
+			<xs:extension base="T_Order">
+				<xs:attribute name="cdt-dia-behavior" type="xs:string" use="required"/>
+				<xs:attribute name="mrt-dia-behavior" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="T_FragOrders">
+		<xs:sequence>
+			<xs:element name="fragorder" minOccurs="0" maxOccurs="unbounded" type="T_FragOrder"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_FragOrder">
+		<xs:complexContent>
+			<xs:extension base="T_Order">
+				<xs:attribute name="available-for-all-mission" type="xs:boolean" use="required"/>
+				<xs:attribute name="available-without-mission" type="xs:boolean" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="T_Parameter">
 		<xs:sequence>
 			<xs:element name="value" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
-					<xs:attribute name="id" use="required" type="xs:integer"/>
-					<xs:attribute name="name" use="required" type="xs:string"/>
+					<xs:attribute name="id" type="xs:integer" use="required"/>
+					<xs:attribute name="name" type="xs:string" use="required"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
-		<xs:attribute name="dia-name" use="required" type="xs:string"/>
-		<xs:attribute name="name" use="required" type="xs:string"/>
-		<xs:attribute name="optional" use="required" type="xs:boolean"/>
-		<xs:attribute name="type" use="required" type="xs:string"/>
+		<xs:attribute name="dia-name" type="xs:string" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="optional" type="xs:boolean" use="required"/>
+		<xs:attribute name="type" type="xs:string" use="required"/>
 	</xs:complexType>
-	
 </xs:schema>
