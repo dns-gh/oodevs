@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="profiles">
+		<xs:annotation>
+			<xs:documentation>Root element, defines a list of profiles.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="profile" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="T_EntityAccessRight">
+		<xs:annotation>
+			<xs:documentation>Defines access for an entity.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+			<xs:annotation>
+				<xs:documentation>Defines the identifier of the entity for which to define access rights.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="T_AccessRights">
+		<xs:annotation>
+			<xs:documentation>Defines a list of access rights to exercise units.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="side" type="T_EntityAccessRight" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Defines access rights for a side.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="formation" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Defines access for a formation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="automat" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Defines access for an automat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="population" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Defines access for a population.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="profile">
+		<xs:annotation>
+			<xs:documentation>Defines profile information and access rights.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="rights">
+					<xs:annotation>
+						<xs:documentation>Defines access rights over exercise units for profile.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="readonly" type="T_AccessRights">
+								<xs:annotation>
+									<xs:documentation>Defines read only access to exercise units (user can see but not control units).</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="readwrite" type="T_AccessRights">
+								<xs:annotation>
+									<xs:documentation>Defines read write access to exercise units (user can control units).</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:ID" use="required">
+				<xs:annotation>
+					<xs:documentation>Defines the name of the profile, used to log in. Must be unique.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="password" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Defines the password to be used to log in using this profile.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="supervision" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation>Grants access to supervision operations for this profile.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
