@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 sp2 U (http://www.altova.com) by  () -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="orbat">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="sides">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="side" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="communication">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="knowledge-group" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="id" type="xs:integer" use="required"/>
+															<xs:attribute name="name" use="required"/>
+															<xs:attribute name="type" type="xs:string" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="logistic">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="automat" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="subordinate" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:choice minOccurs="0">
+																			<xs:element name="quotas" type="dotationsType"/>
+																		</xs:choice>
+																		<xs:attribute name="id" use="required"/>
+																		<xs:attribute name="link" use="required"/>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="id" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="objects">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="object" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:all>
+																<xs:element name="shape" type="shapeType"/>
+																<xs:element name="specific-attributes" minOccurs="0">
+																	<xs:complexType>
+																		<xs:choice>
+																			<xs:element name="tc2">
+																				<xs:complexType>
+																					<xs:attribute name="idref"/>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:sequence>
+																				<xs:element name="security-area" type="shapeType"/>
+																				<xs:element name="danger"/>
+																				<xs:element name="nbc-agents">
+																					<xs:complexType>
+																						<xs:sequence>
+																							<xs:element name="agent">
+																								<xs:complexType>
+																									<xs:attribute name="type"/>
+																								</xs:complexType>
+																							</xs:element>
+																						</xs:sequence>
+																					</xs:complexType>
+																				</xs:element>
+																			</xs:sequence>
+																			<xs:sequence>
+																				<xs:element name="activity-time"/>
+																				<xs:element name="density"/>
+																			</xs:sequence>
+																		</xs:choice>
+																	</xs:complexType>
+																</xs:element>
+															</xs:all>
+															<xs:attribute name="obstacle-type"/>
+															<xs:attribute name="name"/>
+															<xs:attribute name="id"/>
+															<xs:attribute name="type"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="populations">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="population" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="id"/>
+															<xs:attribute name="type"/>
+															<xs:attribute name="name"/>
+															<xs:attribute name="position"/>
+															<xs:attribute name="humans"/>
+															<xs:attribute name="attitude"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="tactical">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="formation" type="formationType"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+									<xs:attribute name="id" type="xs:integer" use="required"/>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="type" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="diplomacies">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="side" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="relationship" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="side" use="required"/>
+												<xs:attribute name="diplomacy" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="shapeType">
+		<xs:sequence>
+			<xs:element name="points">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="point" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="type"/>
+	</xs:complexType>
+	<xs:complexType name="dotationsType">
+		<xs:sequence>
+			<xs:element name="dotation">
+				<xs:complexType>
+					<xs:attribute name="name" use="required"/>
+					<xs:attribute name="quantity" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="formationType">
+		<xs:sequence>
+			<xs:element name="automat" type="automatType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="formation" type="formationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="intelligence" type="intelligenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:integer" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+		<xs:attribute name="level" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="automatType">
+		<xs:sequence>
+			<xs:element name="unit" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="equipments" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="equipment">
+										<xs:complexType>
+											<xs:attribute name="type"/>
+											<xs:attribute name="available"/>
+											<xs:attribute name="unavailable"/>
+											<xs:attribute name="fixable"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="human-factors" minOccurs="0">
+							<xs:complexType>
+								<xs:all>
+									<xs:element name="tiredness"/>
+									<xs:element name="morale"/>
+									<xs:element name="experience"/>
+								</xs:all>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="humans" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="human">
+										<xs:complexType>
+											<xs:attribute name="state"/>
+											<xs:attribute name="officer"/>
+											<xs:attribute name="noncommissioned-officer"/>
+											<xs:attribute name="private"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="stocks" type="dotationsType" minOccurs="0"/>
+						<xs:element name="dotations" type="dotationsType" minOccurs="0"/>
+					</xs:all>
+					<xs:attribute name="type" use="required"/>
+					<xs:attribute name="id" use="required"/>
+					<xs:attribute name="name" use="required"/>
+					<xs:attribute name="position" use="required"/>
+					<xs:attribute name="command-post" type="xs:boolean"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="automat" type="automatType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="intelligence" type="intelligenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="type" use="required"/>
+		<xs:attribute name="id" use="required"/>
+		<xs:attribute name="name" use="required"/>
+		<xs:attribute name="knowledge-group" use="required"/>
+		<xs:attribute name="engaged" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="tacticalLineType">
+		<xs:sequence>
+			<xs:element name="point" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="intelligenceType">
+		<xs:attribute name="id" use="required"/>
+		<xs:attribute name="name" use="required"/>
+		<xs:attribute name="embarked" use="required"/>
+		<xs:attribute name="karma" use="required"/>
+		<xs:attribute name="level" use="required"/>
+		<xs:attribute name="nature" use="required"/>
+		<xs:attribute name="position" use="required"/>
+	</xs:complexType>
+</xs:schema>
