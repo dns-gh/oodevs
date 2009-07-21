@@ -114,9 +114,9 @@ void DEC_PerceptionFunctions::EnableRecognitionPoint( DIA_Call_ABC& call, MIL_Ag
     assert( pCenter );
 
     const MT_Float rSize        = MIL_Tools::ConvertMeterToSim   ( call.GetParameter( 1 ).ToFloat() );
-    const MT_Float rGrowthSpeed = MIL_Tools::ConvertSpeedMosToSim( call.GetParameters().GetParameters().size() >= 4 ? call.GetParameter( 3 ).ToFloat() : 5. );
+    const MT_Float rGrowthSpeed = MIL_Tools::ConvertSpeedMosToSim( call.GetParameter( 2 ).ToFloat() );
 
-    void* pReturnCode = callerAgent.GetRole< PHY_RolePion_Perceiver >().EnableRecoPoint( *pCenter, rSize, rGrowthSpeed, call.GetParameter( 2 ) );
+    void* pReturnCode = callerAgent.GetRole< PHY_RolePion_Perceiver >().EnableRecoPoint( *pCenter, rSize, rGrowthSpeed, call.GetParameter( 3 ) );
     call.GetResult().SetValue( pReturnCode, &DEC_Tools::GetTypePerceptionPoint() );
 }
 
