@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<xs:simpleType name="T_ShortIsoDate">
 		<xs:annotation>
-			<xs:documentation>ISO 8601 date time short format (YYYYMMDDTHHmmSS).</xs:documentation>
+			<xs:documentation xml:lang="en">ISO 8601 date time short format (YYYYMMDDTHHmmSS).</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="\d{8}T\d{6}"/>
@@ -10,7 +10,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="T_LightingKind">
 		<xs:annotation>
-			<xs:documentation>Defines the kind of lighting used for the exercise.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines the kind of lighting used for the exercise.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="JourSansNuage"/>
@@ -28,7 +28,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="T_PrecipitationKind">
 		<xs:annotation>
-			<xs:documentation>Defines the kind of precipitation used for the exercise.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines the kind of precipitation used for the exercise.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="PasDePrecipitation"/>
@@ -40,9 +40,9 @@
 			<xs:enumeration value="Fumigene"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="T_SimulationTime">	
+	<xs:simpleType name="T_SimulationTime">
 		<xs:annotation>
-			<xs:documentation>Defines a specific hour format used for specifying sunset and sunrise times.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines a specific hour format used for specifying sunset and sunrise times.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="\d{1,2}h\d{1,2}m\d{1,2}s"/>
@@ -50,7 +50,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="T_Direction">
 		<xs:annotation>
-			<xs:documentation>Defines a direction in degree angle clockwise starting from North.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines a direction in degree angle clockwise starting from North.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:nonNegativeInteger">
 			<xs:minInclusive value="0"/>
@@ -59,27 +59,26 @@
 	</xs:simpleType>
 	<xs:simpleType name="T_UtmCoordinates">
 		<xs:annotation>
-			<xs:documentation>Defines Universal Transverse Mercator geographic coordinates.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines Universal Transverse Mercator geographic coordinates.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="\d{2}[A-Z]{3}\d{8}(\d{2})?"/>
 		</xs:restriction>
 	</xs:simpleType>
-
 	<xs:element name="weather">
 		<xs:annotation>
-			<xs:documentation>Root element, defines weather and ephemerides data.</xs:documentation>
+			<xs:documentation xml:lang="en">Root element, defines weather and ephemerides data.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="exercise-date">
 					<xs:annotation>
-						<xs:documentation>Defines the date and time at which the exercise takes place (when the simulation is started).</xs:documentation>
+						<xs:documentation xml:lang="en">Defines the date and time at which the exercise takes place (when the simulation is started).</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:attribute name="value" type="T_ShortIsoDate" use="required">
 							<xs:annotation>
-								<xs:documentation>Defines the starting date and time of the simulation.</xs:documentation>
+								<xs:documentation xml:lang="en">Defines the starting date and time of the simulation.</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
 					</xs:complexType>
@@ -90,116 +89,112 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
 	<xs:element name="ephemerides">
 		<xs:annotation>
-			<xs:documentation>Defines ephemerides information.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines ephemerides information.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:attribute name="moon" type="T_LightingKind" use="required">
 				<xs:annotation>
-					<xs:documentation>Defines the type of moon to be used for the exercise.</xs:documentation>
+					<xs:documentation xml:lang="en">Defines the type of moon to be used for the exercise.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="sunrise" type="T_SimulationTime" use="required">
 				<xs:annotation>
-					<xs:documentation>Defines the time of sunrise for the exercise.</xs:documentation>
+					<xs:documentation xml:lang="en">Defines the time of sunrise for the exercise.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="sunset" type="T_SimulationTime" use="required">
 				<xs:annotation>
-					<xs:documentation>Defines the time of sunset for the exercise.</xs:documentation>
+					<xs:documentation xml:lang="en">Defines the time of sunset for the exercise.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
-	
 	<xs:complexType name="T_Weather">
 		<xs:annotation>
-			<xs:documentation>Defines weather conditions.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines weather conditions.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="wind">
 				<xs:annotation>
-					<xs:documentation>Defines wind conditions.</xs:documentation>
+					<xs:documentation xml:lang="en">Defines wind conditions.</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:attribute name="direction" type="T_Direction" use="required">
 						<xs:annotation>
-							<xs:documentation>Defines the wind direction.</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the wind direction.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 					<xs:attribute name="speed" type="xs:float" use="required">
 						<xs:annotation>
-							<xs:documentation>Defines the wind speed.</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the wind speed.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="cloud-cover">
 				<xs:annotation>
-					<xs:documentation>Defines the cloud conditions.</xs:documentation>
+					<xs:documentation xml:lang="en">Defines the cloud conditions.</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:attribute name="ceiling" type="xs:nonNegativeInteger" use="required">
 						<xs:annotation>
-							<xs:documentation>Defines the height of the cloud ceiling in meters.</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the height of the cloud ceiling in meters.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 					<xs:attribute name="density" type="xs:float" use="required">
 						<xs:annotation>
-							<xs:documentation>Defines the density of clouds ($$$ unit?).</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the density of clouds ($$$ unit?).</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 					<xs:attribute name="floor" type="xs:nonNegativeInteger" use="required">
 						<xs:annotation>
-							<xs:documentation>Defines the height of the cloud floor in meters.</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the height of the cloud floor in meters.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="precipitation">
 				<xs:annotation>
-					<xs:documentation>Defines the precipitation conditions.</xs:documentation>
+					<xs:documentation xml:lang="en">Defines the precipitation conditions.</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:attribute name="value" type="T_PrecipitationKind" use="required">
 						<xs:annotation>
-							<xs:documentation>Defines the kind of precipitation.</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the kind of precipitation.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	
 	<xs:element name="theater" type="T_Weather">
 		<xs:annotation>
-			<xs:documentation>Defines global weather condition over the theater.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines global weather condition over the theater.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	
 	<xs:element name="local-weather">
 		<xs:annotation>
-			<xs:documentation>Defines a list of local weather patches.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines a list of local weather patches.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="local" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>Defines a rectangular local weather patch.</xs:documentation>
+						<xs:documentation xml:lang="en">Defines a rectangular local weather patch.</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:complexContent>
 							<xs:extension base="T_Weather">
 								<xs:attribute name="top-left" type="T_UtmCoordinates">
 									<xs:annotation>
-										<xs:documentation>Defines coordinates of the top left corner of the local weather patch.</xs:documentation>
+										<xs:documentation xml:lang="en">Defines coordinates of the top left corner of the local weather patch.</xs:documentation>
 									</xs:annotation>
 								</xs:attribute>
 								<xs:attribute name="bottom-right" type="T_UtmCoordinates">
 									<xs:annotation>
-										<xs:documentation>Defines coordinates of the bottom right corner of the local weather patch.</xs:documentation>
+										<xs:documentation xml:lang="en">Defines coordinates of the bottom right corner of the local weather patch.</xs:documentation>
 									</xs:annotation>
 								</xs:attribute>
 							</xs:extension>
