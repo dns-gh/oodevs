@@ -3,262 +3,947 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="orbat">
 		<xs:annotation>
-			<xs:documentation>Comment describing your root element</xs:documentation>
+			<xs:documentation>Root element, describes the order of battle.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="sides">
+					<xs:annotation>
+						<xs:documentation>Defines the list of sides.</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="side" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:all>
-										<xs:element name="communication">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="knowledge-group" minOccurs="0" maxOccurs="unbounded">
-														<xs:complexType>
-															<xs:attribute name="id" type="xs:integer" use="required"/>
-															<xs:attribute name="name" use="required"/>
-															<xs:attribute name="type" type="xs:string" use="required"/>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="logistic">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="automat" minOccurs="0" maxOccurs="unbounded">
-														<xs:complexType>
-															<xs:sequence>
-																<xs:element name="subordinate" maxOccurs="unbounded">
-																	<xs:complexType>
-																		<xs:choice minOccurs="0">
-																			<xs:element name="quotas" type="dotationsType"/>
-																		</xs:choice>
-																		<xs:attribute name="id" use="required"/>
-																		<xs:attribute name="link" use="required"/>
-																	</xs:complexType>
-																</xs:element>
-															</xs:sequence>
-															<xs:attribute name="id" use="required"/>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="objects">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="object" minOccurs="0" maxOccurs="unbounded">
-														<xs:complexType>
-															<xs:all>
-																<xs:element name="shape" type="shapeType"/>
-																<xs:element name="specific-attributes" minOccurs="0">
-																	<xs:complexType>
-																		<xs:choice>
-																			<xs:element name="tc2">
-																				<xs:complexType>
-																					<xs:attribute name="idref"/>
-																				</xs:complexType>
-																			</xs:element>
-																			<xs:sequence>
-																				<xs:element name="security-area" type="shapeType"/>
-																				<xs:element name="danger"/>
-																				<xs:element name="nbc-agents">
-																					<xs:complexType>
-																						<xs:sequence>
-																							<xs:element name="agent">
-																								<xs:complexType>
-																									<xs:attribute name="type"/>
-																								</xs:complexType>
-																							</xs:element>
-																						</xs:sequence>
-																					</xs:complexType>
-																				</xs:element>
-																			</xs:sequence>
-																			<xs:sequence>
-																				<xs:element name="activity-time"/>
-																				<xs:element name="density"/>
-																			</xs:sequence>
-																		</xs:choice>
-																	</xs:complexType>
-																</xs:element>
-															</xs:all>
-															<xs:attribute name="obstacle-type"/>
-															<xs:attribute name="name"/>
-															<xs:attribute name="id"/>
-															<xs:attribute name="type"/>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="populations">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="population" minOccurs="0" maxOccurs="unbounded">
-														<xs:complexType>
-															<xs:attribute name="id"/>
-															<xs:attribute name="type"/>
-															<xs:attribute name="name"/>
-															<xs:attribute name="position"/>
-															<xs:attribute name="humans"/>
-															<xs:attribute name="attitude"/>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="tactical">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="formation" type="formationType"/>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
-									</xs:all>
-									<xs:attribute name="id" type="xs:integer" use="required"/>
-									<xs:attribute name="name" type="xs:string" use="required"/>
-									<xs:attribute name="type" use="required"/>
-								</xs:complexType>
-							</xs:element>
+							<xs:element ref="side" minOccurs="0" maxOccurs="unbounded"/>
 						</xs:sequence>
 					</xs:complexType>
+					<!-- Constraints -->
+					<xs:key name="sideKey">
+						<xs:annotation>
+							<xs:documentation>Defines key for side.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath="side"></xs:selector>
+						<xs:field xpath="@id"></xs:field>
+					</xs:key>
+					<xs:unique name="knowledgeGroupIdUnicity">
+						<xs:annotation>
+							<xs:documentation>Checks unicity of knowledge group identifiers over whole ORBAT.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath="side/communication/knowledge-group"></xs:selector>
+						<xs:field xpath="@id"></xs:field>
+					</xs:unique>
+					<xs:unique name="objectIdUnicity">
+						<xs:annotation>
+							<xs:documentation>Checks unicity of object identifiers over whole ORBAT.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath="side/objects/object"></xs:selector>
+						<xs:field xpath="@id"></xs:field>
+					</xs:unique>
+					<xs:unique name="populationIdUnicity">
+						<xs:annotation>
+							<xs:documentation>Checks unicity of population identifiers over whole ORBAT.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath="side/populations/population"></xs:selector>
+						<xs:field xpath="@id"></xs:field>
+					</xs:unique>
+					<xs:unique name="automatIdUnicity">
+						<xs:annotation>
+							<xs:documentation>Checks unicity of automat identifiers over whole ORBAT.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath=".//formation/automat|.//automat/automat"></xs:selector>
+						<xs:field xpath="@id"></xs:field>
+					</xs:unique>
+					<xs:unique name="unitIdUnicity">
+						<xs:annotation>
+							<xs:documentation>Checks unicity of unit identifiers over whole ORBAT.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath=".//automat/unit"></xs:selector>
+						<xs:field xpath="@id"></xs:field>
+					</xs:unique>
+					<xs:unique name="intelligenceIdUnicity">
+						<xs:selector xpath=".//intelligence"></xs:selector>
+						<xs:field xpath="@id"></xs:field>
+					</xs:unique>
 				</xs:element>
 				<xs:element name="diplomacies">
+					<xs:annotation>
+						<xs:documentation>Defines diplomacy relationships between sides.</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="side" minOccurs="0" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="relationship" minOccurs="0" maxOccurs="unbounded">
-											<xs:complexType>
-												<xs:attribute name="side" use="required"/>
-												<xs:attribute name="diplomacy" use="required"/>
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
-									<xs:attribute name="id" type="xs:string" use="required"/>
-								</xs:complexType>
+							<xs:element name="side" type="diplomacyRelationshipType" minOccurs="0" maxOccurs="unbounded">
+								<xs:unique name="relationshipTargetUnicity">
+									<xs:annotation>
+										<xs:documentation>Checks that diplomacy is only defined once for each target side.</xs:documentation>
+									</xs:annotation>
+									<xs:selector xpath="relationship"/>
+									<xs:field xpath="@side"/>
+								</xs:unique>
 							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
+					<xs:unique name="relationshipSourceUnicity">
+						<xs:annotation>
+							<xs:documentation>Checks that diplomacy is only defined once for each source side.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath="side"></xs:selector>
+						<xs:field xpath="@id"></xs:field>
+					</xs:unique>
 				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
+		<xs:keyref refer="sideKey" name="relationshipSideKeyRef">
+			<xs:annotation>
+				<xs:documentation>Checks that referenced side exists.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="diplomacies/side"></xs:selector>
+			<xs:field xpath="@id"></xs:field>
+		</xs:keyref>
+		<xs:keyref refer="sideKey" name="diplomacyRelationshipSideKeyRef">
+			<xs:annotation>
+				<xs:documentation>Checks that relationshup side exists.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="diplomacies/side/relationship"></xs:selector>
+			<xs:field xpath="@side"></xs:field>
+		</xs:keyref>
 	</xs:element>
-	<xs:complexType name="shapeType">
+	
+	<xs:complexType name="entityType">
+		<xs:annotation>
+			<xs:documentation>Base type for entities.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+			<xs:annotation>
+				<xs:documentation>Defines unique identifier for internal references.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Defines display name of entity.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	
+	<xs:element name="side">
+		<xs:annotation>
+			<xs:documentation>Defines side composition.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="entityType">
+					<xs:all>
+						<xs:element name="communication">
+							<xs:annotation>
+								<xs:documentation>Defines communication hierarchy.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="knowledge-group" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+							<xs:key name="knowledgeGroupKey">
+								<xs:annotation>
+									<xs:documentation>Defines key for knowledge group.</xs:documentation>
+								</xs:annotation>
+								<xs:selector xpath="knowledge-group"></xs:selector>
+								<xs:field xpath="@id"></xs:field>
+							</xs:key>
+						</xs:element>
+						<xs:element name="logistic">
+							<xs:annotation>
+								<xs:documentation>Defines logistics hierarchy.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="automat" type="logisticRelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+							<xs:unique name="logisticRelationhipIdUnicity">
+								<xs:selector xpath="automat"></xs:selector>
+								<xs:field xpath="@id"></xs:field>
+							</xs:unique>
+						</xs:element>
+						<xs:element name="objects">
+							<xs:annotation>
+								<xs:documentation>Defines objects belonging to side.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="object" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="populations">
+							<xs:annotation>
+								<xs:documentation>Defines populations belonging to side.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="population" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="tactical">
+							<xs:annotation>
+								<xs:documentation>Defines tactical hierarchy (formations, automats and units).</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="formation" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+							<xs:key name="automatKey">
+								<xs:annotation>
+									<xs:documentation>Defines key for automat.</xs:documentation>
+								</xs:annotation>
+								<xs:selector xpath=".//formation/automat|.//automat/automat"></xs:selector>
+								<xs:field xpath="@id"></xs:field>
+							</xs:key>
+						</xs:element>
+					</xs:all>
+					<xs:attribute name="type" type="karmaType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines side type (karma).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+		<!-- knowledge group constraints -->
+		<xs:keyref refer="knowledgeGroupKey" name="knowledgeGroupKeyRef">
+			<xs:annotation>
+				<xs:documentation>Checks that knowledge group exists in same side.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath=".//formation/automat|.//automat/automat"></xs:selector>
+			<xs:field xpath="@knowledge-group"></xs:field>
+		</xs:keyref>
+		<!-- objects constraints -->
+		<xs:keyref refer="automatKey" name="objectTc2KeyRef">
+			<xs:annotation>
+				<xs:documentation>Checks that referenced automat exists in same side.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="objects/object/attributes/tc2"></xs:selector>
+			<xs:field xpath="@id"></xs:field>
+		</xs:keyref>
+		<!-- logistics constraints -->
+		<xs:keyref refer="automatKey" name="logisticSubordinateKeyRef">
+			<xs:annotation>
+				<xs:documentation>Checks existence of source and target logistic automats referenced in links.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="logistic/automat|logistic/automat/subordinate"></xs:selector>
+			<xs:field xpath="@id"></xs:field>
+		</xs:keyref>
+	</xs:element>
+	
+	<xs:simpleType name="karmaType">
+		<xs:annotation>
+			<xs:documentation>Defines side orientation.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="friend"/>
+			<xs:enumeration value="enemy"/>
+			<xs:enumeration value="neutral"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:element name="knowledge-group">
+		<xs:annotation>
+			<xs:documentation>Defines a knowledge/communication group.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="entityType">
+					<xs:attribute name="type" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the type of knowledge group, references "Communications.xml".</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="logisticRelationshipType">
+		<xs:annotation>
+			<xs:documentation>Defines logistic link between an automat and its logistic subordinates.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="points">
+			<xs:element name="subordinate" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Defines link nature and parameters for specified logistic subordinate.</xs:documentation>
+				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="point" maxOccurs="unbounded"/>
+						<xs:element name="quotas" type="resourcesType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Defines quotas granted to subordinate by logistic superior.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+						<xs:annotation>
+							<xs:documentation>Identifies the subordinate (automat).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="link" type="logisticLinkType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the type of logistic link to be configured.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+			<xs:annotation>
+				<xs:documentation>Identifies the automat for which to define logistic links to.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:simpleType name="logisticLinkType">
+		<xs:annotation>
+			<xs:documentation>Defines types of logistic links.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="maintenance"/>
+			<xs:enumeration value="medical"/>
+			<xs:enumeration value="supply"/>
+			<xs:enumeration value="tc2"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="object">
+		<xs:annotation>
+			<xs:documentation>Defines an object.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="entityType">
+					<xs:all>
+						<xs:element name="shape" type="shapeType">
+							<xs:annotation>
+								<xs:documentation>Defines the location and shape of the object.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="attributes">
+							<xs:annotation>
+								<xs:documentation>Defines specific object attributes.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:all>
+									<xs:element name="activity-time" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Defines attributes related to object activity time.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="value" type="xs:nonNegativeInteger">
+												<xs:annotation>
+													<xs:documentation>Defines the activity time in seconds.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="obstacle" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Defines attributes related to obstacle capacities of the object.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="activated" type="xs:boolean" use="required">
+												<xs:annotation>
+													<xs:appinfo>Not read by simulation.</xs:appinfo>
+													<xs:documentation>Defines whether the obstacle is initially activated or not.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="type" type="obstacleType" use="required">
+												<xs:annotation>
+													<xs:documentation>Defines the type of obstacle.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="tc2" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Defines attributes related to logistic superior (TC2).</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+												<xs:annotation>
+													<xs:documentation>Defines reference to the logistic superior (TC2 automat).</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:all>
+							</xs:complexType>
+						</xs:element>
+					</xs:all>
+					<xs:attribute name="type" type="objectType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the type of the object. This is a reference to an existing object type from "Objects.xml".</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="objectType">
+		<xs:annotation>
+			<xs:documentation>Defines the list of available object types. $$$TODO: import list from "ObjectNames.xml" or "Objects.xsd".</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mines"/>
+			<xs:enumeration value="mined area (linear)"/>
+			<xs:enumeration value="mined area (scattered)"/>
+			<xs:enumeration value="anti tank obstacle"/>
+			<xs:enumeration value="abattis"/>
+			<xs:enumeration value="barricade"/>
+			<xs:enumeration value="landslide"/>
+			<xs:enumeration value="road destruction"/>
+			<xs:enumeration value="bridge destruction"/>
+			<xs:enumeration value="continuous pontoon bridge"/>
+			<xs:enumeration value="firing post"/>
+			<xs:enumeration value="safe zone"/>
+			<xs:enumeration value="gun artillery deployment area"/>
+			<xs:enumeration value="cobra deployment area"/>
+			<xs:enumeration value="mrls deployment area"/>
+			<xs:enumeration value="crossing site"/>
+			<xs:enumeration value="nbc cloud"/>
+			<xs:enumeration value="logistic support area"/>
+			<xs:enumeration value="decontamination site"/>
+			<xs:enumeration value="jamming area"/>
+			<xs:enumeration value="rota area"/>
+			<xs:enumeration value="nbc zone"/>
+			<xs:enumeration value="landing area"/>
+			<xs:enumeration value="trail"/>
+			<xs:enumeration value="platform"/>
+			<xs:enumeration value="mobility enhanced area"/>
+			<xs:enumeration value="landing area (helicopter)"/>
+			<xs:enumeration value="logistic area"/>
+			<xs:enumeration value="logistic route"/>
+			<xs:enumeration value="prisoners camp"/>
+			<xs:enumeration value="refugees camp"/>
+			<xs:enumeration value="checkpoint"/>
+			<xs:enumeration value="dropping area"/>
+			<xs:enumeration value="movement forbidden area"/>
+			<xs:enumeration value="fire forbidden area"/>
+			<xs:enumeration value="mortar deployment area"/>
+			<xs:enumeration value="discontinuous pontoon bridge"/>
+			<xs:enumeration value="installation"/>
+			<xs:enumeration value="fire"/>
+			<xs:enumeration value="emergency shelter"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="obstacleType">
+		<xs:annotation>
+			<xs:documentation>Defines obstacle types.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="preliminary">
+				<xs:annotation>
+					<xs:documentation>Defines a preliminary obstacle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="reserved">
+				<xs:annotation>
+					<xs:documentation>Defines a reserved obstacle, which is initially disabled and must be activated.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="population">
+		<xs:annotation>
+			<xs:documentation>Defines a population.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="entityType">
+					<xs:attribute name="attitude" type="populationAttitudeType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the initial population attitude.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="humans" type="xs:positiveInteger" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the initial number of people composing the population.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="position" type="utmCoordinatesType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the initial position of the center of the population concentration.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="type" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the type of population. References an existing population type from "Populations.xml".</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="utmCoordinatesType">
+		<xs:annotation>
+			<xs:documentation>Defines Universal Transverse Mercator geographic coordinates.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{2}[A-Z]{3}\d{8}(\d{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="populationAttitudeType">
+		<xs:annotation>
+			<xs:documentation>Defines the different population attitudes.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="calme"/>
+			<xs:enumeration value="agitee"/>
+			<xs:enumeration value="excitee"/>
+			<xs:enumeration value="agressive"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="diplomacyRelationshipType">
+		<xs:annotation>
+			<xs:documentation>Defines the diplomatical relationships between one side and the others.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="relationship" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Defines a diplomatical relationship between two sides.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="side" type="xs:nonNegativeInteger" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the side with whom to define relationship.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="diplomacy" type="affinityType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the kind of affinity between the two sides considered.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+				<xs:unique name="diplomacyRelationshipDefinitionUnicity">
+					<xs:annotation>
+						<xs:documentation>Checks that relationship are only defined once.</xs:documentation>
+					</xs:annotation>
+					<xs:selector xpath="."></xs:selector>
+					<xs:field xpath="@side"></xs:field>
+				</xs:unique>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+			<xs:annotation>
+				<xs:documentation>Defines the identifier of the side whose relationships are to be defined.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:simpleType name="affinityType">
+		<xs:annotation>
+			<xs:documentation>Defines the list of available affinity types.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="friend"/>
+			<xs:enumeration value="enemy"/>
+			<xs:enumeration value="neutral"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="shapeType">
+		<xs:annotation>
+			<xs:documentation>Defines a geometrical shape.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="points">
+				<xs:annotation>
+					<xs:documentation>Defines a list of points.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="point" maxOccurs="unbounded" type="utmCoordinatesType">
+							<xs:annotation>
+								<xs:documentation>Defines a point using UTM coordinates.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 		<xs:attribute name="type"/>
 	</xs:complexType>
-	<xs:complexType name="dotationsType">
+	
+	<xs:complexType name="resourcesType">
+		<xs:annotation>
+			<xs:documentation>Defines a list of resources with associated quantity.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="dotation">
+			<xs:element name="dotation" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
-					<xs:attribute name="name" use="required"/>
-					<xs:attribute name="quantity" use="required"/>
+					<xs:annotation>
+						<xs:documentation>Defines a resource reference and associated quantity.</xs:documentation>
+					</xs:annotation>
+					<xs:attribute name="name" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the name of the resources. References existing resource from "Resources.xml".</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="quantity" type="xs:positiveInteger" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the quantity of the considered resource.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="formationType">
-		<xs:sequence>
-			<xs:element name="automat" type="automatType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="formation" type="formationType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="intelligence" type="intelligenceType" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attribute name="id" type="xs:integer" use="required"/>
-		<xs:attribute name="name" type="xs:string" use="optional"/>
-		<xs:attribute name="level" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="automatType">
-		<xs:sequence>
-			<xs:element name="unit" minOccurs="0" maxOccurs="unbounded">
-				<xs:complexType>
+	
+	<xs:element name="formation">
+		<xs:annotation>
+			<xs:documentation>Defines a formation, which is an organisational entity containing formations and automats.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="entityType">
+					<xs:sequence>
+						<xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="formation" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="intelligence" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="level" type="hierarchicalLevelType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the hierarchical level of the formation.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:simpleType name="hierarchicalLevelType">
+		<xs:annotation>
+			<xs:documentation>Defines the list of military hierarchical level.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="o"/>
+			<xs:enumeration value="oo"/>
+			<xs:enumeration value="ooo"/>
+			<xs:enumeration value="i"/>
+			<xs:enumeration value="ii"/>
+			<xs:enumeration value="iii"/>
+			<xs:enumeration value="x"/>
+			<xs:enumeration value="xx"/>
+			<xs:enumeration value="xxx"/>
+			<xs:enumeration value="xxxx"/>
+			<xs:enumeration value="xxxxx"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:element name="automat">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="entityType">
+					<xs:sequence>
+						<xs:element ref="unit" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="intelligence" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="engaged" type="xs:boolean" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines whether automat is initially engaged or not.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="knowledge-group" type="xs:nonNegativeInteger" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines reference to existing knowledge group which automat belongs to.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="type" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines automat type. References type defined in "Automat.xml".</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+		<!--xs:unique name="commandPostUnicity">
+			<xs:annotation>
+				<xs:documentation>Checks that there is exactly one command post unit.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="unit"></xs:selector>
+			<xs:field xpath="@command-post"></xs:field>
+		</xs:unique-->
+	</xs:element>
+	
+	<xs:element name="unit">
+		<xs:annotation>
+			<xs:documentation>Defines a unit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="entityType">
 					<xs:all>
 						<xs:element name="equipments" minOccurs="0">
+							<xs:annotation>
+								<xs:appinfo>Not implemented in preparation and simulation.</xs:appinfo>
+								<xs:documentation>Defines overloaded equipment status.</xs:documentation>
+							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element name="equipment">
+									<xs:element name="equipment" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Defines overloaded status for specified equipment.</xs:documentation>
+										</xs:annotation>
 										<xs:complexType>
-											<xs:attribute name="type"/>
-											<xs:attribute name="available"/>
-											<xs:attribute name="unavailable"/>
-											<xs:attribute name="fixable"/>
+											<xs:attribute name="available" type="xs:nonNegativeInteger">
+												<xs:annotation>
+													<xs:documentation>Defines the new number of available equipments.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="fixable" type="xs:nonNegativeInteger">
+												<xs:annotation>
+													<xs:documentation>Defines the new number of fixable equipments.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="unavailable" type="xs:nonNegativeInteger">
+												<xs:annotation>
+													<xs:documentation>Defines the new number of unavailable equipments.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="type" type="xs:string" use="required">
+												<xs:annotation>
+													<xs:documentation>Defines the type of equipment to define overloaded status for.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
 										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
 						<xs:element name="human-factors" minOccurs="0">
+							<xs:annotation>
+								<xs:appinfo>Not implemented in preparation and simulation.</xs:appinfo>
+								<xs:documentation>Defines overloaded human factors.</xs:documentation>
+							</xs:annotation>
 							<xs:complexType>
 								<xs:all>
-									<xs:element name="tiredness"/>
-									<xs:element name="morale"/>
-									<xs:element name="experience"/>
+									<xs:element name="tiredness" type="tirednessType">
+										<xs:annotation>
+											<xs:documentation>Defines overloaded tiredness human factor.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="morale" type="moraleType">
+										<xs:annotation>
+											<xs:documentation>Defines overloaded morale human factor.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="experience" type="experienceType">
+										<xs:annotation>
+											<xs:documentation>Defines overloaded experience human factor.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
 								</xs:all>
 							</xs:complexType>
 						</xs:element>
 						<xs:element name="humans" minOccurs="0">
+							<xs:annotation>
+								<xs:appinfo>Not implemented in preparation and simulation.</xs:appinfo>
+								<xs:documentation>Defines overloaded human components.</xs:documentation>
+							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
 									<xs:element name="human">
 										<xs:complexType>
-											<xs:attribute name="state"/>
-											<xs:attribute name="officer"/>
-											<xs:attribute name="noncommissioned-officer"/>
-											<xs:attribute name="private"/>
+											<xs:attribute name="state" type="humanStateType" use="required">
+												<xs:annotation>
+													<xs:documentation>Defines overloaded human state for specified count of human components.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="officer" type="xs:nonNegativeInteger" use="required">
+												<xs:annotation>
+													<xs:documentation>Defines "state" as the overloaded state for the specified amount of officers.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="noncommissioned-officer" type="xs:nonNegativeInteger" use="required">
+												<xs:annotation>
+													<xs:documentation>Defines "state" as the overloaded state for the specified amount of non-commissioned officers.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="private" type="xs:nonNegativeInteger" use="required">
+												<xs:annotation>
+													<xs:documentation>Defines "state" as the overloaded state for the specified amount of privates.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
 										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-						<xs:element name="stocks" type="dotationsType" minOccurs="0"/>
-						<xs:element name="dotations" type="dotationsType" minOccurs="0"/>
+						<xs:element name="stocks" type="resourcesType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Defines additional resource stocks.</xs:documentation>
+							</xs:annotation>
+							<xs:unique name="stocksResourceUnicity">
+								<xs:annotation>
+									<xs:documentation>Checks that resources only appears once in list.</xs:documentation>
+								</xs:annotation>
+								<xs:selector xpath="dotation"></xs:selector>
+								<xs:field xpath="@name"></xs:field>
+							</xs:unique>
+						</xs:element>
+						<xs:element name="dotations" type="resourcesType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Defines overloaded additional initial resources.</xs:documentation>
+							</xs:annotation>
+							<xs:unique name="dotationsResourceUnicity">
+								<xs:annotation>
+									<xs:documentation>Checks that resources only appears once in list.</xs:documentation>
+								</xs:annotation>
+								<xs:selector xpath="dotation"></xs:selector>
+								<xs:field xpath="@name"></xs:field>
+							</xs:unique>
+						</xs:element>
 					</xs:all>
-					<xs:attribute name="type" use="required"/>
-					<xs:attribute name="id" use="required"/>
-					<xs:attribute name="name" use="required"/>
-					<xs:attribute name="position" use="required"/>
-					<xs:attribute name="command-post" type="xs:boolean"/>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="automat" type="automatType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="intelligence" type="intelligenceType" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attribute name="type" use="required"/>
-		<xs:attribute name="id" use="required"/>
-		<xs:attribute name="name" use="required"/>
-		<xs:attribute name="knowledge-group" use="required"/>
-		<xs:attribute name="engaged" use="required"/>
-	</xs:complexType>
+					<xs:attribute name="type" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines unit type. Reference type from "Units.xml".</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="position" type="utmCoordinatesType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines unit position as UTM coordinates.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="command-post" type="xs:boolean" default="false">
+						<xs:annotation>
+							<xs:documentation>Defines whether unit stands as a command-post.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+		<xs:key name="unitKey">
+			<xs:annotation>
+				<xs:documentation>Defines key for unit.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="."></xs:selector>
+			<xs:field xpath="@id"></xs:field>
+		</xs:key>
+	</xs:element>
+		
+	<xs:simpleType name="tirednessType">
+		<xs:annotation>
+			<xs:documentation>Defines list of tiredness states.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="normal"/>
+			<xs:enumeration value="fatigue"/>
+			<xs:enumeration value="epuise"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="moraleType">
+		<xs:annotation>
+			<xs:documentation>Defines list of morale states.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fanatique"/>
+			<xs:enumeration value="bon"/>
+			<xs:enumeration value="moyen"/>
+			<xs:enumeration value="mauvais"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="experienceType">
+		<xs:annotation>
+			<xs:documentation>Defines list of experience states.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="veteran"/>
+			<xs:enumeration value="experimente"/>
+			<xs:enumeration value="conscrit"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="humanStateType">
+		<xs:annotation>
+			<xs:documentation>Defines list of human states.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="non blesse"/>
+			<xs:enumeration value="mort"/>
+			<xs:enumeration value="blesse urgence 1"/>
+			<xs:enumeration value="blesse urgence 2"/>
+			<xs:enumeration value="blesse urgence 3"/>
+			<xs:enumeration value="blesse urgence extreme"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
 	<xs:complexType name="tacticalLineType">
+		<xs:annotation>
+			<xs:documentation>Defines a tactical line.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="point" maxOccurs="unbounded"/>
+			<xs:element name="point" type="utmCoordinatesType" minOccurs="2" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Defines the list of points constituting the line geometry.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
-		<xs:attribute name="name" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Defines the name identifying the tactical line. Does not have to be unique.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
-	<xs:complexType name="intelligenceType">
-		<xs:attribute name="id" use="required"/>
-		<xs:attribute name="name" use="required"/>
-		<xs:attribute name="embarked" use="required"/>
-		<xs:attribute name="karma" use="required"/>
-		<xs:attribute name="level" use="required"/>
-		<xs:attribute name="nature" use="required"/>
-		<xs:attribute name="position" use="required"/>
-	</xs:complexType>
+	
+	<xs:simpleType name="app6SymbolType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15" fixed="true"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:element name="intelligence">
+		<xs:annotation>
+			<xs:documentation>Defines an intelligence.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="entityType">
+					<xs:attribute name="embarked" type="xs:boolean" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines whether intelligence is performing embarked fight.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="karma" type="karmaType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the karma of the intelligence.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="level" type="hierarchicalLevelType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the hierarchical level of the intelligence.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="nature" type="app6SymbolType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the nature of the intelligence following APP6 symbology.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="position" type="utmCoordinatesType" use="required">
+						<xs:annotation>
+							<xs:documentation>Defines the position of the intelligence as UTM coordinates.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>
