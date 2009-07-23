@@ -309,7 +309,7 @@ void DrawingTemplate::Align( geometry::Vector2f u ) const
 // -----------------------------------------------------------------------------
 void DrawingTemplate::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "template", name_ )
+    xos << xml::attribute( "template", code_ )
         << xml::attribute( "category", category_.GetName() )
         << xml::attribute( "type", type_ );
 }
