@@ -52,43 +52,37 @@
 						<xs:documentation xml:lang="en">Defines elements to be displayed as the briefing.</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
-						<xs:all>
+						<xs:sequence>
 							<xs:element name="image" type="xs:string" minOccurs="0">
 								<xs:annotation>
 									<xs:documentation xml:lang="en">Defines path of image file to be used for briefing (relative to current exercise root directory).</xs:documentation>
 								</xs:annotation>
 							</xs:element>
-							<xs:element name="texts" minOccurs="0">
+							<xs:element name="text" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Defines text to be displayed for briefing.</xs:documentation>
+								</xs:annotation>
 								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="text" minOccurs="0" maxOccurs="unbounded">
-											<xs:annotation>
-												<xs:documentation xml:lang="en">Defines text to be displayed for briefing.</xs:documentation>
-											</xs:annotation>
-											<xs:complexType>
-												<xs:simpleContent>
-													<xs:extension base="xs:string">
-														<xs:attribute name="lang" type="xs:string" use="required">
-															<xs:annotation>
-																<xs:documentation xml:lang="en">Defines language which applies to briefing text (fr, en...).</xs:documentation>
-															</xs:annotation>
-														</xs:attribute>
-													</xs:extension>
-												</xs:simpleContent>
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="lang" type="xs:string" use="required">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Defines language which applies to briefing text (fr, en...).</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
 								</xs:complexType>
-								<xs:unique name="text">
-									<xs:annotation>
-										<xs:documentation xml:lang="en">Checks that only one text is defined for each language.</xs:documentation>
-									</xs:annotation>
-									<xs:selector xpath="text"/>
-									<xs:field xpath="@lang"/>
-								</xs:unique>
 							</xs:element>
-						</xs:all>
+						</xs:sequence>
 					</xs:complexType>
+					<xs:unique name="textUnicity">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Checks that only one text is defined for each language.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath="text"/>
+						<xs:field xpath="@lang"/>
+					</xs:unique>
 				</xs:element>
 				<xs:element name="resources">
 					<xs:annotation>

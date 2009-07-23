@@ -128,10 +128,7 @@ void ExerciseList::SelectExercise( int index )
                     >> xml::optional() >> xml::start( "meta" )
                         >> xml::optional() >> xml::start( "briefing" )
                             >> xml::optional() >> xml::content("image", image )
-                            >> xml::optional()
-                                >> xml::start( "texts" )
-                                    >> xml::list( "text", *this, &ExerciseList::ReadBriefingText )
-                                >> xml::end();
+                            >> xml::list( "text", *this, &ExerciseList::ReadBriefingText );
             const std::string imagePath = config_.GetExerciseDir( MakePath( exercise.ascii(), image ).ascii() );
             const QImage pix( imagePath.c_str() );
             briefingImage_->setPixmap( pix );
