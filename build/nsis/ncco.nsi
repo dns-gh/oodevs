@@ -21,10 +21,6 @@
     !define APP_VERSION_MINOR "1.0.0.0"
 !endif
 
-; worldwide / france
-!ifndef APP_MODEL
-    !define APP_MODEL "worldwide"
-!endif
 ;........................................
 
 
@@ -161,57 +157,29 @@ SectionGroupEnd
 SectionGroup "Models" s_mod
 
     !insertmacro OT.AddDecisionalModels "ada"
-    !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}" "s_phy1"
+
+    SectionGroup "Physical" s_phymod
+    
+        !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phy1"
+        !insertmacro OT.AddPhysicalModels "ada" "france" "s_phy2"
+    
+    SectionGroupEnd
 
 SectionGroupEnd
 
 ;--------------------------------
 SectionGroup "Exercises" s_exo
 
-    !if "${APP_MODEL}" == "worldwide"
-        !insertmacro OT.AddExercise "Egypt" "Nord egypt" "s_exo1"
-        !insertmacro OT.AddExercise "Paris" "Paris_Est" "s_exo2"
-        !insertmacro OT.AddExercise "Scripting demo" "test" "s_exo3"
-        !insertmacro OT.AddExercise "9_cases" "Angers_x9" "s_exo4"
-        !insertmacro OT.AddExercise "Musoria Border Defense" "Paris_Est" "s_exo5"
-    !else if "${APP_MODEL}" == "france"
-        !insertmacro OT.AddExercise "esag" "Angers" "s_exo1"
-        !insertmacro OT.AddExercise "CENTORSEM" "Paris_Est" "s_exo2"
-        !insertmacro OT.AddExercise "puma" "larochelle" "s_exo3"
-        !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
-        !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
-        !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
-        !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
-        !insertmacro OT.AddExercise "tutorials\03 - Mission" "Paris_Est" "s_exo6"
-        !insertmacro OT.AddExercise "tutorials\04 - ABC" "Paris_Est" "s_exo7"
-        !insertmacro OT.AddExercise "tutorials\05 - Infanterie" "Paris_Est" "s_exo8"
-        !insertmacro OT.AddExercise "tutorials\06 - Genie" "Paris_Est" "s_exo9"
-        !insertmacro OT.AddExercise "tutorials\07 - Artillerie" "Paris_Est" "s_exo10"
-        !insertmacro OT.AddExercise "tutorials\071 - NRBC" "Paris_Est" "s_exo11"
-        !insertmacro OT.AddExercise "tutorials\072 - ALAT" "Paris_Est" "s_exo12"
-        !insertmacro OT.AddExercise "tutorials\073 - LOG" "Paris_Est" "s_exo13"
-        !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo14"
-        !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo15"
-        !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo16"
-    !endif
+    !insertmacro OT.AddExercise "Egypt" "Nord egypt" "s_exo1"
+    !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo2"
 
 SectionGroupEnd
 
 ;--------------------------------
 SectionGroup "Terrains" s_ter
 
-    !if "${APP_MODEL}" == "worldwide"
-        !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
-        !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
-        !insertmacro OT.AddTerrain "test" "s_ter3"
-        !insertmacro OT.AddTerrain "Angers_x9" "s_ter4"
-    !else if "${APP_MODEL}" == "france"
-        !insertmacro OT.AddTerrain "Angers" "s_ter1"
-        !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
-        !insertmacro OT.AddTerrain "larochelle" "s_ter3"
-        !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
-        !insertmacro OT.AddTerrain "Blois" "s_ter5"
-    !endif
+    !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
+    !insertmacro OT.AddTerrain "Cabourg" "s_ter2"
 
 SectionGroupEnd
 
@@ -293,31 +261,7 @@ FunctionEnd
 
 Function .onSelChange
 
-    !if "${APP_MODEL}" == "worldwide"
-        !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
-        !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
-        !insertmacro OT.CheckDependency "s_exo4" "s_ter4"
-        !insertmacro OT.CheckDependency "s_exo5" "s_ter2"
-    !else if "${APP_MODEL}" == "france"
-        !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
-        !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
-        !insertmacro OT.CheckDependency "s_exo4" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo5" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo6" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo7" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo8" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo9" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo10" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo11" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo12" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo13" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo14" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo15" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo16" "s_ter2"
-        !insertmacro OT.CheckDependency "s_exo17" "s_ter4"
-        !insertmacro OT.CheckDependency "s_exo18" "s_ter5"
-    !endif
+    !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
+    !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
      
 FunctionEnd
