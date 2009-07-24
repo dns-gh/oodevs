@@ -31,6 +31,7 @@ namespace kernel
 
 class Score_ABC;
 class ScoreEditor;
+class ScoresModel;
 class StaticModel;
 
 // =============================================================================
@@ -48,7 +49,7 @@ class ScoreList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const StaticModel& staticModel );
+             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const ScoresModel& model, const StaticModel& staticModel );
     virtual ~ScoreList();
     //@}
 

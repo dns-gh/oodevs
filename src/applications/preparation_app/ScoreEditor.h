@@ -31,6 +31,7 @@ namespace gui
 class Score_ABC;
 class ScoreGaugeConfiguration;
 class ScoreVariablesList;
+class ScoresModel;
 class StaticModel;
 
 // =============================================================================
@@ -46,7 +47,7 @@ class ScoreEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const StaticModel& staticModel );
+             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const ScoresModel& model, const StaticModel& staticModel );
     virtual ~ScoreEditor();
     //@}
 
@@ -70,6 +71,7 @@ private slots:
     void OnInsert( const QString& text );
     void OnSelectPrimitive( const indicators::Primitive& indicator );
     void CheckFormula();
+    void AllowCommit( bool base = true );
     //@}
 
 private:

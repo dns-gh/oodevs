@@ -18,7 +18,7 @@ namespace
     class NameValidator : public QValidator
     {
     public:
-                 NameValidator( QObject* parent, ScoresModel& model ) : QValidator( parent ), model_( &model ) {}
+                 NameValidator( QObject* parent, const ScoresModel& model ) : QValidator( parent ), model_( &model ) {}
         virtual ~NameValidator() {}
 
         virtual QValidator::State validate( QString& input, int& ) const
@@ -27,7 +27,7 @@ namespace
         }
 
     private:
-        ScoresModel* model_;
+        const ScoresModel* model_;
     };
 }
 
@@ -46,7 +46,7 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
     grid->setRowStretch( 0, 4 );
     {
         QGroupBox* box = new QHGroupBox( tr( "Scores" ), this );
-        ScoreList* scores = new ScoreList( box, controllers, factory, layer, staticModel );
+        ScoreList* scores = new ScoreList( box, controllers, factory, layer, model, staticModel );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
         connect( scores, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
         connect( scores, SIGNAL( Show() ), SLOT( show() ) );

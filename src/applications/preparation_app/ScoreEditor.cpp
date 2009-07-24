@@ -18,6 +18,7 @@
 #include "indicators/Primitive.h"
 #include "indicators/Variables.h"
 #include "preparation/Score.h"
+#include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
 #include <xeumeuleu/xml.h>
 
@@ -69,13 +70,41 @@ namespace
             e->accept();
         }
     };
+
+    class NameValidator : public QValidator
+    {
+    public:
+                 NameValidator( QLineEdit* parent, const ScoresModel& model, Score_ABC* const& score )
+                     : QValidator( parent )
+                     , model_( &model )
+                     , parent_( parent )
+                     , score_( score )
+                 {}
+        virtual ~NameValidator() {}
+
+        virtual QValidator::State validate( QString& input, int& ) const
+        {
+            const QValidator::State state = input.isEmpty() || model_->Find( input ) && ( !score_ || score_ && score_->GetName() != input ) ? QValidator::Intermediate : QValidator::Acceptable;
+            if( state != QValidator::Acceptable )
+                parent_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
+            else
+                parent_->unsetPalette();
+            return state;
+        }
+
+    private:
+        NameValidator& operator=( const NameValidator& );
+        const ScoresModel* model_;
+        QLineEdit* parent_;
+        Score_ABC* const& score_;
+    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScoreEditor constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const StaticModel& staticModel )
+ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const ScoresModel& model, const StaticModel& staticModel )
     : QDialog( parent, "ScoreEditor" )
     , current_( 0 )
 {
@@ -87,7 +116,9 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         QGroupBox* box = new QHGroupBox( tr( "Information" ), this );
         new QLabel( tr( "Name:" ), box );
         name_ = new QLineEdit( box );
+        name_->setValidator( new NameValidator( name_, model, current_ ) );
         grid->addWidget( box, 0, 0 );
+        connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( AllowCommit() ) );
     }
     {
         QTabWidget* tabs = new QTabWidget( this );
@@ -275,11 +306,20 @@ void ScoreEditor::CheckFormula()
         CommitTo( score );
         score.CheckValidity();
         checkResult_->setText( "" );
-        ok_->setEnabled( true );
+        AllowCommit( true );
     }
     catch( std::exception& e )
     {
         checkResult_->setText( QString( "<font color='#ff0000'><b>%1</b></font>" ).arg( e.what() ) );
-        ok_->setEnabled( false );
+        AllowCommit( false );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreEditor::AllowCommit
+// Created: SBO 2009-07-24
+// -----------------------------------------------------------------------------
+void ScoreEditor::AllowCommit( bool base /*= true*/ )
+{
+    ok_->setEnabled( base && name_->hasAcceptableInput() );
 }

@@ -19,12 +19,12 @@
 // Name: ScoreList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const StaticModel& staticModel )
+ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const ScoresModel& model, const StaticModel& staticModel )
     : QVBox( parent )
     , controllers_( controllers )
     , factory_( factory )
     , scores_( new gui::ListDisplayer< ScoreList >( this, *this, factory ) )
-    , editor_( new ScoreEditor( this, controllers, factory, layer, staticModel ) )
+    , editor_( new ScoreEditor( this, controllers, factory, layer, model, staticModel ) )
 {
     layout()->setAlignment( Qt::AlignRight );
     scores_->AddColumn( tr( "Name" ) );
