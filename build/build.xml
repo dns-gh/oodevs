@@ -533,7 +533,6 @@
     </macrodef>
 
     <target name="test-scripts" description="run all tests">
-        <test-scripts dataset="test" physical=""/>
         <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="worldwide"/>
     </target>
