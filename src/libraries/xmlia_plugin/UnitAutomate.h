@@ -55,6 +55,7 @@ public:
     //@{
     virtual void SerializeMission( xml::xostream& xos ) const;
     void UpdateMission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 );
+    Mission* GetMission() const;
     //@}
 
 private:

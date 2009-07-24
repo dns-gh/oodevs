@@ -43,6 +43,7 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     void Update( dispatcher::Object& obj );
+    void ReadPoint( xml::xistream& xis, std::vector< Point >& localisation_ );
     //@}
 
 private:
@@ -50,7 +51,7 @@ private:
     //@{
     unsigned int id_;
     std::string type_;
-    Point* localisation_;
+    std::vector< Point > localisation_;
     //@}
 };
 

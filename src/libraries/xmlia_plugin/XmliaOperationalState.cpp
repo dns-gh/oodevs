@@ -87,12 +87,12 @@ namespace
 // -----------------------------------------------------------------------------
 XmliaOperationalState::XmliaOperationalState( xml::xistream& xis )
 {
-   xis >> xml::start( "mpia:EtatOperationnelEntiteOrganisationnelle" )
-        >> xml::content( "mpia:EtatCarburants", iEtatCarburants_ )
-        >> xml::content( "mpia:EtatEquipements", iEtatEquipements_)
-        >> xml::content( "mpia:EtatMunitions", iEtatMunitions_)
-        >> xml::content( "mpia:EtatOperationnel", etatOpsGeneral_ )
-        >> xml::content( "mpia:EtatPersonnel", iEtatPersonnel_)
+   xis >> xml::start( "EtatOperationnelEntiteOrganisationnelle" )
+        >> xml::content( "EtatCarburants", iEtatCarburants_ )
+        >> xml::content( "EtatEquipements", iEtatEquipements_)
+        >> xml::content( "EtatMunitions", iEtatMunitions_)
+        >> xml::content( "EtatOperationnel", etatOpsGeneral_ )
+        >> xml::content( "EtatPersonnel", iEtatPersonnel_)
        >> xml::end();
 }
 
@@ -130,13 +130,13 @@ XmliaOperationalState::~XmliaOperationalState()
 // -----------------------------------------------------------------------------
 void XmliaOperationalState::Serialize( xml::xostream& xos ) const
 {
-  xos << xml::start( "mpia:EtatOperationnelEntiteOrganisationnelle" )
-        << xml::content( "mpia:Comportement", "NEUTRL" )//@TODOFORCE
-        << xml::content( "mpia:EtatCarburants", iEtatCarburants_ )
-        << xml::content( "mpia:EtatEquipements", iEtatEquipements_)
-        << xml::content( "mpia:EtatMunitions", iEtatMunitions_)
-        << xml::content( "mpia:EtatOperationnel", etatOpsGeneral_ )
-        << xml::content( "mpia:EtatPersonnel", iEtatPersonnel_)
+  xos << xml::start( "EtatOperationnelEntiteOrganisationnelle" )
+        << xml::content( "Comportement", "NEUTRL" )
+        << xml::content( "EtatCarburants", iEtatCarburants_ )
+        << xml::content( "EtatEquipements", iEtatEquipements_)
+        << xml::content( "EtatMunitions", iEtatMunitions_)
+        << xml::content( "EtatOperationnel", etatOpsGeneral_ )
+        << xml::content( "EtatPersonnel", iEtatPersonnel_)
       << xml::end();
 }
 
@@ -165,7 +165,16 @@ void XmliaOperationalState::Update( dispatcher::Agent& agent )
 // Name: XmliaOperationalState GetGeneralOperationalState
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
-std::string& XmliaOperationalState::GetGeneralOperationalState()
+const std::string& XmliaOperationalState::GetGeneralOperationalState() const
 {
   return etatOpsGeneral_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmliaOperationalState GetAverageDotation
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+float XmliaOperationalState::GetAverageDotation() const
+{
+  return ( iEtatCarburants_ + iEtatMunitions_ ) / 2;
 }

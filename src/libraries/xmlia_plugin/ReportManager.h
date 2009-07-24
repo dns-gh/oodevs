@@ -11,6 +11,8 @@
 #define __ReportManager_h_
 
 #include "game_asn/Simulation.h"
+#include "game_asn/plugin.h"
+#include <set>
 
 namespace dispatcher
 {
@@ -39,6 +41,8 @@ namespace plugins
 namespace xmlia
 {
   class Point;
+  class UnitAgent;
+  class UnitAutomate;
   class Report_ABC;
   class Publisher_ABC;
   class LdapClient;
@@ -65,7 +69,7 @@ public:
     //@{
     dispatcher::Model& GetModel() const;
     dispatcher::SimulationPublisher_ABC& GetSimulationPublisher() const;
-    dispatcher::ClientPublisher_ABC& GetClientPublisher() const;
+    dispatcher::ClientPublisher_ABC& GetClientPublisher( const std::string& name ) const;
     bool IsTakenIntoAccount( const std::string messageType );
     //@}
 
@@ -79,29 +83,52 @@ public:
     void DoUpdate( dispatcher::Agent& agent, const ASN1T_MsgUnitOrder& message );
     void DoUpdate( dispatcher::Automat& agent, const ASN1T_MsgAutomatOrder& message );
     void DoUpdateIntrep( dispatcher::Agent& agent,  dispatcher::Agent& fired );
-    void DoUpdateLog( dispatcher::Agent& agent );
     bool ReadLine( const ASN1T_Line& asn, std::vector< Point >& points );
+    void AddIntelligence( const unsigned intelligenceID, const std::string );
+    bool FindIntelligence( unsigned intelligenceID );
     //@}
 
     ///! @name Import Operations
     //@{
     void CleanReceivedRapport();
-    void Read( xml::xistream& xis );
+    void Read( std::string& message );
     void ReadUrl( xml::xistream& xis, Publisher_ABC& publisher );
     void UpdateSimulation() const ;
     //@}
 
+    ///! @name MagicAction Operations
+    //@{
+    void SendReport( std::string report );
+    void MagicMove( UnitAgent& reportedUnit );
+    void UpdateOperationnalState( UnitAgent& reportedUnit );
+    void InsertOrUpdateIntelligence( UnitAgent& reportedUnit );
+    void NewOrderUpdate( UnitAutomate& reportedUnit );
+    //@}
+
 private:
+
+    ///! @name MagicAction Helpers
+    //@{
+    void CreateLimit( const unsigned int idLimit, const dispatcher::Automat& automat, const std::vector< Point >& limit);
+    void DeleteLimit( unsigned int id);
+    void SentToAllClients( ASN1T_MsgsPluginToClient& asnMsg );
+    //@}
+
     //! @name Member data
     //@{
     std::map< unsigned, std::map< std::string, Report_ABC* > > reports_;
-    std::vector< Report_ABC* > receivedRapports_;
+    std::vector< Report_ABC* > receivedReports_;
     dispatcher::Model& model_;
-	dispatcher::SimulationPublisher_ABC& simulationPublisher_;
+	  dispatcher::SimulationPublisher_ABC& simulationPublisher_;
     LdapClient& ldap_;
     ClientManager& clientManager_;
+    std::map< unsigned, std::string > intelligences_;
+    std::set< unsigned int > oldLimits;
+
+    std::map< std::string, std::string > managedReports_;
     //@}
 };
+
 
 }// xmlia
 

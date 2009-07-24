@@ -7,53 +7,50 @@
 //
 // *****************************************************************************
 
-#ifndef __XMLIA_Point_h_
-#define __XMLIA_Point_h_
+#ifndef __XmliaReport_h_
+#define __XmliaReport_h_
 
-#include "Entity_ABC.h"
-
-struct ASN1T_CoordLatLong;
-
-namespace plugins
-{
-namespace xmlia
-{
+#include <qdom.h>
 
 // =============================================================================
-/** @class  Point
-    @brief  Point
+/** @class  XmliaReport
+    @brief  XmliaReport
 */
-// Created: MGD 2009-06-12
+// Created: SBO 2008-06-11
 // =============================================================================
-  class Point : public Entity_ABC
+class XmliaReport : public QListViewItem
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    Point();
-    Point( xml::xistream& xis );
-    Point( const double& latitude, const double& longitude );
-    virtual ~Point();
+    XmliaReport( QListView* parent, const QString& report );
+    virtual ~XmliaReport();
     //@}
 
-    ///! @name Operations
+protected:
+    //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos ) const;
-    void Update( dispatcher::Agent& agent );
-    void FillLatLong( ASN1T_CoordLatLong& utm ) const;
+    virtual void activate();
+    //@}
+
+private slots:
+    //! @name Operations
+    //@{
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    XmliaReport( const XmliaReport& );            //!< Copy constructor
+    XmliaReport& operator=( const XmliaReport& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    double latitude_;
-    double longitude_;
+    QDomDocument report_;
     //@}
 };
 
-}// xmlia
-
-}//plugin
-
-#endif // __XMLIA_Point_h_
+#endif // __XmliaReport_h_

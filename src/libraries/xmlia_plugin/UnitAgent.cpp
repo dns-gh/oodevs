@@ -29,12 +29,15 @@ using namespace plugins::xmlia;
 // -----------------------------------------------------------------------------
 UnitAgent::UnitAgent( xml::xistream& xis )
 : Unit_ABC( xis )
+, localisation_ ( 0 )
+, etatOps_ ( 0 )
+, mission_ ( 0 )
 {
-  if( xis.has_child( "mpia:PointGeographique" ) )
+  if( xis.has_child( "PointGeographique" ) )
   {
     localisation_ = new Point( xis );
   }
-  if( xis.has_child( "mpia:EtatOperationnelEntiteOrganisationnelle" ) )
+  if( xis.has_child( "EtatOperationnelEntiteOrganisationnelle" ) )
   {
     etatOps_ = new XmliaOperationalState( xis );
   }
@@ -51,6 +54,7 @@ UnitAgent::UnitAgent( xml::xistream& xis )
 UnitAgent::UnitAgent( dispatcher::Agent& agent )
 : Unit_ABC( agent.GetId(), agent.name_ )
 , idSide_(agent.automat_->team_.GetId() )
+, mission_ ( 0 )
 {
   localisation_ = new Point( agent.position_.latitude, agent.position_.longitude );
   etatOps_      = new XmliaOperationalState( agent );
@@ -121,7 +125,7 @@ void UnitAgent::Update( dispatcher::Agent& agent )
 void UnitAgent::UpdateMission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
 {
   if( mission_ )
-    mission_->Update( mission );
+    mission_->Update( mission, limit1, limit2 );
   else
     mission_ = new Mission( mission, limit1, limit2 );
 }
@@ -151,4 +155,13 @@ Point* UnitAgent::GetLocalization() const
 XmliaOperationalState* UnitAgent::GetOperationalState() const
 {
   return etatOps_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitAgent::GetMission
+// Created: RPD 2009-06-12
+// -----------------------------------------------------------------------------
+Mission* UnitAgent::GetMission() const
+{
+  return mission_;
 }

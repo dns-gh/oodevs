@@ -29,10 +29,10 @@ Mission::Mission( xml::xistream& xis )
   xis >> xml::start( "Mission" )
     >> xml::attribute( "nom", name_ )
     >> xml::start( "LimiteGauche" )
-        >> xml::list( "mpia:PointGeographique", *this, &Mission::ReadPoint, limiteGauche_ )
+        >> xml::list( "PointGeographique", *this, &Mission::ReadPoint, leftLimit_ )
     >> xml::end()
     >> xml::start( "LimiteDroite" )
-        >> xml::list( "mpia:PointGeographique", *this, &Mission::ReadPoint, limiteDroite_ )
+        >> xml::list( "PointGeographique", *this, &Mission::ReadPoint, rightLimit_ )
     >> xml::end()
     >> xml::end();
 }
@@ -44,8 +44,8 @@ Mission::Mission( xml::xistream& xis )
 Mission::Mission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
 : Entity_ABC()
 , name_( mission.GetName() )
-, limiteGauche_( limit1 )
-, limiteDroite_( limit2 )
+, leftLimit_( limit1 )
+, rightLimit_( limit2 )
 {}
 
 // -----------------------------------------------------------------------------
@@ -74,13 +74,13 @@ void Mission::Serialize( xml::xostream& xos ) const
   xos << xml::start( "Mission" )
     << xml::attribute( "nom", name_ )
     << xml::start( "LimiteGauche" );
-  for( std::vector< Point >::const_iterator it = limiteGauche_.begin(); it != limiteGauche_.end(); it++ )
+  for( std::vector< Point >::const_iterator it = leftLimit_.begin(); it != leftLimit_.end(); it++ )
   {
       it->Serialize( xos );
   }
   xos << xml::end()
     << xml::start( "LimiteDroite" );
-  for( std::vector< Point >::const_iterator it = limiteDroite_.begin(); it != limiteDroite_.end(); it++ )
+  for( std::vector< Point >::const_iterator it = rightLimit_.begin(); it != rightLimit_.end(); it++ )
   {
       it->Serialize( xos );
   }
@@ -92,7 +92,28 @@ void Mission::Serialize( xml::xostream& xos ) const
 // Name: Mission::Update
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Mission::Update( kernel::MissionType& agent )
+void Mission::Update( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
 {
+  name_ = mission.GetName();
+  leftLimit_ = limit1;
+  rightLimit_ = limit2;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::GetLeftLimit
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+const std::vector< Point >& Mission::GetLeftLimit() const
+{
+  return leftLimit_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::GetRightLimit
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+const std::vector< Point >& Mission::GetRightLimit() const
+{
+  return rightLimit_;
 }
 

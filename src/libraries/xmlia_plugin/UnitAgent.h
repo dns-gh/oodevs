@@ -62,6 +62,7 @@ public:
     bool IsSide( unsigned int idSide) const;
     Point* GetLocalization() const;
     XmliaOperationalState* GetOperationalState() const;
+    Mission* GetMission() const;
     //@}
 
 private:

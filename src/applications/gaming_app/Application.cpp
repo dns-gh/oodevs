@@ -99,7 +99,7 @@ void Application::Initialize()
         Initialize( argc(), argv() );
     }
     catch( std::exception& e )
-    {
+    { 
         QMessageBox::critical( 0, tools::translate( "Application", "SWORD Officer Training" ), e.what() );
         throw CatchMeIfYouCan();
     }

@@ -7,7 +7,9 @@
 PluginMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 -- BEGIN includes
-IMPORTS PluginExports FROM Plugin;
+IMPORTS PluginExports FROM Plugin
+        LimaLimiteExports             FROM LimaLimite
+        IntelligenceExports           FROM Intelligence;
 
 PluginMessagesIncludes ::= SEQUENCE
 { PluginExports }
@@ -24,7 +26,13 @@ MsgsPluginToClient ::= SEQUENCE
     msg     CHOICE
     {
         plugin-text-message                              MsgPluginTextMessage,
-        plugin-intelligence-creation                    MsgPluginIntelligenceCreation
+        plugin-intelligence-creation                    MsgIntelligenceCreation,
+        plugin-intelligence-update                    MsgIntelligenceUpdate,
+        plugin-intelligence-destruction                    MsgIntelligenceDestruction,
+        
+        plugin-limit-creation                                      MsgLimitCreation,
+        plugin-limit-update                                        MsgLimitUpdate,
+        plugin-limit-destruction                                 MsgLimitDestruction
     }
 }
 

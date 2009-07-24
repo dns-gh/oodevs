@@ -52,6 +52,7 @@
 #include "Properties.h"
 #include "LoggerProxy.h"
 #include "ChatDock.h"
+#include "XmliaPanel.h"
 #include "CommandFacade.h"
 #include "ClientCommandFacade.h"
 #include "MessagePanel.h"
@@ -264,6 +265,12 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QDockWindow* chatDock = new ChatDock( this, controllers_, publisher, network.GetCommands() );
     moveDockWindow( chatDock, Qt::DockBottom );
     chatDock->hide();
+
+    // Xmlia
+    QDockWindow* xmliaPanel = new XmliaPanel( this, controllers_, publisher, network.GetCommands() );
+    moveDockWindow( xmliaPanel, Qt::DockTop );
+    setDockEnabled( xmliaPanel, Qt::DockTop, false );
+    xmliaPanel->hide();
 
     new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, profile );
     new ClientCommandFacade( this, controllers_, publisher );

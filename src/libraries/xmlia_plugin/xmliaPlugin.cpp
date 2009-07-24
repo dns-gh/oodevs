@@ -14,8 +14,10 @@
 #include "LdapClient.h"
 #include "ClientManager.h"
 #include "ReportManager.h"
+#include "ReportManagerActor.h"
 #include "Simulation.h"
 #include "dispatcher/Model.h"
+#include "Point.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
 #include <xeumeuleu/xml.h>
@@ -27,6 +29,7 @@
 #include "dispatcher/Profile_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/ClientPublisher_ABC.h"
+#include "game_asn/Plugin.h"
 
 using namespace plugins::xmlia;
 
@@ -38,29 +41,30 @@ XmliaPlugin::XmliaPlugin( dispatcher::Model& model,
                           xml::xistream& xis,
                           dispatcher::SimulationPublisher_ABC& simulationPublisher )
     : model_( model )
-	, simulationPublisher_ ( simulationPublisher )
-    , clientProfile_ ( 0 )
-    , clientPublisher_ ( 0 )
+	  , simulationPublisher_ ( simulationPublisher )
     , publisher_( new Publisher( xis ) ) 
     , simulation_( new Simulation() )
-    , ldap_ ( new LdapClient() )
-    , clientManager_ ( new ClientManager() )
-    , reportManager_( new ReportManager( model_, simulationPublisher_, *ldap_, *clientManager_ ) )
-    , extensionFactory_( new ExtensionFactory( *publisher_, *reportManager_, *simulation_, model_ ) )
+    , ldap_ ( new LdapClient( xis ) )
+    , clientManager_ ( new ClientManager( xis, *ldap_ ) )
     , nCptTick_(0)
 {
+  xis >> xml::attribute( "export", bExportActivation_ )
+    >> xml::attribute( "import", bImportActivation_ )
+    >> xml::attribute( "nbTicks", nTick_ );
+
+    reportManager_.reset( new ReportManager( model_, simulationPublisher_, *ldap_, *clientManager_ ) );
+    reportManagerActor_.reset( new ReportManagerActor( *reportManager_ ) );
+    extensionFactory_.reset( new ExtensionFactory( *publisher_, *reportManager_, *simulation_, model_, bExportActivation_ ) );
     model_.RegisterFactory( *extensionFactory_ );
     
-    xis >> xml::attribute( "export", bExportActivation_ )
-        >> xml::attribute( "import", bImportActivation_ )
-        >> xml::attribute( "nbTicks", nTick_ );
 
-    if( bImportActivation_ && false )
+    //hack de test
+    if( bImportActivation_ )
     {
         try
         {
             ldap_->LdapConnection();
-            ldap_->ReadLdapContent();
+            bool isAuthorizedTest = ldap_->ReadLdapContent( "g18" );
         }
         catch( std::exception& e )
         {
@@ -91,19 +95,11 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
          
           simulation_->Update( *message.msg.u.msg_control_end_tick );//@NOTE, keep could be usefull for other message
  
-          //HACK de TEST 
-          if( true /*type == "SITREP"*/ )
-          {
-              dispatcher::Profile_ABC* profile = clientManager_->GetClientProfile();
-              dispatcher::ClientPublisher_ABC* target = clientManager_->GetClientPublisher();
-          }
-          //$$ HACK de TEST 
-
           if( bExportActivation_ )
           {
             try
             {
-              reportManager_->Send( *publisher_ );
+              reportManagerActor_->Send( *publisher_ );
             }
             catch( std::exception& e )
             {
@@ -111,13 +107,11 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
             }  
           }
 
-          if( bImportActivation_ )
+          if( bImportActivation_  && !clientManager_->HasNoClient() )
           {
             try
             {
-              reportManager_->CleanReceivedRapport();
-              reportManager_->Receive(*publisher_);
-              reportManager_->UpdateSimulation();
+              reportManagerActor_->Receive(*publisher_);
             }
             catch( std::exception& e )
             {
@@ -138,8 +132,6 @@ void XmliaPlugin::Receive( const ASN1T_MsgsSimToClient& message )
 void XmliaPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
 {
     clientManager_->NotifyClient( client, profile );
-    /*SetClientPublisher( client );
-    SetClientProfile( profile );*/
 }
 
 // -----------------------------------------------------------------------------

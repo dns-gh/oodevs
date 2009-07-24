@@ -38,7 +38,8 @@ namespace plugins
       //@{
       void Serialize( xml::xostream& xos ) const;
       void Update( dispatcher::Agent& agent );
-      std::string& GetGeneralOperationalState();
+      const std::string& GetGeneralOperationalState() const;
+      float GetAverageDotation() const;
       //@}
 
     private:

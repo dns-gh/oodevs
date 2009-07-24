@@ -53,7 +53,7 @@ Report_ABC::Report_ABC( ReportManager& manager, xml::xistream& xis,  const std::
 
   xis >> xml::start( "Entete" )
         >> xml::start( "Origine" );
-        author_ = new UnitAutomate( xis );//Replace balise and add a factory
+        author_ = new UnitAutomate( xis );
     xis >> xml::end()
         >> xml::start( "DestinatairesPourAction" );
         dest_ = new UnitFormation( xis );
@@ -93,12 +93,14 @@ Report_ABC::~Report_ABC()
 // -----------------------------------------------------------------------------
 void Report_ABC::Serialize( xml::xostream& xos ) const
 {
-  xos << xml::start( type_ );
+  xos << xml::start( "MPIA_Message" )
+      << xml::start( type_ );
 
   SerializeHeader( xos );
   SerializeContent( xos );
 
-  xos << xml::end();
+  xos << xml::end()
+      << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -118,4 +120,13 @@ void Report_ABC::SerializeHeader( xml::xostream& xos ) const
     xos << xml::end()
         << xml::content( "GDHRapport", time ) 
       << xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Report_ABC::GetType
+// Created: MGD 2009-07-06
+// -----------------------------------------------------------------------------
+std::string Report_ABC::GetType() const
+{
+  return type_;
 }

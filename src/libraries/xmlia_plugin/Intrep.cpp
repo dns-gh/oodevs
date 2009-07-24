@@ -42,7 +42,7 @@ Intrep::Intrep( ReportManager& manager, xml::xistream& xis )
 {
   xis >> xml::start( "Cible" )
     >> xml::start( "Unite" );
-  fired = new UnitAgent( xis );
+  fired_ = new UnitAgent( xis );
   xis >> xml::end()
     >> xml::end();
 }
@@ -53,6 +53,7 @@ Intrep::Intrep( ReportManager& manager, xml::xistream& xis )
 // -----------------------------------------------------------------------------
 Intrep::Intrep( ReportManager& manager, dispatcher::Automat& author )
 : Report_ABC( manager, author, "Intrep" )
+, fired_ ( 0 )
 {}
 
 // -----------------------------------------------------------------------------
@@ -61,8 +62,8 @@ Intrep::Intrep( ReportManager& manager, dispatcher::Automat& author )
 // -----------------------------------------------------------------------------
 Intrep::~Intrep()
 {
-  if( fired )
-    delete fired;
+  if( fired_ )
+    delete fired_;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,9 +74,9 @@ void Intrep::SerializeContent( xml::xostream& xos ) const
 {
   xos << xml::start( "Cible" )
       << xml::start( "Unite" );
-    fired->Serialize( xos );
-    fired->SerializePosition( xos );
-    fired->SerializeEtatOps( xos );
+    fired_->Serialize( xos );
+    fired_->SerializePosition( xos );
+    fired_->SerializeEtatOps( xos );
     xos << xml::end()
       << xml::end();
 }
@@ -87,7 +88,8 @@ void Intrep::SerializeContent( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Intrep::UpdateSimulation()
 {
-  //@TODO
+  if( fired_ )
+    reportManager_.InsertOrUpdateIntelligence( *fired_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +98,8 @@ void Intrep::UpdateSimulation()
 // -----------------------------------------------------------------------------
 void Intrep::InsertOrUpdateEnemy( dispatcher::Agent& agent )
 {
-  if( !fired )
-    fired = new UnitAgent( agent );
+  if( !fired_ )
+    fired_ = new UnitAgent( agent );
   else
-    fired->Update( agent );
+    fired_->Update( agent );
 }

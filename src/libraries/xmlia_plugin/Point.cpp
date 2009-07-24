@@ -31,9 +31,9 @@ Point::Point( )
 // -----------------------------------------------------------------------------
 Point::Point( xml::xistream& xis )
 {
-  xis >> xml::start( "mpia:PointGeographique" )
-        >> xml::content( "mpia:Latitude", latitude_ )
-        >> xml::content( "mpia:Latitude", longitude_ )
+  xis >> xml::start( "PointGeographique" )
+        >> xml::content( "Latitude", latitude_ )
+        >> xml::content( "Longitude", longitude_ )
       >> xml::end();
 }
 
@@ -62,9 +62,9 @@ Point::~Point()
 // -----------------------------------------------------------------------------
 void Point::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::start( "mpia:PointGeographique" )
-          << xml::content( "mpia:Latitude" , latitude_ )
-          << xml::content( "mpia:Longitude", longitude_ )
+    xos << xml::start( "PointGeographique" )
+          << xml::content( "Latitude" , latitude_ )
+          << xml::content( "Longitude", longitude_ )
         << xml::end();
 }
 
@@ -82,7 +82,7 @@ void Point::Update( dispatcher::Agent& agent )
 // Name: Point::Update
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
-void Point::FillLatLong( ASN1T_CoordLatLong& utm )
+void Point::FillLatLong( ASN1T_CoordLatLong& utm ) const
 {
     utm.latitude = ( ASN1REAL ) latitude_;
     utm.longitude = ( ASN1REAL ) longitude_;

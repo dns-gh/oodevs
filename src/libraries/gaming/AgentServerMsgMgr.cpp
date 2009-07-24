@@ -1470,19 +1470,12 @@ void AgentServerMsgMgr::OnReceiveMsgTextMessage( const ASN1T_MsgTextMessage& mes
 // Name: AgentServerMsgMgr::OnReceiveMsgXmliaTextMessage
 // Created: RPD 2009-07-12
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPluginTextMessage  ( const ASN1T_MsgPluginTextMessage& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPluginTextMessage  ( const ASN1T_MsgPluginTextMessage& message )
 {
-       //commands_.Receive( message.source.profile, message.target.profile, message.message );
+    commands_.Receive( "xmlia", message.destinataire, message.message );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgXmliaTextMessage
-// Created: RPD 2009-07-12
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPluginIntelligenceCreation  ( const ASN1T_MsgPluginIntelligenceCreation& asnMsg )
-{
-    //commands_.Receive( message.source.profile, message.target.profile, message.message );
-}
+
 
 
 namespace
@@ -1767,8 +1760,12 @@ void AgentServerMsgMgr::OnReceiveMsgPluginToClient( const std::string& , const A
 {
     switch( message.msg.t )
     {
-    case T_MsgsPluginToClient_msg_plugin_text_message:       OnReceiveMsgPluginTextMessage( *message.msg.u.plugin_text_message ); break;
-    case T_MsgsPluginToClient_msg_plugin_intelligence_creation:       OnReceiveMsgPluginIntelligenceCreation( *message.msg.u.plugin_intelligence_creation ); break;
+    case T_MsgsPluginToClient_msg_plugin_text_message:             OnReceiveMsgPluginTextMessage( *message.msg.u.plugin_text_message ); break;
+    case T_MsgsPluginToClient_msg_plugin_intelligence_creation:    OnReceiveMsgIntelligenceCreation( *message.msg.u.plugin_intelligence_creation ); break;
+    case T_MsgsPluginToClient_msg_plugin_intelligence_update:      OnReceiveMsgIntelligenceUpdate( *message.msg.u.plugin_intelligence_update ); break;
+    case T_MsgsPluginToClient_msg_plugin_intelligence_destruction: OnReceiveMsgIntelligenceDestruction( *message.msg.u.plugin_intelligence_destruction ); break;
+    case T_MsgsPluginToClient_msg_plugin_limit_creation:           OnReceiveMsgLimitCreation( *message.msg.u.plugin_limit_creation ); break;
+    case T_MsgsPluginToClient_msg_plugin_limit_destruction:        OnReceiveMsgLimitDestruction( message.msg.u.plugin_limit_destruction ); break;
     default:
         UnhandledMessage( message.msg.t );
     }

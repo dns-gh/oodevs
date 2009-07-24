@@ -39,20 +39,13 @@ using namespace plugins::xmlia;
 // -----------------------------------------------------------------------------
 Opord::Opord( ReportManager& manager, xml::xistream& xis )
 :  Report_ABC( manager, xis, "Opord" )
+, automat_( 0 )
 {
   xis >> xml::start( "Missions" )
-    >> xml::list( "Unite", *this, &Opord::ReadUnite, unitesAMI_ )
+    >> xml::start( "Unite" );
+    automat_ = new UnitAutomate( xis );
+  xis >> xml::end()
     >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Frago ReadUnite
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-void Opord::ReadUnite( xml::xistream& xis, std::map< unsigned, UnitAgent* >& map )
-{
-  UnitAgent* agent = new UnitAgent( xis );
-  map[agent->GetId()] = agent;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,14 +54,20 @@ void Opord::ReadUnite( xml::xistream& xis, std::map< unsigned, UnitAgent* >& map
 // -----------------------------------------------------------------------------
 Opord::Opord( ReportManager& manager, dispatcher::Automat& author )
 : Report_ABC( manager, author, "Opord" )
-{}
+, automat_( 0 )
+{
+  automat_ = new UnitAutomate( author );
+}
 
 // -----------------------------------------------------------------------------
 // Name: Opord destructor
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
 Opord::~Opord()
-{}
+{
+  if( automat_ )
+    delete automat_;
+}
 
 
 // -----------------------------------------------------------------------------
@@ -77,16 +76,12 @@ Opord::~Opord()
 // -----------------------------------------------------------------------------
 void Opord::SerializeContent( xml::xostream& xos ) const
 {
-  xos << xml::start( "Missions" );
-  for( std::map< unsigned, UnitAgent* >::const_iterator it = unitesAMI_.begin(); it != unitesAMI_.end(); it++ )
-  {
-    xos << xml::start( "Unite" );
-    it->second->Serialize( xos );
-    it->second->SerializeMission( xos );
-    xos << xml::end();
-  }
-  xos << xml::end()
-    << xml::end();
+  xos << xml::start( "Missions" )
+        << xml::start( "Unite" );
+          automat_->Serialize( xos );
+          automat_->SerializeMission( xos );
+   xos  << xml::end()
+      << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +90,7 @@ void Opord::SerializeContent( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Opord::UpdateMission( kernel::MissionType& mission,  std::vector< Point >& limit1, std::vector< Point >& limit2  )
 {
-  author_->UpdateMission( mission, limit1, limit2 );
+  automat_->UpdateMission( mission, limit1, limit2 );
 }
 
 
@@ -105,5 +100,5 @@ void Opord::UpdateMission( kernel::MissionType& mission,  std::vector< Point >& 
 // -----------------------------------------------------------------------------
 void Opord::UpdateSimulation()
 {
-  //@TODO
+  reportManager_.NewOrderUpdate( *automat_ );
 }

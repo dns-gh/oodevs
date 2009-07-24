@@ -98,6 +98,7 @@ void Logassessrep::InsertOrUpdateFriendly( dispatcher::Agent& agent )
 // -----------------------------------------------------------------------------
 void Logassessrep::SerializeContent( xml::xostream& xos ) const
 { 
+  float average = 0;
   xos << xml::start( "SituationAMI" )
         << xml::start( "Unites" );
         for( std::map< unsigned, UnitAgent* >::const_iterator it = unitesAMI_.begin(); it != unitesAMI_.end(); it++ )
@@ -105,12 +106,12 @@ void Logassessrep::SerializeContent( xml::xostream& xos ) const
           xos << xml::start( "Unite" );
           it->second->Serialize( xos );
           it->second->SerializeEtatOps( xos );
+          average += it->second->GetOperationalState()->GetAverageDotation();
           xos << xml::end();
         }
     xos << xml::end()
-      << xml::end();
-
-    //@TODO ADD log moyen
+      << xml::end()
+    << xml::content("SituationLogistiqueGenerale", average );
 }
 
 
@@ -121,5 +122,8 @@ void Logassessrep::SerializeContent( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Logassessrep::UpdateSimulation()
 {
-  //@TODO
+  for( std::map< unsigned, UnitAgent* >::const_iterator it = unitesAMI_.begin(); it != unitesAMI_.end(); it++ )
+  {
+    reportManager_.UpdateOperationnalState( *(it->second) );
+  }
 }

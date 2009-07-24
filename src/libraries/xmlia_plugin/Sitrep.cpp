@@ -67,7 +67,7 @@ void Sitrep::ReadUnite( xml::xistream& xis, std::map< unsigned, UnitAgent* >& ma
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
 Sitrep::Sitrep( ReportManager& manager, dispatcher::Automat& author )
-: Report_ABC( manager, author, "SITREP" )
+: Report_ABC( manager, author, "Sitrep" )
 {}
 
 // -----------------------------------------------------------------------------
@@ -156,78 +156,16 @@ void Sitrep::SerializeContent( xml::xostream& xos ) const
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
 void Sitrep::UpdateSimulation()
-{//@TODO share action with other report and call reportManager With push 
-  dispatcher::SimulationPublisher_ABC& simPublisher = reportManager_.GetSimulationPublisher();
-  dispatcher::ClientPublisher_ABC& clientPublisher = reportManager_.GetClientPublisher();
-	unsigned int authorID = author_->GetId();
-	unsigned long authorSideID = reportManager_.GetModel().automats_.Find( authorID )->team_.GetId();
-	dispatcher::Agent* simAuthorAgent = reportManager_.GetModel().agents_.Find( authorID );
-
-
+{
   for( std::map< unsigned, UnitAgent* >::const_iterator it = unitesAMI_.begin(); it != unitesAMI_.end(); it++ )
   {
-    UnitAgent* reportAgent = it-> second;
-    dispatcher::Agent* simAgent = reportManager_.GetModel().agents_.Find( it->first );
-
-    if ( simAgent != 0 )
-    {
-      simulation::UnitMagicAction asnMsg;
-      ASN1T_CoordLatLong utm;
-      asnMsg().oid = reportAgent->GetId();
-      asnMsg().action.t                        = T_MsgUnitMagicAction_action_move_to;
-      reportAgent->GetLocalization()->FillLatLong( utm );
-      asnMsg().action.u.move_to = &utm;
-      asnMsg.Send( simPublisher );
-    
-      if ( reportAgent->GetOperationalState()->GetGeneralOperationalState() == "NOP" )
-      {
-        simulation::UnitMagicAction asnMsg;
-        ASN1T_MagicActionPartialRecovery asnPartialRecovery;
-        asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
-        asnMsg().oid = reportAgent->GetId();
-        asnMsg().action.u.recompletement_partiel = &asnPartialRecovery;
-        asnPartialRecovery.m.equipementsPresent = 0;
-        asnPartialRecovery.m.personnelsPresent = 0;
-        asnPartialRecovery.m.dotationsPresent = 0;
-        asnPartialRecovery.m.munitionsPresent = 0;
-        asnPartialRecovery.m.stocksPresent = 0;
-        asnMsg.Send( simPublisher );
-      }
-    }
+    reportManager_.MagicMove( *(it->second) );
+    reportManager_.UpdateOperationnalState( *(it->second) );
   }
 
   for( std::map< unsigned, UnitAgent* >::const_iterator it = unitesENI_.begin(); it != unitesENI_.end(); it++ )
   {
-    UnitAgent* reportAgent = it-> second;
-    dispatcher::Agent* simAgent = reportManager_.GetModel().agents_.Find( it->first );
-    if ( simAgent != 0 )
-    {
-      ASN1T_MsgsPluginToClient asnMsg;
-      ASN1T_MsgPluginIntelligenceCreation asnTmp;
-      ASN1T_CoordLatLong utm;
-      asnMsg.msg.t              = T_MsgsPluginToClient_msg_plugin_intelligence_creation;
-      asnTmp.oid = reportAgent->GetId();
-      asnMsg.msg.u.plugin_intelligence_creation = &asnTmp;
-      reportAgent->GetLocalization()->FillLatLong( utm );
-      asnTmp.intelligence.name = reportAgent->GetName().c_str();
-      asnTmp.intelligence.nature = "ENI";
-      asnTmp.intelligence.location = utm;
-      clientPublisher.Send( asnMsg );
-
-      if ( reportAgent->GetOperationalState()->GetGeneralOperationalState() == "NOP" )
-      {
-        simulation::UnitMagicAction asnMsg;
-        ASN1T_MagicActionPartialRecovery asnPartialRecovery;
-        asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
-        asnMsg().oid = reportAgent->GetId();
-        asnMsg().action.u.recompletement_partiel = &asnPartialRecovery;
-        asnPartialRecovery.m.equipementsPresent = 0;
-        asnPartialRecovery.m.personnelsPresent = 0;
-        asnPartialRecovery.m.dotationsPresent = 0;
-        asnPartialRecovery.m.munitionsPresent = 0;
-        asnPartialRecovery.m.stocksPresent = 0;
-        asnMsg.Send( simPublisher );
-      }
-    }
+    reportManager_.InsertOrUpdateIntelligence( *(it->second) );
+    reportManager_.UpdateOperationnalState( *(it->second) ); //@TODO WHY magic action if we work with intelligence??? 
   }
 }

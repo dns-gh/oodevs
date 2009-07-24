@@ -164,7 +164,8 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
         case T_MsgsSimToClient_msg_msg_unit_attributes:                      agents_.Get( asn.msg.u.msg_unit_attributes->oid ).Update( *asn.msg.u.msg_unit_attributes ); break;
         case T_MsgsSimToClient_msg_msg_automat_attributes:                   automats_.Get( asn.msg.u.msg_automat_attributes->oid ).Update( *asn.msg.u.msg_automat_attributes  ); break;
         case T_MsgsSimToClient_msg_msg_unit_pathfind:                        agents_.Get( asn.msg.u.msg_unit_pathfind->oid ).Update( *asn.msg.u.msg_unit_pathfind ); break;
-        case T_MsgsSimToClient_msg_msg_start_unit_fire:                      CreateUpdate( fires_, asn.msg.u.msg_start_unit_fire->fire_oid, *asn.msg.u.msg_start_unit_fire ); break;
+        case T_MsgsSimToClient_msg_msg_start_unit_fire:                      CreateUpdate( fires_, asn.msg.u.msg_start_unit_fire->fire_oid, *asn.msg.u.msg_start_unit_fire );
+                                                                             agents_.Get( asn.msg.u.msg_start_unit_fire->firer_oid ).Update( *asn.msg.u.msg_start_unit_fire ); break;
         case T_MsgsSimToClient_msg_msg_stop_unit_fire:                       Destroy( fires_, asn.msg.u.msg_stop_unit_fire->fire_oid ); break;
         case T_MsgsSimToClient_msg_msg_start_population_fire:                CreateUpdate( populationFires_, asn.msg.u.msg_start_population_fire->fire_oid, *asn.msg.u.msg_start_population_fire ); break;
         case T_MsgsSimToClient_msg_msg_stop_population_fire:                 Destroy( populationFires_, asn.msg.u.msg_stop_population_fire->fire_oid ); break;
@@ -175,6 +176,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
         case T_MsgsSimToClient_msg_msg_trace:
             break;  // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
         case T_MsgsSimToClient_msg_msg_unit_detection:                       agents_.Get( asn.msg.u.msg_unit_detection->oid ).Update( *asn.msg.u.msg_unit_detection ); break;
+        case T_MsgsSimToClient_msg_msg_object_detection:                     agents_.Get( asn.msg.u.msg_object_detection->oid ).Update( *asn.msg.u.msg_object_detection ); break;
         case T_MsgsSimToClient_msg_msg_decisional_state:                     UpdateAnyAgent( asn.msg.u.msg_decisional_state->oid, *asn.msg.u.msg_decisional_state ); break;
         case T_MsgsSimToClient_msg_msg_start_fire_effect:                    CreateUpdate( fireEffects_, asn.msg.u.msg_start_fire_effect->effect_oid, *asn.msg.u.msg_start_fire_effect ); break;
         case T_MsgsSimToClient_msg_msg_stop_fire_effect:                     Destroy( fireEffects_, asn.msg.u.msg_stop_fire_effect ); break;
@@ -226,7 +228,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
         case T_MsgsSimToClient_msg_msg_folk_creation                                  : folk_->Update( *asn.msg.u.msg_folk_creation ); break;
 
 //        default:
-//            assert( false );
+//            assert( false );//@TODO restore an exception, some messages aren't linked
     }
 }
 

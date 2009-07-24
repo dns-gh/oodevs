@@ -40,7 +40,6 @@ class AgentExtension : public XmliaExtension_ABC
                      , public kernel::Updatable_ABC< ASN1T_MsgObjectDetection >
                      , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
                      , public kernel::Updatable_ABC< ASN1T_MsgStartUnitFire >
-                     , public kernel::Updatable_ABC< ASN1T_DotationQuery >
 {
 
 public:
@@ -57,7 +56,6 @@ public:
     virtual void DoUpdate( const ASN1T_MsgObjectDetection& message );
     virtual void DoUpdate( const ASN1T_MsgUnitOrder& message );
     virtual void DoUpdate( const ASN1T_MsgStartUnitFire& message );
-    virtual void DoUpdate( const ASN1T_DotationQuery& message );
     //@}
 
 private:

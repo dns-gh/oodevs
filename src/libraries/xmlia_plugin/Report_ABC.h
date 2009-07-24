@@ -66,7 +66,12 @@ namespace plugins
       virtual void InsertOrUpdateEnemy( dispatcher::Agent& agent ){};
       virtual void InsertOrUpdateNBC( dispatcher::Object& agent ){};
       virtual void UpdateMission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 ){};
+      virtual void UpdateMission( dispatcher::Agent& agent, kernel::MissionType& mission,  std::vector< Point >& limit1, std::vector< Point >& limit2 ){}
       virtual void UpdateSimulation() = 0 ;
+      //@}
+      ///! @name Accessors
+      //@{
+      std::string Report_ABC::GetType() const;
       //@}
 
     protected:

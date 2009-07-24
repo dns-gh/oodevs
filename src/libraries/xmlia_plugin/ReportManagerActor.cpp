@@ -8,78 +8,73 @@
 // *****************************************************************************
 
 #include "xmlia_plugin_pch.h"
-#include "UnitAutomate.h"
-
-#include "dispatcher/Automat.h"
-
-#include "xmlia_plugin/Mission.h"
-
-#include <xeumeuleu/xml.h>
+#include "ReportManagerActor.h"
+#include "ReportManager.h"
+#undef Yield
+#undef GetMessage
+#include "tools/thread/ThreadPool.h"
+#include <boost/bind.hpp>
+#include "Publisher_ABC.h"
 
 using namespace plugins::xmlia;
 
 // -----------------------------------------------------------------------------
-// Name: UnitAutomate constructor
-// Created: MGD 2009-06-12
+// Name: ReportManagerActor constructor
+// Created: SLG 2008-05-30
 // -----------------------------------------------------------------------------
-UnitAutomate::UnitAutomate( const dispatcher::Automat& automat )
-: Unit_ABC( automat.GetId(), automat.name_ )
-, mission_ ( 0 )
-{}
-
-// -----------------------------------------------------------------------------
-// Name: UnitAutomate constructor
-// Created: MGD 2009-06-12
-// -----------------------------------------------------------------------------
-UnitAutomate::UnitAutomate( xml::xistream& xis )
-: Unit_ABC( xis )
-, mission_ ( 0 )
+ReportManagerActor::ReportManagerActor( ReportManager& base )
+: base_( base )
+, thread_( new tools::thread::ThreadPool( 1 ) )
 {
-  if( xis.has_child( "Mission" ) )
-  {
-    mission_ = new Mission( xis );
-  }
+  // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitAutomate destructor
-// Created: MGD 2009-06-12
+// Name: ReportManagerActor destructor
+// Created: SLG 2008-05-30
 // -----------------------------------------------------------------------------
-UnitAutomate::~UnitAutomate()
+ReportManagerActor::~ReportManagerActor()
 {
-  if( mission_ )
-    delete mission_;
+  // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportManagerActor::PushReports
+// Created: SLG 2008-05-30
+// -----------------------------------------------------------------------------
+void ReportManagerActor::Send( Publisher_ABC& publisher )
+{
+  thread_->Enqueue( boost::bind( &ReportManagerActor::DoPushReports, this, boost::ref( publisher ) ) );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: UnitAutomate::UpdateMission
-// Created: MGD 2009-06-12
+// Name: ReportManagerActor::PullOrder
+// Created: SLG 2008-05-30
 // -----------------------------------------------------------------------------
-void UnitAutomate::UpdateMission( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 )
+void ReportManagerActor::Receive( Publisher_ABC& publisher )
 {
-    if( mission_ )
-        mission_->Update( mission, limit1, limit2 );
-    else
-        mission_ = new Mission( mission, limit1, limit2 );
+  thread_->Enqueue( boost::bind( &ReportManagerActor::DoReceiveReports, this, boost::ref( publisher ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitAutomate::SerializeMission
-// Created: MGD 2009-06-12
+// Name: ReportManagerActor::DoPushReports
+// Created: SLG 2008-05-30
 // -----------------------------------------------------------------------------
-void UnitAutomate::SerializeMission( xml::xostream& xos ) const
+void ReportManagerActor::DoPushReports( Publisher_ABC& publisher )
 {
-  if( mission_ )
-    mission_->Serialize( xos );
+  base_.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportManagerActor::DoPullOrder
+// Created: SLG 2008-05-30
+// -----------------------------------------------------------------------------
+void ReportManagerActor::DoReceiveReports( Publisher_ABC& publisher )
+{
+  base_.CleanReceivedRapport();
+  base_.Receive( publisher );
+  base_.UpdateSimulation();
 }
 
 
-// -----------------------------------------------------------------------------
-// Name: UnitAutomate::GetMission
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-Mission* UnitAutomate::GetMission() const
-{
-  return mission_;
-}

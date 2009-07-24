@@ -40,9 +40,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetUrlReports() = 0;
+    virtual std::string GetUrlReports( const std::string& messageType, const std::string& lastRequestTime ) = 0;
     virtual std::string GetXmliaMessage( const std::string& url ) = 0;
-    virtual std::string GetUrlId() = 0;
+    virtual std::string GetUrlId( const std::string& messageType ) = 0;
     virtual void PushReport( const std::string& xmliaMessage, const std::string& strPoe ) = 0;
     //@}
 };

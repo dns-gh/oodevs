@@ -44,11 +44,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetUrlReports();
+    virtual std::string GetUrlReports( const std::string& messageType, const std::string& lastRequestTime );
     virtual std::string GetXmliaMessage( const std::string& url );
-    virtual std::string GetUrlId();
+    virtual std::string GetUrlId( const std::string& messageType );
     virtual void PushReport( const std::string& xmliaMessage, const std::string& strPoe );
-    
     //@}
 
 private:
@@ -68,7 +67,6 @@ private:
     //@{
     std::auto_ptr< xml::xostringstream > reports_;
     boost::recursive_mutex mutex_;
-    std::string lastRequestTime_;
     std::string webServiceHost_;
     std::string webservicePort_;
     //@}

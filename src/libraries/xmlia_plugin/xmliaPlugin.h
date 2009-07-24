@@ -33,6 +33,7 @@ namespace xmlia
     class Simulation;
     class LdapClient;
     class ClientManager;
+    class ReportManagerActor;
 
 // =============================================================================
 /** @class  XmliaPlugin
@@ -56,10 +57,6 @@ public:
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     //@}
-    //dispatcher::Profile_ABC* GetClientProfile() const;
-    //void SetClientProfile( dispatcher::Profile_ABC& profile );
-    //dispatcher::ClientPublisher_ABC* GetClientPublisher() const;
-    //void SetClientPublisher( dispatcher::ClientPublisher_ABC& publisher );
 
 private:
     //! @name Copy/Assignment
@@ -77,10 +74,9 @@ private:
     //@{
     dispatcher::Model& model_;
     dispatcher::SimulationPublisher_ABC& simulationPublisher_;
-    dispatcher::Profile_ABC* clientProfile_;
-    dispatcher::ClientPublisher_ABC* clientPublisher_;
     std::auto_ptr< Publisher > publisher_;
     std::auto_ptr< Simulation > simulation_;
+    std::auto_ptr< ReportManagerActor > reportManagerActor_;
     std::auto_ptr< ReportManager > reportManager_;
     std::auto_ptr< ExtensionFactory > extensionFactory_;
     std::auto_ptr< LdapClient > ldap_;

@@ -40,7 +40,7 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory( Publisher_ABC& publisher, ReportManager& reportManager, const Simulation& simulation, const dispatcher::Model& model );
+             ExtensionFactory( Publisher_ABC& publisher, ReportManager& reportManager, const Simulation& simulation, const dispatcher::Model& model, bool export );
     virtual ~ExtensionFactory();
     //@}
 
@@ -64,6 +64,7 @@ private:
     ReportManager& reportManager_;
     const Simulation& simulation_;
     const dispatcher::Model& model_;
+    bool bExport_;
     //@}
 };
 

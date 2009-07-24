@@ -84,15 +84,14 @@ void Frago::SerializeContent( xml::xostream& xos ) const
     it->second->SerializeMission( xos );
     xos << xml::end();
   }
-  xos << xml::end()
-    << xml::end();
+  xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Frago::UpdateMission
 // Created: MGD 2009-06-12
 // -----------------------------------------------------------------------------
-void Frago::UpdateMission( dispatcher::Agent agent, kernel::MissionType& mission,  std::vector< Point >& limit1, std::vector< Point >& limit2 )
+void Frago::UpdateMission( dispatcher::Agent& agent, kernel::MissionType& mission,  std::vector< Point >& limit1, std::vector< Point >& limit2 )
 {
   std::map< unsigned, UnitAgent* >::iterator itFind = unitesAMI_.find( agent.GetId() );
   if( itFind == unitesAMI_.end() )
@@ -110,5 +109,5 @@ void Frago::UpdateMission( dispatcher::Agent agent, kernel::MissionType& mission
 // -----------------------------------------------------------------------------
 void Frago::UpdateSimulation()
 {
-  //@TODO
+  //@NOTHING for the moment : limits are the same than Opord superior report
 }

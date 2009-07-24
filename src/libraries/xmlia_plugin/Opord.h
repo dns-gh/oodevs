@@ -55,8 +55,8 @@ public:
     //@}
 
 private:
-    void ReadUnite( xml::xistream& xis, std::map< unsigned, UnitAgent* >& map );
-    std::map< unsigned, UnitAgent* > unitesAMI_;
+    UnitAutomate* automat_; 
+
 };
 
 }// xmlia

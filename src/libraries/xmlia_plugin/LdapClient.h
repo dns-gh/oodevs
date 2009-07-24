@@ -14,6 +14,10 @@
 #include <Winldap.h>
 #include <stdio.h>
 
+namespace xml
+{
+    class xistream;
+}
 
 namespace plugins
 {
@@ -32,7 +36,7 @@ class LdapClient
 public:
     //! @name Constructors/Destructor
     //@{
-    LdapClient();
+    LdapClient( xml::xistream& xis );
     virtual ~LdapClient();
     //@}
 
@@ -40,9 +44,10 @@ public:
     //@{
     void LdapConnection();
     void LdapDeconnection();
-    void ReadLdapContent();
+    bool ReadLdapContent( const std::string& userProfile );
     void SendContentToLdap();
-    bool IsTakenIntoAccount( const std::string messageType );
+    bool IsTakenIntoAccount( const std::string& messageType );
+    void IdentificationConfigure();
     //@}
 
 
@@ -68,9 +73,13 @@ private:
     //@{
     LDAP* pLdapConnection_;
     LDAPAPIInfo* pMyInfo_;
-    PWCHAR hostName;
+    PWCHAR pHostName_;
     PWCHAR pDN_;
+    PWCHAR pUser_;
+    PWCHAR pPassword_;
+    SEC_WINNT_AUTH_IDENTITY secIdent_;
     LDAPMessage* pSearchResult_;
+    std::vector< PWCHAR* > pAttributesValues_;
 
     T_LdapClientVector ldapContent_;
 

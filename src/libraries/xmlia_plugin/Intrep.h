@@ -54,7 +54,7 @@ public:
     //@}
 
 private:
-    UnitAgent* fired;
+    UnitAgent* fired_;
 };
 
 }// xmlia

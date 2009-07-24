@@ -122,23 +122,8 @@ void AgentExtension::DoUpdate( const ASN1T_MsgStartUnitFire& message )
 {
   try
   {
-    reportManager_.DoUpdateIntrep( holder_, model_.agents_.Get( message.fire_oid ) );
-  }
-  catch( std::exception& e )
-  {
-    MT_LOG_ERROR_MSG( "XMLIA error storing report information: " << e.what() );
-  }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentExtension::DoUpdate
-// Created: MGD 2009-07-06
-// -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const ASN1T_DotationQuery& message )
-{
-  try
-  {
-    reportManager_.DoUpdateLog( holder_ );
+    if( message.target.t == T_MsgStartUnitFire_target_unit )
+      reportManager_.DoUpdateIntrep( holder_, model_.agents_.Get( message.target.u.unit ) );
   }
   catch( std::exception& e )
   {

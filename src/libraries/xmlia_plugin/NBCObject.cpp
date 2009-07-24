@@ -14,6 +14,8 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Object.h"
 
+#include "xmlia_plugin/Point.h"
+
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::xmlia;
@@ -24,10 +26,22 @@ using namespace plugins::xmlia;
 // -----------------------------------------------------------------------------
 NBCObject::NBCObject( xml::xistream& xis )
 {
-  xis >> xml::start( "mpia:AutreEvenementNRBC" )
+  xis >> xml::start( "AutreEvenementNRBC" )
         >> xml::attribute( "id", id_)
-        >> xml::content( "mpia:Nom", type_ )
+        >> xml::content( "Nom", type_ )
+        >> xml::start( "Localisation" )
+          >> xml::list( "PointGeographique", *this, &NBCObject::ReadPoint, localisation_ )
+        >> xml::end()
       >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCObject ReadPoint
+// Created: MGD 2009-06-12
+// -----------------------------------------------------------------------------
+void NBCObject::ReadPoint( xml::xistream& xis, std::vector< Point >& localisation )
+{
+  localisation.push_back( Point( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,10 +50,17 @@ NBCObject::NBCObject( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 NBCObject::NBCObject( dispatcher::Object& obj )
 : Entity_ABC()
-, type_( obj.GetType().GetType() )
+, type_( obj.type_ )
 , id_( obj.GetId() )
 {
+  ASN1T_Location asn;
+  obj.localisation_.Send( asn );
   
+  localisation_.reserve( asn.coordinates.n );
+  for( unsigned int i = 0; i < asn.coordinates.n; ++i )
+  {
+    localisation_.push_back( Point( asn.coordinates.elem[i].latitude, asn.coordinates.elem[i].longitude ) );
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -57,9 +78,15 @@ NBCObject::~NBCObject()
 // -----------------------------------------------------------------------------
 void NBCObject::Serialize( xml::xostream& xos ) const
 {
-  xos << xml::start( "mpia:AutreEvenementNRBC" )
+  xos << xml::start( "AutreEvenementNRBC" )
     << xml::attribute( "id", id_)
-    << xml::content( "mpia:Nom", type_ )
+    << xml::content( "Nom", type_ )
+    << xml::start( "Localisation" );
+    for( std::vector< Point >::const_iterator it = localisation_.begin(); it != localisation_.end(); it++ )
+    {
+      it->Serialize( xos );
+    }
+  xos << xml::end()
     << xml::end();
 }
 
@@ -69,7 +96,7 @@ void NBCObject::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void NBCObject::Update( dispatcher::Object& obj )
 {
-  type_ = obj.GetType().GetType();
+  type_ = obj.type_;
   id_ =  obj.GetId();
 }
 

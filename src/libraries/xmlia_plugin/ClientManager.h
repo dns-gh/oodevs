@@ -12,11 +12,17 @@
 
 #include "dispatcher/Plugin_ABC.h"
 
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
 
 namespace plugins
 {
 namespace xmlia
 {
+    class LdapClient;
     
 // =============================================================================
 /** @class  ClientManager
@@ -28,34 +34,40 @@ class ClientManager
 {
 
 public:
+    typedef std::map < std::string, std::vector< std::string > > rolesMap;
+
     //! @name Constructors/Destructor
     //@{
-    ClientManager();
+    ClientManager( xml::xistream& xis, LdapClient& ldap );
     virtual ~ClientManager();
     //@}
 
     //! @name Operations
     //@{
-    void SetClientProfile( dispatcher::Profile_ABC& profile );
-    void SetClientPublisher( dispatcher::ClientPublisher_ABC& clientPublisher );
-    void SetClientParameters( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     dispatcher::Profile_ABC* GetClientProfile() const;
     dispatcher::ClientPublisher_ABC* GetClientPublisher() const;
     void NotifyClient( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
-    void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
+    void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
+    bool HasNoClient();
+    bool IsTakenIntoAccount( const std::string messageType );
     //@}
 
-    struct clientAttributes {
-        dispatcher::ClientPublisher_ABC* clientPublisher;
-        dispatcher::Profile_ABC* clientProfile;
-    };
+    //! @name Helpers
+    //@{
+    void ReadProfile( xml::xistream& xis );
+    void ReadRole( xml::xistream& xis, std::vector < std::string >& roles );
+    //@}
 
 private:
     //! @name Member data
     //@{
-    dispatcher::Profile_ABC* clientProfile_;
     dispatcher::ClientPublisher_ABC* clientPublisher_;
-    std::map < std::string, clientAttributes > clientParameters_;
+    dispatcher::Profile_ABC* clientProfile_;
+
+    rolesMap rolesFilter_;
+    LdapClient& ldap_;
+
+    bool isAuthorized_;
     //@}
  
 };

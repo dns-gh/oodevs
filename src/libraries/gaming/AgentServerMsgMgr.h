@@ -271,7 +271,6 @@ private:
 
     // Plugin
     void OnReceiveMsgPluginTextMessage  ( const ASN1T_MsgPluginTextMessage& asnMsg );
-    void OnReceiveMsgPluginIntelligenceCreation  ( const ASN1T_MsgPluginIntelligenceCreation& asnMsg );
 
     //@}
 

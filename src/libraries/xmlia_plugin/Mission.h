@@ -43,15 +43,17 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     void ReadPoint( xml::xistream& xis, std::vector< Point >& limite );
-    void Update( kernel::MissionType& mission );
+    void Update( kernel::MissionType& mission, std::vector< Point >& limit1, std::vector< Point >& limit2 );
+    const std::vector< Point >& GetLeftLimit() const;
+    const std::vector< Point >& GetRightLimit() const ;
     //@}
 
 private:
     //! @name Member data
     //@{
     std::string name_;
-    std::vector< Point > limiteGauche_;
-    std::vector< Point > limiteDroite_;
+    std::vector< Point > leftLimit_;
+    std::vector< Point > rightLimit_;
     //@}
 };
 

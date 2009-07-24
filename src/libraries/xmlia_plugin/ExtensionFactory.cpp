@@ -20,11 +20,12 @@ using namespace plugins::xmlia;
 // Name: ExtensionFactory constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, ReportManager& reportManager, const Simulation& simulation, const dispatcher::Model& model )
+ExtensionFactory::ExtensionFactory( Publisher_ABC& publisher, ReportManager& reportManager, const Simulation& simulation, const dispatcher::Model& model, bool export )
     : publisher_( publisher )
     , reportManager_( reportManager )
     , simulation_( simulation )
     , model_( model )
+    , bExport_( export )
 {
     // NOTHING
 }
@@ -44,6 +45,7 @@ ExtensionFactory::~ExtensionFactory()
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
+  if( bExport_ )
     entity.Attach< XmliaExtension_ABC >( *new AgentExtension( entity, publisher_, reportManager_, simulation_, model_ ) );
 }
 
@@ -53,5 +55,6 @@ void ExtensionFactory::Create( dispatcher::Agent& entity )
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Automat& entity )
 {
+  if( bExport_ )
     entity.Attach< XmliaExtension_ABC >( *new AutomatExtension( entity, publisher_, reportManager_, model_ ) );
 }

@@ -613,13 +613,18 @@
       package
     ============================================================================
     -->
-    <target name="package" description="create the installer">
+    <target name="package" description="package the installers" depends="package.standard,package.eval,package.france"/>
+    
+    <target name="package.standard" description="package the standard installer: worlwide, no license">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=worldwide"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
+    </target>
+    
+    <target name="package.eval" description="package the standard installer: worlwide, 3 months license">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
@@ -627,6 +632,9 @@
             <arg value="/DAPP_MODEL=worldwide"/>
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
+    </target>
+
+    <target name="package.france" description="package the french version of installer: france, no license">
         <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
@@ -634,8 +642,16 @@
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
     </target>
+    
+    <target name="package.ncco" description="package the NCCO installer">
+        <nsis todir="${dist.dir}/current/${platform}/ncco" name="ncco" script="ncco.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+    </target>
 
-    <target name="package.patch" description="create the patch installer">
+    <target name="package.patch" description="create a patch installer">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped-patch" script="sword-ot-scalped-patch.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
@@ -643,7 +659,7 @@
         </nsis>
     </target>
 
-    <target name="crossbow-installer" description="create the crossbow installer">
+    <target name="package.crossbow" description="package the Crossbow installer">
         <nsis todir="${dist.dir}/current" name="crossbow_install" script="crossbow.nsi"/>
         <!-- <exec executable="${bin.dir}/RegAsm.exe">
             <arg value="../out/applications/crossbow_app/vc80/Release/Crossbow.dll"/>
