@@ -1,25 +1,21 @@
 signatures
-{ 
+{
     // Geometrie
     U /*T_ListePoints*/                 DEC_Geometrie_DecouperListePoints              ( U /*T_ListePions*/, R /*nb parts*/ ); // Effacer résultat
-    U /*T_ListePoints*/                 DEC_Geometrie_DecouperItineraire               ( U /*T_Itineraire*/, R /*nb parts*/ ); // Effacer résultat
     U /*T_Point*/                       DEC_Geometrie_CalculerPositionCouverture       ( S /*T_ListePions*/, U /*T_Direction*/, R /*distance en m*/ );
     U /*T_Point*/                       DEC_Geometrie_CalculerBarycentreAgents         ( S /*T_ListePions*/ );
     U /*T_Point*/                       DEC_Geometrie_PositionTranslate                ( U /*T_Point src*/, U /*T_Point dst*/, R /*distance*/ );
     U /*T_Point*/                       DEC_Geometrie_PositionTranslateDir             ( U /*T_Point src*/, U /*T_Direction*/, R /*distance*/ );
     B                                   DEC_Geometrie_PositionsEgales                  ( U /*T_Point*/, U /*T_Point*/ );
-    B                                   DEC_Geometrie_DirectionEgales                  ( U /*T_Direction*/, U /*T_Direction*/ );
     R                                   DEC_Geometrie_Distance                         ( U /*T_Point*/, U /*T_Point*/ );
     U /*T_Localisation*/                DEC_Geometrie_ConvertirPointEnLocalisation     ( U /*T_Point*/ );
     B                                   DEC_Geometrie_EstPointDansLocalisation         ( U /*T_Point*/, U /*T_Localisation*/ );
-    B                                   DEC_Geometrie_LocalisationsEgales              ( U /*T_Localisation*/, U /*T_Localisation*/ );
     U /*T_Localition*/                  DEC_Geometrie_CreerLocalisation                ();
     U /*T_ListePoints*/                 DEC_Geometrie_CreerListePoints                 ();
     U /*T_Point*/                       DEC_Geometrie_CreerPoint                       (); 
     U /*T_Direction*/                   DEC_Geometrie_CreerDirection                   ( U /*T_Point src*/, U /*T_Point dest*/);
     U /*T_Direction*/                   DEC_Geometrie_CreerDirectionPerpendiculaire    ( U /*T_Direction*/, * /* B = sens trigo ?*/ );
     V                                   DEC_Geometrie_InverseDirection                 ( U /*T_Direction*/ );
-    V                                   DEC_Geometrie_RotateDirection                  ( U /*T_Direction*/, R /*angle en degré : dans sens trigo*/ );
     U /*T_Direction*/                   DEC_Geometrie_CopieEtInverseDirection          ( U /*T_Direction*/ );
     U /*T_Direction*/                   DEC_Geometrie_CopieEtRotateDirection           ( U /*T_Direction*/, R /*angle en degré : dans sens trigo*/ );
     R                                   DEC_Geometrie_CalculerDistanceLigneMoyenne     ( S /*T_ListePions*/, A /*T_Pion reference*/ );
@@ -29,12 +25,13 @@ signatures
     U /*T_Point*/                       DEC_Geometrie_PositionAleatoireDansCercle      ( U /*T_Point centre*/, R /*rayon*/ );     
     U /*T_Localisation*/                DEC_Geometrie_CreerLocalisationCercle          ( U /*T_Point centre*/, R /*rayon*/ );
     S /*T_ListePions*/                  DEC_Geometrie_PionEstCoordonne                 ( A /*T_Pion*/, S /*T_ListePions*/, R /*dist min*/ ); // Retourne les pions de la liste avec lesquels le pion n'est pas coordonné
-    R                                   DEC_Geometrie_AireLocalisation                 ( U /*T_Localisation*/ );
-    R                                   DEC_Geometrie_PourcentageTerrainCompartimente  ( U /*T_Fuseau ou T_Localisation*/ );
-    S /*T_ListeFuseaux/Localisations*/  DEC_Geometrie_TrierZonesSelonOuvertureTerrain( S /*T_ListeFuseaux ou T_ListLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
-    B                                   DEC_Geometrie_EstLocalisationDansFuseau        ( U /*T_Localisation*/, U /*T_Fuseau*/ );
+    R                                   DEC_Geometrie_PourcentageTerrainCompartimente  ( U /*T_Fuseau*/ );
+    R                                   DEC_Geometrie_PourcentageZoneTerrainCompartimente( U /*T_Localisation*/ );
+    R                                   DEC_Geometrie_PourcentageTerrainOuvert         ( U /*T_Fuseau*/ );
+    R                                   DEC_Geometrie_PourcentageZoneTerrainOuvert     ( U /*T_Localisation*/ );
+    S /*T_ListeFuseaux*/                DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain( S /*T_ListeFuseaux*/ ); // Retourne liste moins ouvert -> plus ouvert
+    S /*T_ListeLocalisations*/          DEC_Geometrie_TrierZonesSelonOuvertureTerrain  ( S /*T_ListLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
     U /*T_Localisation*/                DEC_Geometrie_ConvertirFuseauEnLocalisation    ( U /*T_Fuseau*/ );
-    U /*T_Point*/                       DEC_Geometrie_CalculerBarycentreAutomates      ( S /*T_ListeAutomates*/ );   
     U /*T_Objectif*/                    DEC_Geometrie_ProchainObjectifDansFuseau       ( U /*T_Fuseau*/, U /*T_Point ref*/, S /*T_ListeObjectifs*/ );
     U /*T_Localisation*/                DEC_Geometrie_CalculerZoneAutourPointDansFuseau( U /*T_Fuseau*/, U /*T_Point*/ );
    
@@ -42,15 +39,12 @@ signatures
     // Temps                            
     R                                   DEC_TempsSim       ();
     R                                   DEC_TempsReel      ();
-    R                                   DEC_DureePasDeTemps();
     B                                   DEC_Nuit           ();
                                         
-    V                                   DEC_Copie_Direction                         ( U /*T_Direction src*/         , U /*T_Direction dest*/         );
     V                                   DEC_Copie_Point                             ( U /*T_Point src*/             , U /*T_Point dest*/             );
     V                                   DEC_Copie_ListePoints                       ( U /*T_ListePoints src*/       , U /*T_ListePoints dest*/       ); 
     V                                   DEC_Copie_PointDansListePoints              ( U /*T_Point src*/             , U /*T_ListePoints dest*/       ); 
     V                                   DEC_Copie_Localisation                      ( U /*T_Localisation src*/      , U /*T_Localisation dest*/      ); 
-    V                                   DEC_Copie_PointDansLocalisation             ( U /*T_Point src*/             , U /*T_Localisation dest*/      ); 
     V                                   DEC_Copie_ListeLocalisations                ( S /*T_ListeLocalisations src*/, S /*T_ListeLocalisations dst*/ );
     V                                   DEC_Copie_LocalisationDansListeLocalisations( U /*T_Localisation src*/      , S /*T_ListeLocalisations dst*/ );    
                                         
@@ -61,10 +55,9 @@ signatures
     V                                   DEC_UserTypeList_Remove   ( S /*liste*/, U /*elt*/ );
                                         
     U /*T_Point*/                       DEC_ListePoints_GetAt    ( U /*T_ListePoints*/, R /*nIdx*/ ); // Le point retourné doit être détruit par l'utilisateur quand il n'est plus utile
-    R                                   DEC_ListePoints_Size     ( U /*T_ListePoints*/ );
+    R                                   DEC_ListePoints_Size     ( U /*T_ListePointsS_TypeObject_ToString*/ );
     V                                   DEC_ListePoints_PushBack ( U /*T_ListePoints*/, U /*T_Point a ajouter*/ ); 
     V                                   DEC_ListePoints_Remove   ( U /*T_ListePoints*/, R /*T_Point a enlever*/ );
-    V                                   DEC_ListePoints_Clear    ( U /*T_ListePoints*/ );
                                         
     // Debug                            
     X                                   DEC_PointToString     ( U /*T_Point*/      );      
@@ -77,9 +70,14 @@ signatures
                                         
     V                                   DEC_InterdireEvacuationAutomatiqueBlesses( A /*T_Pion*/ );
     V                                   DEC_AutoriserEvacuationAutomatiqueBlesses( A /*T_Pion*/ );   
-                                                                            
+                                        
+    // Objets                           
+    // B                                   DEC_TypeObjet_PeutEtreContourne  ( I /*E_TypeObject*/ );
+    // B                                   DEC_TypeObjet_PeutEtreValorise   ( I /*E_TypeObject*/ );
+    // B                                   DEC_TypeObjet_PeutEtreDeManoeuvre( I /*E_TypeObject*/ );
+                                        
     // GEN objets                       
-    I /*E_TypeObject*/                  DEC_GenObject_Type              ( U /*T_GenObjet*/ );
+    X /*E_TypeObject*/                  DEC_GenObject_Type              ( U /*T_GenObjet*/ );
     U /*T_Localisation*/                DEC_GenObject_Localisation      ( U /*T_GenObjet*/ );
     R                                   DEC_GenObject_Densite           ( U /*T_GenObjet*/ );
     B                                   DEC_GenObject_TypeObstacleManoeuvre( U /*T_GenObjet*/ );
@@ -88,7 +86,6 @@ signatures
     
     // Objectifs
     U /*T_Localisation*/                DEC_Objectif_Localisation( U /*T_Objectif*/ );
-    B                                   DEC_Objectif_EstFlage    ( U /*T_Objectif*/ );
     V                                   DEC_Objectif_Flag        ( U /*T_Objectif*/, B /*flag*/ );
      
     // Manipulation DIA Thing 
@@ -103,6 +100,8 @@ signatures
     A                                   DEC_GetDestPoint    ( A /*Rep_PointABC*/ );
     I                                   DEC_GetTypeLimaPoint( A /*Rep_PointABC*/ );
     U /* T_Lima */                      DEC_GetLimaPoint    ( A /*Rep_PointABC*/ );
+
+    X                                   S_TypeObject_ToString( I );
 }
 
 
