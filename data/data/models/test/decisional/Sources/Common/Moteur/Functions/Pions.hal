@@ -20,7 +20,6 @@ signatures
     U /*T_Action*/                          A::DEC_Transport_StartDebarquer          ( I /*E_EtatActionTransport*/ );              
     V                                       A::DEC_Transport_EmbarquerPionsSansDelais( S /*T_ListePions*/, B /*Transporte seulement embarquables*/ );    
     V                                       A::DEC_Transport_EmbarquerPionSansDelais ( A /*T_Pion*/      , B /*Transporte seulement embarquables*/ );    
-    V                                       A::DEC_Transport_DebarquerPionsSansDelais( S /*T_ListePions*/ ); 
     V                                       A::DEC_Transport_DebarquerPionSansDelais ( A /*T_Pion*/ );        
     B                                       A::DEC_Transport_EstTermine              ();   
     B                                       A::DEC_Transport_EnCoursDeTransport      (); 
@@ -111,14 +110,13 @@ signatures
     
     // Perception
     V                                       A::DEC_Perception_Furtivite                           ( R );
-    R                                       A::DEC_Perception_DistanceMax                         ();
     V                                       A::DEC_Perception_ActiverCoupsDeSonde                 (); 
     V                                       A::DEC_Perception_DesactiverCoupsDeSonde              ();
     B                                       A::DEC_Perception_PointEstVisible                     ( U /*T_Point*/     );  // teste si le point est visible par l'agent
     V                                       A::DEC_Perception_VisionVerrouilleeSurDirection       ( U /*T_DIrection*/ );
     V                                       A::DEC_Perception_VisionVerrouilleeSurPoint           ( U /*T_Point*/     );
     V                                       A::DEC_Perception_VisionNormale                       ();    
-    U /*T_PerceptionPoint*/                 A::DEC_Perception_ActiverReconnaissancePoint          ( U /*T_Point*/, R /*rayon de la reconnaissance*/, B/* ack taille max obtenue */, * /* R : vitesse de progression en km.h-1, par défaut : 5 km.h-1*/ );
+    U /*T_PerceptionPoint*/                 A::DEC_Perception_ActiverReconnaissancePoint          ( U /*T_Point*/, R /*rayon de la reconnaissance*/, R /* vitesse de propagation en km.h-1 */, B/* ack taille max obtenue */ );
     V                                       A::DEC_Perception_DesactiverReconnaissancePoint       ( U /*T_PerceptionPoint*/ );
     U /*T_PerceptionLocalisation*/          A::DEC_Perception_ActiverReconnaissanceLocalisation   ( U /*T_Localisation*/, * /*rien ou (R) rayon max*/ );
     V                                       A::DEC_Perception_DesactiverReconnaissanceLocalisation( U /*T_PerceptionLocalisation*/ );
@@ -136,20 +134,13 @@ signatures
     // Renforcements
     B                                       A::DEC_Renforce          ( A );
     V                                       A::DEC_AnnuleRenforcement();
-    B                                       A::DEC_EstEnRenfort      ();   
     S /*T_ListePions*/                      A::DEC_Renforts          (); 
                                             
     // Info agents                          
     B                                       A::DEC_Agent_EstEnVol                        ();
     V                                       A::DEC_Agent_HauteurDeVol                    ( R /* hauteur de vol en m*/ );    
-    B                                       A::DEC_Agent_SEstRendu                       ();
-    B                                       A::DEC_Agent_EstRefugie                      ();
-    B                                       A::DEC_Agent_EstMilice                       ();    
-    B                                       A::DEC_Agent_EstTerroriste                   ();
     B                                       A::DEC_Agent_EstMort                         ();    
-    B                                       A::DEC_Agent_EstPrisonnier                   ();
     B                                       A::DEC_Agent_EstContamine                    ();
-    B                                       A::DEC_Agent_EstEnTenueProtectionNBC         ();
     V                                       A::DEC_Agent_MettreTenueProtectionNBC        ();
     V                                       A::DEC_Agent_EnleverTenueProtectionNBC       ();
     B                                       A::DEC_Agent_EstEnMouvement                  ();
@@ -174,16 +165,9 @@ signatures
     R                                       A::DEC_Agent_DureeDebarquement               (); // En minutes         
     B                                       A::DEC_Agent_TransporteursPret               ();
     I /*E_EtatROEPopulation*/               A::DEC_Agent_RoePopulation                   ();
-    R /* ratio alive/total */               A::DEC_Agent_OfficiersTues                   ();
     V                                       A::DEC_Agent_CanaliserPopulation             ( U /*T_Localisation*/ );
                                             
     // Effets population
-    V                                       A::DEC_Agent_ActiverRalentissementParPopulation                  ();
-    V                                       A::DEC_Agent_DesactiverRalentissementParPopulation               ();
-    V                                       A::DEC_Agent_ActiverModificationTempsRechargementParPopulation   ();
-    V                                       A::DEC_Agent_DesactiverModificationTempsRechargementParPopulation();
-    V                                       A::DEC_Agent_ActiverInvulnerabilitePopulation                    ();
-    V                                       A::DEC_Agent_DesactiverInvulnerabilitePopulation                 ();
                                                                                         
     R /* temps en minutes */                A::DEC_Agent_AutonomieEnDeplacement();
     R /* temps en minutes */                A::DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( R /*distance en m*/ );    
@@ -215,7 +199,6 @@ signatures
     B                                       A::DEC_ConnaissanceAgent_EstMort                        ( U /*T_ConnaissanceAgent*/ );
     I /*E_ValiditeRequete*/                 A::DEC_ConnaissanceAgent_Verrouiller                    ( U /*T_ConnaissanceAgent*/ );
     V                                       A::DEC_ConnaissanceAgent_Deverrouiller                  ( U /*T_ConnaissanceAgent*/ );
-    B                                       A::DEC_ConnaissanceAgent_EstDansDirection               ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/ );
     B                                       A::DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone     ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/, R /*angle en degré*/ );
     B                                       A::DEC_ConnaissanceAgent_TuerOfficiers                  ( U /*T_ConnaissanceAgent*/ );
                                             
@@ -260,7 +243,6 @@ signatures
     V                                       A::DEC_Connaissances_PartageConnaissancesAvec        ( A /*T_Automate*/, R /*delai en minutes*/ );    
     V                                       A::DEC_Connaissances_PartageConnaissancesDansZoneAvec( A /*T_Automate*/, U /*centre du cercle de la zone*/, R /*rayon du cercle de la zone*/ );    
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_CollisionsObjets                ();
-    S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_Objets                          ( * /*E_TypeObjects*/ );
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_ObjetsDansCercle                ( U /*T_Point centre du cercle*/, R /*rayon*/, * /*E_TypeObjects*/ );    
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_ObjetsDansZone                  ( U /*T_Localisation zone*/, * /*E_TypeObjects*/ );    
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_ObjetsDansFuseau                ( * /*E_TypeObjects*/ );        
@@ -275,11 +257,9 @@ signatures
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesDetecteesDansZone                ( U /*T_Localisation*/ );
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesPrenantAPartie                   ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDangereuses              ();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion( A /*T_Pion*/, U /*T_Localisation*/ );          
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercues          ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion   ( A /*T_Pion*/ );        
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansZone  ( U /*T_Localisation*/ );
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau       ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesDansZone         ( U /*T_Localisation*/ );        
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesDansCercle       ( U /*T_Point centre cercle zone*/, R /*rayon*/ );    
@@ -300,7 +280,6 @@ signatures
     V                                       A::DEC_SetMissionLimaFlag         ( U /*T_Lima*/, B /*bFlag*/ );
     B                                       A::DEC_GetMissionLimaFlag         ( U /*T_Lima*/ );
     V                                       A::DEC_SetMissionLimaFlagHoraire  ( U /*T_Lima*/, B /*bFlag*/ );
-    B                                       A::DEC_GetMissionLimaFlagHoraire  ( U /*T_Lima*/ );   
                                             
     // Geometrie                            
     U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionAppui                              ( A /*T_Pion*/, R /*rDist*/ ); 
@@ -329,8 +308,6 @@ signatures
     // Facteurs humains                     
     I /*E_FacteurHumain_Fatigue*/           A::DEC_FacteurHumain_Fatigue   ();
     I /*E_FacteurHumain_Moral*/             A::DEC_FacteurHumain_Moral     ();
-    I /*E_FacteurHumain_Experience*/        A::DEC_FacteurHumain_Experience();
-    R                                       A::DEC_ForceFacteursHumains    ();
                                             
     // Hiérarchie                           
     S /*T_ListePions*/                      A::DEC_Pion_PionsAvecPC          ();
@@ -349,10 +326,8 @@ signatures
     A /*T_Automate*/                        A::DEC_Pion_TC2                  (); // ATTENTION : La valeur de retour peut être nulle
     V                                       A::DEC_DemandeDeRavitaillement   ();
     V                                       A::DEC_ChangeValeurDotations     ( I /*E_TypeDotation*/, R /* ratio (0..1) par rapport aux capacités du pion*/, * /*I E_DotationMunitionClasse*/ );
-    R                                       A::DEC_ValeurDotation            ( U /*T_Dotation*/ );
 
     // Test / debug 
-    V                                       A::DEC_PostureForTest    ( I );
     V                                       A::DEC_DebugAffichePoint ( U /*T_Point*/ );
     V                                       A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );    
     V                                       A::DEC_Debug             ( X );

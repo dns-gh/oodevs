@@ -20,7 +20,6 @@ signatures
     V                                         A::DEC_Population_RalentissementPion_VitesseParDefaut();
     V                                         A::DEC_Population_ChangerAttitude                    ( I /* E_AttitudePopulation */ );
     I /* E_AttitudePopulation */              A::DEC_Population_Attitude                           ();
-    R                                         A::DEC_Population_Vivants                            ();
     R                                         A::DEC_Population_Morts                              ();
     
     // Connaissance

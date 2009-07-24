@@ -12,10 +12,8 @@ signatures
     S /*T_ListePions*/               A::DEC_Automate_PionsAvecPC         ();
     S /*T_ListePions*/               A::DEC_Automate_PionsSansPC         ();
     A /*T_Pion*/                     A::DEC_Automate_PionPC              ();
-    B                                A::DEC_Automate_SEstRendu           ();
     S /*T_ListeAutomates*/           A::DEC_Automate_AutomatesSubordonnes();
     
-    A /*T_Automate*/                 A::DEC_AutomateSuperieur            ();
     B                                A::DEC_AutomateSuperieur_EstEmbraye ();
         
     
@@ -43,38 +41,20 @@ signatures
     V                                A::DEC_SetMissionLimaFlag            ( U /*T_Lima*/, B /*bFlag*/ );
     B                                A::DEC_GetMissionLimaFlag            ( U /*T_Lima*/ );
     V                                A::DEC_SetMissionLimaFlagHoraire     ( U /*T_Lima*/, B /*bFlag*/ );
-    B                                A::DEC_GetMissionLimaFlagHoraire     ( U /*T_Lima*/ );       
-    U /*T_Lima ou T_Objectif*/       A::DEC_ProchainElementHoraireNonFlage( S /*T_ListeObjectifs*/ );
     U /*T_Lima*/                     A::DEC_ProchaineLimaHoraireNonFlagee ();    
-    
-                                     
-    // Etats décisionnel             
-    V                                A::DEC_Automate_ChangeEtatRapportDeForce   ( I /*E_EtatRapportDeForce*/ );
-    V                                A::DEC_Automate_ChangeEtatROE              ( I /*E_EtatROE*/ );
-    V                                A::DEC_Automate_ChangeEtatCombatDeRencontre( I /*E_EtatCombatDeRencontre*/ );            
-    V                                A::DEC_Automate_ChangeEtatOperationnel     ( I /*E_E_EtatOperationnel*/ );
-    
-    B                                A::DEC_Automate_Debrayer ();
-    
     // Objets
     B                                A::DEC_ActiverObjet( U /*connaissance objet*/ );    
 
     // Connaissance                  
-    R                                A::DEC_RapportDeForceGlobal                                 ();   // Retourne une valeur entre 0.2 et 5 (0.2 = très défavorable / 2.4 = neutre / 5 = favorable)
-    
     V                                A::DEC_Connaissances_PartageConnaissancesAvec                 ( A /*T_Automate*/, R /*delai en minutes*/ );    
     V                                A::DEC_Connaissances_PartageConnaissancesDansZoneAvec         ( A /*T_Automate*/, U /*centre du cercle de la zone*/, R /*rayon du cercle de la zone*/ );    
-    S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_Objets                                   ( * /*E_TypeObjects*/ );   
     S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_ObjetsDansCercle                         ( U /*T_Point centre du cercle*/, R /*rayon*/, * /*E_TypeObjects*/ );    
     S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_ObjetsDansZone                           ( U /*T_Localisation zone*/, * /*E_TypeObjects*/ );    
     S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_ObjetsDansFuseau                         ( * /*E_TypeObjects*/ );            
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion     ( A /*T_Pion*/ );    
-    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion  ( A /*T_Pion*/, U /*T_Localisation*/ );
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesAmiesDansZone                      ( U /*T_Localisation*/ );            
-    R                                A::DEC_Connaissances_PourcentageEnnemisDebarquesDansZone      ( U /*T_Fuseau ou T_Localisation*/ );
-    R                                A::DEC_Connaissances_PourcentageEnnemisEmbarquesDansZone      ( U /*T_Fuseau ou T_Localisation*/ );               
-    S /*T_ListeFuseaux/Loc*/         A::DEC_Connaissances_TrierZonesSelonPresenceEnnemisDebarques  ( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); 
-    S /*T_ListeFuseaux/Loc*/         A::DEC_Connaissances_TrierZonesSelonPresenceEnnemisEmbarques  ( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
+    S /*T_ListeLocalisations*/       A::DEC_Connaissances_TrierZonesSelonPresenceEnnemisDebarques  ( S /*T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
+    S /*T_ListeLocalisations*/       A::DEC_Connaissances_TrierZonesSelonPresenceEnnemisEmbarques  ( S /*T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
     I /*E_NiveauPerception*/         A::DEC_ConnaissanceAgent_NiveauPerceptionMax                ( U /*T_ConnaissanceAgent*/ ); // Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)    
     R                                A::DEC_ConnaissanceAgent_EtatOps                            ( U /*T_ConnaissanceAgent*/ ); // Retourne une valeur entre 0 et 1
     B                                A::DEC_ConnaissanceAgent_EstDetruitTactique                 ( U /*T_ConnaissanceAgent*/ );
@@ -106,47 +86,40 @@ signatures
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPointArriveePourPion             ( A /*T_Pion*/ );
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPointDepart                      ();           
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( U /*T_Lima*/, R /*dist avant lima*/, U /*fuseau*/ );
+    U /*T_ListePoints*/              A::DEC_Geometrie_CalculerPositionsParRapportALima         ( U /*T_Lima*/, R /*dist avant lima*/, R /*nb points*/ );
     U /*T_ListePoints*/              A::DEC_Geometrie_PositionsParRapportALocalisation         ( S /*T_ListePions*/, U /*T_Localisation*/, U /*dirdanger*/, R /*Dist max*/ ); // Retourne T_ListePoints à EFFACER !!!
-    U /*T_CalculLignesAvantArriere*/ A::DEC_Geometrie_StartCalculLignesAvantEtArriere          ( S /*T_ListePions ou T_ListeAutomates*/ );
+    U /*T_CalculLignesAvantArriere*/ A::DEC_Geometrie_StartCalculLignesAvantEtArriere          ( S /*T_ListePions*/ );
+    U /*T_CalculLignesAvantArriere*/ A::DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere  ( S /*T_ListeAutomates*/ );
     V                                A::DEC_Geometrie_StopCalculLignesAvantEtArriere           ( U /*T_CalculLignesAvantArriere*/ );  
-    R                                A::DEC_Geometrie_CalculerDistanceLigneAvant               ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion ou T_Automate*/ );
-    R                                A::DEC_Geometrie_CalculerDistanceLigneArriere             ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion ou T_Automate*/ );
+    R                                A::DEC_Geometrie_CalculerDistanceLigneAvant               ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion*/ );
+    R                                A::DEC_Geometrie_CalculerAutomateDistanceLigneAvant       ( U /*T_CalculLignesAvantArriere*/, A /*T_Automate*/ );
+    R                                A::DEC_Geometrie_CalculerDistanceLigneArriere             ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion*/ );
+    R                                A::DEC_Geometrie_CalculerAutomateDistanceLigneArriere     ( U /*T_CalculLignesAvantArriere*/, A /*T_Automate*/ );
     U /*T_Point */                   A::DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( U /*T_Localisation localisation*/ );
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau   ( U /*T_Localisation localisation*/ );
     A                                A::DEC_Geometrie_PionDevant                               ( S /*T_ListePions*/, U /*T_Direction*/ );
     A                                A::DEC_Geometrie_PionDerriere                             ( S /*T_ListePions*/, U /*T_Direction*/ );
-    S /*T_ListeFuseaux*/             A::DEC_Geometrie_TrierFuseauxSelonHoraire                 ( S /*T_ListeFuseaux*/, U /*T_Point point de reference*/, U /*T_Lima ou T_Objectif*/ );
-    R /* entre 0 et 1*/              A::DEC_Geometrie_CalculerRetard                           ( U /*T_Fuseau*/,  S /*T_ListeAutomates*/, U /*T_Lima ou T_Objectif*/ ); 
+    R /* entre 0 et 1*/              A::DEC_Geometrie_CalculerRetard                           ( U /*T_Fuseau*/,  S /*T_ListeAutomates*/, U /*T_Lima*/ ); 
+    R /* entre 0 et 1*/              A::DEC_Geometrie_CalculerRetardSurObjectifs               ( U /*T_Fuseau*/,  S /*T_ListeAutomates*/, S /*list of T_Objectif*/ ); 
 
     // Gestion des pions
     B                                A::DEC_Pion_ChangeAutomate( A /*T_Pion*/, A /*T_Automate*/ );
 
     B                                A::DEC_Automate_EstEmbraye                                       ();
     B                                A::DEC_Automate_PionEstContamine                                 ( A /*T_Pion*/ );
-    B                                A::DEC_Automate_PionEstTransporte                                ( A /*T_Pion*/ );
-    B                                A::DEC_Automate_PionEstEnTenueProtectionNBC                      ( A /*T_Pion*/ );
-    B                                A::DEC_Automate_PionEstEnMouvement                               ( A /*T_Pion*/ );
     B                                A::DEC_Automate_PionEstNeutralise                                ( A /*T_Pion*/ );
-    R                                A::DEC_Automate_PionEtatOps                                      ( A /*T_Pion*/ );
-    R                                A::DEC_Automate_PionEtatOpsMajeur                                ( A /*T_Pion*/ );
     U /*T_Point*/                    A::DEC_Automate_PionPosition                                     ( A /*T_Pion*/ );
-    U /*T_Direction*/                A::DEC_Automate_PionDirection                                    ( A /*T_Pion*/ );
     B                                A::DEC_Automate_PionRelevePion                                   ( A /*T_Pion*/, A /*T_Pion*/ );
     B                                A::DEC_Automate_PionPeutReleverPion                              ( A /*T_Pion*/, A /*T_Pion*/ );
     B                                A::DEC_Automate_EstPointDansFuseauPion                           ( U /*T_Position*/, A /*T_Pion*/ );
     U /*T_Point*/                    A::DEC_Automate_CalculerPositionParRapportALimaPourPion          ( U /*T_Lima*/, R /*dist avant lima*/, B /*retour*/, A /*T_Pion*/);
     B                                A::DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion( U /*T_Localisation localisation*/, U /*T_Point result*/, A /*T_Pion*/ );    
-    B                                A::DEC_Automate_PionPeutTransporterPion                          ( A /*T_Pion transporteur*/, A /*T_Pion à transporter*/, B /*Transporte seulement embarquables*/ );
-    R /* temps en minutes */         A::DEC_Automate_PionAutonomieEnDeplacement                       ( A /*T_Pion*/ );    
     R /* temps en minutes */         A::DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite      ( A /*T_Pion*/, R /*distance en m*/ );    
-    B                                A::DEC_Automate_PionEstEnVol                                     ( A /*T_Pion*/ );
     
     // Objets
     B                                A::DEC_Automate_PionPeutConstruireObjet             ( A /*T_Pion*/, X /*E_TypeObject*/ );
     B                                A::DEC_Automate_PionPeutConstruireContournementObjet( A /*T_Pion*/, U /*T_ConnaissanceObjet*/ );
     B                                A::DEC_Automate_PionPeutDetruireObjet               ( A /*T_Pion*/, U /*T_ConnaissanceObjet*/ );   
-    B                                A::DEC_Automate_PionPeutValoriserObjet              ( A /*T_Pion*/, U /*T_ConnaissanceObjet*/ );         
-    B                                A::DEC_Automate_PionPeutActiverObjet                ( A /*T_Pion*/, U /*T_ConnaissanceObjet*/ );         
     
     V                                A::DEC_CreerObjetSansDelais   ( X /*Objet type*/, U/*localisation*/, * );
     V                                A::DEC_DetruireObjetSansDelais( U /*T_ConnaissanceObjet*/ );
@@ -161,11 +134,13 @@ signatures
     S /*T_ListeConnaissancesPopulation*/ A::DEC_Connaissances_Populations         ();
 
     // Renseignement eni
-    R                                  A::DEC_Rens_PourcentageEnnemisDebarquesDansZone    ( U /*T_Fuseau ou T_Localisation*/ );
-    R                                  A::DEC_Rens_PourcentageEnnemisEmbarquesDansZone    ( U /*T_Fuseau ou T_Localisation*/ );
-    S /*T_ListeFuseaux/Localisations*/ A::DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert 
-    S /*T_ListeFuseaux/Localisations*/ A::DEC_Rens_TrierZonesSelonPresenceEnnemisEmbarques( S /*T_ListeFuseaux ou T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert
-    B                                  A::DEC_Rens_EnnemiSurFlanc                         ( U /*T_Fuseau*/ );
+    R                                  A::DEC_Rens_PourcentageEnnemisDebarquesDansFuseau  ( U /*T_Fuseau*/ );
+    R                                  A::DEC_Rens_PourcentageEnnemisEmbarquesDansFuseau  ( U /*T_Fuseau*/ );
+    R                                  A::DEC_Rens_PourcentageEnnemisDebarquesDansZone    ( U /*T_Localisation*/ );
+    R                                  A::DEC_Rens_PourcentageEnnemisEmbarquesDansZone    ( U /*T_Localisation*/ );
+    S /*T_ListeLocalisations*/         A::DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques( S /*T_ListeLocalisations*/ ); // Retourne liste moins ouvert -> plus ouvert 
+    S /*T_ListeFuseaux*/               A::DEC_Rens_TrierFuseauxSelonPresenceEnnemisDebarques( S /*T_ListeFuseaux*/ ); // Retourne liste moins ouvert -> plus ouvert 
+    S /*T_ListeFuseaux*/               A::DEC_Rens_TrierFuseauxSelonPresenceEnnemisEmbarques( S /*T_ListeFuseaux*/ ); // Retourne liste moins ouvert -> plus ouvert
     B                                  A::DEC_Rens_AmiSurFlanc                            ( U /*T_Fuseau*/ );
     U /*T_Direction*/                  A::DEC_Rens_CalculerDirectionCouverture            ( U /*T_Point*/, U /*T_Fuseau*/ );
 
