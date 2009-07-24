@@ -195,21 +195,6 @@ void DEC_GeometryFunctions::CopyAndReverseDirection( DIA_Call_ABC& call )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::RotateDirection
-// Created: NLD 2005-03-18
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::RotateDirection( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 0 ) ) );
-
-    MT_Vector2D* pDir = call.GetParameter( 0 ).ToUserPtr( pDir );
-    assert( pDir );
-
-    const MT_Float rAngle = - ( call.GetParameter( 1 ).ToFloat() * MT_PI / 180. );
-    pDir->Rotate( rAngle );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::CopyAndRotateDirection
 // Created: NLD 2005-03-18
 // -----------------------------------------------------------------------------
@@ -224,24 +209,6 @@ void DEC_GeometryFunctions::CopyAndRotateDirection( DIA_Call_ABC& call )
     const MT_Float rAngle = - ( call.GetParameter( 1 ).ToFloat() * MT_PI / 180. );
     pNewDir->Rotate( rAngle );
     call.GetResult().SetValue( pNewDir, &DEC_Tools::GetTypeDirection() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::CompareLocalisations
-// Created: NLD 2003-09-01
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::CompareLocalisations( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 1 ) ) );
-
-    TER_Localisation* pLocalisation1 = call.GetParameter( 0 ).ToUserPtr( pLocalisation1 );
-    TER_Localisation* pLocalisation2 = call.GetParameter( 1 ).ToUserPtr( pLocalisation2 );
-
-    assert( pLocalisation1 );
-    assert( pLocalisation2 );
-
-    call.GetResult().SetValue( *pLocalisation1 == *pLocalisation2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -476,22 +443,6 @@ void DEC_GeometryFunctions::ComparePositions( DIA_Call_ABC& call )
     call.GetResult().SetValue( p1->Distance( *p2 ) <= rWeldValue );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::CompareDirection
-// Created: JVT 2005-05-12
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::CompareDirection( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 1 ) ) );
-
-    MT_Vector2D* pD1 = call.GetParameter( 0 ).ToUserPtr( pD1 );
-    MT_Vector2D* pD2 = call.GetParameter( 1 ).ToUserPtr( pD2 );
-    assert( pD1 && pD2 );
-
-    call.GetResult().SetValue( *pD1 == *pD2 );
-}
-
 // =============================================================================
 // CALCULS DE POSITIONS
 // =============================================================================
@@ -689,16 +640,6 @@ void DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint( DIA_Call_ABC& call, 
     MT_Vector2D* pResult = new MT_Vector2D();
     callerAgent.GetOrderManager().GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), *pResult );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeChantierPosition
-// Created: NLD 2004-05-17
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::ComputeChantierPosition( DIA_Call_ABC& /*call*/, const MIL_AgentPion& /*callerAgent*/ )
-{
-    assert( false ); 
 }
 
 // =============================================================================
@@ -1006,25 +947,6 @@ void DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine( DIA_Call_ABC& c
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeDistancePointFromFrontLine
-// Created: NLD 2003-09-29
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::ComputeDistancePointFromFrontLine( DIA_Call_ABC& call, const MIL_Automate& /*callerAgent*/ )
-{
-    assert( DEC_Tools::CheckTypeCalculLignesAvantArriere( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
-
-    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr( pComputer );
-    assert( pComputer );
-
-    const MT_Vector2D* pPoint = call.GetParameter( 1 ).ToUserPtr( pPoint );
-    assert( pPoint );
-
-    MT_Float rDist = pComputer->ComputeDistanceFromFrontLine( *pPoint );
-    call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDistanceFromBackLine
 // Created: NLD 2003-09-29
 // -----------------------------------------------------------------------------
@@ -1071,25 +993,6 @@ void DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine( DIA_Call_ABC& ca
     else
         assert( false );
 
-    call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeDistancePointFromBackLine
-// Created: NLD 2003-09-29
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::ComputeDistancePointFromBackLine( DIA_Call_ABC& call, const MIL_Automate& /*callerAgent*/ )
-{
-    assert( DEC_Tools::CheckTypeCalculLignesAvantArriere( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
-
-    DEC_FrontAndBackLinesComputer* pComputer = call.GetParameter( 0 ).ToUserPtr( pComputer );
-    assert( pComputer );
-
-    const MT_Vector2D* pPoint = call.GetParameter( 1 ).ToUserPtr( pPoint );
-    assert( pPoint );
-
-    MT_Float rDist = pComputer->ComputeDistanceFromBackLine( *pPoint );
     call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( rDist ) );
 }
 
@@ -1324,17 +1227,6 @@ void DEC_GeometryFunctions::ComputeRandomPointInCircle( DIA_Call_ABC& call )
     call.GetResult().SetValue( pRandomPosition, &DEC_Tools::GetTypePoint() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeLocalisationArea
-// Created: NLD 2005-03-23
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::ComputeLocalisationArea( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    const TER_Localisation* pLoc = call.GetParameter( 0 ).ToUserPtr( pLoc );
-    call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeterSquare( pLoc->GetArea() ) );
-}
-
 // =============================================================================
 // Interception
 // =============================================================================
@@ -1501,27 +1393,6 @@ void DEC_GeometryFunctions::SplitListPoints( DIA_Call_ABC& call )
     call.GetResult().SetValue( ::SplitListPoints( *pListPoint, rNbrParts ), &DEC_Tools::GetTypeListePoints() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::SplitPath
-// Created: NLD 2005-05-11
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::SplitPath( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
-
-    DEC_Agent_Path* pPath     = call.GetParameter( 0 ).ToUserPtr( pPath );
-    const MT_Float  rNbrParts = call.GetParameter( 1 ).ToFloat();
-    assert( pPath );
-
-    T_PointVector points;
-    const DEC_Agent_Path::T_PathPointList& pathPoints = pPath->GetResult();
-    points.reserve( pathPoints.size() );
-    for( DEC_Agent_Path::CIT_PathPointList it = pathPoints.begin(); it != pathPoints.end(); ++it )
-        points.push_back( (**it).GetPos() );
-
-    call.GetResult().SetValue( ::SplitListPoints( points, rNbrParts ), &DEC_Tools::GetTypeListePoints() );
-}
-
 namespace
 {
     float ComputeClosedTerrainRatio( const TER_Localisation& location )
@@ -1635,22 +1506,6 @@ void DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening( DIA_Call_ABC& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::IsLocalisationInFuseau
-// Created: NLD 2007-04-17
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::IsLocalisationInFuseau( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeFuseau      ( call.GetParameter( 1 ) ) );
-
-    const TER_Localisation* pLocalisation = call.GetParameter( 0 ).ToUserPtr( pLocalisation );
-    const MIL_Fuseau*       pFuseau       = call.GetParameter( 1 ).ToUserPtr( pFuseau );
-    assert( pLocalisation && pFuseau );
-
-    call.GetResult().SetValue( pLocalisation->IsIntersecting( *pFuseau ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ConvertFuseauToLocalisation
 // Created: NLD 2007-04-25
 // -----------------------------------------------------------------------------
@@ -1666,7 +1521,7 @@ void DEC_GeometryFunctions::ConvertFuseauToLocalisation( DIA_Call_ABC& call )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeAutomatesBarycenter
+// Name: DEC_GeometryFunctions::_ComputeAutomatesBarycenter
 // Created: NLD 2007-04-29
 // -----------------------------------------------------------------------------
 MT_Vector2D DEC_GeometryFunctions::_ComputeAutomatesBarycenter( const T_ObjectVector& automates )
@@ -1685,19 +1540,6 @@ MT_Vector2D DEC_GeometryFunctions::_ComputeAutomatesBarycenter( const T_ObjectVe
     if( nNbrElt > 0 )
         barycenter /= nNbrElt;
     return barycenter;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputeAutomatesBarycenter
-// Created: NLD 2007-04-29
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::ComputeAutomatesBarycenter( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 0 ) ) );
-
-    const T_ObjectVector automates = call.GetParameter( 0 ).ToSelection();
-    MT_Vector2D* pBarycenter = new MT_Vector2D( _ComputeAutomatesBarycenter( automates ) );
-    call.GetResult().SetValue( pBarycenter, &DEC_Tools::GetTypePoint() );
 }
 
 // -----------------------------------------------------------------------------

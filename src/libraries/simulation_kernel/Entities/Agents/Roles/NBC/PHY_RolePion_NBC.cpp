@@ -250,15 +250,6 @@ void PHY_RolePion_NBC::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_UnitCanBeContaminated::IsWearingNbcProtectionSuit
-// Created: NLD 2004-05-03
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_NBC::IsWearingNbcProtectionSuit() const
-{
-    return bNbcProtectionSuitWorn_;   
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_UnitCanBeContaminated::IsContaminated
 // Created: NLD 2004-05-05
 // -----------------------------------------------------------------------------

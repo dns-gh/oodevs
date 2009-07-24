@@ -37,21 +37,17 @@ public:
     static void ListPoint_Size       ( DIA_Call_ABC& );
     static void ListPoint_PushBack   ( DIA_Call_ABC& );
     static void ListPoint_Remove     ( DIA_Call_ABC& );
-    static void ListPoint_Clear      ( DIA_Call_ABC& );
 
     // Time management
     static void GetSimTime         ( DIA_Call_ABC& );
     static void GetRealTime        ( DIA_Call_ABC& );
-    static void GetTimeStepDuration( DIA_Call_ABC& ); 
     static void IsNight            ( DIA_Call_ABC& );
 
     // Parameters copy
-    static void CopyDirection                     ( DIA_Call_ABC& call );
     static void CopyPoint                         ( DIA_Call_ABC& call );
     static void CopyListPoint                     ( DIA_Call_ABC& call );
     static void CopyPointToListPoint              ( DIA_Call_ABC& call );
     static void CopyLocalisation                  ( DIA_Call_ABC& call );
-    static void CopyPointToLocalisation           ( DIA_Call_ABC& call );
     static void CopyLocationList              ( DIA_Call_ABC& call );
     static void CopyLocalisationToLocationList( DIA_Call_ABC& call );
 

@@ -45,7 +45,6 @@ void DEC_AutomateDecision::InitializeDIA()
 DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
     : DEC_Decision             ( automate, "T_Automate" )
     , diaFunctionCaller_       ( automate, automate.GetType().GetFunctionTable() )
-    , nForceRatioState_        ( eForceRatioStateNone  )
     , nRulesOfEngagementState_ ( eRoeStateNone         )
     , nCloseCombatState_       ( eCloseCombatStateNone )
     , nOperationalState_       ( eOpStateOperational   )
@@ -83,7 +82,6 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
 DEC_AutomateDecision::DEC_AutomateDecision()
     : DEC_Decision             ( "T_Automate" ) 
     , diaFunctionCaller_       ( *(MIL_Automate*)0, *(DIA_FunctionTable< MIL_Automate >*)1 ) // $$$$ JVT : Eurkkk
-    , nForceRatioState_        ( eForceRatioStateNone  )
     , nRulesOfEngagementState_ ( eRoeStateNone         )
     , nCloseCombatState_       ( eCloseCombatStateNone )
     , nOperationalState_       ( eOpStateOperational   )
@@ -118,7 +116,6 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< MT_Role_ABC >( *this )
          >> pEntity_
-         >> nForceRatioState_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
          >> nOperationalState_;
@@ -172,7 +169,6 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) co
     unsigned id = pEntity_->GetType().GetID();
     file << boost::serialization::base_object< MT_Role_ABC >( *this )
          << pEntity_
-         << nForceRatioState_
          << nRulesOfEngagementState_
          << nCloseCombatState_
          << nOperationalState_
@@ -257,7 +253,7 @@ void DEC_AutomateDecision::SendFullState( NET_ASN_MsgAutomatAttributes& msg ) co
     msg().m.combat_de_rencontrePresent = 1;
     msg().m.etat_operationnelPresent   = 1;
 
-    msg().rapport_de_force      = (ASN1T_EnumForceRatioStatus)nForceRatioState_;
+    msg().rapport_de_force      = (ASN1T_EnumForceRatioStatus)eForceRatioStateNone;
     msg().combat_de_rencontre   = (ASN1T_EnumMeetingEngagementStatus)nCloseCombatState_;
     msg().etat_operationnel     = (ASN1T_EnumOperationalStatus)nOperationalState_;
     msg().roe                   = (ASN1T_EnumRoe)nRulesOfEngagementState_;
@@ -312,32 +308,6 @@ bool DEC_AutomateDecision::HasStateChanged() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::NotifyForceRatioStateChanged
-// Created: NLD 2004-10-15
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::NotifyForceRatioStateChanged( E_ForceRatioState nState )
-{
-    if( nForceRatioState_ != nState )
-    {
-        nForceRatioState_ = nState;
-        bStateHasChanged_ = true;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::NotifyRulesOfEngagementStateChanged
-// Created: NLD 2004-10-15
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState nState )
-{
-    if( nRulesOfEngagementState_ != nState )
-    {
-        nRulesOfEngagementState_ = nState;
-        bStateHasChanged_ = true;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::NotifyCloseCombatStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
@@ -346,19 +316,6 @@ void DEC_AutomateDecision::NotifyCloseCombatStateChanged( E_CloseCombatState nSt
     if( nCloseCombatState_ != nState )
     {
         nCloseCombatState_ = nState;
-        bStateHasChanged_  = true;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::NotifyOperationalStateChanged
-// Created: NLD 2005-07-26
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::NotifyOperationalStateChanged( E_OperationalState nState )
-{
-    if( nOperationalState_ != nState )
-    {
-        nOperationalState_ = nState;
         bStateHasChanged_  = true;
     }
 }

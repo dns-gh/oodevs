@@ -125,16 +125,7 @@ float SensorType::GetPostureSourceFactor( const Agent_ABC& /*agent*/ ) const
 // -----------------------------------------------------------------------------
 float SensorType::GetDistanceModificator( const Agent_ABC& agent ) const
 {
-//    const MT_Float rPopulationCollisionDensity = agent.GetPopulationCollisionDensity();
-//          MT_Float rPopulationFactor = 1.;
-//    if( rPopulationCollisionDensity != 0. )
-//        rPopulationFactor = std::min( 1., rPopulationFactor_ * rPopulationDensity_ / rPopulationCollisionDensity );
-//       
     return    GetPostureSourceFactor( agent );
-//            * agent.GetElongationFactor()
-//            * agent.GetTiredness ().GetCoefSensorDistanceModificator()
-//            * agent.GetExperience().GetCoefSensorDistanceModificator()
-//            * rPopulationFactor;
 }
 
 // -----------------------------------------------------------------------------

@@ -106,18 +106,6 @@ void DEC_ObjectFunctions::GetObjectiveLocalisation( DIA_Call_ABC& call )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::IsObjectiveFlagged
-// Created: NLD 2007-05-15
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::IsObjectiveFlagged( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeObjectif( call.GetParameter( 0 ) ) );
-    DEC_Objective* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
-    assert( pTmp );
-    call.GetResult().SetValue( pTmp->IsFlagged() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::SetObjectiveFlag
 // Created: NLD 2007-05-15
 // -----------------------------------------------------------------------------

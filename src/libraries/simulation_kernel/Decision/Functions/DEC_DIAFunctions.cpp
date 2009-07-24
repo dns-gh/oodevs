@@ -170,34 +170,6 @@ void DEC_DIAFunctions::CopyPoint( DIA_Call_ABC& call )
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::CopyDirection
-// Created: NLD 2003-04-15
-//-----------------------------------------------------------------------------
-// static
-void DEC_DIAFunctions::CopyDirection( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 1 ) ) );
-
-    DIA_Parameters& params = call.GetParameters();
-
-    MT_Vector2D* pPosSource = params[0].ToUserPtr( pPosSource );
-    MT_Vector2D* pPosDest   = params[1].ToUserPtr( pPosDest   );
-
-    assert( pPosSource );
-    assert( !pPosSource->IsZero() );
-    assert( MT_IsZero( pPosSource->SquareMagnitude() - 1. ) );
-
-    if( pPosDest )
-        (*pPosDest) = (*pPosSource);
-    else
-    {
-        MT_Vector2D* pTmp = new MT_Vector2D( *pPosSource );
-        params[1].SetValue( pTmp, &DEC_Tools::GetTypeDirection() );
-    }
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::CopyPointToListPoint
 // Created: NLD 2003-04-15
 // Modified: JVT 2004-12-14
@@ -249,33 +221,6 @@ void DEC_DIAFunctions::CopyLocalisation( DIA_Call_ABC& call )
     }    
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::CopyPointToLocalisation
-// Created: NLD 2003-08-19
-// -----------------------------------------------------------------------------
-// static
-void DEC_DIAFunctions::CopyPointToLocalisation( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypePoint       ( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 1 ) ) );
-
-    DIA_Parameters& params = call.GetParameters();
-
-    MT_Vector2D*      pPosSource = params[0].ToUserPtr( pPosSource );
-    TER_Localisation* pLocDest   = params[1].ToUserPtr( pLocDest   );
-
-    assert( pPosSource );
-
-    if( pLocDest )
-        pLocDest->Reset( *pPosSource );
-    else
-    {
-        pLocDest = new TER_Localisation();
-        pLocDest->Reset( *pPosSource );
-        params[1].SetValue( pLocDest, &DEC_Tools::GetTypeLocalisation() );
-    }
-}
-
 // =============================================================================
 // TIME MANAGEMENT
 // =============================================================================
@@ -305,15 +250,6 @@ void DEC_DIAFunctions::GetSimTime( DIA_Call_ABC& call )
 void DEC_DIAFunctions::GetRealTime( DIA_Call_ABC& call )
 {
     call.GetResult().SetValue( (float) MIL_AgentServer::GetWorkspace().GetRealTime() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::GetTimeStepDuration
-// Created: NLD 2004-04-27
-// -----------------------------------------------------------------------------
-void DEC_DIAFunctions::GetTimeStepDuration( DIA_Call_ABC& call )
-{
-   call.GetResult().SetValue( (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
 }
 
 // =============================================================================
@@ -460,20 +396,6 @@ void DEC_DIAFunctions::ListPoint_Remove( DIA_Call_ABC& call )
     std::advance( it, nPos );
     pListPointDest->erase( it );
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::ListPoint_Clear
-// Created: JVT 2005-05-18
-// -----------------------------------------------------------------------------
-void DEC_DIAFunctions::ListPoint_Clear( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeListePoints( call.GetParameter( 0 ) ) );
-    
-    T_PointVector* pListPoint = call.GetParameter( 0 ).ToUserPtr( pListPoint );
-    assert( pListPoint );
-    pListPoint->clear();
-}
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::CreateDIAThing

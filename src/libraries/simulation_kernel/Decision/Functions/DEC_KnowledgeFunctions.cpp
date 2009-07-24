@@ -102,23 +102,6 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau( DIA_Call_ABC& ca
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInZone
-// Created: NLD 2005-03-23
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInZone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    TER_Localisation* pZone = call.GetParameter( 0 ).ToUserPtr( pZone );
-    assert( pZone );
-
-    T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledge().GetLivingEnemiesPerceivedInZone( knowledges, *pZone );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetLivingEnemiesInZone
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
@@ -213,15 +196,6 @@ void DEC_KnowledgeFunctions::EnemyPresenceInCircle( DIA_Call_ABC& call, const MI
 void DEC_KnowledgeFunctions::GetRapForLocal( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     call.GetResult().SetValue( (float)callerAgent.GetKnowledge().GetRapForLocalValue() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetRapForGlobal
-// Created: NLD 2004-04-08
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetRapForGlobal( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    call.GetResult().SetValue( (float)callerAutomate.GetKnowledge().GetRapForGlobalValue() );
 }
 
 // -----------------------------------------------------------------------------

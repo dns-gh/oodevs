@@ -250,17 +250,6 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_IntelligenceFunctions::IsEnemyOnFlank
-// Created: SBO 2007-12-06
-// -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::IsEnemyOnFlank( DIA_Call_ABC& call, const MIL_Automate& caller )
-{
-    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
-    const MIL_Fuseau* zone = call.GetParameter( 0 ).ToUserPtr( zone );
-    call.GetResult().SetValue( zone && ::IsOnFlank( *zone, caller, boost::bind( &MIL_IntelligenceOrder::IsEnemy, _1 ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_IntelligenceFunctions::IsFriendOnFlank
 // Created: SBO 2007-12-06
 // -----------------------------------------------------------------------------

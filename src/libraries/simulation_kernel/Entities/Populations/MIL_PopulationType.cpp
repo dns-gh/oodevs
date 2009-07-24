@@ -286,7 +286,6 @@ void MIL_PopulationType::InitializeDiaFunctions()
 
     // Etats decisionnel
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::NotifyDominationStateChanged, "DEC_Population_ChangeEtatDomination" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetNbrAliveHumans           , "DEC_Population_Vivants"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetNbrDeadHumans            , "DEC_Population_Morts"                );
 
     // Representations

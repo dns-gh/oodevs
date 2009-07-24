@@ -264,20 +264,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceived( T_KnowledgeOb
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone( T_KnowledgeObjectDiaIDVector& container, const TER_Polygon& zone ) const
-{
-    assert( pPion_ );
-    assert( pKnowledgeAgentPerceptionContainer_ );
-
-    container.clear();
-    sLivingEnemiesPerceivedInsertor< TER_Polygon > functor( *pPion_, container, &zone );
-    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );           
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone
-// Created: NLD 2005-03-23
-// -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone( T_KnowledgeObjectDiaIDVector& container, const TER_Localisation& zone ) const
 {
     assert( pPion_ );

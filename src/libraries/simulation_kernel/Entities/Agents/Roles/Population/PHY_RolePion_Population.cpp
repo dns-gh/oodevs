@@ -26,9 +26,6 @@ PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_Ag
     : PHY_RoleInterface_Population          ( role )
     , pPion_                                ( &pion )
     , bHasChanged_                          ( true )
-    , bSlowDownEnabled_                     ( true )
-    , bReloadingDurationModificationEnabled_( true )
-    , bInvulnerabilityEnabled_              ( false )
 {
     // NOTHING
 }
@@ -41,9 +38,6 @@ PHY_RolePion_Population::PHY_RolePion_Population()
     : PHY_RoleInterface_Population          ()
     , pPion_                                ( 0 )
     , bHasChanged_                          ( true )
-    , bSlowDownEnabled_                     ( true )
-    , bReloadingDurationModificationEnabled_( true )
-    , bInvulnerabilityEnabled_              ( false )
 {
     // NOTHING
 }
@@ -65,10 +59,7 @@ template< typename Archive >
 void PHY_RolePion_Population::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Population >( *this )
-         & pPion_
-         & bSlowDownEnabled_
-         & bReloadingDurationModificationEnabled_
-         & bInvulnerabilityEnabled_;
+         & pPion_;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,8 +69,6 @@ void PHY_RolePion_Population::serialize( Archive& file, const uint )
 MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
 {
     assert( pPion_ );
-    if( !bSlowDownEnabled_ )
-        return rSpeed;
 
     T_KnowledgePopulationCollisionVector collisions;
     pPion_->GetKnowledge().GetPopulationsColliding( collisions );
@@ -101,8 +90,6 @@ MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
 MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) const
 {
     assert( pPion_ );
-    if( !bReloadingDurationModificationEnabled_ )
-        return rDuration;
 
     T_KnowledgePopulationCollisionVector collisions;
     pPion_->GetKnowledge().GetPopulationsColliding( collisions );
@@ -181,74 +168,12 @@ bool PHY_RolePion_Population::HasChanged() const
 {
     return bHasChanged_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population::EnableSlowDown
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Population::EnableSlowDown()
-{
-    bSlowDownEnabled_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population::DisableSlowDown
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Population::DisableSlowDown()
-{
-    bSlowDownEnabled_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population::EnableReloadingDurationModification
-// Created: NLD 2005-11-02
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Population::EnableReloadingDurationModification()
-{
-    bReloadingDurationModificationEnabled_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population::DisableReloadingDurationModification
-// Created: NLD 2005-11-02
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Population::DisableReloadingDurationModification()
-{
-    bReloadingDurationModificationEnabled_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population::EnableInvulnerability
-// Created: NLD 2005-11-03
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Population::EnableInvulnerability()
-{
-    if( ! bInvulnerabilityEnabled_ )
-    {
-        bHasChanged_ = true;
-        bInvulnerabilityEnabled_ = true;
-    }
-}
     
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population::DisableInvulnerability
-// Created: NLD 2005-11-03
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Population::DisableInvulnerability()
-{
-    if( bInvulnerabilityEnabled_ )
-    {
-        bHasChanged_ = true;
-        bInvulnerabilityEnabled_ = false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::IsInvulnerable
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Population::IsInvulnerable() const
 {
-    return bInvulnerabilityEnabled_;
+    return false;
 }

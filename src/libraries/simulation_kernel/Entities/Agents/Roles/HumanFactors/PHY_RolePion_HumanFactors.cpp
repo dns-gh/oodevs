@@ -307,16 +307,6 @@ const PHY_Morale& PHY_RolePion_HumanFactors::GetMorale() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_HumanFactors::GetExperience
-// Created: JVT 2004-11-30
-// -----------------------------------------------------------------------------
-const PHY_Experience& PHY_RolePion_HumanFactors::GetExperience() const
-{
-    assert( pExperience_ );
-    return *pExperience_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::GetTiredness
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------

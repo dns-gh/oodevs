@@ -60,7 +60,6 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsContaminated            () const;
-            bool IsWearingNbcProtectionSuit() const;
     //@}
 
     //! @name Network

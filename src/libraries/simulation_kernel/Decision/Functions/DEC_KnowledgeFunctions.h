@@ -28,7 +28,6 @@ public:
     //! @name Rapport de force
     //@{
     static void GetRapForLocal         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetRapForGlobal        ( DIA_Call_ABC& call, const MIL_Automate&  callerAgent );
 
     static void GetDetectedAgentsInFuseau        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetDetectedAgentsInZone          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
@@ -37,7 +36,6 @@ public:
 //    static void GetLivingTerroristsPerceived     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesPerceived        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesPerceivedInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetLivingEnemiesPerceivedInZone  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesInZone           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesInFuseau         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesInCircle         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
@@ -46,7 +44,6 @@ public:
     template< typename T > static void SortAccordingToLoadedEnemies  ( DIA_Call_ABC& call, const T& caller );
 
     template< typename T > static void GetLivingEnemiesPerceivedByPion      ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetDangerousEnemiesInZoneOfPion      ( DIA_Call_ABC& call, const T& caller );
 
     static void GetNearbyRefugees                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNearbySurrenderedAgents       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
@@ -57,8 +54,7 @@ public:
        
     static void GetClosestObject       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
     static void GetClosestFriendObject ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
-    static void GetObjectsColliding    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    template< typename T > static void GetObjects        ( DIA_Call_ABC& call, const T& caller );   
+    static void GetObjectsColliding    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );  
     template< typename T > static void GetObjectsInCircle( DIA_Call_ABC& call, const T& caller );   
     template< typename T > static void GetObjectsInZone  ( DIA_Call_ABC& call, const T& caller );   
     template< typename T > static void GetObjectsInFuseau( DIA_Call_ABC& call, const T& caller );   

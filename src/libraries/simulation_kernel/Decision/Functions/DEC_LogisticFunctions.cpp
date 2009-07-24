@@ -385,21 +385,6 @@ void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( DIA_Call_ABC& call, MI
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::GetDotationValue
-// Created: NLD 2006-08-07
-// -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::GetDotationValue( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    assert( DEC_Tools::CheckTypeDotation( call.GetParameter( 0 ) ) );
-    const PHY_DotationCategory* pDotationCategory = call.GetParameter( 0 ).ToUserPtr( pDotationCategory );
-
-    if( pDotationCategory )
-        call.GetResult().SetValue( (float)callerAgent.GetRole< PHY_RolePion_Dotations >().GetDotationValue( *pDotationCategory ) );
-    else
-        call.GetResult().SetValue( (float)0. );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionSupplyEnableSystem
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------

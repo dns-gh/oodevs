@@ -30,15 +30,6 @@ void DEC_PerceptionFunctions::SetStealthFactor( DIA_Call_ABC& call, MIL_AgentPio
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_PerceptionFunctions::GetMaxDetectionDistance
-// Created: JVT 04-05-18
-//-----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::GetMaxDetectionDistance( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RolePion_Perceiver >().GetMaxAgentPerceptionDistance() ) );
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::EnableCoupDeSonde
 // Created: JVT 03-04-29
 //-----------------------------------------------------------------------------

@@ -276,7 +276,6 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPC              , "DEC_Automate_PionPC"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPCOfAutomate    , "DEC_Automate_PionPCDeAutomate"     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetAutomates           , "DEC_Automate_AutomatesSubordonnes" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetParentAutomate      , "DEC_AutomateSuperieur"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsParentAutomateEngaged, "DEC_AutomateSuperieur_EstEmbraye"  );
 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC, "DEC_Automate_PionsDeAutomateSansPC" );
@@ -284,15 +283,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPCOfAutomate        , "DEC_Automate_PionPCDeAutomate" );
 
     // State
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyForceRatioStateChanged       , "DEC_Automate_ChangeEtatRapportDeForce"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged, "DEC_Automate_ChangeEtatROE"               );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyCloseCombatStateChanged      , "DEC_Automate_ChangeEtatCombatDeRencontre" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyOperationalStateChanged      , "DEC_Automate_ChangeEtatOperationnel"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsEngaged                          , "DEC_Automate_EstEmbraye"                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsSurrendered                      , "DEC_Automate_SEstRendu"                   );
-       
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::DebrayeAutomate, "DEC_Automate_Debrayer" ); 
-    
+
     // Debug
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::Trace          , "DEC_Trace"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::DecisionalState, "DEC_DecisionalState"    );
@@ -326,14 +318,11 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsRecon                               < MIL_Automate >, "DEC_ConnaissanceObjet_EstReconnu"                           );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesWith                   < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesAvec"                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesInZoneWith             < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjects                            < MIL_Automate >, "DEC_Connaissances_Objets"                                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInCircle                    < MIL_Automate >, "DEC_Connaissances_ObjetsDansCercle"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInZone                      < MIL_Automate >, "DEC_Connaissances_ObjetsDansZone"                           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInFuseau                    < MIL_Automate >, "DEC_Connaissances_ObjetsDansFuseau"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetFriendsInZone                      < MIL_Automate >, "DEC_Connaissances_UnitesAmiesDansZone"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetLivingEnemiesPerceivedByPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion"     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetDangerousEnemiesInZoneOfPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion"  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetRapForGlobal                                       , "DEC_RapportDeForceGlobal"                                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetPopulations                        < MIL_Automate >, "DEC_Connaissances_Populations"                              );    
     
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::SortAccordingToUnloadedEnemies        < MIL_Automate >, "DEC_Connaissances_TrierZonesSelonPresenceEnnemisDebarques"  );
@@ -347,7 +336,6 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::SortZonesAccordingToUnloadedEnemies                        , "DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::SortAccordingToUnloadedEnemies                        , "DEC_Rens_TrierFuseauxSelonPresenceEnnemisDebarques"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::SortAccordingToLoadedEnemies                          , "DEC_Rens_TrierFuseauxSelonPresenceEnnemisEmbarques"  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::IsEnemyOnFlank                                        , "DEC_Rens_EnnemiSurFlanc"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::IsFriendOnFlank                                       , "DEC_Rens_AmiSurFlanc"     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_IntelligenceFunctions   ::ComputeCoverDirection                                 , "DEC_Rens_CalculerDirectionCouverture" );
 
@@ -374,8 +362,6 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine                             , "DEC_Geometrie_CalculerAutomateDistanceLigneAvant"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceFromBackLine                                     , "DEC_Geometrie_CalculerDistanceLigneArriere"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine                              , "DEC_Geometrie_CalculerAutomateDistanceLigneArriere"                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistancePointFromFrontLine                               , "DEC_Geometrie_CalculerDistancePointLigneAvant"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistancePointFromBackLine                                , "DEC_Geometrie_CalculerDistancePointLigneArriere"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPointForPion                                         , "DEC_Geometrie_CalculerPointArriveePourPion"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau         < MIL_Automate >, "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >, "DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau"   );
@@ -393,7 +379,6 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateSetMissionLimaFlag                        , "DEC_SetMissionLimaFlag"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag                < MIL_Automate >, "DEC_GetMissionLimaFlag"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag                , "DEC_SetMissionLimaFlagHoraire"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaScheduleFlag        < MIL_Automate >, "DEC_GetMissionLimaFlagHoraire"      );
 
     // MRT / conduite
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_CreatePionMission           , "DEC_MRT_CreerMissionPion"              );
@@ -411,16 +396,9 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::PionChangeAutomate , "DEC_Pion_ChangeAutomate" );
     
     // Accesseurs sur les pions   
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionFlying                               , "DEC_Automate_PionEstEnVol"                                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionTransported                          , "DEC_Automate_PionEstTransporte"                                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionContaminated                         , "DEC_Automate_PionEstContamine"                                 );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionNBCProtected                         , "DEC_Automate_PionEstEnTenueProtectionNBC"                      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionMoving                               , "DEC_Automate_PionEstEnMouvement"                               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionNeutralized                          , "DEC_Automate_PionEstNeutralise"                                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionOperationalState                    , "DEC_Automate_PionEtatOps"                                      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionMajorOperationalState               , "DEC_Automate_PionEtatOpsMajeur"                                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPosition                            , "DEC_Automate_PionPosition"                                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionDirection                           , "DEC_Automate_PionDirection"                                    );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::MakePionRelievePion                        , "DEC_Automate_PionRelevePion"                                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionRelievePion                         , "DEC_Automate_PionPeutReleverPion"                              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPointInPionFuseau                        , "DEC_Automate_EstPointDansFuseauPion"                           );
@@ -429,12 +407,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionConstructObject                     , "DEC_Automate_PionPeutConstruireObjet"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionBypassObject                        , "DEC_Automate_PionPeutConstruireContournementObjet"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionDestroyObject                       , "DEC_Automate_PionPeutDetruireObjet"                            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionMineObject                          , "DEC_Automate_PionPeutValoriserObjet"                           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionActivateObject                      , "DEC_Automate_PionPeutActiverObjet"                             );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::PionTimeLeftForMoving                      , "DEC_Automate_PionAutonomieEnDeplacement"                       );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::PionTimeToMoveDistance                     , "DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite"      );   
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionTransportPion                       , "DEC_Automate_PionPeutTransporterPion"                          );
-    
+
     // Logistique
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateGetTC2       , "DEC_Automate_TC2"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateRequestSupply, "DEC_DemandeDeRavitaillement" );

@@ -28,7 +28,6 @@ public:
     static void SetVisionModePoint                  ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void SetVisionModeNormal                 ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void SetStealthFactor                    ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void GetMaxDetectionDistance             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPointVisible                      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void EnableRecoAlat                      ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void DisableRecoAlat                     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );

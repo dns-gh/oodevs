@@ -25,8 +25,6 @@ class DEC_ExtinguishFireFunctions
 public:
     //! @name Functions
     //@{
-    static void GetRangeToExtinguish( DIA_Call_ABC& call, MIL_AgentPion& pPion );
-    static void AnalyzeFireClass    ( DIA_Call_ABC& call, MIL_AgentPion& pPion );
     //@}
 };
 

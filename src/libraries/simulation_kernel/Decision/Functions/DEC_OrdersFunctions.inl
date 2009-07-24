@@ -36,23 +36,6 @@ void DEC_OrdersFunctions::GetMissionLimaFlag( DIA_Call_ABC& call, const T& calle
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::GetMissionLimaScheduleFlag
-// Created: NLD 2003-12-23
-// -----------------------------------------------------------------------------
-template< typename T >
-void DEC_OrdersFunctions::GetMissionLimaScheduleFlag( DIA_Call_ABC& call, const T& caller )
-{
-    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-    MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
-    if( !pLima )
-    {
-        call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetResult().SetValue( pLima->IsScheduleFlagged() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::GetLima
 // Created: NLD 2004-05-21
 // -----------------------------------------------------------------------------

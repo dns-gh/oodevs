@@ -37,18 +37,6 @@
     
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::GetParentAutomate
-// Created: NLD 2007-04-24
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::GetParentAutomate( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    if( callerAutomate.GetParentAutomate() )
-        call.GetResult().SetValue( callerAutomate.GetParentAutomate()->GetDecision() );
-    else
-        call.GetResult().Reset();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsParentAutomateEngaged
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
@@ -234,42 +222,6 @@ void DEC_AutomateFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_Automa
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_AutomateFunctions::NotifyForceRatioStateChanged
-// Created: NLD 2004-10-15
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::NotifyForceRatioStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    callerAutomate.GetDecision().NotifyForceRatioStateChanged( (E_ForceRatioState)call.GetParameter( 0 ).ToId() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: static void DEC_AutomateFunctions::NotifyForceRatioStateChanged
-// Created: NLD 2004-10-15
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    callerAutomate.GetDecision().NotifyRulesOfEngagementStateChanged( (E_RulesOfEngagementState )call.GetParameter( 0 ).ToId() );
-}  
-
-// -----------------------------------------------------------------------------
-// Name: static void DEC_AutomateFunctions::NotifyForceRatioStateChanged
-// Created: NLD 2004-10-15
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::NotifyCloseCombatStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    callerAutomate.GetDecision().NotifyCloseCombatStateChanged( (E_CloseCombatState)call.GetParameter( 0 ).ToId() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::NotifyOperationalStateChanged
-// Created: NLD 2005-07-26
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::NotifyOperationalStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    callerAutomate.GetDecision().NotifyOperationalStateChanged( (E_OperationalState)call.GetParameter( 0 ).ToId() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::PionChangeAutomate
 // Created: NLD 2003-10-09
 // -----------------------------------------------------------------------------
@@ -301,15 +253,6 @@ void DEC_AutomateFunctions::PionChangeAutomate( DIA_Call_ABC& call, MIL_Automate
 void DEC_AutomateFunctions::IsEngaged( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
 {
     call.GetResult().SetValue( callerAutomate.IsEngaged() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::IsSurrendered
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::IsSurrendered( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    call.GetResult().SetValue( callerAutomate.IsSurrendered() );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,55 +319,6 @@ void DEC_AutomateFunctions::CanPionDestroyObject( DIA_Call_ABC& call, const MIL_
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::CanPionMineObject
-// Created: NLD 2005-09-13
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::CanPionMineObject( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    
-    assert( pPion );
-    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
-
-    const DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAutomate.GetArmy() );
-    call.GetResult().SetValue( pKnowledge && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( pKnowledge->GetType() ) );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::CanPionActivateObject
-// Created: NLD 2005-09-13
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::CanPionActivateObject( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    
-    assert( pPion );
-    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
-
-    const DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAutomate.GetArmy() );
-    call.GetResult().SetValue( pKnowledge != 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::PionTimeLeftForMoving
-// Created: NLD 2005-03-18
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::PionTimeLeftForMoving( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    assert( pPion );   
-    
-    const MT_Float rTime = pPion->GetPion().GetRole< PHY_RolePion_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
-    call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMinutes( rTime ) );
-}   
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::PionTimeToMoveDistance
 // Created: NLD 2005-03-21
 // -----------------------------------------------------------------------------
@@ -461,87 +355,6 @@ void DEC_AutomateFunctions::IsPionContaminated( DIA_Call_ABC& call, const MIL_Au
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::IsPionFlying
-// Created: NLD 2005-09-19
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::IsPionFlying( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );  
-    assert( pPion );
-    
-    call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::IsPionTransported
-// Created: JVT 2005-05-11
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::IsPionTransported( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    
-    assert( pPion );
-    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
-    
-    call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RolePion_Transported >().IsTransported() );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::CanPionTransportPion
-// Created: JVT 2004-11-26
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::CanPionTransportPion( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    const DEC_RolePion_Decision* pTransporter           = call.GetParameter( 0 ).ToUserObject( pTransporter );
-    const DEC_RolePion_Decision* pTransported           = call.GetParameter( 1 ).ToUserObject( pTransported );
-    const bool                   bTransportOnlyLoadable = call.GetParameter( 2 ).ToBool();
-
-    assert( pTransporter );
-    assert( pTransported );
-    call.GetResult().SetValue( pTransporter->GetPion().GetRole< PHY_RoleAction_Transport >().CanTransportPion( pTransported->GetPion(), bTransportOnlyLoadable ) );
-    assert( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::IsPionNBCProtected
-// Created: JVT 2004-11-26
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::IsPionNBCProtected( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    
-    assert( pPion );
-    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
-    
-    call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RolePion_NBC >().IsWearingNbcProtectionSuit() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::IsPionMoving
-// Created: JVT 2004-11-26
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::IsPionMoving( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    
-    assert( pPion );
-    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
-    
-    call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RolePion_Location >().GetCurrentSpeed() != 0. );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsPionNeutralized
 // Created: JVT 2004-11-26
 // -----------------------------------------------------------------------------
@@ -575,38 +388,6 @@ void DEC_AutomateFunctions::IsPointInPionFuseau( DIA_Call_ABC& call, const MIL_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::GetPionOperationalState
-// Created: JVT 2004-11-26
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::GetPionOperationalState( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    
-    assert( pPion );
-//    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
-    
-    call.GetResult().SetValue( (float)pPion->GetPion().GetRole< PHY_RolePion_Composantes >().GetOperationalState() );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::GetPionMajorOperationalState
-// Created: NLD 2005-11-25
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::GetPionMajorOperationalState( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    
-    assert( pPion );
-//    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
-    
-    call.GetResult().SetValue( (float)pPion->GetPion().GetRole< PHY_RolePion_Composantes >().GetMajorOperationalState() );    
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetPionPosition
 // Created: JVT 2004-11-26
 // -----------------------------------------------------------------------------
@@ -621,23 +402,6 @@ void DEC_AutomateFunctions::GetPionPosition( DIA_Call_ABC& call, const MIL_Autom
     
     call.GetResult().SetValue( (void*)&pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), &DEC_Tools::GetTypePoint(), 1 );
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::GetPionDirection
-// Created: JVT 2004-11-26
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::GetPionDirection( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    
-    assert( pPion );
-//  assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
-    
-    call.GetResult().SetValue( (void*)&pPion->GetPion().GetRole< PHY_RolePion_Location >().GetDirection(), &DEC_Tools::GetTypeDirection(), 1 );    
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::MakePionRelievePion
@@ -684,16 +448,6 @@ void DEC_AutomateFunctions::CanPionRelievePion( DIA_Call_ABC& call, const MIL_Au
     assert( IsPionInAutomate( callerAutomate, pAgentToRelieve->GetPion() ) );
 
     call.GetResult().SetValue( pAgentRelieving->GetPion().GetOrderManager().CanRelievePion( pAgentToRelieve->GetPion() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::DebrayeAutomate
-// Created: JVT 2005-01-03
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::DebrayeAutomate( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    call.GetResult().SetValue( callerAutomate.IsEngaged() );
-    callerAutomate.Disengage();
 }
 
 // -----------------------------------------------------------------------------

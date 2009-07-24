@@ -47,35 +47,6 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( DIA_Call_ABC& call
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetDangerousEnemiesInZoneOfPion
-// Created: NLD 2006-04-20
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_KnowledgeFunctions::GetDangerousEnemiesInZoneOfPion( DIA_Call_ABC& call, const T& caller )
-{
-    assert( DEC_Tools::CheckTypePion        ( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 1 ) ) );
-
-    const DEC_RolePion_Decision* pSourcePionTmp = call.GetParameter( 0 ).ToUserObject( pSourcePionTmp );
-    assert( pSourcePionTmp );
-    const MIL_AgentPion& sourcePion = pSourcePionTmp->GetPion();
-
-    const TER_Localisation* pZone = call.GetParameter( 1 ).ToUserPtr( pZone );
-    assert( pZone );
-
-    T_KnowledgeAgentDiaIDVector sourceKnowledges;
-    sourcePion.GetKnowledge().GetDangerousEnemiesInZone( sourceKnowledges, *pZone );
-    
-    T_KnowledgeAgentDiaIDVector translatedKnowledges;
-    caller.GetKnowledgeGroup().GetKnowledge().TranslateKnowledges( sourceKnowledges, sourcePion.GetKnowledgeGroup(), translatedKnowledges );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( translatedKnowledges, DEC_Tools::GetTypeConnaissanceAgent() );
-}
-
-// -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::ShareKnowledgesWith
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
@@ -108,22 +79,6 @@ void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( DIA_Call_ABC& call, cons
 
     assert( pAutomate );
     pAutomate->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *pSharedCircleCenter, rSharedCircleRadius );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetObstacles
-// Created: NLD 2004-04-09
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_KnowledgeFunctions::GetObjects( DIA_Call_ABC& call, const T& caller )
-{
-    MIL_ObjectFilter filter( call.GetParameters(), 0 );
-    
-    T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjects( knowledges, filter );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
 }
 
 // -----------------------------------------------------------------------------

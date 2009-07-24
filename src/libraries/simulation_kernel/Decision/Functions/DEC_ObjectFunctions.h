@@ -53,7 +53,6 @@ public:
 
     // Objectives
     static void GetObjectiveLocalisation     ( DIA_Call_ABC& call );
-    static void IsObjectiveFlagged           ( DIA_Call_ABC& call );
     static void SetObjectiveFlag             ( DIA_Call_ABC& call );
     //@}
 };

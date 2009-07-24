@@ -239,22 +239,6 @@ void DEC_ActionFunctions::Transport_MagicUnloadPion( DIA_Call_ABC& call, MIL_Age
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::Transport_MagicUnloadPions
-// Created: NLD 2005-04-19
-// -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_MagicUnloadPions( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
-{
-    assert( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) );
-    
-    T_ObjectVector pions = call.GetParameter( 0 ).ToSelection();
-    for( CIT_ObjectVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {   
-        MIL_AgentPion& pion = static_cast< DEC_RolePion_Decision* >( *itPion )->GetPion();
-        callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pion );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Transport_IsFinished
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------

@@ -34,7 +34,6 @@ public:
     template< typename T > static void GetNextScheduledLima              ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetFuseau                         ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetMissionLimaFlag                ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetMissionLimaScheduleFlag        ( DIA_Call_ABC& call, const T& caller );
                            static void PionSetMissionLimaFlag            ( DIA_Call_ABC& call,       MIL_AgentPion& caller );
                            static void PionSetMissionLimaScheduleFlag    ( DIA_Call_ABC& call,       MIL_AgentPion& caller );
                            static void AutomateSetMissionLimaFlag        ( DIA_Call_ABC& call,       MIL_Automate& caller );

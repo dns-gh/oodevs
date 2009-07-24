@@ -64,7 +64,6 @@ public:
     //! @name Accessors
     //@{
     const PHY_Morale&     GetMorale    () const;
-    const PHY_Experience& GetExperience() const;
     const PHY_Tiredness&  GetTiredness () const;
     //@}
             

@@ -99,24 +99,20 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
 {
     // Geometry
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitListPoints                     , "DEC_Geometrie_DecouperListePoints"               );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitPath                           , "DEC_Geometrie_DecouperItineraire"                );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeCoverPosition                , "DEC_Geometrie_CalculerPositionCouverture"        );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAgentsBarycenter             , "DEC_Geometrie_CalculerBarycentreAgents"          );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePosition                   , "DEC_Geometrie_PositionTranslate"                 );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePositionInDirection        , "DEC_Geometrie_PositionTranslateDir"              );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComparePositions                    , "DEC_Geometrie_PositionsEgales"                   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareDirection                    , "DEC_Geometrie_DirectionEgales"                   );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::Distance                            , "DEC_Geometrie_Distance"                          );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertPointToLocalisation          , "DEC_Geometrie_ConvertirPointEnLocalisation"      );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPointInsideLocalisation           , "DEC_Geometrie_EstPointDansLocalisation"          );    
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareLocalisations                , "DEC_Geometrie_LocalisationsEgales"               );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateLocalisation                  , "DEC_Geometrie_CreerLocalisation"                 );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateListPoint                     , "DEC_Geometrie_CreerListePoints"                  );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreatePoint                         , "DEC_Geometrie_CreerPoint"                        );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateDirection                     , "DEC_Geometrie_CreerDirection"                    );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateOrthoDirection                , "DEC_Geometrie_CreerDirectionPerpendiculaire"     );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ReverseDirection                    , "DEC_Geometrie_InverseDirection"                  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::RotateDirection                     , "DEC_Geometrie_RotateDirection"                   );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndReverseDirection             , "DEC_Geometrie_CopieEtInverseDirection"           );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndRotateDirection              , "DEC_Geometrie_CopieEtRotateDirection"            );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeDistanceFromMiddleLine       , "DEC_Geometrie_CalculerDistanceLigneMoyenne"      );
@@ -126,16 +122,13 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointInCircle          , "DEC_Geometrie_PositionAleatoireDansCercle"       );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateCircleLocalisation            , "DEC_Geometrie_CreerLocalisationCercle"           );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPionCoordinated                   , "DEC_Geometrie_PionEstCoordonne"                  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationArea             , "DEC_Geometrie_AireLocalisation"                  );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau   , "DEC_Geometrie_PourcentageTerrainCompartimente"   );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau     , "DEC_Geometrie_PourcentageTerrainOuvert"          );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone     , "DEC_Geometrie_PourcentageZoneTerrainCompartimente"   );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone       , "DEC_Geometrie_PourcentageZoneTerrainOuvert"          );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening  , "DEC_Geometrie_TrierZonesSelonOuvertureTerrain"   );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening, "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsLocalisationInFuseau              , "DEC_Geometrie_EstLocalisationDansFuseau"         );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertFuseauToLocalisation         , "DEC_Geometrie_ConvertirFuseauEnLocalisation"     );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAutomatesBarycenter          , "DEC_Geometrie_CalculerBarycentreAutomates"       );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::GetNextObjectiveInFuseau            , "DEC_Geometrie_ProchainObjectifDansFuseau"        );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAreaInZone                   , "DEC_Geometrie_CalculerZoneAutourPointDansFuseau" );
 
@@ -143,16 +136,13 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     // $$$$ AGE 2007-10-11: Un seul temps
     pFuncTable->RegisterFunction( DEC_DIAFunctions::GetSimTime         , "DEC_TempsSim"        );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::GetRealTime        , "DEC_TempsReel"       );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::GetTimeStepDuration, "DEC_DureePasDeTemps" );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::IsNight            , "DEC_Nuit"            );
 
     // Parameters copy
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyDirection                 , "DEC_Copie_Direction"                          );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPoint                     , "DEC_Copie_Point"                              );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyListPoint                 , "DEC_Copie_ListePoints"                        );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPointToListPoint          , "DEC_Copie_PointDansListePoints"               );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisation              , "DEC_Copie_Localisation"                       );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPointToLocalisation       , "DEC_Copie_PointDansLocalisation"              );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocationList              , "DEC_Copie_ListeLocalisations"                 );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisationToLocationList, "DEC_Copie_LocalisationDansListeLocalisations" );
 
@@ -166,7 +156,6 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_Size       , "DEC_ListePoints_Size"       );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_PushBack   , "DEC_ListePoints_PushBack"   );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_Remove     , "DEC_ListePoints_Remove"     );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_Clear      , "DEC_ListePoints_Clear"      );
     // DIA Thing management
     pFuncTable->RegisterFunction( DEC_DIAFunctions::CreateDIAThing         , "DEC_CreerDIAThing"    );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::DestroyDIAThing         , "DEC_DetruireDIAThing" );
@@ -187,7 +176,6 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
 
     // Objectives
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetObjectiveLocalisation     , "DEC_Objectif_Localisation" );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::IsObjectiveFlagged           , "DEC_Objectif_EstFlage"     );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::SetObjectiveFlag             , "DEC_Objectif_Flag"         );
     
     // Objects

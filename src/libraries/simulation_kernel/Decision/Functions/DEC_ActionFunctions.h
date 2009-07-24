@@ -34,7 +34,6 @@ public:
     static void Transport_MagicLoadPion   ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
     static void Transport_MagicLoadPions  ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
     static void Transport_MagicUnloadPion ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );         
-    static void Transport_MagicUnloadPions( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
     static void Transport_IsFinished      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void Transport_IsTransporting  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void Transport_Cancel          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        

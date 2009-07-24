@@ -52,12 +52,10 @@
 #include "Entities/Agents/Actions/Objects/PHY_ActionConstructObject.h" 
 #include "Entities/Agents/Actions/Objects/PHY_ActionPrepareObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionDestroyObject.h"
-#include "Entities/Agents/Actions/Objects/PHY_ActionMineObject.h"   
-#include "Entities/Agents/Actions/Objects/PHY_ActionDemineObject.h" 
+#include "Entities/Agents/Actions/Objects/PHY_ActionMineObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionBypassObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionOccupyObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionAnimateObject.h"
-#include "Entities/Agents/Actions/Objects/PHY_ActionExtinguishObject.h" 
 #include "Entities/Agents/Actions/Objects/PHY_ActionResumeWorkObject.h"
 #include "Entities/Agents/Actions/Moving/PHY_ActionMove.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Position.h"
@@ -318,7 +316,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionPrepareObject                    >, "DEC_StartPreparerObjet"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDestroyObject                    >, "DEC_StartDetruireObjet"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionMineObject                       >, "DEC_StartValoriserObjet"                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDemineObject                     >, "DEC_StartDevaloriserObjet"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionBypassObject                     >, "DEC_StartCreerContournementObjet"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionOccupyObject                     >, "DEC__StartOccuperObjet"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionResumeWorkObject                 >, "DEC_StartReprendreTravauxObjet"           );  
@@ -326,11 +323,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionControlZone                      >, "DEC__StartControlerZone"                   );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionLoad                             >, "DEC_StartEmbarquement"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionUnload                           >, "DEC_StartDebarquement"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionExtinguishObject                 >, "DEC_StartEteindreObjet"                   );
-    
-    //Incendies
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ExtinguishFireFunctions::GetRangeToExtinguish  , "DEC_Fire_GetRangeToExtinguish"    );
-    //DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ExtinguishFireFunctions::AnalyzeFireClass      , "DEC_Fire_AnalyzeFireClass"        );
 
     // Embarquement / débarquement
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsLoaded                   , "DEC_Agent_EstEmbarque"               );
@@ -356,7 +348,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::IsMovingOnPath       , "DEC_Itineraire_EstEnMouvementSur"  );
   
     // Perception
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PerceptionFunctions::GetMaxDetectionDistance             , "DEC_Perception_DistanceMax"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PerceptionFunctions::EnableCoupDeSonde                   , "DEC_Perception_ActiverCoupsDeSonde"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PerceptionFunctions::DisableCoupDeSonde                  , "DEC_Perception_DesactiverCoupsDeSonde"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PerceptionFunctions::IsPointVisible                      , "DEC_Perception_PointEstVisible"                      );
@@ -383,7 +374,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetReinforcements  , "DEC_Renforts" );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::Reinforce          , "DEC_Renforce" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::CancelReinforcement, "DEC_AnnuleRenforcement" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::IsReinforcing      , "DEC_EstEnRenfort" );
 
     // Tests / Debug
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DebugDrawPoint , "DEC_DebugAffichePoint"  );
@@ -391,7 +381,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::Debug          , "DEC_Debug"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::Trace          , "DEC_Trace"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DecisionalState, "DEC_DecisionalState"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::SetPosture     , "DEC_PostureForTest"     ); //$$ Used for test only
 
     // Installation
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsInstalled  , "DEC_Agent_EstInstalle"    );
@@ -417,16 +406,10 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsAutomateEngaged       , "DEC_Agent_AutomateEstEmbraye"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosition             , "DEC_Agent_Position"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetDirection            , "DEC_Agent_Direction"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsSurrendered           , "DEC_Agent_SEstRendu"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsPrisoner              , "DEC_Agent_EstPrisonnier"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsRefugee               , "DEC_Agent_EstRefugie"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsMilitia               , "DEC_Agent_EstMilice"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsTerrorist             , "DEC_Agent_EstTerroriste"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsDead                  , "DEC_Agent_EstMort"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosture              , "DEC_Agent_NiveauInstallation"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetRoePopulation        , "DEC_Agent_RoePopulation"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetKilledOfficers       , "DEC_Agent_OfficiersTues"                    );
- 
+    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeLeftForMoving  , "DEC_Agent_AutonomieEnDeplacement"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeToMoveDistance , "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite" );
     
@@ -439,7 +422,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
  
     // NBC
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsContaminated                   , "DEC_Agent_EstContamine"                         );   
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsWearingNbcProtectionSuit       , "DEC_Agent_EstEnTenueProtectionNBC"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::WearNbcProtectionSuit            , "DEC_Agent_MettreTenueProtectionNBC"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::RemoveNbcProtectionSuit          , "DEC_Agent_EnleverTenueProtectionNBC"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::QueueForDecontamination, "DEC_ConnaissanceObjet_DemandeDeDecontamination" );
@@ -456,12 +438,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanRelievePion            , "DEC_PeutReleverPion"            );
 
     // Population
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableSlowDownByPopulation          , "DEC_Agent_ActiverRalentissementParPopulation"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableSlowDownByPopulation         , "DEC_Agent_DesactiverRalentissementParPopulation"                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableReloadingDurationModification , "DEC_Agent_ActiverModificationTempsRechargementParPopulation"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableReloadingDurationModification, "DEC_Agent_DesactiverModificationTempsRechargementParPopulation" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableInvulnerability               , "DEC_Agent_ActiverInvulnerabilitePopulation"                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableInvulnerability              , "DEC_Agent_DesactiverInvulnerabilitePopulation"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::ChannelPopulations                  , "DEC_Agent_CanaliserPopulation"                                  );
 
     // Agent knowledges accessors    
@@ -483,7 +459,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsDead                                    < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstMort"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::Lock                                      < MIL_AgentPion >, "DEC_ConnaissanceAgent_Verrouiller"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::Unlock                                    < MIL_AgentPion >, "DEC_ConnaissanceAgent_Deverrouiller"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsInSameDirection                                          , "DEC_ConnaissanceAgent_EstDansDirection"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsInDetectionCone                                          , "DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::KillOfficers                                               , "DEC_ConnaissanceAgent_TuerOfficiers"                   );
 
@@ -524,13 +499,10 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetDetectedAgentsInZone                                 , "DEC_Connaissances_UnitesDetecteesDansZone"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetAgentsAttacking                                      , "DEC_Connaissances_UnitesPrenantAPartie"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetDangerousEnemies                                     , "DEC_Connaissances_UnitesEnnemiesDangereuses"                );
-    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetDangerousEnemiesInZoneOfPion       < MIL_AgentPion > , "DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion"  );
 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceived                               , "DEC_Connaissances_UnitesEnnemiesVivantesPercues"            );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion       < MIL_AgentPion > , "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion"     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau                       , "DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau"  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInZone                         , "DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansZone"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau                                , "DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesInZone                                  , "DEC_Connaissances_UnitesEnnemiesVivantesDansZone"           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesInCircle                                , "DEC_Connaissances_UnitesEnnemiesVivantesDansCercle"         );
@@ -540,7 +512,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetFriendsInZone                       < MIL_AgentPion >, "DEC_Connaissances_UnitesAmiesDansZone"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::ShareKnowledgesWith                    < MIL_AgentPion >, "DEC_Connaissances_PartageConnaissancesAvec"                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith              < MIL_AgentPion >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec"         );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetObjects                             < MIL_AgentPion >, "DEC_Connaissances_Objets"                                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetObjectsInCircle                     < MIL_AgentPion >, "DEC_Connaissances_ObjetsDansCercle"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetObjectsInZone                       < MIL_AgentPion >, "DEC_Connaissances_ObjetsDansZone"                           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetObjectsInFuseau                     < MIL_AgentPion >, "DEC_Connaissances_ObjetsDansFuseau"                         );
@@ -551,9 +522,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetPopulationsAttacking                                 , "DEC_Connaissances_PopulationsPrenantAPartie"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetPopulations                         < MIL_AgentPion >, "DEC_Connaissances_Populations"                              );
 
-    // Ordres de conduite
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions ::RelievePion, "DEC_ReleverUnite" );
-
     // Limas / Mission    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted           < MIL_AgentPion >, "DEC_NouvelleMission"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission                 < MIL_AgentPion >, "DEC_FinMission"                    );
@@ -561,7 +529,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::PionSetMissionLimaFlag                         , "DEC_SetMissionLimaFlag"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag            < MIL_AgentPion >, "DEC_GetMissionLimaFlag"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag                 , "DEC_SetMissionLimaFlagHoraire"     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaScheduleFlag    < MIL_AgentPion >, "DEC_GetMissionLimaFlagHoraire"     );
 
     // Etat décisionnel
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyForceRatioStateChanged                 , "DEC_Agent_ChangeEtatRapportDeForce"         );
@@ -572,15 +539,12 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged        , "DEC_Agent_ChangeDisponibiliteAuTirIndirect" );
 
     // Facteurs humains
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetHumanFactorTiredness , "DEC_FacteurHumain_Fatigue"    );  
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetHumanFactorExperience, "DEC_FacteurHumain_Experience" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetHumanFactorTiredness , "DEC_FacteurHumain_Fatigue"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetHumanFactorMorale    , "DEC_FacteurHumain_Moral"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetHumanFactorWeight    , "DEC_ForceFacteursHumains"     );
 
     // Calculs de position
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::GetInterceptionPosition                                             , "DEC_Geometrie_PositionInterception"                                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions   ::GetInterceptionPoint                                                , "DEC_Agent_PositionInterception"                                      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeChantierPosition                                             , "DEC_Geometrie_CalculerPositionChantier"                              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeSupportPosition                                              , "DEC_Geometrie_CalculerPositionAppui"                                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeAmbushPosition                                               , "DEC_Geometrie_CalculerPositionEmbuscade"                             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeSafetyPosition                                               , "DEC_Geometrie_CalculerPositionSurete"                                );
@@ -636,7 +600,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionGetTC2                                        , "DEC_Pion_TC2"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionRequestSupply                                 , "DEC_DemandeDeRavitaillement" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2                      , "DEC_ChangeValeurDotations"   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::GetDotationValue                                  , "DEC_ValeurDotation"          ); 
 
     // Transport / Héliportage
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_AddPion                       , "DEC_Transport_AjouterPion"              );
@@ -646,7 +609,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_MagicLoadPion                 , "DEC_Transport_EmbarquerPionSansDelais"  );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_MagicLoadPions                , "DEC_Transport_EmbarquerPionsSansDelais" );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_MagicUnloadPion               , "DEC_Transport_DebarquerPionSansDelais"  );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_MagicUnloadPions              , "DEC_Transport_DebarquerPionsSansDelais" );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_IsFinished                    , "DEC_Transport_EstTermine"               );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_Cancel                        , "DEC_Transport_Annuler"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_IsTransporting                , "DEC_Transport_EnCoursDeTransport"       );

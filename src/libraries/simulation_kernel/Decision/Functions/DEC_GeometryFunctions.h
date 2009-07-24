@@ -36,12 +36,9 @@ public:
     static void CreateOrthoDirection   ( DIA_Call_ABC& );
 
     static void ReverseDirection                    ( DIA_Call_ABC& );
-    static void RotateDirection                     ( DIA_Call_ABC& );
     static void CopyAndReverseDirection             ( DIA_Call_ABC& );
     static void CopyAndRotateDirection              ( DIA_Call_ABC& );
     static void IsPointInsideLocalisation           ( DIA_Call_ABC& );
-    static void CompareLocalisations                ( DIA_Call_ABC& );
-    static void CompareDirection                    ( DIA_Call_ABC& );
     static void ComparePositions                    ( DIA_Call_ABC& );
     static void TranslatePosition                   ( DIA_Call_ABC& );
     static void TranslatePositionInDirection        ( DIA_Call_ABC& );
@@ -56,23 +53,18 @@ public:
     static void ComputeRandomPointOnCircle          ( DIA_Call_ABC& );
     static void ComputeRandomPointInCircle          ( DIA_Call_ABC& );
     static void IsPionCoordinated                   ( DIA_Call_ABC& );
-    static void ComputeLocalisationArea             ( DIA_Call_ABC& );
     static void SplitListPoints                     ( DIA_Call_ABC& );
-    static void SplitPath                           ( DIA_Call_ABC& );
     static void ComputeClosedTerrainRatioInZone     ( DIA_Call_ABC& );
     static void ComputeOpenTerrainRatioInZone       ( DIA_Call_ABC& );
     static void ComputeClosedTerrainRatioInFuseau   ( DIA_Call_ABC& );
     static void ComputeOpenTerrainRatioInFuseau     ( DIA_Call_ABC& );
     static void SortZonesAccordingToTerrainOpening  ( DIA_Call_ABC& );
     static void SortFuseauxAccordingToTerrainOpening( DIA_Call_ABC& );
-    static void IsLocalisationInFuseau              ( DIA_Call_ABC& );
     static void ConvertFuseauToLocalisation         ( DIA_Call_ABC& );
-    static void ComputeAutomatesBarycenter          ( DIA_Call_ABC& );
     static void GetNextObjectiveInFuseau            ( DIA_Call_ABC& );
     static void ComputeAreaInZone                   ( DIA_Call_ABC& call );
 
     
-                           static void ComputeChantierPosition                          ( DIA_Call_ABC& call, const MIL_AgentPion& );
                            static void StartComputingFrontAndBackLines                  ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void StartComputingAutomatFrontAndBackLines           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void StopComputingFrontAndBackLines                   ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
@@ -80,8 +72,6 @@ public:
                            static void ComputeDistanceAutomatFromFrontLine              ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistanceFromBackLine                      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeDistanceAutomatFromBackLine               ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-                           static void ComputeDistancePointFromFrontLine                ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-                           static void ComputeDistancePointFromBackLine                 ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
                            static void ComputeNearestFuseauEntryPoint                   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
                            static void ComputeSupportPosition                           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
                            static void ComputeAmbushPosition                            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );

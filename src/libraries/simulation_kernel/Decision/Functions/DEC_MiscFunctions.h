@@ -31,8 +31,7 @@ public:
   
     // Reinforcement
     static void Reinforce          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );            
-    static void CancelReinforcement( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );            
-    static void IsReinforcing      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );            
+    static void CancelReinforcement( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );           
     static void GetReinforcements  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
     // Misc

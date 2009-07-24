@@ -63,10 +63,7 @@ public:
 
     //! @name Notifications
     //@{
-    void NotifyForceRatioStateChanged       ( E_ForceRatioState        nState );
-    void NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState nState );
     void NotifyCloseCombatStateChanged      ( E_CloseCombatState       nState );
-    void NotifyOperationalStateChanged      ( E_OperationalState       nState );
     //@}
 
     //! @name Network
@@ -94,7 +91,6 @@ private:
     DIA_Parameters                     missionConduiteBehaviorParameters_;   
 
     // Etat décisionnel
-    E_ForceRatioState        nForceRatioState_;
     E_RulesOfEngagementState nRulesOfEngagementState_;
     E_CloseCombatState       nCloseCombatState_;
     E_OperationalState       nOperationalState_;

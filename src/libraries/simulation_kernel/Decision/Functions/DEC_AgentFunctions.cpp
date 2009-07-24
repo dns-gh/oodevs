@@ -64,15 +64,6 @@ void DEC_AgentFunctions::IsNeutralized( DIA_Call_ABC& call, const MIL_AgentPion&
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsWearingNbcProtectionSuit
-// Created: NLD 2004-05-11
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::IsWearingNbcProtectionSuit( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RolePion_NBC >().IsWearingNbcProtectionSuit() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::WearNbcProtectionSuit
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
@@ -177,51 +168,6 @@ void DEC_AgentFunctions::SetElongationFactor( DIA_Call_ABC& call, MIL_AgentPion&
     
     assert( rElongationFactor > 0. );
     callerAgent.GetRole< PHY_RolePion_Posture >().SetElongationFactor( rElongationFactor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsSurrendered
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::IsSurrendered( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RolePion_Surrender >().IsSurrendered() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsPrisoner
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::IsPrisoner( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RolePion_Surrender >().IsPrisoner() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsRefugee
-// Created: NLD 2005-03-10
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::IsRefugee( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    call.GetResult().SetValue( callerAgent.GetType().IsRefugee() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsMilitia
-// Created: NLD 2005-03-10
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::IsMilitia( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    call.GetResult().SetValue( callerAgent.GetType().IsMilitia() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsTerrorist
-// Created: NLD 2005-03-10
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::IsTerrorist( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    call.GetResult().SetValue( callerAgent.GetType().IsTerrorist() );
 }
 
 // -----------------------------------------------------------------------------
@@ -447,28 +393,6 @@ void DEC_AgentFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_AgentPion
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::SetPosture
-// Created: NLD 2003-10-27
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::SetPosture( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
-{
-    // Tests
-    PHY_RolePion_Posture& role = callerAgent.GetRole< PHY_RolePion_Posture >();
-
-    int nPostureID = call.GetParameter( 0 ).ToId();
-    switch( nPostureID )
-    {
-        case 0: role.SetPostureMovement         (); break;
-        case 1: role.SetPosturePostePrepareGenie(); break;
-        default:
-        {
-            role.UnsetPostureMovement();
-            role.UnsetPosturePostePrepareGenie();
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsLoaded
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
@@ -589,34 +513,12 @@ void DEC_AgentFunctions::GetHumanFactorTiredness( DIA_Call_ABC& call, const MIL_
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetHumanFactorExperience
-// Created: JVT 2004-11-30
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::GetHumanFactorExperience( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    call.GetResult().SetValue( (int)callerAgent.GetRole< PHY_RolePion_HumanFactors >().GetExperience().GetID() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetHumanFactorMorale
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::GetHumanFactorMorale( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     call.GetResult().SetValue( (int)callerAgent.GetRole< PHY_RolePion_HumanFactors >().GetMorale().GetID() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetHumanFactorWeight
-// Created: NLD 2004-12-01
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::GetHumanFactorWeight( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    const PHY_RolePion_HumanFactors& humanFactors = callerAgent.GetRole< PHY_RolePion_HumanFactors >();
-    const MT_Float rWeight = humanFactors.GetMorale().GetWeight()
-                           * humanFactors.GetTiredness().GetWeight()
-                           * humanFactors.GetExperience().GetWeight();
-    call.GetResult().SetValue( (float)rWeight );
 }
 
 // -----------------------------------------------------------------------------
@@ -798,60 +700,6 @@ void DEC_AgentFunctions::GetInterceptionPoint( DIA_Call_ABC& call, const MIL_Age
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::EnableSlowDownByPopulation
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::EnableSlowDownByPopulation( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
-{
-    callerAgent.GetRole< PHY_RolePion_Population >().EnableSlowDown();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::DisableSlowDownByPopulation
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisableSlowDownByPopulation( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
-{
-    callerAgent.GetRole< PHY_RolePion_Population >().DisableSlowDown();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::EnableReloadingDurationModification
-// Created: NLD 2005-11-02
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::EnableReloadingDurationModification( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
-{
-    callerAgent.GetRole< PHY_RolePion_Population >().EnableReloadingDurationModification();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::DisableReloadingDurationModification
-// Created: NLD 2005-11-02
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisableReloadingDurationModification( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
-{
-    callerAgent.GetRole< PHY_RolePion_Population >().DisableReloadingDurationModification();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::EnableInvulnerability
-// Created: NLD 2005-11-03
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::EnableInvulnerability( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
-{
-    callerAgent.GetRole< PHY_RolePion_Population >().EnableInvulnerability();
-}
-    
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::DisableInvulnerability
-// Created: NLD 2005-11-03
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisableInvulnerability( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
-{
-    callerAgent.GetRole< PHY_RolePion_Population >().DisableInvulnerability();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetRoePopulation
 // Created: SBO 2005-11-23
 // -----------------------------------------------------------------------------
@@ -872,24 +720,6 @@ void DEC_AgentFunctions::ChannelPopulations( DIA_Call_ABC& call, MIL_AgentPion& 
     assert( pLoc );
 
     MIL_AgentServer::GetWorkspace().GetEntityManager().ChannelPopulations( *pLoc );
-}
-
-// =============================================================================
-// ASY
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetKilledOfficers
-// Created: SBO 2005-12-21
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::GetKilledOfficers( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    MT_Float rTotal = callerAgent.GetRole< PHY_RolePion_Humans >().GetNbrHumans     ( PHY_HumanRank::officier_ );
-    MT_Float rAlive = callerAgent.GetRole< PHY_RolePion_Humans >().GetNbrAliveHumans( PHY_HumanRank::officier_ );
-    MT_Float rRatio = 1.;
-    if( rTotal > 0. )
-        rRatio = rAlive / rTotal;
-    call.GetResult().SetValue( (float)rRatio );
 }
 
 // =============================================================================

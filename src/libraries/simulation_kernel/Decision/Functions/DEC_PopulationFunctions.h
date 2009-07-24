@@ -36,7 +36,6 @@ public:
     static void ResetPionMaxSpeed( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     static void SetAttitude      ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     static void GetAttitude      ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
-    static void GetNbrAliveHumans( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     static void GetNbrDeadHumans ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
 
     // Knowledge agents

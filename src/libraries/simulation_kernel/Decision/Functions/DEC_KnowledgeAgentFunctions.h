@@ -31,7 +31,6 @@ public:
     static void IsAnEnemy                             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsMoving                              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPerceivingAgent                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsInSameDirection                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsInDetectionCone                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void KillOfficers                          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 

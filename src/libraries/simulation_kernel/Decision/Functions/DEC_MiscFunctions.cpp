@@ -91,15 +91,6 @@ void DEC_MiscFunctions::CancelReinforcement( DIA_Call_ABC& /*call*/, MIL_AgentPi
     callerAgent.GetRole< PHY_RolePion_Reinforcement >().CancelReinforcement();
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_Agent_ABC::IsReinforcing
-// Created: NLD 2003-03-17
-//-----------------------------------------------------------------------------
-void DEC_MiscFunctions::IsReinforcing( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RolePion_Reinforcement >().IsReinforcing() );
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::DEC_MiscFunctions::GetCategory
 // Created: LDC 2009-04-03

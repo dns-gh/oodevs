@@ -149,15 +149,6 @@ void DEC_PopulationFunctions::GetAttitude( DIA_Call_ABC& call, MIL_Population& c
 {
     call.GetResult().SetValue( (int)callerPopulation.GetAttitude().GetID() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::GetNbrAliveHumans
-// Created: SBO 2006-02-22
-// -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::GetNbrAliveHumans( DIA_Call_ABC& call, MIL_Population& callerPopulation )
-{
-    call.GetResult().SetValue( (float)callerPopulation.GetNbrAliveHumans() );
-}
     
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetNbrDeadHumans

@@ -95,10 +95,9 @@ public:
           bool                         IsPerceived                    ( const MIL_Agent_ABC& agent ) const;
           bool                         WasPerceived                   ( const MIL_Agent_ABC& agent ) const;
           void                         GetLivingEnemiesPerceived      ( T_KnowledgeAgentDiaIDVector& container ) const;
-          void                         GetLivingEnemiesPerceivedInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon& zone ) const;          
-          void                         GetLivingEnemiesPerceivedInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;          
+          void                         GetLivingEnemiesPerceivedInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;
     const T_KnowledgeAgentDiaIDVector& GetDangerousEnemies            () const;
-          void                         GetDangerousEnemiesInZone      ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;          
+          void                         GetDangerousEnemiesInZone      ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;
           void                         GetAgentsAttacking             ( T_KnowledgeAgentDiaIDVector& container ) const;
           MT_Float                     GetRapForLocalValue            () const;
 

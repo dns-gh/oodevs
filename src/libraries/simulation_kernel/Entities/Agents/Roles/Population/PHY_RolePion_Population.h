@@ -46,14 +46,6 @@ public:
     MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const;
     MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
 
-    void     EnableSlowDown ();
-    void     DisableSlowDown();
-
-    void     EnableReloadingDurationModification ();
-    void     DisableReloadingDurationModification();
-
-            void EnableInvulnerability ();
-            void DisableInvulnerability();
     virtual bool IsInvulnerable        () const;
 
     MT_Float GetCollidingPopulationDensity() const;
@@ -67,9 +59,6 @@ public:
 
 private:
     MIL_AgentPion* pPion_;
-    bool           bSlowDownEnabled_;
-    bool           bReloadingDurationModificationEnabled_;
-    bool           bInvulnerabilityEnabled_;
     bool           bHasChanged_;
 };
 

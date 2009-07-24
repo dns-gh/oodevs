@@ -15,7 +15,6 @@
 #include "DEC_KnowledgeBlackBoard_ABC.h"
 
 class MIL_Automate;
-class DEC_Knowledge_RapForGlobal;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_Automate
@@ -60,16 +59,8 @@ public:
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const;
     //@}
 
-    //! @name Queries
-    //@{
-    MT_Float GetRapForGlobalValue() const;
-    //@}
-
 private:
     MIL_Automate* pAutomate_;
-
-    // Containers
-    DEC_Knowledge_RapForGlobal* pKnowledgeRapForGlobal_;
 };
 
 #endif // __DEC_KnowledgeBlackBoard_Automate_h_

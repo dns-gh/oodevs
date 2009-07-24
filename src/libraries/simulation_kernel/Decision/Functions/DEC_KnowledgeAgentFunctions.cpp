@@ -59,31 +59,6 @@ void DEC_KnowledgeAgentFunctions::GetDangerosity( DIA_Call_ABC& call, const MIL_
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeAgentFunctions::IsInSameDirection
-// Created: JVT 2004-12-06
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeAgentFunctions::IsInSameDirection( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 1 ) ) );
-
-    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-
-    if ( !pKnowledge )
-    {
-        call.GetResult().SetValue( false );
-        return;
-    }
-
-    MT_Vector2D* pDirection = call.GetParameter( 1 ).ToUserPtr( pDirection );
-    assert( pDirection );
-
-    const MT_Vector2D& vOrigin = callerAgent.GetRole< PHY_RolePion_Location >().GetPosition();
-
-    call.GetResult().SetValue( *pDirection * ( pKnowledge->GetPosition() - vOrigin ) > 0. );
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsInDetectionCone
 // Created: JVT 2005-08-23
 // -----------------------------------------------------------------------------
