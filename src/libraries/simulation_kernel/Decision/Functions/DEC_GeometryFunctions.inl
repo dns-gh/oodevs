@@ -133,7 +133,6 @@ void DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau( DIA_Call_ABC&
     DIA_Parameters& diaParams = diaCall.GetParameters();
 
     TER_Localisation*   pLocalisation = diaParams[0].ToUserPtr( pLocalisation );
-    DIA_Variable_ABC&   diaReturnCode = diaParams[1];
 
     // 1. Clippe le polygone dans le fuseau
     T_PointVector clippedPointVector;
@@ -142,17 +141,14 @@ void DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau( DIA_Call_ABC&
     MT_Vector2D vBarycenter = MT_ComputeBarycenter( clippedPointVector );
 
     if( clippedPointVector.empty() || ! caller.GetOrderManager().GetFuseau().IsInside( vBarycenter ) )
-    {
-        diaReturnCode.SetValue( eError_LocalisationPasDansFuseau );
         diaCall.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
-        return; 
+    else
+    {
+        assert( TER_World::GetWorld().IsValidPosition( vBarycenter ) );
+        // 3. Envoi du résulat à DIA
+        MT_Vector2D* pOutVector = new MT_Vector2D( vBarycenter );
+        diaCall.GetResult().SetValue( (void*)pOutVector, &DEC_Tools::GetTypePoint() );
     }
-
-    assert( TER_World::GetWorld().IsValidPosition( vBarycenter ) );
-    // 3. Envoi du résulat à DIA
-    MT_Vector2D* pOutVector = new MT_Vector2D( vBarycenter );
-    diaCall.GetResult().SetValue( (void*)pOutVector, &DEC_Tools::GetTypePoint() );
-    diaReturnCode.SetValue( eNoError );
 }
 
 //-----------------------------------------------------------------------------
