@@ -227,13 +227,17 @@ Section "Documentation" s_doc
 
     SetOutPath "$INSTDIR\doc\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\en\*.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\User Guide.lnk" "$INSTDIR\doc\en\User Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\Trainee_User_Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\Trainer_User_Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\Reference_Guide.pdf"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Trainee Guide.lnk" "$INSTDIR\doc\en\Trainee_User_Guide.pdf"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Trainer Guide.lnk" "$INSTDIR\doc\en\Trainer_User_Guide.pdf"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Reference Guide.lnk" "$INSTDIR\doc\en\Reference_Guide.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
     SetOutPath "$INSTDIR\doc\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\fr\*.pdf"
+    File /r /x ".svn" "${DOCDIR}\fr\Guide Utilisateur.pdf"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Guide Utilisateur.lnk" "$INSTDIR\doc\fr\Guide Utilisateur.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     
