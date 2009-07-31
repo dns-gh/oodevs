@@ -5483,7 +5483,9 @@
       <sensor height="2" type="Light Intensifier Device"/>
       <sensor height="2" type="Radar RASIT"/>
     </sensors>
-    <radars/>
+    <radars>
+      <radar type="Radar doppler RASIT"/>
+    </radars>
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">

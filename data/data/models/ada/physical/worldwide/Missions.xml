@@ -14,16 +14,16 @@
     <mission dia-behavior="MIS_Pion_SoutenirSurPositionEnMesureDe" dia-type="T_Mission_Pion_SoutenirSurPositionEnMesureDe" id="2" name="prepare to (take up position)">
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ALAT_AllerSeRecompleter" dia-type="T_Mission_Pion_ALAT_AllerSeRecompleter" id="3" name="Army Aviation - replenish">
+    <mission dia-behavior="MIS_Pion_ALAT_AllerSeRecompleter" dia-type="T_Mission_Pion_ALAT_AllerSeRecompleter" id="3" name="Army Aviation - resupply">
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" dia-type="T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur" id="4" name="Army Aviation - reconnoiter">
+    <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" dia-type="T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur" id="4" name="Army Aviation - recon in force">
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Location"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreContourEnnemi" dia-type="T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" id="5" name="Army Aviation - reconnoiter enemy positions">
+    <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreContourEnnemi" dia-type="T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" id="5" name="Army Aviation - recon enemy positions">
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
     </mission>
@@ -77,12 +77,12 @@
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ALAT_IMEX" dia-type="T_Mission_Pion_ALAT_IMEX" id="14" name="Army Aviation - extract">
+    <mission dia-behavior="MIS_Pion_ALAT_IMEX" dia-type="T_Mission_Pion_ALAT_IMEX" id="14" name="Army Aviation - evacuate">
       <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ALAT_Eclairer" dia-type="T_Mission_Pion_ALAT_Eclairer" id="15" name="Army Aviation - scout">
+    <mission dia-behavior="MIS_Pion_ALAT_Eclairer" dia-type="T_Mission_Pion_ALAT_Eclairer" id="15" name="Army Aviation - recon">
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
     </mission>
@@ -103,7 +103,7 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ALAT_Attaquer" dia-type="T_Mission_Pion_ALAT_Attaquer" id="19" name="Army Aviation - attack">
+    <mission dia-behavior="MIS_Pion_ALAT_Attaquer" dia-type="T_Mission_Pion_ALAT_Attaquer" id="19" name="Army Aviation - assault">
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
@@ -173,7 +173,7 @@
       <parameter dia-name="positionImplantation_" name="Deployment position" optional="false" type="Point"/>
       <parameter dia-name="presenceContreBatterie_" name="Counter battery" optional="false" type="Bool"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ASS_ReconnaitreZoneDeploiement" dia-type="T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" id="33" name="Field Artillery - reconnoiter deployment area">
+    <mission dia-behavior="MIS_Pion_ASS_ReconnaitreZoneDeploiement" dia-type="T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" id="33" name="Field Artillery - recon deployment area">
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AcquerirLanceursEni" dia-type="T_Mission_Pion_ASS_AcquerirLanceursEni" id="34" name="Field Artillery - collect enemy artillery intelligence">
@@ -197,84 +197,181 @@
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_PC_SeDeployer" dia-type="T_Mission_Pion_ABC_PC_SeDeployer" id="38" name="Armor CP To Deploy"/>
-    <mission dia-behavior="MIS_Pion_ABC_ReconnaitreAxe" dia-type="T_Mission_Pion_ABC_ReconnaitreAxe" id="39" name="Armor - reconnoiter an axis">
+    <mission dia-behavior="MIS_Pion_ABC_ReconnaitreAxe" dia-type="T_Mission_Pion_ABC_ReconnaitreAxe" id="39" name="Armor - recon in force (an axis)">
+      <descriptions>
+        <doctrine><![CDATA[Route reconnaissance is a form of reconnaissance that focuses along a specific line of communication, such as a road, railway, or cross-country mobility corridor.]]></doctrine>
+        <usage><![CDATA[Unit moves along the route reconnaissance. If an enemy is detected, Unit will engage it.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Soutenir" dia-type="T_Mission_Pion_ABC_Soutenir" id="40" name="Armor - support (dynamic)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to dinamycally support and follows it. If this unit is engaged, Unit will engage the enemy to change the force ratio and/or destroy it.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteASoutenir_" name="Unit to support" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Couvrir" dia-type="T_Mission_Pion_ABC_Couvrir" id="41" name="Armor - cover">
+      <descriptions>
+        <doctrine><![CDATA[The action by land, air, or sea forces to protect by offense, defense, or threat of either or both.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position, installs and cover its allies by barring any enemy that could prevent the covered allies from fulfilling their missions.]]></usage>
+      </descriptions>
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
       <parameter dia-name="unitesACouvrir_" name="Units to cover" optional="false" type="AgentList"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_FlancGarder" dia-type="T_Mission_Pion_ABC_FlancGarder" id="42" name="Armor - flank-guard">
+      <descriptions>
+        <doctrine><![CDATA[A security element operating to the flank of a moving or stationary
+force to protect it from enemy ground observation, direct fire, and surprise attack.]]></doctrine>
+        <usage><![CDATA[Unit moves along a designated route while coordinating with its allies.  Where necessary, it will fire upon enemies within weapons range.  After reaching its objective, the unit assumes a defensive posture.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="unitesACouvrir_" name="Units to cover" optional="false" type="AgentList"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Reduire" dia-type="T_Mission_Pion_ABC_Reduire" id="43" name="Armor - destroy">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task that physically renders an enemy force combat-ineffective until it is reconstituted.]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targeted enemy and opens fire until it is operationally ineffective, or totally destroyed.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteAReduire_" name="Unit to reduce" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Appuyer" dia-type="T_Mission_Pion_ABC_Appuyer" id="44" name="Armor - support">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to support, takes a support position that allows it to help this unit with fire, resources or movement, and follows it. If necessary, Unit will open fire.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteAAppuyer_" name="Unit to support" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Fixer" dia-type="T_Mission_Pion_ABC_Fixer" id="45" name="Armor - fix">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task where a unit prevents the enemy from moving any part of his force from a specific location for a specific period of time.]]></doctrine>
+        <usage><![CDATA[Unit moves towards an enemy and opens fire to prevent it from moving.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteAFixer_" name="Unit to fix" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_RenseignerSur" dia-type="T_Mission_Pion_ABC_RenseignerSur" id="46" name="Armor - report information">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position to observe, stops when it has a good perception of this position and monitor the danger direction.]]></usage>
+      </descriptions>
       <parameter dia-name="pointARenseigner_" name="Observation area" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ControlerZone" dia-type="T_Mission_Pion_ABC_ControlerZone" id="47" name="Armor - control">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task in which a force moves onto an objective, key terrain, or other manmade or natural terrain area and controls that entire area. The commander maintains physical influence over a specified area to prevent its use by an enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the area to control, installs and controls the area, ie. detects and reduces any enemy present in the area. A unit controlling an area has a tactical advantage over its enemy units in this area.]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Surveiller" dia-type="T_Mission_Pion_ABC_Surveiller" id="48" name="Armor - monitor">
+      <descriptions>
+        <doctrine><![CDATA[An element of assessment: continuous observation of the common operational picture to identify indicators of opportunities for success, threats to the force, and gaps in information.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position to monitor and faces the danger direction. It will open-fire only to self-protect.]]></usage>
+      </descriptions>
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Barrer" dia-type="T_Mission_Pion_ABC_Barrer" id="49" name="Armor - interdict">
+      <descriptions>
+        <doctrine><![CDATA[To divert, disrupt, delay, or destroy the enemy's
+surface military potential before it can be used
+effectively against friendly forces. It may include destruction, removal, contamination, or erection of
+obstructions.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position and will hold it at all costs, even if the force ratio is unfavorable.]]></usage>
+      </descriptions>
       <parameter dia-name="positionInstallation_" name="Deployment area" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Attaquer" dia-type="T_Mission_Pion_ABC_Attaquer" id="50" name="Armor - attack">
+      <descriptions>
+        <doctrine><![CDATA[An offensive operation that destroys or defeats enemy forces, seizes and secures terrain, or both.]]></doctrine>
+        <usage><![CDATA[Unit moves along the specified route and tries to inflict as much damage as possible to enemy units. After reaching its objective, the unit assumes a defensive posture.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraireAssaut_" name="Assault route" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ABC_ReconnaitrePoint" dia-type="T_Mission_Pion_ABC_ReconnaitrePoint" id="51" name="Armor - reconnoiter">
-      <parameter dia-name="pointAReconnaitre_" name="Position to reconnoiter" optional="false" type="Point"/>
+    <mission dia-behavior="MIS_Pion_ABC_ReconnaitrePoint" dia-type="T_Mission_Pion_ABC_ReconnaitrePoint" id="51" name="Armor - recon in force">
+      <descriptions>
+        <doctrine><![CDATA[A mission undertaken to obtain, by visual observation or other detection methods, information about the activities and resources of an enemy or potential enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves towards a designated reconnaissance point. If an enemy is detected, Unit will engage it.]]></usage>
+      </descriptions>
+      <parameter dia-name="pointAReconnaitre_" name="Position to recon" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ABC_Eclairer" dia-type="T_Mission_Pion_ABC_Eclairer" id="52" name="Armor - scout">
+    <mission dia-behavior="MIS_Pion_ABC_Eclairer" dia-type="T_Mission_Pion_ABC_Eclairer" id="52" name="Armor - recon">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves along the route to scout. Unit will engage enemy units only as retaliation.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Jalonner" dia-type="T_Mission_Pion_ABC_Jalonner" id="53" name="Armor - screen">
+      <descriptions>
+        <doctrine><![CDATA[A security element whose primary task is to observe, identify, and report information, and which only fights in self-protection.]]></doctrine>
+        <usage><![CDATA[The unit will maintain a tactical stand-by position, facing the danger direction, and wait for enemy units.  When an enemy unit is detected, the unit will move along the designated route to maintain visual contact on the enemy and avoid contact. Nevertheless, if Unit can, it will open fire as it progresses.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ContreAttaquer" dia-type="T_Mission_Pion_ABC_ContreAttaquer" id="54" name="Armor - counter-attack">
       <parameter dia-name="itineraireAssaut_" name="Assault route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_SemparerZone" dia-type="T_Mission_Pion_ABC_SemparerZone" id="55" name="Armor - seize">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task that involves taking possession of a designated area using
+overwhelming force.]]></doctrine>
+        <usage><![CDATA[Unit moves towards an observation point relevant for its objective. If an enemy unit is in the area to seize, Unit will reduce it, else Unit will take position in the area and hold it.]]></usage>
+      </descriptions>
       <parameter dia-name="zoneAPrendre_" name="Area to seize" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ReleverUnite" dia-type="T_Mission_Pion_ABC_ReleverUnite" id="56" name="Armor - relieve">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to relieve and take its mission.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteARelever_" name="Unit to relieve" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ArmerPIA" dia-type="T_Mission_Pion_ABC_ArmerPIA" id="57" name="Armor - operate an identification point">
       <parameter dia-name="pia_" name="Checkpoint" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_OuvrirItineraire" dia-type="T_Mission_Pion_ABC_OuvrirItineraire" id="58" name="Armor - open a route">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves along the route to open, with a lurking stance. Unit will engage enemy units only as retaliation.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Freiner" dia-type="T_Mission_Pion_ABC_Freiner" id="59" name="Armor - delay">
+      <descriptions>
+        <doctrine><![CDATA[A form of defensive operation that involves organized movement away from the enemy, in which a force under pressure trades space for time by slowing the enemy?s momentum and inflicting maximum damage on the enemy without, in principle, becoming decisively engaged.]]></doctrine>
+        <usage><![CDATA[The unit will maintain a tactical stand-by position, facing the danger direction, and wait for enemy units. When an enemy unit is detected, Unit engages it to stop its movement, then screens it before engage it again, and repeat the screen/engage cycle.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_EscorterUnite" dia-type="T_Mission_Pion_ABC_EscorterUnite" id="60" name="Armor - escort">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to escort and follows it. Unit will engage any detected enemy unit. If the unit to follow has a move mission, this unit will stop and wait for Unit. When close to it, Unit will take its objective and move towards this objective, followed by the unit to escort.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteAEscorter_" name="Unit to escort" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_EscorterUnites" dia-type="T_Mission_Pion_ABC_EscorterUnites" id="61" name="Armor - escort units">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Instead of one unit, Unit will escort all sub-units of the selected company-level automat.]]></usage>
+      </descriptions>
       <parameter dia-name="automateAEscorter_" name="Units to escort" optional="false" type="Automate"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ArmerPointDeControle" dia-type="T_Mission_Pion_ABC_ArmerPointDeControle" id="62" name="Armor - operate a checkpoint">
+      <descriptions>
+        <doctrine><![CDATA[A checkpoint is a predetermined point on the ground used to control movement, tactical maneuver, and orientation.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position of the checkpoint, builds (if not already done) and operates it. A checkpoint is effective only if it is operated by a unit. While operating a checkpoint, the unit can't fulfill other missions, but is still able to shoot, hide and emplace.]]></usage>
+      </descriptions>
       <parameter dia-name="pointDeControle_" name="Checkpoint position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_OrganiserAccueilColonneRefugies" dia-type="T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies" id="63" name="Armor - support refugees">
       <parameter dia-name="positionInstallation_" name="Deployment area" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_AppuyerSurPosition" dia-type="T_Mission_Pion_ABC_AppuyerSurPosition" id="64" name="Armor - support (from a position)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to support, takes the position and will engage any unit that engages the supported units.]]></usage>
+      </descriptions>
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
       <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
     </mission>
@@ -287,24 +384,16 @@
     <mission dia-behavior="MIS_Pion_GEN_RetablirItineraire" dia-type="T_Mission_Pion_GEN_RetablirItineraire" id="67" name="Engineer - restore a route">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_GEN_ReconnaitreItineraire" dia-type="T_Mission_Pion_GEN_ReconnaitreItineraire" id="68" name="Engineer - reconnoiter a route">
+    <mission dia-behavior="MIS_Pion_GEN_ReconnaitreItineraire" dia-type="T_Mission_Pion_GEN_ReconnaitreItineraire" id="68" name="Engineer - recon a route">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_GEN_ReconnaitreZone" dia-type="T_Mission_Pion_GEN_ReconnaitreZone" id="69" name="Engineer - reconnoiter an area">
+    <mission dia-behavior="MIS_Pion_GEN_ReconnaitreZone" dia-type="T_Mission_Pion_GEN_ReconnaitreZone" id="69" name="Engineer - recon an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Location"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_GEN_ReconnaitreSiteFranchissement" dia-type="T_Mission_Pion_GEN_ReconnaitreSiteFranchissement" id="70" name="Engineer - reconnoiter a crossing site">
+    <mission dia-behavior="MIS_Pion_GEN_ReconnaitreSiteFranchissement" dia-type="T_Mission_Pion_GEN_ReconnaitreSiteFranchissement" id="70" name="Engineer - recon a crossing site">
       <parameter dia-name="siteFranchissement_" name="Crossing site" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_GEN_EquiperExploiterSiteFranchissement" dia-type="T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement" id="71" name="Engineer - operate a crossing site">
-      <parameter dia-name="siteFranchissement_" name="Crossing site" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="typePontage_" name="Bridging mode" optional="false" type="Enumeration">
-        <value id="0" name="bridging"/>
-        <value id="1" name="rafting"/>
-      </parameter>
-    </mission>
-    <mission dia-behavior="MIS_Pion_GEN_ExecuterVariantement" dia-type="T_Mission_Pion_GEN_ExecuterVariantement" id="72" name="Engineer - operate a new crossing site">
+    <mission dia-behavior="MIS_Pion_GEN_EquiperExploiterSiteFranchissement" dia-type="T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement" id="71" name="Engineer - support a crossing site">
       <parameter dia-name="siteFranchissement_" name="Crossing site" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="typePontage_" name="Bridging mode" optional="false" type="Enumeration">
@@ -312,13 +401,21 @@
         <value id="1" name="rafting"/>
       </parameter>
     </mission>
-    <mission dia-behavior="MIS_Pion_GEN_DegagerObstacles" dia-type="T_Mission_Pion_GEN_DegagerObstacles" id="73" name="Engineer - clear obstacles">
+    <mission dia-behavior="MIS_Pion_GEN_ExecuterVariantement" dia-type="T_Mission_Pion_GEN_ExecuterVariantement" id="72" name="Engineer - support a new crossing site">
+      <parameter dia-name="siteFranchissement_" name="Crossing site" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
+      <parameter dia-name="typePontage_" name="Bridging mode" optional="false" type="Enumeration">
+        <value id="0" name="bridging"/>
+        <value id="1" name="rafting"/>
+      </parameter>
+    </mission>
+    <mission dia-behavior="MIS_Pion_GEN_DegagerObstacles" dia-type="T_Mission_Pion_GEN_DegagerObstacles" id="73" name="Engineer - breach">
       <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_GEN_ContournerObstacles" dia-type="T_Mission_Pion_GEN_ContournerObstacles" id="74" name="Engineer - bypass obstacles">
+    <mission dia-behavior="MIS_Pion_GEN_ContournerObstacles" dia-type="T_Mission_Pion_GEN_ContournerObstacles" id="74" name="Engineer - bypass">
       <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_GEN_DepolluerZone" dia-type="T_Mission_Pion_GEN_DepolluerZone" id="75" name="Engineer - clean up area">
+    <mission dia-behavior="MIS_Pion_GEN_DepolluerZone" dia-type="T_Mission_Pion_GEN_DepolluerZone" id="75" name="Engineer - breach (an area)">
       <parameter dia-name="zone_" name="Area" optional="false" type="Location"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_Renforcer" dia-type="T_Mission_Pion_GEN_Renforcer" id="76" name="Engineer - reinforce">
@@ -346,7 +443,7 @@
     <mission dia-behavior="MIS_Pion_GEN_ActiverObstacle" dia-type="T_Mission_Pion_GEN_ActiverObstacle" id="83" name="Engineer - activate obstacle">
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_INF_ReconnaitreAxe" dia-type="T_Mission_Pion_INF_ReconnaitreAxe" id="84" name="Infantry - reconnoiter an axis">
+    <mission dia-behavior="MIS_Pion_INF_ReconnaitreAxe" dia-type="T_Mission_Pion_INF_ReconnaitreAxe" id="84" name="Infantry - recon in force (an axis)">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Couvrir" dia-type="T_Mission_Pion_INF_Couvrir" id="85" name="Infantry - cover">
@@ -362,7 +459,7 @@
     <mission dia-behavior="MIS_Pion_INF_Fixer" dia-type="T_Mission_Pion_INF_Fixer" id="88" name="Infantry - fix">
       <parameter dia-name="ennemi_" name="Enemy" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_INF_ControlerSecteur" dia-type="T_Mission_Pion_INF_ControlerSecteur" id="89" name="Infantry - control an area">
+    <mission dia-behavior="MIS_Pion_INF_ControlerSecteur" dia-type="T_Mission_Pion_INF_ControlerSecteur" id="89" name="Infantry - control">
       <parameter dia-name="secteur_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
@@ -372,11 +469,11 @@
     <mission dia-behavior="MIS_Pion_INF_Barrer" dia-type="T_Mission_Pion_INF_Barrer" id="91" name="Infantry - bar">
       <parameter dia-name="positionABarrer_" name="Position to bar" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_INF_ReconnaitrePoint" dia-type="T_Mission_Pion_INF_ReconnaitrePoint" id="92" name="Infantry - reconnoiter">
+    <mission dia-behavior="MIS_Pion_INF_ReconnaitrePoint" dia-type="T_Mission_Pion_INF_ReconnaitrePoint" id="92" name="Infantry - recon in force">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
-      <parameter dia-name="pointAReconnaitre_" name="Position to reconnoiter" optional="false" type="Point"/>
+      <parameter dia-name="pointAReconnaitre_" name="Position to recon" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_INF_Eclairer" dia-type="T_Mission_Pion_INF_Eclairer" id="93" name="Infantry - scout">
+    <mission dia-behavior="MIS_Pion_INF_Eclairer" dia-type="T_Mission_Pion_INF_Eclairer" id="93" name="Infantry - recon">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Interdire" dia-type="T_Mission_Pion_INF_Interdire" id="94" name="Infantry - interdict">
@@ -389,11 +486,15 @@
     <mission dia-behavior="MIS_Pion_INF_PrendrePreciserContact" dia-type="T_Mission_Pion_INF_PrendrePreciserContact" id="96" name="Infantry - movement to contact">
       <parameter dia-name="ennemi_" name="Enemy" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_INF_Defendre" dia-type="T_Mission_Pion_INF_Defendre" id="97" name="Infantry - defend">
+    <mission dia-behavior="MIS_Pion_INF_Defendre" dia-type="T_Mission_Pion_INF_Defendre" id="97" name="Infantry - hold">
       <parameter dia-name="pointADefendre_" name="Point to defend" optional="false" type="Point"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_DetruireEmbuscade" dia-type="T_Mission_Pion_INF_DetruireEmbuscade" id="98" name="Infantry - ambush">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Tinu moves to the ambush position, enhances it with obstacles and takes a firing position. When the targeted enemy is engaged in the obstacle, Tinu will open fire and take contact, then withdraw to the meeting point.]]></usage>
+      </descriptions>
       <parameter dia-name="positionEmbuscade_" name="Ambush position" optional="false" type="Point"/>
       <parameter dia-name="positionRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ennemi_" name="Enemy" optional="false" type="AgentKnowledge"/>
@@ -532,10 +633,10 @@
     <mission dia-behavior="MIS_Pion_LOG_AppuyerMouvement" dia-type="T_Mission_Pion_LOG_AppuyerMouvement" id="123" name="Logistics - support mobility">
       <parameter dia-name="uniteAAppuyer_" name="Unit to support" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_LOG_ReconnaitreItineraire" dia-type="T_Mission_Pion_LOG_ReconnaitreItineraire" id="124" name="Logistics - reconnoiter a route">
+    <mission dia-behavior="MIS_Pion_LOG_ReconnaitreItineraire" dia-type="T_Mission_Pion_LOG_ReconnaitreItineraire" id="124" name="Logistics - recon a route">
       <parameter dia-name="itineraireLog_" name="Logistics routes" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_LOG_ReconnaitreZoneContaminee" dia-type="T_Mission_Pion_LOG_ReconnaitreZoneContaminee" id="125" name="Logistics - reconnoiter a contaminated area">
+    <mission dia-behavior="MIS_Pion_LOG_ReconnaitreZoneContaminee" dia-type="T_Mission_Pion_LOG_ReconnaitreZoneContaminee" id="125" name="Logistics - recon a contaminated area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_AppuyerMouvementDansZone" dia-type="T_Mission_Pion_LOG_AppuyerMouvementDansZone" id="126" name="Logistics - support mobility (in an area)">
@@ -550,7 +651,7 @@
     <mission dia-behavior="MIS_Pion_LOG_BloquerZone" dia-type="T_Mission_Pion_LOG_BloquerZone" id="129" name="Logistics - block an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_LOG_ReconnaitreZoneDeDeploiement" dia-type="T_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement" id="130" name="Logistics - reconnoiter a deployment area">
+    <mission dia-behavior="MIS_Pion_LOG_ReconnaitreZoneDeDeploiement" dia-type="T_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement" id="130" name="Logistics - recon a deployment area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_ArmerPIA" dia-type="T_Mission_Pion_LOG_ArmerPIA" id="131" name="Logistics - operate a checkpoint">
@@ -597,10 +698,10 @@
     <mission dia-behavior="MIS_Pion_RenseignerSurPopulations" dia-type="T_Mission_Pion_RenseignerSurPopulations" id="143" name="report information on populations">
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_CanaliserPopulations" dia-type="T_Mission_Pion_CanaliserPopulations" id="144" name="channel populations">
+    <mission dia-behavior="MIS_Pion_CanaliserPopulations" dia-type="T_Mission_Pion_CanaliserPopulations" id="144" name="canalize populations">
       <parameter dia-name="zone_" name="Area" optional="false" type="Location"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ControlerPopulationsDansZone" dia-type="T_Mission_Pion_ControlerPopulationsDansZone" id="145" name="control Populations (in an area)">
+    <mission dia-behavior="MIS_Pion_ControlerPopulationsDansZone" dia-type="T_Mission_Pion_ControlerPopulationsDansZone" id="145" name="control populations (in an area)">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_SecuriserZoneContrePopulations" dia-type="T_Mission_Pion_SecuriserZoneContrePopulations" id="146" name="secure area (against populations assault)">
@@ -673,16 +774,16 @@
     <mission dia-behavior="MIS_Pion_NBC_AnimerUnPlotDeDecontamination" dia-type="T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination" id="152" name="NBC - operate a decontamination site">
       <parameter dia-name="positionSiteDecontamination_" name="decontamination site position" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_NBC_ReconnaitreItineraire" dia-type="T_Mission_Pion_NBC_ReconnaitreItineraire" id="153" name="NBC - reconnoiter a route">
+    <mission dia-behavior="MIS_Pion_NBC_ReconnaitreItineraire" dia-type="T_Mission_Pion_NBC_ReconnaitreItineraire" id="153" name="NBC - recon a route">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_NBC_ReconnaitreZone" dia-type="T_Mission_Pion_NBC_ReconnaitreZone" id="154" name="NBC - reconnoiter an area">
+    <mission dia-behavior="MIS_Pion_NBC_ReconnaitreZone" dia-type="T_Mission_Pion_NBC_ReconnaitreZone" id="154" name="NBC - recon an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_NBC_DecontaminerZone" dia-type="T_Mission_Pion_NBC_DecontaminerZone" id="155" name="NBC - decontaminate an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_NBC_ReconnaitreUnSiteROTA" dia-type="T_Mission_Pion_NBC_ReconnaitreUnSiteROTA" id="156" name="NBC - reconnoiter a ROTA site">
+    <mission dia-behavior="MIS_Pion_NBC_ReconnaitreUnSiteROTA" dia-type="T_Mission_Pion_NBC_ReconnaitreUnSiteROTA" id="156" name="NBC - recon a ROTA site">
       <parameter dia-name="siteROTA_" name="ROTA site" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROHUM_RenseignerSur" id="157" name="Human Intelligence - report information">
@@ -803,7 +904,7 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirSurPositionEnMesureDe" dia-type="T_Mission_Automate_SoutenirSurPositionEnMesureDe" id="188" mrt-dia-behavior="MIS_Automate_MRT_SoutenirSurPositionEnMesureDe" name="prepare to (take up position)">
       <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="Army Aviation - replenish">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="Army Aviation - resupply">
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur" id="190" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur" name="Army Aviation - destroy">
@@ -880,7 +981,7 @@
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
       <parameter dia-name="pointLogistique_" name="Point logistique" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Reconnaitre" dia-type="T_Mission_Automate_ALAT_Reconnaitre" id="201" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Reconnaitre" name="Army Aviation - reconnoiter">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Reconnaitre" dia-type="T_Mission_Automate_ALAT_Reconnaitre" id="201" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Reconnaitre" name="Army Aviation - recon">
       <parameter dia-name="pointRegroupement_" name="PointRegroupement" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" name="Replenishment sites" optional="false" type="ObjectKnowledgeList"/>
     </mission>
@@ -969,8 +1070,8 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_SeDeployer" dia-type="T_Mission_Automate_ASS_SeDeployer" id="216" mrt-dia-behavior="MIS_Automate_MRT_ASS_SeDeployer" name="Field Artillery - deploy">
       <parameter dia-name="zoneDeploiement_" name="Deployment area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" dia-type="T_Mission_Automate_ASS_ReconnaitreZonesDeploiement" id="217" mrt-dia-behavior="MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" name="Field Artillery - reconnoiter deployment areas">
-      <parameter dia-name="positionsAReconnaitre_" name="Positions to reconnoiter" optional="false" type="PointList"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" dia-type="T_Mission_Automate_ASS_ReconnaitreZonesDeploiement" id="217" mrt-dia-behavior="MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" name="Field Artillery - recon deployment areas">
+      <parameter dia-name="positionsAReconnaitre_" name="Positions to recon" optional="false" type="PointList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifs" dia-type="T_Mission_Automate_ASS_AcquerirObjectifs" id="218" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifs" name="Field Artillery - collect intelligence on objectives">
       <parameter dia-name="zonesAObserver_" name="Areas to observe" optional="false" type="PolygonList"/>
@@ -997,14 +1098,14 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_DonnerCoupArret" dia-type="T_Mission_Automate_ABC_DonnerCoupArret" id="225" mrt-dia-behavior="MIS_Automate_MRT_ABC_DonnerCoupArret" name="Armor - block">
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Eclairer" dia-type="T_Mission_Automate_ABC_Eclairer" id="226" mrt-dia-behavior="MIS_Automate_MRT_ABC_Eclairer" name="Armor - scout"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Eclairer" dia-type="T_Mission_Automate_ABC_Eclairer" id="226" mrt-dia-behavior="MIS_Automate_MRT_ABC_Eclairer" name="Armor - recon"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_EffectuerRaid" dia-type="T_Mission_Automate_ABC_EffectuerRaid" id="227" mrt-dia-behavior="MIS_Automate_MRT_ABC_EffectuerRaid" name="Armor - carry out a raid"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Interdire" dia-type="T_Mission_Automate_ABC_Interdire" id="228" mrt-dia-behavior="MIS_Automate_MRT_ABC_Interdire" name="Armor - interdict"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Jalonner" dia-type="T_Mission_Automate_ABC_Jalonner" id="229" mrt-dia-behavior="MIS_Automate_MRT_ABC_Jalonner" name="Armor - screen"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_PrendrePreciserContact" dia-type="T_Mission_Automate_ABC_PrendrePreciserContact" id="230" mrt-dia-behavior="MIS_Automate_MRT_ABC_PrendrePreciserContact" name="Armor - movement to contact"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Reconnaitre" dia-type="T_Mission_Automate_ABC_Reconnaitre" id="231" mrt-dia-behavior="MIS_Automate_MRT_ABC_Reconnaitre" name="Armor - reconnoiter"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_ReconnaitrePoint" dia-type="T_Mission_Automate_ABC_ReconnaitrePoint" id="232" mrt-dia-behavior="MIS_Automate_MRT_ABC_ReconnaitrePoint" name="Armor - reconnoiter (a position)">
-      <parameter dia-name="pointAReconnaitre_" name="Position to reconnoiter" optional="false" type="Polygon"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Reconnaitre" dia-type="T_Mission_Automate_ABC_Reconnaitre" id="231" mrt-dia-behavior="MIS_Automate_MRT_ABC_Reconnaitre" name="Armor - recon in force"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_ReconnaitrePoint" dia-type="T_Mission_Automate_ABC_ReconnaitrePoint" id="232" mrt-dia-behavior="MIS_Automate_MRT_ABC_ReconnaitrePoint" name="Armor - recon in force (a position)">
+      <parameter dia-name="pointAReconnaitre_" name="Position to recon" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Reduire" dia-type="T_Mission_Automate_ABC_Reduire" id="233" mrt-dia-behavior="MIS_Automate_MRT_ABC_Reduire" name="Armor - destroy">
       <parameter dia-name="zoneResistance_" name="Resistance area" optional="false" type="Polygon"/>
@@ -1034,7 +1135,7 @@
       <parameter dia-name="ennemis_" name="Ennemies" optional="false" type="AgentKnowledgeList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Freiner" dia-type="T_Mission_Automate_ABC_Freiner" id="242" mrt-dia-behavior="MIS_Automate_MRT_ABC_Freiner" name="Armor - delay"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_SurveillerItineraire" dia-type="T_Mission_Automate_ABC_SurveillerItineraire" id="243" mrt-dia-behavior="MIS_Automate_MRT_ABC_SurveillerItineraire" name="Armor - monitor route">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_SurveillerItineraire" dia-type="T_Mission_Automate_ABC_SurveillerItineraire" id="243" mrt-dia-behavior="MIS_Automate_MRT_ABC_SurveillerItineraire" name="Armor - monitor (a route)">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_RenseignerSurUnAxe" dia-type="T_Mission_Automate_ABC_RenseignerSurUnAxe" id="244" mrt-dia-behavior="MIS_Automate_MRT_ABC_RenseignerSurUnAxe" name="Armor - report information on an axis"/>
@@ -1096,7 +1197,7 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_SeDeployer" dia-type="T_Mission_Automate_GEN_SeDeployer" id="259" mrt-dia-behavior="MIS_Automate_MRT_GEN_SeDeployer" name="Engineer - deploy">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_ReconnaitreZone" dia-type="T_Mission_Automate_GEN_ReconnaitreZone" id="260" mrt-dia-behavior="MIS_Automate_MRT_GEN_ReconnaitreZone" name="Engineer - reconnoiter an area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_ReconnaitreZone" dia-type="T_Mission_Automate_GEN_ReconnaitreZone" id="260" mrt-dia-behavior="MIS_Automate_MRT_GEN_ReconnaitreZone" name="Engineer - recon (an area)">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_RealiserTravaux" dia-type="T_Mission_Automate_GEN_RealiserTravaux" id="261" mrt-dia-behavior="MIS_Automate_MRT_GEN_RealiserTravaux" name="Engineer - perform work">
@@ -1109,19 +1210,19 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_RetablirItineraires" dia-type="T_Mission_Automate_GEN_RetablirItineraires" id="263" mrt-dia-behavior="MIS_Automate_MRT_GEN_RetablirItineraires" name="Engineer - restore routes">
       <parameter dia-name="itineraires_" name="Routes" optional="false" type="PathList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FaireFranchir" dia-type="T_Mission_Automate_GEN_FaireFranchir" id="264" mrt-dia-behavior="MIS_Automate_MRT_GEN_FaireFranchir" name="Engineer - support bridging">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FaireFranchir" dia-type="T_Mission_Automate_GEN_FaireFranchir" id="264" mrt-dia-behavior="MIS_Automate_MRT_GEN_FaireFranchir" name="Engineer - support a crossing site">
       <parameter dia-name="sitesDeFranchissement_" name="Crossing sites" optional="false" type="ObjectKnowledgeList"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FranchirDeViveForce" dia-type="T_Mission_Automate_GEN_FranchirDeViveForce" id="265" mrt-dia-behavior="MIS_Automate_MRT_GEN_FranchirDeViveForce" name="Engineer - bypass obstacles in an area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FranchirDeViveForce" dia-type="T_Mission_Automate_GEN_FranchirDeViveForce" id="265" mrt-dia-behavior="MIS_Automate_MRT_GEN_FranchirDeViveForce" name="Engineer - bypass (an area)">
       <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_DegagerObstaclesDansZone" dia-type="T_Mission_Automate_GEN_DegagerObstaclesDansZone" id="266" mrt-dia-behavior="MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" name="Engineer - clear obstacles in an area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_DegagerObstaclesDansZone" dia-type="T_Mission_Automate_GEN_DegagerObstaclesDansZone" id="266" mrt-dia-behavior="MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" name="Engineer - breach (an area)">
       <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerSouplesse" dia-type="T_Mission_Automate_INF_AttaquerSouplesse" id="267" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerSouplesse" name="Infantry - attack (smoothly)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerSouplesse" dia-type="T_Mission_Automate_INF_AttaquerSouplesse" id="267" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerSouplesse" name="Infantry - attack">
       <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Appuyer" dia-type="T_Mission_Automate_INF_Appuyer" id="268" mrt-dia-behavior="MIS_Automate_MRT_INF_Appuyer" name="Infantry - support">
@@ -1139,7 +1240,7 @@
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Eclairer" dia-type="T_Mission_Automate_INF_Eclairer" id="272" mrt-dia-behavior="MIS_Automate_MRT_INF_Eclairer" name="Infantry - scout"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Eclairer" dia-type="T_Mission_Automate_INF_Eclairer" id="272" mrt-dia-behavior="MIS_Automate_MRT_INF_Eclairer" name="Infantry - recon"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_FlancGarder" dia-type="T_Mission_Automate_INF_FlancGarder" id="273" mrt-dia-behavior="MIS_Automate_MRT_INF_FlancGarder" name="Infantry - flank-guard">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
@@ -1154,7 +1255,7 @@
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_MenerDefenseUsure" dia-type="T_Mission_Automate_INF_MenerDefenseUsure" id="277" mrt-dia-behavior="MIS_Automate_MRT_INF_MenerDefenseUsure" name="Infantry - defend (wear)"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact" dia-type="T_Mission_Automate_INF_PrendrePreciserMaintenirContact" id="278" mrt-dia-behavior="MIS_Automate_MRT_INF_PrendrePreciserMaintenirContact" name="Infantry - take and maintain contact"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_ReconnaissanceOffensive" dia-type="T_Mission_Automate_INF_ReconnaissanceOffensive" id="279" mrt-dia-behavior="MIS_Automate_MRT_INF_ReconnaissanceOffensive" name="Infantry - reconnoiter"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_ReconnaissanceOffensive" dia-type="T_Mission_Automate_INF_ReconnaissanceOffensive" id="279" mrt-dia-behavior="MIS_Automate_MRT_INF_ReconnaissanceOffensive" name="Infantry - recon in force"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_RecueillirUnite" dia-type="T_Mission_Automate_INF_RecueillirUnite" id="280" mrt-dia-behavior="MIS_Automate_MRT_INF_RecueillirUnite" name="Infantry - assist units in their rearward maneuvers">
       <parameter dia-name="zoneDeploiement_" name="Deployment area" optional="false" type="Polygon"/>
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
@@ -1219,7 +1320,7 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvement" dia-type="T_Mission_Automate_LOG_AppuyerMouvement" id="298" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvement" name="Logistics - support mobility">
       <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreItineraire" dia-type="T_Mission_Automate_LOG_ReconnaitreItineraire" id="299" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreItineraire" name="Logistics - reconnoiter a route">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreItineraire" dia-type="T_Mission_Automate_LOG_ReconnaitreItineraire" id="299" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreItineraire" name="Logistics - recon a route">
       <parameter dia-name="itineraireLog_" name="Logistics routes" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvementDansZone" dia-type="T_Mission_Automate_LOG_AppuyerMouvementDansZone" id="300" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvementDansZone" name="Logistics - support mobility (in an area)">
@@ -1234,10 +1335,10 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_BloquerZone" dia-type="T_Mission_Automate_LOG_BloquerZone" id="303" mrt-dia-behavior="MIS_Automate_MRT_LOG_BloquerZone" name="Logistics - block an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneContaminee" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneContaminee" id="304" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee" name="Logistics - reconnoiter a contaminated area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneContaminee" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneContaminee" id="304" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee" name="Logistics - recon a contaminated area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneDeDeploiement" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement" id="305" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" name="Logistics - reconnoiter a deployment area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneDeDeploiement" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement" id="305" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" name="Logistics - recon a deployment area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_LOG_Surveiller" dia-type="T_Mission_Automate_LOG_Surveiller" id="306" mrt-dia-behavior="MIS_Automate_MRT_LOG_Surveiller" name="Logistics - monitor">
@@ -1274,7 +1375,7 @@
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SeRecompleter" dia-type="T_Mission_Automate_SeRecompleter" id="316" mrt-dia-behavior="MIS_Automate_MRT_SeRecompleter" name="replenish">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeRecompleter" dia-type="T_Mission_Automate_SeRecompleter" id="316" mrt-dia-behavior="MIS_Automate_MRT_SeRecompleter" name="resupply">
       <parameter dia-name="zoneRavitaillement_" name="Replenishment area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_InterdireFranchissementPopulations" dia-type="T_Mission_Automate_InterdireFranchissementPopulations" id="317" mrt-dia-behavior="MIS_Automate_MRT_InterdireFranchissementPopulations" name="deny population crossing">
@@ -1283,10 +1384,10 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_FiltrerPopulations" dia-type="T_Mission_Automate_FiltrerPopulations" id="318" mrt-dia-behavior="MIS_Automate_MRT_FiltrerPopulations" name="filttrate populations">
       <parameter dia-name="points_" name="Positions" optional="false" type="PointList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_CanaliserPopulations" dia-type="T_Mission_Automate_CanaliserPopulations" id="319" mrt-dia-behavior="MIS_Automate_MRT_CanaliserPopulations" name="channel populations">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_CanaliserPopulations" dia-type="T_Mission_Automate_CanaliserPopulations" id="319" mrt-dia-behavior="MIS_Automate_MRT_CanaliserPopulations" name="canalize populations">
       <parameter dia-name="zones_" name="Areas" optional="false" type="LocationList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ControlerPopulationsDansZone" dia-type="T_Mission_Automate_ControlerPopulationsDansZone" id="320" mrt-dia-behavior="MIS_Automate_MRT_ControlerPopulationsDansZone" name="control Populations (in an area)">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ControlerPopulationsDansZone" dia-type="T_Mission_Automate_ControlerPopulationsDansZone" id="320" mrt-dia-behavior="MIS_Automate_MRT_ControlerPopulationsDansZone" name="control populations (in an area)">
       <parameter dia-name="zones_" name="Areas" optional="false" type="PolygonList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SecuriserZoneContrePopulations" dia-type="T_Mission_Automate_SecuriserZoneContrePopulations" id="321" mrt-dia-behavior="MIS_Automate_MRT_SecuriserZoneContrePopulations" name="secure area (against populations assault)">
@@ -1304,8 +1405,8 @@
       <parameter dia-name="connaissancesAgents_" name="Enemy intelligence" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="connaissancesObjets_" name="Obstacle intelligence" optional="false" type="ObjectKnowledgeList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUnAxe" dia-type="T_Mission_Automate_NBC_ReconnaitreUnAxe" id="324" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUnAxe" name="NBC - reconnoiter an axis"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUneZone" dia-type="T_Mission_Automate_NBC_ReconnaitreUneZone" id="325" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUneZone" name="NBC - reconnoiter an area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUnAxe" dia-type="T_Mission_Automate_NBC_ReconnaitreUnAxe" id="324" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUnAxe" name="NBC - recon an axis"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUneZone" dia-type="T_Mission_Automate_NBC_ReconnaitreUneZone" id="325" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUneZone" name="NBC - recon an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination" dia-type="T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" id="326" mrt-dia-behavior="MIS_Automate_MRT_NBC_ArmerUnSiteDeDecontamination" name="NBC - operate a decontamination site">
@@ -1314,7 +1415,7 @@
     <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_DecontaminerUneZone" dia-type="T_Mission_Automate_NBC_DecontaminerUneZone" id="327" mrt-dia-behavior="MIS_Automate_MRT_NBC_DecontaminerUneZone" name="NBC - decontaminate an area">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA" dia-type="T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" id="328" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreDesSitesROTA" name="NBC - reconnoiter ROTA sites">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA" dia-type="T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" id="328" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreDesSitesROTA" name="NBC - recon ROTA sites">
       <parameter dia-name="sitesROTA_" name="Sites ROTA" optional="false" type="ObjectKnowledgeList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROHUM_RenseignerSur" id="329" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_RenseignerSur" name="Human Intelligence - report information">
@@ -1499,7 +1600,7 @@
       <parameter dia-name="pion_" name="Subordinate" optional="false" type="Agent"/>
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="GenObject"/>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation" id="386" name="Reconnoiter Deployment area">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation" id="386" name="recon Deployment area">
       <parameter dia-name="orderConduiteAutomateReconnaitreZoneImplantation_" name="Deployment area" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement" id="387" name="Logistic - Manage remaining tasks before moving">

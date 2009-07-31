@@ -33,7 +33,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - scout">
+        <mission name="Army Aviation - recon">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -45,11 +45,11 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - reconnoiter enemy positions">
+        <mission name="Army Aviation - recon enemy positions">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - reconnoiter">
+        <mission name="Army Aviation - recon in force">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -85,7 +85,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - replenish">
+        <mission name="Army Aviation - resupply">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
@@ -97,7 +97,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - attack">
+        <mission name="Army Aviation - assault">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -127,7 +127,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - extract">
+        <mission name="Army Aviation - evacuate">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -159,7 +159,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - replenish">
+        <mission name="Army Aviation - resupply">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
@@ -243,15 +243,15 @@
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.hal" name="Infantry platoon">
       <missions>
         <mission name="Infantry - support"/>
-        <mission name="Infantry - control an area"/>
+        <mission name="Infantry - control"/>
         <mission name="Infantry - cover"/>
-        <mission name="Infantry - defend"/>
+        <mission name="Infantry - hold"/>
         <mission name="Infantry - destroy (intervene)"/>
         <mission name="Infantry - destroy"/>
         <mission name="Infantry - ambush">
           <fragorder name="Withdraw"/>
         </mission>
-        <mission name="Infantry - scout"/>
+        <mission name="Infantry - recon"/>
         <mission name="Infantry - fix"/>
         <mission name="Infantry - flank-guard"/>
         <mission name="Infantry - delay">
@@ -261,8 +261,8 @@
         <mission name="Infantry - interdict"/>
         <mission name="Infantry - operate a checkpoint"/>
         <mission name="Infantry - movement to contact"/>
-        <mission name="Infantry - reconnoiter an axis"/>
-        <mission name="Infantry - reconnoiter"/>
+        <mission name="Infantry - recon in force (an axis)"/>
+        <mission name="Infantry - recon in force"/>
         <mission name="Infantry - seize"/>
         <mission name="Infantry - monitor">
           <fragorder name="Withdraw"/>
@@ -278,9 +278,9 @@
         <mission name="manage prisoners"/>
         <mission name="Infantry - escort"/>
         <mission name="filtrate populations"/>
-        <mission name="control Populations (in an area)"/>
+        <mission name="control populations (in an area)"/>
         <mission name="report information on populations"/>
-        <mission name="channel populations"/>
+        <mission name="canalize populations"/>
         <mission name="deny population crossing"/>
         <mission name="secure area (against populations assault)"/>
         <mission name="prepare to"/>
@@ -357,14 +357,14 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="deny population crossing"/>
-        <mission name="channel populations"/>
-        <mission name="control Populations (in an area)"/>
+        <mission name="canalize populations"/>
+        <mission name="control populations (in an area)"/>
         <mission name="filtrate populations"/>
         <mission name="report information on populations"/>
         <mission name="secure area (against populations assault)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
-        <mission name="Infantry - defend"/>
+        <mission name="Infantry - hold"/>
         <mission name="Infantry - destroy"/>
       </missions>
     </unit>
@@ -723,16 +723,16 @@
         <mission name="follow"/>
         <mission name="go through decontamination process"/>
         <mission name="withdraw"/>
-        <mission name="Logistics - reconnoiter a route"/>
+        <mission name="Logistics - recon a route"/>
         <mission name="Logistics - monitor"/>
         <mission name="Logistics - support mobility (in an area)"/>
         <mission name="Logistics - support mobility"/>
         <mission name="Logistics - operate parking area"/>
-        <mission name="Logistics - reconnoiter a contaminated area"/>
+        <mission name="Logistics - recon a contaminated area"/>
         <mission name="Logistics - operate a checkpoint"/>
         <mission name="Logistics - block an area"/>
         <mission name="Logistics - support crossing maneuvers"/>
-        <mission name="Logistics - reconnoiter a deployment area"/>
+        <mission name="Logistics - recon a deployment area"/>
         <mission name="adopt transportation posture"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
@@ -845,7 +845,7 @@
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
         <mission name="Armor - control"/>
-        <mission name="Armor - scout"/>
+        <mission name="Armor - recon"/>
         <mission name="Armor - escort"/>
         <mission name="Armor - screen"/>
         <mission name="Armor - open a route"/>
@@ -855,8 +855,8 @@
         <mission name="Armor - escort units"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - flank-guard"/>
-        <mission name="Armor - reconnoiter an axis"/>
-        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - recon in force (an axis)"/>
+        <mission name="Armor - recon in force"/>
         <mission name="Armor - seize"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
@@ -875,7 +875,7 @@
         <mission name="Armor - support"/>
         <mission name="Armor - interdict"/>
         <mission name="Armor - control"/>
-        <mission name="Armor - scout"/>
+        <mission name="Armor - recon"/>
         <mission name="Armor - escort"/>
         <mission name="Armor - screen"/>
         <mission name="Armor - monitor"/>
@@ -886,8 +886,8 @@
         <mission name="Armor - cover"/>
         <mission name="Armor - delay"/>
         <mission name="Armor - open a route"/>
-        <mission name="Armor - reconnoiter an axis"/>
-        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - recon in force (an axis)"/>
+        <mission name="Armor - recon in force"/>
         <mission name="Armor - seize"/>
         <mission name="Armor - support (dynamic)"/>
         <mission name="prepare to"/>
@@ -931,8 +931,8 @@
         <mission name="Armor - fix"/>
         <mission name="Armor - delay"/>
         <mission name="Armor - screen"/>
-        <mission name="Armor - reconnoiter an axis"/>
-        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - recon in force (an axis)"/>
+        <mission name="Armor - recon in force"/>
         <mission name="Armor - destroy"/>
         <mission name="Armor - relieve"/>
         <mission name="Armor - seize"/>
@@ -940,13 +940,13 @@
         <mission name="Armor - monitor"/>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - support (from a position)"/>
-        <mission name="channel populations"/>
-        <mission name="control Populations (in an area)"/>
+        <mission name="canalize populations"/>
+        <mission name="control populations (in an area)"/>
         <mission name="filtrate populations"/>
         <mission name="deny population crossing"/>
         <mission name="report information on populations"/>
         <mission name="secure area (against populations assault)"/>
-        <mission name="Armor - scout"/>
+        <mission name="Armor - recon"/>
         <mission name="Armor - escort"/>
         <mission name="Armor - escort units"/>
         <mission name="Armor - open a route"/>
@@ -977,8 +977,8 @@
         <mission name="Armor - fix"/>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - screen"/>
-        <mission name="Armor - reconnoiter an axis"/>
-        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - recon in force (an axis)"/>
+        <mission name="Armor - recon in force"/>
         <mission name="Armor - destroy"/>
         <mission name="Armor - relieve"/>
         <mission name="Armor - seize"/>
@@ -987,8 +987,8 @@
         <mission name="Armor - delay"/>
         <mission name="Armor - escort units"/>
         <mission name="Armor - support (from a position)"/>
-        <mission name="channel populations"/>
-        <mission name="control Populations (in an area)"/>
+        <mission name="canalize populations"/>
+        <mission name="control populations (in an area)"/>
         <mission name="filtrate populations"/>
         <mission name="deny population crossing"/>
         <mission name="report information on populations"/>
@@ -1012,15 +1012,15 @@
         <mission name="follow"/>
         <mission name="Engineer - activate obstacle"/>
         <mission name="Engineer - enhance mobility"/>
-        <mission name="Engineer - bypass obstacles"/>
-        <mission name="Engineer - clear obstacles"/>
-        <mission name="Engineer - clean up area"/>
-        <mission name="Engineer - operate a crossing site"/>
+        <mission name="Engineer - bypass"/>
+        <mission name="Engineer - breach"/>
+        <mission name="Engineer - breach (an area)"/>
+        <mission name="Engineer - support a crossing site"/>
         <mission name="Engineer - open a route"/>
         <mission name="Engineer - perform work"/>
-        <mission name="Engineer - reconnoiter a route"/>
-        <mission name="Engineer - reconnoiter a crossing site"/>
-        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - recon a route"/>
+        <mission name="Engineer - recon a crossing site"/>
+        <mission name="Engineer - recon an area"/>
         <mission name="Engineer - reinforce"/>
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
@@ -1039,16 +1039,16 @@
         <mission name="follow"/>
         <mission name="Engineer - activate obstacle"/>
         <mission name="Engineer - enhance mobility"/>
-        <mission name="Engineer - bypass obstacles"/>
-        <mission name="Engineer - clear obstacles"/>
-        <mission name="Engineer - clean up area"/>
-        <mission name="Engineer - operate a crossing site"/>
+        <mission name="Engineer - bypass"/>
+        <mission name="Engineer - breach"/>
+        <mission name="Engineer - breach (an area)"/>
+        <mission name="Engineer - support a crossing site"/>
         <mission name="Engineer - open a route"/>
         <mission name="Engineer - perform counter-mobility work"/>
         <mission name="Engineer - perform work"/>
-        <mission name="Engineer - reconnoiter a route"/>
-        <mission name="Engineer - reconnoiter a crossing site"/>
-        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - recon a route"/>
+        <mission name="Engineer - recon a crossing site"/>
+        <mission name="Engineer - recon an area"/>
         <mission name="Engineer - reinforce"/>
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
@@ -1064,15 +1064,15 @@
         <mission name="follow"/>
         <mission name="Engineer - activate obstacle"/>
         <mission name="Engineer - enhance mobility"/>
-        <mission name="Engineer - bypass obstacles"/>
-        <mission name="Engineer - clear obstacles"/>
-        <mission name="Engineer - clean up area"/>
-        <mission name="Engineer - operate a crossing site"/>
+        <mission name="Engineer - bypass"/>
+        <mission name="Engineer - breach"/>
+        <mission name="Engineer - breach (an area)"/>
+        <mission name="Engineer - support a crossing site"/>
         <mission name="Engineer - open a route"/>
         <mission name="Engineer - perform work"/>
-        <mission name="Engineer - reconnoiter a route"/>
-        <mission name="Engineer - reconnoiter a crossing site"/>
-        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - recon a route"/>
+        <mission name="Engineer - recon a crossing site"/>
+        <mission name="Engineer - recon an area"/>
         <mission name="Engineer - reinforce"/>
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
@@ -1094,15 +1094,15 @@
         <mission name="follow"/>
         <mission name="Engineer - activate obstacle"/>
         <mission name="Engineer - enhance mobility"/>
-        <mission name="Engineer - bypass obstacles"/>
-        <mission name="Engineer - clear obstacles"/>
-        <mission name="Engineer - clean up area"/>
-        <mission name="Engineer - operate a crossing site"/>
+        <mission name="Engineer - bypass"/>
+        <mission name="Engineer - breach"/>
+        <mission name="Engineer - breach (an area)"/>
+        <mission name="Engineer - support a crossing site"/>
         <mission name="Engineer - open a route"/>
         <mission name="Engineer - perform work"/>
-        <mission name="Engineer - reconnoiter a route"/>
-        <mission name="Engineer - reconnoiter a crossing site"/>
-        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - recon a route"/>
+        <mission name="Engineer - recon a crossing site"/>
+        <mission name="Engineer - recon an area"/>
         <mission name="Engineer - reinforce"/>
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
@@ -1218,8 +1218,8 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="NBC - reconnoiter a route"/>
-        <mission name="NBC - reconnoiter an area"/>
+        <mission name="NBC - recon a route"/>
+        <mission name="NBC - recon an area"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
       </missions>
@@ -1233,7 +1233,7 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="NBC - reconnoiter a ROTA site"/>
+        <mission name="NBC - recon a ROTA site"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
       </missions>
@@ -1259,7 +1259,7 @@
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.hal" name="Field artillery reconnaissance">
       <missions>
-        <mission name="Field Artillery - reconnoiter deployment area"/>
+        <mission name="Field Artillery - recon deployment area"/>
         <mission name="move"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
@@ -1281,7 +1281,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - scout">
+        <mission name="Army Aviation - recon">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1293,11 +1293,11 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - reconnoiter enemy positions">
+        <mission name="Army Aviation - recon enemy positions">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - reconnoiter">
+        <mission name="Army Aviation - recon in force">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1333,7 +1333,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - replenish">
+        <mission name="Army Aviation - resupply">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
@@ -1345,7 +1345,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - attack">
+        <mission name="Army Aviation - assault">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1369,7 +1369,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - scout">
+        <mission name="Army Aviation - recon">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1381,11 +1381,11 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - reconnoiter enemy positions">
+        <mission name="Army Aviation - recon enemy positions">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - reconnoiter">
+        <mission name="Army Aviation - recon in force">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1421,7 +1421,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - replenish">
+        <mission name="Army Aviation - resupply">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
@@ -1453,7 +1453,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - replenish">
+        <mission name="Army Aviation - resupply">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
@@ -1475,7 +1475,7 @@
           <fragorder name="Modify Disembarking point"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - extract">
+        <mission name="Army Aviation - evacuate">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1503,7 +1503,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - replenish">
+        <mission name="Army Aviation - resupply">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
@@ -1594,7 +1594,7 @@
         <mission name="move"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1612,7 +1612,7 @@
         <mission name="move"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1622,7 +1622,7 @@
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.hal" name="Attack Helicopter Squadron">
       <missions>
-        <mission name="Army Aviation - reconnoiter">
+        <mission name="Army Aviation - recon">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1642,7 +1642,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="replenish">
+        <mission name="resupply">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1694,7 +1694,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - replenish">
+        <mission name="Army Aviation - resupply">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
@@ -1721,7 +1721,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="replenish">
+        <mission name="resupply">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -1733,7 +1733,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
-        <mission name="Army Aviation - replenish">
+        <mission name="Army Aviation - resupply">
           <fragorder name="Army Aviation - Change mission type"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
@@ -1743,23 +1743,24 @@
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.hal" name="Infantry company">
       <missions>
         <mission name="Infantry - support"/>
-        <mission name="Infantry - attack (smoothly)">
+        <mission name="Infantry - attack">
           <fragorder name="Cross departure line"/>
         </mission>
         <mission name="Infantry - control"/>
         <mission name="Infantry - cover"/>
-        <mission name="Infantry - scout"/>
+        <mission name="Infantry - recon"/>
         <mission name="Infantry - flank-guard"/>
         <mission name="Infantry - delay">
           <fragorder name="Withdraw"/>
         </mission>
         <mission name="Infantry - harass"/>
         <mission name="Infantry - take and maintain contact"/>
-        <mission name="Infantry - reconnoiter"/>
+        <mission name="Infantry - recon in force"/>
         <mission name="Infantry - seize"/>
         <mission name="Infantry - interdict"/>
+        <mission name="Infantry - interdict (an area)"/>
         <mission name="Infantry - hold"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
         <mission name="withdraw"/>
@@ -1782,7 +1783,7 @@
           <fragorder name="Withdraw"/>
         </mission>
         <mission name="Infantry - monitor"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
         <mission name="withdraw"/>
@@ -1805,7 +1806,7 @@
         </mission>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="follow"/>
         <mission name="move"/>
       </missions>
@@ -1815,12 +1816,12 @@
         <mission name="Logistics - deploy"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
       </missions>
     </automat>
     <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.hal" name="Escadron Transport Blindes">
       <missions>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="move"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
@@ -1835,19 +1836,19 @@
     </automat>
     <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.hal" name="Peloton Circulation">
       <missions>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="move"/>
         <mission name="withdraw"/>
         <mission name="Logistics - monitor"/>
         <mission name="Logistics - support mobility (in an area)"/>
         <mission name="Logistics - support mobility"/>
         <mission name="Logistics - operate parking area"/>
-        <mission name="Logistics - reconnoiter a contaminated area"/>
+        <mission name="Logistics - recon a contaminated area"/>
         <mission name="Logistics - block an area"/>
         <mission name="Logistics - operate checkpoints"/>
-        <mission name="Logistics - reconnoiter a route"/>
+        <mission name="Logistics - recon a route"/>
         <mission name="Logistics - support crossing"/>
-        <mission name="Logistics - reconnoiter a deployment area"/>
+        <mission name="Logistics - recon a deployment area"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
         <mission name="park"/>
@@ -1862,7 +1863,7 @@
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1870,12 +1871,12 @@
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.hal" name="Firefinder reconnaissance battery">
       <missions>
-        <mission name="Field Artillery - reconnoiter deployment areas"/>
+        <mission name="Field Artillery - recon deployment areas"/>
         <mission name="move"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1888,7 +1889,7 @@
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1902,7 +1903,7 @@
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1914,7 +1915,7 @@
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1924,7 +1925,7 @@
       <missions>
         <mission name="Communication - command"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="move"/>
       </missions>
     </automat>
@@ -1935,7 +1936,7 @@
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1948,7 +1949,7 @@
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1961,7 +1962,7 @@
         <mission name="move"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -1973,7 +1974,7 @@
     <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.hal" name="Terroristes">
       <missions>
         <mission name="move"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
       </missions>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="MBT squadron">
@@ -1985,7 +1986,7 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="adopt transportation posture"/>
         <mission name="Armor - support"/>
         <mission name="Armor - attack">
@@ -1994,13 +1995,13 @@
         <mission name="Armor - control"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - block"/>
-        <mission name="Armor - scout"/>
+        <mission name="Armor - recon"/>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - delay">
           <fragorder name="Withdraw"/>
         </mission>
         <mission name="Armor - movement to contact"/>
-        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - recon in force"/>
         <mission name="Armor - destroy"/>
         <mission name="Armor - relieve"/>
         <mission name="Armor - seize"/>
@@ -2009,7 +2010,7 @@
         <mission name="Armor - escort"/>
         <mission name="Armor - escort units"/>
         <mission name="Armor - screen"/>
-        <mission name="Armor - reconnoiter (a position)"/>
+        <mission name="Armor - recon in force (a position)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
       </missions>
@@ -2023,7 +2024,7 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="adopt transportation posture"/>
         <mission name="Armor - attack">
           <fragorder name="Cross departure line"/>
@@ -2031,13 +2032,13 @@
         <mission name="Armor - control"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - block"/>
-        <mission name="Armor - scout"/>
+        <mission name="Armor - recon"/>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - delay">
           <fragorder name="Withdraw"/>
         </mission>
         <mission name="Armor - movement to contact"/>
-        <mission name="Armor - reconnoiter"/>
+        <mission name="Armor - recon in force"/>
         <mission name="Armor - destroy"/>
         <mission name="Armor - seize"/>
         <mission name="Armor - hold"/>
@@ -2045,7 +2046,7 @@
         <mission name="Armor - escort"/>
         <mission name="Armor - escort units"/>
         <mission name="Armor - screen"/>
-        <mission name="Armor - reconnoiter (a position)"/>
+        <mission name="Armor - recon in force (a position)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
         <mission name="Armor - support"/>
@@ -2060,12 +2061,12 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="Armor - control"/>
-        <mission name="Armor - scout"/>
+        <mission name="Armor - recon"/>
         <mission name="Armor - screen"/>
         <mission name="Armor - monitor"/>
-        <mission name="Armor - reconnoiter (a position)"/>
+        <mission name="Armor - recon in force (a position)"/>
         <mission name="Armor - escort"/>
         <mission name="adopt transportation posture"/>
         <mission name="Armor - escort units"/>
@@ -2081,16 +2082,16 @@
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="Engineer - clear obstacles in an area"/>
-        <mission name="Engineer - support bridging"/>
-        <mission name="Engineer - bypass obstacles in an area"/>
+        <mission name="Engineer - breach (an area)"/>
+        <mission name="Engineer - support a crossing site"/>
+        <mission name="Engineer - bypass (an area)"/>
         <mission name="Engineer - open routes"/>
         <mission name="Engineer - perform work"/>
-        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - recon (an area)"/>
         <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
@@ -2101,16 +2102,16 @@
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="Engineer - clear obstacles in an area"/>
-        <mission name="Engineer - support bridging"/>
-        <mission name="Engineer - bypass obstacles in an area"/>
+        <mission name="Engineer - breach (an area)"/>
+        <mission name="Engineer - support a crossing site"/>
+        <mission name="Engineer - bypass (an area)"/>
         <mission name="Engineer - open routes"/>
         <mission name="Engineer - perform work"/>
-        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - recon (an area)"/>
         <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
@@ -2121,16 +2122,16 @@
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="Engineer - clear obstacles in an area"/>
-        <mission name="Engineer - support bridging"/>
-        <mission name="Engineer - bypass obstacles in an area"/>
+        <mission name="Engineer - breach (an area)"/>
+        <mission name="Engineer - support a crossing site"/>
+        <mission name="Engineer - bypass (an area)"/>
         <mission name="Engineer - open routes"/>
         <mission name="Engineer - perform work"/>
-        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - recon (an area)"/>
         <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
@@ -2141,16 +2142,16 @@
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="Engineer - clear obstacles in an area"/>
-        <mission name="Engineer - support bridging"/>
-        <mission name="Engineer - bypass obstacles in an area"/>
+        <mission name="Engineer - breach (an area)"/>
+        <mission name="Engineer - support a crossing site"/>
+        <mission name="Engineer - bypass (an area)"/>
         <mission name="Engineer - open routes"/>
         <mission name="Engineer - perform work"/>
-        <mission name="Engineer - reconnoiter an area"/>
+        <mission name="Engineer - recon (an area)"/>
         <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
@@ -2164,7 +2165,7 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
       </missions>
     </automat>
     <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.hal" name="Listening station">
@@ -2174,7 +2175,7 @@
         <mission name="withdraw"/>
         <mission name="Electronic Intelligence - report information"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
       </missions>
     </automat>
     <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.hal" name="Jamming station">
@@ -2184,7 +2185,7 @@
         <mission name="withdraw"/>
         <mission name="Electronic Intelligence - report information"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -2197,7 +2198,7 @@
         <mission name="withdraw"/>
         <mission name="Electronic Intelligence - report information"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -2209,7 +2210,7 @@
         <mission name="move"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -2225,7 +2226,7 @@
         <mission name="Human Intelligence - guide"/>
         <mission name="Human Intelligence - report information"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -2240,9 +2241,9 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
-        <mission name="NBC - reconnoiter an axis"/>
-        <mission name="NBC - reconnoiter an area"/>
+        <mission name="resupply"/>
+        <mission name="NBC - recon an axis"/>
+        <mission name="NBC - recon an area"/>
         <mission name="adopt transportation posture"/>
       </missions>
     </automat>
@@ -2255,7 +2256,7 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="NBC - operate a decontamination site"/>
         <mission name="NBC - decontaminate an area"/>
         <mission name="adopt transportation posture"/>
@@ -2270,8 +2271,8 @@
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="go through decontamination process"/>
-        <mission name="replenish"/>
-        <mission name="NBC - reconnoiter ROTA sites"/>
+        <mission name="resupply"/>
+        <mission name="NBC - recon ROTA sites"/>
       </missions>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.hal" name="Field battery">
@@ -2281,7 +2282,7 @@
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -2289,12 +2290,12 @@
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.hal" name="Recconnaissance battery">
       <missions>
-        <mission name="Field Artillery - reconnoiter deployment areas"/>
+        <mission name="Field Artillery - recon deployment areas"/>
         <mission name="move"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
-        <mission name="replenish"/>
+        <mission name="resupply"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
