@@ -1871,7 +1871,7 @@
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.hal" name="Firefinder reconnaissance battery">
       <missions>
-        <mission name="Field Artillery - recon deployment areas"/>
+        <mission name="Field Artillery - recon deployment area"/>
         <mission name="move"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
@@ -2290,7 +2290,7 @@
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.hal" name="Recconnaissance battery">
       <missions>
-        <mission name="Field Artillery - recon deployment areas"/>
+        <mission name="Field Artillery - recon deployment area"/>
         <mission name="move"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>

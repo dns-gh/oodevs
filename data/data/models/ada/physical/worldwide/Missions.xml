@@ -1070,7 +1070,7 @@ overwhelming force.]]></doctrine>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_SeDeployer" dia-type="T_Mission_Automate_ASS_SeDeployer" id="216" mrt-dia-behavior="MIS_Automate_MRT_ASS_SeDeployer" name="Field Artillery - deploy">
       <parameter dia-name="zoneDeploiement_" name="Deployment area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" dia-type="T_Mission_Automate_ASS_ReconnaitreZonesDeploiement" id="217" mrt-dia-behavior="MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" name="Field Artillery - recon deployment areas">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" dia-type="T_Mission_Automate_ASS_ReconnaitreZonesDeploiement" id="217" mrt-dia-behavior="MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" name="Field Artillery - recon deployment area">
       <parameter dia-name="positionsAReconnaitre_" name="Positions to recon" optional="false" type="PointList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifs" dia-type="T_Mission_Automate_ASS_AcquerirObjectifs" id="218" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifs" name="Field Artillery - collect intelligence on objectives">
