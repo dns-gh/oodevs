@@ -28,10 +28,10 @@ public:
     virtual ~XmliaReport();
     //@}
 
-protected:
+public:
     //! @name Operations
     //@{
-    virtual void activate();
+    void show();
     //@}
 
 private slots:

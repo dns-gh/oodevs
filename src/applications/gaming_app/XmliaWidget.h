@@ -43,9 +43,16 @@ public:
     virtual ~XmliaWidget();
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void Selected( const UserProfile& profile );
+    //@}
+
 private slots:
     //! @name Operations
     //@{
+    void OnDoubleClicked( QListViewItem* item );
     //@}
 
 private:

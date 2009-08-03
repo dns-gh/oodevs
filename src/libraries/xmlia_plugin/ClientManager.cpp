@@ -60,9 +60,15 @@ void ClientManager::NotifyClient( dispatcher::ClientPublisher_ABC& client, dispa
         msgToClient.msg.u.plugin_text_message = &asnMessage;
        
         if (isAuthorized_)
+        {
           message = "<infoConnection>Authorization accepted from ldap</infoConnection>";
+          MT_LOG_ERROR_MSG( "Ldap good connection" );
+        }
         else
+        {
           message = "<infoConnection>Authorization refused from ldap</infoConnection>";
+          MT_LOG_ERROR_MSG( "Ldap error connection" );
+        }
           
         std::string command = "xmlia '" + message + "'";
         asnMessage.message = command.c_str();

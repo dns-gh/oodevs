@@ -67,7 +67,7 @@ std::string Publisher::GetUrlReports( const std::string& messageType, const std:
 std::string Publisher::GetXmliaMessage( const std::string& url )
 {
     
-    std::string webServicePath = url.substr( 38/*36*/, url.length()-38 ); 
+    std::string webServicePath = url.substr( webServiceHost_.length()+8 + webservicePort_.length(), url.length()-( webServiceHost_.length()+ 8 + webservicePort_.length() ) ); 
     boost::asio::io_service io_service;
     
     TCP_Client client(io_service, "reception", webServicePath, webServiceHost_, webservicePort_ );

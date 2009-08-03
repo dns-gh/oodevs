@@ -21,9 +21,8 @@ XmliaPanel::XmliaPanel( QWidget* parent, kernel::Controllers& controllers, Publi
     setWidget( new XmliaWidget( this, controllers, publisher, handler ) );
     setResizeEnabled( true );
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
-    setPaletteBackgroundColor( QColor( 255, 255, 225 ) );
     setCloseMode( QDockWindow::Always );
-    setCaption( tr( "XMLIA" ) );
+    setCaption( tr( "XMLIA messages" ) );
     hide();
 }
 

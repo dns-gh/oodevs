@@ -29,6 +29,7 @@ XmliaWidget::XmliaWidget( QWidget* parent, kernel::Controllers& controllers, Pub
     handler_.Register( "xmlia", *this );
     controllers_.Register( *this );
 
+    setPaletteBackgroundColor( QColor( 239, 242, 238 ) );
     setMinimumSize( 40, 40);
     setShowSortIndicator( true );
     setSorting( -1 );
@@ -37,6 +38,8 @@ XmliaWidget::XmliaWidget( QWidget* parent, kernel::Controllers& controllers, Pub
     addColumn( tr( "Message" ) );
     setResizeMode( QListView::LastColumn );
     setAllColumnsShowFocus ( true );
+
+    connect( this, SIGNAL( doubleClicked( QListViewItem* ) ), SLOT( OnDoubleClicked( QListViewItem* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +60,15 @@ void XmliaWidget::Receive( const Command& command )
 {
   if( command.ArgumentCount() != 1 )
     return;
-
   new XmliaReport( this, QString( command.Argument( 1 ).c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmliaWidget::OnDoubleClicked
+// Created: RPD 2009-08-14
+// -----------------------------------------------------------------------------
+void XmliaWidget::OnDoubleClicked( QListViewItem* item )
+{
+    XmliaReport* line = dynamic_cast< XmliaReport* >( item );
+    line->show();
 }

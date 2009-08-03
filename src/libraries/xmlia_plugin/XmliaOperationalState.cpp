@@ -178,3 +178,4 @@ float XmliaOperationalState::GetAverageDotation() const
 {
   return ( iEtatCarburants_ + iEtatMunitions_ ) / 2;
 }
+

@@ -515,8 +515,8 @@ void ReportManager::MagicMove( UnitAgent& reportedUnit )
     ASN1T_CoordLatLong utm;
     reportedUnit.GetLocalization()->FillLatLong( utm );
     asnMsg().action.u.move_to = &utm;
-    if ( utm.latitude != simAgent->position_.latitude && utm.latitude != simAgent->position_.latitude )
-      asnMsg.Send( simulationPublisher_ );
+    if ( simAgent->position_.latitude != utm.latitude && simAgent->position_.longitude != utm.longitude )
+        asnMsg.Send( simulationPublisher_ );
   }
 }
 
@@ -553,7 +553,7 @@ void ReportManager::UpdateOperationnalState( UnitAgent& reportedUnit )
 // -----------------------------------------------------------------------------
 void ReportManager::InsertOrUpdateIntelligence( UnitAgent& reportedUnit )
 {
-  dispatcher::Agent* simAgent = model_.agents_.Find( reportedUnit.GetId() );
+  /*dispatcher::Agent* simAgent = model_.agents_.Find( reportedUnit.GetId() );
 
   if ( simAgent != 0 )
   {
@@ -592,7 +592,7 @@ void ReportManager::InsertOrUpdateIntelligence( UnitAgent& reportedUnit )
     }
 
     SentToAllClients( asnMsg );
- }
+ }*/
 }
 
 // -----------------------------------------------------------------------------
