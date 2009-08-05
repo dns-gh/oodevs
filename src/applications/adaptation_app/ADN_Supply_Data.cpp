@@ -76,34 +76,48 @@ void ADN_Supply_Data::ConvoyInfo< T >::WriteArchive( const std::string& section,
            << xml::end();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::SupplyDataInfos
-// Created: SBO 2009-06-03
-// -----------------------------------------------------------------------------
-ADN_Supply_Data::SupplyDataInfos::SupplyDataInfos()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
-    , ptrSupplyMission_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions(), 0 )
-{
-    BindExistenceTo( &ptrUnit_ );
-    BindExistenceTo( &ptrSupplyMission_ );
-}
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::~SupplyDataInfos
-// Created: SBO 2009-06-03
-// -----------------------------------------------------------------------------
-ADN_Supply_Data::SupplyDataInfos::~SupplyDataInfos()
-{
-    Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::Reset
+// Name: ADN_Supply_Data constructor
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::Reset()
+ADN_Supply_Data::ADN_Supply_Data()
+: ADN_Data_ABC()
+, ptrUnit_    ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0, "ADN_Supply_Data::ptrUnit_" )
+, ptrSupplyMission_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions(), 0 )
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data destructor
+// Created: APE 2005-03-22
+// -----------------------------------------------------------------------------
+ADN_Supply_Data::~ADN_Supply_Data()
+{
+    vConvoySetupInfos_    .Reset();
+    vConvoyLoadingInfos_  .Reset();
+    vConvoyUnloadingInfos_.Reset();
+    vConvoySpeedModificatorInfos_.Reset();
+    vVectorWarnings_      .Reset();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data::FilesNeeded
+// Created: APE 2005-03-22
+// -----------------------------------------------------------------------------
+void ADN_Supply_Data::FilesNeeded( T_StringList& vFiles ) const
+{
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSupply_.GetData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data::Reset
+// Created: APE 2005-03-22
+// -----------------------------------------------------------------------------
+void ADN_Supply_Data::Reset()
 {
     vConvoySetupInfos_    .Reset();
     vConvoyLoadingInfos_  .Reset();
@@ -113,10 +127,10 @@ void ADN_Supply_Data::SupplyDataInfos::Reset()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::ReadArchive
-// Created: SBO 2009-06-03
+// Name: ADN_Supply_Data::ReadArchive
+// Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
+void ADN_Supply_Data::ReadArchive( xml::xistream& input )
 {
     std::string strUnit, supplyMission;
     input >> xml::start( "supply" )
@@ -124,16 +138,16 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "unit-type", strUnit )
                 >> xml::attribute( "mission", supplyMission )
                 >> xml::start( "constitution-times" )
-                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime )
+                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::ReadConstitutionTime )
                 >> xml::end()
                 >> xml::start( "loading-times" )
-                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadLoadingTime )
+                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::ReadLoadingTime )
                 >> xml::end()
                 >> xml::start( "unloading-times" )
-                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadUnloadingTime )
+                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::ReadUnloadingTime )
                 >> xml::end()
                 >> xml::start( "speed-modifiers" )
-                    >> xml::list( "speed-modifier", *this, &ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier )
+                    >> xml::list( "speed-modifier", *this, &ADN_Supply_Data::ReadSpeedModifier )
                 >> xml::end()
             >> xml::end();
     vConvoySetupInfos_.AddItem( 0 );
@@ -153,19 +167,18 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
     ptrSupplyMission_ = mission;
 
     input >> xml::start( "resource-availability-alerts" )
-            >> xml::list( "resource-availability-alert", *this, &ADN_Supply_Data::SupplyDataInfos::ReadResourceAvailability )
+            >> xml::list( "resource-availability-alert", *this, &ADN_Supply_Data::ReadResourceAvailability )
           >> xml::end()
         >> xml::end();
 
     vVectorWarnings_.AddItem( 0 );
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::ReadResourceAvailability
+// Name: ADN_Supply_Data::ReadResourceAvailability
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::ReadResourceAvailability( xml::xistream& input )
+void ADN_Supply_Data::ReadResourceAvailability( xml::xistream& input )
 {
     std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
     pNew->ReadArchive( input );
@@ -173,10 +186,10 @@ void ADN_Supply_Data::SupplyDataInfos::ReadResourceAvailability( xml::xistream& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime
+// Name: ADN_Supply_Data::ReadConstitutionTime
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime( xml::xistream& input )
+void ADN_Supply_Data::ReadConstitutionTime( xml::xistream& input )
 {
     std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
     spNew->ReadArchive( "time", input );
@@ -184,10 +197,10 @@ void ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime( xml::xistream& inpu
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::ReadLoadingTime
+// Name: ADN_Supply_Data::ReadLoadingTime
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::ReadLoadingTime( xml::xistream& input )
+void ADN_Supply_Data::ReadLoadingTime( xml::xistream& input )
 {
     std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
     spNew->ReadArchive( "time", input );
@@ -195,10 +208,10 @@ void ADN_Supply_Data::SupplyDataInfos::ReadLoadingTime( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::ReadUnloadingTime
+// Name: ADN_Supply_Data::ReadUnloadingTime
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::ReadUnloadingTime( xml::xistream& input )
+void ADN_Supply_Data::ReadUnloadingTime( xml::xistream& input )
 {
     std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
     spNew->ReadArchive( "time", input );
@@ -206,10 +219,10 @@ void ADN_Supply_Data::SupplyDataInfos::ReadUnloadingTime( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier
+// Name: ADN_Supply_Data::ReadSpeedModifier
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier( xml::xistream& input )
+void ADN_Supply_Data::ReadSpeedModifier( xml::xistream& input )
 {
     std::auto_ptr< ConvoyInfo< ADN_Type_Double > > spNew( new ConvoyInfo< ADN_Type_Double >( 1 ) );
     spNew->ReadArchive( "value", input );
@@ -217,10 +230,10 @@ void ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::WriteArchive
+// Name: ADN_Supply_Data::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
+void ADN_Supply_Data::WriteArchive( xml::xostream& output )
 {
     if( ptrUnit_.GetData() == 0 )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Logistic supply systems - Convoy unit type not defined" ).ascii() );
@@ -264,60 +277,4 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
     output << xml::end();
 
     output << xml::end();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data constructor
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-ADN_Supply_Data::ADN_Supply_Data()
-    : ADN_Data_ABC()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data destructor
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-ADN_Supply_Data::~ADN_Supply_Data()
-{
-    Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::Reset
-// Created: SBO 2009-06-03
-// -----------------------------------------------------------------------------
-void ADN_Supply_Data::Reset()
-{
-    infos_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::FilesNeeded
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-void ADN_Supply_Data::FilesNeeded( T_StringList& vFiles ) const
-{
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSupply_.GetData() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::ReadArchive
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-void ADN_Supply_Data::ReadArchive( xml::xistream& input )
-{
-    infos_.ReadArchive( input );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::WriteArchive
-// Created: SBO 2009-06-03
-// -----------------------------------------------------------------------------
-void ADN_Supply_Data::WriteArchive( xml::xostream& output )
-{
-    infos_.WriteArchive( output );
 }

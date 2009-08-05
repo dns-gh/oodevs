@@ -67,28 +67,28 @@ void ADN_Supply_GUI::Build()
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
 
-    builder.AddField< ADN_SupplyUnitSelector >( pHolder, tr( "Unit type" ), data_.infos_.ptrUnit_ );
-    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pHolder, tr( "Mission" ), data_.infos_.ptrSupplyMission_ );
+    builder.AddField< ADN_SupplyUnitSelector >( pHolder, tr( "Unit type" ), data_.ptrUnit_ );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pHolder, tr( "Mission" ), data_.ptrSupplyMission_ );
 
     QHGroupBox* pTrucksGroup = new QHGroupBox( tr( "Convoy setup duration" ), pGroup );
     ADN_Supply_TrucksTimeTable* pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoySetupInfos_ );
+    pTrucksTimeTable->GetConnector().Connect( & data_.vConvoySetupInfos_ );
 
     pTrucksGroup = new QHGroupBox( tr( "Convoy loading duration" ), pGroup );
     pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyLoadingInfos_ );
+    pTrucksTimeTable->GetConnector().Connect( & data_.vConvoyLoadingInfos_ );
 
     pTrucksGroup = new QHGroupBox( tr( "Convoy unloading duration" ), pGroup );
     pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyUnloadingInfos_ );
+    pTrucksTimeTable->GetConnector().Connect( & data_.vConvoyUnloadingInfos_ );
 
     pTrucksGroup = new QHGroupBox( tr( "Convoy speed modifiers" ), pGroup );
     ADN_Supply_TrucksDoubleTable* pTrucksDoubleTable = new ADN_Supply_TrucksDoubleTable( pTrucksGroup );
-    pTrucksDoubleTable->GetConnector().Connect( & data_.infos_.vConvoySpeedModificatorInfos_ );
+    pTrucksDoubleTable->GetConnector().Connect( & data_.vConvoySpeedModificatorInfos_ );
 
     QHGroupBox* pVectorGroup = new QHGroupBox( tr( "Conveyors availability warnings" ), pGroup );
     ADN_AvailabilityWarningTable* pWarningTable = new ADN_AvailabilityWarningTable( pVectorGroup );
-    pWarningTable->GetConnector().Connect( & data_.infos_.vVectorWarnings_ );
+    pWarningTable->GetConnector().Connect( & data_.vVectorWarnings_ );
 
     // Layout
     QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
