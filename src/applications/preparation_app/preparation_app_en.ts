@@ -668,6 +668,18 @@ Do you want to save anyway?</source>
         <source>Variable value: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Human states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Human ranks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment states</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScoreVariablesList</name>

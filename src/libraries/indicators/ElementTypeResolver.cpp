@@ -85,6 +85,9 @@ namespace
         boost::replace_all( result, "dotation list", "list(resource-type)" );
         boost::replace_all( result, "equipment list", "list(equipment-type)" );
         boost::replace_all( result, "zone", "position" );
+        boost::replace_all( result, "human states", "list(human-state)" );
+        boost::replace_all( result, "human ranks", "list(human-rank)" );
+        boost::replace_all( result, "equipment states", "list(equipment-state)" );
         boost::replace_all( result, "operator", "string" ); // $$$$ SBO 2009-06-05: 
         return result;
     }

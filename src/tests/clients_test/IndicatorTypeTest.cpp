@@ -262,4 +262,19 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestVariableTypeIsCompatibleWithBuil
         boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "position", resolver ) );
         BOOST_CHECK( *lhs == *rhs );
     }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "human states", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(human-state)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "human ranks", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(human-rank)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "equipment states", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(equipment-state)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
 }

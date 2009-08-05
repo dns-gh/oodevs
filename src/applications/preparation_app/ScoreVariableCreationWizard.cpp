@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ScoreVariableCreationWizard.h"
 #include "moc_ScoreVariableCreationWizard.cpp"
+#include "ParamStringEnumeration.h"
 #include "actions_gui/ParamAgent.h"
 #include "actions_gui/ParamAgentList.h"
 #include "actions_gui/ParamDotationTypeList.h"
@@ -21,6 +22,7 @@
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Variable.h"
 #include "gaming/StaticModel.h"
+#include <boost/assign/list_of.hpp>
 #include <qvgroupbox.h>
 
 // -----------------------------------------------------------------------------
@@ -50,6 +52,9 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, kerne
         type_->AddItem( tr( "Dotation list" ), "dotation list" );
         type_->AddItem( tr( "Equipment list" ), "equipment list" );
         type_->AddItem( tr( "Zone" ), "zone" );
+        type_->AddItem( tr( "Human states" ), "human states" );
+        type_->AddItem( tr( "Human ranks" ), "human ranks" );
+        type_->AddItem( tr( "Equipment states" ), "equipment states" );
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
         grid->addWidget( box, 0, 0 );
     }
@@ -171,6 +176,24 @@ void ScoreVariableCreationWizard::OnChangeType()
     paramBox_->show();
 }
 
+namespace
+{
+    std::vector< std::string > HumanStates()
+    {
+        return boost::assign::list_of( "total" )( "operational" )( "dead" )( "wounded" )( "mental" )( "nbc" )( "in-treatment" )( "in-maintenance" );
+    }
+
+    std::vector< std::string > HumanRanks()
+    {
+        return boost::assign::list_of( "officer" )( "sub-officer" )( "troopers" );
+    }
+
+    std::vector< std::string > EquipmentStates()
+    {
+        return boost::assign::list_of( "available" )( "unavailable" )( "repairable" )( "repairing" )( "prisoner" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ScoreVariableCreationWizard::CreateParameter
 // Created: SBO 2009-05-25
@@ -194,6 +217,12 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
         location->SetShapeFilter( false, false, true, true );
         result.reset( location.release() );
     }
+    else if( type == "human states" )
+        result.reset( new ParamStringEnumeration( this, tr( "Human states" ), parameter, HumanStates() ) );
+    else if( type == "human ranks" )
+        result.reset( new ParamStringEnumeration( this, tr( "Human ranks" ), parameter, HumanRanks() ) );
+    else if( type == "equipment states" )
+        result.reset( new ParamStringEnumeration( this, tr( "Equipment states" ), parameter, EquipmentStates() ) );
     return result;
 }
 

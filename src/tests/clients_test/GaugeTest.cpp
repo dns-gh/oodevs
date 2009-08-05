@@ -13,6 +13,32 @@
 
 using namespace mockpp;
 
+namespace
+{
+    class TestReader
+    {
+    public:
+        explicit TestReader( xml::xistream& xis )
+        {
+            xis >> xml::optional() >> xml::start( "tests" )
+                    >> xml::list( "test", *this, &TestReader::ReadTest )
+                >> xml::end();
+        }
+        void ReadTest( xml::xistream& xis )
+        {
+            throw std::runtime_error( __FUNCTION__ );
+        }
+    };
+}
+
+BOOST_AUTO_TEST_CASE( XmlTest_ThrowInList )
+{
+    const std::string init = "<root><tests><test><blabla/></test><test/></tests></root>";
+    xml::xistringstream xis( init ); xis >> xml::start( "root" );
+    std::auto_ptr< TestReader > reader;
+    BOOST_CHECK_THROW( reader.reset( new TestReader( xis ) ), std::runtime_error );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Gauge_TestNormalizationIntervalBoundariesAreImplicit
 // Created: SBO 2009-05-06
