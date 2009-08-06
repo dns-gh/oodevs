@@ -9,12 +9,12 @@
 
 #include "gaming_app_pch.h"
 #include "LimitsLayer.h"
-
 #include "gaming/TacticalLine_ABC.h"
 #include "gaming/TacticalLineFactory.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace kernel;
 using namespace gui;
@@ -27,6 +27,7 @@ LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, Co
     : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile )
     , tools_            ( tools )
     , factory_          ( factory )
+    , selectedEntity_   ( 0 )
 {
     // NOTHING
 }
@@ -46,7 +47,7 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 bool LimitsLayer::CanCreateLine()
 {
-    return factory_.IsReady();
+    return selectedEntity_ != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +84,8 @@ bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void LimitsLayer::CreateLimit( const T_PointVector& points )
 {
-    factory_.CreateLimit( points );
+    if( selectedEntity_ )
+        factory_.CreateLimit( points, *selectedEntity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,5 +94,42 @@ void LimitsLayer::CreateLimit( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void LimitsLayer::CreateLima( const T_PointVector& points )
 {
-    factory_.CreateLima( points );
+    if( selectedEntity_ )
+        factory_.CreateLima( points, *selectedEntity_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::BeforeSelection
+// Created: SBO 2009-08-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::BeforeSelection()
+{
+    selectedEntity_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Select
+// Created: SBO 2009-08-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::Select( const kernel::Automat_ABC& entity )
+{
+    selectedEntity_ = &entity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Select
+// Created: SBO 2009-08-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::Select( const kernel::Formation_ABC& entity )
+{
+    selectedEntity_ = &entity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::AfterSelection
+// Created: SBO 2009-08-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::AfterSelection()
+{
+    // NOTHING
 }

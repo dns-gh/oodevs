@@ -21,6 +21,8 @@ class TacticalLineFactory;
 // Created: AGE 2006-03-24
 // =============================================================================
 class LimitsLayer : public gui::TacticalLinesLayer
+                  , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
+                  , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
 {
 
 public:
@@ -44,6 +46,11 @@ private:
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
+
+    virtual void BeforeSelection();
+    virtual void Select( const kernel::Automat_ABC& entity );
+    virtual void Select( const kernel::Formation_ABC& entity );
+    virtual void AfterSelection();
     //@}
 
 private:
@@ -51,6 +58,7 @@ private:
     //@{
     const kernel::GlTools_ABC& tools_;
     TacticalLineFactory& factory_;
+    const kernel::Entity_ABC* selectedEntity_;
     //@}
 };
 
