@@ -1,1 +1,24 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/Fonctions - Telepathy.bms"] = true
+
+
+function F_CopyPlotsRavitaillement( patrouilleAlat, list )
+    DIA_Clear( patrouilleAlat:GetplotsRavitaillement_() )
+    for _,y in pairs( S_Obj_ListeObjetsValides( list ) ) do
+    local _continue = true
+        DEC_UserTypeList_PushBack( patrouilleAlat:GetplotsRavitaillement_(), y )
+
+    end
+
+end
+
+function F_GetListeEnisTirAutorise( pion )
+    local _returnValue = {}
+    _returnValue = pion:GetlisteEnisTirAutorise_()
+    return _returnValue
+end
+
+function F_RemoveAgentFromListeEnisTirAutorise( pion, x )
+    DEC_UserTypeList_Remove( pion:GetlisteEnisTirAutorise_(), x )
+end
 

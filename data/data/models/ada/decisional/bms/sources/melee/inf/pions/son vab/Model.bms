@@ -35,6 +35,7 @@ if connections then
     end
 end
 eventmanager_plugin = eventmanager_plugin or {}
+if not nodes.BEH_Defaut then node "BEH_Defaut" {} end
 eventmanager_plugin.BEH_Defaut = {}
 local table = {
     eventmanager_plugin = eventmanager_plugin,

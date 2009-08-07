@@ -157,9 +157,7 @@ node "ACT_Pion_ABC_AnimerSite"
 ]]if( ModuleBegins() ) then
             do
                 DEC_Trace( "Animation du site" )
-                self.actionAnimer = DEC_StartAnimerObjet(  )
-                actionCallbacks[ self.actionAnimer ] = function( arg ) self._namedParams.pointControle = arg end
-
+                self.actionAnimer = DEC__StartAnimerObjet( self._namedParams.pointControle )
             end
         end
 

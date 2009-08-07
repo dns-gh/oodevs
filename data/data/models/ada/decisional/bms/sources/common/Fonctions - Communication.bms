@@ -1,1 +1,458 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/Fonctions - Communication.bms"] = true
+
+
+function F_Pion_GeteEtatDec( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatDec_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatDec( pion, value )
+    pion:SeteEtatDec_( value )
+end
+
+function F_Pion_GeteEtatDecPrudence( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatDecPrudence_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatDecPrudence( pion, value )
+    pion:SeteEtatDecPrudence_( value )
+end
+
+function F_Pion_GeteEtatLima( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatLima_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatLima( pion, value )
+    pion:SeteEtatLima_( value )
+end
+
+function F_Pion_GeteEtatNbc( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatNbc_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatNbc( pion, value )
+    pion:SeteEtatNbc_( value )
+end
+
+function F_Pion_GeteEtatDestruction( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatDestruction_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatDestruction( pion, value )
+    pion:SeteEtatDestruction_( value )
+end
+
+function F_Pion_GeteEtatFeu( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatFeu_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatFeu( pion, value )
+    pion:SeteEtatFeu_( value )
+end
+
+function F_Pion_GeteEtatAmbiance( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatAmbiance_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatAmbiance( pion, value )
+    pion:SeteEtatAmbiance_( value )
+end
+
+function F_Pion_GeteEtatRadio( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatRadio_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatRadio( pion, value )
+    pion:SeteEtatRadio_( value )
+end
+
+function F_Pion_GeteEtatRadar( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatRadar_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatRadar( pion, value )
+    pion:SeteEtatRadar_( value )
+end
+
+function F_Pion_GeteEtatDeplacement( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatDeplacement_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatDeplacement( pion, value )
+    pion:SeteEtatDeplacement_( value )
+end
+
+function F_Pion_GeteEtatOrdreCoordination( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatOrdreCoordination_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatOrdreCoordination( pion, value )
+    pion:SeteEtatOrdreCoordination_( value )
+end
+
+function F_Pion_GeteConsigneTir( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteConsigneTir_()
+    return _returnValue
+end
+
+function F_Pion_SeteConsigneTir( pion, value )
+    pion:SeteConsigneTir_( value )
+end
+
+function F_Pion_GeteConsigneTirPopulation( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteConsigneTirPopulation_()
+    return _returnValue
+end
+
+function F_Pion_SeteConsigneTirPopulation( pion, value )
+    pion:SeteConsigneTirPopulation_( value )
+end
+
+function F_Pion_GeteEtatEchelon( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatEchelon_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatEchelon( pion, value )
+    pion:SeteEtatEchelon_( value )
+end
+
+function F_Pion_GeteEtatSoutien( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatSoutien_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatSoutien( pion, value )
+    pion:SeteEtatSoutien_( value )
+end
+
+function F_Pion_GeteEtatSituationEnnemi( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatSituationEnnemi_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatSituationEnnemi( pion, value )
+    pion:SeteEtatSituationEnnemi_( value )
+end
+
+function F_Pion_GeteEtatPhaseMission( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatPhaseMission_()
+    return _returnValue
+end
+
+function F_Pion_SeteEtatPhaseMission( pion, value )
+    pion:SeteEtatPhaseMission_( value )
+end
+
+function F_Pion_GetbOrdreInterrompreMission( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdreInterrompreMission_()
+    return _returnValue
+end
+
+function F_Pion_SetbOrdreInterrompreMission( pion, value )
+    pion:SetbOrdreInterrompreMission_( value )
+end
+
+function F_Pion_GetbOrdreDecrocher( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdreDecrocher_()
+    return _returnValue
+end
+
+function F_Pion_SetbOrdreDecrocher( pion, value )
+    pion:SetbOrdreDecrocher_( value )
+end
+
+function F_Pion_GetbOrdreTenirSurLR( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdreTenirSurLR_()
+    return _returnValue
+end
+
+function F_Pion_SetbOrdreTenirSurLR( pion, value )
+    pion:SetbOrdreTenirSurLR_( value )
+end
+
+function F_Pion_GetbOrdreTenir( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdreTenir_()
+    return _returnValue
+end
+
+function F_Pion_SetbOrdreTenir( pion, value )
+    pion:SetbOrdreTenir_( value )
+end
+
+function F_Pion_GetbPasserSurLC( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbPasserSurLC_()
+    return _returnValue
+end
+
+function F_Pion_SetbPasserSurLC( pion, value )
+    pion:SetbPasserSurLC_( value )
+end
+
+function F_Pion_GetpionEnEscorte( pion )
+    local _returnValue = nil
+    _returnValue = pion:GetpionEnEscorte_()
+    return _returnValue
+end
+
+function F_Pion_SetpionEnEscorte( pion, value )
+    pion:SetpionEnEscorte_( value )
+end
+
+function F_Pion_GetitMvt( pion )
+    local _returnValue = nil
+    _returnValue = pion:GetitMvt_()
+    return _returnValue
+end
+
+function F_Pion_SetitMvt( pion, value )
+    pion:SetitMvt_( value )
+end
+
+function F_Pion_GetobjectifEsquive( pion )
+    local _returnValue = nil
+    _returnValue = pion:GetobjectifEsquive_()
+    return _returnValue
+end
+
+function F_Pion_SetobjectifEsquive( pion, value )
+    pion:SetobjectifEsquive_( value )
+end
+
+function F_Pion_GeteniEnCours( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteniEnCours_()
+    return _returnValue
+end
+
+function F_Pion_SeteniEnCours( pion, value )
+    pion:SeteniEnCours_( value )
+end
+
+function F_Pion_GetmissionPrecedente( pion )
+    local _returnValue = nil
+    _returnValue = pion:GetmissionPrecedente_()
+    return _returnValue
+end
+
+function F_Pion_SetmissionPrecedente( pion, value )
+    pion:SetmissionPrecedente_( value )
+end
+
+function F_Pion_GetrTenir( pion )
+    local _returnValue = 0
+    _returnValue = pion:GetrTenir_()
+    return _returnValue
+end
+
+function F_Pion_SetrTenir( pion, value )
+    pion:SetrTenir_( value )
+end
+
+function F_Pion_GeteTypeContact( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteTypeContact_()
+    return _returnValue
+end
+
+function F_Pion_SeteTypeContact( pion, value )
+    pion:SeteTypeContact_( value )
+end
+
+function F_Pion_GeteNiveauAction( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteNiveauAction_()
+    return _returnValue
+end
+
+function F_Pion_SeteNiveauAction( pion, value )
+    pion:SeteNiveauAction_( value )
+end
+
+function F_Pion_GetbDefenseStatique_Mobile( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbDefenseStatique_Mobile_()
+    return _returnValue
+end
+
+function F_Pion_SetbDefenseStatique_Mobile( pion, value )
+    pion:SetbDefenseStatique_Mobile_( value )
+end
+
+function F_Pion_GetselUnitesEnAppui( pion )
+    local _returnValue = {}
+    _returnValue = pion:GetselUnitesEnAppui_()
+    return _returnValue
+end
+
+function F_AddToselUnitesEnAppui( pion )
+    DIA_PushBack( pion:GetselUnitesEnAppui_(), myself )
+end
+
+function F_RemoveFromselUnitesEnAppui( pion )
+    DIA_Remove( pion:GetselUnitesEnAppui_(), myself )
+end
+
+function F_Automat_GeteEtatPhaseMission( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatPhaseMission_()
+    return _returnValue
+end
+
+function F_Automat_SeteEtatPhaseMission( pion, value )
+    pion:SeteEtatPhaseMission_( value )
+end
+
+function F_Automat_GeteEtatLima( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatLima_()
+    return _returnValue
+end
+
+function F_Automat_SeteEtatLima( pion, value )
+    pion:SeteEtatLima_( value )
+end
+
+function F_Automat_GeteEtatDec( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatDec_()
+    return _returnValue
+end
+
+function F_Automat_SeteEtatDec( pion, value )
+    pion:SeteEtatDec_( value )
+end
+
+function F_Automat_GetrDestruction( pion )
+    local _returnValue = 0
+    _returnValue = pion:GetrDestruction_()
+    return _returnValue
+end
+
+function F_Automat_SetrDestruction( pion, value )
+    pion:SetrDestruction_( value )
+end
+
+function F_Automat_GeteEtatEchelon( pion )
+    local _returnValue = nil
+    _returnValue = pion:GeteEtatEchelon_()
+    return _returnValue
+end
+
+function F_Automat_SeteEtatEchelon( pion, value )
+    pion:SeteEtatEchelon_( value )
+end
+
+function F_Automat_Getfuseau( pion )
+    local _returnValue = nil
+    _returnValue = pion:Getfuseau_()
+    return _returnValue
+end
+
+function F_Automat_Setfuseau( pion, value )
+    pion:Setfuseau_( value )
+end
+
+function F_Automat_Getzone( pion )
+    local _returnValue = nil
+    _returnValue = pion:Getzone_()
+    return _returnValue
+end
+
+function F_Automat_Setzone( pion, value )
+    pion:Setzone_( value )
+end
+
+function F_Automat_GetbOrdreAttendre( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdreAttendre_()
+    return _returnValue
+end
+
+function F_Automat_SetbOrdreAttendre( pion, value )
+    pion:SetbOrdreAttendre_( value )
+end
+
+function F_Automat_GetbOrdrePoursuivre( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdrePoursuivre_()
+    return _returnValue
+end
+
+function F_Automat_SetbOrdrePoursuivre( pion, value )
+    pion:SetbOrdrePoursuivre_( value )
+end
+
+function F_Automat_GetbOrdreRalentir( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdreRalentir_()
+    return _returnValue
+end
+
+function F_Automat_SetbOrdreRalentir( pion, value )
+    pion:SetbOrdreRalentir_( value )
+end
+
+function F_Automat_GetbOrdreDecrocher( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdreDecrocher_()
+    return _returnValue
+end
+
+function F_Automat_SetbOrdreDecrocher( pion, value )
+    pion:SetbOrdreDecrocher_( value )
+end
+
+function F_Automat_GetbOrdreTenirSurLR( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdreTenirSurLR_()
+    return _returnValue
+end
+
+function F_Automat_SetbOrdreTenirSurLR( pion, value )
+    pion:SetbOrdreTenirSurLR_( value )
+end
+
+function F_Automat_GetbOrdreTenir( pion )
+    local _returnValue = false
+    _returnValue = pion:GetbOrdreTenir_()
+    return _returnValue
+end
+
+function F_Automat_SetbOrdreTenir( pion, value )
+    pion:SetbOrdreTenir_( value )
+end
 
