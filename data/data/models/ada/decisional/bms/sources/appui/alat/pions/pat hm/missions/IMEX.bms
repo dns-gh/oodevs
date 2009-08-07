@@ -1,0 +1,236 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/pat hm/missions/IMEX.bms"] = true
+
+include "bit.lua"
+
+
+--[[//------------------------------------------------------------------------------
+]]--[[//MIS_Pion_ALAT_IMEX
+]]--[[//========================
+]]--[[//
+]]--[[// Mission d'extraction immédiate.
+]]--[[//
+]]--[[// paramètres mission :
+]]--[[// --------------------
+]]--[[// T_ListePions unitesAAppuyer_;
+]]--[[// T_Point pointRegroupement_;
+]]--[[// T_ListeConnaissancesObjet plotsRavitaillement_;
+]]--[[// id porteeAction_
+]]--[[//
+]]--[[// On ne suit que les pions qui ont une mission
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_ALAT_IMEX"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire", {} },
+        { "Pion_ALAT_IMEX_GererTransport", {} },
+        { "BEH_Dep_Pion_ALAT_Suivre", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eAppuyer
+        self.listePionsASuivre = self.listePionsASuivre or {}
+        self.listePionsAPotentiellementExtraire = self.listePionsAPotentiellementExtraire or {}
+        local bufferListe = {}
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
+            end
+--[[//si l'automate du pion n'est pas embrayé
+]]        end
+
+        if( not DEC_Agent_AutomateEstEmbraye() ) then
+            self.listePionsAPotentiellementExtraire = S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAAppuyer_ )
+        else
+            self.listePionsAPotentiellementExtraire = self._namedParams.mission.unitesAAppuyer_
+        end
+
+        --[[//MAJ de la liste des pions a suivre
+]]self.listePionsASuivre = S_Liste_Pion_ALAT_UnitesASuivre( self.listePionsAPotentiellementExtraire )
+        --[[// Obtention du TC2 de myself.
+]]--[[// ---------------------------                
+]]local TC2 = DEC_Pion_TC2()
+        local pionTC2 = nil
+        if( TC2 ~= nil ) then
+            pionTC2 = DEC_Pion_PionPCDeAutomate( TC2 )
+        else
+do
+                DEC_Warning( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                if( self.ePhase ~= eFinMission and self.ePhase ~= eSExfiltrer ) then
+                    do
+                        self.ePhase = eSExfiltrer
+                        self.eEtat = eActionEnCours
+                    end
+                end
+
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eAppuyer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
+                for _,x in pairs( --[[//desactivation de la gestion des alarmes sanitaires vers les TC2
+]]self.listePionsAPotentiellementExtraire ) do
+                local _continue = true
+                    Activate( self.activations.ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire, 1, { x, } )
+
+                end
+
+                Activate( self.activations.Pion_ALAT_IMEX_GererTransport, GetMotivation( "MOT_Manoeuvrer" ) * 2, { pionTC2, self.listePionsAPotentiellementExtraire, eTypeItiInfiltration, } )
+                if( DIA_IsListEmpty( self.listePionsASuivre ) and not myself.bEnCoursExtractionPersonnel_ ) then
+                    Halt()
+                end
+
+                if( not DIA_IsListEmpty( self.listePionsASuivre ) ) then
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_Suivre, GetMotivation( "MOT_Manoeuvrer" ), { DEC_Geometrie_PionDerriere( self.listePionsASuivre, DEC_GetDirectionDanger( self._namedParams.mission ) ), 7000, eProgressionDefaut, eTypeItiInfiltration, } )
+                end
+
+                
+            elseif switch_1 == eSExfiltrer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Warning( eRC_MissionImpossible )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            DIA_Clear( myself.plotsRavitaillement_ )
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                DIA_Clear( myself.plotsRavitaillement_ )
+        F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+}
+
+node "Pion_ALAT_IMEX_GererTransport"
+{
+    activations =
+    {
+        { "BEH_Transport_Pion_ALAT_HM_Extraire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.TC2 = self.params[1]
+        self._namedParams.unitesAPotentiellementExtraire = self.params[2]
+        self._namedParams.ePathType = self.params[3]
+    end,
+
+    activate = function( self )
+        local listePionsDetruits = {}
+        local listePionsAvecBlesses = {}
+        self.eEtat = self.eEtat or eActionEnCours
+        if( not myself.bEnCoursExtractionPersonnel_ ) then
+            do
+                for _,x in pairs( --[[//si chargement non complet    
+]]self._namedParams.unitesAPotentiellementExtraire ) do
+                local _continue = true
+                    do
+                        local forceDistancePlusProche = S_Force_Pion_ALAT_Raprochement( DEC_Geometrie_Distance( x:DEC_Agent_Position(), myself:DEC_Agent_Position() ), 0 )
+                        --[[//si le pion contient des blesses
+]]if( DEC_NecessiteEvacuationBlesses( x ) ) then
+                            do
+                                StartActivate( self.activations.BEH_Transport_Pion_ALAT_HM_Extraire, 2 * forceDistancePlusProche, setmetatable( { self._namedParams.TC2, x, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                            end
+                        end
+
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ALAT_IMEX = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_IMEX, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_IMEX, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_IMEX, "ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire", nodes.ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_IMEX, "Pion_ALAT_IMEX_GererTransport", nodes.Pion_ALAT_IMEX_GererTransport }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_IMEX, "BEH_Dep_Pion_ALAT_Suivre", nodes.BEH_Dep_Pion_ALAT_Suivre }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_IMEX, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_IMEX, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_IMEX, "BEH_Manoeuvre_Pion_AllerStationner", nodes.BEH_Manoeuvre_Pion_AllerStationner }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_IMEX, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }
+connections[ #connections + 1 ] = { nodes.Pion_ALAT_IMEX_GererTransport, "BEH_Transport_Pion_ALAT_HM_Extraire", nodes.BEH_Transport_Pion_ALAT_HM_Extraire }

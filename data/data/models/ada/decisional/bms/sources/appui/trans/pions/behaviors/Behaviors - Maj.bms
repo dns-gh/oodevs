@@ -1,0 +1,78 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Maj.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_EtatDefaut()
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_MAJ_EtatDefaut"
+{
+    activations =
+    {
+        { "BEH_MAJ_EtatOperationnel", {} },
+        { "ACT_MAJ_EtatDec", {} },
+        { "ACT_MAJ_EtatOrdreCoordination", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_MAJ_EtatOperationnel, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ etat destruction
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.ACT_MAJ_EtatDec, 1, { eEtatDec_RAS, } )
+        Activate( self.activations.ACT_MAJ_EtatOrdreCoordination, 1, { eEtatOrdreCoordination_aucun, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_EtatOperationnel
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//              
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_EtatOperationnel"
+{
+    activations =
+    {
+        { "ACT_MAJ_EtatDestruction", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Destruction totale --> plus aucune composante
+]]if( S_Misc_EstDetruitPhysique() ) then
+            do
+                Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_Total, } )
+                                return
+
+            end
+--[[// Destruction tactique --> plus de composantes majeurs
+]]        end
+
+        if( S_Misc_EstDetruitTactique() ) then
+            do
+                Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_Tactique, } )
+                                return
+
+            end
+--[[// Par defaut
+]]        end
+
+        Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_None, } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_EtatDefaut, "BEH_MAJ_EtatOperationnel", nodes.BEH_MAJ_EtatOperationnel }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_EtatDefaut, "ACT_MAJ_EtatDec", nodes.ACT_MAJ_EtatDec }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_EtatDefaut, "ACT_MAJ_EtatOrdreCoordination", nodes.ACT_MAJ_EtatOrdreCoordination }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_EtatOperationnel, "ACT_MAJ_EtatDestruction", nodes.ACT_MAJ_EtatDestruction }

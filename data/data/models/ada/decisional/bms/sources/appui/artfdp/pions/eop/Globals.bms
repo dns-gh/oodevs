@@ -1,0 +1,40 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/eop/Globals.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/EOP/Globals.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:46 $
+]]--[[// $Revision: 12 $
+]]--[[// $Workfile: Globals.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//=============================================================================
+]]--[[// Parametres constants 
+]]--[[//=============================================================================
+]]--[[// include "Appui\ArtFdp\Pions\Son AUF1\Parameters.bms"
+]]
+include "Appui/ArtFdp/Pions/Common/Globals.bms"
+
+
+include "Appui/ArtFdp/Pions/EOP/Globals Poly.bms"
+
+
+
+function M_DEPLACEMENT_ACTUATEURS()
+    return deplacement
+end
+--[[//-----------------------------------------------------------------------------
+]]--[[// variables globales
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//=============================================================================
+]]--[[// Definition des signatures des callbacks C/C++
+]]--[[//=============================================================================
+]]--[[//=============================================================================
+]]--[[// Definition des functions ecrites en script
+]]--[[//=============================================================================
+]]

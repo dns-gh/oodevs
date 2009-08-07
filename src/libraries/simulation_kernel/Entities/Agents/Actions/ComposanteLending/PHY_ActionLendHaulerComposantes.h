@@ -23,7 +23,7 @@ class PHY_ActionLendHaulerComposantes : public PHY_ActionLendComposantes
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionLendHaulerComposantes( MIL_AgentPion&, DIA_Call_ABC& );
+             PHY_ActionLendHaulerComposantes( MIL_AgentPion&, DEC_RolePion_Decision* pAgent, unsigned int nbrToLend );
     virtual ~PHY_ActionLendHaulerComposantes();
     //@}
 };

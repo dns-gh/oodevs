@@ -1,0 +1,14 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roem/systeme linx/missions/Missions.bms"] = true
+
+
+
+--[[//=============================================================================
+]]--[[// Liste des missions du LINX
+]]--[[//=============================================================================
+]]
+--[[/* RenseignerSur */]]
+include "Appui/Rens/Automates/Roem/Systeme LINX/Missions/RenseignerSur/RenseignerSur - MRT.bms"
+
+include "Appui/Rens/Automates/Roem/Systeme LINX/Missions/RenseignerSur/RenseignerSur - CDT.bms"
+

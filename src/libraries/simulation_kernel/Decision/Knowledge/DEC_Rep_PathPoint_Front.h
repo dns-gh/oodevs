@@ -22,22 +22,16 @@ class DEC_Representations;
 // Created: JDY 03-05-05
 //*****************************************************************************
 class DEC_Rep_PathPoint_Front  : public DEC_PathPoint
-                               , public DIA_TypedObject
 {
 
 public:
-    explicit DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest );
+             DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest );
     virtual ~DEC_Rep_PathPoint_Front();
-
-    //! @name Init
-    //@{
-    static void InitializeDIA();
-    //@}
 
     //! @name DIA
     //@{
     virtual void SendToDIA( DEC_Representations& agent ) const;
-    DEC_Rep_PathPoint& GetDestPoint() const;
+    DEC_PathPoint& GetDestPoint() const;
     //@}
 
     //! @name Debug

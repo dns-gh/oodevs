@@ -1,0 +1,9 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/Types.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Structure des automates ALAT
+]]--[[//------------------------------------------------------------------------------
+]]
+
+

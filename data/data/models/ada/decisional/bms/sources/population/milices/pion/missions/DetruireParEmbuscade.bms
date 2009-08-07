@@ -1,0 +1,316 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/milices/pion/missions/DetruireParEmbuscade.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Population/Milices/Pion/Missions/DetruireParEmbuscade.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 19/09/05 10:24 $
+]]--[[// $Revision: 21 $
+]]--[[// $Workfile: DetruireParEmbuscade.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+node "MIS_Pion_MILICE_DetruireEmbuscade"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Eni_Pion_Milice_DetruireEmbuscade", {} },
+        { "BEH_Mission_Pion_Milice_DetruireEmbuscade", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eActionPreparation = self.eActionPreparation or eActionEnCours
+        self.eActionPos = self.eActionPos or eActionEnCours
+        self.eActionEmbarquer = self.eActionEmbarquer or eActionEnCours
+        self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eSeMettreEnPlace
+        self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
+        self.rAct = self.rAct or 1
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_Trace( "Mission 'Detruire par Embuscade' : debut" )
+            end
+--[[// Voir milice 
+]]        end
+
+        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, 0.8, } )
+        Activate( self.activations.ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement, 1, { self._namedParams.mission.positionRegroupement_, } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eRompreContact
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eSeMettreEnPlace then
+                switch_2 = self.eCurrentPhase
+                    if switch_2 == eSurveiller then
+                        self.rAct = 1
+                        
+                    elseif switch_2 == eFinMission then
+                        self.eAction = eActionEnCours
+                        self.ePhase = eRompreContact
+                                                return
+
+                                        end
+
+                if( self.eAction == eActionImpossible or self.eAction == eActionHalt ) then
+                    do
+                        self.ePhase = eRompreContact
+                                                return
+
+                    end
+                end
+
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eRompreContact
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Eni_Pion_Milice_DetruireEmbuscade, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( { self.eCurrentPhase, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Mission_Pion_Milice_DetruireEmbuscade, self.rAct * GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Decrocher sur ordre ou non
+]]elseif switch_1 == eRompreContact then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+--[[// Ambiance vitesse ( itineraire reconnu )
+]]--[[// action ACT_Misc_Pion_Ambiance( eEtatAmbiance_Vitesse );
+]]--[[// Se Replier
+]]--[[// behavior BEH_Manoeuvre_RompreContact() return in eAction;
+]]                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionRegroupement_, eProgressionDefaut, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                
+            
+            else
+                        end
+
+    end,
+
+--[[//=============================================================================
+]]--[[//							Squelette de la mission
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Pion_Milice_DetruireEmbuscade"
+{
+    activations =
+    {
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
+        { "ACT_RC", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Dep_PasserEnModeFurtif", {} },
+        { "BEH_Obj_Pion_INF_GererInstallationObstacle", {} },
+        { "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc", {} },
+        { "ACT_Dep_Pion_MILICE_ActiverFurtivite", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_ObserverZone", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.ePhase = self.ePhase or eRejoindre
+        self.eAction = self.eAction or eActionEnCours
+        --[[// Positions liees a la mission		
+]]self.ptEmbuscade = self.ptEmbuscade or self.mission.positionEmbuscade_
+        if( ModuleBegins() ) then
+            do
+                --[[// Une fois que l'on s'est replier
+]]if( GetActivity() == 2 ) then
+                    self.ePhase = eInstallerDispositif
+                end
+
+            end
+        end
+
+        do
+        end
+
+        if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                    DEC_RC( eRC_MissionImpossible )
+                                        self.params.__returnValue = eFinMission
+                    Halt()
+
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                --[[// On rejoint la position d'embuscade
+]]if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eInstallerDispositif
+                                                        self.params.__returnValue = self.ePhase
+                            return
+
+                        end
+
+                    end
+--[[// behavior BEH_Mot_Pion_Embarquer();
+]]--[[// Rejoins une position d'observation de la position a Barrer
+]]                end
+
+                Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.positionEmbuscade_, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Rejoins la position d'enbuscade et prepare le terrain
+]]elseif switch_1 == eInstallerDispositif then
+                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                StartActivate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]--[[// On fait en sorte de ne pas etre vu
+]]
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            StartActivate( self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 1.5, { self.ptEmbuscade, self.mission.natureObstacle_, } )
+                            self.ePhase = eSurveiller
+                                                        self.params.__returnValue = self.ePhase
+                            return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc, 1, setmetatable( { self.ptEmbuscade, self.mission.positionRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Surveille la position
+]]elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
+                Activate( self.activations.ACT_Dep_Pion_MILICE_ActiverFurtivite, 1, { 0.5, } )
+                --[[// detection par l'eni
+]]Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptEmbuscade, } )
+                --[[// Formation
+]]Activate( self.activations.ACT_Obs_ObserverZone, 1, { self.ptEmbuscade, 1000, } )
+                
+            
+            else
+                        end
+
+                self.params.__returnValue = self.ePhase
+        return
+
+    end,
+
+--[[//=============================================================================
+]]--[[//							Gestion des ennemis 
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Eni_Pion_Milice_DetruireEmbuscade"
+{
+    activations =
+    {
+        { "BEH_Eni_Pion_INF_DetruireEmbuscade", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.ptEmbuscade = self.ptEmbuscade or self.mission.positionEmbuscade_
+        self.eAction = self.eAction or eActionEnCours
+        if( self.eAction ~= eActionEnCours ) then
+            self.params.__returnValue = eActionHalt
+            return
+        end
+
+        --[[// Gestion des unites percues
+]]--[[//
+]]Activate( self.activations.BEH_Eni_Pion_INF_DetruireEmbuscade, 1, setmetatable( { self.ptEmbuscade, self.mission.natureObstacle_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_MILICE_DetruireEmbuscade = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_Milice_DetruireEmbuscade, "BEH_Eni_Pion_INF_DetruireEmbuscade", nodes.BEH_Eni_Pion_INF_DetruireEmbuscade }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade, "BEH_Dep_Pion_INF_MiseEnPlace_Mission", nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade, "ACT_Dep_PasserEnModeFurtif", nodes.ACT_Dep_PasserEnModeFurtif }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade, "BEH_Obj_Pion_INF_GererInstallationObstacle", nodes.BEH_Obj_Pion_INF_GererInstallationObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade, "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc", nodes.BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade, "ACT_Dep_Pion_MILICE_ActiverFurtivite", nodes.ACT_Dep_Pion_MILICE_ActiverFurtivite }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade, "ACT_Obs_ObserverZone", nodes.ACT_Obs_ObserverZone }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_DetruireEmbuscade, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_DetruireEmbuscade, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_DetruireEmbuscade, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_DetruireEmbuscade, "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement", nodes.ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_DetruireEmbuscade, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_DetruireEmbuscade, "BEH_Eni_Pion_Milice_DetruireEmbuscade", nodes.BEH_Eni_Pion_Milice_DetruireEmbuscade }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_DetruireEmbuscade, "BEH_Mission_Pion_Milice_DetruireEmbuscade", nodes.BEH_Mission_Pion_Milice_DetruireEmbuscade }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_DetruireEmbuscade, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_DetruireEmbuscade, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

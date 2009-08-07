@@ -1,0 +1,40 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SExfiltrer - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Auto_CDT_RENS_ROHUM_SExfiltrer
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Auto_CDT_RENS_ROHUM_SExfiltrer"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", {} },
+        { "BEH_Dispositif_Automate_RENS_GererLeSE_", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "BEH_Auto_CDT_RENS_ROHUM_SExfiltrer : debut " )
+        end
+
+        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererPionsDetruits_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Gestion 
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererLeSE_, 1, {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Auto_CDT_RENS_ROHUM_SExfiltrer, "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", nodes.BEH_Dispositif_Automate_RENS_GererPionsDetruits_ }
+connections[ #connections + 1 ] = { nodes.BEH_Auto_CDT_RENS_ROHUM_SExfiltrer, "BEH_Dispositif_Automate_RENS_GererLeSE_", nodes.BEH_Dispositif_Automate_RENS_GererLeSE_ }

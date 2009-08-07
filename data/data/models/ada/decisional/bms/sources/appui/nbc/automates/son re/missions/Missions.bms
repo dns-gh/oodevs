@@ -1,0 +1,23 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/son re/missions/Missions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-08-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Nbc/Automates/Son RE/Missions/Missions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:47 $
+]]--[[// $Revision: 5 $
+]]--[[// $Workfile: Missions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//=============================================================================
+]]--[[// Liste des missions de la Son RE
+]]--[[//=============================================================================
+]]
+--[[/* Renseigner sur */]]
+include "Appui/Nbc/Automates/Son RE/Missions/ReconnaitreSitesROTA/ReconnaitreSitesROTA - MRT.bms"
+
+include "Appui/Nbc/Automates/Son RE/Missions/ReconnaitreSitesROTA/ReconnaitreSitesROTA - CDT.bms"
+

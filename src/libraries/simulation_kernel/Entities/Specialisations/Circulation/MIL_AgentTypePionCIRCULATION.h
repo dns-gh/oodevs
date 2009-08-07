@@ -29,6 +29,8 @@ class MIL_AgentTypePionCIRCULATION : public MIL_AgentTypePion
 public:
              MIL_AgentTypePionCIRCULATION( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionCIRCULATION();
+    
+    virtual void RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const;
 
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };

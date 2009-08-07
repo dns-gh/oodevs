@@ -1,0 +1,460 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Eni.bms"] = true
+
+include "bit.lua"
+
+
+--[[//------------------------------------------------------------------------------
+]]--[[// DecrocherFaceA
+]]--[[//------------------------------------------------------------------------------
+]]node "BEH_Eni_Pion_ALAT_DecrocherFaceA"
+{
+    instances =
+    {
+        max = 1,
+        boost = 1.2,
+    },
+
+    activations =
+    {
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repUnite = self.params[1]
+        self._namedParams.rDistance = self.params[2]
+        self._namedParams.rDistanceSecurite = self.params[3]
+    end,
+
+    activate = function( self )
+        self.rDistanceEffective = self.rDistanceEffective or self._namedParams.rDistance + self._namedParams.rDistanceSecurite
+        self.eEtat = self.eEtat or eActionEnCours
+        self.positionSurete = self.positionSurete or nil
+        --[[//----------------------------------------------------------------------
+]]--[[// Connaissance invalide
+]]--[[//----------------------------------------------------------------------
+]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repUnite ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        --[[//si je suis a une distance supérieure a rDistance, alors, ce n'est pas
+]]--[[//la peine de decrocher
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//----------------------------------------------------------------------
+]]--[[// Init comp
+]]--[[//----------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
+                    self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, F_Pion_GetobjectifEsquive( myself ) )
+                else
+if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
+                        self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, myself.ptRegroupement_ )
+                    else
+                        self.positionSurete = DEC_Geometrie_CalculerPositionSurete( self._namedParams.repUnite, self.rDistanceEffective )
+                    end
+                end
+
+                if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+                    Halt()
+                end
+
+            end
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
+        Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionSurete, eProgressionDefaut, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//------------------------------------------------------------------------------
+]]--[[// AttendrePuisDetruirePion : Ce comportement a pour but de gerer
+]]--[[//l'ouverture des feux sur une liste de connaissance. On ne souhaite pas tirer
+]]--[[//sur le premier de la liste. On ca d'abord attendre que la situation se 
+]]--[[//stabilise afin de faire un choix judicieux sur l'ennemi que l'on va attaquer
+]]--[[//
+]]--[[//utilisation : on calcule une volonter de faire feu pour chaque ennemi de la 
+]]--[[//liste des agents dangereux. On appelle ensuite ce comportement avec la force
+]]--[[//calculée pour chaque ennemi.
+]]--[[//
+]]--[[//On evalue l'etat op avant d'aller faire l'action. Meme apres avoir frappé l'ennemi
+]]--[[//on considre que le pion a un état op comme au debut. On aura donc toujours une
+]]--[[//instance sur BEH_AllerDetruire et on pourra avoir le retour sur l'action de feu.
+]]--[[//
+]]--[[//
+]]--[[//Commentaire :
+]]--[[//-------------
+]]--[[// Ce comportement est lancé sur toutes les connaissances.
+]]--[[// max instance = 1 et selected boost => on en choisi un et on le traite.
+]]--[[//
+]]--[[//Ce comportement est actif, c'est a dire que nous allons annalyser l'ennemi
+]]--[[//afin d'aller le detruire. Considérant que nous pouvons nous deplacer pour ouvrir les
+]]--[[//feux, nous allons evaluer l'ennemi a detruire en fonction de son etat op.
+]]--[[//
+]]--[[//On réalise au mieux une série de tir
+]]--[[//
+]]--[[//On peut dans ce comportement spécifier si l'on souhaite se poster face a l'eni
+]]--[[//pendant la phase d'attente
+]]--[[//
+]]--[[// - ne jamais attendre quand c'est une unité volante
+]]--[[//------------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
+{
+    instances =
+    {
+        boost = 1.01,
+    },
+
+    activations =
+    {
+        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Obs_ObserverPoint", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.delai = self.params[1]
+        self._namedParams.bufferConnaissanceAgent = self.params[2]
+        self._namedParams.niveauPerception = self.params[3]
+        self._namedParams.pourcentageComposantes = self.params[4]
+        self._namedParams.pH = self.params[5]
+        self._namedParams.sePosterEnAttendant = self.params[6]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//si la connaissance est invalide, halter le comportement
+]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.bufferConnaissanceAgent ) ) then
+            Halt()
+        end
+
+        if( not S_Eni_Pion_ALAT_PeutDetruire( myself, self._namedParams.bufferConnaissanceAgent ) ) then
+            Halt()
+        end
+
+        if( DEC_ConnaissanceAgent_EstMort( self._namedParams.bufferConnaissanceAgent ) ) then
+            Halt()
+        end
+
+        --[[//attendre le temps "delai"
+]]if( self.eEtat == eActionEnCours and not S_ConnaissanceAgent_EstEnVol( self._namedParams.bufferConnaissanceAgent ) ) then
+            do
+                if( self._namedParams.sePosterEnAttendant ) then
+                    Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { self._namedParams.bufferConnaissanceAgent, } )
+                end
+
+                Activate( self.activations.ACT_Obs_ObserverPoint, 1, { myself:DEC_Agent_Position(), } )
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.delai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                return
+
+            end
+--[[//MAJ de l'ennemi en cours de traitement
+]]--[[//c'est l'ennemi le plus interressant qui sera l'ennemi en cours de
+]]--[[//traitement.
+]]        end
+
+        Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.bufferConnaissanceAgent, } )
+        --[[//MOT_TirerSurEnis = 1 quand on est coordonne.
+]]--[[//toujours = 1 quand automate debrayé. Sinon, c'est l'automate qui se
+]]--[[//charge de setter cette motivation.
+]]Activate( self.activations.BEH_Eni_Pion_ALAT_AllerDetruireEnnemi, GetMotivation( "MOT_TirerSurEnis" ), { self._namedParams.bufferConnaissanceAgent, self._namedParams.niveauPerception, self._namedParams.pourcentageComposantes, self._namedParams.pH, } )
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[//GestionDuFeu (on va chercher l'ennemi => deplacement pour le rejoindre)
+]]--[[//
+]]--[[//Commentaire : traitement d'un objectif avec le HA
+]]--[[//				On s'approche au minimum a 4000 metre => portée des missiles hot
+]]--[[//				Au mieux, on se rapproche de 2000 metres (1000 metres DEP mais 
+]]--[[//              risque de se faire voir)
+]]--[[//
+]]--[[//				Temps autorisé sur une meme position => 2 minutes (zone 
+]]--[[//              dangereuse puisqu'on se rapproche de l'ennemi)
+]]--[[//							
+]]--[[//Condition d'arret : sur fin de série de tir
+]]--[[//
+]]--[[//valeurs de retour : eActionEffectuee si on a réalisé une série de tir
+]]--[[//                    eActionImpossible si le feu est impossible (plus de 
+]]--[[//                    munitions par exemple dans le cas d'un itinéraire 
+]]--[[//                    impossible, on ne renvoie rien, mais on signal dans les 
+]]--[[//                    traces le bug de pathfind (il ne devrait jamais y avoir 
+]]--[[//                    d'itineraire impossible)
+]]--[[//
+]]--[[//
+]]--[[// on peut utiliser ce comportement dans une boucle car le max_instances = 1
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
+{
+    instances =
+    {
+        max = 1,
+        boost = 1.05,
+    },
+
+    activations =
+    {
+        { "ACT_Misc_VerouillerConnaissance", {} },
+        { "ACT_Tir_DirectSur", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "BEH_Eni_SePosterFaceA", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ennemi = self.params[1]
+        self._namedParams.niveauPerception = self.params[2]
+        self._namedParams.pourcentageComposantes = self.params[3]
+        self._namedParams.pH = self.params[4]
+    end,
+
+    activate = function( self )
+                self.eEtatAttaque = self.eEtatAttaque or eActionEnCours
+        self.eEtatTir = self.eEtatTir or eActionEnCours
+        self.pointInterception = self.pointInterception or DEC_Geometrie_CreerPoint()
+        self.initPointRejoindre = self.initPointRejoindre or false
+        self.positionEnnemi = self.positionEnnemi or DEC_Geometrie_CreerPoint()
+        self.porteeMaxPourTirerSurAgent = self.porteeMaxPourTirerSurAgent or S_Tir_PorteeMaxPourTirerSurAgentPosturesReelles( self._namedParams.ennemi, self._namedParams.pH )
+        --[[//si la connaissance n'est plus valide, on arrete le comportement
+]]--[[//ou si on n'a plus de quoi tirer dessus
+]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
+            Halt()
+        end
+
+        if( not S_Eni_Pion_ALAT_PeutDetruire( myself, self._namedParams.ennemi ) ) then
+            Halt()
+        end
+
+        --[[//verouillez la direction des capteurs vers la cible
+]]Activate( self.activations.ACT_Misc_VerouillerConnaissance, 1, { self._namedParams.ennemi, } )
+        --[[//si je peux frapper l'ennemi
+]]if( S_Tir_EstAPorteePosturesReelles( self._namedParams.ennemi, self._namedParams.pH ) ) then
+            do
+                if( DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.ennemi ) and S_Eni_EstNiveauPerceptionGTIA( self._namedParams.ennemi, self._namedParams.niveauPerception ) ) then
+                    do
+                        Activate( self.activations.ACT_Tir_DirectSur, 1, { self._namedParams.ennemi, self._namedParams.pourcentageComposantes, } )
+                        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                    end
+                end
+
+            end
+        end
+
+        if( not S_Tir_EstTropProchePourToucherPosturesReelles( self._namedParams.ennemi, self._namedParams.pH ) ) then
+            do
+                --[[//copie de la position initiale à rejoindre
+]]if( not self.initPointRejoindre ) then
+                    do
+                        DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ), self.pointInterception )
+                        self.initPointRejoindre = true
+                    end
+--[[//si le pion est loin de la position a laquelle ou souhaiter l'intercepter
+]]--[[//alors, on relance un calcul d'itineraire
+]]                end
+
+                if( DEC_Geometrie_Distance( self.pointInterception, DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ) ) >= 3000 ) then
+                    do
+                        self.initPointRejoindre = false
+                        Activate( self.activations.BEH_Eni_SePosterFaceA, 1, { self._namedParams.ennemi, } )
+                                                return
+--[[//pour killer l'instance de Rejoindre
+]]
+                    end
+--[[//traitement des valeurs de retour du comportement de deplacement
+]]                end
+
+                if( self.eEtatAttaque == eActionEffectuee ) then
+                    do
+                        self.eEtatAttaque = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ), eProgressionDefaut, eTypeItiAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatAttaque = v else rawset( t, k, v ) end end } ) )
+            end
+        else
+do
+                Activate( self.activations.BEH_Eni_Pion_ALAT_DecrocherFaceA, 1, { self._namedParams.ennemi, self.porteeMaxPourTirerSurAgent, 0, } )
+            end
+        end
+
+--[[//on peut passer ici si l'unité est détruite ou si myself est détruit.
+]]    end,
+
+    destroy = function( self )
+                if( not S_Misc_EstDetruitPhysique() ) then
+if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
+if( DEC_ConnaissanceAgent_EstMort( self._namedParams.ennemi ) ) then
+                    DEC_RC( eRC_EnnemiDetruit, self._namedParams.ennemi )
+                end
+            end
+        end
+
+    end,
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Jalonner l'ennemi :
+]]--[[//
+]]--[[// - Si l'ennemi se rapproche : garder ses distances
+]]--[[// - Sinon, se poster
+]]--[[// - Cependant, si on perds l'ennemi de vue, Progresser tactique vers lui
+]]--[[//
+]]--[[//
+]]--[[// Attention : on risque de perdre la connaissance si on attend de ne plus la
+]]--[[// voir pour la rejoindre => il faut rejoindre avant
+]]--[[//
+]]--[[// dans ce comportement, soit on doit aller chercher de l'information sur 
+]]--[[// l'ennemi(si on a perdu de vue l'ennemi) ou bien alors on doit garder ses
+]]--[[// distances afin de ne pas se faire detruire (cas de phase rétrograde amie
+]]--[[//------------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ALAT_Jalonner"
+{
+    instances =
+    {
+        max = 1,
+        boost = 1.000001,
+    },
+
+    activations =
+    {
+        { "ACT_RC", {} },
+        { "BEH_Eni_SePosterFaceA", {} },
+        { "ACT_Misc_VerouillerConnaissance", {} },
+        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", {} },
+        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+        self._namedParams.distanceSecu = self.params[2]
+    end,
+
+    activate = function( self )
+        self.rDistanceEfficace = self.rDistanceEfficace or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, M_POLY_PH_TIR_ENI_EFFICACE() )
+        self.rDistanceEsquive = self.rDistanceEsquive or self.rDistanceEfficace + self._namedParams.distanceSecu
+        --[[//Fin du comportement si la connaissance n'est plus valide    
+]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
+            Halt()
+        end
+
+        if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repEni ) ) then
+            Halt()
+        end
+
+        --[[//RC pour signaler que le pion est en cours de jalonnement
+]]Activate( self.activations.ACT_RC, 1, { eRC_EnJalonnement, } )
+        --[[//si tout va bien
+]]Activate( self.activations.BEH_Eni_SePosterFaceA, 1, { self._namedParams.repEni, } )
+        --[[//verouillez la direction des capteurs vers la cible
+]]Activate( self.activations.ACT_Misc_VerouillerConnaissance, 1, { self._namedParams.repEni, } )
+        --[[//si je ne vois plus l'ennemi, progression tactique vers la connaissance.
+]]--[[//la connaissance est automatiquement mise à jour en extrapolant sa 
+]]--[[//position en fonction de sa derniere vitesse et direction connues
+]]if( not DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.repEni ) ) then
+            do
+                Activate( self.activations.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, 1.5, { self.rDistanceEfficace, 0.15, self._namedParams.repEni, } )
+            end
+        else
+do
+                --[[// si on est trop pres de l'ennemi, alors on garde ses distances
+]]--[[// rend correctement le jalonnement quand les ennemis progressent vers nous
+]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repEni ) ) < self.rDistanceEsquive ) then
+                    do
+                        Activate( self.activations.BEH_Eni_Pion_ALAT_DecrocherFaceA, 1.5, { self._namedParams.repEni, self.rDistanceEsquive, 0, } )
+                    end
+                end
+
+            end
+        end
+
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// EviterContactsAvecEnnemisConnus
+]]--[[//
+]]--[[// si il y a un nouveau ennemi a proximité, on relance le calcul du pathfind
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.listeEnisPrec = self.listeEnisPrec or DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( myself:DEC_Agent_Position(), 10000 )
+        local listeEnisCourant = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( myself:DEC_Agent_Position(), 10000 )
+        for _,x in pairs( listeEnisCourant ) do
+        local _continue = true
+do
+                if( not DEC_UserTypeList_Contient( self.listeEnisPrec, x ) ) then
+                    g_bRecalculItineraire = true
+                end
+
+            end
+
+        end
+
+        self.listeEnisPrec = listeEnisCourant
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AllerDetruireEnnemi, "ACT_Misc_VerouillerConnaissance", nodes.ACT_Misc_VerouillerConnaissance }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AllerDetruireEnnemi, "ACT_Tir_DirectSur", nodes.ACT_Tir_DirectSur }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AllerDetruireEnnemi, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AllerDetruireEnnemi, "BEH_Eni_SePosterFaceA", nodes.BEH_Eni_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AllerDetruireEnnemi, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AllerDetruireEnnemi, "BEH_Eni_Pion_ALAT_DecrocherFaceA", nodes.BEH_Eni_Pion_ALAT_DecrocherFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, "ACT_Obs_ObserverPoint", nodes.ACT_Obs_ObserverPoint }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi", nodes.BEH_Eni_Pion_ALAT_AllerDetruireEnnemi }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_DecrocherFaceA, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_DecrocherFaceA, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_Jalonner, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_Jalonner, "BEH_Eni_SePosterFaceA", nodes.BEH_Eni_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_Jalonner, "ACT_Misc_VerouillerConnaissance", nodes.ACT_Misc_VerouillerConnaissance }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_Jalonner, "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", nodes.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_Jalonner, "BEH_Eni_Pion_ALAT_DecrocherFaceA", nodes.BEH_Eni_Pion_ALAT_DecrocherFaceA }

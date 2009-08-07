@@ -12,6 +12,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Direction constructor
@@ -36,55 +37,16 @@ MIL_ParameterType_Direction::~MIL_ParameterType_Direction()
 // Name: MIL_ParameterType_Direction::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_Direction::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Direction::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_heading ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeDirection( to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    if( !NET_ASN_Tools::CopyDirection( from.value.u.heading, to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Direction::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_Direction::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeDirection( from ) )
-        return false;
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeDirection( to ) )
-        return false;
-
-    NET_ASN_Tools::CopyDirection( from, to );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Direction::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_Direction::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeDirection( from ) )
+    if( !from.IsOfType( *this ) )
         return false;
 
     to.null_value = false;
     to.value.t    = T_MissionParameter_value_heading;
     
-    if( !NET_ASN_Tools::CopyDirection( from, to.value.u.heading ) )
-        return false;
-
-    return true;
+    return from.ToDirection( to.value.u.heading );
 }
 
 // -----------------------------------------------------------------------------

@@ -1,0 +1,173 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/motivations v3/Stimulus.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//  STIMULUS ORDRE MISSION
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_Mission"
+node "ActivationForSTIM_Mission"
+{
+    activate = function( self )
+        if( DEC_GetMission( myself ) ~= nil ) then
+            SetStimulus( "STIM_Mission", 1 )
+        else
+            SetStimulus( "STIM_Mission", 0 )
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIMULUS STIM_PriseAPartieTirDirect
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirDirect"
+node "ActivationForSTIM_PriseAPartieTirDirect"
+{
+    activate = function( self )
+        local listeConnaissances = DEC_Connaissances_UnitesPrenantAPartie()
+        if( not DIA_IsListEmpty( listeConnaissances ) ) then
+            SetStimulus( "STIM_PriseAPartieTirDirect", 1 )
+        else
+            SetStimulus( "STIM_PriseAPartieTirDirect", 0 )
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIMULUS STIM_PriseAPartieTirInDirect
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirInDirect"
+node "ActivationForSTIM_PriseAPartieTirInDirect"
+{
+    activate = function( self )
+        if( DEC_Agent_EstNeutralise() and ( DEC_Agent_NiveauInstallation() < eNiveauInstallation_PosteAmenage ) ) then
+            SetStimulus( "STIM_PriseAPartieTirInDirect", 1 )
+        else
+            SetStimulus( "STIM_PriseAPartieTirInDirect", 0 )
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIM_PresenceEnisRendus
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PresenceEnisRendus"
+node "ActivationForSTIM_PresenceEnisRendus"
+{
+    activate = function( self )
+        --[[// Default
+]]SetStimulus( "STIM_PresenceEnisRendus", 0 )
+        --[[// Transport circu
+]]if( DEC_Transport_EnCoursDeTransport() ) then
+            return
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// PRISONNIERS
+]]--[[//-----------------------------------------------------------------------------
+]]local listeEniRendus = DEC_Connaissances_UnitesRenduesAProximite( 1000 )
+        for _,eniRendu in pairs( listeEniRendus ) do
+        local _continue = true
+do
+                if( not DEC_ConnaissanceAgent_EstPrisonnier( eniRendu ) ) then
+                    SetStimulus( "STIM_PresenceEnisRendus", 1 )
+                end
+
+            end
+
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIM_PresenceRefugies
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PresenceRefugies"
+node "ActivationForSTIM_PresenceRefugies"
+{
+    activate = function( self )
+        --[[// Default
+]]SetStimulus( "STIM_PresenceRefugies", 0 )
+        --[[// Transport circu
+]]if( DEC_Transport_EnCoursDeTransport() ) then
+            return
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// REFUGIES
+]]--[[//-----------------------------------------------------------------------------
+]]local listeRefugies = DEC_Connaissances_RefugiesAProximite( 1000 )
+        for _,repRefugies in pairs( listeRefugies ) do
+        local _continue = true
+do
+                if( not DEC_Refugies_EstEmbarque( repRefugies ) ) then
+                    SetStimulus( "STIM_PresenceRefugies", 1 )
+                end
+
+            end
+
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIM_PresenceZoneTirInterdit
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PresenceZoneTirInterdit"
+node "ActivationForSTIM_PresenceZoneTirInterdit"
+{
+    activate = function( self )
+        SetStimulus( "STIM_PresenceZoneTirInterdit", 0 )
+        local listeObjet = DEC_Connaissances_CollisionsObjets()
+        for _,objet in pairs( listeObjet ) do
+        local _continue = true
+do
+                if( DEC_ConnaissanceObjet_Type( objet ) == S_TypeObject_ToString( eTypeObjectZoneInterditeTir ) ) then
+                    SetStimulus( "STIM_PresenceZoneTirInterdit", 2 )
+                end
+
+            end
+
+        end
+
+        end
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_Mission }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PriseAPartieTirDirect }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PriseAPartieTirInDirect }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PresenceEnisRendus }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PresenceRefugies }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PresenceZoneTirInterdit }

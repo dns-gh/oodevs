@@ -1,0 +1,18 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/MissionsGeneriques.bms"] = true
+
+--[[//Missions Generiques aux pions alat
+]]include "Appui/Alat/Pions/Common/Missions/FaireMouvement.bms"
+
+include "Appui/Alat/Pions/Common/Missions/AllerSeRecompleter.bms"
+
+include "Appui/Alat/Pions/Common/Missions/SeFaireDecontaminer.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Suivre.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Stationner.bms"
+
+include "Appui/Alat/Pions/Common/Missions/SeFaireTransporter.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Decrocher.bms"
+

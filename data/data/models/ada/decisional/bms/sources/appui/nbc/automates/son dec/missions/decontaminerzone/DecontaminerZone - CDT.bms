@@ -1,0 +1,41 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/son dec/missions/decontaminerzone/DecontaminerZone - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_NBC_DecontaminerUneZone
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_NBC_DecontaminerUneZone"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_NBC_DecontaminerUneZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_NBC_DecontaminerUneZone, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Conduite générique 
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_NBC_DecontaminerUneZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_NBC_DecontaminerUneZone, "BEH_Conduite_Automate_NBC_DecontaminerUneZone", nodes.BEH_Conduite_Automate_NBC_DecontaminerUneZone }

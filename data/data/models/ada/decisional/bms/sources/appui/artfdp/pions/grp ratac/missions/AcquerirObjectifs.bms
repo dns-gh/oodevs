@@ -1,0 +1,136 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/grp ratac/missions/AcquerirObjectifs.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ASS_RATAC_AcquerirObjectifs
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ASS_RATAC_AcquerirObjectifs"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.ePhase = self.ePhase or eMettreEnOeuvre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+                DEC_Trace( "On receipt of order: 'To acquire targets'" )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMettreEnOeuvre then
+                Activate( self.activations.BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission, GetMotivation( "MOT_Mission" ), {} )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission"
+{
+    activations =
+    {
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obs_Pion_ASS_ActiverRadar_DansZone", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionReco = self.eActionReco or eActionEnCours
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
+                self.ePhase = eRejoindre
+                
+            elseif switch_1 == eRejoindre then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                        self.ePhase = eDeployer
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.positionDeploiement_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eDeployer then
+                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                local eNiveauInstallation = DEC_Agent_NiveauInstallation()
+                if( eNiveauInstallation_Poste == eNiveauInstallation or eNiveauInstallation_PosteAmenage == eNiveauInstallation ) then
+                    Activate( self.activations.ACT_Obs_Pion_ASS_ActiverRadar_DansZone, 1, { eRadarType_Radar, self.mission.zoneAObserver_, } )
+                end
+
+                
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ASS_RATAC_AcquerirObjectifs = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission, "ACT_Obs_Pion_ASS_ActiverRadar_DansZone", nodes.ACT_Obs_Pion_ASS_ActiverRadar_DansZone }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_RATAC_AcquerirObjectifs, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_RATAC_AcquerirObjectifs, "BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission", nodes.BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_RATAC_AcquerirObjectifs, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

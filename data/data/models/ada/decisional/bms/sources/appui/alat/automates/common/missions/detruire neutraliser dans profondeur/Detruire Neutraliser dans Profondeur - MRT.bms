@@ -1,0 +1,42 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/detruire neutraliser dans profondeur/Detruire Neutraliser dans Profondeur - MRT.bms"] = true
+
+node "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, AntitankHelicopterPatrol )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, EscortAndCloseSupportHelicopterPatrol )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePion( self.selPions, AirDefenseHelicopterPatrol )
+        self.listeDetruire = self.listeDetruire or S_Liste_Concatene( self.listeHAC, self.listeHAP )
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( DIA_IsListEmpty( self.listeDetruire ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+            end
+        end
+
+        DEC_MRT_Valide()
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur = { "mission" }

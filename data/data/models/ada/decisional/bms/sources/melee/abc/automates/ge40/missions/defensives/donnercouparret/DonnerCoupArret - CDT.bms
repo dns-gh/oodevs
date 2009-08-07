@@ -1,0 +1,875 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/defensives/donnercouparret/DonnerCoupArret - CDT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret"
+{
+    activations =
+    {
+        { "ACT_GTIA_AnalyserSituationPourMissionRetrograde", {} },
+        { "BEH_GTIA_OrganiserLesMoyensPourDonnerCAR", {} },
+        { "BEH_GTIA_RendreCompte", {} },
+        { "BEH_GTIA_EchelonnerDispositif", {} },
+        { "BEH_GTIA_RepartirDansFuseaux", {} },
+        { "BEH_GTIA_GererAppuisInternesEnDefense", {} },
+        { "BEH_GTIA_AssignerLesOrdresPourCoupArret", {} },
+        { "BEH_GTIA_ORDRE_Decrocher", {} },
+        { "BEH_GTIA_Decrocher", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[//Vide dans cette mission
+]]
+        Activate( self.activations.ACT_GTIA_AnalyserSituationPourMissionRetrograde, 1, {} )--[[// Analyse environnement
+]]
+        --[[// Init
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                                do
+                    g_bPhaseReceuil = false
+                    local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
+                    for _,x in pairs( listePionsSubordonnes ) do
+                    local _continue = true
+                        do
+                            local automat = x
+                            F_Automat_SeteEtatEchelon( automat, eEtatEchelon_None )
+                            F_Automat_SeteEtatPhaseMission( automat, eEtatPhaseMission_None )
+                        end
+
+                    end
+
+                end
+
+                                return
+
+            end
+--[[/* **************TEST *******************/]]        end
+
+        if( not self._namedParams.mission.sansRearticulation_ ) then
+            Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourDonnerCAR, 10, {} )
+        end
+
+        Activate( self.activations.BEH_GTIA_RendreCompte, 1, {} )--[[// CR
+]]
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, {} )--[[// Dispositif  
+]]
+        Activate( self.activations.BEH_GTIA_RepartirDansFuseaux, 1, { self.objectifsPrioritaires, } )
+        --[[// Missions
+]]--[[//priorite 1
+]]Activate( self.activations.BEH_GTIA_GererAppuisInternesEnDefense, 10, {} )
+        --[[//priorite 2
+]]Activate( self.activations.BEH_GTIA_AssignerLesOrdresPourCoupArret, 1, { self._namedParams.mission.travaux_, self._namedParams.mission.zoneRegroupement_, } )
+        Activate( self.activations.BEH_GTIA_ORDRE_Decrocher, 1, {} )--[[//si utilisateur veut faire décrocher le GTIA sur ordre
+]]
+        Activate( self.activations.BEH_GTIA_Decrocher, 1, {} )--[[// Décrocher sur RapFor
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_Decrocher
+]]--[[//
+]]--[[// Commentaires: REGLE = decrocher si RapFor def pour tous les pions de PE
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_Decrocher"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+                if( S_Automate_EchelonEnDifficulte( eEtatEchelon_Premier ) ) then
+            g_bPhaseReceuil = true
+        end
+
+    end,
+
+    destroy = function( self )
+                g_bPhaseReceuil = false
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_ORDRE_Decrocher
+]]--[[//
+]]--[[// Commentaires: décrocher sur ordre 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_ORDRE_Decrocher"
+{
+    activations =
+    {
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,ordre in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = ordre
+                if( repOrdre:GetType() == "Rep_OrderConduite_Decrocher" ) then
+                    g_bPhaseReceuil = true
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                g_bPhaseReceuil = false
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_OrganiserLesMoyensPourDonnerCAR
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_OrganiserLesMoyensPourDonnerCAR"
+{
+    activations =
+    {
+        { "BEH_GTIA_OrganiserMoyensVersPionsOp", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsMeleeDetruits = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateNonOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Melee( DEC_Automate_AutomatesSubordonnes() ) ) )
+        Activate( self.activations.BEH_GTIA_OrganiserMoyensVersPionsOp, 1, { listePionsMeleeDetruits, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerLesOrdresPourCoupArret
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerLesOrdresPourCoupArret"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerLesMissionsCAR", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.travaux = self.params[1]
+        self._namedParams.zoneRegroupement = self.params[2]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_GTIA_AssignerLesMissionsCAR, 1, { self._namedParams.travaux, self._namedParams.zoneRegroupement, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerLesMissionsCAR
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerLesMissionsCAR"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionsDefensesEcl", {} },
+        { "BEH_GTIA_AssignerMissionsDefensesPE", {} },
+        { "BEH_GTIA_AssignerMissionsDefensesSE", {} },
+        { "BEH_GTIA_AssignerMissionsDefenseSEAppui", {} },
+        { "BEH_GTIA_AssignerMissionDefensePC", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.travaux = self.params[1]
+        self._namedParams.zoneRegroupement = self.params[2]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesEcl, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ), self._namedParams.zoneRegroupement, } )
+        Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesPE, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ), self._namedParams.zoneRegroupement, } )
+        Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesSE, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ), self._namedParams.zoneRegroupement, } )
+        --[[// PC et Appui
+]]Activate( self.activations.BEH_GTIA_AssignerMissionsDefenseSEAppui, 1, { S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ), self._namedParams.travaux, self._namedParams.zoneRegroupement, } )
+        Activate( self.activations.BEH_GTIA_AssignerMissionDefensePC, 1, { DEC_Automate_PionPC(), self._namedParams.zoneRegroupement, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsDefenseSEAppui
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsDefenseSEAppui"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionDefenseLogA", {} },
+        { "BEH_GTIA_AssignerMissionDefenseGenieA", {} },
+        { "BEH_GTIA_AssignerMissionRetrogradeART", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pions = self.params[1]
+        self._namedParams.travaux = self.params[2]
+        self._namedParams.zoneRegroupement = self.params[3]
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( --[[// TC2
+]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.pions ) ) do
+        local _continue = true
+            Activate( self.activations.BEH_GTIA_AssignerMissionDefenseLogA, 1, { pion, self._namedParams.zoneRegroupement, } )
+
+        end
+
+        for _,pion in pairs( --[[// Assignation missions Genie
+]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.pions ) ) do
+        local _continue = true
+            Activate( self.activations.BEH_GTIA_AssignerMissionDefenseGenieA, 1, { pion, self._namedParams.travaux, self._namedParams.zoneRegroupement, } )
+
+        end
+
+        for _,pion in pairs( --[[// Assignation missions ART
+]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.pions ) ) do
+        local _continue = true
+            --[[// idem Freiner
+]]Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeART, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionDefenseGenieA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionDefenseGenieA"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA", {} },
+        { "ACT_GTIA_AssignerMissionDefense", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionGen = self.params[1]
+        self._namedParams.travaux = self.params[2]
+        self._namedParams.zoneRegroupement = self.params[3]
+    end,
+
+    activate = function( self )
+        --[[//On a des travaux 
+]]if( not DIA_IsListEmpty( self._namedParams.travaux ) and not g_bPhaseReceuil ) then
+            Activate( self.activations.ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA, 1, { self._namedParams.pionGen, F_Automat_Getfuseau( self._namedParams.pionGen ), self._namedParams.travaux, self._namedParams.zoneRegroupement, } )
+        else
+            Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { self._namedParams.pionGen, F_Automat_Getfuseau( self._namedParams.pionGen ), "T_Mission_Automate_Decrocher", self._namedParams.zoneRegroupement, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionDefenseLogA
+]]--[[// 
+]]--[[// Commentaires: pour TC2
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionDefenseLogA"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionDeployerTC2", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionLog = self.params[1]
+        self._namedParams.zoneRegroupement = self.params[2]
+    end,
+
+    activate = function( self )
+        self.positionDeploiement = self.positionDeploiement or DEC_Geometrie_PositionAleatoireSurCercle( S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement ), 100 )
+        Activate( self.activations.ACT_GTIA_AssignerMissionDeployerTC2, 1, { self._namedParams.pionLog, F_Automat_Getfuseau( self._namedParams.pionLog ), self.positionDeploiement, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionDefensePC
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionDefensePC"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_AssignerDecrocherA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionPC = self.params[1]
+        self._namedParams.zoneRegroupement = self.params[2]
+    end,
+
+    activate = function( self )
+        self.positionDeploiement = self.positionDeploiement or DEC_Geometrie_PositionAleatoireSurCercle( S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement ), 100 )
+        Activate( self.activations.ACT_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, self._namedParams.pionPC, self.positionDeploiement, eEtatEchelon_Second, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsDefensesEcl
+]]--[[// 
+]]--[[// Commentaires: assigner surveiller
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsDefensesEcl"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionsDefensesPEclSurveiller", {} },
+        { "BEH_GTIA_AssignerMissionsDefensesDecrocher", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+        self._namedParams.zoneRegroupement = self.params[2]
+    end,
+
+    activate = function( self )
+        if( not g_bPhaseReceuil ) then
+            Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesPEclSurveiller, 1, { self._namedParams.listePions, } )
+        else
+            --[[// Il est temps de décrocher
+]]Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesDecrocher, 1, { self._namedParams.listePions, self._namedParams.zoneRegroupement, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsDefensesPEclSurveiller
+]]--[[// 
+]]--[[// Commentaires: assigner surveiller
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsDefensesPEclSurveiller"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionDefense", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,x in pairs( self._namedParams.listePions ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_ABC_Surveiller", nil, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsDefensesPE
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsDefensesPE"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionsDefensesPETenir", {} },
+        { "BEH_GTIA_AssignerMissionsDefensesDecrocher", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+        self._namedParams.zoneRegroupement = self.params[2]
+    end,
+
+    activate = function( self )
+        if( not g_bPhaseReceuil ) then
+            Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesPETenir, 1, { self._namedParams.listePions, } )
+        else
+            --[[// Il est temps de décrocher pour le PE
+]]Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesDecrocher, 1, { self._namedParams.listePions, self._namedParams.zoneRegroupement, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsDefensesPETenir
+]]--[[//  
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsDefensesPETenir"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionDefense", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[// Assignation missions ABC
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_ABC_Tenir", nil, } )
+            end
+--[[// Assignation missions INF
+]]
+        end
+
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_INF_DefendreFerme", nil, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsDefensesSE
+]]--[[//  
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsDefensesSE"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionsDefensesSESoutenir", {} },
+        { "ACT_GTIA_AssignerMissionDefense", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+        self._namedParams.zoneRegroupement = self.params[2]
+    end,
+
+    activate = function( self )
+        if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
+            return
+        end
+
+        self.resultatCalcul = self.resultatCalcul or nil
+        if( ModuleBegins() ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) )
+        end
+
+        if( not g_bPhaseReceuil ) then
+            Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesSESoutenir, 1, { self._namedParams.listePions, } )
+        else
+for _,x in pairs( --[[// Il est temps de décrocher pour le SE
+]]self._namedParams.listePions ) do
+            local _continue = true
+do
+                    local automat = x
+                    if( DEC_Geometrie_CalculerAutomateDistanceLigneAvant( self.resultatCalcul, automat ) < -500 ) then
+                        do
+                            Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { automat, F_Automat_Getfuseau( automat ), "T_Mission_Automate_Decrocher", self._namedParams.zoneRegroupement, } )
+                        end
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsDefensesSESoutenir
+]]--[[//  
+]]--[[// Commentaires: Si eni ou ?? sur le flanc --> couverture
+]]--[[//               Si ami sur le flanc --> Soutien
+]]--[[//
+]]--[[// *****************************************************************************   
+]]}
+
+node "BEH_GTIA_AssignerMissionsDefensesSESoutenir"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionDefense", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[// Assignation missions ABC
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) ) do
+        local _continue = true
+do
+                local pion = x
+                --[[// securité
+]]if( ( F_Automat_Getfuseau( pion ) == 0 or F_Automat_Getfuseau( pion ) == nil ) ) then
+                    return
+                end
+
+                --[[// Pas d'ami = eni ou ??
+]]if( DEC_Rens_AmiSurFlanc( F_Automat_Getfuseau( pion ) ) ) then
+                    --[[//en mesure de
+]]Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_SoutenirSurPositionEnMesureDe", nil, } )--[[// un eni ou inconnu
+]]
+                else
+                    Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_ABC_Couvrir", nil, } )
+                end
+
+            end
+--[[// Assignation missions INF
+]]
+        end
+
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) ) do
+        local _continue = true
+do
+                local pion = x
+                --[[// Pas d'ami = eni ou ??
+]]if( DEC_Rens_AmiSurFlanc( F_Automat_Getfuseau( pion ) ) ) then
+                    --[[//en mesure de
+]]Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_SoutenirSurPositionEnMesureDe", nil, } )--[[// un eni ou inconnu
+]]
+                else
+                    --[[// Couvrir
+]]Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_INF_BarrerDirection", nil, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsDefensesDecrocher
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsDefensesDecrocher"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionDefense", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+        self._namedParams.zoneRegroupement = self.params[2]
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[// Assignation missions ABC et INF
+]]self._namedParams.listePions ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_GTIA_AssignerMissionDefense, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_Decrocher", self._namedParams.zoneRegroupement, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerMissionDefense
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_GTIA_AssignerMissionDefense"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.fuseau = self.params[2]
+        self._namedParams.typeMission = self.params[3]
+        self._namedParams.zoneRegroupement = self.params[4]
+    end,
+
+    select = function( self )
+        if( DIA_GetLocalFakeActuator( self._namedParams.pion ) < GetActivity() ) then
+            do
+                DIA_SetLocalFakeActuator( self._namedParams.pion, GetActivity() )
+                self.bMissionAssignee = self.bMissionAssignee or false
+                --[[// fuseau pas encore assigné
+]]if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
+                    return
+                end
+
+                --[[// Assignation de la mission
+]]self.bMissionAssignee = true
+                switch_1 = self._namedParams.typeMission
+                    if switch_1 == "T_Mission_Automate_Decrocher" then
+                        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                        DEC_Copie_Localisation_Mission( self._namedParams.zoneRegroupement, missionPion, "pointRegroupement_" )
+                        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                        DEC_DonnerMissionAutomate_Mission( missionPion )
+                        
+                    elseif switch_1 == "T_Mission_Automate_ABC_Tenir" then
+                        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                        local lima = DEC_GetLima( eTypeLima_LCAR )
+                        local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 100, self._namedParams.fuseau )
+                        if( ( point == 0 or point == nil ) ) then
+                            do
+                                DEC_Trace( "position impossible ABC" )
+                                
+                            end
+                        end
+
+                        local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                        DEC_Copie_Localisation_Mission( positionATenir, missionPion, "positionInstallation_" )
+                        DEC_DonnerMissionAutomate_Mission( missionPion )
+                        
+                    elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
+                        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                        local lima = DEC_GetLima( eTypeLima_LCAR )
+                        local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 100, self._namedParams.fuseau )
+                        if( ( point == 0 or point == nil ) ) then
+                            do
+                                DEC_Trace( "position impossible ABC" )
+                                
+                            end
+                        end
+
+                        local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                        DEC_Copie_Localisation_Mission( positionATenir, missionPion, "position_" )
+                        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                        DEC_DonnerMissionAutomate_Mission( missionPion )
+                        
+                    elseif switch_1 == "T_Mission_Automate_ABC_Surveiller" then
+                        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                        local lima = DEC_GetLima( eTypeLima_LCAR )
+                        local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 100, self._namedParams.fuseau )
+                        if( ( point == 0 or point == nil ) ) then
+                            do
+                                DEC_Trace( "position impossible ABC" )
+                                
+                            end
+                        end
+
+                        local position = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                        DEC_Copie_Localisation_Mission( position, missionPion, "zoneInstallation_" )
+                        DEC_DonnerMissionAutomate_Mission( missionPion )
+                        
+                    elseif switch_1 == "T_Mission_Automate_ABC_Couvrir" then
+                        --[[// Couvrir ici: Tenir face à la direction de couverture
+]]local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                        local lima = DEC_GetLima( eTypeLima_LCAR )
+                        --[[// Compagnie  --> inutile ici on couvre le reste du GTIA 
+]]DEC_AssignMissionParameter( missionPion, "compagnie_", myself )
+                        --[[// position
+]]local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 3000, self._namedParams.fuseau )
+                        if( ( point == 0 or point == nil ) ) then
+                            do
+                                DEC_Trace( "position impossible ABC" )
+                                
+                            end
+--[[// Direction
+]]                        end
+
+                        local dirCouverture = DEC_Rens_CalculerDirectionCouverture( point, self._namedParams.fuseau )
+                        DEC_AssignerDirectionAMissionAutomate_Mission( dirCouverture, missionPion )
+                        local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                        DEC_Copie_Localisation_Mission( positionATenir, missionPion, "positionInstallation_" )
+                        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                        DEC_DonnerMissionAutomate_Mission( missionPion )
+                        
+                    --[[// Couvrir de l'INF
+]]elseif switch_1 == "T_Mission_Automate_INF_BarrerDirection" then
+                        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                        local lima = DEC_GetLima( eTypeLima_LCAR )
+                        local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 3000, self._namedParams.fuseau )
+                        if( ( point == 0 or point == nil ) ) then
+                            do
+                                DEC_Trace( "position impossible INF" )
+                                
+                            end
+--[[// Direction
+]]                        end
+
+                        local dirCouverture = DEC_Rens_CalculerDirectionCouverture( point, self._namedParams.fuseau )
+                        DEC_AssignerDirectionAMissionAutomate_Mission( dirCouverture, missionPion )
+                        --[[//Position
+]]local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                        DEC_Copie_Localisation_Mission( positionATenir, missionPion, "position_" )
+                        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                        DEC_DonnerMissionAutomate_Mission( missionPion )
+                        
+                    elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
+                        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                        local lima = DEC_GetLima( eTypeLima_LCAR )
+                        local point = DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( lima, 3000, self._namedParams.fuseau )
+                        if( ( point == 0 or point == nil ) ) then
+                            do
+                                DEC_Trace( "position impossible" )
+                                
+                            end
+                        end
+
+                        local position = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                        DEC_Copie_Localisation_Mission( position, missionPion, "position_" )
+                        DEC_DonnerMissionAutomate_Mission( missionPion )
+                        
+                                        end
+
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA
+]]--[[// 
+]]--[[// Commentaires: spé Génie dans mission retrograde, pas de compet
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionGenie = self.params[1]
+        self._namedParams.fuseau = self.params[2]
+        self._namedParams.travaux = self.params[3]
+        self._namedParams.zoneRegroupement = self.params[4]
+    end,
+
+    select = function( self )
+        self.bMissionAssignee = self.bMissionAssignee or false
+        if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
+            return
+        end
+
+        self.bMissionAssignee = true
+        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pionGenie, "T_Mission_Automate_GEN_RealiserTravaux" )
+        DEC_AssignMissionParameter( missionPion, "travaux_", self._namedParams.travaux )
+        DEC_AssignMissionParameter( missionPion, "zoneRegroupement_", self._namedParams.zoneRegroupement )
+        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+        DEC_DonnerMissionAutomate_Mission( missionPion )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsCAR, "BEH_GTIA_AssignerMissionsDefensesEcl", nodes.BEH_GTIA_AssignerMissionsDefensesEcl }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsCAR, "BEH_GTIA_AssignerMissionsDefensesPE", nodes.BEH_GTIA_AssignerMissionsDefensesPE }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsCAR, "BEH_GTIA_AssignerMissionsDefensesSE", nodes.BEH_GTIA_AssignerMissionsDefensesSE }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsCAR, "BEH_GTIA_AssignerMissionsDefenseSEAppui", nodes.BEH_GTIA_AssignerMissionsDefenseSEAppui }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsCAR, "BEH_GTIA_AssignerMissionDefensePC", nodes.BEH_GTIA_AssignerMissionDefensePC }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesOrdresPourCoupArret, "BEH_GTIA_AssignerLesMissionsCAR", nodes.BEH_GTIA_AssignerLesMissionsCAR }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionDefenseGenieA, "ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA", nodes.ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionDefenseGenieA, "ACT_GTIA_AssignerMissionDefense", nodes.ACT_GTIA_AssignerMissionDefense }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionDefenseLogA, "ACT_GTIA_AssignerMissionDeployerTC2", nodes.ACT_GTIA_AssignerMissionDeployerTC2 }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionDefensePC, "ACT_Mission_Automate_AssignerDecrocherA", nodes.ACT_Mission_Automate_AssignerDecrocherA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefenseSEAppui, "BEH_GTIA_AssignerMissionDefenseLogA", nodes.BEH_GTIA_AssignerMissionDefenseLogA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefenseSEAppui, "BEH_GTIA_AssignerMissionDefenseGenieA", nodes.BEH_GTIA_AssignerMissionDefenseGenieA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefenseSEAppui, "BEH_GTIA_AssignerMissionRetrogradeART", nodes.BEH_GTIA_AssignerMissionRetrogradeART }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesDecrocher, "ACT_GTIA_AssignerMissionDefense", nodes.ACT_GTIA_AssignerMissionDefense }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesEcl, "BEH_GTIA_AssignerMissionsDefensesPEclSurveiller", nodes.BEH_GTIA_AssignerMissionsDefensesPEclSurveiller }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesEcl, "BEH_GTIA_AssignerMissionsDefensesDecrocher", nodes.BEH_GTIA_AssignerMissionsDefensesDecrocher }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesPE, "BEH_GTIA_AssignerMissionsDefensesPETenir", nodes.BEH_GTIA_AssignerMissionsDefensesPETenir }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesPE, "BEH_GTIA_AssignerMissionsDefensesDecrocher", nodes.BEH_GTIA_AssignerMissionsDefensesDecrocher }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesPETenir, "ACT_GTIA_AssignerMissionDefense", nodes.ACT_GTIA_AssignerMissionDefense }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesPEclSurveiller, "ACT_GTIA_AssignerMissionDefense", nodes.ACT_GTIA_AssignerMissionDefense }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesSE, "BEH_GTIA_AssignerMissionsDefensesSESoutenir", nodes.BEH_GTIA_AssignerMissionsDefensesSESoutenir }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesSE, "ACT_GTIA_AssignerMissionDefense", nodes.ACT_GTIA_AssignerMissionDefense }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesSESoutenir, "ACT_GTIA_AssignerMissionDefense", nodes.ACT_GTIA_AssignerMissionDefense }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_ORDRE_Decrocher, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_OrganiserLesMoyensPourDonnerCAR, "BEH_GTIA_OrganiserMoyensVersPionsOp", nodes.BEH_GTIA_OrganiserMoyensVersPionsOp }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "ACT_GTIA_AnalyserSituationPourMissionRetrograde", nodes.ACT_GTIA_AnalyserSituationPourMissionRetrograde }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "BEH_GTIA_OrganiserLesMoyensPourDonnerCAR", nodes.BEH_GTIA_OrganiserLesMoyensPourDonnerCAR }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "BEH_GTIA_RendreCompte", nodes.BEH_GTIA_RendreCompte }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "BEH_GTIA_EchelonnerDispositif", nodes.BEH_GTIA_EchelonnerDispositif }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "BEH_GTIA_RepartirDansFuseaux", nodes.BEH_GTIA_RepartirDansFuseaux }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "BEH_GTIA_GererAppuisInternesEnDefense", nodes.BEH_GTIA_GererAppuisInternesEnDefense }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "BEH_GTIA_AssignerLesOrdresPourCoupArret", nodes.BEH_GTIA_AssignerLesOrdresPourCoupArret }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "BEH_GTIA_ORDRE_Decrocher", nodes.BEH_GTIA_ORDRE_Decrocher }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "BEH_GTIA_Decrocher", nodes.BEH_GTIA_Decrocher }

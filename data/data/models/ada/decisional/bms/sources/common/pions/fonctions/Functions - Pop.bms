@@ -1,0 +1,133 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/fonctions/Functions - Pop.bms"] = true
+
+include "bit.lua"
+
+--[[//-------------------------------------------------------------------------
+]]--[[//  Reset de g_DistanceEsquivePopulation
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[//  Reset de Monitoring de g_DistanceEsquivePopulation
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[//  Attrition maximale
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[//  la population a t-elle une attitude plus grave que les ROE du pion ?
+]]--[[//-------------------------------------------------------------------------
+]]--[[/*{	if( ! DEC_Agent_AutomateEstEmbraye() )	    DEC_RC(    );    else        DEC_Message(    );}*/]]function S_Reset_g_DistanceEsquivePopulation( )
+    local _returnValue = 0
+    g_CurrentDistanceEsquivePopulation = 225
+    _returnValue = 200
+    return _returnValue
+end
+
+function S_Augmente_g_DistanceEsquivePopulation( )
+    local _returnValue = 0
+    g_CurrentDistanceEsquivePopulation = 225
+    _returnValue = 250
+    return _returnValue
+end
+
+function S_EtatOpsMinimalFaceAPopulations( )
+    local _returnValue = 0
+    _returnValue = 0.2
+    return _returnValue
+end
+
+function S_PopulationTropAggressive( pop )
+    local _returnValue = false
+    _returnValue = true
+    local eValiditeRequete = nil
+    local attitude = DEC_ConnaissancePopulation_Attitude( pop )
+    local roe = DEC_Agent_RoePopulation()
+    if( ( roe == eEtatROEPopulation_EmploiForceInterdit ) and ( attitude ~= eAttitudePopulation_Calme ) ) then
+        _returnValue = true
+    else
+if( ( roe == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux ) and ( attitude == eAttitudePopulation_Excitee ) ) then
+            _returnValue = true
+        else
+if( ( roe == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux ) and ( attitude == eAttitudePopulation_Agressive ) ) then
+                _returnValue = true
+            else
+if( ( roe == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs ) and ( attitude == eAttitudePopulation_Agressive ) ) then
+                    _returnValue = true
+                else
+                    _returnValue = false
+                end
+            end
+        end
+    end
+
+    if( not DEC_ConnaissancePopulation_Domination( pop, eValiditeRequete ) ) then
+        _returnValue = false
+    end
+
+    return _returnValue
+end
+
+function S_AugmenterROEPopulation( eROEPopulationVirtuel )
+    local _returnValue = nil
+    switch_1 = eROEPopulationVirtuel
+        if switch_1 == eEtatROEPopulation_None then
+            _returnValue = eEtatROEPopulation_EmploiForceInterdit
+            
+        elseif switch_1 == eEtatROEPopulation_EmploiForceInterdit then
+            _returnValue = eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux
+            
+        elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+            _returnValue = eEtatROEPopulation_DispersionParMoyensDeDefenseActifs
+            
+        elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs
+        or switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
+            _returnValue = eEtatROEPopulation_ArmesLetalesAutorisees
+            
+                end
+
+    return _returnValue
+end
+
+function S_RCROE( eROEPopulationVirtuel )
+    local _returnValue = false
+    switch_1 = eROEPopulationVirtuel
+        if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
+            
+        elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_UtilisationArmesNonLetalesFaceAPopulation )
+                else
+                    DEC_Message( eRC_UtilisationArmesNonLetalesFaceAPopulation )
+                end
+
+            end
+
+            
+        elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_UtilisationMoyensDefenseActifsFaceAPopulation )
+                else
+                    DEC_Message( eRC_UtilisationMoyensDefenseActifsFaceAPopulation )
+                end
+
+            end
+
+            
+        elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_UtilisationArmementsFaceAPopulation )
+                else
+                    DEC_Message( eRC_UtilisationArmementsFaceAPopulation )
+                end
+
+            end
+
+            
+                end
+
+    _returnValue = true
+    return _returnValue
+end
+

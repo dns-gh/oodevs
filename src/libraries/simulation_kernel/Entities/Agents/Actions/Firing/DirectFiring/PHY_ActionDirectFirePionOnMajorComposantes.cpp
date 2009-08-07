@@ -17,8 +17,8 @@
 // Name: PHY_ActionDirectFirePionOnMajorComposantes constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDirectFirePionOnMajorComposantes::PHY_ActionDirectFirePionOnMajorComposantes( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_ActionDirectFirePion_ABC( pion, diaCall, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFireOnlyOnMajorComposantes )
+PHY_ActionDirectFirePionOnMajorComposantes::PHY_ActionDirectFirePionOnMajorComposantes( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass )
+    : PHY_ActionDirectFirePion_ABC( pion, pEnemy, percentage, firingMode, ammoDotationClass, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFireOnlyOnMajorComposantes )
 {
 }
 

@@ -1,0 +1,71 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/son proterre/missions/soutenir/Soutenir CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-07-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Cie Hot/Missions/Soutenir/Soutenir CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 20/06/05 11:05 $
+]]--[[// $Revision: 5 $
+]]--[[// $Workfile: Soutenir CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "MIS_Automate_CDT_INF_Soutenir"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_GererFuseau", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_HOT_Defaut", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eActionMission = self.eActionMission or eActionEnCours
+        self.eActionHorsFuseau = self.eActionHorsFuseau or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                StartActivate( self.activations.BEH_Conduite_Automate_GererFuseau, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionHorsFuseau = v else rawset( t, k, v ) end end } ) )
+            end
+--[[// Conduite des pions au niveau section
+]]--[[//-----------------------------------------------------------------------------				
+]]        end
+
+        if( self.eActionMission == eActionEffectuee ) then
+            do
+                self.eActionMission = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_HOT_Defaut, 1, {} )
+--[[// behavior BEH_Conduite_Automate_INF_Appuyer( mission.compagnie_ );		
+]]    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_INF_Soutenir = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Soutenir, "BEH_Conduite_Automate_GererFuseau", nodes.BEH_Conduite_Automate_GererFuseau }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Soutenir, "BEH_Conduite_Automate_INF_Defaut", nodes.BEH_Conduite_Automate_INF_Defaut }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Soutenir, "BEH_Conduite_Automate_HOT_Defaut", nodes.BEH_Conduite_Automate_HOT_Defaut }

@@ -141,15 +141,15 @@ DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgent( 
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon& zone ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Polygon& zone ) const
 {
     container.clear();
     const T_KnowledgeAgentVector& detected = pKnowledgeAgentContainer_->GetDetected();
     for( CIT_KnowledgeAgentVector it = detected.begin(); it != detected.end(); ++it )
     {
-        const DEC_Knowledge_Agent& knowledge = **it;
-        if( zone.IsInside( knowledge.GetPosition() ) )
-            container.push_back( (void*)knowledge.GetID() );
+        const DEC_Knowledge_Agent* knowledge = *it;
+        if( zone.IsInside( knowledge->GetPosition() ) )
+            container.push_back( knowledge );
     }
 }
 
@@ -157,7 +157,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_Knowledg
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
 {
     container.clear();
     const T_KnowledgeAgentVector& detected = pKnowledgeAgentContainer_->GetDetected();
@@ -165,7 +165,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_Knowledg
     {
         const DEC_Knowledge_Agent& knowledge = **it;
         if( zone.IsInside( knowledge.GetPosition() ) )
-            container.push_back( (void*)knowledge.GetID() );
+            container.push_back( &knowledge );
     }
 }
 
@@ -183,7 +183,7 @@ const T_KnowledgeAgentVector& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetFriends
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetFriendsInZone
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetFriendsInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetFriendsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
 {
     container.clear();
     const T_KnowledgeAgentVector& friends = GetFriends();
@@ -191,7 +191,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetFriendsInZone( T_KnowledgeAgentD
     {
         const DEC_Knowledge_Agent& knowledge = **it;
         if( zone.IsInside( knowledge.GetPosition() ) )
-            container.push_back( (void*)knowledge.GetID() );
+            container.push_back( &knowledge );
     }
 }
 
@@ -209,15 +209,15 @@ const T_KnowledgeAgentVector& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetEnemies
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
 {
     container.clear();
     const T_KnowledgeAgentVector& enemies = GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
     {
-        const DEC_Knowledge_Agent& knowledge = **it;
-        if( !knowledge.IsDead() && zone.IsInside( knowledge.GetPosition() ) )
-            container.push_back( (void*)knowledge.GetID() );
+        const DEC_Knowledge_Agent* knowledge = *it;
+        if( !knowledge->IsDead() && zone.IsInside( knowledge->GetPosition() ) )
+            container.push_back( knowledge );
     }
 }
 
@@ -225,15 +225,15 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_Knowledge
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon& zone ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Polygon& zone ) const
 {
     container.clear();
     const T_KnowledgeAgentVector& enemies = GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
     {
-        const DEC_Knowledge_Agent& knowledge = **it;
-        if( !knowledge.IsDead() && zone.IsInside( knowledge.GetPosition() ) )
-            container.push_back( (void*)knowledge.GetID() );
+        const DEC_Knowledge_Agent* knowledge = *it;
+        if( !knowledge->IsDead() && zone.IsInside( knowledge->GetPosition() ) )
+            container.push_back( knowledge );
     }
 }
 
@@ -241,15 +241,15 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_Knowledge
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
 {
     container.clear();
     const T_KnowledgeAgentVector& enemies = GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
     {
-        const DEC_Knowledge_Agent& knowledge = **it;
-        if( !knowledge.IsDead() && center.Distance( knowledge.GetPosition() ) <= rRadius )
-            container.push_back( (void*)knowledge.GetID() );
+        const DEC_Knowledge_Agent* knowledge = *it;
+        if( !knowledge->IsDead() && center.Distance( knowledge->GetPosition() ) <= rRadius )
+            container.push_back( knowledge );
     }
 }
 
@@ -273,16 +273,16 @@ bool DEC_KnowledgeBlackBoard_KnowledgeGroup::EnemyPresenceInCircle( const MT_Vec
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
 {
     assert( pKnowledgeAgentContainer_ );
     container.clear();
     const T_KnowledgeAgentVector& refugees = pKnowledgeAgentContainer_->GetRefugees();
     for( CIT_KnowledgeAgentVector it = refugees.begin(); it != refugees.end(); ++it )
     {
-        const DEC_Knowledge_Agent& knowledge = **it;
-        if( center.Distance( knowledge.GetPosition() ) <= rRadius )
-            container.push_back( (void*)knowledge.GetID() );
+        const DEC_Knowledge_Agent* knowledge = *it;
+        if( center.Distance( knowledge->GetPosition() ) <= rRadius )
+            container.push_back( knowledge );
     }
 }
 
@@ -290,16 +290,16 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle( T_KnowledgeAge
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
 {
     assert( pKnowledgeAgentContainer_ );
     container.clear();
     const T_KnowledgeAgentVector& surrenderedAgents = pKnowledgeAgentContainer_->GetSurrenderedAgents();
     for( CIT_KnowledgeAgentVector it = surrenderedAgents.begin(); it != surrenderedAgents.end(); ++it )
     {
-        const DEC_Knowledge_Agent& knowledge = **it;
-        if( center.Distance( knowledge.GetPosition() ) <= rRadius )
-            container.push_back( (void*)knowledge.GetID() );
+        const DEC_Knowledge_Agent* knowledge = *it;
+        if( center.Distance( knowledge->GetPosition() ) <= rRadius )
+            container.push_back( knowledge );
     }
 }
 
@@ -341,7 +341,7 @@ namespace
         sDIAInserter( T_KnowledgePopulationDiaIDVector& container ) : pContainer_( &container ) {}
         void operator() ( DEC_Knowledge_Population& knowledge )
         {
-            pContainer_->push_back( (void*)knowledge.GetID() );
+            pContainer_->push_back( knowledge.GetID() );
         }
     private:
         T_KnowledgePopulationDiaIDVector* pContainer_;
@@ -393,7 +393,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulati
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges
 // Created: NLD 2006-04-24
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_KnowledgeAgentDiaIDVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_KnowledgeAgentDiaIDVector& translatedKnowledges ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const
 {
     assert( pKnowledgeGroup_ );
     if( *pKnowledgeGroup_ == sourceKnowledgeGroup )
@@ -401,14 +401,14 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_Knowle
     else
     {
         translatedKnowledges.clear();
-        for( CIT_KnowledgeAgentDiaIDVector it = sourceKnowledges.begin(); it != sourceKnowledges.end(); ++it )
+        for( CIT_ConstKnowledgeAgentVector it = sourceKnowledges.begin(); it != sourceKnowledges.end(); ++it )
         {
             const DEC_Knowledge_Agent* pSourceKnowledge = sourceKnowledgeGroup.GetKnowledge().GetKnowledgeAgentFromID( (uint)*it );
             assert( pSourceKnowledge );
 
             const DEC_Knowledge_Agent* pTranslatedKnowledge = pKnowledgeAgentContainer_->GetKnowledgeAgent( pSourceKnowledge->GetAgentKnown() );
             if( pTranslatedKnowledge )
-                translatedKnowledges.push_back( (void*)pTranslatedKnowledge->GetID() );
+                translatedKnowledges.push_back( pTranslatedKnowledge );
         }
     }
 }
@@ -420,17 +420,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_Knowle
 DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
 {
     return GetKnowledgeAgentFromID( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( const DIA_Variable_ABC& dia ) const
-{
-    assert( DEC_Tools::CheckTypeConnaissanceAgent( dia ) );
-    uint nDiaID = (uint)dia.ToPtr();
-    return GetKnowledgeAgentFromID( nDiaID );
 }
 
 // -----------------------------------------------------------------------------
@@ -455,17 +444,6 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeOb
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( const DIA_Variable_ABC& dia ) const
-{
-    assert( DEC_Tools::CheckTypeConnaissanceObjet( dia ) );
-    uint nDiaID = (uint)dia.ToPtr();
-    return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nDiaID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
 DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( uint nID ) const
 {
     return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
@@ -478,17 +456,6 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeOb
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const
 {
     return GetKnowledgePopulationFromID( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( const DIA_Variable_ABC& dia ) const
-{
-    assert( DEC_Tools::CheckTypeConnaissancePopulation( dia ) );
-    uint nDiaID = (uint)dia.ToPtr();
-    return GetKnowledgePopulationFromID( nDiaID );
 }
 
 // -----------------------------------------------------------------------------

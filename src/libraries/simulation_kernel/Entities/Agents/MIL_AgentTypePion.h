@@ -21,6 +21,11 @@ namespace xml
     class xistream;
 }
 
+namespace directia
+{
+    class Brain;
+}
+
 class PHY_UnitType;
 class DEC_Model_ABC;
 class MIL_Automate;
@@ -58,7 +63,6 @@ public:
     //@{
     const PHY_UnitType&                       GetUnitType                      () const;
     const DEC_Model_ABC&                      GetModel                         () const;
-          DIA_FunctionTable< MIL_AgentPion >& GetFunctionTable                 () const;
           MT_Float                            GetDistanceAvantPoint            ( const TerrainData& nType ) const;
           MT_Float                            GetDistanceAvantLima             () const;
           MT_Float                            GetRapForIncreasePerTimeStepValue() const;
@@ -69,7 +73,13 @@ public:
     bool operator==( const MIL_AgentTypePion& rhs ) const;
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const;
+    //@}
+
 protected:
+    explicit MIL_AgentTypePion( const DEC_Model_ABC* pModel );
     template< typename T >
         MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* pUnitTypeType /*Used only to determine T type*/ );
 
@@ -110,8 +120,6 @@ private:
     T_DistanceAvantPointMap distancesAvantPoints_;
     MT_Float                rDistanceAvantLimas_;
     MT_Float                rRapForIncreasePerTimeStepValue_;
-
-    DIA_FunctionTable< MIL_AgentPion >* pDIAFunctionTable_;
 
 private:
     static T_PionTypeAllocatorMap  pionTypeAllocators_;

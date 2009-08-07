@@ -1,0 +1,258 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/automates/common/missions/evacuate area/EvacuateArea - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_Emergency_EvacuateArea"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eCreationMRT = self.eCreationMRT or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Emergency_EvacuateArea : start MRT" )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// MRT creee
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eCreationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_RC( eRC_MissionImpossible )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eCreationMRT == eActionEffectuee ) then
+            do
+                self.eCreationMRT = eActionEnCours
+                                do
+                    DEC_Trace( "Emergency_EvacuateArea : end MRT" )
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Modalité d'exécution
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea, 1, setmetatable( { "T_Mission_Automate_INF_Controler", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_Emergency_EvacuateArea", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eTypeMission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eMRT_SelectionnerPions
+        self.eActionMRT = self.eActionMRT or eActionEnCours
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        self.pions = self.pions or {}
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]self.ePhase
+            if switch_1 == eMRT_SelectionnerPions then
+                self.ePhase = eMRT_AssignerMissions
+                local selTmp = DEC_Automate_PionsSansPC()
+                local i = #( selTmp ) - #( selTmp ) / 3
+                for _,x in pairs( selTmp ) do
+                local _continue = true
+do
+                        local pion = x
+                        if( i < 0 ) then
+                            break
+                        end
+
+                        DIA_PushBack( self.pions, pion )
+                        i = i - 1
+                    end
+
+                end
+
+                
+            elseif switch_1 == eMRT_AssignerMissions then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------				
+]]if( self.eActionMRT == eActionImpossible ) then
+                    do
+                                                do
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( self.eValidationMRT == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Trace( "eValidationMRT == eActionImpossible" )
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( self.eValidationMRT == eActionEffectuee ) then
+                    do
+                        self.eValidationMRT = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.pions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                switch_2 = self._namedParams.eTypeMission
+                    if switch_2 == "T_Mission_Automate_INF_Controler" then
+                        Activate( self.activations.BEH_Medo_Automate_Emergency_EvacuateArea, 1, { self.pions, } )
+                        
+                    
+                    else
+                        DEC_Trace( "Mission Inconnue" )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                                        end
+
+                
+                        end
+
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Controler
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Medo_Automate_Emergency_EvacuateArea"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPions = self.params[1]
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.lstLocalisations = self.lstLocalisations or {}
+        self.eCodeLoc = self.eCodeLoc or eNoError
+        --[[//--------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//--------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                --[[//----------------------------------------------------------------------
+]]--[[// Decoupage de la zone A surveiller
+]]--[[//----------------------------------------------------------------------
+]]self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( self.mission.area_, #( self._namedParams.lstPions ), self.eCodeLoc )
+                self.eCodeLoc = self.lstLocalisations.second
+                self.lstLocalisations = self.lstLocalisations.first
+                switch_1 = self.eCodeLoc
+                    if switch_1 == eError_PionsPasDansMemeFuseau
+                    or switch_1 == eError_LocalisationPasDansFuseau then
+                                            DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                                                do
+                            DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                            Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                                        self.params.__returnValue = eActionImpossible
+                            return
+
+                        end
+
+                        
+                    elseif switch_1 == eWarning_DecoupageIncomplet then
+                                            DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                        
+                    elseif switch_1 == eNoError then
+                                            
+                                        end
+
+                local rIt = 0
+                for _,x_pion in pairs( self._namedParams.lstPions ) do
+                local _continue = true
+                    do
+                        if( rIt < #( self.lstLocalisations ) ) then
+                            do
+                                local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
+                                StartActivate( self.activations.BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea, 1, { ePhase_MRT, x_pion, locZone, } )
+                            end
+                        end
+
+                                                rIt = rIt + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_Emergency_EvacuateArea = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_Emergency_EvacuateArea, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_Emergency_EvacuateArea, "BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea", nodes.BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea, "BEH_Medo_Automate_Emergency_EvacuateArea", nodes.BEH_Medo_Automate_Emergency_EvacuateArea }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_Emergency_EvacuateArea, "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea", nodes.BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea }

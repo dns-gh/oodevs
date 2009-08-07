@@ -25,64 +25,23 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_FunctionsTools::GetKnowledgePopulationFromDia
-// Created: NLD 2005-11-03
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_FunctionsTools::GetKnowledgePopulationFromDia( const DIA_Variable_ABC& diaVar, const MIL_KnowledgeGroup& caller )
-{
-    assert( DEC_Tools::CheckTypeConnaissancePopulation( diaVar ) );
-
-    uint nKnowledgeID_ = (uint)diaVar.ToPtr();
-    return caller.GetKnowledge().GetKnowledgePopulationFromID( nKnowledgeID_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_FunctionsTools::GetKnowledgeAgentFromDia
-// Created: NLD 2004-03-31
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_FunctionsTools::GetKnowledgeAgentFromDia( const DIA_Variable_ABC& diaVar, const MIL_KnowledgeGroup& caller )
-{
-    assert( DEC_Tools::CheckTypeConnaissanceAgent( diaVar ) );
-
-    uint nKnowledgeID_ = (uint)diaVar.ToPtr();
-    return caller.GetKnowledge().GetKnowledgeAgentFromID( nKnowledgeID_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_FunctionsTools::GetKnowledgeObjectFromDia
 // Created: NLD 2004-03-31
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar, const MIL_Army_ABC& caller )
+DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( unsigned int nKnowledgeID, const MIL_Army_ABC& caller )
 {
-    assert( DEC_Tools::CheckTypeConnaissanceObjet( diaVar ) );
-
-    uint nKnowledgeID_ = (uint)diaVar.ToPtr();
-    return caller.GetKnowledge().GetKnowledgeObjectFromID( nKnowledgeID_ ); 
+    return caller.GetKnowledge().GetKnowledgeObjectFromID( nKnowledgeID ); 
 }
-
 
 // =============================================================================
 // POPULATION
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_FunctionsTools::GetPopulationKnowledgeAgentFromDia
-// Created: NLD 2005-12-05
-// -----------------------------------------------------------------------------
-MIL_AgentPion* DEC_FunctionsTools::GetPopulationKnowledgeAgentFromDia( const DIA_Variable_ABC& diaVar )
-{
-    assert( DEC_Tools::CheckTypePopulationConnaissanceAgent( diaVar ) );
-    uint nID = ( uint )diaVar.ToPtr();
-    return MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID ); // $$$$ HLA
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar )
+MIL_Object_ABC* DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( unsigned int nID )
 {
-    assert( DEC_Tools::CheckTypePopulationConnaissanceObjet( diaVar ) );
-    uint nID = ( uint )diaVar.ToPtr();
     return MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( nID );
 }

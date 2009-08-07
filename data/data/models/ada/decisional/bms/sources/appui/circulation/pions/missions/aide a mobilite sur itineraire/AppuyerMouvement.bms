@@ -1,0 +1,145 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/pions/missions/aide a mobilite sur itineraire/AppuyerMouvement.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_LOG_AppuyerMouvement
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_LOG_AppuyerMouvement"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "ACT_Misc_Pion_AppuyerMvtDe", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[// Dans le cadre de cette mission le pions circule à pleinne vitesse
+]]        end
+
+        Activate( self.activations.ACT_Dep_ModulationVitesse, 2, { 1, } )
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "MIS_Pion_LOG_AppuyerMouvement: debut", } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progression vers l'unité à appuyer
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                --[[// Renforcement si à distance
+]]if( DEC_Geometrie_Distance( self._namedParams.mission.uniteAAppuyer_:DEC_Agent_Position(), myself:DEC_Agent_Position() ) < 1000 ) then
+                    do
+                        self.ePhaseMission = eRenforcer
+                        
+                    end
+--[[//rejoint l'unité
+]]                end
+
+                Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.mission.uniteAAppuyer_, 0, } )
+                
+            --[[// On renforce l'unité
+]]elseif switch_1 == eRenforcer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                Activate( self.activations.ACT_Misc_Pion_AppuyerMvtDe, 1, { self._namedParams.mission.uniteAAppuyer_, } )
+                
+            --[[// Fin de la mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_AppuyerMvtDe
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Misc_Pion_AppuyerMvtDe"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionAmi = self.params[1]
+    end,
+
+    select = function( self )
+                self.bInit = self.bInit or true
+        if( self.bInit ) then
+            do
+                --[[// On renforce le pion pour lui donner les moyens d'aller plus vite
+]]DEC_Renforce( self._namedParams.pionAmi )
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_EscorteUnite )
+                    else
+                        DEC_Message( eRC_EscorteUnite )
+                    end
+
+                end
+
+                self.bInit = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_AnnuleRenforcement()
+        self.bInit = true
+    end,
+
+    destroy = function( self )
+                DEC_AnnuleRenforcement()
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_LOG_AppuyerMouvement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_AppuyerMouvement, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_AppuyerMouvement, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_AppuyerMouvement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_AppuyerMouvement, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_AppuyerMouvement, "BEH_Dep_Suivre", nodes.BEH_Dep_Suivre }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_AppuyerMouvement, "ACT_Misc_Pion_AppuyerMvtDe", nodes.ACT_Misc_Pion_AppuyerMvtDe }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_AppuyerMouvement, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

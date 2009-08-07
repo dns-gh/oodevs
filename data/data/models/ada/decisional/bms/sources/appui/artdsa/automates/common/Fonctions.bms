@@ -1,0 +1,16 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/common/Fonctions.bms"] = true
+
+--[[//définition des fonctions Automates ASA
+]]include "Common/Moteur/Functions/AutomatesASA.bms"
+
+
+--[[//fonctions génériques aux pions et automates asa
+]]include "Appui/ArtDsa/Common/Fonctions.bms"
+
+
+--[[//fonctions des Automates ASA
+]]include "Appui/ArtDsa/Automates/Common/Fonctions/Fonctions - Listes.bms"
+
+include "Appui/ArtDsa/Automates/Common/Fonctions/Fonctions - Misc.bms"
+

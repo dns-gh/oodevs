@@ -31,7 +31,7 @@ class DEC_Path_KnowledgePopulation
 public:
     //! @name Constructors/Destructor
     //@{
-    DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, const MIL_AgentPion& pion );
+    DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, bool avoidPolicy );
     ~DEC_Path_KnowledgePopulation();
     //@}
 

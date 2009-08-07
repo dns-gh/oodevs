@@ -1,0 +1,242 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/common/MRT generique mis retrogrades.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Common/MRT generique mis retrogrades.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 9/09/05 16:55 $
+]]--[[// $Revision: 13 $
+]]--[[// $Workfile: MRT generique mis retrogrades.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde"
+{
+    activations =
+    {
+        { "ACT_Info_Automate_Trace", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ABC_AssignerMissionFreinerA", {} },
+        { "BEH_Medo_Automate_ABC_AssignerMissionJalonerA", {} },
+        { "ACT_Warning", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eType = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// Pions subordonnés à l'Auto
+]]local selPions = DEC_Automate_PionsSansPC()
+        self.ePhase = self.ePhase or eMRT_DeterminerEchelonsGlobals
+        self.eEtat = self.eEtat or eActionEnCours
+        self.selABC_Ecl = self.selABC_Ecl or {}
+        self.selABC_NonPrevu = self.selABC_NonPrevu or {}--[[// suivre le SE
+]]
+        self.selABC_Blinde = self.selABC_Blinde or {}
+        self.selABC_PE = self.selABC_PE or {}--[[// Liste des pions en premier echelon
+]]
+        self.selABC_SE = self.selABC_SE or {}--[[// Liste des pions en second echelon
+]]
+        self.selINF = self.selINF or {}--[[// Liste des pions INF en renforcement
+]]
+        switch_1 = --[[// =============================================================================
+]]--[[// PHASE DU COMPORTEMENT
+]]--[[// 1) Vérifier les moyens, des renforts éventuels
+]]--[[// 2) Déterminer les échelons
+]]--[[// 2) Assigner certaines missions (les missions des unités de premier échelon)
+]]--[[// $$$$ MIA 2004-10-01: les missions du deuxieme échelon sont données dans la conduite
+]]--[[// $$$$ MIA 2004-10-01: car elles sont en permance évaluées durant la mission.
+]]--[[// =============================================================================                                  
+]]self.ePhase
+            if switch_1 == eMRT_DeterminerEchelonsGlobals then
+                for _,x in pairs( --[[//---------------------------------------------------------------------
+]]--[[// Assignation des grands échelons Ecl / Utile( PE + SE )/ non prevus
+]]--[[// Différenece avec mission marche à l'ennemi: que des blindes dans PE 
+]]--[[// et SE
+]]--[[//---------------------------------------------------------------------
+]]selPions ) do
+                local _continue = true
+do
+                        local pion = x
+                        --[[// On ne traite pas les pions non opérationnels
+]]if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                            do
+                                DEC_Trace( DEC_GetSzName( pion ) .. " non operationnel" )
+                                DIA_PushFront( self.selABC_SE, pion )
+                                _continue = false
+                            end
+                        end
+
+                            if _continue then
+                            switch_2 = pion:GetType()
+                                if switch_2 == "Patrouille_EI"
+                                or switch_2 == "Patrouille_EI_Milan" then
+                                    DIA_PushFront( self.selABC_Ecl, pion )
+                                    
+                                elseif switch_2 == "Peloton_XL"
+                                or switch_2 == "Peloton_AMX" then
+                                    DIA_PushFront( self.selABC_Blinde, pion )
+                                    
+                                elseif switch_2 == "SectionInfanterie"
+                                or switch_2 == "SectionInfanterie_HOT"
+                                or switch_2 == "SectionInfanterie_MILAN" then
+                                    Activate( self.activations.ACT_Info_Automate_Trace, 1, { "-------$$$ Renforcements INF $$$------", } )
+                                    DIA_PushFront( self.selINF, pion )
+                                    
+                                
+                                else
+                                    DIA_PushFront( self.selABC_NonPrevu, pion )
+                                    
+                                                                end
+
+                        end
+                    end
+
+                end
+
+                self.ePhase = eMRT_DeterminerEchelonsLocals
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Assignation premier echelon et second echelon utile
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_DeterminerEchelonsLocals then
+                local fNbPionsEnPEMax = 0
+                local fNbPionsEnPE = 0
+                if( #( self.selABC_Blinde ) < 3 ) then
+                    --[[// que du premier echelon
+]]fNbPionsEnPEMax = #( self.selABC_Blinde )
+                else
+                    fNbPionsEnPEMax = #( self.selABC_Blinde ) / 2
+                end
+
+                for _,x in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Critère de formation
+]]--[[// Si l'animateur veut une attaque en ligne, on ne cherche pas
+]]--[[// à équilibrer la formation --> tous les pions en premier echeleon
+]]--[[// ( sauf ceux qui ne peuvent pas comme le PAD et autre pion non prevu )
+]]--[[//-----------------------------------------------------------------------------
+]]self.selABC_Blinde ) do
+                local _continue = true
+do
+                        local pion = x
+                        switch_2 = pion:GetType()
+                            if switch_2 == "Peloton_AMX"
+                            or switch_2 == "Peloton_XL" then
+                                --[[// Premer echelon
+]]--[[// ou ERC
+]]if( fNbPionsEnPE < fNbPionsEnPEMax ) then
+                                    do
+                                        DIA_PushFront( self.selABC_PE, pion )
+                                                                                fNbPionsEnPE = fNbPionsEnPE + 1
+                                    end
+                                else
+                                    DIA_PushFront( self.selABC_SE, pion )
+                                end
+
+                                
+                                                        end
+
+                    end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Mission impossible si pas de premier echelon
+]]--[[//-----------------------------------------------------------------------------
+]]
+                end
+
+                if( DIA_IsListEmpty( self.selABC_PE ) and DIA_IsListEmpty( self.selABC_Ecl ) ) then
+                    do
+                        DEC_Trace( "No adapted units to perform the mission" )
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                self.ePhase = eMRT_AssignerMissions
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_AssignerMissions then
+                --[[/* ------------------------------------------------------------- */]]--[[/* -------------  Gestion erreur/ bon deroulement -------------- */]]--[[/* ------------------------------------------------------------- */]]if( self.eEtat == eActionImpossible ) then
+                    do
+                        --[[// ePhase = eMRT_MissionImpossible;
+]]DEC_Trace( "Warning: some front units did not received mission " )
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[/* ------------------------------------------------------------- */]]--[[/* ------- Fin Gestion erreur/ bon deroulement ------- */]]--[[/* ------------------------------------------------------------- */]]--[[// Suivant le type de mission...
+]]                end
+
+                switch_2 = self._namedParams.eType
+                    if switch_2 == "T_Mission_Automate_ABC_Freiner" then
+                        --[[//-----------------------------------------------------------------------------
+]]--[[// Freiner
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_Blinde ) + #( self.selABC_Ecl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionFreinerA, 1, { self.selABC_SE, eEtatEchelon_Second, } )
+                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionFreinerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
+                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionJalonerA, 1, { self.selABC_Ecl, eEtatEchelon_Eclairage, } )
+                        
+                    --[[//-----------------------------------------------------------------------------
+]]--[[// Jalonner
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_2 == "T_Mission_Automate_ABC_Jalonner" then
+                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_Blinde ) + #( self.selABC_Ecl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionJalonerA, 1, { self.selABC_Ecl, eEtatEchelon_Eclairage, } )
+                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionJalonerA, 1, { self.selABC_Blinde, eEtatEchelon_Premier, } )
+                        
+                                        end
+
+                
+            --[[//-----------------------------------------------------------------------------
+]]--[[// Mission impossible
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eMRT_MissionImpossible then
+                Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            
+            else
+                        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde, "ACT_Info_Automate_Trace", nodes.ACT_Info_Automate_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde, "BEH_Medo_Automate_ABC_AssignerMissionFreinerA", nodes.BEH_Medo_Automate_ABC_AssignerMissionFreinerA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde, "BEH_Medo_Automate_ABC_AssignerMissionJalonerA", nodes.BEH_Medo_Automate_ABC_AssignerMissionJalonerA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde, "ACT_Warning", nodes.ACT_Warning }

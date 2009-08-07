@@ -1,0 +1,84 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/fixer/Fixer MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-07-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Sgpt Inf Abc/Missions/Fixer/Fixer MRT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 31/08/05 18:34 $
+]]--[[// $Revision: 13 $
+]]--[[// $Workfile: Fixer MRT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "MIS_Automate_MRT_INF_Fixer"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eCreationMRT = self.eCreationMRT or eActionEnCours
+        self.rN_Loc = self.rN_Loc or #( self._namedParams.mission.ennemis_ )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "MIS_Automate_MRT_INF_Fixer : debut MRT" )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// MRT creee
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eCreationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_RC( eRC_MissionImpossible )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eCreationMRT == eActionEffectuee ) then
+            do
+                self.eCreationMRT = eActionEnCours
+                                do
+                    DEC_Trace( "MIS_Automate_MRT_INF_Fixer : fin MRT" )
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Modalité d'exécution
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// behavior BEH_Medo_Automate_INF_Fixer() return in eCreationMRT;	
+]]        end
+
+        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Manoeuvre, 1, setmetatable( { "T_Mission_Automate_INF_Fixer", self.rN_Loc, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_INF_Fixer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_INF_Fixer, "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", nodes.BEH_Medo_Automate_INF_PreparerMission_Manoeuvre }

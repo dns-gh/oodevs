@@ -1,0 +1,58 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/esc xl/missions/contreattaquer/ContreAttaquer - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_ABC_ContreAttaquer
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_ABC_ContreAttaquer"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "$ MIS AUTO ContreAttaquer: debut MRT $" )
+                DEC_SetMission( myself, self._namedParams.mission )
+                                do
+                    local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
+                    for _,x in pairs( listePionsSubordonnes ) do
+                    local _continue = true
+                        do
+                            local pion = x
+                            F_Pion_SeteEtatEchelon( pion, eEtatEchelon_Second )
+                            F_Pion_SeteEtatSoutien( pion, eEtatSoutien_aucun )
+                        end
+
+                    end
+
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Gen
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique, 1, { "T_Mission_Automate_ABC_ContreAttaquer", } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ABC_ContreAttaquer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ABC_ContreAttaquer, "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", nodes.BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique }

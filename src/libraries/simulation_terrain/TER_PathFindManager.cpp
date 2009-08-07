@@ -58,7 +58,7 @@ TER_PathFindManager::~TER_PathFindManager()
 // Name: TER_PathFindManager::CreatePathFinderThread
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
-TER_PathFinderThread& TER_PathFindManager::CreatePathFinderThread( tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue )
+TER_PathFinderThread& TER_PathFindManager::CreatePathFinderThread( tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue )
 {
     threads_.push_back( new TER_PathFinderThread( strGraphArchive_, strNodeArchive_, strLinkArchive_, queue ) );
     return *threads_.back();

@@ -12,8 +12,17 @@
 
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include <directia/Brain.h>
 
+class DEC_Model_ABC;
 class MIL_Entity_ABC;
+class MIL_Mission_ABC;
+
+namespace directia
+{
+    class Brain;
+    class ScriptRef;
+}
 
 // =============================================================================
 /** @class  DEC_Decision
@@ -24,25 +33,85 @@ class MIL_Entity_ABC;
 // =============================================================================
 template <class T >
 class DEC_Decision : public DEC_Decision_ABC
-                   , public DIA_Engine
 {
 
 public:
-    //! @name Cosntructor
+    //! @name Constructor
     //@{
-             DEC_Decision( T& entity, const std::string& type );
-    explicit DEC_Decision( const std::string& type );
+    explicit DEC_Decision( T& entity );
+             DEC_Decision();
     virtual ~DEC_Decision();
     //@}
 
     //! @name Operations
     //@{
-    virtual void UpdateDecision();
+    void SetModel( const DEC_Model_ABC& model );
+    virtual void UpdateDecision( float duration );
     virtual void Reset();
-    virtual DIA_Variable_ABC* ExecuteFunction( const std::string& szFuncName, DIA_Parameters& parameters );
     
     virtual void SetMission( MIL_Mission_ABC* pMission );
     virtual MIL_Mission_ABC* GetMission();
+    virtual void RemoveCallback( PHY_Action_ABC* pAction );
+    virtual void CallbackKnowledge( PHY_Action_ABC* pAction, int value );
+    virtual void CallbackPerception( int id );
+    virtual const std::string& GetDIAType() const;
+    virtual MIL_AgentPion& GetPion() const;
+    virtual MIL_Automate& GetAutomate() const;
+    
+    virtual void StartMissionBehavior( MIL_Mission_ABC& mission );
+    virtual void StopMissionBehavior ( MIL_Mission_ABC& mission );
+
+    virtual int  GeteEtatPhaseMission() const;
+    virtual void SeteEtatPhaseMission( int value );
+    virtual int  GeteEtatLima() const;
+    virtual void SeteEtatLima( int value );
+    virtual int  GeteEtatDec() const;
+    virtual void SeteEtatDec( int value );
+    virtual int  GeteEtatEchelon() const;
+    virtual void SeteEtatEchelon( int value );
+    virtual bool GetbOrdreDecrocher() const;
+    virtual void SetbOrdreDecrocher( bool value );
+    virtual bool GetbOrdreTenirSurLR() const;
+    virtual void SetbOrdreTenirSurLR( bool value );
+    virtual bool GetbOrdreTenir() const;
+    virtual void SetbOrdreTenir( bool value );
+
+    virtual void SetAmbianceMission( int );
+    virtual void SetAppuieFreinage( bool );
+    virtual bool GetDemandeOrdreConduitePoursuivre();
+    virtual bool GetEnCoursExtractionPersonnel();
+    virtual bool GetEnExploitation();
+    virtual void SetbEnExploitation( bool );
+    virtual bool GetEnPhaseRavitaillement();
+    virtual void SetEnPhaseRavitaillement( bool );
+    virtual bool GetMiseEnOeuvre();
+    virtual void SetMiseEnOeuvre( bool );
+    virtual int GetEtatFeu();
+    virtual std::vector<DEC_Knowledge_Agent*> GetListeEnisTirAutorise();
+    virtual std::vector<DEC_Decision_ABC*> GetListePionsCoordination();
+    virtual int GetObjMisEnCours();
+    virtual void SetObjMisEnCours( int );
+    virtual boost::shared_ptr< MT_Vector2D > GetObjectifCourant();
+    virtual int GetPlotRavitaillementAssigne();
+    virtual void SetPlotRavitaillementAssigne( int );
+    virtual int GetPorteeAction();
+    virtual void SetPorteeAction( int );
+    virtual float GetNiveauAlerteRavitaillement();
+    
+    virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
+    virtual bool IsNeutralized() const;
+    virtual bool IsMoving() const;
+    virtual bool IsContaminated() const;
+    virtual const MT_Vector2D* GetPosition() const;
+    virtual void SetStateVariable( const std::string& name, float value );
+    virtual bool IsPC() const;
+    virtual bool IsTransported() const;
+    virtual bool IsFlying() const;
+    virtual MT_Float GetMajorOperationalState() const;
+    virtual bool IsAutomateEngaged() const;
+    virtual bool IsDead() const;
+    virtual void WearNbcProtectionSuit() const;
+    virtual void RemoveNbcProtectionSuit() const;
     //@}
 
 protected:
@@ -54,31 +123,54 @@ protected:
     void StopDefaultBehavior      ();
     void LogCrash                 ();
     
-    void ActivateOrder( const std::string& strBehavior, DIA_Parameters& parameters, MIL_Mission_ABC& mission );
-    void StopMission( const std::string& strBehavior, DIA_Parameters& parameters );
+    void ActivateOrder( const std::string& strBehavior, MIL_Mission_ABC& mission );
+    void StopMission( const std::string& strBehavior );
+
+    virtual void EndCleanStateAfterCrash  () = 0;
+    virtual void RegisterUserFunctions( directia::Brain& brain ) = 0;
     //@}
     
-    //!@name Accessors
-    //@{
-    DIA_BehaviorPart&   GetBehaviorPart () const;
-    //@}
-
 private://! @name Helpers
     //@{
     void HandleUpdateDecisionError ();
-    bool IsDefaultBehaviorAvailable() const;
+    virtual directia::Brain& GetBrain();
     
-    virtual void EndCleanStateAfterCrash  () = 0;
+    void InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath );
+    
+    virtual void RegisterSelf( directia::Brain& brain ) = 0;
     //@}
 
 protected:
     //!@name Data
     //@{
-    T*                              pEntity_;
-    DIA_Parameters                  defaultBehaviorParameters_;
-    std::auto_ptr<DIA_Variable_Id>  pDefaultParameter_;
+    T*                               pEntity_;
     MIL_Mission_ABC*                pMission_;
     //@}
+
+private:
+    //!@name Data
+    //@{
+    std::auto_ptr< directia::Brain >   pBrain_;
+    std::auto_ptr< struct ScriptRefs > pRefs_;
+    std::string                        brainFile_;
+    std::string                        includePath_;
+    std::string                        diaType_;
+    //@}
+};
+
+struct ScriptRefs
+{
+public:
+    explicit ScriptRefs( directia::Brain& brain );
+    
+    directia::ScriptRef sendEvent_;
+    directia::ScriptRef startEvent_;
+    directia::ScriptRef stopEvents_;
+    directia::ScriptRef setStateVariable_;
+private:
+    ScriptRefs();
+    ScriptRefs( const ScriptRefs& );
+    ScriptRefs& operator=( const ScriptRefs& );
 };
 
 #include "DEC_Decision.inl"

@@ -1,0 +1,15 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/Fonctions.bms"] = true
+
+--[[//fonctions génériques aux pions et automates alat
+]]include "Appui/Alat/Common/Fonctions.bms"
+
+
+--[[//fonctions des Automates alat
+]]include "Appui/Alat/Automates/Common/Fonctions/Fonctions - Listes.bms"
+
+include "Appui/Alat/Automates/Common/Fonctions/Fonctions - Misc.bms"
+
+include "Common/Fonctions - Telepathy.bms"
+
+

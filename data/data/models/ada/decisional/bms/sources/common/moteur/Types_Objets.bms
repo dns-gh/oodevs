@@ -1,0 +1,55 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/Types_Objets.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: NLD 2002-12-23 $
+]]--[[// $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_Objets.hal $
+]]--[[// $Author: Nld $
+]]--[[// $Modtime: 5/04/05 12:11 $
+]]--[[// $Revision: 10 $
+]]--[[// $Workfile: Types_Objets.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+eTypeObjectBouchonMines = 0
+eTypeObjectZoneMineeLineaire = 1
+eTypeObjectZoneMineeParDispersion = 2
+eTypeObjectFosseAntiChar = 3
+eTypeObjectAbatti = 4
+eTypeObjectBarricade = 5
+eTypeObjectEboulement = 6
+eTypeObjectDestructionRoute = 7
+eTypeObjectDestructionPont = 8
+eTypeObjectPontFlottantContinu = 9
+eTypeObjectPosteTir = 10
+eTypeObjectZoneProtegee = 11
+eTypeObjectZoneImplantationCanon = 12
+eTypeObjectZoneImplantationCOBRA = 13
+eTypeObjectZoneImplantationLRM = 14
+eTypeObjectSiteFranchissement = 15
+eTypeObjectNuageNBC = 16
+eTypeObjectPlotRavitaillement = 17
+eTypeObjectSiteDecontamination = 18
+eTypeObjectZoneBrouillage = 19
+eTypeObjectRota = 20
+eTypeObjectZoneNBC = 21
+eTypeObjectAirePoser = 22
+eTypeObjectPiste = 23
+eTypeObjectPlateForme = 24
+eTypeObjectZoneMobiliteAmelioree = 25
+eTypeObjectZonePoserHelicoptere = 26
+eTypeObjectAireLogistique = 27
+eTypeObjectItineraireLogistique = 28
+eTypeObjectCampPrisonniers = 29
+eTypeObjectCampRefugies = 30
+eTypeObjectPosteControle = 31
+eTypeObjectTerrainLargage = 32
+eTypeObjectZoneInterditeDeplacement = 33
+eTypeObjectZoneInterditeTir = 34
+eTypeObjectZoneImplantationMortier = 35
+eTypeObjectPontFlottantDiscontinu = 36
+eTypeObjectInstallation = 37
+eTypeObjectFire = 38
+eTypeObjectEmergencyShelter = 39
+

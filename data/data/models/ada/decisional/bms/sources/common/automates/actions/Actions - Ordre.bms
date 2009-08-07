@@ -1,0 +1,249 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_Pause
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_Pause"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                self._namedParams.pion:SetStateVariable( "VE_SePoster", 2 )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                self._namedParams.pion:SetStateVariable( "VE_SePoster", 0 )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_Continue
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_Continue"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        self._namedParams.pion:SetStateVariable( "VE_SePoster", 0 )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_Ralentir()  
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_Ralentir"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                self._namedParams.pion:SetStateVariable( "VE_Ralentir", 1.8 )
+--[[// l'équivalent à l'ordre "POURSUIVRE"
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                self._namedParams.pion:SetStateVariable( "VE_Ralentir", 0 )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_Interrompre 
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_Interrompre"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SetbOrdreInterrompreMission( self._namedParams.pion, true )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetbOrdreInterrompreMission( self._namedParams.pion, false )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_PasserEnAmbianceVitesse()  
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_PasserEnAmbianceVitesse"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        --[[// MIA --> hack on devrait pas touché cette valeur directement mais c'est la seule solution
+]]F_Pion_SeteEtatAmbiance( self._namedParams.pion, eEtatAmbiance_Vitesse )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_PasserEnAmbianceSurete()  
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_PasserEnAmbianceSurete"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        --[[// MIA --> hack on devrait pas touché cette valeur directement mais c'est la seule solution
+]]F_Pion_SeteEtatAmbiance( self._namedParams.pion, eEtatAmbiance_Surete )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_Decrocher 
+]]--[[// 
+]]--[[// Commentaires: MISSION JALONNER --> TEMP
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_Decrocher"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SetbOrdreDecrocher( self._namedParams.pion, true )
+--[[// l'équivalent à l'ordre "POURSUIVRE"
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetbOrdreDecrocher( self._namedParams.pion, false )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_TenirSurLR( 
+]]--[[// 
+]]--[[// Commentaires: MISSION JALONNER --> TEMP
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_TenirSurLR"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SetbOrdreTenirSurLR( self._namedParams.pion, true )
+--[[// l'équivalent à l'ordre "POURSUIVRE"
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetbOrdreTenirSurLR( self._namedParams.pion, false )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_Decrocher 
+]]--[[// 
+]]--[[// Commentaires: MISSION JALONNER --> TEMP
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_Tenir"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SetbOrdreTenir( self._namedParams.pion, true )
+--[[// l'équivalent à l'ordre "POURSUIVRE"
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetbOrdreTenir( self._namedParams.pion, false )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_PasserSurLC 
+]]--[[// 
+]]--[[// Commentaires: MISSION FREINER --> TEMP ajout ADA
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_PasserSurLC"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SetbPasserSurLC( self._namedParams.pion, true )
+--[[// l'équivalent à l'ordre "POURSUIVRE"
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetbPasserSurLC( self._namedParams.pion, false )
+    end,
+
+}
+

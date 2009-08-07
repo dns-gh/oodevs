@@ -1,0 +1,156 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/jalonner/Jalonner - MRT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Jalonner :
+]]--[[// ==========
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//                  - 3 pions font la mission jalonner
+]]--[[//                    en ayant chacun une partie du fuseau d'escadrille
+]]--[[//
+]]--[[//                  - le ou les pions de reserve suivent les unités qui 
+]]--[[//                    jalonnent. Elles vont être utiles dans la manoeuvre de 
+]]--[[//                    roque des pieces pour ravitaillement.
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_Jalonner"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe", {} },
+        { "BEH_Mission_Automate_AssignerSuivreAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionsJalonner = self.eEtatMissionsJalonner or eActionEnCours
+        self.affectationFuseauOk = self.affectationFuseauOk or false
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listePionsReserve = self.listePionsReserve or {}
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, AntitankHelicopterPatrol )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, EscortAndCloseSupportHelicopterPatrol )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, AirDefenseHelicopterPatrol )
+        self.listePatrouillesPeutFaireMissionJalonner = self.listePatrouillesPeutFaireMissionJalonner or S_Liste_Concatene( S_Liste_Concatene( self.listeHAC, self.listeHAP ), self.listeHAM )
+        self.listeJalonner = self.listeJalonner or {}
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+                --[[// -----------------------------------------------------------------
+]]--[[// Vérifier les moyens, determiner les patrouilles qui vont aller 
+]]--[[// Jalonner
+]]--[[// -----------------------------------------------------------------
+]]local nbPionsPouvantJalonner = #( self.listePatrouillesPeutFaireMissionJalonner )
+                --[[//1 pion de reserve pour 4 qui peuvent Jalonner
+]]local nbPionsReserve = nbPionsPouvantJalonner / 3
+                for _,x in pairs( --[[//construction de la liste des pions en reserve
+]]self.listePatrouillesPeutFaireMissionJalonner ) do
+                local _continue = true
+                    do
+                        if( nbPionsReserve < 1 ) then
+                            _continue = false
+                        end
+
+                            if _continue then
+                            DIA_PushBack( self.listePionsReserve, x )
+                                                        nbPionsReserve = nbPionsReserve - 1
+                        end
+                    end
+--[[//les autres vont faire la mission "Jalonner"           
+]]--[[//Ceux qui peuvent faire la mission et qui ne sont pas en reserve
+]]
+                end
+
+                self.listeJalonner = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePatrouillesPeutFaireMissionJalonner, self.listePionsReserve )
+                if( DIA_IsListEmpty( self.listeJalonner ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionsJalonner == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionsJalonner == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[//Affectation des fuseaux
+]]                end
+
+                if( not self.affectationFuseauOk ) then
+                    do
+                        DEC_MRT_AffecteFuseaux( self.listeJalonner )
+                        self.affectationFuseauOk = true
+                    end
+--[[// Jalonner : controle de creation mission
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeJalonner ) + #( self.listePionsReserve ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsJalonner = v else rawset( t, k, v ) end end } ) )
+                --[[// Jalonner : ordre de creation des missions
+]]if( not DIA_IsListEmpty( self.listeJalonner ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe, 1, { ePhase_MRT, self.listeJalonner, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, } )
+                end
+
+                --[[// Suivre : ordre de création de mission
+]]if( not DIA_IsListEmpty( self.listePionsReserve ) and not DIA_IsListEmpty( self.listeJalonner ) ) then
+                    do
+                        local pionASuivre = DEC_Geometrie_PionDerriere( self.listeJalonner, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
+                        Activate( self.activations.BEH_Mission_Automate_AssignerSuivreAListe, 1, { ePhase_MRT, self.listePionsReserve, pionASuivre, } )
+                    end
+                end
+
+                
+            elseif switch_1 == eMRT_MissionImpossible then
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_Jalonner = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Jalonner, "BEH_ROE_Automate_TirRestreint", nodes.BEH_ROE_Automate_TirRestreint }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Jalonner, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Jalonner, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Jalonner, "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe", nodes.BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Jalonner, "BEH_Mission_Automate_AssignerSuivreAListe", nodes.BEH_Mission_Automate_AssignerSuivreAListe }

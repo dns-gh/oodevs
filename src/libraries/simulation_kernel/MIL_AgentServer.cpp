@@ -210,8 +210,7 @@ void MIL_AgentServer::WaitForNextStep()
     pPathFindManager_->Update();
     if( pFederate_ )
         pFederate_->Tick();
-    DIA_Workspace::Instance().UpdateWorkspace();
-
+    
     long sleepTime = 100;
     if( nSimState_ == eSimRunning )
     {

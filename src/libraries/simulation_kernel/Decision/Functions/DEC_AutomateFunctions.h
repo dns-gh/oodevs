@@ -14,8 +14,10 @@
 
 #include "MIL.h"
 
+class DEC_Decision_ABC;
 class MIL_Automate;
 class MIL_AgentPion;
+class MIL_Mission_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -26,44 +28,42 @@ public:
     //! @name Functions
     //@{
     // Accessors
-    static void IsEngaged          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static bool IsEngaged          ( DEC_Decision_ABC* pAutomate );
 
-    static void GetPionsWithoutPC      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetPionsWithPC         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetPionPC              ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetPionPCOfAutomate    ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetAutomates           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void IsParentAutomateEngaged( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static std::vector< DEC_Decision_ABC* > GetPionsWithoutPC    ( const MIL_Automate& callerAutomate );
+    static std::vector< DEC_Decision_ABC* > GetAutomatPionsWithPC( DEC_Decision_ABC* pAutomate );
+    static std::vector< DEC_Decision_ABC* > GetPionsWithPC       ( const MIL_Automate& callerAutomate );
+    static DEC_Decision_ABC*                GetPionPC            ( const MIL_Automate& callerAutomate );
+    static DEC_Decision_ABC*                GetPionPCOfAutomate  ( DEC_Decision_ABC* pAutomate );
+    static std::vector< DEC_Decision_ABC* > GetAutomates         ( const MIL_Automate& callerAutomate );
+    static bool IsParentAutomateEngaged( const MIL_Automate& callerAutomate );
         
-    static void GetPionsOfAutomateWithoutPC( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetPionsOfAutomateWithPC   ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static std::vector< DEC_Decision_ABC* > GetPionsOfAutomateWithoutPC( const DEC_Decision_ABC* automat );
 
     // Test / debug
-    static void Debug          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void Trace          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void DecisionalState( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void DebugDrawPoints( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void DebugDrawPoint ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void DecisionalState( const MIL_Automate& callerAutomate, const std::string& key, const std::string& value );
 
     // Pion management
-    static void PionChangeAutomate( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static bool PionChangeAutomate( DEC_Decision_ABC* pion, const DEC_Decision_ABC* superior );
     
     // Accesseurs sur les fonctions Pion
-    static void IsPionContaminated                          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 
-    static void IsPionNeutralized                           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 
-    static void IsPointInPionFuseau                         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void MakePionRelievePion                         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetPionPosition                             ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 
-    static void CanPionRelievePion                          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void CanPionConstructObject                      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void CanPionBypassObject                         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void CanPionDestroyObject                        ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void ComputePointBeforeLimaForPion               ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void ComputePionNearestLocalisationPointInFuseau ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void PionTimeToMoveDistance                      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static bool IsPionContaminated                         ( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion ); 
+    static bool IsPionNeutralized                          ( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion ); 
+    static bool IsPointInPionFuseau                        ( const MIL_Automate& callerAutomate, MT_Vector2D* pPoint, DEC_Decision_ABC* pPion );
+    static bool MakePionRelievePion                        ( const MIL_Automate& callerAutomate, DEC_Decision_ABC* relieving, DEC_Decision_ABC* relieved );
+    static boost::shared_ptr< MT_Vector2D > GetPionPosition( const DEC_Decision_ABC* pion ); 
+    static bool CanPionRelievePion                         ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* relieving, const DEC_Decision_ABC* relieved );
+    static bool CanPionConstructObject                     ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type );
+    static bool CanPionBypassObject                        ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, int knowledgeId );
+    static bool CanPionDestroyObject                       ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, int knowledgeId );
+    static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLimaForPion( int phaseLine, float distanceBefore, const DEC_Decision_ABC* pion );
+    static boost::shared_ptr< MT_Vector2D > ComputePionNearestLocalisationPointInFuseau( const TER_Localisation* location, const DEC_Decision_ABC* pion );
+    static float PionTimeToMoveDistance                    ( const DEC_Decision_ABC* pion, float distance );
+    
+    static MIL_Mission_ABC* GetMission( DEC_Decision_ABC* pAgent );
+    static void SetMission            ( DEC_Decision_ABC* object, MIL_Mission_ABC* mission );  
     //@}
     
-private:
     static bool IsPionInAutomate( const MIL_Automate& automate, const MIL_AgentPion& pion );
 };
 

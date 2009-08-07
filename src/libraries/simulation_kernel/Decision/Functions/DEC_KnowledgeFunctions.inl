@@ -28,22 +28,15 @@
 // Created: NLD 2006-04-18
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( DIA_Call_ABC& call, const T& caller )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( const T& caller, const DEC_Decision_ABC* perceiver )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    const DEC_RolePion_Decision* pSourcePionTmp = call.GetParameter( 0 ).ToUserObject( pSourcePionTmp );
-    assert( pSourcePionTmp );
-    const MIL_AgentPion& sourcePion = pSourcePionTmp->GetPion();
-
-    T_KnowledgeAgentDiaIDVector sourceKnowledges;
-    sourcePion.GetKnowledge().GetLivingEnemiesPerceived( sourceKnowledges );
-
-    T_KnowledgeAgentDiaIDVector translatedKnowledges;
-    caller.GetKnowledgeGroup().GetKnowledge().TranslateKnowledges( sourceKnowledges, sourcePion.GetKnowledgeGroup(), translatedKnowledges );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( translatedKnowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    assert( perceiver );
+    const MIL_AgentPion& source = perceiver->GetPion();
+    T_ConstKnowledgeAgentVector sourceKnowledge;
+    source.GetKnowledge().GetLivingEnemiesPerceived( sourceKnowledge );
+    T_ConstKnowledgeAgentVector results;
+    caller.GetKnowledgeGroup().GetKnowledge().TranslateKnowledges( sourceKnowledge, source.GetKnowledgeGroup(), results );
+    return results;
 }
 
 // -----------------------------------------------------------------------------
@@ -51,16 +44,11 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( DIA_Call_ABC& call
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::ShareKnowledgesWith( DIA_Call_ABC& call, const T& caller )
+void DEC_KnowledgeFunctions::ShareKnowledgesWith( const T& caller, DEC_Decision_ABC* receiver, float minutes )
 {
-    assert( DEC_Tools::CheckTypeAutomate( call.GetParameter( 0 ) ) );
-
-          DEC_AutomateDecision* pAutomate      = call.GetParameter( 0 ).ToUserObject( pAutomate );
-    const MT_Float              rTime          = MIL_Tools::ConvertMinutesToSim( call.GetParameter( 1 ).ToFloat() );
-    const uint                  nShareTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + (uint)rTime;
-
-    assert( pAutomate );
-    pAutomate->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), nShareTimeStep );
+    assert( receiver );
+    const uint sharingTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + uint( MIL_Tools::ConvertMinutesToSim( minutes ) );
+    receiver->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), sharingTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,74 +56,60 @@ void DEC_KnowledgeFunctions::ShareKnowledgesWith( DIA_Call_ABC& call, const T& c
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( DIA_Call_ABC& call, const T& caller )
+void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const T& caller, DEC_Decision_ABC* receiver, const MT_Vector2D* center, float radius )
 {
-    assert( DEC_Tools::CheckTypeAutomate( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypePoint   ( call.GetParameter( 1 ) ) );
-
-          DEC_AutomateDecision* pAutomate           = call.GetParameter( 0 ).ToUserObject( pAutomate );
-    const MT_Vector2D*          pSharedCircleCenter = call.GetParameter( 1 ).ToUserPtr   ( pSharedCircleCenter );
-          MT_Float              rSharedCircleRadius = MIL_Tools::ConvertMeterToSim( call.GetParameter( 2 ).ToFloat() );
-
-    assert( pAutomate );
-    pAutomate->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *pSharedCircleCenter, rSharedCircleRadius );
+    assert( receiver );
+    receiver->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *center, MIL_Tools::ConvertMeterToSim( radius ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_KnowledgeFunctions::GetObjectsInCircle
+// Name: DEC_KnowledgeFunctions::GetObjectsInCircle
 // Created: NLD 2006-05-05
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::GetObjectsInCircle( DIA_Call_ABC& call, const T& caller )
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, MT_Float rRadius, const std::vector< std::string >& filters )
 {
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
-    const MT_Vector2D* pCenter = call.GetParameter( 0 ).ToUserPtr( pCenter );
     assert( pCenter );
 
-    MIL_ObjectFilter filter( call.GetParameters(), 2 );
+    MIL_ObjectFilter filter( filters );
     
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, call.GetParameter( 1 ).ToFloat() );
+    caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_KnowledgeFunctions::GetObjectsInZone
+// Name: DEC_KnowledgeFunctions::GetObjectsInZone
 // Created: NLD 2006-05-05
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::GetObjectsInZone( DIA_Call_ABC& call, const T& caller )
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters )
 {
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-
-    const TER_Localisation* pLoc = call.GetParameter( 0 ).ToUserPtr( pLoc );
     assert( pLoc );
 
-    MIL_ObjectFilter filter( call.GetParameters(), 1 );
+    MIL_ObjectFilter filter( parameters );
     
     T_KnowledgeObjectDiaIDVector knowledges;
     caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pLoc );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_KnowledgeFunctions::GetObjectsInFuseau
+// Name: DEC_KnowledgeFunctions::GetObjectsInFuseau
 // Created: NLD 2006-05-05
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::GetObjectsInFuseau( DIA_Call_ABC& call, const T& caller )
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInFuseau( const T& caller, const std::string& type )
 {
-    MIL_ObjectFilter filter( call.GetParameters(), 0 );
+    std::vector< std::string > types;
+    types.push_back( type );
+    MIL_ObjectFilter filter( types );;
     
-    T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, caller.GetOrderManager().GetFuseau() );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
+    T_KnowledgeObjectDiaIDVector results;
+    caller.GetArmy().GetKnowledge().GetObjectsInZone( results, filter, caller.GetOrderManager().GetFuseau() );
+    return results;
 }
 
 // -----------------------------------------------------------------------------
@@ -143,17 +117,12 @@ void DEC_KnowledgeFunctions::GetObjectsInFuseau( DIA_Call_ABC& call, const T& ca
 // Created: NLD 2005-05-11
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::GetFriendsInZone( DIA_Call_ABC& call, const T& caller )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetFriendsInZone( const T& caller, const TER_Localisation* location )
 {
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    TER_Localisation* pZone = call.GetParameter( 0 ).ToUserPtr( pZone );
-    assert( pZone );
-
-    T_KnowledgeAgentDiaIDVector knowledges;
-    caller.GetKnowledgeGroup().GetKnowledge().GetFriendsInZone( knowledges, *pZone );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    assert( location );
+    T_ConstKnowledgeAgentVector results;
+    caller.GetKnowledgeGroup().GetKnowledge().GetFriendsInZone( results, *location );
+    return results;
 }
 
 // -----------------------------------------------------------------------------
@@ -161,13 +130,11 @@ void DEC_KnowledgeFunctions::GetFriendsInZone( DIA_Call_ABC& call, const T& call
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::GetPopulations( DIA_Call_ABC& call, const T& caller )
+std::vector< unsigned int > DEC_KnowledgeFunctions::GetPopulations( const T& caller )
 {
-    T_KnowledgePopulationDiaIDVector knowledges;
-    caller.GetKnowledgeGroup().GetKnowledge().GetPopulations( knowledges );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissancePopulation() );
+    std::vector< unsigned int > results;
+    caller.GetKnowledgeGroup().GetKnowledge().GetPopulations( results );
+    return results;
 }
 
 // -----------------------------------------------------------------------------
@@ -198,31 +165,17 @@ float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& bou
 
 namespace 
 {
-    template< typename T >
+    template< typename Entity, typename Area >
     struct CompareBoundariesEnemies
     {
-        CompareBoundariesEnemies( const T& caller, bool unloaded )
+        CompareBoundariesEnemies( const Entity& caller, bool unloaded )
             : pCaller_( &caller ), unloaded_( unloaded ) {}
-        bool operator()( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
+        bool operator()( boost::shared_ptr< Area > area1, boost::shared_ptr< Area > area2 )
         {
-            if( DEC_Tools::CheckTypeFuseau( *dia1 ) && DEC_Tools::CheckTypeFuseau( *dia2 ) )
-            {
-                MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
-                MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
-                return DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *pFuseau1, unloaded_ )
-                     < DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *pFuseau2, unloaded_ );
-            }
-            else if( DEC_Tools::CheckTypeLocalisation( *dia1 ) && DEC_Tools::CheckTypeLocalisation( *dia2 ) )
-            {
-                TER_Localisation* location1 = dia1->ToUserPtr( location1 );
-                TER_Localisation* location2 = dia2->ToUserPtr( location2 );
-                return DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *location1, unloaded_ )
-                     < DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *location2, unloaded_ );
-            }
-            return false;
+            return DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *area1, unloaded_ )
+                 < DEC_KnowledgeFunctions::ComputeEnemiesRatio( *pCaller_, *area2, unloaded_ );
         }
-
-        const T* pCaller_;
+        const Entity* pCaller_;
         bool unloaded_;
     };    
 }
@@ -232,14 +185,11 @@ namespace
 // Created: NLD 2007-04-19
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeFunctions::SortAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller )
+std::vector< boost::shared_ptr< TER_Localisation > > DEC_KnowledgeFunctions::SortAccordingToUnloadedEnemies( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations )
 {
-    assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
-
-    call.GetResult() = call.GetParameter( 0 );
-    
-    T_ObjectVariableVector& boundaries = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( boundaries.begin(), boundaries.end(), CompareBoundariesEnemies< MIL_Automate >( caller, true ) );
+    std::vector< boost::shared_ptr< TER_Localisation > > result( locations );
+    std::sort( result.begin(), result.end(), CompareBoundariesEnemies< T, TER_Localisation >( caller, true ) );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -247,12 +197,9 @@ void DEC_KnowledgeFunctions::SortAccordingToUnloadedEnemies( DIA_Call_ABC& call,
 // Created: AGE 2007-10-16
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_KnowledgeFunctions::SortAccordingToLoadedEnemies( DIA_Call_ABC& call, const T& caller )
+std::vector< boost::shared_ptr< TER_Localisation > > DEC_KnowledgeFunctions::SortAccordingToLoadedEnemies( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations )
 {
-    assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
-
-    call.GetResult() = call.GetParameter( 0 );
-    
-    T_ObjectVariableVector& boundaries = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( boundaries.begin(), boundaries.end(), CompareBoundariesEnemies< MIL_Automate >( caller, false ) );
+    std::vector< boost::shared_ptr< TER_Localisation > > result( locations );    
+    std::sort( result.begin(), result.end(), CompareBoundariesEnemies< T, TER_Localisation >( caller, false ) );
+    return result;
 }

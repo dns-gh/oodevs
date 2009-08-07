@@ -1,0 +1,68 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/sgpt inf ac/missions/romprecontact/RompreContact CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-07-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Sgpt Inf Ac/Missions/RompreContact/RompreContact CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 8/07/05 16:21 $
+]]--[[// $Revision: 13 $
+]]--[[// $Workfile: RompreContact CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "MIS_Automate_CDT_INF_RompreContact"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_RompreContact", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eActionMission = self.eActionMission or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Conduite Rompre Contact : debut" )
+                DEC_Trace( "Direction Dangereuse : " .. DEC_DirectionToString( DEC_GetDirectionEnnemi( self._namedParams.mission ) ) )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[// Conduite des pions au niveau section
+]]--[[//-----------------------------------------------------------------------------		
+]]        end
+
+        if( self.eActionMission == eActionEffectuee ) then
+            do
+                self.eActionMission = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_RompreContact, 1, {} )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_INF_RompreContact = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_RompreContact, "BEH_Conduite_Automate_INF_Defaut", nodes.BEH_Conduite_Automate_INF_Defaut }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_RompreContact, "BEH_Conduite_Automate_INF_RompreContact", nodes.BEH_Conduite_Automate_INF_RompreContact }

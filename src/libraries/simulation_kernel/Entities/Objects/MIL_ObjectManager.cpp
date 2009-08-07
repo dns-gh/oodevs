@@ -165,12 +165,9 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx, ASN1T_EnumDemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType )
 {
-	const std::string type( diaParameters[ nCurrentParamIdx++ ].ToString() );
-    const TER_Localisation* pLocalisation = diaParameters[ nCurrentParamIdx++ ].ToUserPtr( pLocalisation );    
-    
-    if ( pLocalisation )
+	if ( pLocalisation )
         return builder_->BuildObject( type, army, *pLocalisation, obstacleType );
     return 0;
 }

@@ -1,0 +1,124 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/rohum/urh/common/missions/RenseignerSur.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_RENS_RenseignerSur
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_RENS_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dep_SePoster", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Rens_EnSurveillanceDe", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.pointARenseigner = self.pointARenseigner or S_Geometrie_BarycentreZone( self._namedParams.mission.zoneAObserver_ )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Intelligence gathering mission begining", } )
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progresser jusqu'à zone de débarquement
+]]elseif switch_1 == eProgresser then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Spé rens ne pas bouger tant qu'il fait pas nuit
+]]--[[//-----------------------------------------------------------------------------
+]]if( not DEC_Nuit() ) then
+                    do
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Il fait ne pas nuit, l'unité reste cachée", } )
+                        Activate( self.activations.ACT_RC, 1, { eRC_AttenteConditionFavorablePourInfiltration, } )
+                        Activate( self.activations.BEH_Dep_SePoster, 1.5, {} )
+                    end
+--[[// Hack car si pas condition fav myself.eEtatPionMission_ = 0  Attention pour automate!
+]]                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eSurveiller
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pointARenseigner, eProgressionReco, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Surveiller
+]]elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                Activate( self.activations.BEH_Rens_EnSurveillanceDe, 1, { self._namedParams.mission.zoneAObserver_, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointARenseigner ) > 200 ) then
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.pointARenseigner, eProgressionReco, eTypeItiInfiltration, } )
+                end
+
+                
+            --[[// Fin de la mission --> SUR ORDRE
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_RenseignerSur, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_RenseignerSur, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_RenseignerSur, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_RenseignerSur, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_RenseignerSur, "BEH_Dep_SePoster", nodes.BEH_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_RenseignerSur, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_RenseignerSur, "BEH_Rens_EnSurveillanceDe", nodes.BEH_Rens_EnSurveillanceDe }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_RenseignerSur, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

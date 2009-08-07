@@ -1,0 +1,282 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/populations/Actions.bms"] = true
+
+--[[// Actions utilitaires
+]]include "Population/Populations/Actions - misc.bms"
+
+
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pop_RalentissementPions
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Pop_RalentissementPions"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+                DEC_Population_RalentissementPion_ChangeVitesse( 2 )
+    end,
+
+    deselect = function( self )
+                DEC_Population_RalentissementPion_VitesseParDefaut()
+    end,
+
+    destroy = function( self )
+                DEC_Population_RalentissementPion_VitesseParDefaut()
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pop_PAPPions
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Pop_PAPPions"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rIntensite = self.params[1]
+    end,
+
+    select = function( self )
+                self.actionPions = self.actionPions or nil
+        self.bReprise = self.bReprise or false
+        self.intensite = self.intensite or 1
+        --[[//------------------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                self.intensite = self._namedParams.rIntensite
+                self.actionPions = DEC__StartTirSurPions( self.intensite )
+            end
+--[[//------------------------------------------------------------------------------------
+]]--[[// L'intensite a t-elle variee ?
+]]--[[//------------------------------------------------------------------------------------
+]]        end
+
+        if( self.intensite ~= self._namedParams.rIntensite ) then
+            do
+                self.actionPions = DEC_StopAction( self.actionPions )
+                self.intensite = self._namedParams.rIntensite
+                self.actionPions = DEC__StartTirSurPions( self.intensite )
+            end
+--[[//------------------------------------------------------------------------------------
+]]--[[// Reprise si interruption
+]]--[[//------------------------------------------------------------------------------------
+]]        end
+
+        if( self.bReprise ) then
+            do
+                DEC_ReprendAction( self.actionPions )
+                self.bReprise = true
+                DEC_RC( eRC_RepriseDesAffrontements )
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionPions )
+        self.bReprise = true
+    end,
+
+    destroy = function( self )
+                self.actionPions = DEC_StopAction( self.actionPions )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pop_PAPPion
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Pop_PAPPion"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.rIntensite = self.params[2]
+    end,
+
+    select = function( self )
+                self.actionPion = self.actionPion or nil
+        self.bReprise = self.bReprise or false
+        self.intensite = self.intensite or 1
+        --[[//------------------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                self.intensite = self._namedParams.rIntensite
+                self.actionPion = DEC__StartTirSurPion( self.intensite, self._namedParams.pion )
+            end
+--[[//------------------------------------------------------------------------------------
+]]--[[// L'intensite a t-elle variee ?
+]]--[[//------------------------------------------------------------------------------------
+]]        end
+
+        if( self.intensite ~= self._namedParams.rIntensite ) then
+            do
+                self.actionPion = DEC_StopAction( self.actionPion )
+                self.intensite = self._namedParams.rIntensite
+                self.actionPion = DEC__StartTirSurPion( self.intensite, self._namedParams.pion )
+            end
+--[[//------------------------------------------------------------------------------------
+]]--[[// Reprise si interruption
+]]--[[//------------------------------------------------------------------------------------
+]]        end
+
+        if( self.bReprise ) then
+            do
+                DEC_ReprendAction( self.actionPion )
+                self.bReprise = true
+                DEC_RC( eRC_RepriseDesAffrontements )
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionPion )
+        self.bReprise = true
+    end,
+
+    destroy = function( self )
+                self.actionPion = DEC_StopAction( self.actionPion )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pop_DegraderInstallations
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Pop_DegraderInstallations"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+        self._namedParams.intensite = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//------------------------------------------------------------------------------------
+]]--[[// Dégradation des installations à proximite
+]]--[[//------------------------------------------------------------------------------------
+]]        if( self._namedParams.intensite > 0 ) then
+            do
+                local lstInstallations = DEC_Connaissances_ObjetsDansZone( self._namedParams.zone, S_TypeObject_ToString( eTypeObjectInstallation ) )
+                for _,installation in pairs( lstInstallations ) do
+                local _continue = true
+                    do
+                        if( DEC_ConnaissanceObjet_Distance( installation ) < 10 ) then
+                            DEC_ConnaissanceObjet_Degrader( installation, S_IntensiteDegradationsInstallations() * self._namedParams.intensite )
+                        end
+
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pop_Stationner
+]]--[[//
+]]--[[// Commentaires: Cette action ne fait rien d'autre que preempter l'actuateur de
+]]--[[//               deplacement pour inhiber tout mouvement
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Pop_Stationner"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            DEC_Trace( "En stationnement" )
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                DEC_Trace( "Fin du stationnement" )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pop_RejoindrePoint
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Pop_RejoindrePoint"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+    end,
+
+    select = function( self )
+        --[[//DEC_Trace( " move "  );
+]]        self.actionMove = self.actionMove or nil
+        self.bReprise = self.bReprise or false
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Début déplacement" )
+                self.actionMove = DEC__StartDeplacement( self._namedParams.point )
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_Trace( "reprise déplacement" )
+                DEC_ReprendAction( self.actionMove )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionMove )
+        DEC_Trace( "pause déplacement" )
+        self.bReprise = true
+    end,
+
+    destroy = function( self )
+                self.actionMove = DEC_StopAction( self.actionMove )
+        DEC_Trace( "fin déplacement" )
+    end,
+
+}
+

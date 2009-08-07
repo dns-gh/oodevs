@@ -1,0 +1,14 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/automates/medical/Motivations.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Motivations des automates
+]]include "Common/Pions/Motivations V3/Etats.bms"

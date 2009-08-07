@@ -1,0 +1,6 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/radint/esc horizon/Motivations.bms"] = true
+
+include "Common/Pions/Motivations V3/Etats.bms"
+
+

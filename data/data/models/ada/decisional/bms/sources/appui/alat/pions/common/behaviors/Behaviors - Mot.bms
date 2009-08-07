@@ -1,0 +1,168 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Mot.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Comportement SePoster spécifique à l'ALAT
+]]--[[// -----------------------------------------------------------------------------
+]]node "BEH_MOT_Pion_ALAT_SePoster"
+{
+    activations =
+    {
+        { "ACT_MAJ_EtatOrdreCoordination", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_MAJ_EtatOrdreCoordination, 1, { eEtatOrdreCoordination_Attendre, } )
+        Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )
+    end,
+
+--[[//------------------------------------------------------------------------------
+]]--[[// BEH_MOT_Pion_ALAT_GarderSesDistances
+]]--[[//
+]]--[[// Commentaires: Il est nécessaire que la force S_Force_DangerSur soit comprise
+]]--[[// dans [1,2]
+]]--[[//------------------------------------------------------------------------------
+]]}
+
+node "BEH_MOT_Pion_ALAT_GarderSesDistances"
+{
+    activations =
+    {
+        { "ACT_MAJ_EtatDec", {} },
+        { "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
+        for _,repEni in pairs( listeUnitesEnnemiesDangereuses ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_MAJ_EtatDec, 1, { eEtatDec_Sauvegarde, } )
+                Activate( self.activations.BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA, S_Force_DangerSur( repEni ), { repEni, } )
+            end
+
+        end
+
+    end,
+
+--[[//------------------------------------------------------------------------------
+]]--[[// BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA
+]]--[[//
+]]--[[// Commentaires: Ce comportement utilise les priorites pour implémenté un
+]]--[[// systeme de rail. On calcule au debut de l'esquive un itineraire sur lequel
+]]--[[// on va se deplacer. Si on n'a plus besoin de se deplacer, on lance un
+]]--[[// comportement SePoster avec la meme force mais une priorité supérieure
+]]--[[// => on ne propage ainsi pas une force suplémentaire pour se poster, et on
+]]--[[// ne recalcule pas systématiquement une nouvelle esquive
+]]--[[//
+]]--[[/// On a tj:
+]]--[[//  rDistanceSauvegarde < rDistanceEsquive		
+]]--[[//
+]]--[[// Remarque : on a un probleme de precision dans les calculs des distances max
+]]--[[// => on prefere ajouter 1 m a la distance rDistanceSurete afin d'avoir un 
+]]--[[// rapport de force qui peut diminuer quand on est a cette distance.
+]]--[[//------------------------------------------------------------------------------
+]]}
+
+node "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA"
+{
+    instances =
+    {
+        boost = 1.01,
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+    end,
+
+    activate = function( self )
+        if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repEni ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( g_bDesactiveSauvegarde ) then
+            return
+        end
+
+        self.rDistanceEfficace = self.rDistanceEfficace or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, M_POLY_PH_TIR_ENI_EFFICACE() )
+        --[[// si je suis détecté (HACK)
+]]if( DEC_ConnaissanceAgent_PercoitUnite( self._namedParams.repEni ) ) then
+            Activate( self.activations.BEH_Eni_Pion_ALAT_DecrocherFaceA, 1, { self._namedParams.repEni, self.rDistanceEfficace, 0, } )
+        end
+
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Affecter les variables d'état pour les pions alat
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// En fonction du moral...
+]]--[[//-----------------------------------------------------------------------------
+]]        switch_1 = DEC_FacteurHumain_Moral()
+            if switch_1 == eMoral_Fanatique then
+                SetStateVariable( "VE_RapFor", 0 )
+                
+            elseif switch_1 == eMoral_Moyen
+            or switch_1 == eMoral_Bon then
+                SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                
+            elseif switch_1 == eMoral_Mauvais then
+                SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                
+                        end
+
+        if( DEC_GetMission( myself ) == nil ) then
+            SetStateVariable( "VE_Agressivite_Tir", 0 )
+        end
+
+        if( not DEC_Agent_EstTransporte() ) then
+            do
+                local tempsPourAllerRecompleter = S_Misc_Pion_ALAT_TempsPourAllerRecompleter()
+                local autonomieEnVol = DEC_Agent_AutonomieEnDeplacement()
+                myself.rNiveauAlerteRavitaillement_ = tempsPourAllerRecompleter + M_DOCTRINE_ALAT_TEMPS_SECURITE() - autonomieEnVol
+                SetStateVariable( "VE_TempsDeVol", myself.rNiveauAlerteRavitaillement_ )
+            end
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_RapFor", 0 )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_GarderSesDistances, "ACT_MAJ_EtatDec", nodes.ACT_MAJ_EtatDec }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_GarderSesDistances, "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA", nodes.BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA, "BEH_Eni_Pion_ALAT_DecrocherFaceA", nodes.BEH_Eni_Pion_ALAT_DecrocherFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_SePoster, "ACT_MAJ_EtatOrdreCoordination", nodes.ACT_MAJ_EtatOrdreCoordination }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_SePoster, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }

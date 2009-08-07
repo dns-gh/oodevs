@@ -43,8 +43,15 @@ public:
     //@}
 
 public:
-    DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
-    virtual ~DEC_PathPoint();
+    //! @name Constructor/Destructor
+    //@{
+             DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
+    virtual ~DEC_PathPoint();    
+protected:
+             DEC_PathPoint( const MT_Vector2D& vPos, const char* szDIARepType );
+    //@}
+
+public:
 
     //! @name Accessors
     //@{
@@ -63,6 +70,7 @@ public:
     //! @name DIA
     //@{
     virtual void SendToDIA    ( DEC_Representations& agent ) const;
+    const std::string& GetDIAType() const;
     //@}
 
     //! @name Debug
@@ -71,13 +79,13 @@ public:
     //@}
 
 protected:
-    DEC_PathPoint( const MT_Vector2D& vPos );
-
-protected:
     MT_Vector2D vPos_;
     E_Type      nType_;
     TerrainData nObjectTypes_;
-    TerrainData nObjectTypesToNextPoint_;   
+    TerrainData nObjectTypesToNextPoint_; 
+
+private:
+    std::string diaType_;
 };
 
 #include "DEC_PathPoint.inl"

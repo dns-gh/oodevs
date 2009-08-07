@@ -1,0 +1,60 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_INF_Freiner
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_INF_Freiner"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_Freiner", {} },
+        { "BEH_Conduite_Automate_INF_GererOrdre_Mortier", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eActionMission = self.eActionMission or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        --[[// Conduite des pions au niveau section
+]]--[[//-----------------------------------------------------------------------------		
+]]if( self.eActionMission == eActionEffectuee ) then
+            do
+                self.eActionMission = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Freiner, 1, {} )
+        local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( S_ObtenirPionsOperationnels(), GroupeInfanterie_Mortier )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererOrdre_Mortier, 1, { selAppuis_Mortier, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_INF_Freiner = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Freiner, "BEH_Conduite_Automate_INF_Defaut", nodes.BEH_Conduite_Automate_INF_Defaut }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Freiner, "BEH_Conduite_Automate_INF_Freiner", nodes.BEH_Conduite_Automate_INF_Freiner }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Freiner, "BEH_Conduite_Automate_INF_GererOrdre_Mortier", nodes.BEH_Conduite_Automate_INF_GererOrdre_Mortier }

@@ -1,0 +1,59 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/pel amx-erc/missions/Freiner.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-09-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Pel AMX-ERC/Missions/Freiner.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 7 $
+]]--[[// $Workfile: Freiner.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ABC_Freiner
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ABC_Freiner"
+{
+    activations =
+    {
+        { "BEH_Mission_Pion_ABC_Freiner", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionImpossible ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------   
+]]Activate( self.activations.BEH_Mission_Pion_ABC_Freiner, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_FREINER_PH(), M_MODELE_PION_ABC_FREINER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ABC_Freiner = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ABC_Freiner, "BEH_Mission_Pion_ABC_Freiner", nodes.BEH_Mission_Pion_ABC_Freiner }

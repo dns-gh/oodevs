@@ -1,0 +1,41 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zone/MettreEnOeuvreZoneStationnement.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_LOG_MettreEnOeuvreZoneStationnement
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_LOG_MettreEnOeuvreZoneStationnement"
+{
+    activations =
+    {
+        { "BEH_Pion_CIRCU_RealiserObjetDansZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        --[[//---------------------------------------------------------------------
+]]--[[// Comportement générique
+]]--[[//---------------------------------------------------------------------
+]]Activate( self.activations.BEH_Pion_CIRCU_RealiserObjetDansZone, 1, { self._namedParams.mission.zone_, eTypeObjectZoneMobiliteAmelioree, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_LOG_MettreEnOeuvreZoneStationnement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_MettreEnOeuvreZoneStationnement, "BEH_Pion_CIRCU_RealiserObjetDansZone", nodes.BEH_Pion_CIRCU_RealiserObjetDansZone }

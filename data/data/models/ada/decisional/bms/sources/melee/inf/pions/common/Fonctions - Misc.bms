@@ -1,0 +1,163 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/common/Fonctions - Misc.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Common/Fonctions - Misc.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 11 $
+]]--[[// $Workfile: Fonctions - Misc.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Recupere le point de destination d'un itineraire_ T_ListePoints
+]]--[[//-------------------------------------------------------------------------
+]]--[[//=============================================================================
+]]--[[// Regarde si toutes les unites en appui sont pretes
+]]--[[//=============================================================================
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie true si l ennemi m a detecte, sinon false
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Perception_Pion S_Cherche_Pion_INF_EniPercu()
+]]--[[//
+]]--[[// Retourne l'unite la plus 'dangereuse' pour le pion
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Perception_Pion S_Eni__ChercheAppui()
+]]--[[//
+]]--[[// Retourne l'unite la plus 'dangereuse' pour le pion en prenant d'abord
+]]--[[// en compte les unites ennemies sur lesquelles on a demande un appui
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 15/06/2004 14:50
+]]--[[// Cree une itineraire sur lequel se trouve un PIA
+]]--[[// ----------------------------------------------------------------------------				
+]]--[[// Si le PIA est le plus proche, en premier sur l'iti
+]]--[[// Si le PIA est plus loin, on l'insert en dernier, 
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 16/06/2004 10:47
+]]--[[// Cree un itineraire a partir d'un seul point
+]]--[[// ----------------------------------------------------------------------------
+]]function S_Dep_PointItineraireDest( it )
+    local _returnValue = nil
+    _returnValue = DEC_ListePoints_GetAt( it, DEC_ListePoints_Size( it ) - 1 )
+    return _returnValue
+end
+
+function S_UnitesAppuis_EnPosition( )
+    local _returnValue = false
+    local sAppuis = F_Pion_GetselUnitesEnAppui( myself )
+    _returnValue = true
+    for _,x in pairs( sAppuis ) do
+    local _continue = true
+do
+            local tAppui = x
+            if( F_Pion_GeteEtatPhaseMission( tAppui ) ~= eEtatPhaseMission_EnAppui ) then
+                do
+                    _returnValue = false
+                                        return _returnValue
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_EstDetecteParEnis( )
+    local _returnValue = false
+    _returnValue = false
+    local lstEnisPercues = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
+    for _,ksEni in pairs( lstEnisPercues ) do
+    local _continue = true
+do
+            if( DEC_ConnaissanceAgent_PercoitUnite( ksEni ) ) then
+                do
+                    _returnValue = true
+                                        return _returnValue
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Cherche_Pion_INF_EniPercu( )
+    local _returnValue = nil
+    local rMaxForce = 0
+    _returnValue = nil
+    local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
+    for _,ksEni in pairs( lstEnisPercus ) do
+    local _continue = true
+do
+            if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
+                _continue = false
+            end
+
+                if _continue then
+                local rForce = 1 + S_Force_ActionContre( ksEni )
+                if( rForce > rMaxForce ) then
+                    do
+                        rMaxForce = rForce
+                        _returnValue = ksEni
+                    end
+                end
+
+            end
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Eni_Pion_INF_ChercheAppui( )
+    local _returnValue = nil
+    _returnValue = S_Cherche_Pion_INF_EniPercu()
+    return _returnValue
+end
+
+function S_CreerItineraire_PIA( itBase, ptPIA )
+    local _returnValue = {}
+    _returnValue = nil
+    local ptDernier = S_Dep_PointItineraireDest( itBase )
+    local rDist_Dest = DEC_Geometrie_Distance( DEC_Agent_Position(), ptDernier )
+    if( ptPIA == nil ) then
+        return _returnValue
+    end
+
+    _returnValue = DEC_Geometrie_CreerListePoints()
+    if( DEC_Geometrie_Distance( DEC_Agent_Position(), ptPIA ) < rDist_Dest ) then
+        do
+            DEC_Copie_PointDansListePoints( ptPIA, _returnValue )
+            DEC_ListePoints_PushBack( _returnValue, ptDernier )
+        end
+    else
+do
+            DEC_Copie_PointDansListePoints( ptDernier, _returnValue )
+            DEC_ListePoints_PushBack( _returnValue, ptPIA )
+        end
+    end
+
+    local rIti_Size = DEC_ListePoints_Size( _returnValue )
+    return _returnValue
+end
+
+function S_CreerItineraire_Pt( ptDest )
+    local _returnValue = {}
+    _returnValue = DEC_Geometrie_CreerListePoints()
+    DEC_Copie_PointDansListePoints( ptDest, _returnValue )
+    return _returnValue
+end
+

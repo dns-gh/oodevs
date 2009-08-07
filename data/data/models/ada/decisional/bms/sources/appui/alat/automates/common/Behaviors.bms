@@ -1,0 +1,95 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/Behaviors.bms"] = true
+
+--[[// Common Squadron Behaviors and Actions
+]]--[[// -------------------------------------
+]]include "Common/Automates/Behaviors.bms"
+
+include "Common/Automates/Behaviors/Medo/Behaviors - Medo - ALAT.bms"
+
+
+--[[// Common AAC Squadron Behaviors and Actions
+]]--[[// -----------------------------------------
+]]include "Appui/Alat/Automates/Common/Actions.bms"
+
+include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Manoeuvre.bms"
+
+include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Tir.bms"
+
+include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Log.bms"
+
+include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Rc.bms"
+
+include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
+
+
+
+--[[// Default Behavior
+]]--[[//-----------------
+]]node "BEH_Defaut"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
+        { "BEH_ROE_Automate_GererOrdre", {} },
+        { "BEH_RC_Automate_ALAT_Situation", {} },
+        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+        { "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau", {} },
+        { "BEH_Log_Automate_ALAT_GererPlotsRavitaillement", {} },
+        { "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        self.listePionsAvecPC = self.listePionsAvecPC or {}
+        self.listePionsAvecPC = DEC_Automate_PionsAvecPC()
+        myself.sPlotsDeRavitaillement_ = S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ )
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ---------------------------------------------------------------------
+]]--[[// CR automates génériques sur eni et situation mission
+]]--[[// ---------------------------------------------------------------------
+]]
+        --[[// -------------------------------------------------------------------------
+]]--[[// si l'automate n'est pas embrayé
+]]--[[// -------------------------------------------------------------------------
+]]if( DEC_Automate_EstEmbraye() ) then
+            do
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )
+                Activate( self.activations.BEH_RC_Automate_ALAT_Situation, 1, {} )--[[// ---------------------------------------------------------------------
+]]--[[// CR automates spécifique à l'ALAT
+]]--[[// ---------------------------------------------------------------------
+]]
+                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )
+                if( DEC_GetMission( myself ) ~= nil ) then
+                    do
+                        Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, {} )
+                        Activate( self.activations.BEH_Log_Automate_ALAT_GererPlotsRavitaillement, 1, {} )
+                    end
+                end
+
+            end
+--[[// gestion de l'ordre de conduite changement des paramètres de recompletement ALAT
+]]        end
+
+        Activate( self.activations.BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement, 1, {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_RC_Automate_Situation", nodes.BEH_RC_Automate_Situation }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc_Automate_GererAlerteNiv4", nodes.BEH_Nbc_Automate_GererAlerteNiv4 }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE_Automate_GererOrdre", nodes.BEH_ROE_Automate_GererOrdre }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_RC_Automate_ALAT_Situation", nodes.BEH_RC_Automate_ALAT_Situation }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens_Automate_GererSilenceRadio", nodes.BEH_Rens_Automate_GererSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau", nodes.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Log_Automate_ALAT_GererPlotsRavitaillement", nodes.BEH_Log_Automate_ALAT_GererPlotsRavitaillement }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement", nodes.BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement }

@@ -1,0 +1,231 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.ptZone = self.params[3]
+    end,
+
+    select = function( self )
+        self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
+]]--[[// Cree la Mission
+]]--[[//-----------------------------------------------------------------------------	
+]]
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//-----------------------------------------------------------------------------		
+]]if( ModuleBegins() ) then
+            do
+            end
+        else
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+        --[[// Zone
+]]DEC_Copie_Point_Mission( self._namedParams.ptZone, self.missionPion, "positionDeploiement_" )
+        --[[// Infos globales	    
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[// Marquage échelon
+]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Envoie la mission si l'on se trouve dans la conduite
+]]--[[//-----------------------------------------------------------------------------
+]]if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// *****************************************************************************
+]]--[[// ACT_Mission_Automate_ASS_AcquerirObjectifsA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Mission_Automate_ASS_AcquerirObjectifsA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.ptDeploiement = self.params[3]
+        self._namedParams.locZone = self.params[4]
+    end,
+
+    select = function( self )
+        self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
+]]--[[// Cree la Mission
+]]--[[//-----------------------------------------------------------------------------	
+]]
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_RATAC_AcquerirObjectifs" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_RATAC_AcquerirObjectifs" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//-----------------------------------------------------------------------------		
+]]if( ModuleBegins() ) then
+            do
+            end
+        else
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+        --[[// Point d'installation
+]]DEC_Copie_Point_Mission( self._namedParams.ptDeploiement, self.missionPion, "positionDeploiement_" )
+        --[[// Zone
+]]DEC_Copie_Localisation_Mission( self._namedParams.locZone, self.missionPion, "zoneAObserver_" )
+        --[[// Infos globales	    
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[// Marquage échelon
+]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Envoie la mission si l'on se trouve dans la conduite
+]]--[[//-----------------------------------------------------------------------------
+]]if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[//-----------------------------------------------------------------------------	
+]]--[[// *****************************************************************************
+]]--[[// ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.zone = self.params[3]
+        self._namedParams.automate = self.params[4]
+        self._namedParams.eEtatEchelon = self.params[5]
+    end,
+
+    select = function( self )
+        self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
+]]--[[// Cree la Mission
+]]--[[//-----------------------------------------------------------------------------	
+]]
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_EO_AcquerirObjectifs" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_EO_AcquerirObjectifs" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        if( ModuleBegins() ) then
+            DEC_Trace( "Assigne mission 'AcquerirObjectifs' a " .. DEC_GetSzName( self._namedParams.pion ) )
+        else
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+        --[[// Zone
+]]DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zoneAObserver_" )
+        --[[// Unite à appuyer
+]]DEC_AssignMissionParameter( self.missionPion, "automateAAppuyer_", self._namedParams.automate )
+        --[[// Infos globales	    
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[// Marquage échelon
+]]F_Pion_SeteEtatEchelon( self._namedParams.pion, self._namedParams.eEtatEchelon )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Envoie la mission si l'on se trouve dans la conduite
+]]--[[//-----------------------------------------------------------------------------
+]]if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[//-----------------------------------------------------------------------------	
+]]

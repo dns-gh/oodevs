@@ -1,0 +1,17 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/log/automates/missions/Missions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Log/Automates/Missions/Missions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 20/06/05 11:05 $
+]]--[[// $Revision: 18 $
+]]--[[// $Workfile: Missions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+include "Appui/Log/Automates/Missions/SeDeployer - CDT.bms"
+
+include "Appui/Log/Automates/Missions/SeDeployer - MRT.bms"

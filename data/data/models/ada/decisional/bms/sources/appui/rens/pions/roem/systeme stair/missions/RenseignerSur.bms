@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roem/systeme stair/missions/RenseignerSur.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_RENS_ROEM_RenseignerSur
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_RENS_ROEM_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Mission_Pion_RENS_ROEM_RenseignerSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionImpossible ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/* ecoute radar*/]]Activate( self.activations.BEH_Mission_Pion_RENS_ROEM_RenseignerSur, 1, setmetatable( { self._namedParams.mission, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_RENS_ROEM_RenseignerSur = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROEM_RenseignerSur, "BEH_Mission_Pion_RENS_ROEM_RenseignerSur", nodes.BEH_Mission_Pion_RENS_ROEM_RenseignerSur }

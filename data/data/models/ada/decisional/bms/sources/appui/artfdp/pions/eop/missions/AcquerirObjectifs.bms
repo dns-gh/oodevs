@@ -1,0 +1,272 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/eop/missions/AcquerirObjectifs.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 19/09/05 10:09 $
+ * $Revision: 20 $
+ *
+ */]]--[[// Created: JCR 03-02-13
+]]--[[// *****************************************************************************
+]]--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]
+
+node "MIS_Pion_ASS_EOP_AcquerirObjectifs"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Dep_Pion_EOP_ActiverFurtivite", {} },
+        { "BEH_Pion_EOP_AcquerirObjectifs_Mission", {} },
+        { "BEH_Transport_Pion_EOP_RecupererTransporteur", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.eActionEmbarquer = self.eActionEmbarquer or eActionEnCours
+        self.ePhase = self.ePhase or eReconnaitre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eSeReplier
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.ACT_Dep_Pion_EOP_ActiverFurtivite, 1, { 0.5, } )
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                Activate( self.activations.BEH_Pion_EOP_AcquerirObjectifs_Mission, GetMotivation( "MOT_Mission" ), {} )
+                
+            --[[// Sur fin de mission, on se replie
+]]elseif switch_1 == eSeReplier then
+                if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.mission.positionDebarquement_, 100 ) ) then
+                    Activate( self.activations.BEH_Transport_Pion_EOP_RecupererTransporteur, 1, {} )
+                end
+
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                        self.ePhase = eFinMission
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDebarquement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( self.eActionEmbarquer == eActionEnCours ) then
+                    return
+                end
+
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                
+                        end
+
+    end,
+
+--[[// Lorsque l'on arrive au point de debarquement, on se deploie
+]]}
+
+node "BEH_Pion_EOP_AcquerirObjectifs_Mission"
+{
+    activations =
+    {
+        { "ACT_Dep_PasserEnModeFurtif", {} },
+        { "BEH_Mot_Pion_EOP_Debarquer", {} },
+        { "BEH_Dep_Pion_EOP_PreparerDebarquement", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission", {} },
+        { "ACT_Dep_Pion_EOP_ActiverFurtivite", {} },
+        { "BEH_Obs_Pion_ASS_ReconnaissanceZone", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or ePreparerMission
+        if( self.ePhase == eRejoindre and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.positionDebarquement_, 300 ) ) then
+            do
+                StartActivate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                StartActivate( self.activations.BEH_Mot_Pion_EOP_Debarquer, 1.1, { true, } )
+                StartActivate( self.activations.BEH_Dep_Pion_EOP_PreparerDebarquement, 1.1, {} )
+                self.ePhase = eDeployer
+            end
+        end
+
+        if( self.eAction ~= eActionEnCours ) then
+            do
+                self.eAction = eActionEnCours
+                self.ePhase = eSurveiller
+            end
+        end
+
+        do
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
+                self.ePhase = eRejoindre
+            elseif switch_1 == eDeployer
+            or switch_1 == eRejoindre then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                Activate( self.activations.BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission, 1, setmetatable( { self.mission.positionInstallation_, self.mission.positionDebarquement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
+                Activate( self.activations.ACT_Dep_Pion_EOP_ActiverFurtivite, 1.1, { 0.1, } )
+                Activate( self.activations.BEH_Obs_Pion_ASS_ReconnaissanceZone, 1, { self.mission.zoneAObserver_, } )
+                
+            --[[// persistent E_EtatAction		eActionDebarquement = eActionEnCours;
+]]            end
+
+    end,
+
+--[[// if ( DIA_ModuleBegins() )
+]]}
+
+node "BEH_Dep_Pion_EOP_PreparerDebarquement"
+{
+    activations =
+    {
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Misc_Pion_DelaiInstallation", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// start action ACT_Transport_Pion_EOP_Debarquer( true ) : strength = 1.1;
+]]self.eActionDelai = self.eActionDelai or eActionEnCours
+        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+        if( self.eActionDelai == eActionEffectuee ) then
+            do
+                self.eActionDelai = eActionEnCours
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+        end
+
+        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
+{
+    activations =
+    {
+        { "BEH_Dep_Progresser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptDest = self.params[1]
+        self._namedParams.ptPassage = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[// On cree un itineraire qui passe par la position de debarquement
+]]--[[// vers la position d'installation			
+]]        self.itineraire_Pt = self.itineraire_Pt or S_Misc_CreerItineraire_Points( self._namedParams.ptDest, self._namedParams.ptPassage )
+        self.eAction = self.eAction or eActionEnCours
+        self.it = self.it or DEC_CreerItineraireListe( self.itineraire_Pt, eTypeItiInfiltration )
+        if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                    self.it = S_Misc_DetruireItineraire( self.it, "BEH_Pion_INF_ApprocherObjectifMission" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                do
+                    self.it = S_Misc_DetruireItineraire( self.it, "BEH_Pion_INF_ApprocherObjectifMission" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.it, eProgressionReco, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+                self.it = S_Misc_DetruireItineraire( self.it, "BEH_Pion_INF_ApprocherObjectifMission" )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ASS_EOP_AcquerirObjectifs = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission, "BEH_Dep_Progresser", nodes.BEH_Dep_Progresser }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_EOP_PreparerDebarquement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_EOP_PreparerDebarquement, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_EOP_PreparerDebarquement, "ACT_Misc_Pion_DelaiInstallation", nodes.ACT_Misc_Pion_DelaiInstallation }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_EOP_AcquerirObjectifs_Mission, "ACT_Dep_PasserEnModeFurtif", nodes.ACT_Dep_PasserEnModeFurtif }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_EOP_AcquerirObjectifs_Mission, "BEH_Mot_Pion_EOP_Debarquer", nodes.BEH_Mot_Pion_EOP_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_EOP_AcquerirObjectifs_Mission, "BEH_Dep_Pion_EOP_PreparerDebarquement", nodes.BEH_Dep_Pion_EOP_PreparerDebarquement }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_EOP_AcquerirObjectifs_Mission, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_EOP_AcquerirObjectifs_Mission, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_EOP_AcquerirObjectifs_Mission, "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission", nodes.BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_EOP_AcquerirObjectifs_Mission, "ACT_Dep_Pion_EOP_ActiverFurtivite", nodes.ACT_Dep_Pion_EOP_ActiverFurtivite }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_EOP_AcquerirObjectifs_Mission, "BEH_Obs_Pion_ASS_ReconnaissanceZone", nodes.BEH_Obs_Pion_ASS_ReconnaissanceZone }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_EOP_AcquerirObjectifs, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_EOP_AcquerirObjectifs, "ACT_Dep_Pion_EOP_ActiverFurtivite", nodes.ACT_Dep_Pion_EOP_ActiverFurtivite }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_EOP_AcquerirObjectifs, "BEH_Pion_EOP_AcquerirObjectifs_Mission", nodes.BEH_Pion_EOP_AcquerirObjectifs_Mission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_EOP_AcquerirObjectifs, "BEH_Transport_Pion_EOP_RecupererTransporteur", nodes.BEH_Transport_Pion_EOP_RecupererTransporteur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_EOP_AcquerirObjectifs, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_EOP_AcquerirObjectifs, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

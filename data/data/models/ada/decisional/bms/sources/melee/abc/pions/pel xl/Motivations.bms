@@ -1,0 +1,196 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/pel xl/Motivations.bms"] = true
+
+--[[// Générique
+]]include "Common/Pions/Motivations.bms"
+
+
+--[[// *****************************************************************************
+]]--[[//  VE_RapForInfiltration
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.statevariables[ "VE_RapForInfiltration" ] =
+{
+    --[[// Boundary of the comfort interval. 
+]]min_confort = 0,
+    --[[// Boundary of the comfort interval.
+]]max_confort = 2.4,
+    --[[// Boundary of the tolerance interval.
+]]tolerance_limit = 3.5,
+    --[[// Boundary of the comfort interval.
+]]viability_limit = 5,
+    --[[// Initial value of the state variable.
+]]init_value = 0,
+    --[[// Evolution of the variable for 1 time unit.
+]]natural_evolution = 0,
+    --[[// Output when state variable is max_confort.
+]]tolerance_min_output = 0,
+    --[[// Output when state variable is tolerance_limit.
+]]tolerance_max_output = 10,
+    --[[// Max output of the state variable.
+]]viability_max_output = 10,
+    --[[// emergency_increase_rate + tolerance_max_output
+]]emergency_increase_rate = 10,
+}
+
+--[[// = Output when state variable is at
+]]--[[// (tolerance_limit + viability_limit) / 2.
+]]--[[// *****************************************************************************
+]]--[[//  STIM_TirEffectue
+]]--[[//
+]]--[[//	Commentaires: utilisé dans l'ABC
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_TirEffectue"
+node "ActivationForSTIM_TirEffectue"
+{
+    activate = function( self )
+        --[[//Defaut
+]]SetStimulus( "STIM_TirEffectue", 0 )
+        --[[// vrai un tick ou plus
+]]if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
+            SetStimulus( "STIM_TirEffectue", 1 )
+        end
+
+    --[[// Spé mêlée
+]]--[[//include "Melee\Common\Motivations\Etats.bms"
+]]--[[// *****************************************************************************
+]]--[[//  MOT_AcquerirEnis
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.motivations[ "MOT_AcquerirEnis" ] =
+{
+    activation = {
+        STIM_TirEffectue = 300,
+    },
+    amplification = {
+    },
+    reduction = {
+        STIM_PriseAPartieTirDirect = { 0, 1 }    },
+    max_increase_rate = 300,
+    max_decrease_rate = 0.5,
+    max_output_value = 300,
+}
+
+node "ActivatedByMOT_AcquerirEnis"
+{
+    activations =
+    {
+        { "BEH_MOT_TirerSurEnis", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_TirerSurEnis, -GetMotivation( "MOT_AcquerirEnis" ), {} )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_SInfiltrer
+]]--[[//
+]]--[[//	Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_SInfiltrer" ] =
+{
+    activation = {
+        VE_RapForInfiltration = 1000,
+        STIM_PriseAPartieTirDirect = 1000,
+        STIM_PriseAPartieTirInDirect = 1000,
+    },
+    amplification = {
+        STIM_PriseAPartieTirDirect = { 0, 1 }    },
+    reduction = {
+    },
+    max_increase_rate = 1000,
+    max_decrease_rate = 4,
+    max_output_value = 1000,
+}
+
+node "ActivatedByMOT_SInfiltrer"
+{
+    activations =
+    {
+        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Mise à jour si moral mauvais ==> valeur = celle du rapFor 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer, GetMotivation( "MOT_SInfiltrer" ), {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { motivation( "MOT_AcquerirEnis" ), nodes.ActivatedByMOT_AcquerirEnis }
+connections[ #connections + 1 ] = { motivation( "MOT_SInfiltrer" ), nodes.ActivatedByMOT_SInfiltrer }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_TirEffectue }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_AcquerirEnis, "BEH_MOT_TirerSurEnis", nodes.BEH_MOT_TirerSurEnis }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_SInfiltrer, "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer", nodes.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer }

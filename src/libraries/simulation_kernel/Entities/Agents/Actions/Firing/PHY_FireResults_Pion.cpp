@@ -107,7 +107,7 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
         const MIL_Population&               population = *it->first;
         const PHY_FireDamages_Population&   damages    =  it->second;
 
-        uint rNbrWounded = damages.GetNbrKilledHumans() * randomGenerator.rand_ii( 0.6, 0.75 );
+        uint rNbrWounded = static_cast< unsigned int >( damages.GetNbrKilledHumans() * randomGenerator.rand_ii( 0.6, 0.75 ) );
 
         MIL_Report::PostEvent( population, MIL_Report::eReport_ConfrontationWithPopulation, damages.GetNbrKilledHumans(), rNbrWounded );
         MIL_Report::PostEvent( firer_    , MIL_Report::eReport_ConfrontationWithPopulation, damages.GetNbrKilledHumans(), rNbrWounded );

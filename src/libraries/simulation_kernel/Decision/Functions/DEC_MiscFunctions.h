@@ -14,9 +14,23 @@
 
 #include "MIL.h"
 #include "MT_Tools/MT_Random.h"
+#include <boost/shared_ptr.hpp>
 
+class DEC_Decision_ABC;
+class DEC_Knowledge_Agent;
+class DEC_Knowledge_Object;
+class DEC_Knowledge_Population;
+class DEC_PathPoint;
 class MIL_AgentPion;
 class MIL_Entity_ABC;
+class MIL_FragOrder;
+class MIL_Mission_ABC;
+class MT_Vector2D;
+
+namespace directia
+{
+    class ScriptRef;
+}
 
 // =============================================================================
 // Created: NLD 2004-07-08
@@ -25,31 +39,46 @@ class DEC_MiscFunctions
 {
 public:
     // Communication
-    template< typename T > static void RC_Operational( DIA_Call_ABC& call, T& caller );
-    template< typename T > static void RC_Message    ( DIA_Call_ABC& call, T& caller );
-    template< typename T > static void RC_Warning    ( DIA_Call_ABC& call, T& caller );    
+    template< typename T > static void Report                   ( T& caller, int type, int reportId );
+    template< typename T > static void ReportAgentKnowledge     ( T& caller, int type, int reportId, DEC_Knowledge_Agent* agentKnowledge );
+    template< typename T > static void ReportDotationType       ( T& caller, int type, int reportId, const PHY_DotationCategory* dotationType );
+    template< typename T > static void ReportEquipmentType      ( T& caller, int type, int reportId, const PHY_ComposanteTypePion* equipmentType );
+    template< typename T > static void ReportFloat              ( T& caller, int type, int reportId, float param );
+    template< typename T > static void ReportFloatFloat         ( T& caller, int type, int reportId, float param1, float param2 );
+    template< typename T > static void ReportId                 ( T& caller, int type, int reportId, int id );
+    template< typename T > static void ReportObjectKnoweldge    ( T& caller, int type, int reportId, DEC_Knowledge_Object* objectKnowledge );
+    template< typename T > static void ReportPion               ( T& caller, int type, int reportId, DEC_Decision_ABC* pion );
+    template< typename T > static void ReportPionAutomate       ( T& caller, int type, int reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate );
+    template< typename T > static void ReportPopulationKnowledge( T& caller, int type, int reportId, DEC_Knowledge_Population* populationKnowledge );
+    template< typename T > static void ReportTirPion            ( T& caller, int type, int reportId, int id );
+
+    template< typename T > static void Trace          			( const T& caller, const std::string& message );
+    template< typename T > static void Debug          			( const T& caller, const std::string& callerType, const std::string& message );
+    template< typename T > static void DebugDrawPoints			( const T& caller, std::vector< boost::shared_ptr< MT_Vector2D > > points );
+    template< typename T > static void DebugDrawPoint 			( const T& caller, const MT_Vector2D* pPoint  );
   
     // Reinforcement
-    static void Reinforce          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );            
-    static void CancelReinforcement( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );           
-    static void GetReinforcements  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static std::vector<DEC_Decision_ABC*> GetReinforcements  ( const MIL_AgentPion& callerAgent );
+    static bool Reinforce          ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget );            
+    static void CancelReinforcement( MIL_AgentPion& callerAgent );           
 
     // Misc
-    static void SetCurrentSpeedModificator( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void SetMaxSpeedModificator    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, MT_Float rFactor );
+    static void SetMaxSpeedModificator    ( MIL_AgentPion& callerAgent, MT_Float rFactor );
     
     // Representations
-    static void GetCategory         ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void AddToCategory       ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void RemoveFromCategory  ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void DeleteRepresentation( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    static std::vector<MIL_FragOrder*> GetOrdersCategory ( MIL_Entity_ABC& callerAgent );
+    static std::vector<DEC_PathPoint*> GetPointsCategory ( MIL_Entity_ABC& callerAgent );
+    static void RemoveFromOrdersCategory                 ( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder );
+    static void DeleteOrderRepresentation                ( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder );
+    static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, DEC_PathPoint* pPoint );
     
-    static void GetMission         ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void SetMission         ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );  
-    static void GetName            ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void GetAutomate        ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void GetDirectionEnnemi ( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
-    static void CopyDirectionDanger( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent );
+    //
+    static void FillMissionParameters                         ( const directia::ScriptRef& refMission, MIL_Mission_ABC* mission );
+    static std::string  GetName                               ( DEC_Decision_ABC* pEntity );
+    static DEC_Decision_ABC* GetAutomate                      ( DEC_Decision_ABC* pAgent );
+    static boost::shared_ptr< MT_Vector2D > GetDirectionEnnemi( MIL_Mission_ABC* pMission );
+    static void CopyDirectionDanger                           ( MT_Vector2D* pPosSource, MIL_Mission_ABC* pMission );
 };
 
 #include "DEC_MiscFunctions.inl"

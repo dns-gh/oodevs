@@ -12,6 +12,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Numeric constructor
@@ -31,60 +32,21 @@ MIL_ParameterType_Numeric::~MIL_ParameterType_Numeric()
 {
     // NOTHING
 }
-    
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Numeric::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_Numeric::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_aReal ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( to.Type() != eFloat )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    if( !NET_ASN_Tools::CopyNumeric( from.value.u.aReal, to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Numeric::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_Numeric::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Numeric::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.Type() != eFloat )
-        return false;
-
-    // Check dest
-    if( to.Type() != eFloat )
-        return false;
-
-    NET_ASN_Tools::CopyNumeric( from, to );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Numeric::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_Numeric::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( from.Type() != eFloat )
+    if( !from.IsOfType( *this ) )
         return false;
 
     to.null_value = false;
     to.value.t    = T_MissionParameter_value_aReal;
     
-    if( !NET_ASN_Tools::CopyNumeric( from, to.value.u.aReal ) )
-        return false;
-
-    return true;
+    return from.ToNumeric( to.value.u.aReal );
 }
 
 // -----------------------------------------------------------------------------

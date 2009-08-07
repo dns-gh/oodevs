@@ -1,0 +1,23 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt satcp mistral/Parameters.bms"] = true
+
+--[[// =============================================================================
+]]--[[// Paramètres de déploiement des sections MISTRAL
+]]--[[// =============================================================================
+]]function M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS()
+    return 7000
+end
+
+
+
+function M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE()
+    return 2000
+end
+
+
+
+function M_POLY_DOCTRINE_DISTANCE_ENTRE_RIDEAUX()
+    return 5000
+end
+
+

@@ -1,0 +1,250 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/missions/Jalonner.bms"] = true
+
+include "bit.lua"
+
+
+--[[//------------------------------------------------------------------------------
+]]--[[// MIS_ALAT_Jalonner
+]]--[[//==================
+]]--[[//
+]]--[[//- Fin Mission si crash sur avarie carburant (eFinMission)
+]]--[[//ajouter formation en rideau
+]]--[[//se poser à la fin de la mission pour ne plus consommer de fuel
+]]--[[//pour cette mission, pas d'objectif courant sauf quand on veut retourner au 
+]]--[[//point de ravitaillement
+]]--[[//
+]]--[[// pour cette mission, on desactive la sauvegarde dans le combat de rencontre
+]]--[[// dans la phase eJalonner car on gere deja la sauvegarde de jalonner
+]]--[[// tirs tous les 15 minutes si on jalonne un ennemi pendant ce temps
+]]--[[//
+]]--[[// - Si crash sur avarie carburant, alors, faire fin mission
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_ALAT_Jalonner"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Manoeuvre_Pion_GererRecueil", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Eni_Pion_ALAT_GererUnitesDetectes", {} },
+        { "BEH_Eni_Pion_ALAT_GererEniJalonner", {} },
+        { "BEH_Eni_Pion_ALAT_JalonnerGererFeu", {} },
+        { "ACT_Maj_Pions_ObjectifCourant", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eJalonner
+        self.pointFinFuseau = self.pointFinFuseau or nil
+        self.pointDebutFuseau = self.pointDebutFuseau or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                end
+
+                self.pointFinFuseau = DEC_Geometrie_CalculerPointArrivee()
+                self.pointDebutFuseau = DEC_Geometrie_CalculerPointDepart()
+                DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                if( self.ePhase ~= eFinMission and self.ePhase ~= eSExfiltrer ) then
+                    do
+                        self.ePhase = eSExfiltrer
+                        self.eEtat = eActionEnCours
+                    end
+                end
+
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Manoeuvre_Pion_GererRecueil, 10, {} )
+        switch_1 = self.ePhase
+            if switch_1 == eJalonner then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnJalonnement, } )
+                Activate( self.activations.BEH_Eni_Pion_ALAT_GererUnitesDetectes, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
+                Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniJalonner, GetMotivation( "MOT_Manoeuvrer" ) * 4, { self._namedParams.mission.ciblesPrioritaires_, self.pointDebutFuseau, } )
+                Activate( self.activations.BEH_Eni_Pion_ALAT_JalonnerGererFeu, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 8, { self.pointDebutFuseau, self._namedParams.mission.ciblesPrioritaires_, } )
+                
+            elseif switch_1 == eSExfiltrer then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Warning( eRC_MissionImpossible )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                end
+
+                Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointRegroupement_, } )
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                DIA_Clear( myself.plotsRavitaillement_ )
+        F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+--[[//------------------------------------------------------------------------------
+]]--[[// GererEnnemisMissionJalonner
+]]--[[//------------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ALAT_GererEniJalonner"
+{
+    activations =
+    {
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "ACT_RC", {} },
+        { "BEH_Eni_Pion_ALAT_Jalonner", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeCiblePrioritaire = self.params[1]
+        self._namedParams.pointDebutFuseau = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
+        Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.pointDebutFuseau, } )
+        --[[// gestion des unités reconnues
+]]local listeUnitesEnnemiesVivantesDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
+        for _,x in pairs( listeUnitesEnnemiesVivantesDansFuseau ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_RC, 1, { eRC_EnJalonnement, } )
+                Activate( self.activations.BEH_Eni_Pion_ALAT_Jalonner, S_Force_Pion_ALAT_Jalonner( self._namedParams.pointDebutFuseau, x, self._namedParams.typeCiblePrioritaire ) * 2, { x, M_POLY_DISTANCE_SECURITE_ESQUIVE(), } )
+            end
+
+        end
+
+    end,
+
+--[[//------------------------------------------------------------------------------
+]]--[[// JalonnerGererFeuSur :
+]]--[[//
+]]--[[// Prendre a partie les ennis tous les 15 minutes
+]]--[[//
+]]--[[// force entre [0, 2]
+]]--[[//------------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ALAT_JalonnerGererFeu"
+{
+    activations =
+    {
+        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pointDirectionJalonnement = self.params[1]
+        self._namedParams.typeCiblePrioritaire = self.params[2]
+    end,
+
+    activate = function( self )
+        if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        local listeUnitesEnnemiesVivantesPercuesDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
+        for _,x in pairs( listeUnitesEnnemiesVivantesPercuesDansFuseau ) do
+        local _continue = true
+do
+                if( not DEC_ConnaissanceAgent_EstValide( x ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    Activate( self.activations.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, S_Force_Pion_ALAT_Jalonner( self._namedParams.pointDirectionJalonnement, x, self._namedParams.typeCiblePrioritaire ), { 15, x, eReconnu, 0.34, M_DOCTRINE_PION_ALAT_PH(), false, } )
+                end
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ALAT_Jalonner = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_GererEniJalonner, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_GererEniJalonner, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_GererEniJalonner, "BEH_Eni_Pion_ALAT_Jalonner", nodes.BEH_Eni_Pion_ALAT_Jalonner }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_JalonnerGererFeu, "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", nodes.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "BEH_Manoeuvre_Pion_GererRecueil", nodes.BEH_Manoeuvre_Pion_GererRecueil }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "BEH_Eni_Pion_ALAT_GererUnitesDetectes", nodes.BEH_Eni_Pion_ALAT_GererUnitesDetectes }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "BEH_Eni_Pion_ALAT_GererEniJalonner", nodes.BEH_Eni_Pion_ALAT_GererEniJalonner }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "BEH_Eni_Pion_ALAT_JalonnerGererFeu", nodes.BEH_Eni_Pion_ALAT_JalonnerGererFeu }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "ACT_Maj_Pions_ObjectifCourant", nodes.ACT_Maj_Pions_ObjectifCourant }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "BEH_Manoeuvre_Pion_AllerStationner", nodes.BEH_Manoeuvre_Pion_AllerStationner }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Jalonner, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }

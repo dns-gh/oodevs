@@ -1,0 +1,122 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/fonctions/Functions - Eni.bms"] = true
+
+include "bit.lua"
+
+--[[// *****************************************************************************
+]]--[[// Fonctions Communes aux pions
+]]--[[// Thème : Ennemis
+]]--[[// *****************************************************************************
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie l'eni le plus proche de la position passée en paramètre
+]]--[[//-------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[//  Renvoie vrai si un eni se trouve dans une localisation
+]]--[[// -----------------------------------------------------------------------------	
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'eni est dangereux pour moi
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Attention au seuil...
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Force evaluant la dangerosité d'une connaissance sur moi
+]]--[[// valeur de sortie [1, 2] si valide, sinon 0
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Force evaluant la dangerosité d'une connaissance sur moi
+]]--[[// valeur de sortie [1, 2] si valide, sinon 0
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// S_Eni_EstCiblePrioritaireSelonCategorieAtlas
+]]--[[// SPE ALAT OPT: A deplacer
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------    
+]]--[[// Renvoie la nature atlas d'un connaissance
+]]--[[// SPE ALAT OPT: A deplacer
+]]--[[// ----------------------------------------------------------------------------
+]]function S_Eni_ChercheEniPlusProchePosition( point, listeEnis )
+    local _returnValue = nil
+    local rDist_Min = 1105199104
+    local rDistanceConnaissance = 0
+    _returnValue = nil
+    for _,ksEni in pairs( listeEnis ) do
+    local _continue = true
+do
+            rDistanceConnaissance = DEC_Geometrie_Distance( point, DEC_ConnaissanceAgent_Position( ksEni ) )
+            if( rDistanceConnaissance < rDist_Min ) then
+                do
+                    _returnValue = ksEni
+                    rDist_Min = rDistanceConnaissance
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Eni_EstDansZone( ksEni, locZone )
+    local _returnValue = false
+    _returnValue = false
+    local ptEni = DEC_ConnaissanceAgent_Position( ksEni )
+    if( ( ( ptEni == 0 or ptEni == nil ) or locZone == 0 or ( ptEni == 0 or ptEni == nil ) or locZone == nil ) ) then
+        return _returnValue
+    end
+
+    _returnValue = DEC_Geometrie_EstPointDansFuseau( ptEni ) and DEC_Geometrie_EstPointDansLocalisation( ptEni, locZone )
+    return _returnValue
+end
+
+function S_Eni_EstDangereux( repEni )
+    local _returnValue = false
+    local rDangerosite = DEC_ConnaissanceAgent_Dangerosite( repEni )
+    if( rDangerosite < 1.1 ) then
+        _returnValue = false
+    else
+        _returnValue = true
+    end
+
+    return _returnValue
+end
+
+function S_ForceDangerSur( repEni )
+    local _returnValue = 0
+    _returnValue = DEC_ConnaissanceAgent_Dangerosite( repEni )
+    return _returnValue
+end
+
+function S_Eni_ForceDangerPour( pionAmi, repEni )
+    local _returnValue = 0
+    _returnValue = pionAmi:DEC_ConnaissanceAgent_Dangerosite( repEni )
+    return _returnValue
+end
+
+function S_Eni_EstCiblePrioritaireSelonCategorieAtlas( cible, nTypeCiblePrioriraitreAtlas )
+    local _returnValue = false
+    _returnValue = false
+    if( nTypeCiblePrioriraitreAtlas == eNatureAtlas_Indefini ) then
+        _returnValue = true
+    else
+do
+            local typeAtlas = DEC_ConnaissanceAgent_NatureAtlas( cible )
+            if( typeAtlas == eNatureAtlas_None ) then
+                return _returnValue
+            end
+
+            if( ( bit.band( nTypeCiblePrioriraitreAtlas, typeAtlas ) ) == nTypeCiblePrioriraitreAtlas ) then
+                _returnValue = true
+            end
+
+        end
+    end
+
+    return _returnValue
+end
+
+function S_Eni_NatureAtlas( cible )
+    local _returnValue = nil
+    _returnValue = DEC_ConnaissanceAgent_NatureAtlas( cible )
+    return _returnValue
+end
+

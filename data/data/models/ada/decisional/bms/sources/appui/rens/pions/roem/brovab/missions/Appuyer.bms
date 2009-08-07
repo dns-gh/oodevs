@@ -1,0 +1,131 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roem/brovab/missions/Appuyer.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_RENS_ROEM_Appuyer
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_RENS_ROEM_Appuyer"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Rens_ActiverBrouillage", {} },
+        { "ACT_Misc_Delai", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( ModuleBegins() ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "Support mission begining", } )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progresser jusqu'à zone de débarquement
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eAppuyer
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// eAppuyer
+]]elseif switch_1 == eAppuyer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                --[[// Progression
+]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionDeploiement_ ) > 200 ) then
+                    do
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionDeploiement_, eProgressionReco, eTypeItiMouvement, } )
+                                                return
+
+                    end
+--[[//Brouiller pendant 15 mins
+]]                end
+
+                Activate( self.activations.BEH_Rens_ActiverBrouillage, 1, { eTypeObjectZoneBrouillage, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 15, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission --> SUR ORDRE
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    return
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_RENS_ROEM_Appuyer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROEM_Appuyer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROEM_Appuyer, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROEM_Appuyer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROEM_Appuyer, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROEM_Appuyer, "BEH_Rens_ActiverBrouillage", nodes.BEH_Rens_ActiverBrouillage }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROEM_Appuyer, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }

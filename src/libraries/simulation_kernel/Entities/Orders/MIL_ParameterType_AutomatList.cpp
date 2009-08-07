@@ -14,6 +14,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_AutomatList constructor
@@ -40,58 +41,17 @@ MIL_ParameterType_AutomatList::~MIL_ParameterType_AutomatList()
 // Name: MIL_ParameterType_AutomatList::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_ParameterType_AutomatList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_AutomatList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.value.t != T_MissionParameter_value_automatList ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeListeAutomates( to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    if( !NET_ASN_Tools::CopyAutomateList( *from.value.u.automatList, to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_AutomatList::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_AutomatList::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeListeAutomates( from ) )
-        return false;
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeListeAutomates( to ) )
-        return false;
-
-    if( !NET_ASN_Tools::CopyAutomateList( from, to ) )
-        return false;
-    
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_AutomatList::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_AutomatList::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeListeAutomates( from ) )
+    if( !from.IsOfType( *this ) )
         return false;
 
     to.null_value           = false;
     to.value.t              = T_MissionParameter_value_automatList;
     to.value.u.automatList = new ASN1T_AutomatList();
     
-    if( !NET_ASN_Tools::CopyAutomateList( from, *to.value.u.automatList ) )
-        return false;
-
-    return true;    
+    return from.ToAutomatList( *to.value.u.automatList );
 }
 
 //-----------------------------------------------------------------------------

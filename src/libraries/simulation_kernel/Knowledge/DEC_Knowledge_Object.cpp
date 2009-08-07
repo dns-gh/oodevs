@@ -99,9 +99,8 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::~DEC_Knowledge_Object()
 {
-    assert( pObjectType_ );
-    
-    SendMsgDestruction();
+    if( pObjectType_ )
+        SendMsgDestruction();
 }
 
 // =============================================================================

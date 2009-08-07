@@ -12,24 +12,25 @@
 #ifndef __PHY_ActionMineObject_h_
 #define __PHY_ActionMineObject_h_
 
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class PHY_RoleAction_Objects;
 class MIL_Object_ABC;
 class MIL_AgentPion;
+class DEC_Decision_ABC;
 
 // =============================================================================
 // @class  PHY_ActionMineObject
 // Mined: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionMineObject : public PHY_Action_ABC
+class PHY_ActionMineObject : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionMineObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionMineObject( MIL_AgentPion& pion, unsigned int nKnowledgeID );
     virtual ~PHY_ActionMineObject();
 
     //! @name Operations
@@ -40,8 +41,7 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    DIA_Variable_ABC&        diaReturnCode_;
-    uint                     nKnowledgeID_;    
+    unsigned int            nKnowledgeID_;    
 };
 
 #endif // __PHY_ActionMineObject_h_

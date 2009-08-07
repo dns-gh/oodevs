@@ -1,0 +1,20 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/Parameters.bms"] = true
+
+function M_POLY_PH_RIPOSTE()
+    return 0.3
+end
+
+
+
+function M_POLY_PH_TIR_ENI_EFFICACE()
+    return 0.5
+end
+
+
+
+function M_POLY_DISTANCE_SECURITE_ESQUIVE()
+    return 1000
+end
+
+

@@ -1,0 +1,229 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son appui/missions/Appuyer.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son Appui/Missions/Appuyer.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 19/09/05 10:25 $
+]]--[[// $Revision: 21 $
+]]--[[// $Workfile: Appuyer.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//=============================================================================
+]]--[[// Details :
+]]--[[//		Définition : apporter une aide à une autre unité, spontanément ou sur 
+]]--[[//		ordre par le mouvement ou par le feu. 
+]]--[[//
+]]--[[//		Principes : Il s’agit, dans le cadre de la manoeuvre de la compagnie 
+]]--[[//		et à partir d’une position choisie, d’apporter, sur ordre ou de façon 
+]]--[[//		spontanée, une aide aux éléments amis par des feux appliqués sur des
+]]--[[//		objectifs repérés.
+]]--[[//=============================================================================
+]]node "MIS_Pion_INF_Appuyer"
+{
+    activations =
+    {
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Delai_Pion_INF_PreparerMission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_INF_Appuyer", {} },
+        { "BEH_Eni_Pion_SAppui_Appuyer", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or ePreparerMission
+        self.tAmi = self.tAmi or self._namedParams.mission.uniteAAppuyer_
+        --[[// initalisation de la mission
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_Trace( "Mission 'Appuyer ( " .. DEC_GetSzName( self.tAmi ) .. " )' : debut" )
+            end
+        end
+
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Appui, } )
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_APPUYER(), } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
+                    do
+                        Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { M_TEMPS_PREPARATION_APPUYER(), } )
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhase = eAppuyer
+            elseif switch_1 == eAppuyer then
+                Activate( self.activations.BEH_Dep_Pion_INF_Appuyer, GetMotivation( "MOT_Mission" ), { self.tAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), } )
+                Activate( self.activations.BEH_Eni_Pion_SAppui_Appuyer, GetMotivation( "MOT_ManoeuvrerSurEnis" ), { self._namedParams.mission.uniteAAppuyer_, } )
+                
+            elseif switch_1 == eFinMission then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            DEC_Trace( "Appuyer : fin mission" )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// BEH_Eni_Pion_SAppui_Appuyer()
+]]--[[// 		Gestion de la manoeuvre face a l'ennemi
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_SAppui_Appuyer"
+{
+    activations =
+    {
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Misc_UnitesEnAppui_EnPosition", {} },
+        { "BEH_Dep_Pion_INF_PreciserContact", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.tAmi = self.params[1]
+    end,
+
+    activate = function( self )
+        local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
+        for _,ksEni in pairs( lstEnisDansFuseau ) do
+        local _continue = true
+do
+                if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    --[[// Gestion du debarquement vis a vis de cet ennemi
+]]--[[// ----------------------------------------------------------------
+]]local bDemandeDebarquement = S_Tir_EstAPortee_Debarque( ksEni, GetStateVariable( "VE_Agressivite_Tir" ) ) or S_Tir_EstAPortee( ksEni, GetStateVariable( "VE_Agressivite_Tir" ) )
+                    if( bDemandeDebarquement ) then
+                        do
+                            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                            --[[// Si on est a porte, on se poste
+]]Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { ksEni, } )
+                            Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, {} )
+                        end
+--[[//  Gestion particuliere:
+]]--[[//  On tir principalement sur les blindes
+]]                    end
+
+                    if( not S_Eni_EstNiveauPerceptionGTIA( ksEni, F_Pion_GeteNiveauAction( myself ) ) ) then
+                        _continue = false
+                    end
+
+                        if _continue then
+                        --[[// On favorise les blindes en plus du combat de rencontre
+]]--[[// ----------------------------------------------------------------
+]]local rForce_Arme = 1
+                    end
+                end
+            end
+--[[//		switch ( S_Eni_NatureArme( ksEni ) )
+]]--[[//		{
+]]--[[//			case eNatureWeapon_Cavalerie:
+]]--[[//			case eNatureWeapon_Blinde:
+]]--[[//			{
+]]--[[//				// Tir A distance de tir
+]]--[[//				// Si c'est un ennemi a pied on peut debarquer et tirer						
+]]--[[//				behavior BEH_Feu_Pion_INF_TirAppui( ksEni )	: strength = 2;
+]]--[[//				break;
+]]--[[//			}
+]]--[[//		}
+]]
+        end
+
+        for _,ksEni in pairs( lstEnisDansFuseau ) do
+        local _continue = true
+do
+                if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    if( not ( F_Pion_GetbDefenseStatique_Mobile( myself ) or F_Pion_GeteTypeContact( self._namedParams.tAmi ) == eTypeContact_Offensif ) ) then
+                        _continue = false
+                    end
+
+                        if _continue then
+                        --[[// Precise le contact
+]]--[[// ----------------------------------------------------------------
+]]local rForce_Action = 1 * S_Force_ActionContre( ksEni )
+                        local rForce_Contact = rForce_Action * S_Force_DistanceReco( DEC_ConnaissanceAgent_Position( ksEni ), 4000 )
+                        if( not ( DEC_ConnaissanceAgent_EstPercuParUnite( ksEni ) and S_Tir_EstAPortee( ksEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) ) then
+                            do
+                                Activate( self.activations.BEH_Dep_Pion_INF_PreciserContact, rForce_Contact, { ksEni, eIdentifie, true, } )
+                            end
+                        end
+
+                    end
+                end
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_INF_Appuyer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_SAppui_Appuyer, "BEH_MOT_Pion_INF_Debarquer", nodes.BEH_MOT_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_SAppui_Appuyer, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_SAppui_Appuyer, "ACT_Misc_UnitesEnAppui_EnPosition", nodes.ACT_Misc_UnitesEnAppui_EnPosition }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_SAppui_Appuyer, "BEH_Dep_Pion_INF_PreciserContact", nodes.BEH_Dep_Pion_INF_PreciserContact }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Appuyer, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Appuyer, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Appuyer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Appuyer, "BEH_Delai_Pion_INF_PreparerMission", nodes.BEH_Delai_Pion_INF_PreparerMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Appuyer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Appuyer, "BEH_Dep_Pion_INF_Appuyer", nodes.BEH_Dep_Pion_INF_Appuyer }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Appuyer, "BEH_Eni_Pion_SAppui_Appuyer", nodes.BEH_Eni_Pion_SAppui_Appuyer }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Appuyer, "BEH_Poste_Pion_INF_TomberEnGarde", nodes.BEH_Poste_Pion_INF_TomberEnGarde }

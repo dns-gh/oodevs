@@ -1,0 +1,176 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/behaviors/Behaviors - POP - Mot.bms"] = true
+
+include "bit.lua"
+
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_MOT_RiposteSurPopulations
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_MOT_RiposteSurPopulations"
+{
+    activations =
+    {
+        { "BEH_RiposteSurPopulation", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local lstPops = DEC_Connaissances_CollisionsPopulations()
+        for _,pop in pairs( lstPops ) do
+        local _continue = true
+do
+                Activate( self.activations.BEH_RiposteSurPopulation, DEC_ConnaissancePopulation_Dangerosite( pop ), { pop, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MOT_DecrochageFaceAPopulations
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MOT_DecrochageFaceAPopulations"
+{
+    activations =
+    {
+        { "BEH_Pop_Pion_PresAuDecrochageFaceA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Pour certaines missions
+]]if( g_bDesactiveSauvegarde ) then
+            return
+        end
+
+        local lstPops = DEC_Connaissances_Populations()
+        local lstPopsCollision = DEC_Connaissances_CollisionsPopulations()
+        for _,pop in pairs( lstPops ) do
+        local _continue = true
+do
+                local rDangerosite = DEC_ConnaissancePopulation_Dangerosite( pop )
+                --[[//peut être inutile
+]]if( rDangerosite > 1 and ( DEC_UserTypeList_Contient( lstPopsCollision, pop ) or DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissancePopulation_PointPlusProche( pop ) ) < g_DistanceEsquivePopulation ) ) then
+                    do
+                        g_DistanceEsquivePopulation = S_Augmente_g_DistanceEsquivePopulation()
+                        Activate( self.activations.BEH_Pop_Pion_PresAuDecrochageFaceA, rDangerosite, { pop, } )
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MOT_PasserEnEmploiForceInterdit
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MOT_PasserEnEmploiForceInterdit"
+{
+    activations =
+    {
+        { "BEH_ROE_GererEmploiForceInterdit", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_ROE_GererEmploiForceInterdit, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux"
+{
+    activations =
+    {
+        { "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_ROE_GererMaintienADistanceParMoyensNonLetaux, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs"
+{
+    activations =
+    {
+        { "BEH_ROE_GererDispersionParMoyensDeDefenseActifs", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_ROE_GererDispersionParMoyensDeDefenseActifs, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MOT_PasserEnArmesLetalesAutorisees
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MOT_PasserEnArmesLetalesAutorisees"
+{
+    activations =
+    {
+        { "BEH_ROE_GererArmesLetalesAutorisees", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_ROE_GererArmesLetalesAutorisees, 1, {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_MOT_DecrochageFaceAPopulations, "BEH_Pop_Pion_PresAuDecrochageFaceA", nodes.BEH_Pop_Pion_PresAuDecrochageFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnArmesLetalesAutorisees, "BEH_ROE_GererArmesLetalesAutorisees", nodes.BEH_ROE_GererArmesLetalesAutorisees }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs, "BEH_ROE_GererDispersionParMoyensDeDefenseActifs", nodes.BEH_ROE_GererDispersionParMoyensDeDefenseActifs }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnEmploiForceInterdit, "BEH_ROE_GererEmploiForceInterdit", nodes.BEH_ROE_GererEmploiForceInterdit }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux, "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux", nodes.BEH_ROE_GererMaintienADistanceParMoyensNonLetaux }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_RiposteSurPopulations, "BEH_RiposteSurPopulation", nodes.BEH_RiposteSurPopulation }

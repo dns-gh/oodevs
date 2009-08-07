@@ -18,8 +18,8 @@
 // Name: PHY_ActionLendHaulerComposantes constructor
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-PHY_ActionLendHaulerComposantes::PHY_ActionLendHaulerComposantes( MIL_AgentPion& pion, DIA_Call_ABC& call )
-    : PHY_ActionLendComposantes( pion, call, &PHY_ComposantePion::CanHaul )
+PHY_ActionLendHaulerComposantes::PHY_ActionLendHaulerComposantes( MIL_AgentPion& pion, DEC_RolePion_Decision* pAgent, unsigned int nbrToLend )
+    : PHY_ActionLendComposantes( pion, pAgent, nbrToLend, &PHY_ComposantePion::CanHaul )
 {
 
 }

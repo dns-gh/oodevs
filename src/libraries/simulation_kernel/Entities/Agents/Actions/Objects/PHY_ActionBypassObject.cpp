@@ -19,14 +19,12 @@
 // Name: PHY_ActionBypassObject constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionBypassObject::PHY_ActionBypassObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC( pion, diaCall )
+PHY_ActionBypassObject::PHY_ActionBypassObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+    : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , diaReturnCode_( diaCall.GetParameter( 0 ) )
-    , nKnowledgeID_ ( (uint)diaCall.GetParameter( 1 ).ToPtr() )
-{    
-    assert( DEC_Tools::CheckTypeConnaissanceObjet( diaCall.GetParameter( 1 ) ) );
-    diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
+    , nKnowledgeID_ ( nKnowledgeID )
+{
+    Callback( role_.GetInitialReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +33,7 @@ PHY_ActionBypassObject::PHY_ActionBypassObject( MIL_AgentPion& pion, DIA_Call_AB
 // -----------------------------------------------------------------------------
 PHY_ActionBypassObject::~PHY_ActionBypassObject()
 {
-    diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
+    Callback( role_.GetFinalReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +43,7 @@ PHY_ActionBypassObject::~PHY_ActionBypassObject()
 void PHY_ActionBypassObject::Execute()
 {   
     int nReturn = role_.Bypass( nKnowledgeID_ );
-    diaReturnCode_.SetValue( nReturn );
+    Callback( nReturn );
 }
 
 // -----------------------------------------------------------------------------

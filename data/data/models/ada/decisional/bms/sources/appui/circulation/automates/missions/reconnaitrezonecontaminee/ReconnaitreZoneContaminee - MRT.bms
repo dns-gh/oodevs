@@ -1,0 +1,109 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/automates/missions/reconnaitrezonecontaminee/ReconnaitreZoneContaminee - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local selPions = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), PatrouilleCirculation )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionAppuyer = self.eEtatMissionAppuyer or eActionEnCours
+        self.listeLocalisaitons = self.listeLocalisaitons or {}
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                local nErrorCode = nil
+                self.listeLocalisaitons = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( selPions ), nErrorCode )
+                nErrorCode = self.listeLocalisaitons.second
+                self.listeLocalisaitons = self.listeLocalisaitons.first
+                if( nErrorCode ~= eNoError ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+            end
+--[[// =============================================================================
+]]--[[// PHASE DU COMPORTEMENT
+]]--[[//
+]]--[[// =============================================================================
+]]        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------
+]]--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionAppuyer == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionAppuyer == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[// controle de creation mission
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( selPions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionAppuyer = v else rawset( t, k, v ) end end } ) )
+                --[[// ordre de creation des missions
+]]if( ( #( selPions ) ~= 0 and #( selPions ) ~= nil ) ) then
+                    Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe, 1, { ePhase_MRT, selPions, self.listeLocalisaitons, } )
+                end
+
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Mission impossible
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_MissionImpossible then
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe", nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe }

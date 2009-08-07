@@ -1,0 +1,57 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie appui/missions/sedeployer/SeDeployer - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: SDE 02-11-22 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Genie/Automates/Cie Appui/Missions/SeDeployer/SeDeployer - CDT.hal $
+]]--[[// $Author: Mia $
+]]--[[// $Modtime: 21/09/05 11:41 $
+]]--[[// $Revision: 15 $
+]]--[[// $Workfile: SeDeployer - CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_GEN_SeDeployer
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// Révision MIA
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_GEN_SeDeployer"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "$ MIS_Automate_CDT_GEN_SeDeployer: starting CDT $" )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[//---------------------------------------------------------------------
+]]--[[// Ordre conduite
+]]--[[//---------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_GEN_SeDeployer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_SeDeployer, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }

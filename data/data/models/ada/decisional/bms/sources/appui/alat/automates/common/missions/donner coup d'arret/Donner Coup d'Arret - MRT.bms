@@ -1,0 +1,168 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/donner coup d'arret/Donner Coup d'Arret - MRT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// DonnerCoupArret :
+]]--[[//
+]]--[[// Commentaires : - preparer la liste des pions qui vont faire la mission 
+]]--[[//                  detruire dans zone
+]]--[[//                - Preparer la liste des localisations dans lesquelles realiser
+]]--[[//                  l'action
+]]--[[//                - Preparer la liste des points de dislocation
+]]--[[//                - Donner les missions de destruction dans zone
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_DonnerCoupArret"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionsDonnerCoupArret = self.eEtatMissionsDonnerCoupArret or eActionEnCours
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, AntitankHelicopterPatrol )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, EscortAndCloseSupportHelicopterPatrol )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, AirDefenseHelicopterPatrol )
+        self.listePeutDonnerCoupArret = self.listePeutDonnerCoupArret or S_Liste_Concatene( self.listeHAC, self.listeHAP )
+        self.listeDonnerCoupArretDroit = self.listeDonnerCoupArretDroit or {}
+        self.listeDonnerCoupArretGauche = self.listeDonnerCoupArretGauche or {}
+        self.listePionRef = self.listePionRef or {}
+        self.pointDeDislocationRef = self.pointDeDislocationRef or nil
+        self.pointDeDislocationGauche = self.pointDeDislocationGauche or nil
+        self.pointDeDislocationDroit = self.pointDeDislocationDroit or nil
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+                local unSurDeux = false
+                for _,x in pairs( self.listePeutDonnerCoupArret ) do
+                local _continue = true
+                    do
+                        if( DIA_IsListEmpty( self.listePionRef ) ) then
+                            do
+                                DIA_PushBack( self.listePionRef, x )
+                                _continue = false
+                            end
+                        end
+
+                            if _continue then
+                            if( unSurDeux ) then
+                                DIA_PushBack( self.listeDonnerCoupArretDroit, x )
+                            else
+                                DIA_PushBack( self.listeDonnerCoupArretGauche, x )
+                            end
+
+                            unSurDeux = not unSurDeux
+                        end
+                    end
+
+                end
+
+                if( DIA_IsListEmpty( self.listePionRef ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( ( DIA_IsListEmpty( self.listeDonnerCoupArretGauche ) ) and ( DIA_IsListEmpty( self.listeDonnerCoupArretDroit ) ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                local barycentreZone = S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
+                local directionEnnemi = DEC_GetDirectionEnnemi( self._namedParams.mission )
+                --[[//point arriere
+]]local directionBuffer = DEC_Geometrie_CopieEtInverseDirection( directionEnnemi )
+                self.pointDeDislocationRef = DEC_Geometrie_PositionTranslateDir( barycentreZone, directionBuffer, 5000 )
+                --[[//point flanc gauche
+]]directionBuffer = DEC_Geometrie_CreerDirectionPerpendiculaire( directionEnnemi, true )
+                self.pointDeDislocationGauche = DEC_Geometrie_PositionTranslateDir( barycentreZone, directionBuffer, 5000 )
+                --[[//point flanc droit
+]]directionBuffer = DEC_Geometrie_CreerDirectionPerpendiculaire( directionEnnemi, false )
+                self.pointDeDislocationDroit = DEC_Geometrie_PositionTranslateDir( barycentreZone, directionBuffer, 5000 )
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )--[[// ROE par défaut pour cette mission + ordre poursuivre
+]]
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionsDonnerCoupArret == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionsDonnerCoupArret == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[// DonnerCoupArret : controle de creation mission
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeDonnerCoupArretGauche ) + #( self.listeDonnerCoupArretDroit ) + #( self.listePionRef ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsDonnerCoupArret = v else rawset( t, k, v ) end end } ) )
+                --[[// DonnerCoupArret : ordre de creation des missions
+]]if( not DIA_IsListEmpty( self.listeDonnerCoupArretGauche ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_MRT, self.listeDonnerCoupArretGauche, self._namedParams.mission.zone_, self.pointDeDislocationGauche, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
+                end
+
+                --[[// DonnerCoupArret : ordre de creation des missions
+]]if( not DIA_IsListEmpty( self.listeDonnerCoupArretDroit ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_MRT, self.listeDonnerCoupArretDroit, self._namedParams.mission.zone_, self.pointDeDislocationDroit, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
+                end
+
+                --[[// Detruire dans zone au pion de ref.
+]]if( not DIA_IsListEmpty( self.listePionRef ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_MRT, self.listePionRef, self._namedParams.mission.zone_, self.pointDeDislocationRef, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
+                end
+
+                
+            elseif switch_1 == eMRT_MissionImpossible then
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_DonnerCoupArret = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_DonnerCoupArret, "BEH_ROE_Automate_TirRestreint", nodes.BEH_ROE_Automate_TirRestreint }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_DonnerCoupArret, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_DonnerCoupArret, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_DonnerCoupArret, "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe", nodes.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe }

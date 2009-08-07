@@ -1,0 +1,61 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/pat milan/missions/Eclairer.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Eclairer
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ABC_Eclairer"
+{
+    activations =
+    {
+        { "BEH_Dep_Pion_ABC_GererDeboucherEclairage", {} },
+        { "BEH_Mission_Pion_ABC_Eclairer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[//  /===========> ///////////// SPE MISSION EI /////////////<============
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/* MIA pour ada
+    behavior BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer();
+    behavior BEH_MOT_DesactiveSauvegarde();  // désactive l'esquive normal sur PAP mais l'envie (Etat esquive MAJ)
+    behavior BEH_MOT_EtrePrudent() : strength = DIA_GetMotivation( MOT_EtrePrudent );
+    action ACT_Maj_Pions_ObjectifEsquive( DEC_ListePoints_GetAt( mission.itineraire_, DEC_ListePoints_Size( mission.itineraire_ ) - 1 ) );
+    action ACT_Dep_PasserEnModeFurtif(); // Furtivité
+    //-----------------------------------------------------------------------------
+    //  /===========> ///////////// FIN SPE MISSION EI /////////////<============
+    //-----------------------------------------------------------------------------
+    */]]--[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Si LD coordination
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionImpossible or self.eEtat == eActionEffectuee ) then
+            Halt()
+        end
+
+        Activate( self.activations.BEH_Dep_Pion_ABC_GererDeboucherEclairage, 1, {} )
+        Activate( self.activations.BEH_Mission_Pion_ABC_Eclairer, 1, setmetatable( { self._namedParams.mission.itineraire_, M_MODELE_PION_ABC_ECLAIRER_PH(), M_MODELE_PION_ABC_ECLAIRER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ABC_Eclairer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ABC_Eclairer, "BEH_Dep_Pion_ABC_GererDeboucherEclairage", nodes.BEH_Dep_Pion_ABC_GererDeboucherEclairage }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ABC_Eclairer, "BEH_Mission_Pion_ABC_Eclairer", nodes.BEH_Mission_Pion_ABC_Eclairer }

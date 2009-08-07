@@ -29,6 +29,8 @@ class MIL_AutomateTypeASA : public MIL_AutomateType
 public:
              MIL_AutomateTypeASA( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateTypeASA();
+    
+    virtual void RegisterFunctions( directia::Brain& brain, MIL_Automate& automat ) const;
 
     static const MIL_AutomateType* Create( const std::string& strName, xml::xistream& xis );
 };

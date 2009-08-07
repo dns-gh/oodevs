@@ -19,6 +19,11 @@ namespace xml
     class xistream;
 }
 
+namespace directia
+{
+    class Brain;
+}
+
 class MIL_AgentTypePion;
 class MIL_Automate;
 class MIL_Formation;
@@ -57,7 +62,6 @@ public:
     const MIL_AgentTypePion&                 GetTypePionPC                    () const;
     const DEC_Model_ABC&                     GetModel                         () const;
     const std::string&                       GetName                          () const;
-          DIA_FunctionTable< MIL_Automate >& GetFunctionTable                 () const;
           MT_Float                           GetRapForIncreasePerTimeStepValue() const;
     //@}
 
@@ -71,6 +75,14 @@ public:
     virtual bool IsLogistic() const;
     virtual bool IsRefugee () const;
     //@}
+    
+    //! @name Logistic
+    //@{
+    virtual void RegisterFunctions( directia::Brain& brain, MIL_Automate& automat ) const;
+    //@}
+
+protected:
+    explicit MIL_AutomateType( const DEC_Model_ABC& model );
 
 private:
     //! @name Types
@@ -115,8 +127,6 @@ private:
           T_CompositionMap    composition_;
     const MIL_AgentTypePion*  pTypePC_;
           MT_Float            rRapForIncreasePerTimeStepValue_;
-
-    DIA_FunctionTable< MIL_Automate >* pDIAFunctionTable_;
 
 private:
     static T_AutomateTypeAllocatorMap  automateTypeAllocators_;

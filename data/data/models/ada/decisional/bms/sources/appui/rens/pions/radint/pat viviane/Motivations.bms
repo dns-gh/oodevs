@@ -1,0 +1,10 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/radint/pat viviane/Motivations.bms"] = true
+
+include "Common/Pions/Motivations.bms"
+
+
+--[[// SPE RENS
+]]include "Appui/Rens/Pions/Common/Motivations/Etats.bms"
+
+include "Appui/Rens/Pions/Common/Motivations/Motivations.bms"

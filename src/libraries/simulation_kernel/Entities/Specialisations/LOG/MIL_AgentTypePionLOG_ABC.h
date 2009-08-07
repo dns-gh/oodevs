@@ -29,6 +29,9 @@ class MIL_AgentTypePionLOG_ABC : public MIL_AgentTypePion
 public:
              MIL_AgentTypePionLOG_ABC( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOG_ABC();
+    
+    virtual void RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const;
+
 };
 
 #endif // __MIL_AgentTypePionLOG_ABC_h_

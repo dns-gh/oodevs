@@ -27,7 +27,7 @@ public:
     typedef MIL_Population ActorType;
 
 public:
-             PHY_Population_ActionMove( MIL_Population& population, DIA_Call_ABC& diaCall );
+             PHY_Population_ActionMove( MIL_Population& population, MT_Vector2D* pTargetPosition );
     virtual ~PHY_Population_ActionMove();
 
     //! @name Operations
@@ -37,8 +37,7 @@ public:
     //@}
 
 private:
-    MIL_Population&        population_;   
-    //DIA_Variable_ABC&      diaReturnCode_;
+    MIL_Population&        population_;
     MT_Vector2D            destination_;
 };
 

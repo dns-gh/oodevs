@@ -1,0 +1,102 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/common/missions/armerpointcontrol/ArmerPointControl - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: SDE 03-04-25 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Common/Missions/ArmerPointControl/ArmerPointControl - CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 26/08/05 17:57 $
+]]--[[// $Revision: 13 $
+]]--[[// $Workfile: ArmerPointControl - CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_Automate_ABC_ArmerPointDeControle
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Conduite_Automate_ABC_ArmerPointDeControle"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", {} },
+        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zoneControle = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ptControle = self.ptControle or S_Geometrie_BarycentreZone( self._namedParams.zoneControle )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "Arming check point mission begining" )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Coordination
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//behavior BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_();
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// SE
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositif_, 1, { false, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Condition opérationnelle
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_RC_Automate_GererConditionOperationnelle, 1, { eEtatEchelon_Eclairage, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Spé
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Dispositif_Automate_ABC_FaireArmerPointControle_, 1, { self.ptControle, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dispositif_Automate_ABC_FaireArmerPointControle_
+]]--[[// 
+]]--[[// Commentaires: marche pas bien // pas utilisé pour l'instant
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerArmerPointControleA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.positionSite = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Essayer d'armer le site
+]]--[[//-----------------------------------------------------------------------------
+]]local listePions = S_Dispositif_Automate_ABC_PionsPourArmerPointControle()
+        for _,pion in pairs( listePions ) do
+        local _continue = true
+            Activate( self.activations.BEH_Mission_Automate_AssignerArmerPointControleA, 1, { ePhase_CDT, pion, self._namedParams.positionSite, eEtatEchelon_Premier, } )
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_ArmerPointDeControle, "BEH_Dispositif_Automate_ABC_GererLeDispositif_", nodes.BEH_Dispositif_Automate_ABC_GererLeDispositif_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_ArmerPointDeControle, "BEH_RC_Automate_GererConditionOperationnelle", nodes.BEH_RC_Automate_GererConditionOperationnelle }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_ArmerPointDeControle, "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_", nodes.BEH_Dispositif_Automate_ABC_FaireArmerPointControle_ }
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_FaireArmerPointControle_, "BEH_Mission_Automate_AssignerArmerPointControleA", nodes.BEH_Mission_Automate_AssignerArmerPointControleA }

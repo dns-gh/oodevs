@@ -24,6 +24,8 @@
 //#include "Entities/Objects/LogisticCapacity.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
 namespace
 {
@@ -37,9 +39,8 @@ namespace
 // Name: DEC_ActionFunctions::Prisoners_CaptureAndLoad
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Prisoners_CaptureAndLoad( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Prisoners_CaptureAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Capture( callerAgent ) )
         callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
 }
@@ -48,9 +49,8 @@ void DEC_ActionFunctions::Prisoners_CaptureAndLoad( DIA_Call_ABC& call, MIL_Agen
 // Name: DEC_ActionFunctions::Prisoners_Unload
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Prisoners_Unload( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Prisoners_Unload( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( pKnowledge )
     {
         pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Release();
@@ -62,10 +62,9 @@ void DEC_ActionFunctions::Prisoners_Unload( DIA_Call_ABC& call, MIL_AgentPion& c
 // Name: DEC_ActionFunctions::Prisoners_UnloadInCamp
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Prisoners_UnloadInCamp( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Prisoners_UnloadInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID  )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAgent.GetArmy() );
+	DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy() );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return;
 
@@ -74,40 +73,25 @@ void DEC_ActionFunctions::Prisoners_UnloadInCamp( DIA_Call_ABC& call, MIL_AgentP
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::Prisoners_IsLoaded
-// Created: NLD 2007-02-26
-// -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Prisoners_IsLoaded( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
-{
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( pKnowledge )
-        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) );
-    else
-        call.GetResult().SetValue( false );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Prisoners_IsUnloadedInCamp
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAgent.GetArmy          () );
+	DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy          () );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
-        call.GetResult().SetValue( false );
+        return false;
     else
-        call.GetResult().SetValue( pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() ) );
+        return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() ) ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Refugees_OrientateAndLoad
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Refugees_OrientateAndLoad( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Orientate( callerAgent ) )
+	if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Orientate( callerAgent ) )
         callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
 }
    
@@ -115,10 +99,9 @@ void DEC_ActionFunctions::Refugees_OrientateAndLoad( DIA_Call_ABC& call, MIL_Age
 // Name: DEC_ActionFunctions::Refugees_Unload
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Refugees_Unload( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Refugees_Unload( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
+	if( !pKnowledge )
         return;
     pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Release();
     callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
@@ -128,10 +111,9 @@ void DEC_ActionFunctions::Refugees_Unload( DIA_Call_ABC& call, MIL_AgentPion& ca
 // Name: DEC_ActionFunctions::Refugees_UnloadInCamp
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Refugees_UnloadInCamp( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Refugees_UnloadInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAgent.GetArmy          () );
+	DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy          () );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return;
     callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
@@ -142,27 +124,25 @@ void DEC_ActionFunctions::Refugees_UnloadInCamp( DIA_Call_ABC& call, MIL_AgentPi
 // Name: DEC_ActionFunctions::Refugees_IsLoaded
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Refugees_IsLoaded( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+bool DEC_ActionFunctions::PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
-        call.GetResult().SetValue( false );
+        return false;
     else
-        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) );
+        return callerAgent.GetRole< PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Refugees_IsUnloadedInCamp
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Refugees_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+bool DEC_ActionFunctions::Refugees_IsUnloadedInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAgent.GetArmy          () );
+    DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy() );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
-        call.GetResult().SetValue( false );
+        return false;
     else
-        call.GetResult().SetValue( pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().IsManaged( *pCampKnowledge->GetObjectKnown() ) );
+        return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().IsManaged( *pCampKnowledge->GetObjectKnown() );
 }
 
 // =============================================================================
@@ -173,11 +153,8 @@ void DEC_ActionFunctions::Refugees_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_Age
 // Name: DEC_ActionFunctions::Transport_AddPion
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_AddPion( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Transport_AddPion( MIL_AgentPion& callerAgent, DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    const bool bTransportOnlyLoadable = call.GetParameter( 1 ).ToBool();
-    const DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
     callerAgent.GetRole< PHY_RoleAction_Transport >().AddPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
@@ -185,15 +162,11 @@ void DEC_ActionFunctions::Transport_AddPion( DIA_Call_ABC& call, MIL_AgentPion& 
 // Name: DEC_ActionFunctions::Transport_AddPions
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_AddPions( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable )
 {
-    assert( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) );
-    const bool bTransportOnlyLoadable = call.GetParameter( 1 ).ToBool();
-
-    T_ObjectVector pions = call.GetParameter( 0 ).ToSelection();
-    for( CIT_ObjectVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+    for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {   
-        MIL_AgentPion& pion = static_cast< DEC_RolePion_Decision* >( *itPion )->GetPion();
+        MIL_AgentPion& pion = ( *itPion )->GetPion();
         callerAgent.GetRole< PHY_RoleAction_Transport >().AddPion( pion, bTransportOnlyLoadable );
     }
 }
@@ -202,11 +175,9 @@ void DEC_ActionFunctions::Transport_AddPions( DIA_Call_ABC& call, MIL_AgentPion&
 // Name: DEC_ActionFunctions::Transport_MagicLoadPion
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_MagicLoadPion( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Transport_MagicLoadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable  )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    const bool bTransportOnlyLoadable = call.GetParameter( 1 ).ToBool();
-    const DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+    assert( pPion );
     callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
@@ -214,15 +185,11 @@ void DEC_ActionFunctions::Transport_MagicLoadPion( DIA_Call_ABC& call, MIL_Agent
 // Name: DEC_ActionFunctions::Transport_MagicLoadPions
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_MagicLoadPions( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Transport_MagicLoadPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable )
 {
-    assert( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) );
-    const bool bTransportOnlyLoadable = call.GetParameter( 1 ).ToBool();
-
-    T_ObjectVector pions = call.GetParameter( 0 ).ToSelection();
-    for( CIT_ObjectVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+    for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {   
-        MIL_AgentPion& pion = static_cast< DEC_RolePion_Decision* >( *itPion )->GetPion();
+        MIL_AgentPion& pion = ( *itPion )->GetPion();
         callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pion, bTransportOnlyLoadable );
     }
 }
@@ -231,10 +198,9 @@ void DEC_ActionFunctions::Transport_MagicLoadPions( DIA_Call_ABC& call, MIL_Agen
 // Name: DEC_ActionFunctions::Transport_MagicUnloadPion
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_MagicUnloadPion( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Transport_MagicUnloadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    const DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+	assert( pPion );
     callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pPion->GetPion() );
 }
 
@@ -242,16 +208,16 @@ void DEC_ActionFunctions::Transport_MagicUnloadPion( DIA_Call_ABC& call, MIL_Age
 // Name: DEC_ActionFunctions::Transport_IsFinished
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_IsFinished( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+bool DEC_ActionFunctions::Transport_IsFinished( const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsFinished() );
+    return callerAgent.GetRole< PHY_RoleAction_Transport >().IsFinished() ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Transport_Cancel
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_Cancel( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Transport_Cancel( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleAction_Transport >().Cancel();
 }
@@ -260,22 +226,17 @@ void DEC_ActionFunctions::Transport_Cancel( DIA_Call_ABC& /*call*/, MIL_AgentPio
 // Name: DEC_ActionFunctions::CanTransportPion
 // Created: JVT 2005-01-18
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::CanTransportPion( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    const DEC_RolePion_Decision* pTransported           = call.GetParameter( 0 ).ToUserObject( pTransported );
-    const bool                   bTransportOnlyLoadable = call.GetParameter( 1 ).ToBool();
-    
-    assert( pTransported );
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().CanTransportPion( pTransported->GetPion(), bTransportOnlyLoadable ) );
+    assert( pPion );
+    return callerAgent.GetRole< PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable ) ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Transport_IsTransporting
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_IsTransporting( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+bool DEC_ActionFunctions::Transport_IsTransporting( const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsTransporting() );
+    return callerAgent.GetRole< PHY_RoleAction_Transport >().IsTransporting();
 }

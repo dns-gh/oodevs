@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/pions/pat re/missions/ReconnaitreSiteROTA.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_NBC_ReconnaitreUnSiteROTA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_NBC_ReconnaitreUnSiteROTA"
+{
+    activations =
+    {
+        { "BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionImpossible ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA, 1, setmetatable( { self._namedParams.mission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_NBC_ReconnaitreUnSiteROTA = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_NBC_ReconnaitreUnSiteROTA, "BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA", nodes.BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA }

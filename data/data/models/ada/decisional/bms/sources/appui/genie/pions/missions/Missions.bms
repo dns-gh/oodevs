@@ -1,0 +1,52 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/missions/Missions.bms"] = true
+
+--[[// Refonte 27/10/2006
+]]
+--[[// Autres issions
+]]include "Appui/Genie/Pions/Missions/Reprendre travaux.bms"
+
+include "Appui/Genie/Pions/Missions/Construire camps.bms"
+
+
+--[[// Appui a la contre mobilite
+]]include "Appui/Genie/Pions/Missions/Appui a la contre mobilite/Activer obstacle.bms"
+
+include "Appui/Genie/Pions/Missions/Appui a la contre mobilite/Realiser travaux contre mobilite.bms"
+
+
+--[[// Appui a la mobilite
+]]include "Appui/Genie/Pions/Missions/Appui a la mobilite/Retablir itineraire.bms"
+
+include "Appui/Genie/Pions/Missions/Appui a la mobilite/Reconnaitre site franchissement.bms"
+
+include "Appui/Genie/Pions/Missions/Appui a la mobilite/Ouvrir itineraire.bms"
+
+include "Appui/Genie/Pions/Missions/Appui a la mobilite/Executer variantement.bms"
+
+include "Appui/Genie/Pions/Missions/Appui a la mobilite/Equiper-exploiter site franchissement.bms"
+
+include "Appui/Genie/Pions/Missions/Appui a la mobilite/Degager obstacles.bms"
+
+include "Appui/Genie/Pions/Missions/Appui a la mobilite/Contourner obstacles.bms"
+
+include "Appui/Genie/Pions/Missions/Appui a la mobilite/Ameliorer mobilite.bms"
+
+
+
+--[[// Appui aide au deploiement
+]]include "Appui/Genie/Pions/Missions/Appui aide au deploiement/Depolluer-deminer zone.bms"
+
+include "Appui/Genie/Pions/Missions/Appui aide au deploiement/Realiser travaux aide au deploiement.bms"
+
+include "Appui/Genie/Pions/Missions/Appui aide au deploiement/Reconnaitre itineraire.bms"
+
+include "Appui/Genie/Pions/Missions/Appui aide au deploiement/Reconnaitre zone.bms"
+
+
+--[[//Participation à la protection
+]]include "Appui/Genie/Pions/Missions/Participation a la protection/Realiser travaux protection.bms"
+
+
+--[[// Renfort
+]]include "Appui/Genie/Pions/Missions/Renfort/Renforcer.bms"

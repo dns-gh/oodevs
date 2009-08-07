@@ -25,18 +25,18 @@ class DEC_KnowledgePopulationFunctions
 public:
     //! @name Functions
     //@{
-    template< typename T > static void GetDominationState( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetAttitude       ( DIA_Call_ABC& call, const T& caller );
-                           static void GetDangerosity    ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void Recon             ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-    template< typename T > static void IsRecon           ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsInZone          ( DIA_Call_ABC& call, const T& caller );
-                           static void IsPerceivedByAgent( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void ClosestPoint      ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void Secure            ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void SecuringPoint     ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void IsEnemy           ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void Exterminate       ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+    template< typename T > static float GetDominationState( const T& caller, unsigned int knowledgeId );
+    template< typename T > static unsigned int GetAttitude( const T& caller, unsigned int knowledgeId );
+                           static float GetDangerosity    ( const MIL_AgentPion& caller, int knowledgeId);
+                           static void Recon             ( const MIL_AgentPion& caller, int knowledgeId );
+    template< typename T > static bool IsRecon           ( const T& caller, unsigned int knowledgeId );
+    template< typename T > static bool IsInZone          ( const T& caller, unsigned int knowledgeId, TER_Localisation* pLoc );
+                           static bool IsPerceivedByAgent( const MIL_AgentPion& caller, int knowledgeId );
+                           static boost::shared_ptr<MT_Vector2D> ClosestPoint      ( const MIL_AgentPion& caller, int knowledgeId );
+                           static void Secure            ( const MIL_AgentPion& caller, int knowledgeId );
+                           static boost::shared_ptr<MT_Vector2D> SecuringPoint ( const MIL_AgentPion& caller, int knowledgeId );
+                           static bool IsEnemy           ( const MIL_AgentPion& caller, int knowledgeId );
+                           static int Exterminate		 ( const MIL_AgentPion& caller, int knowledgeId, float surface );
     //@}
 };
 

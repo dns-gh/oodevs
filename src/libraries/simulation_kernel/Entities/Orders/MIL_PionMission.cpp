@@ -19,16 +19,6 @@
 #include "Network/NET_ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PionMission::InitializeDIA
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-// static
-void MIL_PionMission::InitializeDIA()
-{
-    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "T_Mission_Pion" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

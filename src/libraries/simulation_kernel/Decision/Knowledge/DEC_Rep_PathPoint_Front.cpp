@@ -13,7 +13,6 @@
 
 #include "DEC_Rep_PathPoint_Front.h"
 
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
@@ -23,8 +22,7 @@
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest )
-    : DEC_PathPoint     ( vPos )
-    , DIA_TypedObject   ( *DIA_TypeManager::Instance().GetType( "Rep_AvantPoint" ), "$$$ nom tmp" )
+    : DEC_PathPoint     ( vPos, "Rep_AvantPoint" )
     , destPoint_        ( dest )
     , pSentToDiaAgent_  ( 0 )
 {
@@ -38,18 +36,8 @@ DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
 {
     if( pSentToDiaAgent_ )
     {
-        pSentToDiaAgent_->RemoveFromCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
-        pSentToDiaAgent_->RemoveAllReferencesOf( *this );    
+        pSentToDiaAgent_->RemoveFromPointsCategory( const_cast< DEC_Rep_PathPoint_Front* >( this ) );
     }
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Front::InitializeDIA
-// Created: NLD 2003-01-13
-//-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Front::InitializeDIA()
-{
-    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "Rep_AvantPoint" );
 }
 
 //-----------------------------------------------------------------------------
@@ -62,7 +50,7 @@ void DEC_Rep_PathPoint_Front::SendToDIA( DEC_Representations& agent ) const
     if( pSentToDiaAgent_ )
         return;
 
-    agent.AddToCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
+    agent.AddToPointsCategory( const_cast< DEC_Rep_PathPoint_Front* >( this ) );
 
     pSentToDiaAgent_ = &agent;
 }
@@ -71,7 +59,7 @@ void DEC_Rep_PathPoint_Front::SendToDIA( DEC_Representations& agent ) const
 // Name: DEC_Rep_PathPoint_Front::GetDestPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-DEC_Rep_PathPoint& DEC_Rep_PathPoint_Front::GetDestPoint() const
+DEC_PathPoint& DEC_Rep_PathPoint_Front::GetDestPoint() const
 {
     return destPoint_;
 }

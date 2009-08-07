@@ -1,0 +1,323 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/Repartir dans zone.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_RepartirDansZone
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_GTIA_RepartirDansZone"
+{
+    activations =
+    {
+        { "BEH_GTIA_RepartirPionsMeleeDansZones", {} },
+        { "BEH_GTIA_RepartirPionsDansZones", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux PE : melee
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsPE = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ) )
+        local listePionsMeleePE = S_Cherche_GE_Filtre_TypeAutomate_Melee( listePionsPE )
+        Activate( self.activations.BEH_GTIA_RepartirPionsMeleeDansZones, 1, { listePionsMeleePE, self._namedParams.zone, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux SE : melee
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsSE = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ) )
+        local listePionsMeleeSE = S_Cherche_GE_Filtre_TypeAutomate_Melee( listePionsSE )
+        Activate( self.activations.BEH_GTIA_RepartirPionsMeleeDansZones, 1, { listePionsMeleeSE, self._namedParams.zone, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux Ecl:EEI/PER
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsTemp = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) ) )
+        local listePionsEcl = S_Cherche_GE_Filtre_TypeAutomate_Eclairage( listePionsTemp )
+        Activate( self.activations.BEH_GTIA_RepartirPionsDansZones, 1, { listePionsEcl, self._namedParams.zone, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux TC2 (pions log)
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsLog = S_Cherche_GE_Filtre_TypeAutomate_Log( listePionsSE )
+        Activate( self.activations.BEH_GTIA_RepartirPionsDansZones, 1, { listePionsLog, self._namedParams.zone, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux Genie
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsGenie = S_Cherche_GE_Filtre_TypeAutomate_Genie( listePionsSE )
+        Activate( self.activations.BEH_GTIA_RepartirPionsDansZones, 1, { listePionsGenie, self._namedParams.zone, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_RepartirPionsDansZones
+]]--[[// 
+]]--[[// Commentaires: répartition simple
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_RepartirPionsDansZones"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+        self._namedParams.zone = self.params[2]
+    end,
+
+    activate = function( self )
+        if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
+            return
+        end
+
+        self.zones = self.zones or S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ) )
+        local itZone = 0
+        for _,pion in pairs( self._namedParams.listePions ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( self.zones, itZone ), } )
+                                itZone = itZone + 1
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_RepartirPionsMeleeDansZones
+]]--[[// 
+]]--[[// Commentaires:ici competition ABC/INF entre terrain eni délais etc.
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_RepartirPionsMeleeDansZones"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerZoneMeleeSuivantTerrain", {} },
+        { "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques", {} },
+        { "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsMelee = self.params[1]
+        self._namedParams.zone = self.params[2]
+    end,
+
+    activate = function( self )
+        if( DIA_IsListEmpty( self._namedParams.listePionsMelee ) ) then
+            return
+        end
+
+        self.zones = self.zones or S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePionsMelee ) )
+        Activate( self.activations.BEH_GTIA_AssignerZoneMeleeSuivantTerrain, g_rRapTerrainComp, { self._namedParams.listePionsMelee, self.zones, } )
+        Activate( self.activations.BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques, g_rRapEniEmbarques, { self._namedParams.listePionsMelee, self.zones, } )
+        Activate( self.activations.BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques, g_rRapEniDebarques, { self._namedParams.listePionsMelee, self.zones, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerZoneMeleeSuivantTerrain
+]]--[[// 
+]]--[[// Commentaires: R--> ABC fuseau ouvert / Inf --> fuseau compartimenté
+]]--[[//               définis comme comportement par defaut
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerZoneMeleeSuivantTerrain"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsMelee = self.params[1]
+        self._namedParams.zones = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[// Copie
+]]local zonesTriees = DEC_Geometrie_TrierZonesSelonOuvertureTerrain( self._namedParams.zones )
+        local listePionsABC = S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePionsMelee )
+        local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
+        local itZone = 0
+        for _,pion in pairs( --[[// Inf dans fuseau plus "fermés"
+]]listePionsINF ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
+                                itZone = itZone + 1
+            end
+--[[// ABC dans les fuseaux au terrain les plus "ouverts"
+]]
+        end
+
+        for _,pion in pairs( listePionsABC ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
+                                itZone = itZone + 1
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques
+]]--[[// 
+]]--[[// Commentaires: R--> ABC zone ouverte / Inf --> zone compartimentée
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsMelee = self.params[1]
+        self._namedParams.zones = self.params[2]
+    end,
+
+    activate = function( self )
+        local zonesTriees = DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques( self._namedParams.zones )
+        local listePionsABC = S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePionsMelee )
+        local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
+        --[[// A VIRER 
+]]if( DIA_IsListEmpty( listePionsABC ) or DIA_IsListEmpty( listePionsINF ) ) then
+            return
+        end
+
+        local itZone = 0
+        for _,pion in pairs( --[[// ABC dans les fuseaux "enis embarques"
+]]listePionsABC ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
+                                itZone = itZone + 1
+            end
+--[[// Inf dans fuseaux "eni debarques"
+]]
+        end
+
+        for _,pion in pairs( listePionsINF ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
+                                itZone = itZone + 1
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques
+]]--[[// 
+]]--[[// Commentaires: R--> ABC fuseau ouvert / Inf --> fuseau compartimenté
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerFuseau", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsMelee = self.params[1]
+        self._namedParams.zones = self.params[2]
+    end,
+
+    activate = function( self )
+        local zonesTriees = DEC_Connaissances_TrierZonesSelonPresenceEnnemisEmbarques( self._namedParams.zones )
+        local listePionsABC = S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePionsMelee )
+        local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
+        --[[// A VIRER 
+]]if( DIA_IsListEmpty( listePionsABC ) or DIA_IsListEmpty( listePionsINF ) ) then
+            return
+        end
+
+        local itZone = 0
+        for _,pion in pairs( --[[// Inf dans fuseaux "eni debarques"
+]]listePionsINF ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
+                                itZone = itZone + 1
+            end
+--[[// ABC dans les fuseaux "enis embarques"
+]]
+        end
+
+        for _,pion in pairs( listePionsABC ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
+                                itZone = itZone + 1
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerZone
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_GTIA_AssignerZone"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.zone = self.params[2]
+    end,
+
+    select = function( self )
+        if( DIA_GetLocalFakeActuator( self._namedParams.pion ) < GetActivity() ) then
+            do
+                DIA_SetLocalFakeActuator( self._namedParams.pion, GetActivity() )
+                F_Automat_Setzone( self._namedParams.pion, self._namedParams.zone )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques, "ACT_GTIA_AssignerZone", nodes.ACT_GTIA_AssignerZone }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques, "ACT_GTIA_AssignerFuseau", nodes.ACT_GTIA_AssignerFuseau }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerZoneMeleeSuivantTerrain, "ACT_GTIA_AssignerZone", nodes.ACT_GTIA_AssignerZone }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirDansZone, "BEH_GTIA_RepartirPionsMeleeDansZones", nodes.BEH_GTIA_RepartirPionsMeleeDansZones }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirDansZone, "BEH_GTIA_RepartirPionsDansZones", nodes.BEH_GTIA_RepartirPionsDansZones }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirPionsDansZones, "ACT_GTIA_AssignerZone", nodes.ACT_GTIA_AssignerZone }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirPionsMeleeDansZones, "BEH_GTIA_AssignerZoneMeleeSuivantTerrain", nodes.BEH_GTIA_AssignerZoneMeleeSuivantTerrain }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirPionsMeleeDansZones, "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques", nodes.BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirPionsMeleeDansZones, "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques", nodes.BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques }

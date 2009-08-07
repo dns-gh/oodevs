@@ -76,15 +76,12 @@ public:
     //! @name Resolver
     //@{
     virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const;
-    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const DIA_Variable_ABC&      dia ) const;
     virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent (       uint                   nID ) const;
 
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const;
-    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const;
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject(       uint                   nID ) const;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const DIA_Variable_ABC&          dia ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const;
     //@}
 
@@ -94,11 +91,11 @@ public:
           bool                         IsIdentified                   ( const MIL_Agent_ABC& agent ) const;
           bool                         IsPerceived                    ( const MIL_Agent_ABC& agent ) const;
           bool                         WasPerceived                   ( const MIL_Agent_ABC& agent ) const;
-          void                         GetLivingEnemiesPerceived      ( T_KnowledgeAgentDiaIDVector& container ) const;
-          void                         GetLivingEnemiesPerceivedInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;
-    const T_KnowledgeAgentDiaIDVector& GetDangerousEnemies            () const;
-          void                         GetDangerousEnemiesInZone      ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;
-          void                         GetAgentsAttacking             ( T_KnowledgeAgentDiaIDVector& container ) const;
+          void                         GetLivingEnemiesPerceived      ( T_ConstKnowledgeAgentVector& container ) const;
+          void                         GetLivingEnemiesPerceivedInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
+    const T_ConstKnowledgeAgentVector& GetDangerousEnemies            () const;
+          void                         GetDangerousEnemiesInZone      ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
+          void                         GetAgentsAttacking             ( T_ConstKnowledgeAgentVector& container ) const;
           MT_Float                     GetRapForLocalValue            () const;
 
     // Objects

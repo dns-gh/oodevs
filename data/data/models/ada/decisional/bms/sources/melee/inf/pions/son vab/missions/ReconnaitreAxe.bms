@@ -1,0 +1,195 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son vab/missions/ReconnaitreAxe.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_INF_ReconnaitreAxe
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_INF_ReconnaitreAxe"
+{
+    activations =
+    {
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Eni_Pion_VAB_RecoAxe", {} },
+        { "BEH_Mission_Pion_INF_RecoAxe", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eReconnaitre
+        self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Mission 'Reconnaitre Axe' : debut" )
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+        end
+
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_MANOEUVRE(), } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//=============================================================================
+]]--[[// Mission de Reconnaissance
+]]--[[//
+]]--[[// 1) preparation
+]]--[[// 2) - progression sur l axe
+]]--[[//    - retour sur l axe de progression si ce dernier a été quitte
+]]--[[// 3) fin mission
+]]--[[//=============================================================================
+]]        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                if( self.eAction == eActionImpossible or self.eAction == eActionHalt ) then
+                    self.ePhase = eFinMission
+                end
+
+                if( self.eCurrentPhase ~= eFinMission ) then
+                    do
+                        Activate( self.activations.BEH_Eni_Pion_VAB_RecoAxe, 1, {} )
+                        Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                else
+                    self.ePhase = eFinMission
+                end
+
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                --[[// Ajout MIA ADA    
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )--[[// Ajout MIA ADA
+]]
+                --[[/*  // Virer MIA ADA
+			if( 	eAction == eActionEffectuee )    {        	eAction=eActionEnCours;        								{										
+									DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );										
+									DEC_FinMission();
+									halt( eActionEffectuee );
+								}
+							  
+    }
+			action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_FinMission );
+			behavior BEH_Poste_Pion_INF_TomberEnGarde( true ) return in eAction;
+			*/]]--[[//=============================================================================
+]]--[[//=============================================================================
+]]--[[//						Gestion de l'ennemi
+]]--[[//	
+]]--[[//=============================================================================
+]]
+            
+            else
+            --[[//=============================================================================
+]]            end
+--[[// BEH_Eni_Pion_VAB_RecoAxe()
+]]
+    end,
+
+--[[//	
+]]--[[// Dans le cadre de la reco offencive, on precise et prends le contact sur les
+]]--[[//  ennemis dans le fuseau et non detruit tactiquement.
+]]--[[//=============================================================================
+]]--[[// Si on quitte notre fuseau, on reinitialise toute les manoeuvres sur 
+]]--[[// les ennemis
+]]--[[// Precise le contact sur les unites detectees
+]]}
+
+node "BEH_Eni_Pion_VAB_RecoAxe"
+{
+    activations =
+    {
+        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", {} },
+        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// On traite l'unite si elle est dans le fuseau de la section    								
+]]        if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
+            Halt()
+        end
+
+        --[[// On traite l'unite si elle est dans le fuseau de la section
+]]local lstUnitesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()
+        for _,ksEni in pairs( lstUnitesDansFuseau ) do
+        local _continue = true
+do
+                local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
+                local rForceReco = S_Force_DistanceReco( DEC_ConnaissanceAgent_Position( ksEni ), 4000 )
+                Activate( self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce * rForceReco, { ksEni, true, } )
+            end
+--[[// Le comportement doit etre starte car une fois que l'unite est 
+]]--[[// detruite, il retablit le dispositif.
+]]
+        end
+
+        local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
+        for _,ksEni in pairs( lstEnisDansFuseau ) do
+        local _continue = true
+do
+                --[[// On lance l'assaut si le niveau de perception attendu est atteind
+]]if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
+                    local rForceReco = S_Force_DistanceReco( DEC_ConnaissanceAgent_Position( ksEni ), 4000 )
+                    StartActivate( self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce * rForceReco, { ksEni, true, } )
+                    if( S_Eni_EstNiveauPerceptionGTIA( ksEni, F_Pion_GeteNiveauAction( myself ) ) ) then
+                        Activate( self.activations.BEH_Eni_Pion_VAB_ManoeuvreDetruire, 1.1 * ( 2.5 + rForce ) * rForceReco, { ksEni, true, } )
+                    end
+
+                end
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                do
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_INF_ReconnaitreAxe = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_RecoAxe, "BEH_Dep_Pion_INF_GererDispositif_Offensif", nodes.BEH_Dep_Pion_INF_GererDispositif_Offensif }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_RecoAxe, "BEH_Eni_Pion_VAB_ManoeuvreDetruire", nodes.BEH_Eni_Pion_VAB_ManoeuvreDetruire }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitreAxe, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitreAxe, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitreAxe, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitreAxe, "BEH_Eni_Pion_VAB_RecoAxe", nodes.BEH_Eni_Pion_VAB_RecoAxe }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitreAxe, "BEH_Mission_Pion_INF_RecoAxe", nodes.BEH_Mission_Pion_INF_RecoAxe }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitreAxe, "BEH_MOT_Pion_INF_Debarquer", nodes.BEH_MOT_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitreAxe, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitreAxe, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

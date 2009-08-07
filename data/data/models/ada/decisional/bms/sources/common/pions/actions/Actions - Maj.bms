@@ -1,0 +1,314 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
+
+
+--[[// ==============================================================================
+]]--[[//	MAJ DES ETATS DU PION DE HAUT NIVEAU
+]]--[[// ==============================================================================
+]]
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_EtatPhaseMission
+]]--[[// 
+]]--[[// Commentaires: Mets a jour la situation du pion en fonction de sa phase de mission
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_MAJ_EtatPhaseMission"
+{
+    actuators =
+    {
+        etat_Mission = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatPhaseMission = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatPhaseMission( myself, self._namedParams.eEtatPhaseMission )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatPhaseMission( myself, eEtatPhaseMission_None )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_EtatDec
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_MAJ_EtatDec"
+{
+    actuators =
+    {
+        etat_Dec = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatDec = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatDec( myself, self._namedParams.eEtatDec )
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatDec( myself, eEtatDec_Continu )
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatDec( myself, eEtatDec_Continu )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_EtatDestruction
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_MAJ_EtatDestruction"
+{
+    actuators =
+    {
+        etat_Destruction = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatDestruction = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatDestruction( myself, self._namedParams.eEtatDestruction )
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatDestruction( myself, eEtatDestruction_None )
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatDestruction( myself, eEtatDestruction_None )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_EtatOrdreCoordination
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_MAJ_EtatOrdreCoordination"
+{
+    actuators =
+    {
+        etat_OrdreCoordination = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatOrdreCoordination = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatOrdreCoordination( myself, self._namedParams.eEtatOrdreCoordination )
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatOrdreCoordination( myself, eEtatOrdreCoordination_aucun )
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatOrdreCoordination( myself, eEtatOrdreCoordination_aucun )
+    end,
+
+}
+
+--[[// ==============================================================================
+]]--[[//	MAJ Divers: objectif et eni en cours stocké dans le T_PionModeleDEC
+]]--[[// ==============================================================================
+]]--[[// ****************************************************************************** 
+]]--[[// ACT_Maj_Pions_ObjectifEsquive
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Maj_Pions_ObjectifEsquive"
+{
+    actuators =
+    {
+        objectifEsquive = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objectif = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SetobjectifEsquive( myself, self._namedParams.objectif )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_MAJ_EnnemiEnCours
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//		
+]]--[[// *****************************************************************************
+]]node "ACT_MAJ_EnnemiEnCours"
+{
+    actuators =
+    {
+        ennemi = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteniEnCours( myself, self._namedParams.repEni )
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteniEnCours( myself, nil )
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteniEnCours( myself, nil )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_MAJ_EnAppuiPionMobile
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_MAJ_EnAppuiPionMobile"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionAppui = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SetbDefenseStatique_Mobile( self._namedParams.pionAppui, true )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetbDefenseStatique_Mobile( self._namedParams.pionAppui, false )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_MAJ_EtatPrudence 
+]]--[[// 
+]]--[[// Commentaires: MAJ de l'etat de prudence .. Fait uniquement dans les
+]]--[[//               motivations, pas besoin d'actuateur
+]]--[[// *****************************************************************************
+]]node "ACT_MAJ_EtatPrudence"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatDecPrudence = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatDecPrudence( myself, self._namedParams.eEtatDecPrudence )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatDecPrudence( myself, eEtatDecPrudence_None )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Maj_Pion_PasserEnTirLibre
+]]--[[// 
+]]--[[// Commentaires: MIA:Appelee une seule fois par le comportement 
+]]--[[//               BEH_ROE_Recevoir_OrdreInopine OU dans une mission "en dur"
+]]--[[//               Juste encapsulation, pas d'actuateurs
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Maj_Pion_PasserEnTirLibre"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        SetStateVariable( "VE_TirRestreint", 0 )
+        SetStateVariable( "VE_TirInterdit", 0 )
+        SetStateVariable( "VE_TirLibre", 1 )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Maj_Pion_PasserEnTirSurRiposte
+]]--[[// 
+]]--[[// Commentaires: MIA:Appelee une seule fois par le comportement 
+]]--[[//               BEH_ROE_Recevoir_OrdreInopine. Juste encapsulation, pas d'actuateurs
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Maj_Pion_PasserEnTirSurRiposte"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        SetStateVariable( "VE_TirRestreint", 1 )
+        SetStateVariable( "VE_TirInterdit", 0 )
+        SetStateVariable( "VE_TirLibre", 0 )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Maj_Pion_PasserEnTirInterdit
+]]--[[// 
+]]--[[// Commentaires: MIA:Appelee une seule fois par le comportement 
+]]--[[//               BEH_ROE_Recevoir_OrdreInopine. Juste encapsulation, pas d'actuateurs
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Maj_Pion_PasserEnTirInterdit"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        SetStateVariable( "VE_TirRestreint", 0 )
+        SetStateVariable( "VE_TirInterdit", 1 )
+        SetStateVariable( "VE_TirLibre", 0 )
+    end,
+
+}
+

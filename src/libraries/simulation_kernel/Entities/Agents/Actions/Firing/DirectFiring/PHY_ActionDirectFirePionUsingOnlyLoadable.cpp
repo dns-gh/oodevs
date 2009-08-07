@@ -17,8 +17,8 @@
 // Name: PHY_ActionDirectFirePionUsingOnlyLoadable constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDirectFirePionUsingOnlyLoadable::PHY_ActionDirectFirePionUsingOnlyLoadable( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_ActionDirectFirePion_ABC( pion, diaCall, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFireOnAllComposantes )
+PHY_ActionDirectFirePionUsingOnlyLoadable::PHY_ActionDirectFirePionUsingOnlyLoadable( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode )
+    : PHY_ActionDirectFirePion_ABC( pion, pEnemy, percentage, firingMode, -1, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFireOnAllComposantes )
 {
 }
 

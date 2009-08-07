@@ -1,0 +1,176 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/common/Behaviors.bms"] = true
+
+--[[//génériques pions scipio
+]]include "Common/Pions/Behaviors.bms"
+
+--[[// Embarquement (apres heliportage)
+]]include "Common/Pions/Behaviors/Behaviors - Embarquement.bms"
+
+
+--[[//inclusion des actions communes aux pions asa
+]]include "Appui/ArtDsa/Pions/Common/Actions.bms"
+
+
+--[[// comportements génériques aux pions asa
+]]include "Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Eni.bms"
+
+include "Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Manoeuvre.bms"
+
+include "Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Mot.bms"
+
+
+--[[//Missions génériques des pions SCIPIO
+]]include "Common/Pions/MissionsGeneriques.bms"
+
+
+--[[// *****************************************************************************
+]]--[[// Comportement par défaut.
+]]--[[//
+]]--[[// Commentaires: Les helicopteres sont tous posés pour au debut. Ils n'ont pas
+]]--[[// d'objectif ni de plot de rafitaillement
+]]--[[//
+]]--[[// toutes les actions et les comportements par défaut sont activé avec une force 
+]]--[[// maximale de 0.5
+]]--[[// *****************************************************************************
+]]node "BEH_Defaut"
+{
+    activations =
+    {
+        { "BEH_ASA_Defaut", {} },
+        { "BEH_Pion_ASA_GererInstallation", {} },
+        { "BEH_Mot_Pion_ASA_AffecterVariablesDEtat", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_Rens", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Info_Pion_RendreCompte", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SetobjectifEsquive( myself, nil )
+                myself.typeDeploiement_ = eEtatDeploiement_omnidirectionnel
+            end
+        end
+
+        Activate( self.activations.BEH_ASA_Defaut, 1, {} )
+        Activate( self.activations.BEH_Pion_ASA_GererInstallation, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_ASA_AffecterVariablesDEtat, 1, {} )--[[// ---------------------------------------------------------------------
+]]--[[// MAJ VE
+]]--[[// ---------------------------------------------------------------------
+]]
+        --[[//les pions de l'asa sont toujours organisés en un echelon
+]]F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[// ---------------------------------------------------------------------
+]]--[[// MAJ de l'état DEC par défaut 
+]]--[[// ---------------------------------------------------------------------
+]]
+        if( not S_Misc_EstDetruitPhysique() ) then
+            do
+                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                Activate( self.activations.BEH_Ambiance, 1, {} )--[[// ---------------------------------------------------------------------
+]]--[[// Comportements génériques
+]]--[[// ---------------------------------------------------------------------
+]]
+                Activate( self.activations.BEH_Nbc, 1, {} )
+                Activate( self.activations.BEH_Rens, 1, {} )
+                Activate( self.activations.BEH_ROE, 1, {} )
+            end
+--[[// -------------------------------------------------------------------------
+]]--[[// RC de haut niveau (phases missions)
+]]--[[// -------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// GererInstallation :
+]]--[[// ----------------
+]]--[[//
+]]--[[// Commentaires : on prend un actuateur de déplacement si on est installé.
+]]--[[//
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Pion_ASA_GererInstallation"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_EstInstalle() ) then
+            DEC_Elongation( M_POLY_DOCTRINE_ELONGATION_DEPLOIEMENT() )
+        end
+
+        if( DEC_Agent_EstDesinstalle() ) then
+            DEC_Elongation( 1 )
+        end
+
+    end,
+
+--[[////////////////////////////// PARTIE COMPORTEMENTS VIRTUELS /////////////////////////////////////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_ProgressionVers
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_ProgressionVers"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+        self._namedParams.eTypeProgression = self.params[2]
+        self._namedParams.eTypeIti = self.params[3]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_PreparationAction
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_PreparationAction"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ASA_Defaut", nodes.BEH_ASA_Defaut }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Pion_ASA_GererInstallation", nodes.BEH_Pion_ASA_GererInstallation }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_ASA_AffecterVariablesDEtat", nodes.BEH_Mot_Pion_ASA_AffecterVariablesDEtat }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MAJ_EtatDefaut", nodes.BEH_MAJ_EtatDefaut }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ambiance", nodes.BEH_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc", nodes.BEH_Nbc }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens", nodes.BEH_Rens }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE", nodes.BEH_ROE }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Info_Pion_RendreCompte", nodes.BEH_Info_Pion_RendreCompte }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }

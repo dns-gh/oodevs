@@ -1,0 +1,28 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/son dec/missions/Missions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-08-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Nbc/Automates/Son Dec/Missions/Missions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:47 $
+]]--[[// $Revision: 5 $
+]]--[[// $Workfile: Missions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//=============================================================================
+]]--[[// Liste des missions de l'escadrons AMX / ERC
+]]--[[//=============================================================================
+]]
+--[[/* Armer un site de decontamination */]]
+include "Appui/Nbc/Automates/Son Dec/Missions/ArmerSiteDecontamination/ArmerSiteDecontamination - MRT.bms"
+
+include "Appui/Nbc/Automates/Son Dec/Missions/ArmerSiteDecontamination/ArmerSiteDecontamination - CDT.bms"
+
+
+--[[/* Decontaminer une zone */]]
+include "Appui/Nbc/Automates/Son Dec/Missions/DecontaminerZone/DecontaminerZone - MRT.bms"
+
+include "Appui/Nbc/Automates/Son Dec/Missions/DecontaminerZone/DecontaminerZone - CDT.bms"

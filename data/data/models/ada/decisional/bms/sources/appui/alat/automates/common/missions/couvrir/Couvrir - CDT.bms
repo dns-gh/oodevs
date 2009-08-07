@@ -1,0 +1,138 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/couvrir/Couvrir - CDT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Conduite de la mission Automate Alat Couvrir :
+]]--[[//
+]]--[[//
+]]--[[// Les unites de reserve suivent les patrouilles qui couvrent pour être pretes
+]]--[[// à relever
+]]--[[//
+]]--[[// De plus, on doit toujours assurer la permanance de la couverture malgré les
+]]--[[// ravitaillements.
+]]--[[//
+]]--[[// Les HM Log gerent les besoins en plots de ravitaillement et en IMEX
+]]--[[//
+]]--[[// Les unites qui peuvent relever les unites recoivent la mission suivre pour 
+]]--[[// etre à meme de le faire le plus rapidement possible
+]]--[[//
+]]--[[// Gestion des ODC Inopinés
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_CDT_ALAT_Couvrir"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirLibre", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe", {} },
+        { "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne", {} },
+        { "BEH_Automate_ALAT_CoordonnerFeux", {} },
+        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", {} },
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eCouvrir
+        self.listePionsSgpt = self.listePionsSgpt or {}
+        self.listePionsSgptSansRavitaillementsEnCours = self.listePionsSgptSansRavitaillementsEnCours or {}
+        self.listePionsCouvrir = self.listePionsCouvrir or {}
+        self.listePionsCouvrirSansRavitaillementsEnCours = self.listePionsCouvrirSansRavitaillementsEnCours or {}
+        self.listeUnitesACouvrir = self.listeUnitesACouvrir or {}
+        self.listeHMLog = self.listeHMLog or {}
+        self.listePionsAAppuyerIMEX = self.listePionsAAppuyerIMEX or {}
+        if( ModuleBegins() ) then
+            do
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+        end
+
+        self.eEtatODC = self.eEtatODC or eActionEnCours
+        if( self.eEtatODC == eActionHalt ) then
+            do
+                self.ePhase = eSExfiltrer
+                self.eEtatODC = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        --[[// donner des missions aux pions qui sont opérationnels et qui ne sont pas en cours
+]]--[[// de ravitaillement
+]]DIA_Clear( self.listePionsSgpt )
+        DIA_Clear( self.listePionsSgptSansRavitaillementsEnCours )
+        self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+        local listePionsEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( self.listePionsSgpt )
+        self.listePionsSgptSansRavitaillementsEnCours = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsSgpt, listePionsEnCoursRavitaillement )
+        --[[// Mise à Jour des selections
+]]--[[// --------------------------
+]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AntitankHelicopterPatrol )
+        local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, EscortAndCloseSupportHelicopterPatrol )
+        local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AirDefenseHelicopterPatrol )
+        --[[// liste des unités pour IMEX
+]]DIA_Clear( self.listeHMLog )
+        self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, GeneralPurposeHelicopterPatrol )
+        --[[// liste des unités à appuyer
+]]DIA_Clear( self.listeUnitesACouvrir )
+        self.listeUnitesACouvrir = S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAAppuyer_ )
+        --[[// liste des pions qui peuvent couvrir
+]]DIA_Clear( self.listePionsCouvrir )
+        DIA_Clear( self.listePionsCouvrirSansRavitaillementsEnCours )
+        self.listePionsCouvrir = S_Liste_Concatene( S_Liste_Concatene( listeHAP, listeHAC ), listeHAM )
+        self.listePionsCouvrirSansRavitaillementsEnCours = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsCouvrir, listePionsEnCoursRavitaillement )
+        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
+        switch_1 = self.ePhase
+            if switch_1 == eCouvrir then
+                --[[// CDT des missions de couverture
+]]if( not DIA_IsListEmpty( self.listePionsCouvrirSansRavitaillementsEnCours ) and not DIA_IsListEmpty( self.listeUnitesACouvrir ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe, 1, { ePhase_CDT, self.listePionsCouvrirSansRavitaillementsEnCours, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, eNatureAtlas_Helicoptere, self.listeUnitesACouvrir, DEC_GetDirectionEnnemi( self._namedParams.mission ), 60, } )
+                end
+
+                --[[// Gestion Coordination Ravitaillement
+]]--[[// -----------------------------------
+]]if( not DIA_IsListEmpty( self.listePionsCouvrir ) ) then
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePionsCouvrir, } )
+                end
+
+                --[[// Gestion de la coordination des feux
+]]--[[// -----------------------------------
+]]if( not DIA_IsListEmpty( self.listePionsCouvrirSansRavitaillementsEnCours ) ) then
+                    Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listePionsCouvrirSansRavitaillementsEnCours, 0, } )
+                end
+
+                --[[// IMEX et ravitaillements
+]]--[[// ---------------------------------------------------------------------
+]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
+                
+            elseif switch_1 == eSExfiltrer then
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
+                
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ALAT_Couvrir = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Couvrir, "BEH_ROE_Automate_TirLibre", nodes.BEH_ROE_Automate_TirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Couvrir, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Couvrir, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Couvrir, "BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe", nodes.BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Couvrir, "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne", nodes.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Couvrir, "BEH_Automate_ALAT_CoordonnerFeux", nodes.BEH_Automate_ALAT_CoordonnerFeux }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Couvrir, "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", nodes.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Couvrir, "BEH_ROE_Automate_TirRestreint", nodes.BEH_ROE_Automate_TirRestreint }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Couvrir, "BEH_Mission_Automate_AssignerStationnerAListe", nodes.BEH_Mission_Automate_AssignerStationnerAListe }

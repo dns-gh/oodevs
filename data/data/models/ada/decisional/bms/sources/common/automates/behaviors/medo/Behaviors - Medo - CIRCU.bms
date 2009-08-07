@@ -1,0 +1,1001 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/behaviors/medo/Behaviors - Medo - CIRCU.bms"] = true
+
+include "Common/Automates/Actions/Medo/Actions - Medo - CIRCU.bms"
+
+
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerReconnaitreItineraireA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.itineraireLog = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA, 1, { self._namedParams.ePhase, x, self._namedParams.itineraireLog, } )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerReconnaitreItineraireA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerReconnaitreItineraireA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.iti = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerReconnaitreItineraireA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.iti, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.uniteARenforcer = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        StartActivate( self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA, 1, { self._namedParams.ePhase, x, self._namedParams.uniteARenforcer, } )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+node "BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_CIRCU_AssignerRenforcerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.uniteARenforcer = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_CIRCU_AssignerRenforcerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.uniteARenforcer, DEC_Automate_PionPosition( self._namedParams.uniteARenforcer ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.listeObjets = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                local iterateur = 0
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        --[[//si on a moins de positions que de pions, on renforce des positions
+]]if( iterateur == #( self._namedParams.listeObjets ) ) then
+                            iterateur = 0
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeObjets, iterateur ), } )
+                                                iterateur = iterateur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerAppuyerFranchissementSurUnPointA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerAppuyerFranchissementSurUnPointA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.obj = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerAppuyerFranchissementSurUnPointA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.obj, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.listeLocalisations = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                local iterateur = 0
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        --[[//si on a moins de positions que de pions, on renforce des positions
+]]if( iterateur == #( self._namedParams.listeLocalisations ) ) then
+                            iterateur = 0
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                                                iterateur = iterateur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementDansZoneA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.zone = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerAppuyerMouvementDansZoneA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.listePC = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                local iterateur = 0
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        --[[//si on a moins de positions que de pions, on renforce des positions
+]]if( iterateur == #( self._namedParams.listePC ) ) then
+                            iterateur = 0
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA, 1, { self._namedParams.ePhase, x, DIA_GetAt( self._namedParams.listePC, iterateur ), } )
+                                                iterateur = iterateur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerAppuyerMouvementA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pionA = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerAppuyerMouvementA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pionA, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerArmerPIAA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.listePIA = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                local iterateur = 0
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        --[[//si on a moins de positions que de pions, on renforce des positions
+]]if( iterateur == DEC_ListePoints_Size( self._namedParams.listePIA ) ) then
+                            iterateur = 0
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerArmerPIAA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePIA, iterateur ), } )
+                                                iterateur = iterateur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerBloquerZoneA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerArmerPIAA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerArmerPIAA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pt = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerArmerPIAA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pt, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.listeSousSecteurs = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                local iterateur = 0
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        --[[//si on a moins de positions que de pions, on renforce des positions
+]]if( iterateur == #( self._namedParams.listeSousSecteurs ) ) then
+                            iterateur = 0
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeSousSecteurs, iterateur ), } )
+                                                iterateur = iterateur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerBloquerZoneA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerBloquerZoneA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.zone = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerBloquerZoneA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreStationnementAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.listeLocalisations = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                local iterateur = 0
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        --[[//si on a moins de positions que de pions, on renforce des positions
+]]if( iterateur == #( self._namedParams.listeLocalisations ) ) then
+                            iterateur = 0
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                                                iterateur = iterateur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerMettreEnOeuvreZoneStationnementA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerMettreEnOeuvreZoneStationnementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.zone = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerMettreEnOeuvreZoneStationnementA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.listeLocalisations = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                local iterateur = 0
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        --[[//si on a moins de positions que de pions, on renforce des positions
+]]if( iterateur == #( self._namedParams.listeLocalisations ) ) then
+                            iterateur = 0
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                                                iterateur = iterateur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerReconnaitreZoneContamineeA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneContamineeA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.zone = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerReconnaitreZoneContamineeA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.listeLocalisations = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                local iterateur = 0
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        --[[//si on a moins de positions que de pions, on renforce des positions
+]]if( iterateur == #( self._namedParams.listeLocalisations ) ) then
+                            iterateur = 0
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                                                iterateur = iterateur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerReconnaitreZoneDeDeploiementA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneDeDeploiementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.loc = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerReconnaitreZoneDeDeploiementA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.loc, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_CIRCU_AssignerSurveillerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.listeLocalisations = self.params[3]
+    end,
+
+    activate = function( self )
+        assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
+        if( ModuleBegins() ) then
+            do
+                local iterateur = 0
+                for _,x in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        --[[//si on a moins de positions que de pions, on renforce des positions
+]]if( iterateur == #( self._namedParams.listeLocalisations ) ) then
+                            iterateur = 0
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_CIRCU_AssignerSurveillerA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                                                iterateur = iterateur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerSurveillerA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_CIRCU_AssignerSurveillerA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerSurveillerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.zone = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerSurveillerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA, "ACT_Mission_Automate_CIRCU_AssignerRenforcerA", nodes.ACT_Mission_Automate_CIRCU_AssignerRenforcerA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe, "BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA", nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe, "BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA", nodes.BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA, "ACT_Mission_Automate_LOG_AssignerAppuyerFranchissementSurUnPointA", nodes.ACT_Mission_Automate_LOG_AssignerAppuyerFranchissementSurUnPointA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA, "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementA", nodes.ACT_Mission_Automate_LOG_AssignerAppuyerMouvementA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe, "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA", nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA, "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementDansZoneA", nodes.ACT_Mission_Automate_LOG_AssignerAppuyerMouvementDansZoneA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneAListe, "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA", nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerArmerPIAA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerArmerPIAA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerArmerPIAA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerArmerPIAA, "ACT_Mission_Automate_LOG_AssignerArmerPIAA", nodes.ACT_Mission_Automate_LOG_AssignerArmerPIAA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe, "BEH_Mission_Automate_CIRCU_AssignerArmerPIAA", nodes.BEH_Mission_Automate_CIRCU_AssignerArmerPIAA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA, "ACT_Mission_Automate_LOG_AssignerBloquerZoneA", nodes.ACT_Mission_Automate_LOG_AssignerBloquerZoneA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerBloquerZoneAListe, "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA", nodes.BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreStationnementAListe, "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA", nodes.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA, "ACT_Mission_Automate_LOG_AssignerMettreEnOeuvreZoneStationnementA", nodes.ACT_Mission_Automate_LOG_AssignerMettreEnOeuvreZoneStationnementA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA, "ACT_Mission_Automate_LOG_AssignerReconnaitreItineraireA", nodes.ACT_Mission_Automate_LOG_AssignerReconnaitreItineraireA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireAListe, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA", nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA, "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneContamineeA", nodes.ACT_Mission_Automate_LOG_AssignerReconnaitreZoneContamineeA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA", nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA, "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneDeDeploiementA", nodes.ACT_Mission_Automate_LOG_AssignerReconnaitreZoneDeDeploiementA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA", nodes.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerSurveillerA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerSurveillerA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerSurveillerA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerSurveillerA, "ACT_Mission_Automate_LOG_AssignerSurveillerA", nodes.ACT_Mission_Automate_LOG_AssignerSurveillerA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe, "BEH_Mission_Automate_CIRCU_AssignerSurveillerA", nodes.BEH_Mission_Automate_CIRCU_AssignerSurveillerA }

@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/esc xl/missions/appuyersurposition/AppuyerSurPosition - CDT.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_AppuyerSurPosition
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_AppuyerSurPosition"
+{
+    activations =
+    {
+        { "BEH_Auto_CDT_ABC_Tenir", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                                do
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Conduite gen
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// idem tenir
+]]        end
+
+        Activate( self.activations.BEH_Auto_CDT_ABC_Tenir, 1, {} )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_AppuyerSurPosition = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_AppuyerSurPosition, "BEH_Auto_CDT_ABC_Tenir", nodes.BEH_Auto_CDT_ABC_Tenir }

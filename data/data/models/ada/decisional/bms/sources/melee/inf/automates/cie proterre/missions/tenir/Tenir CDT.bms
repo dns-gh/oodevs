@@ -1,0 +1,67 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/cie proterre/missions/tenir/Tenir CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-07-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Cie Vab/Missions/Tenir/Tenir CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 14 $
+]]--[[// $Workfile: Tenir CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "MIS_Automate_CDT_INF_Tenir"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreStatique", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eActionMission = self.eActionMission or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[// Coordination lors de la mise en place du dispositif dans les fuseaux			
+]]--[[/* MIA ADA //start behavior BEH_Conduite_Automate_GererFuseau();*/]]--[[// Conduite des pions au niveau section
+]]--[[//-----------------------------------------------------------------------------		
+]]        end
+
+        if( self.eActionMission == eActionEffectuee ) then
+            do
+                self.eActionMission = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, {} )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_INF_Tenir = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Tenir, "BEH_Conduite_Automate_INF_Defaut", nodes.BEH_Conduite_Automate_INF_Defaut }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Tenir, "BEH_Conduite_Automate_INF_CadreStatique", nodes.BEH_Conduite_Automate_INF_CadreStatique }

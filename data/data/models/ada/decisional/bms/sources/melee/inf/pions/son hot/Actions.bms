@@ -1,0 +1,43 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son hot/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son Hot/Actions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 10 $
+]]--[[// $Workfile: Actions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+node "ACT_Transport_Pion_INF_Debarquer"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+
+node "ACT_Tir_Pion_INF_TirCouverture"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+    end,
+
+    select = function( self )
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+

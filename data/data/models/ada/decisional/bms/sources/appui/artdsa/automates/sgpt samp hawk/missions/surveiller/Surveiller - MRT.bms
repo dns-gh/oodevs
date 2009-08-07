@@ -1,0 +1,106 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/surveiller/Surveiller - MRT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Surveiller Hawk - MRT
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ASA_HAWK_Surveiller"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe", {} },
+        { "BEH_Mission_Automate_AssignerStationnerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[// variables persistantes
+]]self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionsSurveiller = self.eEtatMissionsSurveiller or eActionEnCours
+        self.pionPC = self.pionPC or DEC_Automate_PionPC()
+        self.barycentreZone = self.barycentreZone or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listeSectionsHawk = self.listeSectionsHawk or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, TheaterHighAltitudeDefenseTroop )
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( DIA_IsListEmpty( self.listeSectionsHawk ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( ( DEC_ListePoints_Size( self._namedParams.mission.positionsSections_ ) == 0 or DEC_ListePoints_Size( self._namedParams.mission.positionsSections_ ) == nil ) ) then
+                    self.ePhase = eMRT_MissionImpossible
+                end
+
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionsSurveiller == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionsSurveiller == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[//controle des creations de missions
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeSectionsHawk ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsSurveiller = v else rawset( t, k, v ) end end } ) )
+                --[[//Surveiller à partir de position calculées
+]]if( not DIA_IsListEmpty( self.listeSectionsHawk ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe, 1, { ePhase_MRT, self.listeSectionsHawk, self._namedParams.mission.positionsSections_, } )
+                end
+
+                --[[//Le pc va toujours stationner au centre de la zone défendue
+]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreZone, } )
+                
+            elseif switch_1 == eMRT_MissionImpossible then
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ASA_HAWK_Surveiller = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_HAWK_Surveiller, "BEH_ROE_Automate_TirRestreint", nodes.BEH_ROE_Automate_TirRestreint }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_HAWK_Surveiller, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_HAWK_Surveiller, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_HAWK_Surveiller, "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe", nodes.BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_HAWK_Surveiller, "BEH_Mission_Automate_AssignerStationnerA", nodes.BEH_Mission_Automate_AssignerStationnerA }

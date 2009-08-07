@@ -64,9 +64,9 @@ public:
     //! @name Operations
     //@{
     void NotifyAttackedBy ( const MIL_Agent_ABC& attacker );
-    void GetPionsAttacking( T_PopulationKnowledgeAgentDiaIDVector& container ) const;
+    std::vector< unsigned int > GetPionsAttacking( ) const;
     void NotifySecuredBy  ( const MIL_Agent_ABC& securer );
-    void GetPionsSecuring ( T_PopulationKnowledgeAgentDiaIDVector& container ) const;
+    std::vector< unsigned int > GetPionsSecuring ( ) const;
     
           void              NotifyChanneled       ( const TER_Localisation& location );
     const T_LocationVector& GetChannelingLocations() const;

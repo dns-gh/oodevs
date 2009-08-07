@@ -40,13 +40,3 @@ const DEC_Model_ABC* DEC_Workspace::FindModelPopulation( const std::string& strM
         return 0;
     return it->second;
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Workspace::GetDebug
-// Created: NLD 2004-06-04
-// -----------------------------------------------------------------------------
-inline
-DEC_Debug& DEC_Workspace::GetDebug()
-{
-    return debug_;   
-}

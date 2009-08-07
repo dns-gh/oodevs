@@ -1,0 +1,377 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/pions/Behaviors.bms"] = true
+
+include "bit.lua"
+
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+debarquement = 1,
+tir = 1,
+vitesse = 1,
+observation = 1,
+obstacle = 1,
+reconnaissance = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+ennemi = 1,
+controlePopulation = 1,
+objectifEsquive = 1,
+etat_ROE = 1,
+etat_Mission = 1,
+}
+
+
+include "Common/Pions/Behaviors.bms"
+
+--[[// Embarquement (apres heliportage)
+]]include "Common/Pions/Behaviors/Behaviors - Embarquement.bms"
+
+
+--[[//missions génériques
+]]include "Common/Pions/MissionsGeneriques.bms"
+
+
+include "Appui/Circulation/Pions/Actions.bms"
+
+include "Appui/Circulation/Pions/Missions/Missions.bms"
+
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Defaut
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Defaut"
+{
+    activations =
+    {
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_Mot_AffecterVariablesDEtat", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_Rens", {} },
+        { "BEH_Ordre_Pion_CIRCU_OrdresInopines", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        local mission = DEC_GetMission( myself )
+        if( mission ~= nil and mission:GetType() ~= "T_Mission_Pion_LOG_AppuyerMouvement" ) then
+            do
+                --[[// Dans le cas où on appui pas le mouvement d'une unité on limite fortement la vitesse
+]]--[[// du pion.
+]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 0.5, } )
+            end
+--[[// ---------------------------------------------------------------------
+]]--[[// MAJ de l'état DEC par défaut
+]]--[[// ---------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
+        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, {} )--[[// ------------------------------------------------------------------------
+]]--[[// MAJ VE
+]]--[[// ------------------------------------------------------------------------
+]]
+        --[[// Si totalement detruit...
+]]if( S_Misc_EstDetruitPhysique() ) then
+            return
+        end
+
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// Embarquement apres Heliportage
+]]--[[// ------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_ROE, 1, {} )--[[// ---------------------------------------------------------------------
+]]--[[// Comp générique
+]]--[[// ---------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Ambiance, 1, {} )
+        Activate( self.activations.BEH_Nbc, 1, {} )
+        Activate( self.activations.BEH_Rens, 1, {} )
+        Activate( self.activations.BEH_Ordre_Pion_CIRCU_OrdresInopines, 1, {} )--[[// ---------------------------------------------------------------------
+]]--[[// Ordre
+]]--[[// ---------------------------------------------------------------------
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mot_AffecterVariablesDEtat
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mot_AffecterVariablesDEtat"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+    end,
+
+--[[// $$$$ MIA: esquive seulement sur PAP
+]]--[[// *****************************************************************************
+]]--[[// BEH_LOG_Pion_FaireDesMesures
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_LOG_Pion_FaireDesMesures"
+{
+    activations =
+    {
+        { "BEH_LOG_Pion_FaireUneMesureDans", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Ici normalement: si bonne gestion des objets (NBC)
+]]--[[// If (pas mesurée) alors mesurer --> faire une action et pas un comportement
+]]--[[//---------------------------------------------------------------------
+]]--[[// Des que l'on est proche d'un objet, faire une mesure au cas ou 
+]]--[[// il s'agirait d'une zone contaminée
+]]--[[//---------------------------------------------------------------------
+]]local listeObjet = DEC_Connaissances_CollisionsObjets()
+        for _,objet in pairs( listeObjet ) do
+        local _continue = true
+            Activate( self.activations.BEH_LOG_Pion_FaireUneMesureDans, 1, { objet, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_LOG_Pion_FaireUneMesureDans
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_LOG_Pion_FaireUneMesureDans"
+{
+    activations =
+    {
+        { "ACT_LOG_FaireMesure", {} },
+        { "ACT_Dep_SePoster", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// Car ne mesurer qu'une seule fois
+]]self.bMesureEffectuee = self.bMesureEffectuee or false
+        --[[// Mesure effectuee
+]]if( self.bMesureEffectuee ) then
+            return
+        end
+
+        --[[//---------------------------------------------------------------------
+]]--[[// Condition de fin de mesure
+]]--[[//---------------------------------------------------------------------
+]]if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            self.bMesureEffectuee = true
+        end
+
+        --[[//---------------------------------------------------------------------
+]]--[[// Mesure une seule fois
+]]--[[//---------------------------------------------------------------------
+]]if( not self.bMesureEffectuee ) then
+            do
+                Activate( self.activations.ACT_LOG_FaireMesure, 1, {} )--[[// Juste pour RC
+]]
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[// Attente la posture adéquate pour faire fonctionner le senseur
+]]
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Pion_CIRCU_OrdresInopines
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Pion_CIRCU_OrdresInopines"
+{
+    activations =
+    {
+        { "ACT_Misc_Pion_Circu_PreterRemorqueurs", {} },
+        { "ACT_Misc_Pion_Circu_RecupererRemorqueurs", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
+                        local repOrdreRenforcer = repOrdre
+                        StartActivate( self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrRemorqueurs_(), } )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
+                        local repOrdreTransferer = repOrdre
+                        StartActivate( self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
+                        local repOrdreReprendre = repOrdre
+                        StartActivate( self.activations.ACT_Misc_Pion_Circu_RecupererRemorqueurs, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrRemorqueurs_(), } )
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[////////////////////////////// PARTIE COMPORTEMENTS VIRTUELS /////////////////////////////////////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_ProgressionVers
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_ProgressionVers"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+        self._namedParams.eTypeProgression = self.params[2]
+        self._namedParams.eTypeIti = self.params[3]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_PreparationAction
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_PreparationAction"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_Circu_InstallerDispositif
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_Circu_InstallerDispositif"
+{
+    activations =
+    {
+        { "ACT_Pion_Circu_InstallerDisposifif", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Pion_Circu_InstallerDisposifif, 1, {} )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pion_Circu_InstallerDisposifif
+]]--[[//
+]]--[[// Commentaires: Juste RC
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Pion_Circu_InstallerDisposifif"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_RC( eRC_EnPosition )
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MAJ_EtatDefaut", nodes.BEH_MAJ_EtatDefaut }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_AffecterVariablesDEtat", nodes.BEH_Mot_AffecterVariablesDEtat }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE", nodes.BEH_ROE }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ambiance", nodes.BEH_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc", nodes.BEH_Nbc }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens", nodes.BEH_Rens }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ordre_Pion_CIRCU_OrdresInopines", nodes.BEH_Ordre_Pion_CIRCU_OrdresInopines }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_LOG_Pion_FaireDesMesures, "BEH_LOG_Pion_FaireUneMesureDans", nodes.BEH_LOG_Pion_FaireUneMesureDans }
+connections[ #connections + 1 ] = { nodes.BEH_LOG_Pion_FaireUneMesureDans, "ACT_LOG_FaireMesure", nodes.ACT_LOG_FaireMesure }
+connections[ #connections + 1 ] = { nodes.BEH_LOG_Pion_FaireUneMesureDans, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_CIRCU_OrdresInopines, "ACT_Misc_Pion_Circu_PreterRemorqueurs", nodes.ACT_Misc_Pion_Circu_PreterRemorqueurs }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_CIRCU_OrdresInopines, "ACT_Misc_Pion_Circu_RecupererRemorqueurs", nodes.ACT_Misc_Pion_Circu_RecupererRemorqueurs }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_CIRCU_OrdresInopines, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Circu_InstallerDispositif, "ACT_Pion_Circu_InstallerDisposifif", nodes.ACT_Pion_Circu_InstallerDisposifif }

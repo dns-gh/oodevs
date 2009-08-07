@@ -13,6 +13,9 @@
 #include "MIL_AutomateTypeASA.h"
 #include "Decision/Functions/DEC_GeometryFunctions.h"
 #include "Decision/DEC_Tools.h"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <directia/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeASA constructor
@@ -21,9 +24,6 @@
 MIL_AutomateTypeASA::MIL_AutomateTypeASA( const std::string& strName, xml::xistream& xis )
     : MIL_AutomateType( strName, xis )
 {
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePosDeploiementASAOmni,         "DEC_Geometrie_PosDeploiementASAOmni"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePosDeploiementASANasse,        "DEC_Geometrie_PosDeploiementMistralNasse" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau, "DEC_Geometrie_PosDeploiementDoubleRideau" );    
 }
 
 // -----------------------------------------------------------------------------
@@ -42,4 +42,18 @@ MIL_AutomateTypeASA::~MIL_AutomateTypeASA()
 const MIL_AutomateType* MIL_AutomateTypeASA::Create( const std::string& strName, xml::xistream& xis )
 {
     return new MIL_AutomateTypeASA( strName, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateTypeASA::RegisterFunctions
+// Created: LDC 2009-04-23
+// -----------------------------------------------------------------------------
+void MIL_AutomateTypeASA::RegisterFunctions( directia::Brain& brain, MIL_Automate& automat ) const
+{
+    brain.RegisterFunction( "DEC_Geometrie_PosDeploiementASAOmni", 
+        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASAOmni, boost::cref( automat ), _1, _2, _3 ) ) );
+    brain.RegisterFunction( "DEC_Geometrie_PosDeploiementMistralNasse", 
+        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASANasse, _1, _2, _3, _4, _5, _6 ) ) );
+    brain.RegisterFunction( "DEC_Geometrie_PosDeploiementDoubleRideau", 
+        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau, _1, _2, _3, _4, _5, _6 ) ) );
 }

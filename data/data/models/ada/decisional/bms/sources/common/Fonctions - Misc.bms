@@ -1,0 +1,101 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/Fonctions - Misc.bms"] = true
+
+
+--[[//-------------------------------------------------------------------------
+]]--[[// Niveau perception GTIA
+]]--[[//-------------------------------------------------------------------------
+]]--[[// -------------------------------------------------------------------------
+]]--[[// Fonction permettant de savoir si une connaissance est en vol.
+]]--[[//
+]]--[[// remarque : on peut généralement savoir qu'une connaissane est volante dès
+]]--[[// sa detection.
+]]--[[// -------------------------------------------------------------------------
+]]--[[//ggr : pas de traitement specifique pour la non validite de la requette
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Force evaluant la dangerosité d'une connaissance sur une autre 
+]]--[[// connaissance
+]]--[[// valeur de sortie [1, 2] si valide, sinon 0
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Force evaluant la dangerosité d'une connaissance sur un pion
+]]--[[// valeur de sortie [1,2] si valide, sinon 0
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Concatene les deux listes passées en paramètre
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Concatene les deux listes passées en paramètre
+]]--[[//-------------------------------------------------------------------------
+]]--[[//  JCR : Utilisé uniquemenet par l'ALAT OPT : MIA: et une seule fois en plus
+]]--[[// *************************************************************************
+]]function S_Eni_EstNiveauPerceptionGTIA( repEni, eIdentificationDemandee )
+    local _returnValue = false
+    _returnValue = false
+    local eIdentificationGTIA = DEC_ConnaissanceAgent_NiveauPerceptionMax( repEni )
+    if( eIdentificationGTIA >= eIdentificationDemandee ) then
+        _returnValue = true
+    end
+
+    return _returnValue
+end
+
+function S_ConnaissanceAgent_EstEnVol( connaissance )
+    local _returnValue = false
+    local bBuffer = false
+    if( not DEC_ConnaissanceAgent_EstValide( connaissance ) ) then
+        do
+            _returnValue = false
+                        return _returnValue
+
+        end
+    end
+
+    bBuffer = DEC_ConnaissanceAgent_EstEnVol( connaissance )
+    _returnValue = bBuffer
+    return _returnValue
+end
+
+function S_ForceDangerSurConnaissance( repEnie, repAmie )
+    local _returnValue = 0
+    _returnValue = DEC_ConnaissanceAgent_DangerositeSurConnaissance( repEnie, repAmie )
+    return _returnValue
+end
+
+function S_ForceDangerSurPion( repEni, pion )
+    local _returnValue = 0
+    _returnValue = DEC_ConnaissanceAgent_DangerositeSurPion( repEni, pion )
+    return _returnValue
+end
+
+function S_Liste_Concatene( listeA, listeB )
+    local _returnValue = {}
+    local bufferSelection = {}
+    for _,x in pairs( listeA ) do
+    local _continue = true
+        DIA_PushBack( bufferSelection, x )
+
+    end
+
+    for _,x in pairs( listeB ) do
+    local _continue = true
+        DIA_PushBack( bufferSelection, x )
+
+    end
+
+    _returnValue = bufferSelection
+    return _returnValue
+end
+
+function S_ListeLocalisations_Copie( listeSrc, listeDest )
+    local bufferSelection = {}
+    for _,x in pairs( listeSrc ) do
+    local _continue = true
+        DEC_UserTypeList_PushBack( listeDest, x )
+
+    end
+
+end
+
+include "Common/Fonctions - S_TypeObject_ToString.bms"
+

@@ -1,0 +1,14 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/cie vab/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Cie Vab/Actions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:55 $
+]]--[[// $Revision: 10 $
+]]--[[// $Workfile: Actions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]

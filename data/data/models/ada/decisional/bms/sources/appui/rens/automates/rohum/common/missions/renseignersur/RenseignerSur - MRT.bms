@@ -1,0 +1,79 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/RenseignerSur - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_RENS_ROHUM_AssignerRenseignerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions = self.params[1]
+        self._namedParams.eEtatEchelon = self.params[2]
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        --[[// Parcours de la liste
+]]self.rIterateurSecteur = self.rIterateurSecteur or 0
+        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+            return
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                local nErrorCode1 = nil
+                local listeSousSecteurs = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneAObserver_, #( self._namedParams.selPions ), nErrorCode1 )
+                --[[// Gestion erreur
+]]if( nErrorCode1 ~= eNoError ) then
+                    do
+                        DEC_Trace( "Impossiblde de trouver des sous secteurs dans localisation" )
+                        --[[// JCR : 11/08/2005 10:55                        
+]]DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                        StartActivate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                                self.params.__returnValue = eActionImpossible
+                        return
+
+                    end
+                end
+
+                DEC_Trace( "Nbre de sous secteurs = " .. FloatToString( #( listeSousSecteurs ) ) )
+                for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation des mission une par une au pion (pas simultanément)
+]]--[[//-----------------------------------------------------------------------------
+]]self._namedParams.selPions ) do
+                local _continue = true
+do
+                        if( self.rIterateurSecteur == #( listeSousSecteurs ) ) then
+                            self.rIterateurSecteur = 0
+                        end
+
+                        local secteur = DEC_UserTypeList_GetAt( listeSousSecteurs, self.rIterateurSecteur )
+                        StartActivate( self.activations.BEH_Mission_Automate_RENS_ROHUM_AssignerRenseignerA, 1, { ePhase_MRT, pion, secteur, self._namedParams.eEtatEchelon, } )
+                                                self.rIterateurSecteur = self.rIterateurSecteur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA, "BEH_Mission_Automate_RENS_ROHUM_AssignerRenseignerA", nodes.BEH_Mission_Automate_RENS_ROHUM_AssignerRenseignerA }

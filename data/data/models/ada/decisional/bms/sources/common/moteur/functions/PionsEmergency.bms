@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/functions/PionsEmergency.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// globals
+]]--[[// *****************************************************************************
+]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*//*localisation*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*//*localisation*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*/]]

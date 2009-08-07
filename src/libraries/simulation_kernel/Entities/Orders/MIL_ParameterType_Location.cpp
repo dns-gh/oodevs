@@ -14,6 +14,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Location constructor
@@ -40,56 +41,17 @@ MIL_ParameterType_Location::~MIL_ParameterType_Location()
 // Name: MIL_ParameterType_Location::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_ParameterType_Location::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Location::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_location ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeLocalisation( to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    if( !NET_ASN_Tools::CopyLocation( *from.value.u.location, to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Location::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_Location::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeLocalisation( from ) )
+    if( !from.IsOfType( *this ) )
         return false;
 
-    // Check dest
-    if( !DEC_Tools::CheckTypeLocalisation( to ) )
-        return false;
-
-    NET_ASN_Tools::CopyLocation( from, to );
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Location::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_Location::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeLocalisation( from ) )
-        return false;
-
-    to.null_value           = false;
-    to.value.t              = T_MissionParameter_value_location;
+    to.value.t          = T_MissionParameter_value_location;
     to.value.u.location = new ASN1T_Location();
+    to.null_value       = !from.ToLocation( *to.value.u.location );
     
-    if( !NET_ASN_Tools::CopyLocation( from, *to.value.u.location ) )
-        return false;
-
-    return true;    
+    return !to.null_value || bIsOptional;
 }
 
 //-----------------------------------------------------------------------------

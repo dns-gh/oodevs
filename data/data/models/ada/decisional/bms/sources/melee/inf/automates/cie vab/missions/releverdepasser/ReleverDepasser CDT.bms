@@ -1,0 +1,301 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/cie vab/missions/releverdepasser/ReleverDepasser CDT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-07-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Cie Vab/Missions/ReleverDepasser/ReleverDepasser CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 9/09/05 14:53 $
+]]--[[// $Revision: 15 $
+]]--[[// $Workfile: ReleverDepasser CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "MIS_Automate_CDT_INF_Relever"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_Relever", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eActionMission = self.eActionMission or eActionEnCours
+        self.eActionReleve = self.eActionReleve or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[// Conduite des pions au niveau section
+]]--[[//-----------------------------------------------------------------------------		
+]]        end
+
+        if( self.eActionMission == eActionEffectuee ) then
+            do
+                self.eActionMission = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Relever, 1, {} )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+node "BEH_Conduite_Automate_INF_Relever"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_INF_InitialiseSE", {} },
+        { "BEH_Conduite_Automate_INF_CadreStatique", {} },
+        { "BEH_Situation_Automate_INF_Relever", {} },
+        { "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide", {} },
+        { "BEH_Conduite_Automate_INF_Relever_AssignerReleve", {} },
+        { "BEH_Conduite_Automate_INF_Relever_ApresReleve", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.eActionReleve = self.eActionReleve or eActionEnCours
+        self.ePhase = self.ePhase or eRejoindre
+        self.rN_PE = self.rN_PE or #( S_ObtenirTousPionsDe( eEtatEchelon_Premier ) )
+        if( ModuleBegins() ) then
+            do
+            end
+        end
+
+        if( self.eActionReleve == eActionImpossible ) then
+            do
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                if( self.eActionReleve == eActionEffectuee ) then
+                    do
+                        self.eActionReleve = eActionEnCours
+                        Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { DEC_Automate_PionsSansPC(), } )
+                        self.ePhase = eRelever
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, {} )
+                Activate( self.activations.BEH_Situation_Automate_INF_Relever, 1, { self.rN_PE, self.mission.compagnie_, } )
+                Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, setmetatable( { self.rN_PE, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eRelever then
+                if( self.eActionReleve == eActionEffectuee ) then
+                    do
+                        self.eActionReleve = eActionEnCours
+                        self.ePhase = eFinMission
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Conduite_Automate_INF_Relever_AssignerReleve, 1, setmetatable( { self.mission.compagnie_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.BEH_Conduite_Automate_INF_Relever_ApresReleve, 1, {} )--[[// Freiner ? 
+]]
+                
+                        end
+
+    end,
+
+}
+
+node "BEH_Situation_Automate_INF_Relever"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_Relever_PrepareReleveSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rN_PE = self.params[1]
+        self._namedParams.compagnie = self.params[2]
+    end,
+
+    activate = function( self )
+        self.selPions = self.selPions or S_ObtenirTousPionsDe( eEtatEchelon_Premier )
+        local rPion_FinMouvement = 0
+        for _,x in pairs( self.selPions ) do
+        local _continue = true
+do
+                local x_pion = x
+                --[[// Situation Mission
+]]--[[// --------------------------------------------------------------------
+]]if( ( ( DEC_GetMission( x_pion ) == 0 or DEC_GetMission( x_pion ) == nil ) or F_Pion_GeteEtatPhaseMission( x_pion ) == eEtatPhaseMission_FinMission ) and F_Pion_GetmissionPrecedente( x_pion ) == "T_Mission_Pion_FaireMouvement" ) then
+                    StartActivate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleveSur, 1, { self._namedParams.rN_PE, x_pion, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_Relever_PrepareReleveSur"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rN_ = self.params[1]
+        self._namedParams.pionReleve = self.params[2]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, { self._namedParams.rN_, } )
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rN_ = self.params[1]
+    end,
+
+    activate = function( self )
+        if( self._namedParams.rN_ == ( GetActivity() - 1 ) ) then
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+                self.params.__returnValue = eActionEnCours
+        return
+
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_Relever_AssignerReleve"
+{
+    activations =
+    {
+        { "ACT_Conduite_Automate_ReleverUnite", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.compagnie = self.params[1]
+    end,
+
+    activate = function( self )
+        self.rN_PionOK = self.rN_PionOK or 0
+        local selUnites = S_ObtenirPionsOperationnels_SansPC()
+        if( ModuleBegins() ) then
+            do
+                local rIt_Pion = 0
+                for _,x_releve in pairs( S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier ) ) do
+                local _continue = true
+                    do
+                        if( rIt_Pion >= #( selUnites ) ) then
+                            return
+                        end
+
+                        local pionAppui = DIA_GetAt( selUnites, rIt_Pion )
+                                                rIt_Pion = rIt_Pion + 1
+                        if( not DEC_Automate_PionPeutReleverPion( pionAppui, x_releve ) ) then
+                            _continue = false
+                        end
+
+                            if _continue then
+                            StartActivate( self.activations.ACT_Conduite_Automate_ReleverUnite, 1, { pionAppui, x_releve, } )
+                                                        self.rN_PionOK = self.rN_PionOK + 1
+                        end
+                    end
+
+                end
+
+                if( ( self.rN_PionOK == 0 or self.rN_PionOK == nil ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+            end
+        else
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_Relever_ApresReleve"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[// Coordination lors de la mise en place du dispositif dans les fuseaux			
+]]--[[/* MIA ADA //start behavior BEH_Conduite_Automate_GererFuseau();*/]]        end
+
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_INF_Relever = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Relever, "BEH_Medo_Automate_INF_InitialiseSE", nodes.BEH_Medo_Automate_INF_InitialiseSE }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Relever, "BEH_Conduite_Automate_INF_CadreStatique", nodes.BEH_Conduite_Automate_INF_CadreStatique }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Relever, "BEH_Situation_Automate_INF_Relever", nodes.BEH_Situation_Automate_INF_Relever }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Relever, "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide", nodes.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Relever, "BEH_Conduite_Automate_INF_Relever_AssignerReleve", nodes.BEH_Conduite_Automate_INF_Relever_AssignerReleve }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Relever, "BEH_Conduite_Automate_INF_Relever_ApresReleve", nodes.BEH_Conduite_Automate_INF_Relever_ApresReleve }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Relever_ApresReleve, "BEH_Conduite_Automate_INF_CadreOffensif", nodes.BEH_Conduite_Automate_INF_CadreOffensif }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Relever_AssignerReleve, "ACT_Conduite_Automate_ReleverUnite", nodes.ACT_Conduite_Automate_ReleverUnite }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Relever_PrepareReleveSur, "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide", nodes.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Relever, "BEH_Conduite_Automate_INF_Relever_PrepareReleveSur", nodes.BEH_Conduite_Automate_INF_Relever_PrepareReleveSur }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Relever, "BEH_Conduite_Automate_INF_Defaut", nodes.BEH_Conduite_Automate_INF_Defaut }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Relever, "BEH_Conduite_Automate_INF_Relever", nodes.BEH_Conduite_Automate_INF_Relever }

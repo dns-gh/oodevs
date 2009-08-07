@@ -1,0 +1,110 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/sgpt hap mixte/Behaviors.bms"] = true
+
+use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+actuators = {
+etat_OrdreCoordination = 1,
+tir = 1,
+formation = 1,
+ennemi = 1,
+}
+
+
+
+--[[//Comportements du Sgpt Hap Mixte
+]]--[[//-------------------------------
+]]--[[//génériques automates alat
+]]include "Appui/Alat/Automates/Common/Behaviors.bms"
+
+--[[//Missions
+]]--[[//--------
+]]
+--[[//Aller se recompleter
+]]include "Appui/Alat/Automates/Common/Missions/Aller Se Recompleter/Aller Se Recompleter - CDT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Aller Se Recompleter/Aller Se Recompleter - MRT.bms"
+
+
+--[[//Appuyer
+]]include "Appui/Alat/Automates/Common/Missions/Appuyer/Appuyer - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Appuyer/Appuyer - CDT.bms"
+
+
+--[[//Attaquer une Formation Aeromobile
+]]include "Appui/Alat/Automates/Common/Missions/Attaquer une Formation Aeromobile/Attaquer une Formation Aeromobile - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Attaquer une Formation Aeromobile/Attaquer une Formation Aeromobile - CDT.bms"
+
+
+--[[//Couvrir
+]]include "Appui/Alat/Automates/Common/Missions/Couvrir/Couvrir - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Couvrir/Couvrir - CDT.bms"
+
+
+--[[//Escorter
+]]include "Appui/Alat/Automates/Common/Missions/Escorter/Escorter - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Escorter/Escorter - CDT.bms"
+
+
+--[[//Recueillir une Formation Aeromobile
+]]include "Appui/Alat/Automates/Common/Missions/Recueillir une Formation Aeromobile/Recueillir une Formation Aeromobile - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Recueillir une Formation Aeromobile/Recueillir une Formation Aeromobile - CDT.bms"
+
+
+--[[//Reconnaitre
+]]include "Appui/Alat/Automates/Common/Missions/Reconnaitre/Reconnaitre - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Reconnaitre/Reconnaitre - CDT.bms"
+
+
+--[[//Jalonner
+]]include "Appui/Alat/Automates/Common/Missions/Jalonner/Jalonner - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Jalonner/Jalonner - CDT.bms"
+
+
+--[[//Surveiller
+]]include "Appui/Alat/Automates/Common/Missions/Surveiller/Surveiller - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Surveiller/Surveiller - CDT.bms"
+
+
+--[[//Freiner
+]]include "Appui/Alat/Automates/Common/Missions/Freiner/Freiner - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Freiner/Freiner - CDT.bms"
+
+
+--[[//Detruire Neutraliser dans la profondeur
+]]include "Appui/Alat/Automates/Common/Missions/Detruire Neutraliser dans Profondeur/Detruire Neutraliser dans Profondeur - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Detruire Neutraliser dans Profondeur/Detruire Neutraliser dans Profondeur - CDT.bms"
+
+
+--[[//Detruire dans zone
+]]include "Appui/Alat/Automates/Common/Missions/Detruire Neutraliser dans Zone/Detruire Neutraliser dans Zone - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Detruire Neutraliser dans Zone/Detruire Neutraliser dans Zone - CDT.bms"
+
+
+--[[//Attaquer
+]]include "Appui/Alat/Automates/Common/Missions/Attaquer/Attaquer - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Attaquer/Attaquer - CDT.bms"
+
+
+--[[//Donner un Coup D'Arret
+]]include "Appui/Alat/Automates/Common/Missions/Donner Coup d'Arret/Donner Coup d'Arret - MRT.bms"
+
+include "Appui/Alat/Automates/Common/Missions/Donner Coup d'Arret/Donner Coup d'Arret - CDT.bms"
+

@@ -1,0 +1,31 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/automates/missions/appuyermouvementdanszone/AppuyerMouvementDansZone - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_LOG_AppuyerMouvementDansZone
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_LOG_AppuyerMouvementDansZone"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_LOG_AppuyerMouvementDansZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_LOG_AppuyerMouvementDansZone, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }

@@ -173,6 +173,7 @@ void TER_AgentManager::GetListWithinPolygon( const TER_Polygon& polygon, T_Agent
 // -----------------------------------------------------------------------------
 TER_Agent_ABC::T_Hint TER_AgentManager::UpdatePosition( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& hint )
 {
+    agent.SetListener( *this );
     agents_.ForceErase( &agent, hint );
     return agents_.Insert( &agent );
 }

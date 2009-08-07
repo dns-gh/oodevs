@@ -23,12 +23,10 @@
 // Name: PHY_ActionIndirectFire_Position constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_ActionIndirectFire_ABC( pion, diaCall )
+PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, MT_Vector2D* pTargetPosition )
+    : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
     , pEffect_                  ( 0 )
 {
-    assert( DEC_Tools::CheckTypePoint( diaCall.GetParameter( 3 ) ) );
-    MT_Vector2D* pTargetPosition = diaCall.GetParameter( 3 ).ToUserPtr( pTargetPosition );
     assert( pTargetPosition );
 
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
@@ -59,7 +57,7 @@ PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
 void PHY_ActionIndirectFire_Position::Execute()
 {
     int nResult = role_.Fire( pEffect_ );
-    diaReturnCode_.SetValue( nResult );
+    Callback( nResult );
 }
 
 // -----------------------------------------------------------------------------

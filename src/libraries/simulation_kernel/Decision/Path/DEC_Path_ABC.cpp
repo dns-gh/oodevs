@@ -26,8 +26,6 @@ uint DEC_Path_ABC::nIDIdx_ = 0;
 // -----------------------------------------------------------------------------
 DEC_Path_ABC::DEC_Path_ABC()
     : nID_         ( ++ nIDIdx_ )
-    , nNbrRefs_    ( 0 )
-    , nNbrDIARefs_ ( 0 )
     , nState_      ( eComputing )            
     , bJobCanceled_( false )
 {
@@ -39,9 +37,6 @@ DEC_Path_ABC::DEC_Path_ABC()
 // -----------------------------------------------------------------------------
 DEC_Path_ABC::~DEC_Path_ABC()
 {
-    assert( nNbrRefs_    == 0 );
-    assert( nNbrDIARefs_ == 0 );
-
     CleanAfterComputation();
 }
 
@@ -135,7 +130,6 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
     {
         bJobCanceled_ = true;
         nState_ = eCanceled;
-        DecRef();
     }
 }
 
@@ -172,36 +166,6 @@ std::string DEC_Path_ABC::GetPathAsString() const
     for( CIT_PathSectionVector itSection = pathSections_.begin(); itSection != pathSections_.end(); ++itSection ) 
         strTmp << " -> " << (**itSection).GetPosEnd();
     return strTmp.str();
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Path_ABC::DecDIARef
-// Created: FBD 02-11-21
-//-----------------------------------------------------------------------------
-void DEC_Path_ABC::DecDIARef()
-{
-    if( nNbrDIARefs_ != 1 ) //$$$ TMP pour corriger les scripts
-    {
-        assert( !"DEC_DetruireItineraire appele plusieurs fois de suite sur le meme itineraire" );
-        return;
-    }
-    --nNbrDIARefs_;
-    if( nNbrDIARefs_ == 0 && nNbrRefs_ == 0 )
-        MIL_AgentServer::GetWorkspace().GetPathFindManager().DeletePath( *this );
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Path_ABC::DecRef
-// Created: FBD 02-11-21
-//-----------------------------------------------------------------------------
-void DEC_Path_ABC::DecRef()
-{
-    assert( nNbrRefs_ > 0 );
-    --nNbrRefs_;
-    if( nNbrRefs_ == 0 && nNbrDIARefs_ == 0 )
-        MIL_AgentServer::GetWorkspace().GetPathFindManager().DeletePath( *this );
 }
 
 

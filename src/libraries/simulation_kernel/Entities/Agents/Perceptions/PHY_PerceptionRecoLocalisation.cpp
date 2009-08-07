@@ -21,10 +21,10 @@
 #include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoLocalisation::sReco constructor
+// Name: PHY_PerceptionRecoLocalisationReco constructor
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoLocalisation::sReco::sReco( const TER_Localisation& localisation, MT_Float rRadius )
+PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, MT_Float rRadius )
     : localisation_    ( localisation )
     , rRadius_         ( rRadius )
     , bShouldUseRadius_( true )
@@ -33,10 +33,10 @@ PHY_PerceptionRecoLocalisation::sReco::sReco( const TER_Localisation& localisati
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoLocalisation::sReco constructor
+// Name: PHY_PerceptionRecoLocalisationReco constructor
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoLocalisation::sReco::sReco( const TER_Localisation& localisation, bool bUseDefaultRadius )
+PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, bool bUseDefaultRadius )
     : localisation_    ( localisation )
     , rRadius_         ( -1. )
     , bShouldUseRadius_( bUseDefaultRadius )
@@ -45,10 +45,10 @@ PHY_PerceptionRecoLocalisation::sReco::sReco( const TER_Localisation& localisati
 }
  
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoLocalisation::sReco::IsInside
+// Name: PHY_PerceptionRecoLocalisationReco::IsInside
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-bool PHY_PerceptionRecoLocalisation::sReco::IsInside( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D& vPoint ) const
+bool PHY_PerceptionRecoLocalisationReco::IsInside( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D& vPoint ) const
 {
     if ( bShouldUseRadius_ )
     {
@@ -60,10 +60,10 @@ bool PHY_PerceptionRecoLocalisation::sReco::IsInside( const PHY_RolePion_Perceiv
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoLocalisation::sReco::GetAgentsInside
+// Name: PHY_PerceptionRecoLocalisationReco::GetAgentsInside
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoLocalisation::sReco::GetAgentsInside( const PHY_RolePion_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& result ) const
+void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RolePion_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& result ) const
 {
     result.clear();
     if( bShouldUseRadius_ )
@@ -86,7 +86,7 @@ void PHY_PerceptionRecoLocalisation::sReco::GetAgentsInside( const PHY_RolePion_
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoLocalisation::PHY_PerceptionRecoLocalisation( PHY_RolePion_Perceiver& perceiver )
-    : PHY_Perception_ABC( perceiver )
+    : PHY_PerceptionWithLocation< PHY_PerceptionRecoLocalisationReco >( perceiver )
 {
     // NOTHING
 }
@@ -106,55 +106,42 @@ PHY_PerceptionRecoLocalisation::~PHY_PerceptionRecoLocalisation()
 // Name: PHY_PerceptionRecoLocalisation::AddLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void* PHY_PerceptionRecoLocalisation::AddLocalisationWithRadius( const TER_Localisation& localisation, MT_Float rRadius )
+int PHY_PerceptionRecoLocalisation::AddLocalisationWithRadius( const TER_Localisation& localisation, MT_Float rRadius )
 {
-    sReco* pNewReco = new sReco( localisation, rRadius );
-    
+    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, rRadius );
     assert( pNewReco );
-    recos_.push_back( pNewReco );
-    return pNewReco;
+    return Add( pNewReco );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisation::AddLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void* PHY_PerceptionRecoLocalisation::AddLocalisationWithDefaultRadius( const TER_Localisation& localisation )
+int PHY_PerceptionRecoLocalisation::AddLocalisationWithDefaultRadius( const TER_Localisation& localisation )
 {
-    sReco* pNewReco = new sReco( localisation, true );
-
+    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, true );
     assert( pNewReco );
-    recos_.push_back( pNewReco );
-    return pNewReco;
+    return Add( pNewReco );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisation::AddLocalisationWithoutRadius
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-void* PHY_PerceptionRecoLocalisation::AddLocalisationWithoutRadius( const TER_Localisation& localisation )
+int PHY_PerceptionRecoLocalisation::AddLocalisationWithoutRadius( const TER_Localisation& localisation )
 {
-    sReco* pNewReco = new sReco( localisation, false );
-    
+    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, false );
     assert( pNewReco );
-    recos_.push_back( pNewReco );
-    return pNewReco;    
+    return Add( pNewReco ); 
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisation::RemoveLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoLocalisation::RemoveLocalisation( void* pId )
+void PHY_PerceptionRecoLocalisation::RemoveLocalisation( int id )
 {
-    sReco* pReco = static_cast< sReco* >( pId );
-    IT_RecoVector it = std::find( recos_.begin(), recos_.end(), pReco );
-
-    if ( it != recos_.end() )
-    {
-        delete pReco;
-        recos_.erase( it );    
-    }
+    Remove( id );
 }
 
 // -----------------------------------------------------------------------------

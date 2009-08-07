@@ -12,7 +12,7 @@
 #ifndef __PHY_ActionResumeWorkObject_h_
 #define __PHY_ActionResumeWorkObject_h_
 
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class PHY_RoleAction_Objects;
 class MIL_AgentPion;
@@ -21,14 +21,14 @@ class MIL_AgentPion;
 // @class  PHY_ActionResumeWorkObject
 // Mined: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionResumeWorkObject : public PHY_Action_ABC
+class PHY_ActionResumeWorkObject : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionResumeWorkObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionResumeWorkObject( MIL_AgentPion& pion, unsigned int nKnowledgeID );
     virtual ~PHY_ActionResumeWorkObject();
 
     //! @name Operations
@@ -39,7 +39,6 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    DIA_Variable_ABC&       diaReturnCode_;
     uint                    nKnowledgeID_;    
 };
 

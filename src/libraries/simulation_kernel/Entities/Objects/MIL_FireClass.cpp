@@ -269,7 +269,7 @@ MIL_FireClass::T_EvaluationResult MIL_FireClass::Evaluate( const PHY_Weapon& wea
     if( iter != extinguisherAgentEffect_.end() )
     {
         result.score_ = iter->second;
-        result.range_ = weapon.GetMaxRangeToIndirectFire();
+        result.range_ = static_cast< int >( weapon.GetMaxRangeToIndirectFire() );
     }
     return result;
 }

@@ -1,0 +1,14 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/appuimob/automates/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: SDE 02-11-22 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/AppuiMob/Automates/Actions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 20/06/05 11:04 $
+]]--[[// $Revision: 12 $
+]]--[[// $Workfile: Actions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]

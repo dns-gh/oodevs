@@ -1,0 +1,519 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/pions/common/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "ACT_Pion_Emergency_BlockRoad"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.actionID = self.actionID or nil
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.eEtatInfluence = self.eEtatInfluence or nil
+        if( ModuleBegins() ) then
+            do
+                self.actionID = DEC_Emergency_StartInfluence( self.eEtatInfluence, "any", -100 )
+            end
+        end
+
+        switch_1 = self.eEtatInfluence
+            if switch_1 == eActionInfluence_EnCours
+            or switch_1 == eActionInfluence_Terminee then
+                
+            elseif switch_1 == eActionInfluence_Impossible then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+                        end
+
+        if( self.bSuspendu ) then
+            do
+                --[[// Pas de delais de reorganisation du chantier
+]]self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Pion_Emergency_Influence"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.name = self.params[1]
+        self._namedParams.influence = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.actionID = self.actionID or nil
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.eEtatInfluence = self.eEtatInfluence or nil
+        if( ModuleBegins() ) then
+            do
+                self.actionID = DEC_Emergency_StartInfluence( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity() )
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutTravaux )
+                    else
+                        DEC_Message( eRC_DebutTravaux )
+                    end
+
+                end
+
+            end
+        end
+
+        switch_1 = self.eEtatInfluence
+            if switch_1 == eActionInfluence_EnCours
+            or switch_1 == eActionInfluence_Terminee then
+                
+            elseif switch_1 == eActionInfluence_Impossible then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+                        end
+
+        if( self.bSuspendu ) then
+            do
+                --[[// Pas de delais de reorganisation du chantier
+]]self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Pion_Emergency_InfluenceInArea"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.name = self.params[1]
+        self._namedParams.influence = self.params[2]
+        self._namedParams.area = self.params[3]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.actionID = self.actionID or nil
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.eEtatInfluence = self.eEtatInfluence or nil
+        if( ModuleBegins() ) then
+            do
+                self.actionID = DEC_Emergency_StartInfluenceInArea( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity(), self._namedParams.area )
+                DEC_Trace( "start influence." )
+            end
+        end
+
+        switch_1 = self.eEtatInfluence
+            if switch_1 == eActionInfluence_EnCours
+            or switch_1 == eActionInfluence_Terminee then
+                
+            elseif switch_1 == eActionInfluence_Impossible then
+                self.actionID = DEC_StopAction( self.actionID )
+                DEC_Trace( "influence impossible." )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+                        end
+
+        if( self.bSuspendu ) then
+            do
+                --[[// Pas de delais de reorganisation du chantier
+]]self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Pion_Emergency_TriggerActivity"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.name = self.params[1]
+        self._namedParams.influence = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.actionID = self.actionID or nil
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.eEtatInfluence = self.eEtatInfluence or nil
+        if( ModuleBegins() ) then
+            do
+                self.actionID = DEC_Emergency_StartTriggerActivity( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity() )
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutTravaux )
+                    else
+                        DEC_Message( eRC_DebutTravaux )
+                    end
+
+                end
+
+            end
+        end
+
+        switch_1 = self.eEtatInfluence
+            if switch_1 == eActionInfluence_EnCours
+            or switch_1 == eActionInfluence_Terminee then
+                
+            elseif switch_1 == eActionInfluence_Impossible then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+                        end
+
+        if( self.bSuspendu ) then
+            do
+                --[[// Pas de delais de reorganisation du chantier
+]]self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Pion_Emergency_TriggerActivityInArea"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.name = self.params[1]
+        self._namedParams.influence = self.params[2]
+        self._namedParams.area = self.params[3]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.actionID = self.actionID or nil
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.eEtatInfluence = self.eEtatInfluence or nil
+        if( ModuleBegins() ) then
+            do
+                self.actionID = DEC_Emergency_StartTriggerActivityInArea( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity(), self._namedParams.area )
+            end
+        end
+
+        switch_1 = self.eEtatInfluence
+            if switch_1 == eActionInfluence_EnCours
+            or switch_1 == eActionInfluence_Terminee then
+                
+            elseif switch_1 == eActionInfluence_Impossible then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+                        end
+
+        if( self.bSuspendu ) then
+            do
+                --[[// Pas de delais de reorganisation du chantier
+]]self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Pion_Emergency_UnloadActivity"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.name = self.params[1]
+        self._namedParams.influence = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.actionID = self.actionID or nil
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.eEtatInfluence = self.eEtatInfluence or nil
+        if( ModuleBegins() ) then
+            do
+                self.actionID = DEC_Emergency_StartUnloadActivity( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity() )
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutTravaux )
+                    else
+                        DEC_Message( eRC_DebutTravaux )
+                    end
+
+                end
+
+            end
+        end
+
+        switch_1 = self.eEtatInfluence
+            if switch_1 == eActionInfluence_EnCours
+            or switch_1 == eActionInfluence_Terminee then
+                
+            elseif switch_1 == eActionInfluence_Impossible then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+                        end
+
+        if( self.bSuspendu ) then
+            do
+                --[[// Pas de delais de reorganisation du chantier
+]]self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Obj_Pion_Emergency_RealiserObjet"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eTypeObjet = self.params[1]
+        self._namedParams.locObjet = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.actionID = self.actionID or nil
+        self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.repObj = self.repObj or nil--[[//objet reel pour la creation de la representation de l'abatti
+]]
+        if( ModuleBegins() ) then
+            do
+                if( ( self._namedParams.locObjet == 0 or self._namedParams.locObjet == nil ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+                if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( self._namedParams.eTypeObjet ) ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+                DEC_Trace( "object construction: begin" )
+                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( eTypeObjet ), self._namedParams.locObjet )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
+                actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
+
+                DEC_Trace( "DEC_StartCreerObjet: OK" )
+                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutTravaux )
+                    else
+                        DEC_Message( eRC_DebutTravaux )
+                    end
+
+                end
+
+            end
+        end
+
+        switch_1 = self.eEtatObjet
+            if switch_1 == eActionObjetEnCours then
+                
+            elseif switch_1 == eActionObjetTerminee then
+                DEC_Trace( "object construction: end" )
+                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_FinTravaux )
+                    else
+                        DEC_Message( eRC_FinTravaux )
+                    end
+
+                end
+
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            elseif switch_1 == eActionObjetPasDeCapacite then
+                DEC_Trace( "object construction: no capability" )
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+            elseif switch_1 == eActionObjetManqueDotation then
+                DEC_Trace( "object construction: not enough issue" )
+            --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+]]elseif switch_1 == eActionObjetImpossible then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+                        end
+
+        if( self.bSuspendu ) then
+            do
+                --[[// Pas de delais de reorganisation du chantier
+]]self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_Trace( "contruction resume" )
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_Trace( "constrution suspended" )
+        DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "realisation arretee" )
+        self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+

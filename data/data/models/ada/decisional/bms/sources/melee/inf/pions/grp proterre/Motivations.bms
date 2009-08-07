@@ -1,0 +1,12 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/grp proterre/Motivations.bms"] = true
+
+include "Common/Pions/Motivations.bms"
+
+include "Melee/Common/Motivations/Etats.bms"
+
+include "Melee/Common/Motivations/Motivations.bms"
+
+include "Melee/Inf/Etats.bms"
+
+

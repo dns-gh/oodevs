@@ -1,0 +1,141 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/behaviors/Behaviors - Misc.bms"] = true
+
+
+--[[// ****************************************************************************
+]]--[[// BEH_Misc_Automate_GererLesMoyens
+]]--[[// 
+]]--[[// Commentaires: initialise la place dans le dispositif pour un pion. 
+]]--[[//               Utile et nécéssaire si on rajoute un pion en dynamique dans 
+]]--[[//               un automate surtout si ce pion était en cours de missions dans 
+]]--[[//               un autre automate.
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Misc_Automate_GererLesMoyens"
+{
+    activations =
+    {
+        { "ACT_Misc_Automate_Gerer", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Pour chaque pion de l'automate...
+]]--[[//-----------------------------------------------------------------------------
+]]DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+            Activate( self.activations.ACT_Misc_Automate_Gerer, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// ACT_Misc_Automate_Gerer
+]]--[[// 
+]]--[[// Commentaires: A utiliser par l'ABC et l'INF
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Misc_Automate_Gerer"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "**** Unité " .. DEC_GetSzName( self._namedParams.pion ) .. " subordonnée ****" )
+                --[[// ATTENTION, si ces ligne ne sont pas 
+]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Second )
+                --[[// dans le DIA_ModuleBegins(), les
+]]F_Pion_SeteEtatSoutien( self._namedParams.pion, eEtatSoutien_aucun )
+            end
+--[[// automates ne marchent plus...
+]]        end
+
+    end,
+
+}
+
+--[[// ****************************************************************************
+]]--[[// BEH_Automate_CreerPosteControle
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Automate_CreerPosteControle"
+{
+    activations =
+    {
+        { "ACT_Automate_CreerObjetSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+    end,
+
+    activate = function( self )
+        self.posteControle = self.posteControle or nil
+        self.localisation = self.localisation or DEC_Geometrie_CreerLocalisationCercle( self._namedParams.point, 100 )
+        if( ModuleBegins() ) then
+            do
+                self.posteControle = S_Geometrie_ObjetPlusProche( DEC_Connaissances_ObjetsDansZone( self.localisation, S_TypeObject_ToString( eTypeObjectPosteControle ) ), self._namedParams.point )
+                if( ( self.posteControle == 0 or self.posteControle == nil ) ) then
+                    Activate( self.activations.ACT_Automate_CreerObjetSur, 1, { self.localisation, eTypeObjectPosteControle, } )
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Automate_CreerZoneSecurisee
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Automate_CreerZoneSecurisee"
+{
+    activations =
+    {
+        { "ACT_Automate_CreerObjetSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+    end,
+
+    activate = function( self )
+        self.posteControle = self.posteControle or nil
+        self.localisation = self.localisation or DEC_Geometrie_CreerLocalisationCercle( self._namedParams.point, 500 )
+        if( ModuleBegins() ) then
+            do
+                --[[// OPT MIA: faire avec DEC_Connaissances_ObjetsDansZone
+]]self.posteControle = S_Geometrie_ObjetPlusProche( DEC_Connaissances_ObjetsDansZone( self.localisation, S_TypeObject_ToString( eTypeObjectPosteControle ) ), self._namedParams.point )
+                if( ( self.posteControle == 0 or self.posteControle == nil ) ) then
+                    Activate( self.activations.ACT_Automate_CreerObjetSur, 1, { self.localisation, eTypeObjectPosteControle, } )
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Automate_CreerPosteControle, "ACT_Automate_CreerObjetSur", nodes.ACT_Automate_CreerObjetSur }
+connections[ #connections + 1 ] = { nodes.BEH_Automate_CreerZoneSecurisee, "ACT_Automate_CreerObjetSur", nodes.ACT_Automate_CreerObjetSur }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GererLesMoyens, "ACT_Misc_Automate_Gerer", nodes.ACT_Misc_Automate_Gerer }

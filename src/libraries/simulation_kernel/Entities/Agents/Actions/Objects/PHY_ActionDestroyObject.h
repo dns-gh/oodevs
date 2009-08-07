@@ -12,24 +12,25 @@
 #ifndef __PHY_ActionDestroyObject_h_
 #define __PHY_ActionDestroyObject_h_
 
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class PHY_RoleAction_Objects;
 class MIL_Object_ABC;
 class MIL_AgentPion;
+class DEC_Decision_ABC;
 
 // =============================================================================
 // @class  PHY_ActionDestroyObject
 // Destroyd: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionDestroyObject : public PHY_Action_ABC
+class PHY_ActionDestroyObject : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionDestroyObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionDestroyObject( MIL_AgentPion& pion, unsigned int nKnowledgeID );
     virtual ~PHY_ActionDestroyObject();
 
     //! @name Operations
@@ -40,8 +41,7 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    DIA_Variable_ABC&       diaReturnCode_;
-    uint                    nKnowledgeID_;    
+    unsigned int            nKnowledgeID_;    
 };
 
 #endif // __PHY_ActionDestroyObject_h_

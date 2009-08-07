@@ -1,0 +1,269 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/common/missions/Harceler.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Common/Missions/Harceler.hal $
+]]--[[// $Author: Jcr $
+]]--[[// $Modtime: 22/09/05 18:17 $
+]]--[[// $Revision: 21 $
+]]--[[// $Workfile: Harceler.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+--[[//=============================================================================
+]]--[[//							Squelette de la mission
+]]--[[//=============================================================================
+]]
+node "BEH_Mission_Pion_INF_Harceler"
+{
+    activations =
+    {
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_RC", {} },
+        { "BEH_Obs_Pion_INF_SurveillerSecteur", {} },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
+        { "ACT_Dep_PasserEnModeFurtif", {} },
+        { "ACT_Misc_Pion_DelaiInstallation", {} },
+        { "BEH_Pion_INF_Detruire_Harceler", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.mission = self.mission or DEC_GetMission( myself )
+        self.ePhase = self.ePhase or eSeMettreEnPlace
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionPoste = self.eActionPoste or eActionEnCours
+        self.eActionOrdre = self.eActionOrdre or eActionEnCours
+        self.eActionDebarquer = self.eActionDebarquer or eActionEnCours
+        self.ptMission = self.ptMission or nil
+        if( ModuleBegins() ) then
+            do
+                --[[// Determine la position dans le secteur d'arrive			
+]]self.ptMission = S_Geometrie_BarycentreZone( self.mission.secteur_ )
+                --[[// Verifie que l'on est bien dans son fuseau
+]]StartActivate( self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+            end
+--[[// Lorsqu'un comportement  ne  peut  pas  s'effectuer  correctement, la mission 
+]]--[[// s'arrete
+]]        end
+
+        if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                    DEC_Warning( eRC_MissionImpossible )
+                                        self.params.__returnValue = eFinMission
+                    Halt()
+
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        do
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eSeMettreEnPlace then
+                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// On va se mettre en position en restant sur nos garde
+]]
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eAborderObjectif
+                                                        self.params.__returnValue = self.ePhase
+                            return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointRegroupement_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eAborderObjectif then
+                --[[// Aborder Objectif
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eInstallerDispositif
+                        end
+
+                    end
+                else
+do
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                end
+
+            elseif switch_1 == eInstallerDispositif then
+                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]StartActivate( self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.secteur_, } )
+                StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, false, } )
+                Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eSurveiller
+                                                        self.params.__returnValue = self.ePhase
+                            return
+
+                        end
+
+                    end
+--[[// Temps de mise en place du dispositif
+]]                end
+
+                Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                self.params.__returnValue = self.ePhase
+                return
+
+            --[[// L'ensemble du dispositif est installe, on surveiller la zone
+]]elseif switch_1 == eSurveiller then
+                --[[// Surveille secteur			
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
+                Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                --[[// action ACT_Pion_VAB_ControleZone( mission.secteur_, M_CAPACITE_SURVEILLANCE(), false );				
+]]Activate( self.activations.BEH_Pion_INF_Detruire_Harceler, 2, { self.mission.secteur_, self.mission.natureObjectif_, } )
+                
+            
+            else
+                        end
+
+                self.params.__returnValue = self.ePhase
+        return
+
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+node "BEH_Pion_INF_Detruire_Harceler"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_INF_Detruire_CoupDeMain", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+        self._namedParams.eNatureObjectif = self.params[2]
+    end,
+
+    activate = function( self )
+                self.selPointsAttente = self.selPointsAttente or {}
+        self.ptRegroupement = self.ptRegroupement or nil
+        self.bNuit = self.bNuit or false
+        self.bActionNuit = self.bActionNuit or false
+        self.nPos = self.nPos or 0
+        if( ModuleBegins() ) then
+            do
+                --[[// Determine la position dans le secteur d'arrive			
+]]local eCodeLocRgpt = eNoError
+                self.selPointsAttente = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zone, 3, eCodeLocRgpt )
+                eCodeLocRgpt = self.selPointsAttente.second
+                self.selPointsAttente = self.selPointsAttente.first
+                switch_1 = eCodeLocRgpt
+                    if switch_1 == eError_PionsPasDansMemeFuseau
+                    or switch_1 == eError_LocalisationPasDansFuseau then
+                                            DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
+                                                do
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                        
+                    elseif switch_1 == eWarning_DecoupageIncomplet then
+                                            DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
+                        
+                    elseif switch_1 == eNoError then
+                                            
+                                        end
+
+                self.ptRegroupement = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.selPointsAttente, self.nPos ) )
+            end
+        end
+
+        self.bNuit = DEC_Nuit()
+        --[[// Se replier a chaque fois sur une position differente
+]]if( not DEC_Geometrie_PositionsEgales( self.ptRegroupement, DEC_Agent_Position() ) ) then
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRegroupement, eProgressionDirect, eTypeItiInfiltration, } )
+        end
+
+        --[[// behavior BEH_Dep_Pion_INF_RejoindreObjectif( ptRegroupement );
+]]if( not self.bNuit and self.bActionNuit ) then
+            self.bActionNuit = false
+        end
+
+        --[[// Si on est de nuit et que l'on n'a pas encore agit
+]]if( self.bNuit ) then
+            do
+                --[[// Laisse en suspend ....
+]]Activate( self.activations.BEH_Pion_INF_Detruire_CoupDeMain, 1, { self._namedParams.zone, self._namedParams.eNatureObjectif, } )
+                if( self.bActionNuit ) then
+                    return
+                end
+
+            end
+        else
+            return
+        end
+
+        --[[// Met a jour la position de regroupement toute les nuits.								
+]]self.bActionNuit = true
+                self.nPos = self.nPos + 1
+        if( self.nPos >= 3 ) then
+            self.nPos = 0
+        end
+
+        self.ptRegroupement = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.selPointsAttente, self.nPos ) )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "BEH_Lima_Pion_RejoindreFuseau_EnAttente", nodes.BEH_Lima_Pion_RejoindreFuseau_EnAttente }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "BEH_Dep_Pion_INF_MiseEnPlace_Mission", nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "BEH_Obs_Pion_INF_SurveillerSecteur", nodes.BEH_Obs_Pion_INF_SurveillerSecteur }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "BEH_Dispositif_Pion_VAB_InstallationDefensive", nodes.BEH_Dispositif_Pion_VAB_InstallationDefensive }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "ACT_Dep_PasserEnModeFurtif", nodes.ACT_Dep_PasserEnModeFurtif }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "ACT_Misc_Pion_DelaiInstallation", nodes.ACT_Misc_Pion_DelaiInstallation }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_Harceler, "BEH_Pion_INF_Detruire_Harceler", nodes.BEH_Pion_INF_Detruire_Harceler }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_Harceler, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_Harceler, "BEH_Pion_INF_Detruire_CoupDeMain", nodes.BEH_Pion_INF_Detruire_CoupDeMain }

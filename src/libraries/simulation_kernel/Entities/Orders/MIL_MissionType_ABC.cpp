@@ -20,6 +20,15 @@ MIL_MissionType_ABC::MIL_MissionType_ABC( uint nID, xml::xistream& xis )
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionType_ABC constructor
+// Created: LDC 2009-04-27
+// -----------------------------------------------------------------------------
+MIL_MissionType_ABC::MIL_MissionType_ABC()
+{
+    // NOTHING
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_MissionType_ABC destructor
 // Created: NLD 2006-11-19

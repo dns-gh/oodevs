@@ -1,0 +1,58 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son proterre/Globals.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son ProTerre/Globals.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:07 $
+]]--[[// $Revision: 20 $
+]]--[[// $Workfile: Globals.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//=============================================================================
+]]--[[// Parametres constants 
+]]--[[//=============================================================================
+]]include "Melee/Inf/Pions/Common/Globals.bms"
+
+include "Melee/Inf/Pions/Common/Fonctions - Geometrie.bms"
+
+
+include "Melee/Inf/Pions/Son ProTerre/Parameters.bms"
+
+include "Melee/Inf/Pions/Son ProTerre/Globals Poly.bms"
+
+
+--[[//Ajouté par LLS pour permettre mission Soutenir au pion INF
+]]include "Melee/Inf/Pions/Common/Donnees Doctrines.bms"
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// variables globales
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//=============================================================================
+]]--[[// Definition des functions ecrites en script
+]]--[[//=============================================================================
+]]--[[//=============================================================================
+]]--[[// variables globales
+]]--[[//=============================================================================
+]]function S_CalculerPositionAppui( pion, rDist )
+    local _returnValue = nil
+    _returnValue = DEC_Geometrie_CalculerPositionAppui( pion, rDist )
+    return _returnValue
+end
+
+function S_Tir_EstAPortee_Debarque( pPion, rPH )
+    local _returnValue = false
+    _returnValue = DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( pPion ) ) < DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( pPion, rPH )
+    return _returnValue
+end
+
+function S_Force_INF_DistancePt_PourPion( pion, pt )
+    local _returnValue = 0
+    _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( pion:DEC_Agent_Position(), pt ) / 1000 )
+    return _returnValue
+end
+

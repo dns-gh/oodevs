@@ -1,0 +1,93 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/asymetriques/common/pion/missions/SInfiltrer.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ASY_SInfiltrer
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ASY_SInfiltrer"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.lieuInfiltre = self.lieuInfiltre or DEC_ListePoints_GetAt( self._namedParams.mission.itineraire_, DEC_ListePoints_Size( self._namedParams.mission.itineraire_ ) - 1 )
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( not DEC_Geometrie_EstPointDansFuseau( self.lieuInfiltre ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                Halt()
+
+                    end
+                end
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_SInfiltrer: debut **", } )
+                self.ePhaseMission = eAborderObjectif
+                
+            --[[// Infiltration
+]]elseif switch_1 == eAborderObjectif then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur, 1, setmetatable( { self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                                Halt()
+
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ASY_SInfiltrer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_SInfiltrer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_SInfiltrer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_SInfiltrer, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_SInfiltrer, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur", nodes.BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur }

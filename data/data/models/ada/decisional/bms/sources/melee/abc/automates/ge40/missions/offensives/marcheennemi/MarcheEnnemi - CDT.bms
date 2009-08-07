@@ -1,0 +1,222 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi/MarcheEnnemi - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi"
+{
+    activations =
+    {
+        { "ACT_GTIA_AnalyserSituationPourReconnaitre", {} },
+        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", {} },
+        { "BEH_GTIA_RendreCompte", {} },
+        { "BEH_GTIA_GererAppuisInternes", {} },
+        { "BEH_GTIA_EchelonnerDispositif", {} },
+        { "BEH_GTIA_RepartirDansFuseaux", {} },
+        { "BEH_GTIA_AssignerLesOrdresPourReconnaitre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[// Vide dans cette mission
+]]
+        Activate( self.activations.ACT_GTIA_AnalyserSituationPourReconnaitre, 1, {} )--[[// Analyse environnement
+]]
+        --[[// Init
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                                do
+                    g_bPhaseReceuil = false
+                    local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
+                    for _,x in pairs( listePionsSubordonnes ) do
+                    local _continue = true
+                        do
+                            local automat = x
+                            F_Automat_SeteEtatEchelon( automat, eEtatEchelon_None )
+                            F_Automat_SeteEtatPhaseMission( automat, eEtatPhaseMission_None )
+                        end
+
+                    end
+
+                end
+
+                                return
+
+            end
+--[[/***************TEST *******************/]]        end
+
+        if( not self._namedParams.mission.sansRearticulation_ ) then
+            --[[//// tres moche priorite
+]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourAttaquer, 10, {} )
+        end
+
+        Activate( self.activations.BEH_GTIA_RendreCompte, 1, {} )--[[/***************TEST *******************/]]--[[// CR
+]]
+        --[[// Dispositif / missions etc.
+]]--[[//// tres moche priorite
+]]Activate( self.activations.BEH_GTIA_GererAppuisInternes, 10, {} )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, {} )
+        Activate( self.activations.BEH_GTIA_RepartirDansFuseaux, 1, { self.objectifsPrioritaires, } )
+        Activate( self.activations.BEH_GTIA_AssignerLesOrdresPourReconnaitre, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AnalyserSituationPourReconnaitre
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_GTIA_AnalyserSituationPourReconnaitre"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        --[[// cast
+]]self.mission = self.mission or DEC_GetMission( myself )
+        g_rRapEniDebarques = DEC_Rens_PourcentageEnnemisDebarquesDansFuseau( DEC_Fuseau() )
+        g_rRapEniEmbarques = DEC_Rens_PourcentageEnnemisEmbarquesDansFuseau( DEC_Fuseau() )
+        g_rRapTerrainComp = DEC_Geometrie_PourcentageTerrainCompartimente( DEC_Fuseau() )
+        g_rRapTerrainOuvert = DEC_Geometrie_PourcentageTerrainOuvert( DEC_Fuseau() )
+        g_rEstimationRetard = DEC_Geometrie_CalculerRetard( DEC_Fuseau(), S_Cherche_GE_Filtre_TypeAutomate_Melee( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ), DEC_ProchaineLimaHoraireNonFlagee() )
+        if( self.mission.delaisCourts_ ) then
+            g_rEstimationDelais = 1
+        else
+            g_rEstimationDelais = 0
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerLesOrdresPourReconnaitre
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_GTIA_AssignerLesOrdresPourReconnaitre"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerLesMissionsReconnaissance", {} },
+        { "BEH_GTIA_AssurerLaCoordination", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_GTIA_AssignerLesMissionsReconnaissance, 1, {} )
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordination, 1, {} )--[[// idem Attaquer
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerLesMissionsReconnaissance
+]]--[[// 
+]]--[[// Commentaires: IDEM ATTAQUER SAUF PREMIER ECHELON --> RECO AXE
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerLesMissionsReconnaissance"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionsEcl", {} },
+        { "BEH_GTIA_AssignerMissionsRecoPE", {} },
+        { "BEH_GTIA_AssignerMissionsSE", {} },
+        { "BEH_GTIA_AssignerMissionsSEAppui", {} },
+        { "BEH_GTIA_AssignerMissionsPC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[// Vide dans cette mission
+]]
+        --[[// PremierEchelon, mission Attaquer ou Semparer si objectif dans le fuseaux
+]]--[[// Idem Attaquer
+]]Activate( self.activations.BEH_GTIA_AssignerMissionsEcl, 1, { S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) ), } )
+        Activate( self.activations.BEH_GTIA_AssignerMissionsRecoPE, 1, { S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ), } )
+        --[[// Idem Attaquer
+]]Activate( self.activations.BEH_GTIA_AssignerMissionsSE, 1, { S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ), } )
+        Activate( self.activations.BEH_GTIA_AssignerMissionsSEAppui, 1, { S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ), self.objectifsPrioritaires, } )
+        --[[// Cas particulier PC
+]]Activate( self.activations.BEH_GTIA_AssignerMissionsPC, 1, { DEC_Automate_PionPC(), } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsRecoPE
+]]--[[// 
+]]--[[// Commentaires: inf --> reco / ABC -
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsRecoPE"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[// Assignation missions ABC
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_GTIA_AssignerMission, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_ABC_Reconnaitre", nil, } )
+            end
+--[[// Assignation missions INF
+]]
+        end
+
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_GTIA_AssignerMission, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_INF_ReconnaissanceOffensive", nil, } )
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsReconnaissance, "BEH_GTIA_AssignerMissionsEcl", nodes.BEH_GTIA_AssignerMissionsEcl }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsReconnaissance, "BEH_GTIA_AssignerMissionsRecoPE", nodes.BEH_GTIA_AssignerMissionsRecoPE }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsReconnaissance, "BEH_GTIA_AssignerMissionsSE", nodes.BEH_GTIA_AssignerMissionsSE }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsReconnaissance, "BEH_GTIA_AssignerMissionsSEAppui", nodes.BEH_GTIA_AssignerMissionsSEAppui }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissionsReconnaissance, "BEH_GTIA_AssignerMissionsPC", nodes.BEH_GTIA_AssignerMissionsPC }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesOrdresPourReconnaitre, "BEH_GTIA_AssignerLesMissionsReconnaissance", nodes.BEH_GTIA_AssignerLesMissionsReconnaissance }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesOrdresPourReconnaitre, "BEH_GTIA_AssurerLaCoordination", nodes.BEH_GTIA_AssurerLaCoordination }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsRecoPE, "ACT_GTIA_AssignerMission", nodes.ACT_GTIA_AssignerMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi, "ACT_GTIA_AnalyserSituationPourReconnaitre", nodes.ACT_GTIA_AnalyserSituationPourReconnaitre }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi, "BEH_GTIA_OrganiserLesMoyensPourAttaquer", nodes.BEH_GTIA_OrganiserLesMoyensPourAttaquer }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi, "BEH_GTIA_RendreCompte", nodes.BEH_GTIA_RendreCompte }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi, "BEH_GTIA_GererAppuisInternes", nodes.BEH_GTIA_GererAppuisInternes }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi, "BEH_GTIA_EchelonnerDispositif", nodes.BEH_GTIA_EchelonnerDispositif }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi, "BEH_GTIA_RepartirDansFuseaux", nodes.BEH_GTIA_RepartirDansFuseaux }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi, "BEH_GTIA_AssignerLesOrdresPourReconnaitre", nodes.BEH_GTIA_AssignerLesOrdresPourReconnaitre }

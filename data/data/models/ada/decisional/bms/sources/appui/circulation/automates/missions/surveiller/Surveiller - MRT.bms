@@ -1,0 +1,110 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveiller - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_LOG_Surveiller
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_LOG_Surveiller"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local listePions = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), PatrouilleCirculation )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionAppuyer = self.eEtatMissionAppuyer or eActionEnCours
+        self.listeLocalisations = self.listeLocalisations or {}
+        self.rIterateurSecteur = self.rIterateurSecteur or 0
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                local nErrorCode = nil
+                self.listeLocalisations = DEC_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( listePions ), nErrorCode )
+                nErrorCode = self.listeLocalisations.second
+                self.listeLocalisations = self.listeLocalisations.first
+                if( nErrorCode ~= eNoError ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+            end
+--[[// =============================================================================
+]]--[[// PHASE DU COMPORTEMENT
+]]--[[//
+]]--[[// =============================================================================    
+]]        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------
+]]--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionAppuyer == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionAppuyer == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[// controle de creation mission
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( listePions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionAppuyer = v else rawset( t, k, v ) end end } ) )
+                --[[// ordre de creation des missions
+]]if( ( #( listePions ) ~= 0 and #( listePions ) ~= nil ) ) then
+                    Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe, 1, { ePhase_MRT, listePions, self.listeLocalisations, } )
+                end
+
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Mission impossible
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_MissionImpossible then
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_LOG_Surveiller = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_LOG_Surveiller, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_LOG_Surveiller, "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe", nodes.BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe }

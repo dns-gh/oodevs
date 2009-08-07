@@ -19,12 +19,11 @@
 // Name: PHY_ActionOccupyObject constructor
 // Demined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionOccupyObject::PHY_ActionOccupyObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC( pion, diaCall )
+PHY_ActionOccupyObject::PHY_ActionOccupyObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+    : PHY_Action_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , nKnowledgeID_ ( (uint)diaCall.GetParameter( 0 ).ToPtr() )
+    , nKnowledgeID_ ( nKnowledgeID )
 {    
-    assert( DEC_Tools::CheckTypeConnaissanceObjet( diaCall.GetParameter( 0 ) ) );
     role_.StartOccupyingObject( nKnowledgeID_ );
 }
 

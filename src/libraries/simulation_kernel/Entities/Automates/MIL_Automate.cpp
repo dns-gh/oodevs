@@ -153,12 +153,43 @@ MIL_Automate::MIL_Automate()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate constructor
+// Created: LDC 2009-04-24
+// -----------------------------------------------------------------------------
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type )
+    : MIL_Entity_ABC                     ( "" ) 
+    , pType_                             ( &type )
+    , nID_                               ( 0 )
+    , pParentFormation_                  ( 0 )
+    , pParentAutomate_                   ( 0 )
+    , bEngaged_                          ( true )
+    , pKnowledgeGroup_                   ( 0 )
+    , orderManager_                      ( *this )
+    , pPionPC_                           ( 0 )
+    , pions_                             ()
+    , recycledPions_                     ()
+    , automates_                         ()
+    , bAutomateModeChanged_              ( true )
+    , pTC2_                              ( 0 )
+    , pNominalTC2_                       ( 0 )
+    , bDotationSupplyNeeded_             ( false )
+    , bDotationSupplyExplicitlyRequested_( false )
+    , dotationSupplyStates_              ()
+    , nTickRcDotationSupplyQuerySent_    ( 0 )
+    , pKnowledgeBlackBoard_              ( 0 )
+    , pArmySurrenderedTo_                ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate destructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Automate::~MIL_Automate()
 {
-    pKnowledgeGroup_->UnregisterAutomate( *this );
+    if( pKnowledgeGroup_ )
+        pKnowledgeGroup_->UnregisterAutomate( *this );
     if( pParentAutomate_ )
         pParentAutomate_->UnregisterAutomate( *this );
     if( pParentFormation_ )
@@ -316,7 +347,7 @@ void MIL_Automate::Initialize( xml::xistream& xis )
         xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
       
-    RegisterRole( new DEC_AutomateDecision( *this ) ) ;  //$$$ BULLSHIT : strName_ must be initialized ...
+    RegisterRole( new DEC_AutomateDecision( *this, *this ) ) ;  //$$$ BULLSHIT : strName_ must be initialized ...
     RegisterRole( new DEC_Representations( *this ) );
     
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
@@ -492,10 +523,18 @@ bool MIL_Automate::CheckComposition() const
 // Name: MIL_Automate::UpdateDecision
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void MIL_Automate::UpdateDecision()
+void MIL_Automate::UpdateDecision( float duration )
 {
-    orderManager_.Update();
-    GetRole< DEC_Decision_ABC >().UpdateDecision();
+    try
+    {
+        orderManager_.Update();
+    }
+    catch( std::runtime_error& e )
+    {
+        orderManager_.ReplaceMission();
+        MT_LOG_ERROR_MSG( "Entity " << GetID() << "('" << GetName() << "') : Mission impossible" );
+    }
+    GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
 }
 
 // -----------------------------------------------------------------------------

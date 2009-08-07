@@ -1,0 +1,49 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/refugies/pions/common/Globals.bms"] = true
+
+
+include "Population/Refugies/Globals.bms"
+
+
+--[[// POUR LE PARSE
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function M_POLY_PH_TIR_ENI_EFFICACE()
+    return 0.5
+end
+
+
+
+function M_POLY_PH_RIPOSTE()
+    return 0.5
+end
+
+

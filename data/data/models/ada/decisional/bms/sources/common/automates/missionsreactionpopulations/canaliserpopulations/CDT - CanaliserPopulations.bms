@@ -1,0 +1,56 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpopulations/CDT - CanaliserPopulations.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_CanaliserPopulations
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_CanaliserPopulations"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Mission_Automate_AssignerSuivreAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.listePionsCanaliserPopulation = self.listePionsCanaliserPopulation or {}
+        self.listePionsSuivre = self.listePionsSuivre or {}
+        self.eEtatODC = self.eEtatODC or eActionEnCours
+        if( self.eEtatODC == eActionHalt ) then
+            do
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                self.eEtatODC = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        DIA_Clear( self.listePionsCanaliserPopulation )
+        DIA_Clear( self.listePionsSuivre )
+        self.listePionsCanaliserPopulation = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_CanaliserPopulations" )
+        DIA_PushBack( self.listePionsSuivre, DEC_Automate_PionPC() )
+        if( not DIA_IsListEmpty( self.listePionsCanaliserPopulation ) ) then
+            do
+                local pionASuivre = DEC_Geometrie_PionDerriere( self.listePionsCanaliserPopulation, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
+                Activate( self.activations.BEH_Mission_Automate_AssignerSuivreAListe, 1, { ePhase_CDT, self.listePionsSuivre, pionASuivre, } )
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_CanaliserPopulations = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_CanaliserPopulations, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_CanaliserPopulations, "BEH_Mission_Automate_AssignerSuivreAListe", nodes.BEH_Mission_Automate_AssignerSuivreAListe }

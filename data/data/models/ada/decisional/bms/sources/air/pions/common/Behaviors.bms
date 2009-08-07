@@ -1,0 +1,132 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/pions/common/Behaviors.bms"] = true
+
+--[[//génériques pions scipio
+]]include "Common/Pions/Behaviors.bms"
+
+--[[//inclusion des actions communes aux pions air
+]]include "Air/Pions/Common/Actions.bms"
+
+
+--[[// comportements génériques aux pions air
+]]include "Air/Pions/Common/Behaviors/Behaviors - Dep.bms"
+
+include "Air/Pions/Common/Behaviors/Behaviors - Mot.bms"
+
+include "Air/Pions/Common/Behaviors/Behaviors - Eni.bms"
+
+
+--[[//missions generques aux pions air
+]]include "Air/Pions/Common/MissionsGeneriques.bms"
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Comportement par défaut.
+]]--[[//
+]]--[[// toutes les actions et les comportements par défaut sont activé avec une force 
+]]--[[// maximale de 0.5
+]]--[[// -----------------------------------------------------------------------------
+]]node "BEH_Defaut"
+{
+    activations =
+    {
+        { "BEH_Mot_Pion_AIR_AffecterVariablesDEtat", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Rens", {} },
+        { "BEH_Info_Pion_RendreCompte", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SetobjectifEsquive( myself, nil )
+                myself.objectifCourant_ = nil
+            end
+--[[// ---------------------------------------------------------------------
+]]--[[// MAJ VE
+]]--[[// ---------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Mot_Pion_AIR_AffecterVariablesDEtat, 1, {} )
+        if( not DEC_Agent_AutomateEstEmbraye() ) then
+            SetStateVariable( "VE_Coordination_Tir", 1 )
+        end
+
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[// ---------------------------------------------------------------------
+]]--[[// MAJ de l'état DEC par défaut 
+]]--[[// ---------------------------------------------------------------------
+]]
+        if( not S_Misc_EstDetruitPhysique() ) then
+            do
+                Activate( self.activations.BEH_Mot_Pion_AIR_AffecterVariablesDEtat, 1, {} )
+                Activate( self.activations.BEH_Ambiance, 1, {} )
+                Activate( self.activations.BEH_Nbc, 1, {} )
+                Activate( self.activations.BEH_ROE, 1, {} )
+                Activate( self.activations.BEH_Rens, 1, {} )
+            end
+        end
+
+        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )
+    end,
+
+--[[////////////////////////////// PARTIE COMPORTEMENTS VIRTUELS /////////////////////////////////////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_ProgressionVers
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_ProgressionVers"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+        self._namedParams.eTypeProgression = self.params[2]
+        self._namedParams.eTypeIti = self.params[3]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_PreparationAction
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_PreparationAction"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_AIR_AffecterVariablesDEtat", nodes.BEH_Mot_Pion_AIR_AffecterVariablesDEtat }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MAJ_EtatDefaut", nodes.BEH_MAJ_EtatDefaut }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ambiance", nodes.BEH_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc", nodes.BEH_Nbc }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE", nodes.BEH_ROE }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens", nodes.BEH_Rens }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Info_Pion_RendreCompte", nodes.BEH_Info_Pion_RendreCompte }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }

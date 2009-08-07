@@ -1,0 +1,42 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/lanceur lrm/Parameters.bms"] = true
+
+--[[//=============================================================================
+]]--[[// Variables globales
+]]--[[//=============================================================================
+]]
+
+
+
+function M_DISTANCE_PorteeMaxObusExplosif()
+    return 31800
+end
+
+
+
+function M_DISTANCE_PorteeMaxObusGrenade()
+    return 31800
+end
+
+
+
+function M_DISTANCE_PorteeMaxObusMine()
+    return 31800
+end
+
+
+
+function M_DISTANCE_PorteeMaxObusACED()
+    return 31800
+end
+
+
+
+
+
+function M_DISTANCE_PorteeMin()
+    return 10000
+end
+
+
+

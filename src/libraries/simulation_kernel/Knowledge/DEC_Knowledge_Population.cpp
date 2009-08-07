@@ -401,13 +401,14 @@ void DEC_Knowledge_Population::SendMsgCreation() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::SendMsgDestruction() const
 {
-    assert( pKnowledgeGroup_ );
+    if( pKnowledgeGroup_ )
+    {
+        NET_ASN_MsgPopulationKnowledgeDestruction asnMsg;
 
-    NET_ASN_MsgPopulationKnowledgeDestruction asnMsg;
-
-    asnMsg().oid_connaissance      = nID_;
-    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_ ->GetID();
-    asnMsg.Send();
+        asnMsg().oid_connaissance      = nID_;
+        asnMsg().oid_groupe_possesseur = pKnowledgeGroup_ ->GetID();
+        asnMsg.Send();
+    }
 }
 
 // -----------------------------------------------------------------------------

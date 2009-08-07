@@ -1,0 +1,8 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie appui/Globals.bms"] = true
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// fichiers à inclure
+]]--[[//-----------------------------------------------------------------------------
+]]include "Appui/Genie/Automates/Globals.bms"
+

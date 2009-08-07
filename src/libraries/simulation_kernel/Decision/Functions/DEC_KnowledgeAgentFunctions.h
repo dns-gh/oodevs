@@ -14,8 +14,9 @@
 
 #include "MIL.h"
 
-class MIL_AgentPion;
+class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
+class MIL_AgentPion;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -25,28 +26,27 @@ class DEC_KnowledgeAgentFunctions
 public:
     //! @name Functions
     //@{
-    static void GetNatureAtlas                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetDangerosity                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsPerceivedByAgent                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsAnEnemy                             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsMoving                              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsPerceivingAgent                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsInDetectionCone                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void KillOfficers                          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static int   GetNatureAtlas    ( const DEC_Knowledge_Agent* pKnowledge );
+    static float GetDangerosity    ( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge );
+    static bool  IsPerceivedByAgent( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge );
+    static int   IsAnEnemy         ( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge );
+    static bool  IsMoving          ( const DEC_Knowledge_Agent* pKnowledge );
+    static bool  IsPerceivingAgent ( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge );
+    static bool  IsInDetectionCone ( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge, const MT_Vector2D* direction, MT_Float angle );
+    static bool  KillOfficers      ( DEC_Knowledge_Agent* pKnowledge );
 
-    template< typename T > static void GetMaxPerceptionLevelForKnowledgeGroup( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetDangerosityOnPion                  ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetDangerosityOnKnowledge             ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetSpeed                              ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetPosition                           ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetOperationalState                   ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetMajorOperationalState              ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsFlying                              ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsKnowledgeValid                      ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsPrisoner                            ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsDead                                ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void Lock                                  ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void Unlock                                ( DIA_Call_ABC& call, const T& caller );
+    static int   GetMaxPerceptionLevelForKnowledgeGroup ( const DEC_Knowledge_Agent* pKnowledge );
+    static float GetDangerosityOnPion                   ( const DEC_Knowledge_Agent* pKnowledge, const DEC_Decision_ABC* pTarget );
+    static float GetDangerosityOnKnowledge              ( const DEC_Knowledge_Agent* pSource, const DEC_Knowledge_Agent* pTarget );
+    static const MT_Vector2D* GetPosition               ( const DEC_Knowledge_Agent* pKnowledge );
+    static float GetOperationalState                    ( const DEC_Knowledge_Agent* pKnowledge );
+    static bool  GetMajorOperationalState               ( const DEC_Knowledge_Agent* pKnowledge );
+    static bool  IsFlying                               ( const DEC_Knowledge_Agent* pKnowledge );
+    static bool  IsKnowledgeValid                       ( const DEC_Knowledge_Agent* pKnowledge );
+    static bool  IsPrisoner                             ( const DEC_Knowledge_Agent* pKnowledge );
+    static bool  IsDead                                 ( const DEC_Knowledge_Agent* pKnowledge );
+    static int   Lock                                   ( DEC_Knowledge_Agent* pKnowledge );
+    static void  Unlock                                 ( DEC_Knowledge_Agent* pKnowledge );
     //@}
 };
 

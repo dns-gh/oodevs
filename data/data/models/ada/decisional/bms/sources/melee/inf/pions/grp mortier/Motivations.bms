@@ -1,0 +1,84 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/grp mortier/Motivations.bms"] = true
+
+
+include "Common/Pions/Motivations.bms"
+
+include "Melee/Common/Motivations/Etats.bms"
+
+include "Melee/Common/Motivations/Motivations.bms"
+
+include "Melee/Inf/Etats.bms"
+
+
+
+
+--[[// *****************************************************************************
+]]--[[//  MOT_SePoster
+]]--[[//
+]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES pour coordination
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.motivations[ "MOT_AppliquerLesFeux" ] =
+{
+    activation = {
+        VE_AppliquerLesFeux = 100,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 50,
+    max_decrease_rate = 10,
+    max_output_value = 100,
+}
+
+node "ActivatedByMOT_AppliquerLesFeux"
+{
+    activations =
+    {
+        { "BEH_MOT_Pion_Mortier_AppliquerLesFeux", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_Pion_Mortier_AppliquerLesFeux, GetMotivation( "MOT_AppliquerLesFeux" ), {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { motivation( "MOT_AppliquerLesFeux" ), nodes.ActivatedByMOT_AppliquerLesFeux }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_AppliquerLesFeux, "BEH_MOT_Pion_Mortier_AppliquerLesFeux", nodes.BEH_MOT_Pion_Mortier_AppliquerLesFeux }

@@ -1,0 +1,72 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/motivations/Stimulus.bms"] = true
+
+include "bit.lua"
+
+
+--[[//------------------------------------------------------------------------------
+]]--[[//  STIMULUS ORDRE MISSION
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[//------------------------------------------------------------------------------
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_Mission"
+node "ActivationForSTIM_Mission"
+{
+    activate = function( self )
+        if( DEC_GetMission( myself ) ~= nil ) then
+            SetStimulus( "STIM_Mission", 1 )
+        else
+            SetStimulus( "STIM_Mission", 0 )
+        end
+
+    --[[//------------------------------------------------------------------------------
+]]--[[//  STIMULUS STIM_PriseAPartieTirDirect
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//------------------------------------------------------------------------------
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirDirect"
+node "ActivationForSTIM_PriseAPartieTirDirect"
+{
+    activate = function( self )
+        local listeEniPAP = DEC_Connaissances_UnitesPrenantAPartie()
+        if( not DIA_IsListEmpty( listeEniPAP ) ) then
+            SetStimulus( "STIM_PriseAPartieTirDirect", 1 )
+        else
+            SetStimulus( "STIM_PriseAPartieTirDirect", 0 )
+        end
+
+    --[[//------------------------------------------------------------------------------
+]]--[[//  STIMULUS STIM_PriseAPartieTirInDirect
+]]--[[//
+]]--[[//	Commentaires: Les hélicoptères ne subissent pas les tirs indirects
+]]--[[//------------------------------------------------------------------------------
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirInDirect"
+node "ActivationForSTIM_PriseAPartieTirInDirect"
+{
+    activate = function( self )
+        if( DEC_Agent_EstNeutralise() and ( DEC_Agent_NiveauInstallation() < eNiveauInstallation_PosteAmenage ) ) then
+            SetStimulus( "STIM_PriseAPartieTirInDirect", 1 )
+        else
+            SetStimulus( "STIM_PriseAPartieTirInDirect", 0 )
+        end
+
+        end
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_Mission }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PriseAPartieTirDirect }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PriseAPartieTirInDirect }

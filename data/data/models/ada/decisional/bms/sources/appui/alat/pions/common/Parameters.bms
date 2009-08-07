@@ -1,0 +1,134 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/Parameters.bms"] = true
+
+--[[// =============================================================================
+]]--[[// Actuateurs génériques
+]]--[[// =============================================================================
+]]function M_TIR_ACTUATEURS()
+    return tir
+end
+
+
+
+function M_DEPLACEMENT_ACTUATEURS()
+    return deplacement
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Gestion des points spéciaux
+]]--[[// =============================================================================
+]]
+
+
+
+
+
+
+
+
+
+
+
+--[[// =============================================================================
+]]--[[// Gestion des LIMAS
+]]--[[// =============================================================================
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// réaction quand passage sur une ligne de recueil
+]]--[[//
+]]--[[// si on était un recueil (càd si on est passé sur une LIA)
+]]--[[//      se poster
+]]--[[//      fin du recueil
+]]--[[// -----------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// réaction quand passage sur une ligne d'identification et d'acceuil
+]]--[[//
+]]--[[// Commentaires : quand l'unité à une ou plusieurs lignes de recueil, elle 
+]]--[[// rejoint la plus proche et s'y pose
+]]--[[// -----------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+
+
+--[[// =============================================================================
+]]--[[// Paramètres de PH efficace considéré dans la doctrine
+]]--[[// =============================================================================
+]]function M_DOCTRINE_PION_ALAT_PH()
+    return 0.5
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Paramètres de reconnaissance des points
+]]--[[// =============================================================================
+]]function M_POLY_MODELE_PION_CAPACITE_RECO_POINT()
+    return 4
+end
+
+
+
+function M_POLY_MODELE_PION_VITESSE_RECO_POINT()
+    return 100
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Madulation de la vitesse pour ralentir
+]]--[[// =============================================================================
+]]function M_POLY_DOCTRINE_MODULATION_VITESSE_RALENTIR()
+    return 1
+end
+
+

@@ -18,15 +18,11 @@
 // Name: PHY_Population_ActionMove constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_Population_ActionMove::PHY_Population_ActionMove( MIL_Population& population, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC      ( population, diaCall )
+PHY_Population_ActionMove::PHY_Population_ActionMove( MIL_Population& population, MT_Vector2D* pTargetPosition )
+    : PHY_Action_ABC      ( population )
     , population_         ( population )
-//    , diaReturnCode_      ( diaCall.GetParameter( 0 ) )
     , destination_        ()
 {    
-    assert( DEC_Tools::CheckTypePoint( diaCall.GetParameter( 0 ) ) );
-
-    MT_Vector2D* pTargetPosition = diaCall.GetParameter( 0 ).ToUserPtr( pTargetPosition );
     assert( pTargetPosition );
     destination_ = *pTargetPosition;
 }
@@ -37,7 +33,7 @@ PHY_Population_ActionMove::PHY_Population_ActionMove( MIL_Population& population
 // -----------------------------------------------------------------------------
 PHY_Population_ActionMove::~PHY_Population_ActionMove()
 {
-    //diaReturnCode_.SetValue( PHY_RoleAction_Moving::eFinished );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

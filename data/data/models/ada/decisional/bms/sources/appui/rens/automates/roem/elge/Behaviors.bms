@@ -1,0 +1,63 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roem/elge/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 02-11-08 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Rens/Automates/Roem/ELGE/Behaviors.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:47 $
+]]--[[// $Revision: 7 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 200
+
+max_activations = 200
+
+
+--[[// Commun SCIPIO
+]]include "Common/Automates/Behaviors.bms"
+
+
+--[[// Medo RENS
+]]include "Common/Automates/Behaviors/Medo/Behaviors - Medo - RENS.bms"
+
+
+--[[// Commun rens
+]]include "Appui/Rens/Behaviors.bms"
+
+
+--[[// Commun automates RENS
+]]include "Appui/Rens/Automates/Common/Behaviors.bms"
+
+
+--[[// Commun ROHUM
+]]include "Appui/Rens/Automates/Roem/Common/Behaviors.bms"
+
+
+--[[// Commun URH
+]]--[[//include "Appui\Rens\Automates\Roem\ELGE\Actions.bms"
+]]include "Appui/Rens/Automates/Roem/ELGE/Missions/Missions.bms"
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Missions génériques
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// RenseignerSur
+]]include "Appui/Rens/Automates/Roem/Common/Missions/RenseignerSur/RenseignerSur - MRT.bms"
+
+include "Appui/Rens/Automates/Roem/Common/Missions/RenseignerSur/RenseignerSur - CDT.bms"
+
+
+--[[// Appuyer
+]]include "Appui/Rens/Automates/Roem/Common/Missions/Appuyer/Appuyer - MRT.bms"
+
+include "Appui/Rens/Automates/Roem/Common/Missions/Appuyer/Appuyer - CDT.bms"

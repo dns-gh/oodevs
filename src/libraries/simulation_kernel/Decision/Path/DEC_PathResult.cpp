@@ -264,7 +264,6 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
         bSectionJustEnded_ = false;
     }
     
-//    assert( resultList_.empty() || unitSpeeds_.IsPassable ( nObjectTypes ) );
     resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
 }
 

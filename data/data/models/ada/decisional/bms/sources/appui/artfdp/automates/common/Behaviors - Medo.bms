@@ -1,0 +1,203 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/automates/common/Behaviors - Medo.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Automates/Common/Behaviors - Medo.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 25/08/05 18:24 $
+]]--[[// $Revision: 14 $
+]]--[[// $Workfile: Behaviors - Medo.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
+{
+    activations =
+    {
+        { "ACT_Medo_Automate_AffecterFuseaux", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ASS_AssignerMission_PC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.selPions = self.selPions or DEC_Automate_PionsAvecPC()
+        self.selPions_ASS_Reco = self.selPions_ASS_Reco or {}
+        self.ePhase = self.ePhase or eMRT_SelectionnerPions
+        self.eActionMRT = self.eActionMRT or eActionEnCours
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Nombre de pions : " .. FloatToString( #( self.selPions ) ) )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_SelectionnerPions then
+                --[[//-----------------------------------------------------------------------------
+]]--[[//	Distribution des types de mission
+]]--[[//-----------------------------------------------------------------------------						
+]]--[[// L'execution de la mission necessite la presence d'un 1er ech
+]]self.selPions_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionASS_Reco )
+                if( ( #( self.selPions_ASS_Reco ) == 0 or #( self.selPions_ASS_Reco ) == nil ) ) then
+                    do
+                        DEC_Trace( "First echelon units is empty" )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                self.ePhase = eMRT_AffecterFuseaux
+                
+            elseif switch_1 == eMRT_AffecterFuseaux then
+                local sVide = {}--[[//-----------------------------------------------------------------------------
+]]--[[//Le fuseau de la compagnie est coupe en DEUX
+]]--[[//le pion en appui utilise le fuseau de la compagnie
+]]--[[//-----------------------------------------------------------------------------
+]]
+                local sFuseau = {}
+                local sFuseau_2 = {}
+                local sFuseau_3 = {}
+                --[[// scinde la reco en 2 ou 3 suivant le nombre de fuseaux selectionnes
+]]--[[// Floor( DIA_Size( selPions_ASS_Reco ) / 3 );
+]]local rN_ParFuseau = 2
+                if( self.eActionMRT == eActionEffectuee ) then
+                    do
+                        self.eActionMRT = eActionEnCours
+                                                do
+                            self.ePhase = eMRT_AssignerMissions
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                for _,x in pairs( self.selPions_ASS_Reco ) do
+                local _continue = true
+do
+                        if( #( sFuseau ) < rN_ParFuseau ) then
+                            DIA_PushBack( sFuseau, x )
+                        else
+do
+                                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { sFuseau, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                                sFuseau = sVide
+                                DIA_PushBack( sFuseau, x )
+                            end
+                        end
+
+                    end
+
+                end
+
+                if( #( sFuseau ) > 0 ) then
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { sFuseau, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                end
+
+                --[[// action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;				
+]]
+            elseif switch_1 == eMRT_AssignerMissions then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On verifie juste que la batterie peut effectuer la mission
+]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
+]]                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                if( self.eValidationMRT == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Trace( "eValidationMRT == eActionImpossible" )
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( self.eValidationMRT == eActionEffectuee ) then
+                    do
+                        self.eValidationMRT = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                --[[// behavior BEH_Medo_Automate_ASS_ReconnaitreZonesDeploiement( selPions_ASS_Reco, mission.positionsAReconnaitre_ ) return in eActionMRT;
+]]--[[// Assigne la mission au pc
+]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_Reco, } )
+                
+                        end
+
+    end,
+
+}
+
+node "BEH_Medo_Automate_ASS_AssignerMission_PC"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPion = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------    		    	
+]]local pAppui = nil
+                for _,x in pairs( --[[// Potentiellement, le PC peut etre un pion de PE, dans ce cas la, il ne
+]]--[[// s'appuie pas lui meme
+]]self._namedParams.selPion ) do
+                local _continue = true
+                    do
+                        if( x ~= DEC_Automate_PionPC() ) then
+                            do
+                                pAppui = x
+                                break
+                            end
+                        end
+
+                    end
+
+                end
+
+                if( ( pAppui ~= 0 and pAppui ~= nil ) ) then
+                    StartActivate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ASS_AssignerMission_PC, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement, "ACT_Medo_Automate_AffecterFuseaux", nodes.ACT_Medo_Automate_AffecterFuseaux }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement, "BEH_Medo_Automate_ASS_AssignerMission_PC", nodes.BEH_Medo_Automate_ASS_AssignerMission_PC }

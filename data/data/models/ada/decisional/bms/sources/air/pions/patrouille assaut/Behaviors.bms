@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/pions/patrouille assaut/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+--[[// Définition des actuateurs
+]]--[[// -------------------------
+]]actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+observation = 1,
+tir = 1,
+vitesse = 1,
+ennemi = 1,
+reconnaissance = 1,
+etat_Lima = 1,
+hauteur = 1,
+etat_destruction = 1,
+etat_Dec = 1,
+surveiller = 1,
+objectifCourant = 1,
+etat_Mission = 1,
+etat_Destruction = 1,
+objectifEsquive = 1,
+parametresRecompletement = 1,
+controlePopulation = 1,
+etat_ROE = 1,
+}
+
+
+--[[//Comportements du pion Patrouille Assaut
+]]--[[//---------------------------------------
+]]--[[//génériques pions air
+]]include "Air/Pions/Common/Behaviors.bms"
+
+
+--[[//Missions
+]]--[[//========
+]]include "Air/Pions/Common/Missions/Effectuer Raid.bms"
+

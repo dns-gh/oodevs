@@ -1,0 +1,402 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/fonctions/Functions - Misc.bms"] = true
+
+include "bit.lua"
+
+--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie le pion le plus proche du point parmis les pions passés en 
+]]--[[// paramètre
+]]--[[// OPT MIA: utilisé une fois pour ART Sol Air
+]]--[[//-------------------------------------------------------------------------
+]]--[[// -------------------------------------------------------------------------
+]]--[[// Cette fonction permet de renvoyer une liste de pions construite de la 
+]]--[[// facon suivante
+]]--[[// 
+]]--[[//  -   pour tous les automates embrayés, on ajoute a la liste tous les pions
+]]--[[//      subordonnés
+]]--[[//
+]]--[[//  -   on ajoute ensuite la liste des pions qui ont étés selectionnés mais
+]]--[[//      qui ne sont pas subordonnés a un automate embrayé
+]]--[[//
+]]--[[//  un pion PC est un pion qui a pour PC lui meme
+]]--[[//  un pion subornonné est un pion qui a pour PC un autre pion que lui 
+]]--[[//  meme
+]]--[[// -----------------------------------------------------------------------------
+]]--[[//on met dans la liste des pions PC embrayés qui sont embrayés (avec
+]]--[[//leuts subordonnés )
+]]--[[//si je suis mon PC et que je suis embrayé, alors
+]]--[[//ajout des pions de la liste unites_ qui ne sont pas deja dans 
+]]--[[//bufferPionCont
+]]--[[//========================================================================
+]]--[[// Gestions des états opérationnels
+]]--[[//=========================================================================
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie vrai si je suis détruit tactiquement --> plus de 
+]]--[[// composantes majeurs
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie vrai si le pion passé en paramètre est détruit tactiquement
+]]--[[// --> plus de composantes majeurs
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie vrai si je suis détruit Physique --> plus de 
+]]--[[// composantes
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie vrai si si le pion passé en paramètre est détruit Physique 
+]]--[[// --> plus de composantes
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions non détruit totalement 
+]]--[[//-------------------------------------------------------------------------
+]]--[[//=========================================================================
+]]--[[// Géométrie et pion
+]]--[[//=========================================================================
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Retourne la localisation la plus proche du pion
+]]--[[// OPT MIA: utilisé seulement par l'ALAT
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si la mission affectee au pion est effectivement typeMission
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------	
+]]--[[// Renvoie vrai si la mission affectee à l'automate est effectivement 
+]]--[[// typeMission
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si la mission du pion est une mission generique
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// =============================================================================
+]]--[[// FORCE DE COMPORTEMENTS
+]]--[[// =============================================================================
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Force de dangerosite compris entre 1 et 2
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Calcul d'une force entre 1 et 2 par rapport à la distance de l'eni.
+]]--[[//
+]]--[[//                                   1
+]]--[[//  force = 1 + -----------------------------------------------
+]]--[[//               1 + ( ( Distance entre eni et unite ) / 1000 )
+]]--[[//
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Calcul d'une force entre 1 et 2 par rapport à un eni.
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Calcul d'une force entre 1 et 2 par rapport à la distance de l'eni.
+]]--[[//
+]]--[[//                                   1
+]]--[[//  force = 1 + -----------------------------------------------
+]]--[[//               1 + ( ( Distance entre eni et unite ) / 1000 )
+]]--[[//
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Calcul d'une force entre 1 et 2 par rapport à un eni.
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Calcul d'une force entre 1 et 2 par rapport à un eni.
+]]--[[// OPT: MIA utilisé par ALAT
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la force d'action contre un ennemi suivant son niveau
+]]--[[// d'identification
+]]--[[//
+]]--[[// 0 <= S_Force_ActionContre <= 2
+]]--[[// 0 <= S_Force_DangerSur <= 2
+]]--[[// 1 <= S_Force_Distance <= 2
+]]--[[//
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//===============================================================================
+]]--[[// Calcul d'une force entre 1 et 2 par rapport à la distance
+]]--[[//
+]]--[[//                                   1
+]]--[[//  force = 1 + -----------------------------------------------
+]]--[[//                            1 + ( dist / 1000 )
+]]--[[//
+]]--[[//===============================================================================
+]]--[[//=========================================================================
+]]--[[// RAPFOR
+]]--[[//=========================================================================
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Renvoie la valeur d'enum du rapport de force local
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// DIA_GetInternalState( VE_RapFor );
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Fonction de destruction des user_type
+]]--[[// MIA OPT: à virer
+]]--[[//-------------------------------------------------------------------------
+]]--[[/*OUT*/]]function S_PionLePlusProche( point, listePions )
+    local _returnValue = nil
+    local pionLePlusProcheBuffer = nil
+    local distanceMin = 1105199104
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local distance = DEC_Geometrie_Distance( point, x:DEC_Agent_Position() )
+            if( distance < distanceMin ) then
+                do
+                    distanceMin = distance
+                    pionLePlusProcheBuffer = x
+                end
+            end
+
+        end
+
+    end
+
+    _returnValue = pionLePlusProcheBuffer
+    return _returnValue
+end
+
+function S_SelectionnePCEtSubordonnes( unites_ )
+    local _returnValue = {}
+    local bufferPionCont = {}
+    for _,x in pairs( unites_ ) do
+    local _continue = true
+do
+            if( x:DEC_Agent_EstPC() and x:DEC_Agent_AutomateEstEmbraye() ) then
+                do
+                    local listePionsAvecPC = x:DEC_Pion_PionsAvecPC()
+                    for _,y in pairs( listePionsAvecPC ) do
+                    local _continue = true
+                        DIA_PushBack( bufferPionCont, y )
+
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+    for _,pion in pairs( unites_ ) do
+    local _continue = true
+do
+            if( not DIA_Contains( bufferPionCont, pion ) ) then
+                DIA_PushBack( bufferPionCont, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = bufferPionCont
+    return _returnValue
+end
+
+function S_Misc_EstDetruitTactique( )
+    local _returnValue = false
+    _returnValue = false
+    if( ( DEC_Agent_EtatOpsMajeur() == 0 or DEC_Agent_EtatOpsMajeur() == nil ) ) then
+        _returnValue = true
+    end
+
+    return _returnValue
+end
+
+function S_Misc_EstPionDetruitTactique( pion )
+    local _returnValue = false
+    _returnValue = false
+    if( ( pion:DEC_Agent_EtatOpsMajeur() == 0 or pion:DEC_Agent_EtatOpsMajeur() == nil ) ) then
+        _returnValue = true
+    end
+
+    return _returnValue
+end
+
+function S_Misc_EstDetruitPhysique( )
+    local _returnValue = false
+    _returnValue = DEC_Agent_EstMort()
+    return _returnValue
+end
+
+function S_Misc_EstPionDetruitPhysique( pion )
+    local _returnValue = false
+    _returnValue = pion:DEC_Agent_EstMort()
+    return _returnValue
+end
+
+function S_PionsNonDetruits( listePions )
+    local _returnValue = {}
+    local listeBuffer = {}
+    for _,x in pairs( listePions ) do
+    local _continue = true
+if( not S_Misc_EstPionDetruitPhysique( x ) ) then
+            DIA_PushBack( listeBuffer, x )
+        end
+
+    end
+
+    _returnValue = listeBuffer
+    return _returnValue
+end
+
+function S_Geometrie_LocalisationProche( listeLocalisation )
+    local _returnValue = nil
+    local locVide = nil
+    local ptEntreeLocalisation = nil
+    local rDistanceMin = 1105199104
+    local rDistanceCourante = 0
+    _returnValue = locVide
+    for _,loc in pairs( listeLocalisation ) do
+    local _continue = true
+do
+            ptEntreeLocalisation = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
+            if( ( ptEntreeLocalisation == 0 or ptEntreeLocalisation == nil ) ) then
+                return _returnValue
+            end
+
+            rDistanceCourante = DEC_Geometrie_Distance( DEC_Agent_Position(), ptEntreeLocalisation )
+            if( rDistanceCourante < rDistanceMin ) then
+                do
+                    rDistanceMin = rDistanceCourante
+                    _returnValue = loc
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Misc_EstMissionAffectee( typeMission )
+    local _returnValue = false
+    local mission = DEC_GetMission( myself )
+    _returnValue = ( mission ~= nil ) and ( mission:GetType() == typeMission )
+    return _returnValue
+end
+
+function S_Misc_EstMissionAffectee_Automate( typeMission )
+    local _returnValue = false
+    local automate = DEC_GetAutomate( myself )
+    local mission = DEC_GetMission( automate )
+    _returnValue = ( mission ~= nil ) and ( mission:GetType() == typeMission )
+    return _returnValue
+end
+
+function S_Misc_EstMissionAffectee_Generique( )
+    local _returnValue = false
+    local mission = DEC_GetMission( myself )
+    _returnValue = ( mission ~= nil ) and ( mission:GetType() == "T_Mission_Pion_FaireMouvement" or mission:GetType() == "T_Mission_Pion_Franchir" or mission:GetType() == "T_Mission_Pion_Decrocher" or mission:GetType() == "T_Mission_Pion_SeFaireDecontaminer" or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" or mission:GetType() == "T_Mission_Pion_Stationner" or mission:GetType() == "T_Mission_Pion_Suivre" )
+    return _returnValue
+end
+
+function S_Force_DangerSur( repEni )
+    local _returnValue = 0
+    local eValiditeRequete = nil
+    local rForceDanger = DEC_ConnaissanceAgent_Dangerosite( repEni )
+    if( ( rForceDanger == 0 or rForceDanger == nil ) ) then
+        _returnValue = -1
+    else
+        _returnValue = rForceDanger
+    end
+
+    return _returnValue
+end
+
+function S_Force_DistancePt( pt )
+    local _returnValue = 0
+    _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( DEC_Agent_Position(), pt ) / 1000 )
+    return _returnValue
+end
+
+function S_Force_Distance( ksEni )
+    local _returnValue = 0
+    local positionEni = nil
+    positionEni = DEC_ConnaissanceAgent_Position( ksEni )
+    if( ( positionEni == 0 or positionEni == nil ) ) then
+        _returnValue = 0
+    else
+        _returnValue = S_Force_DistancePt( positionEni )
+    end
+
+    return _returnValue
+end
+
+function S_Pion_ForceDistancePt( pion, pt )
+    local _returnValue = 0
+    _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( pion:DEC_Agent_Position(), pt ) / 1000 )
+    return _returnValue
+end
+
+function S_Pion_ForceDistance( pion, ksEni )
+    local _returnValue = 0
+    local positionEni = nil
+    positionEni = DEC_ConnaissanceAgent_Position( ksEni )
+    if( ( positionEni == 0 or positionEni == nil ) ) then
+        _returnValue = 0
+    else
+        _returnValue = S_Pion_ForceDistancePt( pion, positionEni )
+    end
+
+    return _returnValue
+end
+
+function S_Connaissance_ForceDistance( ksAmi, ksEni )
+    local _returnValue = 0
+    local positionEni = nil
+    local positionAmi = nil
+    positionEni = DEC_ConnaissanceAgent_Position( ksEni )
+    if( ( positionEni == 0 or positionEni == nil ) ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    positionAmi = DEC_ConnaissanceAgent_Position( ksAmi )
+    if( ( positionAmi == 0 or positionAmi == nil ) ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( positionAmi, positionEni ) / 1000 )
+    return _returnValue
+end
+
+function S_Force_ActionContre( ksEni )
+    local _returnValue = 0
+    _returnValue = S_Force_DangerSur( ksEni ) * ( S_Force_Distance( ksEni ) - 1 )
+    return _returnValue
+end
+
+function S_Force_DistanceFloat( dist )
+    local _returnValue = 0
+    _returnValue = 1 + 1 / ( 1 + dist / 1000 )
+    return _returnValue
+end
+
+function S_RapForLocal( )
+    local _returnValue = nil
+    local rapFor = 5 - DEC_RapportDeForceLocal()
+    if( rapFor > 3.5 ) then
+        _returnValue = eEtatRapportDeForce_Defavorable
+    else
+if( rapFor > 2.4 and rapFor <= 3.5 ) then
+            _returnValue = eEtatRapportDeForce_Neutre
+        else
+            _returnValue = eEtatRapportDeForce_Favorable
+        end
+    end
+
+    return _returnValue
+end
+
+function S_Misc_DetruireItineraire( it, debug )
+    local _returnValue = nil
+    if( it ~= nil ) then
+        it = nil
+    end
+
+    _returnValue = nil
+    return _returnValue
+end
+

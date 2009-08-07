@@ -1,0 +1,142 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAttentatContreInstallation.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ASY_CommettreAttentatContreInstallation
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ASY_CommettreAttentatContreInstallation"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirInterdit", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur", {} },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", {} },
+        { "ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eAction = self.eAction or eActionEnCours
+        self.objectif = self.objectif or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, {} )
+                self.objectif = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.installationCible_ ) )
+                if( ( self.objectif == 0 or self.objectif == nil ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                Halt()
+
+                    end
+                end
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eSExfiltrer
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_CommettreAttentatContreInstallation:debut **", } )
+                self.ePhaseMission = eSInfiltrer
+                
+            --[[// Infiltration
+]]elseif switch_1 == eSInfiltrer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhaseMission = eAborderObjectif
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur, 1, setmetatable( { self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Infiltration en approchant le plus tard possible couvert par une population
+]]elseif switch_1 == eAborderObjectif then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
+                --[[// Attentat effectué, on s'exfiltre
+]]if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhaseMission = eSExfiltrer
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) > 3 ) then
+                    Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, { self.objectif, } )
+                else
+                    Activate( self.activations.ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation, 1, setmetatable( { self._namedParams.mission.installationCible_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                end
+
+                
+            --[[// Rejoindre la position de repli
+]]elseif switch_1 == eSExfiltrer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, setmetatable( { self._namedParams.mission.pointRepli_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                                Halt()
+
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ASY_CommettreAttentatContreInstallation = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_CommettreAttentatContreInstallation, "ACT_Maj_Pion_PasserEnTirInterdit", nodes.ACT_Maj_Pion_PasserEnTirInterdit }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_CommettreAttentatContreInstallation, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_CommettreAttentatContreInstallation, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_CommettreAttentatContreInstallation, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_CommettreAttentatContreInstallation, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur", nodes.BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_CommettreAttentatContreInstallation, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", nodes.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASY_CommettreAttentatContreInstallation, "ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation", nodes.ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation }

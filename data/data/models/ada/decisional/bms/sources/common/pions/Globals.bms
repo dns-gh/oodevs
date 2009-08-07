@@ -1,0 +1,50 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/Globals.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Common/Pions/Globals.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 20/06/05 11:05 $
+]]--[[// $Revision: 14 $
+]]--[[// $Workfile: Globals.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Tir inefficace
+]]local g_bTirInefficace = false
+
+local g_bEnPositionAppui = false
+
+--[[// Desactiver la sauvegarde
+]]local g_bDesactiveSauvegarde = false
+
+local g_DistanceEsquivePopulation = 200
+local g_CurrentDistanceEsquivePopulation = 225
+
+--[[// Fonctions DECs
+]]include "Common/Moteur/Functions/Pions.bms"
+
+
+--[[// Definition des constantes
+]]include "Common/Pions/Parameters.bms"
+
+
+--[[//Macros
+]]include "Common/Macros.bms"
+
+include "Common/Pions/Macros.bms"
+
+
+--[[//Fonctions DIA
+]]include "Common/Pions/Functions.bms"
+
+
+--[[// Reports
+]]include "Common/Moteur/EngineReports.bms"
+
+--[[//include "..\..\Data\Reports.xml";
+]]--[[//include "..\..\Data\Missions.xml";
+]]
+

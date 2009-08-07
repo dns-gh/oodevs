@@ -56,7 +56,7 @@ void MIL_FireFunctor::operator()( const PHY_ComposantePion& composantePion )
 // Created: RFT 22/04/2008
 // Modified: RFT 14/05/2008
 // -----------------------------------------------------------------------------
-void MIL_FireFunctor::operator()( const PHY_ComposantePion& composantePion, const PHY_Weapon& weapon )
+void MIL_FireFunctor::operator()( const PHY_ComposantePion& /*composantePion*/, const PHY_Weapon& weapon )
 {
     MIL_FireClass::T_EvaluationResult result = fireClass_.Evaluate( weapon );
     if ( result.score_ > bestExtinguisherAgentandFireHoseRange_.score_ )

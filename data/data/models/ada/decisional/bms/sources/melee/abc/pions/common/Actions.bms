@@ -1,0 +1,70 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/common/Actions.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// ACT_Tir_Pion_ABC_FaireFeuSur
+]]--[[//
+]]--[[//Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Tir_Pion_ABC_FaireFeuSur"
+{
+    actuators =
+    {
+        tir = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+        self._namedParams.pourcentageComposantes = self.params[2]
+    end,
+
+    select = function( self )
+                self.bTir = self.bTir or false
+        self.actionTir = self.actionTir or nil--[[//handler sur l'action
+]]
+        self.eTir = self.eTir or nil
+        if( ModuleBegins() ) then
+            DEC_Trace( ">>........ PREPARATION TIR ........<<" )
+        end
+
+        if( ( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_PosteReflexe ) and ( not self.bTir ) ) then
+            do
+                self.bTir = true
+                DEC_Trace( ">> Ouverture du feu" )
+                F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
+                self.actionTir = DEC_StartTirDirect( self._namedParams.repEni, self._namedParams.pourcentageComposantes, eTirDirectNormal, 0 )
+                actionCallbacks[ self.actionTir ] = function( arg ) self.eTir = arg end
+
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+        if( ( self.actionTir ~= 0 and self.actionTir ~= nil ) ) then
+            self.actionTir = DEC_StopAction( self.actionTir )
+        end
+
+        DEC_Trace( "Fin ouverture du feu" )
+                self.params.__returnValue = eActionHalt
+        Halt()
+
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+        if( ( self.actionTir ~= 0 and self.actionTir ~= nil ) ) then
+            self.actionTir = DEC_StopAction( self.actionTir )
+        end
+
+        DEC_Trace( "Fin ouverture du feu" )
+    end,
+
+}
+

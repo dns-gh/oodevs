@@ -1,0 +1,41 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter/Aller Se Recompleter - CDT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Aller Se Recompleter :
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_CDT_ALAT_AllerSeRecompleter"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtatODC = self.eEtatODC or eActionEnCours
+        if( self.eEtatODC == eActionHalt ) then
+            do
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                self.eEtatODC = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ALAT_AllerSeRecompleter = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_AllerSeRecompleter, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }

@@ -1,0 +1,197 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre cl289/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Rens/Pions/Roim/Son mise en oeuvre CL289/Behaviors.hal $
+]]--[[// $Author: Mia $
+]]--[[// $Modtime: 23/09/05 18:48 $
+]]--[[// $Revision: 18 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = yes
+
+max_instances = 100
+
+max_activations = 100
+
+
+actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+vitesse = 1,
+ennemi = 1,
+etat_Mission = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+controlePopulation = 1,
+etat_ROE = 1,
+hauteur = 1,
+objectifEsquive = 1,
+}
+
+
+--[[//Commun toutes armes
+]]include "Common/Pions/Behaviors.bms"
+
+
+--[[//missions génériques
+]]include "Common/Pions/MissionsGeneriques.bms"
+
+
+--[[// Commun Rens
+]]include "Appui/Rens/Behaviors.bms"
+
+
+--[[// Commun pion Rens
+]]include "Appui/Rens/Pions/Common/Behaviors.bms"
+
+
+--[[// Commun SMO
+]]include "Appui/Rens/Pions/Roim/Common/Behaviors SMO.bms"
+
+
+--[[// Son mise en oeuvre CL289
+]]include "Appui/Rens/Pions/Roim/Son mise en oeuvre CL289/Actions.bms"
+
+include "Appui/Rens/Pions/Roim/Son mise en oeuvre CL289/Missions/Missions.bms"
+
+
+--[[// missions communes
+]]include "Appui/Rens/Pions/Roim/Common/Missions/MettreEnOeuvre.bms"
+
+
+
+--[[// *****************************************************************************
+]]--[[// Comportement par défaut.
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Defaut"
+{
+    activations =
+    {
+        { "BEH_Mot_Pion_Rens_AffecterVariablesDEtat", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_Dep_Pion_Rens_GererDrones", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_Rens", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Mot_Pion_Rens_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ VE
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ de l'état DEC par défaut 
+]]--[[//-----------------------------------------------------------------------------
+]]
+        --[[// Si totalement detruit...
+]]if( S_Misc_EstDetruitPhysique() ) then
+            return
+        end
+
+        Activate( self.activations.BEH_Dep_Pion_Rens_GererDrones, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ de l'état DEC par défaut 
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Comp générique
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Ambiance, 1, {} )
+        Activate( self.activations.BEH_Nbc, 1, {} )
+        Activate( self.activations.BEH_Rens, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mot_Pion_Rens_AffecterVariablesDEtat
+]]--[[//
+]]--[[// Commentaire : Ce comportement est à inclure dans le BEH_Defaut du pion
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mot_Pion_Rens_AffecterVariablesDEtat"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//////////////// BMS OPTIM  ///////////////////
+]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
+            return
+        end
+
+        switch_1 = --[[////////////// FIN OPTIM  /////////////////////
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// En fonction du moral...
+]]--[[//-----------------------------------------------------------------------------
+]]DEC_FacteurHumain_Moral()
+            if switch_1 == eMoral_Fanatique then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Fanatique --> esquive sur PAP, pas de ralentissement
+]]--[[//-----------------------------------------------------------------------------
+]]SetStateVariable( "VE_RapFor", 0 )
+                
+            --[[//-----------------------------------------------------------------------------
+]]--[[// Moral bon --> esquive sur PAP et effet rapFor défavorable --> ralentissement
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eMoral_Moyen
+            or switch_1 == eMoral_Bon then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// En fonction de la mission...  --> idem moral mauvais
+]]--[[//-----------------------------------------------------------------------------
+]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+                    do
+                        SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                        
+                    end
+--[[// sinon
+]]                end
+
+                SetStateVariable( "VE_RapFor", 0 )
+                
+            --[[//-----------------------------------------------------------------------------
+]]--[[// Moral mauvais: --> esquive sur PAP et sur rapFor défavorable
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eMoral_Mauvais then
+                SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_RapFor", 0 )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_Rens_AffecterVariablesDEtat", nodes.BEH_Mot_Pion_Rens_AffecterVariablesDEtat }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MAJ_EtatDefaut", nodes.BEH_MAJ_EtatDefaut }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Dep_Pion_Rens_GererDrones", nodes.BEH_Dep_Pion_Rens_GererDrones }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE", nodes.BEH_ROE }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ambiance", nodes.BEH_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc", nodes.BEH_Nbc }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens", nodes.BEH_Rens }

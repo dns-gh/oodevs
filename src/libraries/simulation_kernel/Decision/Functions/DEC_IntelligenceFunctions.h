@@ -11,6 +11,8 @@
 #define __DEC_IntelligenceFunctions_h_
 
 class MIL_Automate;
+class MIL_Fuseau;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  DEC_IntelligenceFunctions
@@ -24,15 +26,15 @@ class DEC_IntelligenceFunctions
 public:
     //! @name Operations
     //@{
-    static void ComputeUnloadedEnemiesRatio      ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void ComputeLoadedEnemiesRatio        ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void ComputeFuseauUnloadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void ComputeFuseauLoadedEnemiesRatio  ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void SortZonesAccordingToUnloadedEnemies( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void SortAccordingToUnloadedEnemies   ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void SortAccordingToLoadedEnemies     ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void IsFriendOnFlank                  ( DIA_Call_ABC& call, const MIL_Automate& caller );
-    static void ComputeCoverDirection            ( DIA_Call_ABC& call, const MIL_Automate& caller );
+    static float ComputeUnloadedEnemiesRatio      ( const MIL_Automate& caller, const TER_Localisation* location );
+    static float ComputeLoadedEnemiesRatio        ( const MIL_Automate& caller, const TER_Localisation* location );
+    static float ComputeFuseauUnloadedEnemiesRatio( const MIL_Automate& caller, const MIL_Fuseau* limits );
+    static float ComputeFuseauLoadedEnemiesRatio  ( const MIL_Automate& caller, const MIL_Fuseau* limits );
+    static std::vector< boost::shared_ptr< TER_Localisation > > SortZonesAccordingToUnloadedEnemies( const MIL_Automate& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations );
+    static std::vector< boost::shared_ptr< MIL_Fuseau > > SortAccordingToUnloadedEnemies   ( const MIL_Automate& caller, const std::vector< boost::shared_ptr< MIL_Fuseau > >& limits );
+    static std::vector< boost::shared_ptr< MIL_Fuseau > > SortAccordingToLoadedEnemies     ( const MIL_Automate& caller, const std::vector< boost::shared_ptr< MIL_Fuseau > >& limits );
+    static bool IsFriendOnFlank( const MIL_Automate& caller, const MIL_Fuseau* limits );
+    static boost::shared_ptr< MT_Vector2D > ComputeCoverDirection( const MIL_Automate& caller, const MT_Vector2D* origin, const MIL_Fuseau* limits );
     //@}
 };
 

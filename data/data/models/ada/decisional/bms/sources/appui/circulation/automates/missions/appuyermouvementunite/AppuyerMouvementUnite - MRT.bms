@@ -1,0 +1,102 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/automates/missions/appuyermouvementunite/AppuyerMouvementUnite - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_LOG_AppuyerMouvement
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_LOG_AppuyerMouvement"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local selPions = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), PatrouilleCirculation )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionAppuyer = self.eEtatMissionAppuyer or eActionEnCours
+        self.listePC = self.listePC or {}
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                --[[//selectionne les pc de la liste passé en paramètres
+]]self.listePC = S_Misc_Pion_Circulation_SelectionnePC( self._namedParams.mission.unitesAAppuyer_ )
+            end
+--[[// =============================================================================
+]]--[[// PHASE DU COMPORTEMENT
+]]--[[//
+]]--[[// =============================================================================
+]]        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------
+]]--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionAppuyer == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionAppuyer == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( selPions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionAppuyer = v else rawset( t, k, v ) end end } ) )
+                --[[// ordre de missions
+]]if( ( #( selPions ) ~= 0 and #( selPions ) ~= nil ) ) then
+                    Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe, 1, { ePhase_MRT, selPions, self.listePC, } )
+                end
+
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Mission impossible
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_MissionImpossible then
+                --[[//DEC_RC( eRC_MissionImpossible );
+]]                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_LOG_AppuyerMouvement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_LOG_AppuyerMouvement, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_LOG_AppuyerMouvement, "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe", nodes.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe }

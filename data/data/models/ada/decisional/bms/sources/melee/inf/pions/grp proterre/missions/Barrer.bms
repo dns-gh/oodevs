@@ -1,0 +1,228 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/grp proterre/missions/Barrer.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Grp ProTerre/Missions/Barrer.hal $
+]]--[[// $Author: Jcr $
+]]--[[// $Modtime: 22/09/05 18:26 $
+]]--[[// $Revision: 23 $
+]]--[[// $Workfile: Barrer.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "MIS_Pion_INF_Barrer"
+{
+    activations =
+    {
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Mission_Pion_INF_Barrer", {} },
+        { "BEH_Manoeuvre_RompreContact", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.eEtatPhase = self.eEtatPhase or eActionEnCours
+        --[[// Phase de Gestion de la mission
+]]self.ePhase = self.ePhase or eBarrer
+        --[[// Phase du squelette de la mission
+]]self.eCurrentPhase = self.eCurrentPhase or eInstallerDispositif
+        self.eActionEmb = self.eActionEmb or eActionEnCours
+        self.ptAvtRepli = self.ptAvtRepli or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_Trace( "mission barrer recu" )
+            end
+        end
+
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_STATIQUE(), } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eSeReplier
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[// On commence par prendre en compte les ordres recus
+]]        end
+
+        local selOrder = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( selOrder ) do
+        local _continue = true
+do
+                local repOrder = x
+                local repOrdreCond = repOrder
+                if( repOrdreCond:GetType() == "Rep_OrderConduite_Decrocher" ) then
+                    do
+                        self.ePhase = eSeReplier
+                        self.eAction = eActionEnCours
+                    end
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { repOrdreCond, } )
+            end
+--[[// (1) : Rejoins position d'observation du point de regroupement
+]]--[[// (2) : Rejoins le point de regroupement
+]]--[[// (3) : Rejoins position d'observation du point a barrer
+]]--[[//=============================================================================
+]]--[[// Mission Barrer : squelette principal
+]]--[[//=============================================================================
+]]
+        end
+
+        if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                    DEC_Warning( eRC_MissionImpossible )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eBarrer then
+                if( self.eCurrentPhase == eFinMission or self.eEtatPhase == eActionHalt ) then
+                    do
+                        self.eAction = eActionEnCours
+                        self.ePhase = eSeReplier
+                                                return
+
+                    end
+                end
+
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eSeReplier
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Mission_Pion_INF_Barrer, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Rejoins une position de replis
+]]elseif switch_1 == eSeReplier then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                        end
+
+                    end
+                else
+do
+                        Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                end
+
+            elseif switch_1 == eFinMission then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            DEC_Trace( "fin de mission" )
+                            --[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------					
+]]DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Comportement utilise dans la partie generique de la mission barrer
+]]--[[//-----------------------------------------------------------------------------					
+]]}
+
+node "BEH_Pion_INF_Barrer_DispositifArret"
+{
+    activations =
+    {
+        { "BEH_Obj_RejoindreEmbossements", {} },
+        { "ACT_Transport_Pion_INF_Debarquer", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.eActionDebarquer = self.eActionDebarquer or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_EstEmbarque() ) then
+                    self.eActionDebarquer = eActionEffectuee
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, {} )
+        if( self.eActionDebarquer == eActionEnCours ) then
+            Activate( self.activations.ACT_Transport_Pion_INF_Debarquer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDebarquer = v else rawset( t, k, v ) end end } ) )
+        end
+
+        --[[// detectabilite tres faible
+]]--[[// vulnerabilite faible	
+]]local mission = DEC_GetMission( myself )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_INF_Barrer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Barrer_DispositifArret, "BEH_Obj_RejoindreEmbossements", nodes.BEH_Obj_RejoindreEmbossements }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Barrer_DispositifArret, "ACT_Transport_Pion_INF_Debarquer", nodes.ACT_Transport_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Barrer_DispositifArret, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Barrer, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Barrer, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Barrer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Barrer, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Barrer, "BEH_Mission_Pion_INF_Barrer", nodes.BEH_Mission_Pion_INF_Barrer }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Barrer, "BEH_Manoeuvre_RompreContact", nodes.BEH_Manoeuvre_RompreContact }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Barrer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Barrer, "BEH_Poste_Pion_INF_TomberEnGarde", nodes.BEH_Poste_Pion_INF_TomberEnGarde }

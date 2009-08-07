@@ -1,0 +1,137 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/pions/common/missions/Riot.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_Emergency_Riot"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Pion_Emergency_GartherPeople", {} },
+        { "ACT_Pion_Emergency_Influence", {} },
+        { "ACT_RC", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eReconnaitre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                if( self.eAction == eActionEnCours ) then
+                    do
+                        StartActivate( self.activations.BEH_Pion_Emergency_GartherPeople, 5, setmetatable( { 3, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                end
+
+                self.eAction = eActionEnCours
+                self.ePhase = eReconnaitre
+            elseif switch_1 == eReconnaitre then
+                --[[// behavior BEH_Pion_Emergency_Riot( mission.position, eProgressionDefaut, eTypeItiMouvement ) return in eAction : strength = DIA_GetMotivation( MOT_Mission );
+]]Activate( self.activations.ACT_Pion_Emergency_Influence, 1, { "riot", GetMotivation( "MOT_Mission" ), } )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.mission.position_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                
+                        end
+
+    end,
+
+}
+
+node "BEH_Pion_Emergency_GartherPeople"
+{
+    activations =
+    {
+        { "ACT_Pion_Emergency_TriggerActivity", {} },
+        { "ACT_Misc_Delai", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.delay = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        Activate( self.activations.ACT_Pion_Emergency_TriggerActivity, 1, { "riot", 0.5, } )
+        if( self.eAction == eActionEnCours ) then
+            Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 0, self._namedParams.delay, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        else
+            self.params.__returnValue = self.eAction
+            Halt()
+        end
+
+                return
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Emergency_Riot = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Emergency_GartherPeople, "ACT_Pion_Emergency_TriggerActivity", nodes.ACT_Pion_Emergency_TriggerActivity }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Emergency_GartherPeople, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Riot, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Riot, "BEH_Pion_Emergency_GartherPeople", nodes.BEH_Pion_Emergency_GartherPeople }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Riot, "ACT_Pion_Emergency_Influence", nodes.ACT_Pion_Emergency_Influence }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Riot, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Riot, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Riot, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }

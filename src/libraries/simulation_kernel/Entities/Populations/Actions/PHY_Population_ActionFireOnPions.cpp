@@ -18,11 +18,11 @@
 // Name: PHY_Population_ActionFireOnPions constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_Population_ActionFireOnPions::PHY_Population_ActionFireOnPions( MIL_Population& population, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC( population, diaCall )
+PHY_Population_ActionFireOnPions::PHY_Population_ActionFireOnPions( MIL_Population& population, float rIntensity )
+    : PHY_Action_ABC( population )
     , population_   ( population )
     , fireResults_  ( population )
-    , rIntensity_   ( diaCall.GetParameter( 0 ).ToFloat() )
+    , rIntensity_   ( rIntensity )
 {    
     assert( rIntensity_ > 0. );
 }

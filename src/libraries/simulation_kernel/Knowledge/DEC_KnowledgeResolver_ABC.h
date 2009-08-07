@@ -15,6 +15,7 @@
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
+class DIA_Variable_ABC;
 
 // =============================================================================
 /** @class  DEC_KnowledgeResolver_ABC
@@ -34,15 +35,12 @@ public:
     //! @name Operations
     //@{
     virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const = 0;
-    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const DIA_Variable_ABC&      dia ) const = 0;
     virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent (       uint                   nID ) const = 0;
 
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const = 0;
-    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const = 0;
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject(       uint                   nID ) const = 0;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const = 0;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const DIA_Variable_ABC&          dia ) const = 0;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const = 0;
     //@}
 

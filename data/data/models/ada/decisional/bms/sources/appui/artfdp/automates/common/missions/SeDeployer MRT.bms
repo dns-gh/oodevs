@@ -1,0 +1,80 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/automates/common/missions/SeDeployer MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Automates/Common/Missions/SeDeployer MRT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 8/07/05 16:17 $
+]]--[[// $Revision: 11 $
+]]--[[// $Workfile: SeDeployer MRT.hal $
+]]--[[// *****************************************************************************
+]]
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_AssignerSeDeployerA
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_AssignerSeDeployerA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.ptSite = self.ptSite or S_Geometrie_BarycentreZone( self.mission.zoneDeploiement_ )
+        --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[// Starté sinon le pointeut T_Point change à chq iteration (donc l'instance
+]]--[[// du comportement aussi)
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+for _,pion in pairs( self._namedParams.listePions ) do
+            local _continue = true
+                StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire, 1, { pion, self.ptSite, } )
+
+            end
+        end
+
+    end,
+
+}
+
+node "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.ptCible = self.params[2]
+    end,
+
+    activate = function( self )
+        self.position = self.position or DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.ptCible, 300 )
+        --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[// Starté sinon le pointeut T_Point change à chq iteration (donc l'instance
+]]--[[// du comportement aussi)
+]]--[[//---------------------------------------------------------------------		
+]]Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, self._namedParams.pion, self.position, eEtatEchelon_Premier, } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_AssignerSeDeployerA, "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire", nodes.BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }

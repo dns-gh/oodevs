@@ -1,0 +1,56 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/common/missions/attaquer/Attaquer - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Common/Missions/Attaquer/Attaquer - MRT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:30 $
+]]--[[// $Revision: 11 $
+]]--[[// $Workfile: Attaquer - MRT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_ABC_AssignerMissionAttaquerA
+]]--[[//
+]]--[[// Commentaires: assignation des missions pour le premier echelon
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_ABC_AssignerMissionAttaquerA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_ABC_AssignerAttaquerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selABC = self.params[1]
+        self._namedParams.eEtatEchelon = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Le fuseau de l'escadron est coupé proportionnellement
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_MRT_AffecteFuseaux( self._namedParams.selABC )
+        end
+
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Affectation des missions du premier echelon
+]]--[[//-----------------------------------------------------------------------------
+]]self._namedParams.selABC ) do
+        local _continue = true
+            Activate( self.activations.BEH_Mission_Automate_ABC_AssignerAttaquerA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_AssignerMissionAttaquerA, "BEH_Mission_Automate_ABC_AssignerAttaquerA", nodes.BEH_Mission_Automate_ABC_AssignerAttaquerA }

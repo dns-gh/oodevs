@@ -1,0 +1,26 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/common/Parameters.bms"] = true
+
+--[[// =============================================================================
+]]--[[// Paramètres de reconnaissance des points - devrait être dans ADN
+]]--[[// =============================================================================
+]]function M_POLY_MODELE_PION_CAPACITE_RECO_POINT()
+    return 4
+end
+
+
+
+function M_POLY_MODELE_PION_VITESSE_RECO_POINT()
+    return 100
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Madulation de la vitesse pour les unités AIR - devrait être dans ADN
+]]--[[// =============================================================================
+]]function M_POLY_DOCTRINE_MODULATION_VITESSE_RALENTIR()
+    return 1
+end
+
+

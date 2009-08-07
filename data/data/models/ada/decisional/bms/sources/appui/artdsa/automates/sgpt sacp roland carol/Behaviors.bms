@@ -1,0 +1,59 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/Behaviors.bms"] = true
+
+use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+actuators = {
+etat_OrdreCoordination = 1,
+tir = 1,
+ennemi = 1,
+}
+
+
+--[[//Comportements du Sgpt Sacp Roland Carol
+]]--[[//---------------------------------------
+]]--[[//génériques automates asa
+]]include "Appui/ArtDsa/Automates/Common/Behaviors.bms"
+
+--[[//Comportements Specifiques au Sgpt Sacp Roland Carol
+]]--[[//---------------------------------------------------
+]]node "BEH_Automate_ASA_Defaut"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+    end,
+
+--[[//Missions
+]]--[[//========
+]]--[[// defendre zone
+]]}
+
+include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Missions/Defendre Zone/Defendre Zone - MRT.bms"
+
+include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Missions/Defendre Zone/Defendre Zone - CDT.bms"
+
+
+--[[// defendre site
+]]include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Missions/Defendre Site/Defendre Site - MRT.bms"
+
+include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Missions/Defendre Site/Defendre Site - CDT.bms"
+
+
+--[[//surveiller
+]]include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Missions/Surveiller/Surveiller - MRT.bms"
+
+include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Missions/Surveiller/Surveiller - CDT.bms"
+
+
+--[[//defendre itineraire
+]]include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Missions/Defendre Itineraire/Defendre Itineraire - MRT.bms"
+
+include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Missions/Defendre Itineraire/Defendre Itineraire - CDT.bms"
+

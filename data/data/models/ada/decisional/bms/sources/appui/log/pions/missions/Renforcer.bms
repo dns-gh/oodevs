@@ -1,0 +1,123 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/log/pions/missions/Renforcer.bms"] = true
+
+--[[// ******************************************************************************
+]]--[[// MIS_Pion_LOG_Renforcer()
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[// New MIA
+]]--[[//
+]]--[[// ******************************************************************************
+]]node "MIS_Pion_LOG_Renforcer"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Misc_Pion_Log_Renforcer", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "MIS_Pion_GEN_Renforcer : debut" )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eRejoindrePosition
+                
+            --[[// Progression
+]]elseif switch_1 == eRejoindrePosition then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                            Activate( self.activations.ACT_Misc_Pion_Log_Renforcer, 1, { self._namedParams.mission.automate_, } )
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.lieuRenforcement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission --> sur ordre
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_Log_Renforcer
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// New MIA
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Misc_Pion_Log_Renforcer"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.unite = self.params[1]
+    end,
+
+    select = function( self )
+        --[[//-----------------------------------------------------------------
+]]--[[// Renforcement d'un automate
+]]--[[//-----------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                if( DEC_Pion_ChangeAutomate( self._namedParams.unite ) ) then
+                    DEC_RC( eRC_ReussiteRenforcement, myself, self._namedParams.unite )
+                else
+                    DEC_RC( eRC_EchecRenforcement, myself, self._namedParams.unite )
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_LOG_Renforcer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Renforcer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Renforcer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Renforcer, "ACT_Misc_Pion_Log_Renforcer", nodes.ACT_Misc_Pion_Log_Renforcer }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Renforcer, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Renforcer, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

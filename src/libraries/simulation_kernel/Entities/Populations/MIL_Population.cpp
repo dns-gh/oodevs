@@ -45,7 +45,6 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, xml::xistream& xis )
     : MIL_Entity_ABC          ( type.GetName(), xis ) 
-    , PHY_Actor               ()
     , pType_                  ( &type )
     , nID_                    ( nID )
     , pArmy_                  ( &army )
@@ -81,17 +80,30 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population()
     : MIL_Entity_ABC          ( "" )
-    , PHY_Actor               ()
     , pType_                  ( 0 )
     , nID_                    ( 0 )
     , pArmy_                  ( 0 )
     , pDefaultAttitude_       ( 0 )
     , rPeopleCount_           ( 0. )
-    , pKnowledge_             ()
+    , pKnowledge_             ( 0 )
     , orderManager_           ( *this )
     , bPionMaxSpeedOverloaded_( false )
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population constructor
+// Created: LDC 2009-04-24
+// -----------------------------------------------------------------------------
+MIL_Population::MIL_Population( const MIL_PopulationType& type )
+    : pType_                  ( &type )
+    , nID_                    ( 0 )
+    , pArmy_                  ( 0 )
+    , pKnowledge_             ( new DEC_PopulationKnowledge() )
+    , orderManager_           ( *this )
 {
     // NOTHING
 }
@@ -106,7 +118,8 @@ MIL_Population::MIL_Population()
 // -----------------------------------------------------------------------------
 MIL_Population::~MIL_Population()
 {
-    pArmy_->UnregisterPopulation( *this );
+    if( pArmy_ )
+        pArmy_->UnregisterPopulation( *this );
     delete pKnowledge_;
 }
 
@@ -139,8 +152,7 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
 // -----------------------------------------------------------------------------
 void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this ) 
-         >> boost::serialization::base_object< PHY_Actor >( *this ); 
+    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this ); 
 
     uint nTypeID;
     file >> nTypeID;
@@ -178,8 +190,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< MIL_Entity_ABC >( *this )
-         << boost::serialization::base_object< PHY_Actor >( *this );
+    file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     
     unsigned type     = pType_->GetID(),
              attitude = pDefaultAttitude_->GetID();
@@ -308,10 +319,10 @@ void MIL_Population::CleanKnowledges()
 // Name: MIL_Population::UpdateDecision
 // Created: NLD 2005-09-29
 // -----------------------------------------------------------------------------
-void MIL_Population::UpdateDecision()
+void MIL_Population::UpdateDecision( float duration )
 {
     orderManager_.Update();
-    GetRole< DEC_Decision_ABC >().UpdateDecision();
+    GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
 }
 
 // -----------------------------------------------------------------------------
@@ -918,7 +929,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
     if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_concentration )
     {
         for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-            if( ( **it ).GetID() == asn.beneficiaire.u.concentration )
+            if( static_cast<int>( ( **it ).GetID() ) == asn.beneficiaire.u.concentration )
             {
                 ( **it ).SetAttitude( *pAttitude );
                 return;
@@ -929,7 +940,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
     else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_flux )
     {
         for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-            if( ( **it ).GetID() == asn.beneficiaire.u.flux )
+            if( static_cast<int>( ( **it ).GetID() ) == asn.beneficiaire.u.flux )
             {
                 ( **it ).SetAttitude( *pAttitude );
                 return;

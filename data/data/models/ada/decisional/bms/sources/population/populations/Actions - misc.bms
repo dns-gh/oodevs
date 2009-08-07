@@ -1,0 +1,87 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/populations/Actions - misc.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// ACT_Info_Trace
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Info_Trace"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.message = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Trace( self._namedParams.message )
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Suppression
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Suppression"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ordre = self.params[1]
+    end,
+
+    select = function( self )
+        DEC_RemoveFromCategory( "ordres_recus", self._namedParams.ordre )
+        DEC_DeleteRepresentation( self._namedParams.ordre )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Delai
+]]--[[// 
+]]--[[// Commentaires: temps en minutes
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Delai"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.id = self.params[1]
+        self._namedParams.rDelai = self.params[2]
+    end,
+
+    select = function( self )
+        do
+            do
+                self.rTempsDebut = self.rTempsDebut or DEC_TempsSim()
+                if( ModuleBegins() ) then
+                    do
+                    end
+                end
+
+                do
+                end
+
+                if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
+                    do
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+

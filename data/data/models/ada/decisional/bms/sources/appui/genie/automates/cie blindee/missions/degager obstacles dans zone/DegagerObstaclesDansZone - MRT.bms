@@ -1,0 +1,56 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie blindee/missions/degager obstacles dans zone/DegagerObstaclesDansZone - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_GEN_DegagerObstaclesDansZone
+]]--[[//
+]]--[[// Commentaires: Refonte 27/10/06
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_GEN_DegagerObstaclesDansZone"
+{
+    activations =
+    {
+        { "ACT_Warning", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local listeSectionGenie = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), SectionGenie )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "------------------ Order to rid of pollution in zone ------------------" )
+                S_Dispositif_Automate_Init()
+                --[[//---------------------------------------------------------------------
+]]--[[// Vérification des moyens
+]]--[[//---------------------------------------------------------------------
+]]local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( SectionGenie )
+                if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+                    do
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                                                Halt()
+
+                    end
+--[[// Fin MRT
+]]                end
+
+                DEC_MRT_Valide()
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_GEN_DegagerObstaclesDansZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_GEN_DegagerObstaclesDansZone, "ACT_Warning", nodes.ACT_Warning }

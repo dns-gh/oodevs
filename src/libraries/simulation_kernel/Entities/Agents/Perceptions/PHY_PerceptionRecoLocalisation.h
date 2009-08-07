@@ -12,15 +12,34 @@
 #ifndef __PHY_PerceptionRecoLocalisation_h_
 #define __PHY_PerceptionRecoLocalisation_h_
 
-#include "PHY_Perception_ABC.h"
+#include "PHY_PerceptionWithLocation.h"
+#include "PHY_PerceptionLocalisation.h"
 #include "simulation_terrain/TER_Localisation.h"
+
+class PHY_PerceptionRecoLocalisationReco : public PHY_PerceptionLocalisation
+{
+public:
+    PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, MT_Float rRadius );
+    PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, bool bUseDefaultRadius );
+
+    bool IsInside        ( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D& vPoint )        const;
+    void GetAgentsInside ( const PHY_RolePion_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
+
+private:
+    PHY_PerceptionRecoLocalisationReco& operator = ( const PHY_PerceptionRecoLocalisationReco& );
+
+private:
+    const TER_Localisation localisation_;
+    const MT_Float         rRadius_;
+    const bool             bShouldUseRadius_;
+};
 
 // =============================================================================
 // @class  PHY_PerceptionRecoLocalisation
 // Created: JVT 2004-10-21
 // Modified: JVT 2004-10-28
 // =============================================================================
-class PHY_PerceptionRecoLocalisation : public PHY_Perception_ABC
+class PHY_PerceptionRecoLocalisation : public PHY_PerceptionWithLocation< PHY_PerceptionRecoLocalisationReco >
 {
 
 public:
@@ -29,10 +48,10 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    void* AddLocalisationWithRadius        ( const TER_Localisation&, MT_Float rRadius );
-    void* AddLocalisationWithDefaultRadius ( const TER_Localisation& );
-    void* AddLocalisationWithoutRadius     ( const TER_Localisation& );
-    void  RemoveLocalisation( void* );
+    int AddLocalisationWithRadius        ( const TER_Localisation&, MT_Float rRadius );
+    int AddLocalisationWithDefaultRadius ( const TER_Localisation& );
+    int AddLocalisationWithoutRadius     ( const TER_Localisation& );
+    void  RemoveLocalisation( int );
 
     bool  HasLocalisationToHandle() const;
     //@}
@@ -45,34 +64,6 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
     //@}
-
-private:
-    //! @name Types
-    //@{
-    struct sReco
-    {
-        sReco( const TER_Localisation& localisation, MT_Float rRadius );
-        sReco( const TER_Localisation& localisation, bool bUseDefaultRadius );
-
-        bool IsInside        ( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D& vPoint )        const;
-        void GetAgentsInside ( const PHY_RolePion_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
-
-    private:
-        sReco& operator = ( const sReco& );
-
-    private:
-        const TER_Localisation localisation_;
-        const MT_Float         rRadius_;
-        const bool             bShouldUseRadius_;
-    };
-
-    typedef std::vector< sReco* >         T_RecoVector;
-    typedef T_RecoVector::iterator       IT_RecoVector;
-    typedef T_RecoVector::const_iterator CIT_RecoVector;
-    //@}
-
-private:
-    T_RecoVector recos_;
 };
 
 #endif // __PHY_PerceptionRecoLocalisation_h_

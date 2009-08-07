@@ -31,7 +31,7 @@ public:
     static void                       Initialize   ( xml::xistream& xis );
     static const MIL_MissionType_ABC* Find         ( uint nID );
     static const MIL_MissionType_ABC* Find         ( const std::string& strName );
-    static const MIL_MissionType_ABC* FindFromDiaID( uint nID );
+    static const MIL_MissionType_ABC* FindFromDiaID( const std::string& nID );
     static const T_MissionNameMap&    MissionNames();
     //@}
 
@@ -64,7 +64,7 @@ private:
 
 private:
     static T_MissionIDMap   missionIDs_;
-    static T_MissionIDMap   missionDiaIDs_;
+    static T_MissionNameMap missionDiaIDs_;
     static T_MissionNameMap missionNames_;
 };
 

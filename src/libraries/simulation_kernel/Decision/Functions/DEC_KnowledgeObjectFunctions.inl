@@ -9,28 +9,16 @@
 //
 // *****************************************************************************
 
-#include "DEC_FunctionsTools.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeCrossingSite.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeSupplyRoute.h"
-
-
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_KnowledgeObjectFunctions::IsRecon
+// Name: DEC_KnowledgeObjectFunctions::IsRecon
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeObjectFunctions::IsRecon( DIA_Call_ABC& call, const T& caller )
+bool DEC_KnowledgeObjectFunctions::IsRecon( const T& caller, int knowledgeId )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledge->IsRecon() );
+    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+        return pKnowledge->IsRecon();
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -39,27 +27,23 @@ void DEC_KnowledgeObjectFunctions::IsRecon( DIA_Call_ABC& call, const T& caller 
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( DIA_Call_ABC& call, const T& caller )
+float DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( const T& caller, int knowledgeId )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >();
-    if( !(pKnowledge && attribute != 0 ) )
-        call.GetResult().SetValue( (float)0. );
-    else
-        call.GetResult().SetValue( attribute->GetWidth() );
+    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+        if( const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >() )
+            return attribute->GetWidth();
+    return 0.f;
 }
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_KnowledgeObjectFunctions::GetLocalisation
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeObjectFunctions::GetLocalisation( DIA_Call_ABC& call, const T& caller )
+const TER_Localisation* DEC_KnowledgeObjectFunctions::GetLocalisation( const T& caller, int knowledgeId )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge )
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLocalisation() );
-    else
-        call.GetResult().SetValue( (void*)&pKnowledge->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
+    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+        return &pKnowledge->GetLocalisation();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,10 +51,10 @@ void DEC_KnowledgeObjectFunctions::GetLocalisation( DIA_Call_ABC& call, const T&
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
 template< typename T > 
-static void DEC_KnowledgeObjectFunctions::IsKnowledgeValid( DIA_Call_ABC& call, const T& caller )
+static bool DEC_KnowledgeObjectFunctions::IsKnowledgeValid( const T& caller, unsigned int knowledgeId )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    call.GetResult().SetValue( pKnowledge != 0 );
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( knowledgeId, caller.GetArmy() );
+    return( pKnowledge != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,31 +63,11 @@ static void DEC_KnowledgeObjectFunctions::IsKnowledgeValid( DIA_Call_ABC& call, 
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_KnowledgeObjectFunctions::IsBypassed( DIA_Call_ABC& call, const T& caller )
+int DEC_KnowledgeObjectFunctions::IsBypassed( const T& caller, int knowledgeId )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge )
-        call.GetResult().SetValue( eTristate_DontKnow );
-    else
-        call.GetResult().SetValue( pKnowledge->IsBypassed() ? eTristate_True : eTristate_False );
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T >  void DEC_KnowledgeObjectFunctions::IsConstructed                    
-// Created: NLD 2006-10-27
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_KnowledgeObjectFunctions::IsConstructed( DIA_Call_ABC& call, const T& caller )
-{
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( false );
-        return;
-    }
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( pKnowledge->IsConstructed() );
+    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+        return int( pKnowledge->IsBypassed() ? eTristate_True : eTristate_False );
+    return int( eTristate_DontKnow );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,13 +76,11 @@ void DEC_KnowledgeObjectFunctions::IsConstructed( DIA_Call_ABC& call, const T& c
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_KnowledgeObjectFunctions::IsReservedObstacle( DIA_Call_ABC& call, const T& caller )
+bool DEC_KnowledgeObjectFunctions::IsReservedObstacle( const T& caller, int knowledgeId )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge )
-        call.GetResult().SetValue( false );
-    else
-        call.GetResult().SetValue( pKnowledge->IsReservedObstacle() );
+    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+        return pKnowledge->IsReservedObstacle();
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,13 +89,11 @@ void DEC_KnowledgeObjectFunctions::IsReservedObstacle( DIA_Call_ABC& call, const
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( DIA_Call_ABC& call, const T& caller )
+bool DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( const T& caller, int knowledgeId )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge )
-        call.GetResult().SetValue( true );
-    else
-        call.GetResult().SetValue( pKnowledge->IsReservedObstacleActivated() );
+    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+        return pKnowledge->IsReservedObstacleActivated();
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,11 +102,9 @@ void DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( DIA_Call_ABC& ca
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_KnowledgeObjectFunctions::GetType( DIA_Call_ABC& call, const T& caller )
+std::string DEC_KnowledgeObjectFunctions::GetType( const T& caller, int knowledgeId )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
-    if( !pKnowledge )
-        call.GetResult().SetValue( (int)0 );
-    else
-        call.GetResult().SetValue( pKnowledge->GetType().GetName() );
+    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+        return pKnowledge->GetType().GetName();
+    return "";
 }

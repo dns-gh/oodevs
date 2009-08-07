@@ -1,0 +1,62 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/sgpt hm/missions/heliporter/Heliporter - MRT.bms"] = true
+
+--[[// *----------------------------------------------------------------------------
+]]--[[// MIS_Automate_MRT_ALAT_Heliporter :
+]]--[[// -----------------------------
+]]--[[//
+]]--[[// 1. Trier les unites du sous groupement
+]]--[[// 2. Attribuer à chaque unité HM des pions à hélitransporter 
+]]--[[//
+]]--[[// Remarques : Les missions de couverture et d'escorte doivent etre purement
+]]--[[// adaptatives, c'est pourquoi elles sont données tout le temps dans la CDT.
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_Heliporter"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listeHM = self.listeHM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, TransportHelicopterPatrol )
+        self.listePionsAHeliporter = self.listePionsAHeliporter or {}
+        if( ModuleBegins() ) then
+            do
+                if( DIA_IsListEmpty( self.listeHM ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+--[[//liste des pions que l'on va pouvoir transporter
+]]                end
+
+                self.listePionsAHeliporter = S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAHeliporter_ )
+                self.listePionsAHeliporter = S_Cherche_Automate_PionsOperationnels( self.listePionsAHeliporter )
+                --[[// Si il n'y a aucune unité que l'on peut héliporter
+]]if( DIA_IsListEmpty( self.listePionsAHeliporter ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+            end
+        end
+
+        DEC_MRT_Valide()
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_Heliporter = { "mission" }

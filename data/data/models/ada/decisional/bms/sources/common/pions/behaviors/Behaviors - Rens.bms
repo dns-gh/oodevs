@@ -1,0 +1,138 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/behaviors/Behaviors - Rens.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Rens()
+]]--[[//
+]]--[[// Commentaires : Permet de passer en silence radio sur ordre de conduite
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "BEH_Rens"
+{
+    activations =
+    {
+        { "BEH_Rens_Recevoir_OrdreInopine", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Rens_Recevoir_OrdreInopine, 1, {} )--[[// pour anibas 
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Rens_Recevoir_OrdreInopine
+]]--[[//
+]]--[[//Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Rens_Recevoir_OrdreInopine"
+{
+    activations =
+    {
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
+                        SetStateVariable( "VE_SilenceRadio", 4 )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
+                        SetStateVariable( "VE_SilenceRadio", 0 )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
+                        SetStateVariable( "VE_SilenceRadar", 4 )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
+                        SetStateVariable( "VE_SilenceRadar", 0 )
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Rens_PasserEnSilenceRadio
+]]--[[//
+]]--[[//Commentaires :appelé par la motivation "Passer en silence radio" dépendant
+]]--[[//               de la variable d'état 'VE_SilenceRadio'
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Rens_PasserEnSilenceRadio"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_Rens_CommuterRadio", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Radio communication off", } )
+        Activate( self.activations.ACT_Rens_CommuterRadio, 1, {} )--[[// Passer en silence radio
+]]
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Arret Silence Radio" )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Rens_PasserEnSilenceRadar
+]]--[[//
+]]--[[//Commentaires :appelé par la motivation "Passer en silence radio" dépendant
+]]--[[//               de la variable d'état 'VE_SilenceRadio'
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Rens_PasserEnSilenceRadar"
+{
+    activations =
+    {
+        { "ACT_Pion_Rens_PasserEnSilenceRadar", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeRadar = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// Passer en silence radio
+]]        Activate( self.activations.ACT_Pion_Rens_PasserEnSilenceRadar, 1, { self._namedParams.typeRadar, } )
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Arret Silence Radar" )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Rens, "BEH_Rens_Recevoir_OrdreInopine", nodes.BEH_Rens_Recevoir_OrdreInopine }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_PasserEnSilenceRadar, "ACT_Pion_Rens_PasserEnSilenceRadar", nodes.ACT_Pion_Rens_PasserEnSilenceRadar }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_PasserEnSilenceRadio, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_PasserEnSilenceRadio, "ACT_Rens_CommuterRadio", nodes.ACT_Rens_CommuterRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_Recevoir_OrdreInopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

@@ -1,0 +1,875 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Info.bms"] = true
+
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompte()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "BEH_Info_Pion_RendreCompte"
+{
+    activations =
+    {
+        { "BEH_Info_Pion_RendreCompteSurEtatOperationnel", {} },
+        { "BEH_Info_Pion_RendreCompteSurAmbiance", {} },
+        { "BEH_Info_Pion_RendreCompteSurNBC", {} },
+        { "BEH_Info_Pion_RendreCompteSurROE", {} },
+        { "BEH_Info_Pion_RendreCompteSurSilenceRadio", {} },
+        { "BEH_Info_Pion_RendreCompteSurSilenceRadar", {} },
+        { "BEH_Info_Pion_RendreCompteSurPresencePop", {} },
+        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt", {} },
+        { "BEH_Info_Pion_RendreCompteSurSituationDeplacement", {} },
+        { "BEH_Info_Pion_RendreCompteSurSituationMissions", {} },
+        { "BEH_Info_Pion_RendreCompteSurLima", {} },
+        { "BEH_Info_Pion_RendreCompteSurSituationCoordination", {} },
+        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis", {} },
+        { "BEH_Info_Pion_RendreCompteSurPriseDeContact", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurEtatOperationnel, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// CR SUR EVT autres que enis
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurAmbiance, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurNBC, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurROE, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSilenceRadio, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSilenceRadar, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPresencePop, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiParArt, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSituationDeplacement, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSituationMissions, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurLima, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSituationCoordination, 1, {} )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// CR SUR EVT enis
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Valable un tic
+]]if( DEC_NouvelleMission() ) then
+            return
+        end
+
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseDeContact, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurNBC()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurNBC"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// CR SUR ETAT NBC
+]]--[[//-----------------------------------------------------------------------------
+]]F_Pion_GeteEtatNbc( myself )
+            if switch_1 == eEtatNbc_Niv0 then
+                Activate( self.activations.ACT_RC, 1, { eRC_FinAlerteNBCNiveau4, } )
+                
+            elseif switch_1 == eEtatNbc_Niv4 then
+                Activate( self.activations.ACT_RC, 1, { eRC_AlerteNBCNiveau4, } )
+                
+                        end
+--[[//-----------------------------------------------------------------------------
+]]--[[// CR SUR CONTAMINATION
+]]--[[//-----------------------------------------------------------------------------
+]]
+        if( myself:DEC_Agent_EstContamine() ) then
+            Activate( self.activations.ACT_RC, 1, { eRC_ContamineNBC, } )
+        else
+            Activate( self.activations.ACT_RC, 1, { eRC_DecontamineNBC, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurROE()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurROE"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// CR SUR ETAT NBC
+]]--[[//-----------------------------------------------------------------------------
+]]F_Pion_GeteConsigneTir( myself )
+            if switch_1 == eEtatROE_TirInterdit then
+                --[[// Sur ordre
+]]Activate( self.activations.ACT_RC, 1, { eRC_TirInterdit, } )
+                
+            elseif switch_1 == eEtatROE_TirSurRiposte then
+                Activate( self.activations.ACT_RC, 1, { eRC_TirRestreint, } )
+                
+            elseif switch_1 == eEtatROE_TirLibre then
+                Activate( self.activations.ACT_RC, 1, { eRC_TirLibre, } )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurLima()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurLima"
+{
+    activations =
+    {
+        { "ACT_RC_SurLima", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// CR SUR ETAT Lima
+]]--[[//-----------------------------------------------------------------------------
+]]F_Pion_GeteEtatLima( myself )
+            if switch_1 == eEtatLima_LD then
+                Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LD, } )
+                
+            elseif switch_1 == eEtatLima_LCA then
+                Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LCA, } )
+                
+            elseif switch_1 == eEtatLima_LC then
+                Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LC, } )
+                
+            elseif switch_1 == eEtatLima_LI then
+                Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LI, } )
+                
+            elseif switch_1 == eEtatLima_LIA then
+                Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LIA, } )
+                
+            elseif switch_1 == eEtatLima_LO then
+                Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LO, } )
+                
+            elseif switch_1 == eEtatLima_LCAR then
+                Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LCAR, } )
+                
+            elseif switch_1 == eEtatLima_LR then
+                Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LR, } )
+                
+            elseif switch_1 == eEtatLima_Fuseau then
+                --[[//rien
+]]
+            elseif switch_1 == eEtatLima_aucune then
+                --[[// rien
+]]
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurSituationCoordination
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************  
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurSituationCoordination"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Evite des faire des CR sur la coordination de l'automate!
+]]if( DEC_Agent_AutomateEstEmbraye() ) then
+            return
+        end
+
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// CR SUR ETAT coordination
+]]--[[//-----------------------------------------------------------------------------
+]]F_Pion_GeteEtatOrdreCoordination( myself )
+            if switch_1 == eEtatOrdreCoordination_aucun then
+                --[[// rien
+]]
+            elseif switch_1 == eEtatOrdreCoordination_Attendre then
+                if( F_Pion_GeteEtatLima( myself ) == eEtatLima_LD ) then
+                    Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdreDeboucher, } )
+                else
+                    --[[// ordre attendre ou sur LC
+]]Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdrePoursuivre, } )
+                end
+
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurSilenceRadio()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurSilenceRadio"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// CR SUR ETAT 
+]]--[[//-----------------------------------------------------------------------------
+]]F_Pion_GeteEtatRadio( myself )
+            if switch_1 == eEtatRadio_Silence then
+                Activate( self.activations.ACT_RC, 1, { eRC_DebutSilenceRadio, } )
+                
+            elseif switch_1 == eEtatRadio_Ouverte then
+                Activate( self.activations.ACT_RC, 1, { eRC_FinSilenceRadio, } )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurSilenceRadar()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurSilenceRadar"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// CR SUR ETAT 
+]]--[[//-----------------------------------------------------------------------------
+]]F_Pion_GeteEtatRadar( myself )
+            if switch_1 == eEtatRadar_Silence then
+                Activate( self.activations.ACT_RC, 1, { eRC_DebutSilenceRadar, } )
+                
+            elseif switch_1 == eEtatRadar_Ouvert then
+                Activate( self.activations.ACT_RC, 1, { eRC_FinSilenceRadar, } )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurEtatOperationnel()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurEtatOperationnel"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = F_Pion_GeteEtatDestruction( myself )
+            if switch_1 == eEtatDestruction_Tactique then
+                Activate( self.activations.ACT_RC, 1, { eRC_NonOperationnel, } )
+                
+            elseif switch_1 == eEtatDestruction_Total then
+                --[[// Rien le pion est totalement mort
+]]
+            --[[// Pion opérationnel
+]]elseif switch_1 == eEtatDestruction_None then
+                Activate( self.activations.ACT_RC, 1, { eRC_Operationnel, } )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurAmbiance()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurAmbiance"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = F_Pion_GeteEtatAmbiance( myself )
+            if switch_1 == eEtatAmbiance_Surete then
+                Activate( self.activations.ACT_RC, 1, { eRC_AmbianceSurete, } )
+                
+            elseif switch_1 == eEtatAmbiance_Vitesse then
+                Activate( self.activations.ACT_RC, 1, { eRC_AmbianceVitesse, } )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurSituationMissions()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurSituationMissions"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local eRC = S_Convertir_SituationMission_RC( F_Pion_GeteEtatPhaseMission( myself ) )
+        if( eRC ~= eNbr ) then
+            Activate( self.activations.ACT_RC, 1, { eRC, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurPriseAPartiParArt()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt"
+{
+    activations =
+    {
+        { "ACT_Warning", {} },
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( myself:DEC_Agent_EstNeutralise() ) then
+            do
+                Activate( self.activations.ACT_Warning, 1, { eRC_DebutNeutralisation, } )
+                Activate( self.activations.ACT_RC, 1, { eRC_PrisSousTirArtillerie, } )
+            end
+        else
+            Activate( self.activations.ACT_Warning, 1, { eRC_FinNeutralisation, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis"
+{
+    activations =
+    {
+        { "BEH_Info_Pion_RendreCompteSurPriseAPartiDe", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listeUnitesPrenantAPartie = DEC_Connaissances_UnitesPrenantAPartie()
+        for _,repEni in pairs( listeUnitesPrenantAPartie ) do
+        local _continue = true
+            StartActivate( self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiDe, 1, { repEni, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurPriseAPartiDe()
+]]--[[//
+]]--[[// Commentaires : 1 CR par connaissance eni
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurPriseAPartiDe"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Validité
+]]--[[//-----------------------------------------------------------------------------
+]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init  --> CR une seule fois...par mission // MIA à rajouter
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            Activate( self.activations.ACT_RC, 1, { eRC_PrisAPartieParTirDirect, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurPriseDeContact()
+]]--[[//
+]]--[[// Commentaires : 1 CR par mission
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurPriseDeContact"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// vrai pendant au moins un tic
+]]if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
+            StartActivate( self.activations.ACT_RC, 1, { eRC_PriseContact, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurPresencePop()
+]]--[[//
+]]--[[// Commentaires :refugies + enis rendus
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurPresencePop"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local eValidite = nil
+        for _,eniRendu in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Prisoniers
+]]--[[//-----------------------------------------------------------------------------
+]]DEC_Connaissances_UnitesRenduesAProximite( 1000 ) ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_RC, 1, { eRC_PresenceEnnemiRendu, } )
+                local campPrisonniers = DEC_Connaissances_ObjetAmiLePlusProche( S_TypeObject_ToString( eTypeObjectCampPrisonniers ) )
+                if( ( campPrisonniers == 0 or campPrisonniers == nil ) ) then
+                    StartActivate( self.activations.ACT_RC, 1, { eRC_PasDeCampPrisonniersDisponible, } )
+                else
+                    Activate( self.activations.ACT_RC, 1, { eRC_OrientationEnnemiRenduVersCampPrisonniers, } )
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// refugies
+]]--[[//-----------------------------------------------------------------------------
+]]
+        end
+
+        for _,repRefugies in pairs( DEC_Connaissances_RefugiesAProximite( 1000 ) ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_RC, 1, { eRC_PresencePopulation, } )
+                local campRefugies = DEC_Connaissances_ObjetAmiLePlusProche( S_TypeObject_ToString( eTypeObjectCampRefugies ) )
+                if( ( campRefugies == 0 or campRefugies == nil ) ) then
+                    StartActivate( self.activations.ACT_RC, 1, { eRC_PasDeCampRefugiesDisponible, } )
+                else
+                    Activate( self.activations.ACT_RC, 1, { eRC_OrientationPopulationVersCampRefugies, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_Pion_RendreCompteSurSituationDeplacement()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Pion_RendreCompteSurSituationDeplacement"
+{
+    activations =
+    {
+        { "ACT_RC_SurObjet", {} },
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.rDist = self.rDist or 0
+        self.repObjet = self.repObjet or 0
+        self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// Suivant l'état du deplcement
+]]--[[//-----------------------------------------------------------------------------
+]]myself.eEtatDeplacement_
+            if switch_1 == eEtatDeplacement_aucun then
+                --[[// Pas d'instance de deplacement
+]]--[[// rien
+]]
+            --[[// Pas d'instance de deplacement
+]]elseif switch_1 == eEtatDeplacement_EnCours then
+                --[[// rien
+]]
+            --[[//-----------------------------------------------------------------------------
+]]--[[// Si en poste devant obstacle (CR detection d'un obstacle qd inconnu fait 
+]]--[[// dans le moteur)
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eEtatDeplacement_PosteFaceAObstacle then
+                --[[// On se contente de recuperer l'objet pour faire le RC
+]]DEC_Itineraire_ProchainObjet( self.repObjet, self.rDist, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
+                Activate( self.activations.ACT_RC_SurObjet, 1, { eRC_EnPosteFaceAObstacle, self.repObjet, } )
+                
+            --[[//-----------------------------------------------------------------------------
+]]--[[// Cas de la reco d'un point 
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eEtatDeplacement_EnReco then
+                Activate( self.activations.ACT_RC, 1, { eRC_ReconnaissancePoint, } )
+                
+                        end
+
+    end,
+
+--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// 			****************    CR SUR ENI   *****************
+]]--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// 			****************    INFO MOS   *****************
+]]--[[// =============================================================================
+]]--[[// ICI il s'agit de ne pas envoyer des CR opérationnels mais des états à MOS.
+]]--[[// MIA: Meilleurs solution pour informer l'anibas. Les CR opérationnels devrait 
+]]--[[//      seulement servir à donner des informations sur LES DECISIONS du pion 
+]]--[[//      qui peuvent dépendre justement de ces états.
+]]--[[//      ICI il s'agit de valeurs INTERPRETEES donc MAJ dans le décisionnel
+]]--[[//
+]]--[[// =============================================================================
+]]--[[// *****************************************************************************
+]]--[[// BEH_Info_Mos
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_Mos"
+{
+    activations =
+    {
+        { "BEH_Info_RenseignerSurRapFor", {} },
+        { "BEH_Info_RenseignerSurROE", {} },
+        { "BEH_Info_RenseignerSurEtatDec", {} },
+        { "BEH_Info_RenseignerSurEtatOperationnel", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Info_RenseignerSurRapFor, 1, {} )
+        Activate( self.activations.BEH_Info_RenseignerSurROE, 1, {} )
+        Activate( self.activations.BEH_Info_RenseignerSurEtatDec, 1, {} )--[[// Résultat des motivations
+]]
+        Activate( self.activations.BEH_Info_RenseignerSurEtatOperationnel, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_RenseignerSurRapFor()
+]]--[[//
+]]--[[// Commentaires: enum moteur
+]]--[[// typedef enum E_EtatRapportDeForce
+]]--[[// {
+]]--[[//    eEtatRapportDeForce_None, // sert à rien
+]]--[[//    eEtatRapportDeForce_Neutre,
+]]--[[//    eEtatRapportDeForce_Favorable,
+]]--[[//    eEtatRapportDeForce_Defavorable
+]]--[[// };
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_RenseignerSurRapFor"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+    end,
+
+--[[//$$$$ pas de sens pour les PC de grandes unités
+]]--[[// *****************************************************************************
+]]--[[// BEH_RenseignerSurROE
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_RenseignerSurROE"
+{
+    activations =
+    {
+        { "ACT_Info_EtatROE", {} },
+        { "ACT_Info_EtatROEPopulation", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// Regarder en permanance les ROE 
+]]--[[//-----------------------------------------------------------------------------
+]]F_Pion_GeteConsigneTir( myself )
+            if switch_1 == eEtatROE_TirInterdit then
+                --[[// Sur ordre
+]]Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirInterdit, } )
+                
+            elseif switch_1 == eEtatROE_TirSurRiposte then
+                Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirSurRiposte, } )
+                
+            elseif switch_1 == eEtatROE_TirLibre then
+                Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirLibre, } )
+                
+                        end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Regarder en permanance les ROE Population
+]]--[[//-----------------------------------------------------------------------------
+]]
+        switch_1 = F_Pion_GeteConsigneTirPopulation( myself )
+            if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
+                --[[// Sur ordre
+]]Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_EmploiForceInterdit, } )
+                
+            elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+                Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux, } )
+                
+            elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
+                Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_DispersionParMoyensDeDefenseActifs, } )
+                
+            elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
+                Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_ArmesLetalesAutorisees, } )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_RenseignerSurEtatDec()
+]]--[[//
+]]--[[// Commentaires: enum moteur:
+]]--[[// 	typedef enum E_EtatCombatDeRencontre
+]]--[[//  {
+]]--[[//    	eEtatCombatDeRencontre_None, // Sert à rien
+]]--[[//    	eEtatCombatDeRencontre_Esquive,
+]]--[[//    	eEtatCombatDeRencontre_Fixe,
+]]--[[//    	eEtatCombatDeRencontre_PoursuiteMission
+]]--[[//	};
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_RenseignerSurEtatDec"
+{
+    activations =
+    {
+        { "ACT_Info_EtatDec", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = --[[//-----------------------------------------------------------------------------
+]]--[[// Interpretation de l'envie du pion: sauvegarde ou poursuite mission
+]]--[[//-----------------------------------------------------------------------------
+]]F_Pion_GeteEtatDec( myself )
+            if switch_1 == eEtatDec_Sauvegarde then
+                --[[// fixe / esquive
+]]Activate( self.activations.ACT_Info_EtatDec, 1, { eEtatCombatDeRencontre_Esquive, } )
+                
+            elseif switch_1 == eEtatDec_RAS
+            or switch_1 == eEtatDec_Continu then
+                Activate( self.activations.ACT_Info_EtatDec, 1, { eEtatCombatDeRencontre_PoursuiteMission, } )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Info_RenseignerSurEtatOperationnel()
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Info_RenseignerSurEtatOperationnel"
+{
+    activations =
+    {
+        { "ACT_Info_EtatOperationnel", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = F_Pion_GeteEtatDestruction( myself )
+            if switch_1 == eEtatDestruction_Tactique then
+                Activate( self.activations.ACT_Info_EtatOperationnel, 1, { eEtatOp_DetruitTactiquement, } )
+                
+            elseif switch_1 == eEtatDestruction_Total then
+                Activate( self.activations.ACT_Info_EtatOperationnel, 1, { eEtatOp_DetruitTotalement, } )
+                
+            --[[// Pion opérationnel
+]]elseif switch_1 == eEtatDestruction_None then
+                Activate( self.activations.ACT_Info_EtatOperationnel, 1, { eEtatOp_Operationnel, } )
+                
+                        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Info_Mos, "BEH_Info_RenseignerSurRapFor", nodes.BEH_Info_RenseignerSurRapFor }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Mos, "BEH_Info_RenseignerSurROE", nodes.BEH_Info_RenseignerSurROE }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Mos, "BEH_Info_RenseignerSurEtatDec", nodes.BEH_Info_RenseignerSurEtatDec }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Mos, "BEH_Info_RenseignerSurEtatOperationnel", nodes.BEH_Info_RenseignerSurEtatOperationnel }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurEtatOperationnel", nodes.BEH_Info_Pion_RendreCompteSurEtatOperationnel }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurAmbiance", nodes.BEH_Info_Pion_RendreCompteSurAmbiance }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurNBC", nodes.BEH_Info_Pion_RendreCompteSurNBC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurROE", nodes.BEH_Info_Pion_RendreCompteSurROE }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurSilenceRadio", nodes.BEH_Info_Pion_RendreCompteSurSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurSilenceRadar", nodes.BEH_Info_Pion_RendreCompteSurSilenceRadar }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurPresencePop", nodes.BEH_Info_Pion_RendreCompteSurPresencePop }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt", nodes.BEH_Info_Pion_RendreCompteSurPriseAPartiParArt }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurSituationDeplacement", nodes.BEH_Info_Pion_RendreCompteSurSituationDeplacement }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurSituationMissions", nodes.BEH_Info_Pion_RendreCompteSurSituationMissions }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurLima", nodes.BEH_Info_Pion_RendreCompteSurLima }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurSituationCoordination", nodes.BEH_Info_Pion_RendreCompteSurSituationCoordination }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis", nodes.BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompte, "BEH_Info_Pion_RendreCompteSurPriseDeContact", nodes.BEH_Info_Pion_RendreCompteSurPriseDeContact }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurAmbiance, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurEtatOperationnel, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurLima, "ACT_RC_SurLima", nodes.ACT_RC_SurLima }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurNBC, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurPresencePop, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurPriseAPartiDe, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurPriseAPartiParArt, "ACT_Warning", nodes.ACT_Warning }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurPriseAPartiParArt, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis, "BEH_Info_Pion_RendreCompteSurPriseAPartiDe", nodes.BEH_Info_Pion_RendreCompteSurPriseAPartiDe }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurPriseDeContact, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurROE, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSilenceRadar, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSilenceRadio, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSituationCoordination, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSituationDeplacement, "ACT_RC_SurObjet", nodes.ACT_RC_SurObjet }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSituationDeplacement, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSituationMissions, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Info_RenseignerSurEtatDec, "ACT_Info_EtatDec", nodes.ACT_Info_EtatDec }
+connections[ #connections + 1 ] = { nodes.BEH_Info_RenseignerSurEtatOperationnel, "ACT_Info_EtatOperationnel", nodes.ACT_Info_EtatOperationnel }
+connections[ #connections + 1 ] = { nodes.BEH_Info_RenseignerSurROE, "ACT_Info_EtatROE", nodes.ACT_Info_EtatROE }
+connections[ #connections + 1 ] = { nodes.BEH_Info_RenseignerSurROE, "ACT_Info_EtatROEPopulation", nodes.ACT_Info_EtatROEPopulation }

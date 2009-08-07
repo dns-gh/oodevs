@@ -1,0 +1,6 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie appui/missions/Missions.bms"] = true
+
+include "Appui/Genie/Automates/Cie Appui/Missions/SeDeployer/SeDeployer - CDT.bms"
+
+include "Appui/Genie/Automates/Cie Appui/Missions/SeDeployer/SeDeployer - MRT.bms"

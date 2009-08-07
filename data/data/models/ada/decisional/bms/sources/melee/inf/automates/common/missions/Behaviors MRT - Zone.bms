@@ -1,0 +1,458 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/missions/Behaviors MRT - Zone.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Missions/Behaviors MRT - Zone.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 9/09/05 16:55 $
+]]--[[// $Revision: 18 $
+]]--[[// $Workfile: Behaviors MRT - Zone.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+node "BEH_Medo_Automate_INF_PreparerMission_Zone"
+{
+    activations =
+    {
+        { "ACT_Medo_Automate_AffecterFuseaux", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_INF_AssignerControler", {} },
+        { "BEH_Medo_Automate_INF_Controler_AssignerMission_PC", {} },
+        { "BEH_Medo_Automate_INF_AssignerHarceler", {} },
+        { "BEH_Medo_Automate_INF_Harceler_AssignerMission_PC", {} },
+        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", {} },
+        { "BEH_Medo_Automate_INF_InitialiseSE", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eTypeMission = self.params[1]
+        self._namedParams.rN_Position = self.params[2]
+    end,
+
+    activate = function( self )
+        self.selPions = self.selPions or S_ObtenirPionsOperationnels_SansPC()
+        self.lstPionsAttaque = self.lstPionsAttaque or {}
+        self.lstPionsAppui = self.lstPionsAppui or {}
+        self.selPions_PE_INF = self.selPions_PE_INF or {}
+        self.selPions_INF_Mortier = self.selPions_INF_Mortier or {}
+        self.ePhase = self.ePhase or eMRT_SelectionnerPions
+        self.eActionMRT = self.eActionMRT or eActionEnCours
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Nombre de pions : " .. FloatToString( #( self.selPions ) ) )
+                S_Medo_Automate_InitialiseSE( self.selPions, eEtatEchelon_Second )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_SelectionnerPions then
+                self.ePhase = eMRT_AssignerMissions
+                --[[//-----------------------------------------------------------------------------
+]]--[[//	Distribution des types de mission
+]]--[[//-----------------------------------------------------------------------------								
+]]DEC_Trace( "Selection des composantes pion : Infanterie" )
+                --[[// Selection les types de composantes
+]]local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie )
+                self.selPions_INF_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, GroupeInfanterie_Mortier )
+                --[[// Determine les echelons				
+]]local rN_PE = 0
+                local rN_SE = 0
+                switch_2 = self._namedParams.eTypeMission
+                    if switch_2 == "T_Mission_Automate_INF_Controler"
+                    or switch_2 == "T_Mission_Automate_INF_Harceler" then
+                        --[[// Determine les echelons						
+]]rN_PE = 3
+                        if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
+                            rN_PE = Min( self._namedParams.rN_Position, rN_PE )
+                        end
+
+                        rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
+                        --[[// Selection des composantes
+]]DEC_Trace( "Selection des composantes pion" )
+                        self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                        
+                                        end
+--[[// L'execution de la mission necessite la presence d'un 1er ech
+]]
+                if( ( #( self.lstPionsAttaque ) == 0 or #( self.lstPionsAttaque ) == nil ) ) then
+                    do
+                        DEC_Trace( "Pas de 1er echelon" )
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                
+            elseif switch_1 == eMRT_AffecterFuseaux then
+                --[[//-----------------------------------------------------------------------------
+]]--[[//Le fuseau de la compagnie est coupe en DEUX
+]]--[[//le pion en appui utilise le fuseau de la compagnie
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eActionMRT == eActionEffectuee ) then
+                    do
+                        self.eActionMRT = eActionEnCours
+                                                do
+                            self.ePhase = eMRT_AssignerMissions
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { self.lstPionsAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eMRT_AssignerMissions then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------				
+]]if( self.eActionMRT == eActionImpossible ) then
+                    do
+                                                do
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( self.eValidationMRT == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Trace( "eValidationMRT == eActionImpossible" )
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( self.eValidationMRT == eActionEffectuee ) then
+                    do
+                        self.eValidationMRT = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.lstPionsAttaque ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                switch_2 = self._namedParams.eTypeMission
+                    if switch_2 == "T_Mission_Automate_INF_Controler" then
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerControler, 1, { self.selPions_PE_INF, } )
+                        Activate( self.activations.BEH_Medo_Automate_INF_Controler_AssignerMission_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                        
+                    elseif switch_2 == "T_Mission_Automate_INF_Harceler" then
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerHarceler, 1, { self.selPions_PE_INF, } )
+                        Activate( self.activations.BEH_Medo_Automate_INF_Harceler_AssignerMission_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                        
+                    
+                    else
+                        DEC_Trace( "Mission Inconnue" )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                                        end
+
+                Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
+                Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
+                
+                        end
+
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Controler
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Medo_Automate_INF_AssignerControler"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Controler", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPions_PE = self.params[1]
+    end,
+
+    activate = function( self )
+                self.mission = self.mission or DEC_GetMission( myself )
+        self.lstLocalisations = self.lstLocalisations or {}
+        self.eCodeLoc = self.eCodeLoc or eNoError
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                                do
+                end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Decoupage de la zone A surveiller
+]]--[[//-----------------------------------------------------------------------------		
+]]
+                self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( self.mission.zone_, #( self._namedParams.lstPions_PE ), self.eCodeLoc )
+                self.eCodeLoc = self.lstLocalisations.second
+                self.lstLocalisations = self.lstLocalisations.first
+                switch_1 = self.eCodeLoc
+                    if switch_1 == eError_PionsPasDansMemeFuseau
+                    or switch_1 == eError_LocalisationPasDansFuseau then
+                                            DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                                                do
+                            DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                            Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                                        self.params.__returnValue = eActionImpossible
+                            return
+
+                        end
+
+                        
+                    elseif switch_1 == eWarning_DecoupageIncomplet then
+                                            DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                        
+                    elseif switch_1 == eNoError then
+                                            
+                                        end
+
+                local rIt = 0
+                for _,x_pion in pairs( self._namedParams.lstPions_PE ) do
+                local _continue = true
+                    do
+                        if( rIt < #( self.lstLocalisations ) ) then
+                            do
+                                local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
+                                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Controler, 1, { ePhase_MRT, x_pion, locZone, self.mission.preparerTerrain_, } )
+                            end
+                        end
+
+                                                rIt = rIt + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+    destroy = function( self )
+            end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Harceler
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Medo_Automate_INF_AssignerHarceler"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Harceler", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPions_PE = self.params[1]
+    end,
+
+    activate = function( self )
+                self.mission = self.mission or DEC_GetMission( myself )
+        self.lstLocalisations = self.lstLocalisations or {}
+        self.eCodeLoc = self.eCodeLoc or eNoError
+        self.lstLocRgpt = self.lstLocRgpt or {}
+        self.eCodeLocRgpt = self.eCodeLocRgpt or eNoError
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                                do
+                end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Decoupage de la zone A surveiller
+]]--[[//-----------------------------------------------------------------------------		
+]]
+                self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneSurveillance_, #( self._namedParams.lstPions_PE ), self.eCodeLoc )
+                self.eCodeLoc = self.lstLocalisations.second
+                self.lstLocalisations = self.lstLocalisations.first
+                switch_1 = self.eCodeLoc
+                    if switch_1 == eError_PionsPasDansMemeFuseau
+                    or switch_1 == eError_LocalisationPasDansFuseau then
+                                            DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                                                do
+                            DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                            Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                                        self.params.__returnValue = eActionImpossible
+                            return
+
+                        end
+
+                        
+                    elseif switch_1 == eWarning_DecoupageIncomplet then
+                                            DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                        
+                    elseif switch_1 == eNoError then
+                                            
+                                        end
+
+                self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.pointRegroupement_, #( self._namedParams.lstPions_PE ), self.eCodeLocRgpt )
+                self.eCodeLocRgpt = self.lstLocRgpt.second
+                self.lstLocRgpt = self.lstLocRgpt.first
+                local rIt = 0
+                local natureObjectif = eNatureObjectif_ElementTerrain
+                for _,x_pion in pairs( self._namedParams.lstPions_PE ) do
+                local _continue = true
+                    do
+                        if( rIt < #( self.lstLocalisations ) ) then
+                            do
+                                local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
+                                local locZoneRgpt = self.mission.pointRegroupement_
+                                if( self.eCodeLocRgpt == eNoError ) then
+                                    locZoneRgpt = DEC_UserTypeList_GetAt( self.lstLocRgpt, rIt )
+                                end
+
+                                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Harceler, 1, { ePhase_MRT, x_pion, locZone, locZoneRgpt, natureObjectif, } )
+                                natureObjectif = eNatureObjectif_ElementMobile
+                            end
+                        end
+
+                                                rIt = rIt + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+    destroy = function( self )
+            end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 07/07/2005 16:46
+]]--[[// BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC
+]]--[[// Assigne une mission de deplacement du pc vers une position defini par la 
+]]--[[// mission
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Medo_Automate_INF_Harceler_AssignerMission_PC"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPionsAttaque = self.params[1]
+        self._namedParams.lstPionsAppui = self.params[2]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------    	
+]]local pAppui = nil
+                if( ( #( self._namedParams.lstPionsAttaque ) ~= 0 and #( self._namedParams.lstPionsAttaque ) ~= nil ) ) then
+                    pAppui = DIA_GetAt( self._namedParams.lstPionsAttaque, #( self._namedParams.lstPionsAttaque ) - 1 )
+                else
+if( ( #( self._namedParams.lstPionsAppui ) ~= 0 and #( self._namedParams.lstPionsAppui ) ~= nil ) ) then
+                        pAppui = DIA_GetAt( self._namedParams.lstPionsAppui, 0 )
+                    end
+                end
+
+                StartActivate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
+                for _,x_appui in pairs( self._namedParams.lstPionsAppui ) do
+                local _continue = true
+                    StartActivate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, x_appui, pAppui, } )
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 07/07/2005 16:46
+]]--[[// BEH_Medo_Automate_INF_Controler_AssignerMission_PC
+]]--[[// Assigne une mission de deplacement du pc vers une position defini par la 
+]]--[[// mission
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Medo_Automate_INF_Controler_AssignerMission_PC"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPionsAttaque = self.params[1]
+        self._namedParams.lstPionsAppui = self.params[2]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------    	
+]]local pAppui = nil
+                if( ( #( self._namedParams.lstPionsAttaque ) ~= 0 and #( self._namedParams.lstPionsAttaque ) ~= nil ) ) then
+                    pAppui = DIA_GetAt( self._namedParams.lstPionsAttaque, #( self._namedParams.lstPionsAttaque ) - 1 )
+                else
+if( ( #( self._namedParams.lstPionsAppui ) ~= 0 and #( self._namedParams.lstPionsAppui ) ~= nil ) ) then
+                        pAppui = DIA_GetAt( self._namedParams.lstPionsAppui, 0 )
+                    end
+                end
+
+                StartActivate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerControler, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerControler, "BEH_Mission_Automate_INF_AssignerA_Controler", nodes.BEH_Mission_Automate_INF_AssignerA_Controler }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerHarceler, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerHarceler, "BEH_Mission_Automate_INF_AssignerA_Harceler", nodes.BEH_Mission_Automate_INF_AssignerA_Harceler }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_Controler_AssignerMission_PC, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_Harceler_AssignerMission_PC, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Zone, "ACT_Medo_Automate_AffecterFuseaux", nodes.ACT_Medo_Automate_AffecterFuseaux }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Zone, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Zone, "BEH_Medo_Automate_INF_AssignerControler", nodes.BEH_Medo_Automate_INF_AssignerControler }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Zone, "BEH_Medo_Automate_INF_Controler_AssignerMission_PC", nodes.BEH_Medo_Automate_INF_Controler_AssignerMission_PC }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Zone, "BEH_Medo_Automate_INF_AssignerHarceler", nodes.BEH_Medo_Automate_INF_AssignerHarceler }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Zone, "BEH_Medo_Automate_INF_Harceler_AssignerMission_PC", nodes.BEH_Medo_Automate_INF_Harceler_AssignerMission_PC }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Zone, "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", nodes.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Zone, "BEH_Medo_Automate_INF_InitialiseSE", nodes.BEH_Medo_Automate_INF_InitialiseSE }

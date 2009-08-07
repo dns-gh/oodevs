@@ -1,0 +1,15 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/common/fonctions/Fonctions - Misc.bms"] = true
+
+
+--[[// *************************************************************************
+]]--[[// Fonction permétant de dire si un agent derive d'une section de la marine
+]]--[[//
+]]--[[// A METTRE A JOUR SI ON AJOUTE UN NOUVEAU PION MARINE
+]]--[[// *************************************************************************
+]]function S_EstPatrouilleMarine( agent )
+    local _returnValue = false
+    _returnValue = agent:GetType() == "LandingCraft"
+    return _returnValue
+end
+

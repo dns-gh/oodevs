@@ -28,7 +28,8 @@
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
 TER_Agent_ABC::TER_Agent_ABC()
-    : hint_( 0 )
+    : hint_         ( 0 )
+    , pAgentManager_( 0 )
 {
     //NOTHING
 }
@@ -66,5 +67,15 @@ void TER_Agent_ABC::InsertInPatch()
 // -----------------------------------------------------------------------------
 void TER_Agent_ABC::RemoveFromPatch()
 {
-    TER_World::GetWorld().GetAgentManager().Remove( *this, hint_ );
+    if( pAgentManager_ )
+        pAgentManager_->Remove( *this, hint_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Agent_ABC::SetListener
+// Created: LDC 2009-06-09
+// -----------------------------------------------------------------------------
+void TER_Agent_ABC::SetListener( TER_AgentManager& agentManager )
+{
+    pAgentManager_ = &agentManager;
 }

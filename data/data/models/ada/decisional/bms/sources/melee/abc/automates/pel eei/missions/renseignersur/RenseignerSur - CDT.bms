@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/pel eei/missions/renseignersur/RenseignerSur - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 04-04-26 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Pel EEI/Missions/RenseignerSur/RenseignerSur - CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 7 $
+]]--[[// $Workfile: RenseignerSur - CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_RenseignerSur
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_ABC_RenseignerSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_ABC_RenseignerSur, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Gen
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_RenseignerSur = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_RenseignerSur, "BEH_Conduite_Automate_ABC_RenseignerSur", nodes.BEH_Conduite_Automate_ABC_RenseignerSur }

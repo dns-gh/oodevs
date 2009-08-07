@@ -1,0 +1,433 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/common/motivations/Etats.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//  VE_NiveauROE INTERFACE AVEC EXTERIEUR 
+]]--[[//
+]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//								    anibas en debrayé
+]]--[[//
+]]--[[//	POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.statevariables[ "VE_TirRestreint" ] =
+{
+    min_confort = 0,
+    max_confort = 0,
+    tolerance_limit = 1,
+    viability_limit = 1,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  VE_Courage
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_Courage" ] =
+{
+    min_confort = 0,
+    --[[// Boundary of the comfort interval.
+]]max_confort = 1,
+    --[[// Boundary of the tolerance interval.
+]]tolerance_limit = 2,
+    --[[// Boundary of the comfort interval.
+]]viability_limit = 2,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// -----------------------------------------------------------------------------
+]]--[[//  VE_NiveauROE INTERFACE AVEC EXTERIEUR 
+]]--[[//
+]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//								    anibas en debrayé
+]]--[[//
+]]--[[//	POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
+]]--[[//
+]]--[[// -----------------------------------------------------------------------------
+]]motivation_plugin.statevariables[ "VE_TirLibre" ] =
+{
+    min_confort = 0,
+    max_confort = 0,
+    tolerance_limit = 1,
+    viability_limit = 1,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  VE_NiveauROE INTERFACE AVEC EXTERIEUR 
+]]--[[//
+]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//								    anibas en debrayé
+]]--[[//
+]]--[[//	POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_TirInterdit" ] =
+{
+    min_confort = 0,
+    max_confort = 0,
+    tolerance_limit = 1,
+    viability_limit = 1,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  VE_RapFor
+]]--[[//
+]]--[[//	Commentaires:
+]]--[[//  la variable d'état est comprise entre [0, 10] est vaut 3.5 quand l'inverse 
+]]--[[//  du rapport de force = 2.6 (rapport de force neutre)
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_RapFor" ] =
+{
+    --[[// Boundary of the comfort interval. 
+]]min_confort = 0,
+    --[[// Boundary of the comfort interval.
+]]max_confort = 2.4,
+    --[[// Boundary of the tolerance interval.
+]]tolerance_limit = 3.4,
+    --[[// Boundary of the comfort interval.
+]]viability_limit = 5,
+    --[[// Initial value of the state variable.
+]]init_value = 0,
+    --[[// Evolution of the variable for 1 time unit.
+]]natural_evolution = 0,
+    --[[// Output when state variable is max_confort.
+]]tolerance_min_output = 4.8,
+    --[[// Output when state variable is tolerance_limit.
+]]tolerance_max_output = 6.8,
+    --[[// Max output of the state variable.
+]]viability_max_output = 10,
+    --[[// emergency_increase_rate + tolerance_max_output
+]]emergency_increase_rate = 8.5,
+}
+
+--[[// = Output when state variable is at
+]]--[[// (tolerance_limit + viability_limit) / 2.
+]]--[[// *****************************************************************************
+]]--[[//  VE_Agressivite_Tir
+]]--[[//
+]]--[[//	Commentaires:PH [0;1]
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_Agressivite_Tir" ] =
+{
+    min_confort = 0,
+    max_confort = 0,
+    tolerance_limit = 1,
+    viability_limit = 1,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 1,
+    viability_max_output = 1,
+    emergency_increase_rate = 1,
+}
+
+--[[// *****************************************************************************
+]]--[[//  VE_Agressivite_Manoeuvre
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_Agressivite_Manoeuvre" ] =
+{
+    min_confort = 0,
+    max_confort = 0,
+    tolerance_limit = 5,
+    viability_limit = 10,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 5,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// INTERFACE AVEC ORDRE EXTERIEUR pour coordination automate ou ordre anibas
+]]--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// *****************************************************************************
+]]--[[//  VE SE POSTER INTERFACE AVEC EXTERIEUR 
+]]--[[//
+]]--[[//	Commentaires:gestion des ordres Automate ne embrayé ou
+]]--[[//								    anibas en debrayé
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_SePoster" ] =
+{
+    min_confort = 0,
+    max_confort = 1,
+    tolerance_limit = 2,
+    viability_limit = 2,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  VE SE TIR INTERFACE AVEC EXTERIEUR 
+]]--[[//
+]]--[[//	Commentaires:gestion des ordres Automate ne embrayé ou
+]]--[[//								    anibas en debrayé
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_Ralentir" ] =
+{
+    min_confort = 0,
+    max_confort = 1,
+    tolerance_limit = 2,
+    viability_limit = 2,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// Facteurs humains
+]]--[[// =============================================================================
+]]--[[// =============================================================================
+]]--[[// *****************************************************************************
+]]--[[//  VE 
+]]--[[//
+]]--[[//	Commentaires:gestion des ordres Automate ne embrayé ou
+]]--[[//								    anibas en debrayé
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_Faim" ] =
+{
+    min_confort = 0,
+    max_confort = 10,
+    tolerance_limit = 15,
+    viability_limit = 20,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  VE SE POSTER INTERFACE AVEC EXTERIEUR 
+]]--[[//
+]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//								    anibas en debrayé
+]]--[[//
+]]--[[//	POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_NiveauNBC" ] =
+{
+    min_confort = 0,
+    max_confort = 1,
+    tolerance_limit = 4,
+    viability_limit = 4,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  VE SilenceRadio INTERFACE AVEC EXTERIEUR 
+]]--[[//
+]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//								    anibas en debrayé
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_SilenceRadio" ] =
+{
+    min_confort = 0,
+    max_confort = 1,
+    tolerance_limit = 4,
+    viability_limit = 4,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  VE_SilenceRadar INTERFACE AVEC EXTERIEUR 
+]]--[[//
+]]--[[//	Commentaires: gestion des ordres Automate en embrayé ou
+]]--[[//								     anibas en debrayé
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_SilenceRadar" ] =
+{
+    min_confort = 0,
+    max_confort = 1,
+    tolerance_limit = 4,
+    viability_limit = 4,
+    init_value = 4,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  VE_Coordination_Tir
+]]--[[//
+]]--[[//	Commentaires: cette variable d'etat est utilisée dans la coordination des 
+]]--[[//  feux par l'automate
+]]--[[//
+]]--[[// cette VE est un simple interupteur
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_Coordination_Tir" ] =
+{
+    min_confort = 0,
+    max_confort = 0.5,
+    tolerance_limit = 1,
+    viability_limit = 1,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 1,
+    tolerance_max_output = 1,
+    viability_max_output = 1,
+    emergency_increase_rate = 1,
+}
+
+--[[// ============================================================================
+]]--[[// PreparationMission : Delais de preparation mission.
+]]--[[// ============================================================================
+]]motivation_plugin.statevariables[ "VE_PreparationMission" ] =
+{
+    --[[// Boundary of the comfort interval.
+]]min_confort = 0,
+    --[[// Boundary of the comfort interval.
+]]max_confort = 0,
+    --[[// Boundary of the tolerance interval.
+]]tolerance_limit = 1,
+    --[[// Boundary of the comfort interval.
+]]viability_limit = 1,
+    --[[// Initial value of the state variable.
+]]init_value = 1,
+    --[[// Evolution of the variable for 1 time unit.
+]]natural_evolution = 0,
+    --[[// Output when state variable is max_confort.
+]]tolerance_min_output = 0,
+    --[[// Output when state variable is tolerance_limit.
+]]tolerance_max_output = 1,
+    --[[// Max output of the state variable.
+]]viability_max_output = 2,
+    --[[// emergency_increase_rate + tolerance_max_output
+]]emergency_increase_rate = 2,
+}
+
+--[[// = Output when state variable is at
+]]--[[// (tolerance_limit + viability_limit) / 2.
+]]--[[// *****************************************************************************
+]]--[[//  ROE face aux populations
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_EmploiForceInterdit" ] =
+{
+    min_confort = 0,
+    max_confort = 0,
+    tolerance_limit = 1,
+    viability_limit = 1,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  ROE face aux populations
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_MaintienADistanceParMoyensNonLetaux" ] =
+{
+    min_confort = 0,
+    max_confort = 0,
+    tolerance_limit = 1,
+    viability_limit = 1,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  ROE face aux populations
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_DispersionParMoyensDeDefenseActifs" ] =
+{
+    min_confort = 0,
+    max_confort = 0,
+    tolerance_limit = 1,
+    viability_limit = 1,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
+]]--[[//  ROE face aux populations
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_ArmesLetalesAutorisees" ] =
+{
+    min_confort = 0,
+    max_confort = 0,
+    tolerance_limit = 1,
+    viability_limit = 1,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+

@@ -9,7 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Representations.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Orders/MIL_FragOrder.h"
+#include "Decision/Path/DEC_PathPoint.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Representations constructor
@@ -31,66 +32,85 @@ DEC_Representations::~DEC_Representations()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Representations::GetCategory
+// Name: DEC_Representations::GetOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-const T_ObjectVector& DEC_Representations::GetCategory( const std::string& name )
+const std::vector< MIL_FragOrder* >& DEC_Representations::GetOrdersCategory()
 {
-    return representations_[name];
-}
-    
-// -----------------------------------------------------------------------------
-// Name: DEC_Representations::AddToCategory
-// Created: LDC 2009-04-03
-// -----------------------------------------------------------------------------
-void DEC_Representations::AddToCategory( const std::string& name, DIA_TypedObject* pObject )
-{
-    representations_[name].push_back( pObject );
+    return orderRepresentations_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Representations::RemoveFromCategory
+// Name: DEC_Representations::GetPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_Representations::RemoveFromCategory( const std::string& name, DIA_TypedObject* pObject )
+const std::vector< DEC_PathPoint* >& DEC_Representations::GetPointsCategory()
 {
-    T_ObjectVector& representation = representations_[name];
-    for( IT_ObjectVector it = representation.begin(); it != representation.end(); ++it )
+    return pointRepresentations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Representations::AddToOrdersCategory
+// Created: LDC 2009-04-03
+// -----------------------------------------------------------------------------
+void DEC_Representations::AddToOrdersCategory( MIL_FragOrder* pObject )
+{
+    orderRepresentations_.push_back( pObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Representations::AddToPointsCategory
+// Created: LDC 2009-04-03
+// -----------------------------------------------------------------------------
+void DEC_Representations::AddToPointsCategory( DEC_PathPoint* pObject )
+{
+    pointRepresentations_.push_back( pObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Representations::RemoveFromOrdersCategory
+// Created: LDC 2009-04-03
+// -----------------------------------------------------------------------------
+void DEC_Representations::RemoveFromOrdersCategory( MIL_FragOrder* pObject )
+{
+    for( IT_OrdersRepresentationVector it = orderRepresentations_.begin(); it != orderRepresentations_.end(); ++it )
     {
         if( *it == pObject )
         {
-            representation.erase( it );
+            orderRepresentations_.erase( it );
+            break;
+        }
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_Representations::RemoveFromPointsCategory
+// Created: LDC 2009-04-03
+// -----------------------------------------------------------------------------
+void DEC_Representations::RemoveFromPointsCategory( DEC_PathPoint* pObject )
+{
+    for( IT_PointsRepresentationVector it = pointRepresentations_.begin(); it != pointRepresentations_.end(); ++it )
+    {
+        if( *it == pObject )
+        {
+            pointRepresentations_.erase( it );
             break;
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Representations::DeleteRepresentation
+// Name: DEC_Representations::DeleteOrderRepresentation
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_Representations::DeleteRepresentation( DIA_TypedObject* pObject )
-{
-    for( IT_Representations it = representations_.begin(); it != representations_.end(); ++it )
+void DEC_Representations::DeleteOrderRepresentation( MIL_FragOrder* pObject )
+{    
+    for( IT_OrdersRepresentationVector oit = orderRepresentations_.begin(); oit != orderRepresentations_.end(); ++oit )
     {
-        for( IT_ObjectVector oit = it->second.begin(); oit != it->second.end(); ++oit )
+        if( *oit == pObject )
         {
-            if( *oit == pObject )
-            {
-                it->second.erase( oit );
-                delete pObject;
-                return;
-            }
+            orderRepresentations_.erase( oit );
+            delete pObject;
+            return;
         }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Representations::RemoveAllReferencesOf
-// Created: LDC 2009-04-07
-// -----------------------------------------------------------------------------
-void DEC_Representations::RemoveAllReferencesOf( const DIA_TypedObject& referenced )
-{
-    DEC_RolePion_Decision& role = GetRole<DEC_RolePion_Decision>();
-    role.RemoveAllReferencesOf( referenced, role.GetContext() );
 }

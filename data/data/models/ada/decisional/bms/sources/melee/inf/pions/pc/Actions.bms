@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/pc/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 8/07/05 16:21 $
+ * $Revision: 11 $
+ *
+ */]]--[[// Created: JCR 03-02-13
+]]--[[// *****************************************************************************
+]]--[[// Actions de la section d infanterie
+]]--[[// -------------------------------------
+]]
+--[[// include "Melee\Inf\Pions\Common\Actions.bms"
+]]
+
+
+
+node "ACT_Transport_Pion_INF_Debarquer"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+
+node "ACT_Tir_Pion_INF_TirCouverture"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+    end,
+
+    select = function( self )
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+

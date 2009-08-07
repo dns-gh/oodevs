@@ -1,0 +1,71 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/actions/Actions - Obs.bms"] = true
+
+--[[// ******************************************************************************
+]]--[[// ACT_Obs_EtablirVisionCur
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// ******************************************************************************
+]]node "ACT_Obs_EtablirVisionCur"
+{
+    actuators =
+    {
+        observation = 1,
+    },
+
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.bVisionCur = self.bVisionCur or false
+        if( not self.bVisionCur ) then
+            do
+                DEC_Perception_VisionNormale()
+                self.bVisionCur = true
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                self.bVisionCur = false
+    end,
+
+}
+
+--[[// ******************************************************************************
+]]--[[// ACT_Obs_EtablirVisionFaceADir
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ******************************************************************************
+]]node "ACT_Obs_EtablirVisionFaceADir"
+{
+    actuators =
+    {
+        observation = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.dir = self.params[1]
+    end,
+
+    select = function( self )
+                self.bVisionDir = self.bVisionDir or false
+        if( not self.bVisionDir ) then
+            do
+                DEC_Perception_VisionVerrouilleeSurDirection( self._namedParams.dir )
+                self.bVisionDir = true
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                self.bVisionDir = false
+    end,
+
+}
+

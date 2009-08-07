@@ -1,0 +1,45 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/Types A VIRER.bms"] = true
+
+
+
+--[[// A VIRER
+]]eTypeContexte_RAS = 0
+eTypeContexte_SurLC = 1
+eTypeContexte_SurLC_Ecl = 2
+eTypeContexte_SurLCAR_PE = 3
+eTypeContexte_SurLCAR_SE = 4
+eTypeContexte_SurLD = 5
+eTypeContexte_SurFuseau = 6
+eTypeContexte_SurEniNonPrevu = 7
+eTypeContexte_SurRapportForce = 8
+eTypeContexte_SurDestruction = 9
+eTypeContexte_SurVisionEnnemi = 10
+eTypeContexte_SurFinMission = 11
+eTypeContexte_SurPriseAPartie = 12
+eTypeContexte_SurFixe = 13
+eTypeContexte_SurEsquive = 14
+eTypeContexte_SurEsquiveImpossible = 15
+eTypeContexte_SurActivationObstacle = 16
+eTypeContexte_SurInopine = 17
+eTypeContexte_SurInopineEsquive = 18
+eTypeContexte_SurInopinePause = 19
+eTypeContexte_SurInopineContinue = 20
+eTypeContexte_SurInopineCoordination = 21
+eTypeContexte_Ordre = 22
+eTypeContexte_NonConnu = 23
+eTypeContexte_DispositifInstalle = 24
+eTypeContexte_EnSurveillance = 25
+eTypeContexte_ExecuteTir = 26
+--[[// 'Ordres' de conduite
+]]--[[// Inopinés
+]]--[[// Ne pas utilise, repere sur traitement de l'etat du pion	
+]]--[[// Ne pas deplacer
+]]--[[// Situation des pions ( nvelle version )
+]]
+
+eDeplEnCours = 0
+eDeplTermine = 1
+eDeplManqueCarburant = 2
+eDeplSuspendu = 3
+eDeplNeutralise = 4

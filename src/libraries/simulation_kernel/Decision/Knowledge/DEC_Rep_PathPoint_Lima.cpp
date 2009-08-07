@@ -15,22 +15,13 @@
 #include "Decision/DEC_Tools.h"
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Lima::InitializeDIA
-// Created: NLD 2003-01-13
-//-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Lima::InitializeDIA()
-{
-    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "Rep_PointLima" );
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima constructor
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, uint nLimaID, const MIL_LimaFunction& function )
     : DEC_Rep_PathPoint( vPos, DEC_Rep_PathPoint::eTypePointLima, nTypeTerrain, "Rep_PointLima" )
     , typeLima_( (int)function.GetID() )
-    , limaID_  ( (void*)nLimaID )
+    , limaID_  ( nLimaID )
 {
 }
 
@@ -68,7 +59,7 @@ int DEC_Rep_PathPoint_Lima::GetTypeLima()
 // Name: DEC_Rep_PathPoint_Lima::GetLimaID
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void* DEC_Rep_PathPoint_Lima::GetLimaID()
+unsigned int DEC_Rep_PathPoint_Lima::GetLimaID()
 {
     return limaID_;
 }

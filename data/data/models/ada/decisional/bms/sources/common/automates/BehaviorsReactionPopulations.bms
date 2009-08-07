@@ -1,0 +1,30 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/BehaviorsReactionPopulations.bms"] = true
+
+include "Common/Automates/Behaviors/Behaviors - POP - ROE.bms"
+
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Default_Automate_ReactionPopulations()
+]]--[[//
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Default_Automate_ReactionPopulations"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_RecevoirOrdreInopinePopulation", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, 1, {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Default_Automate_ReactionPopulations, "BEH_ROE_Automate_RecevoirOrdreInopinePopulation", nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation }

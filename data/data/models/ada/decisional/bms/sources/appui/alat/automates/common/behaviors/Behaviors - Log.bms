@@ -1,0 +1,315 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Log.bms"] = true
+
+include "bit.lua"
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Manage Forward Arming and Refueling Points
+]]--[[// -----------------------------------------------------------------------------
+]]node "BEH_Log_Automate_ALAT_GererPlotsRavitaillement"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.TC2 = self.TC2 or DEC_Automate_TC2()
+        self.pionTC2 = self.pionTC2 or nil
+        if( self.TC2 ~= nil ) then
+            self.pionTC2 = DEC_Automate_PionPCDeAutomate( self.TC2 )
+        end
+
+        for _,x in pairs( DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                if( not S_EstPatrouilleALAT( x ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    --[[// plotRavitaillementAssigne == 0 when no FARP is available
+]]local patrouilleAlat = x
+                    patrouilleAlat:SetplotRavitaillementAssigne_( nil )
+                    F_CopyPlotsRavitaillement( patrouilleAlat, myself.sPlotsDeRavitaillement_ )
+                    local distance = 1105199104
+                    local distanceBuffer = 0
+                    for _,y in pairs( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ) ) do
+                    local _continue = true
+do
+                            local positionPlot = S_Geometrie_BarycentreZone( DEC_ConnaissanceObjet_Localisation( y ) )
+                            distanceBuffer = DEC_Geometrie_Distance( DEC_Automate_PionPosition( x ), positionPlot )
+                            if( distanceBuffer < distance ) then
+                                do
+                                    distance = distanceBuffer
+                                    patrouilleAlat:SetplotRavitaillementAssigne_( y )
+                                end
+                            end
+
+                        end
+--[[// if TC is more interresting than closest FARP, agent refuel on it
+]]
+                    end
+
+                    if( self.pionTC2 ~= nil ) then
+                        do
+                            if( DEC_Geometrie_Distance( DEC_Automate_PionPosition( x ), DEC_Automate_PionPosition( self.pionTC2 ) ) <= distance ) then
+                                patrouilleAlat:SetplotRavitaillementAssigne_( nil )
+                            end
+
+                        end
+                    end
+
+                end
+            end
+
+        end
+
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Update Refueling Plots list
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listeObjet = DEC_Connaissances_ObjetsDansFuseau( S_TypeObject_ToString( eTypeObjectPlotRavitaillement ) )
+        for _,x in pairs( listeObjet ) do
+        local _continue = true
+do
+                if( not DEC_UserTypeList_Contient( myself.sPlotsDeRavitaillement_, x ) ) then
+                    DEC_UserTypeList_PushBack( myself.sPlotsDeRavitaillement_, x )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Gestion de la coordination des ravitaillements :
+]]--[[//
+]]--[[// Grand principe SCIPIO ALAT. L'automate plannifie les ravitaillements pour que
+]]--[[// toutes les sections n'aillent pas se ravitailler en meme temps.
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.bAlerteRavitaillentPourSsgpt = self.bAlerteRavitaillentPourSsgpt or false
+        local listePionsACoordonner = S_ListePionsALAT( self._namedParams.listePions )
+        local copieListePionsACoordonner = listePionsACoordonner
+        local bRavitaillementEnCours = false
+        local totalTpsAlertesRav = 0
+        local bufferPionAlat = nil
+        if( #( listePionsACoordonner ) < 2 ) then
+            Halt()
+        end
+
+        local patrouilleAlerteMax = S_Misc_Automate_ALAT_PionAlerteLaPlusIminente( listePionsACoordonner )
+        local patrouilleAlerteMin = S_Misc_Automate_ALAT_PionAlerteLaMoinsIminente( listePionsACoordonner )
+        for _,x in pairs( listePionsACoordonner ) do
+        local _continue = true
+do
+                bufferPionAlat = x
+                --[[// total du temps que les unités vont passer en maneouvre
+]]totalTpsAlertesRav = totalTpsAlertesRav - bufferPionAlat:GetrNiveauAlerteRavitaillement_() - ( ( 2 * S_Misc_Automate_ALAT_TempsPionPourAllerRecompleter( bufferPionAlat ) ) + M_DOCTRINE_ALAT_TEMPS_RECOMPLETEMENT() + M_DOCTRINE_ALAT_TEMPS_RECOMPLETEMENT_SECURITE() )
+            end
+--[[// moyenne
+]]
+        end
+
+        local sizeList = #( listePionsACoordonner )
+        local tmpRavitaillement = ( totalTpsAlertesRav * ( sizeList - 1 ) ) / ( sizeList * sizeList )
+        for _,x in pairs( --[[//on check si une unité est deja en cours de ravitaillement
+]]listePionsACoordonner ) do
+        local _continue = true
+do
+                bufferPionAlat = x
+                if( bufferPionAlat:GetbEnPhaseRavitaillement_() ) then
+                    bRavitaillementEnCours = true
+                end
+
+            end
+--[[// aller ravitailler si le temps sur position est inférieur au pion qui a 
+]]--[[// l'alerte la moins iminente
+]]
+        end
+
+        if( not bRavitaillementEnCours and ( -patrouilleAlerteMax:GetrNiveauAlerteRavitaillement_() <= tmpRavitaillement ) ) then
+            patrouilleAlerteMax:SetbEnPhaseRavitaillement_( true )
+        end
+
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Add new FARP every 30 km
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsHMLog = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.distance = self.params[3]
+        self._namedParams.pointRegroupement = self.params[4]
+        self._namedParams.attendrePourPionsIMEX = self.params[5]
+    end,
+
+    activate = function( self )
+        self.listePionsIMEX = self.listePionsIMEX or {}
+        self.listePionsTransportPlots = self.listePionsTransportPlots or {}
+        self.listePionsPourHeliporterPlots = self.listePionsPourHeliporterPlots or {}
+        self.listePionsASoutenirRav = self.listePionsASoutenirRav or {}
+        self.listePionsASoutenirIMEX = self.listePionsASoutenirIMEX or {}
+        self.pointDebarquement = self.pointDebarquement or DEC_Geometrie_CreerPoint()
+        local distanceBuffer = 0
+        local bCreerPlots = false
+        local TC2 = DEC_Automate_TC2()
+        local pionTC2 = nil
+        DIA_Clear( self.listePionsIMEX )
+        DIA_Clear( self.listePionsTransportPlots )
+        DIA_Clear( self.listePionsPourHeliporterPlots )
+        DIA_Clear( self.listePionsASoutenirRav )
+        DIA_Clear( self.listePionsASoutenirIMEX )
+        if( TC2 ~= nil ) then
+            pionTC2 = DEC_Automate_PionPCDeAutomate( TC2 )
+        end
+
+        self.listePionsIMEX = S_Cherche_Automate_Filtre_TypeMission( self._namedParams.listePionsHMLog, "T_Mission_Pion_ALAT_IMEX" )
+        self.listePionsTransportPlots = S_Cherche_Automate_Filtre_TypeMission( self._namedParams.listePionsHMLog, "T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" )
+        self.listePionsPourHeliporterPlots = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_PionsNonEnCoursExtraction( self._namedParams.listePionsHMLog ), self.listePionsTransportPlots )
+        for _,x in pairs( self._namedParams.listePions ) do
+        local _continue = true
+do
+                DIA_PushBack( self.listePionsASoutenirIMEX, x )
+                if( DEC_GetMission( x ) ~= nil ) then
+                    DIA_PushBack( self.listePionsASoutenirRav, x )
+                end
+
+            end
+--[[// IMEX task pawn don't IMEX each other's
+]]
+        end
+
+        self.listePionsASoutenirIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsASoutenirIMEX, self.listePionsIMEX )
+        for _,x in pairs( self.listePionsASoutenirRav ) do
+        local _continue = true
+do
+                local mission = DEC_GetMission( myself )
+                distanceBuffer = S_Misc_Automate_ALAT_DistancePionPlusLoinAPlotRavitaillement( self.listePionsASoutenirRav, DEC_GetDirectionEnnemi( mission ) )
+                if( distanceBuffer >= self._namedParams.distance ) then
+                    bCreerPlots = true
+                end
+
+            end
+
+        end
+
+        if( bCreerPlots ) then
+            do
+                local barycentreAgents = DEC_Geometrie_CalculerBarycentreAgents( self.listePionsASoutenirRav )
+                local pointDebarquementBuffer = nil
+                if( ( #( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ) ) ~= 0 and #( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ) ) ~= nil ) ) then
+                    do
+                        local pointPlotPlusProche = S_Geometrie_PositionObjetPlusProche( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), barycentreAgents )
+                        --[[//Calcul du point à distance / 2 km du plot le plus proche
+]]pointDebarquementBuffer = DEC_Geometrie_PositionTranslate( pointPlotPlusProche, barycentreAgents, self._namedParams.distance / 2 )
+                    end
+--[[// pas de plot dans la liste, on fait par rapport au tc2
+]]                else
+do
+                        if( pionTC2 ~= nil ) then
+                            do
+                                --[[//Calcul du point à distance / 2 km du TC2 le plus proche
+]]pointDebarquementBuffer = DEC_Geometrie_PositionTranslate( DEC_Automate_PionPosition( pionTC2 ), barycentreAgents, self._namedParams.distance / 2 )
+                            end
+                        else
+                            return
+--[[//on ne peut pas creer de plot
+]]                        end
+
+                    end
+--[[// position ou déposer le plot de ravitaillement
+]]                end
+
+                local pointBufferDansZone = DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( DEC_Geometrie_CreerLocalisationCercle( pointDebarquementBuffer, 0.1 ) )
+                if( pointBufferDansZone ~= nil ) then
+                    DEC_Copie_Point( pointBufferDansZone, self.pointDebarquement )
+                else
+                    return
+--[[//position invalide ($$$$GGR : ne devrait jamais arriver normalement)
+]]                end
+
+                --[[//gestion de l'attente sur une position
+]]--[[//si on doit attendre sur une position
+]]if( self._namedParams.attendrePourPionsIMEX ) then
+                    do
+                        if( not DIA_IsListEmpty( self.listePionsPourHeliporterPlots ) ) then
+                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe, 1, { ePhase_CDT, self.listePionsPourHeliporterPlots, self._namedParams.pointRegroupement, self.pointDebarquement, S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), } )
+                        end
+
+                    end
+                else
+do
+                        if( not DIA_IsListEmpty( self.listePionsPourHeliporterPlots ) ) then
+                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe, 1, { ePhase_CDT, self.listePionsPourHeliporterPlots, self.pointDebarquement, self.pointDebarquement, S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), } )
+                        end
+
+                    end
+                end
+
+            end
+        else
+do
+                local bDesPionsAExtraire = false
+                for _,k in pairs( self._namedParams.listePions ) do
+                local _continue = true
+do
+                        if( DEC_NecessiteEvacuationBlesses( k ) ) then
+                            bDesPionsAExtraire = true
+                        end
+
+                    end
+
+                end
+
+                if( not ( self._namedParams.attendrePourPionsIMEX and not bDesPionsAExtraire ) ) then
+                    do
+                        if( not DIA_IsListEmpty( self.listePionsPourHeliporterPlots ) ) then
+                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe, 1, { ePhase_CDT, self.listePionsPourHeliporterPlots, self.listePionsASoutenirIMEX, self._namedParams.pointRegroupement, S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), } )
+                        end
+
+                    end
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe", nodes.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe }
+connections[ #connections + 1 ] = { nodes.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe", nodes.BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe }

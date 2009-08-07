@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Tools.h"
 #include "Functions/DEC_FrontAndBackLinesComputer.h"
-#include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_Objective.h"
 
@@ -20,77 +19,6 @@
 #include "DIA/DIA_Tool_Script_Engine.h"
 #include "DIA/DIA_DebugInfo_Generator_ABC.h"
 #include "DIA/DIA_BasicBehavior_ABC.h"
-
-const DIA_TypeDef* DEC_Tools::pTypePoint_                         = 0;
-const DIA_TypeDef* DEC_Tools::pTypeDirection_                     = 0;
-const DIA_TypeDef* DEC_Tools::pTypeItineraire_                    = 0;
-const DIA_TypeDef* DEC_Tools::pTypeListePoints_                   = 0;
-const DIA_TypeDef* DEC_Tools::pTypeLocalisation_                  = 0;
-const DIA_TypeDef* DEC_Tools::pTypeCalculLignesAvantArriere_      = 0;
-const DIA_TypeDef* DEC_Tools::pTypeLima_                          = 0;
-const DIA_TypeDef* DEC_Tools::pTypeConnaissanceObjet_             = 0;
-const DIA_TypeDef* DEC_Tools::pTypeConnaissanceAgent_             = 0;
-const DIA_TypeDef* DEC_Tools::pTypeConnaissancePopulation_        = 0;
-const DIA_TypeDef* DEC_Tools::pTypePopulationConnaissanceAgent_   = 0;
-const DIA_TypeDef* DEC_Tools::pTypePopulationConnaissanceObjet_   = 0;
-const DIA_TypeDef* DEC_Tools::pTypeAction_                        = 0;
-const DIA_TypeDef* DEC_Tools::pTypePion_                          = 0;
-const DIA_TypeDef* DEC_Tools::pTypeAutomate_                      = 0;
-const DIA_TypeDef* DEC_Tools::pTypeGenObjet_                      = 0;
-const DIA_TypeDef* DEC_Tools::pTypeMissionPion_                   = 0;
-const DIA_TypeDef* DEC_Tools::pTypeMissionAutomate_               = 0;
-const DIA_TypeDef* DEC_Tools::pTypePerceptionPoint_               = 0;
-const DIA_TypeDef* DEC_Tools::pTypePerceptionLocalisation_        = 0;
-const DIA_TypeDef* DEC_Tools::pTypePerceptionRadar_               = 0;
-const DIA_TypeDef* DEC_Tools::pTypePerceptionSurveillance_        = 0;
-const DIA_TypeDef* DEC_Tools::pTypeMaintenancePriorities_          = 0;
-const DIA_TypeDef* DEC_Tools::pTypeSantePriorites_                = 0;
-const DIA_TypeDef* DEC_Tools::pTypePerceptionObjectsLocalisation_ = 0;
-const DIA_TypeDef* DEC_Tools::pTypePerceptionFlyingShell_         = 0;
-const DIA_TypeDef* DEC_Tools::pTypeDotation_                      = 0;
-const DIA_TypeDef* DEC_Tools::pTypeEquipement_                    = 0;
-const DIA_TypeDef* DEC_Tools::pTypeTirIndirect_                   = 0;
-const DIA_TypeDef* DEC_Tools::pTypeFuseau_                        = 0;
-const DIA_TypeDef* DEC_Tools::pTypeObjectif_                      = 0;
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::InitializeDIA
-// Created: NLD 2004-10-20
-// -----------------------------------------------------------------------------
-void DEC_Tools::InitializeDIA()
-{
-    pTypePoint_                         = &GetDIAType( "T_Point"                        );
-    pTypeDirection_                     = &GetDIAType( "T_Direction"                    );
-    pTypeItineraire_                    = &GetDIAType( "T_Itineraire"                   );
-    pTypeListePoints_                   = &GetDIAType( "T_ListePoints"                  );
-    pTypeLocalisation_                  = &GetDIAType( "T_Localisation"                 );
-    pTypeCalculLignesAvantArriere_      = &GetDIAType( "T_CalculLignesAvantArriere"     );
-    pTypeLima_                          = &GetDIAType( "T_Lima"                         );
-    pTypeConnaissanceObjet_             = &GetDIAType( "T_ConnaissanceObjet"            );
-    pTypeConnaissanceAgent_             = &GetDIAType( "T_ConnaissanceAgent"            );
-    pTypeConnaissancePopulation_        = &GetDIAType( "T_ConnaissancePopulation"       );
-    pTypePopulationConnaissanceAgent_   = &GetDIAType( "T_Population_ConnaissanceAgent" );
-    pTypePopulationConnaissanceObjet_   = &GetDIAType( "T_Population_ConnaissanceObjet" );
-    pTypeAction_                        = &GetDIAType( "T_Action"                       );
-    pTypePion_                          = &GetDIAType( "T_Pion"                         );
-    pTypeAutomate_                      = &GetDIAType( "T_Automate"                     ); 
-    pTypeGenObjet_                      = &GetDIAType( "T_GenObjet"                     );
-    pTypeMissionPion_                   = &GetDIAType( "T_Mission_Pion"                 );
-    pTypeMissionAutomate_               = &GetDIAType( "T_Mission_Automate"             );
-    pTypePerceptionPoint_               = &GetDIAType( "T_PerceptionPoint"              );
-    pTypePerceptionLocalisation_        = &GetDIAType( "T_PerceptionLocalisation"       );
-    pTypePerceptionRadar_               = &GetDIAType( "T_PerceptionRadar"              );
-    pTypePerceptionSurveillance_        = &GetDIAType( "T_PerceptionSurveillance"       );
-    pTypeMaintenancePriorities_         = &GetDIAType( "T_MaintenancePriorites"         );
-    pTypeSantePriorites_                = &GetDIAType( "T_SantePriorites"               );
-    pTypePerceptionObjectsLocalisation_ = &GetDIAType( "T_PerceptionLocalisationObjet"  );
-    pTypePerceptionFlyingShell_         = &GetDIAType( "T_PerceptionTirIndirect"        );
-    pTypeDotation_                      = &GetDIAType( "T_Dotation"                     );
-    pTypeEquipement_                    = &GetDIAType( "T_Equipement"                   );
-    pTypeTirIndirect_                   = &GetDIAType( "T_TirIndirect"                  );
-    pTypeFuseau_                        = &GetDIAType( "T_Fuseau"                       );
-    pTypeObjectif_                      = &GetDIAType( "T_Objectif"                     );
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::GetDIAType
@@ -116,234 +44,51 @@ int DEC_Tools::InitializeDIAField( const std::string& strFieldName, const DIA_Ty
     return nResult;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeConnaissancesAgent
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeConnaissancesAgent( const DIA_Variable_ABC& diaVariable )
+namespace directia
 {
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypeConnaissanceAgent( **it ) )
-            return false;
-    }
-    return true;
+// $$$$ LDC: TODO Check which kind of deletion/destruction operations must be done. See ManageDeletion below...
+    void UsedByDIA( DIA_TypedObject* ) {} // $$$$ LDC: FIXME Should remove this. Only useful because GetRepresenation wasn't typed strongly enough.
+    void ReleasedByDIA( DIA_TypedObject* ) {} // $$$$ LDC: FIXME Should remove this. Only useful because GetRepresenation wasn't typed strongly enough.
+    void UsedByDIA( DEC_Decision_ABC* ) {}
+    void ReleasedByDIA( DEC_Decision_ABC* ) {}
+    void UsedByDIA( DEC_FrontAndBackLinesComputer* ) {}
+    void ReleasedByDIA( DEC_FrontAndBackLinesComputer* ) {}
+    void UsedByDIA( DEC_Gen_Object* ) {}
+    void ReleasedByDIA( DEC_Gen_Object* ) {}
+    void UsedByDIA( DEC_Knowledge_Agent* ) {}
+    void ReleasedByDIA( DEC_Knowledge_Agent* ) {}
+    void UsedByDIA( DEC_Knowledge_Object* ) {}
+    void ReleasedByDIA( DEC_Knowledge_Object* ) {}
+    void UsedByDIA( DEC_Knowledge_Population* ) {}
+    void ReleasedByDIA( DEC_Knowledge_Population* ) {}
+    void UsedByDIA( DEC_Objective* ) {}
+    void ReleasedByDIA( DEC_Objective* ) {}
+    void UsedByDIA( DEC_Path_ABC* ) {}
+    void ReleasedByDIA( DEC_Path_ABC* ) {}    
+    void UsedByDIA( DEC_PathPoint* ) {}
+    void ReleasedByDIA( DEC_PathPoint* ) {}
+    void UsedByDIA( MIL_FragOrder* ) {}
+    void ReleasedByDIA( MIL_FragOrder* ) {}
+    void UsedByDIA( MIL_Fuseau* ) {}
+    void ReleasedByDIA( MIL_Fuseau* ) {}    
+    void UsedByDIA( MIL_ParameterType_MedicalPriorities* ) {}
+    void ReleasedByDIA( MIL_ParameterType_MedicalPriorities* ) {}
+    void UsedByDIA( MIL_ParameterType_MaintenancePriorities* ) {}
+    void ReleasedByDIA( MIL_ParameterType_MaintenancePriorities* ) {}
+    void UsedByDIA( MT_Vector2D* ) {}
+    void ReleasedByDIA( MT_Vector2D* ) {}
+    void UsedByDIA( PHY_DotationCategory* ) {}
+    void ReleasedByDIA( PHY_DotationCategory* ) {}
+    void UsedByDIA( PHY_ComposanteTypePion* ) {}
+    void ReleasedByDIA( PHY_ComposanteTypePion* ) {}
+    void UsedByDIA( PHY_HumanWound* ) {}
+    void ReleasedByDIA( PHY_HumanWound* ) {}
+    void UsedByDIA( TER_Localisation* ) {}
+    void ReleasedByDIA( TER_Localisation* ) {}
+    void UsedByDIA( PHY_Action_ABC* ) {}
+    void ReleasedByDIA( PHY_Action_ABC* ) {}
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeConnaissancesObjet
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeConnaissancesObjet( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypeConnaissanceObjet( **it ) )
-            return false;
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeConnaissancesPopulation
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeConnaissancesPopulation( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypeConnaissancePopulation( **it ) )
-            return false;
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListePopulationConnaissancesAgent
-// Created: NLD 2005-11-10
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListePopulationConnaissancesAgent( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypePopulationConnaissanceAgent( **it ) )
-            return false;
-    }
-    return true;    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListePopulationConnaissancesObjet
-// Created: NLD 2005-11-10
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListePopulationConnaissancesObjet( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypePopulationConnaissanceObjet( **it ) )
-            return false;
-    }
-    return true;    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeLocalisations
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeLocalisations( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypeLocalisation( **it ) )
-            return false;
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeGenObjets
-// Created: NLD 2006-10-26
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeGenObjets( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypeGenObjet( **it ) )
-            return false;
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListePions
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListePions( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypePion( **it ) )
-            return false;
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeAutomates
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeAutomates( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypeAutomate( **it ) )
-            return false;
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeListesPoints
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeListesPoints( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-    {
-        if( !CheckTypeListePoints( **it ) )
-            return false;
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeDirection
-// Created: JVT 2005-01-25
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeDirection( const DIA_Variable_ABC& diaVariable )
-{
-    if ( diaVariable.Type() != eSelection )
-        return false;
-        
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for ( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-        if ( !CheckTypeDirection( **it ) )
-            return false;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeFuseaux
-// Created: NLD 2007-04-13
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeFuseaux( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-        if( !CheckTypeFuseau( **it ) )
-            return false;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeListeObjectifs
-// Created: NLD 2007-05-14
-// -----------------------------------------------------------------------------
-bool DEC_Tools::CheckTypeListeObjectifs( const DIA_Variable_ABC& diaVariable )
-{
-    if( diaVariable.Type() != eSelection )
-        return false;
-
-    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
-    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
-        if( !CheckTypeObjectif( **it ) )
-            return false;
-    return true;
-}
- 
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::ManageDeletion
 // Created: NLD 2005-12-09
@@ -353,78 +98,35 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
     assert( pType );
     if( !pPtr )
         return;
-
-    if( *pType == *pTypePoint_ )
-        delete static_cast< MT_Vector2D* >( pPtr );
-    else if( *pType == *pTypeDirection_ )
-        delete static_cast< MT_Vector2D* >( pPtr );
-    else if( *pType == *pTypeItineraire_ )
-    {
-        if( pPtr )
-        {
-            DEC_Agent_Path* pPath = static_cast< DEC_Agent_Path* >( pPtr );
-            pPath->Cancel();
-            pPath->DecDIARef();
-        }
-    }
-    else if( *pType == *pTypeListePoints_ )
-        delete static_cast< T_PointVector* >( pPtr );
-    else if( *pType == *pTypeLocalisation_ )
-        delete static_cast< TER_Localisation* >( pPtr );
-    else if( *pType == *pTypeCalculLignesAvantArriere_ )
-        delete static_cast< DEC_FrontAndBackLinesComputer* >( pPtr );
-    else if( *pType == *pTypeAction_ )
-        ; // NOTHING
-    else if( *pType == *pTypeLima_ )
-        ; // NOTHING
-    else if( *pType == *pTypeConnaissanceObjet_ )
-        ; // NOTHING
-    else if( *pType == *pTypeConnaissanceAgent_ )
-        ; // NOTHING
-    else if( *pType == *pTypeConnaissancePopulation_ )
-        ; // NOTHING
-    else if( *pType == *pTypePopulationConnaissanceAgent_ )
-        ; // NOTHING
-    else if( *pType == *pTypePopulationConnaissanceObjet_ )
-        ; // NOTHING
-    else if( *pType == *pTypePion_ )
-        ; // NOTHING
-    else if( *pType == *pTypeAutomate_ )
-        ; // NOTHING
-    else if( *pType == *pTypeGenObjet_ )
-        delete static_cast< DEC_Gen_Object* >( pPtr );
-    else if( *pType == *pTypeMissionPion_ )
-        assert( false );
-    else if( *pType == *pTypeMissionAutomate_ )
-        assert( false );
-    else if( *pType == *pTypePerceptionPoint_ )
-        ; // NOTHING
-    else if( *pType == *pTypePerceptionLocalisation_ )
-        ; // NOTHING
-    else if( *pType == *pTypePerceptionRadar_ )
-        ; // NOTHING
-    else if( *pType == *pTypePerceptionSurveillance_ )
-        ; // NOTHING
-    else if( *pType == *pTypePerceptionObjectsLocalisation_ )
-        ; // NOTHING
-    else if( *pType == *pTypeMaintenancePriorities_ )
-        delete static_cast< T_MaintenancePriorityVector* >( pPtr );
-    else if( *pType == *pTypeSantePriorites_ )
-        delete static_cast< T_MedicalPriorityVector* >( pPtr );
-    else if( *pType == *pTypePerceptionFlyingShell_ )
-        ; // NOTHING
-    else if( *pType == *pTypeDotation_ )
-        ; // NOTHING
-    else if( *pType == *pTypeEquipement_ )
-        ; // NOTHING
-    else if( *pType == *pTypeTirIndirect_ )
-        ; // NOTHING
-    else if( *pType == *pTypeFuseau_ )
-        delete static_cast< MIL_Fuseau* >( pPtr );
-    else if( *pType == *pTypeObjectif_ )
-        delete static_cast< DEC_Objective* >( pPtr );
-    else
-        assert( false );
+// $$$$ LDC: TODO Are the delete and other operations below still worth doing in DIA4?
+//    if( *pType == *pTypePoint_ )
+//        delete static_cast< MT_Vector2D* >( pPtr );
+//    else if( *pType == *pTypeDirection_ )
+//        delete static_cast< MT_Vector2D* >( pPtr );
+//    else if( *pType == *pTypeItineraire_ )
+//    {
+//        DEC_Agent_Path* pPath = static_cast< DEC_Agent_Path* >( pPtr );
+//        pPath->Cancel();
+//        pPath->DecDIARef();
+//    }
+//    else if( *pType == *pTypeListePoints_ )
+//        delete static_cast< T_PointVector* >( pPtr );
+//    else if( *pType == *pTypeLocalisation_ )
+//        delete static_cast< TER_Localisation* >( pPtr );
+//    else if( *pType == *pTypeCalculLignesAvantArriere_ )
+//        delete static_cast< DEC_FrontAndBackLinesComputer* >( pPtr );
+//    else if( *pType == *pTypeGenObjet_ )
+//        delete static_cast< DEC_Gen_Object* >( pPtr );
+//    else if( *pType == *pTypeMaintenancePriorities_ )
+//        delete static_cast< T_MaintenancePriorityVector* >( pPtr );
+//    else if( *pType == *pTypeSantePriorites_ )
+//        delete static_cast< T_MedicalPriorityVector* >( pPtr );
+//    else if( *pType == *pTypeFuseau_ )
+//        delete static_cast< MIL_Fuseau* >( pPtr );
+//    else if( *pType == *pTypeObjectif_ )
+//        delete static_cast< DEC_Objective* >( pPtr );
+//    else
+//        assert( false );
 }
 
 // -----------------------------------------------------------------------------

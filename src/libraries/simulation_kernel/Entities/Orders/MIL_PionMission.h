@@ -33,11 +33,6 @@ public:
     virtual ~MIL_PionMission();
     //@}
 
-    //! @name DIA
-    //@{
-    static void InitializeDIA();
-    //@}
-
     //! @name Accessors
     //@{
     MIL_AgentPion& GetPion() const;

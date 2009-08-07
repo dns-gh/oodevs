@@ -18,12 +18,11 @@
 // Name: PHY_ActionLoad constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionLoad::PHY_ActionLoad( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC( pion, diaCall )
+PHY_ActionLoad::PHY_ActionLoad( MIL_AgentPion& pion )
+    : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Loading >() )
-    , diaReturnCode_( diaCall.GetParameter( 0 ) )
 {    
-    diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
+    Callback( role_.GetInitialReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +31,7 @@ PHY_ActionLoad::PHY_ActionLoad( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
 // -----------------------------------------------------------------------------
 PHY_ActionLoad::~PHY_ActionLoad()
 {
-    diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
+    Callback( role_.GetFinalReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +41,7 @@ PHY_ActionLoad::~PHY_ActionLoad()
 void PHY_ActionLoad::Execute()
 {   
     int nResult = role_.Load();
-    diaReturnCode_.SetValue( nResult );   
+    Callback( nResult );   
 }
 
 // -----------------------------------------------------------------------------

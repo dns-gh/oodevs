@@ -1,0 +1,18 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/Types.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Structures des pions ALAT
+]]--[[//------------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+
+
+
+

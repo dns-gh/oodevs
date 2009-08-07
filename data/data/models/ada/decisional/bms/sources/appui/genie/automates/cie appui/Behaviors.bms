@@ -1,0 +1,81 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie appui/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+
+include "Appui/Genie/Automates/Cie Appui/Actions.bms"
+
+include "Appui/Genie/Automates/Behaviors.bms"
+
+include "Appui/Genie/Automates/Cie Appui/Missions/Missions.bms"
+
+
+
+--[[// *****************************************************************************
+]]--[[// Comportement par défaut.
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Defaut"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
+        { "BEH_ROE_Automate_GererOrdre", {} },
+        { "BEH_Misc_Automate_GererLesMoyens", {} },
+        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// CR
+]]--[[//-----------------------------------------------------------------------------
+]]
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Automate actif si embrayé
+]]--[[//-----------------------------------------------------------------------------
+]]if( not DEC_Automate_EstEmbraye() ) then
+            return
+        end
+
+        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// NBC --> alerte de niveau 4
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// ROE --> Tir libre, sur riposte, interdit
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Gestion des pions --> init de la place dans le dispositif
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Silence radio
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_RC_Automate_Situation", nodes.BEH_RC_Automate_Situation }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc_Automate_GererAlerteNiv4", nodes.BEH_Nbc_Automate_GererAlerteNiv4 }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE_Automate_GererOrdre", nodes.BEH_ROE_Automate_GererOrdre }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Misc_Automate_GererLesMoyens", nodes.BEH_Misc_Automate_GererLesMoyens }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens_Automate_GererSilenceRadio", nodes.BEH_Rens_Automate_GererSilenceRadio }

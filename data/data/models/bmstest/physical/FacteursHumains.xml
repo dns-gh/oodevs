@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<humans-factors>
+  <experience-factor>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Veteran"/>
+    <modifier loading-time="2" max-speed="0.5" ph="0.5" posture-setup-time="2" sensor-distance="0.5" state="Experimente"/>
+    <modifier loading-time="10" max-speed="0.1" ph="0.1" posture-setup-time="10" sensor-distance="0.1" state="Conscrit"/>
+  </experience-factor>
+  <tiredness-factor>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Normal"/>
+    <modifier loading-time="2" max-speed="0.5" ph="0.5" posture-setup-time="2" sensor-distance="0.5" state="Fatigue"/>
+    <modifier loading-time="10" max-speed="0.1" ph="0.1" posture-setup-time="10" sensor-distance="0.1" state="Epuise"/>
+  </tiredness-factor>
+</humans-factors>

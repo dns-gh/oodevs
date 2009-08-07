@@ -53,15 +53,6 @@ public:
     virtual void     AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
     //@}
 
-    //! @name References
-    //@{
-    void IncRef();
-    void DecRef();
-
-    void IncDIARef();
-    void DecDIARef();
-    //@}
-
     //! @name Accessors
     //@{
     uint    GetID   () const;

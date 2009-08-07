@@ -15,6 +15,7 @@
 #include "MIL_PopulationElement_ABC.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 class MIL_Population;
 class MIL_PopulationConcentration;
@@ -148,8 +149,8 @@ private:
          
     MT_Vector2D          primaryDestination_;
     MT_Vector2D          alternateDestination_; // Used when the flow is splitted
-    DEC_Population_Path* pHeadPath_;
-    DEC_Population_Path* pTailPath_;
+    boost::shared_ptr< DEC_Population_Path > pHeadPath_;
+    boost::shared_ptr< DEC_Population_Path > pTailPath_;
     bool                 bHeadMoveFinished_;
 
     MT_Vector2D          direction_;

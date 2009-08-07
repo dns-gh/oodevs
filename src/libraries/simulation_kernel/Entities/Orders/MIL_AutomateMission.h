@@ -32,11 +32,6 @@ public:
     virtual ~MIL_AutomateMission();
     //@}
 
-    //! @name DIA
-    //@{
-    static void InitializeDIA();
-    //@}
-
     //! @name Accessors
     //@{
     MIL_Automate& GetAutomate() const;

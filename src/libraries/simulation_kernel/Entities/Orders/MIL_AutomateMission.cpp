@@ -20,16 +20,6 @@
 #include "Network/NET_ASN_Tools.h"
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateMission::InitializeDIA
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-// static
-void MIL_AutomateMission::InitializeDIA()
-{
-    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "T_Mission_Automate" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

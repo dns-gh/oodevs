@@ -1,0 +1,50 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/pel eei/missions/reconnaitreaxe/ReconnaitreAxe - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Esc Xl/Missions/ReconnaitreAxe/ReconnaitreAxe - CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 8 $
+]]--[[// $Workfile: ReconnaitreAxe - CDT.hal $
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_Reconnaitre
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_Reconnaitre"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Conduite générique 
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Conduite_Automate_ABC_ReconnaitreUnAxe, 1, { false, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_Reconnaitre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_Reconnaitre, "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", nodes.BEH_Conduite_Automate_ABC_ReconnaitreUnAxe }

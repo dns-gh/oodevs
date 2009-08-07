@@ -1,0 +1,18 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/common/Parameters.bms"] = true
+
+--[[// =============================================================================
+]]--[[// Paramètre de durée de recomplètement
+]]--[[//
+]]--[[// Commentaires : idem pour tous les appareils
+]]--[[// =============================================================================
+]]function M_DOCTRINE_ALAT_TEMPS_RECOMPLETEMENT()
+    return 10
+end
+
+
+
+function M_DOCTRINE_ALAT_TEMPS_SECURITE()
+    return 20
+end
+

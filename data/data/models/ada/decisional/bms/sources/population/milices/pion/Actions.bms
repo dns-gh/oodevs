@@ -1,0 +1,497 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/milices/pion/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 9/09/05 14:53 $
+ * $Revision: 16 $
+ *
+ */]]--[[// Created: JCR 03-02-13
+]]--[[// *****************************************************************************
+]]
+
+
+
+--[[//booleens suspension reprise et terminaison
+]]
+node "ACT_Obj_Pion_INF_RealiserBouchonMines"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.locObjet = self.params[1]
+        self._namedParams.rQte = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//objet reel pour la creation de la representation de l'abatti
+]]        self.actionID = self.actionID or nil
+        self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.repObj = self.repObj or nil
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectBouchonMines ) ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+                DEC_Trace( "realisation bouchon mines : nbre = " .. FloatToString( self._namedParams.rQte ) )
+                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( eTypeObjectBouchonMines ), self._namedParams.locObjet, self._namedParams.rQte )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
+                actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
+
+            end
+        end
+
+        switch_1 = self.eEtatObjet
+            if switch_1 == eActionObjetEnCours then
+                
+            elseif switch_1 == eActionObjetTerminee then
+                DEC_Trace( "fin realisation" )
+                DEC_RC( eRC_FinTravaux )
+                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+]]self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            elseif switch_1 == eActionObjetManqueDotation then
+            elseif switch_1 == eActionObjetImpossible then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+            --[[// Pas de delais de reorganisation du chantier
+]]            end
+
+        if( self.bSuspendu ) then
+            do
+                self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_Trace( "reprise realisation" )
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_Trace( "realisation suspendue" )
+        DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "realisation arretee" )
+        self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+--[[//booleens suspension reprise et terminaison
+]]node "ACT_Obj_Pion_INF_RealiserObjet"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eTypeObjet = self.params[1]
+        self._namedParams.locObjet = self.params[2]
+        self._namedParams.rParam = self.params[3]
+    end,
+
+    select = function( self )
+        --[[//objet reel pour la creation de la representation de l'abatti
+]]        self.actionID = self.actionID or nil
+        self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.repObj = self.repObj or nil
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( self._namedParams.eTypeObjet ) ) ) then
+                    do
+                        DEC_Trace( "realisation objet : impossible" )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                DEC_Trace( "realisation objet : debut" )
+                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( eTypeObjet ), self._namedParams.locObjet, self._namedParams.rParam )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
+                actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
+
+            end
+        end
+
+        switch_1 = self.eEtatObjet
+            if switch_1 == eActionObjetEnCours then
+                
+            elseif switch_1 == eActionObjetTerminee then
+                DEC_Trace( "realisation objet : fin realisation" )
+                DEC_RC( eRC_FinTravaux )
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            elseif switch_1 == eActionObjetPasDeCapacite then
+                DEC_Trace( "realisation objet : pas de capacites" )
+                self.actionID = DEC_StopAction( self.actionID )
+                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+]]                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+            elseif switch_1 == eActionObjetManqueDotation then
+                DEC_Trace( "realisation objet : manque dotation" )
+            elseif switch_1 == eActionObjetImpossible then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+            --[[// Pas de delais de reorganisation du chantier
+]]            end
+
+        if( self.bSuspendu ) then
+            do
+                self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_Trace( "reprise realisation" )
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Preparation de l'objet
+]]--[[//-----------------------------------------------------------------------------
+]]    end,
+
+    deselect = function( self )
+                DEC_Trace( "realisation suspendue" )
+        DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "realisation arretee" )
+        self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+--[[//booleens suspension reprise et terminaison
+]]node "ACT_Obj_Pion_INF_PreparerAbattis"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.locObjet = self.params[1]
+        self._namedParams.rLongueur = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//objet reel pour le creation de la representation de l'abatti
+]]        self.actionID = self.actionID or nil
+        self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.repObj = self.repObj or 0
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "preparation abatti ( l = " .. FloatToString( self._namedParams.rLongueur ) .. " ) : debut" )
+                if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectAbatti ) ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+                self.actionID = DEC_StartPreparerObjet( self.repObj, S_TypeObject_ToString( eTypeObjectAbatti ), self._namedParams.locObjet, self._namedParams.rLongueur )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
+                actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
+
+            end
+        end
+
+        switch_1 = self.eEtatObjet
+            if switch_1 == eActionObjetEnCours then
+                
+            elseif switch_1 == eActionObjetTerminee then
+                DEC_Trace( "preparation : fin" )
+                DEC_RC( eRC_FinTravaux )
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            elseif switch_1 == eActionObjetImpossible
+            or switch_1 == eActionObjetManqueDotation then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+            --[[// Pas de delais de reorganisation du chantier
+]]            end
+
+        if( self.bSuspendu ) then
+            do
+                self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_Trace( "preparation : reprise" )
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Activation de l'objet
+]]--[[//-----------------------------------------------------------------------------
+]]    end,
+
+    deselect = function( self )
+                DEC_Trace( "preparation : suspendue" )
+        DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "preparation : arretee" )
+        self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Obj_Pion_INF_Activer"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repObj = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            DEC_Trace( "activation : debut" )
+        end
+
+        if( DEC_ActiverObjet( self._namedParams.repObj ) ) then
+            do
+                DEC_Trace( "activation : fin" )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+        else
+do
+                DEC_Trace( "activation : impossible" )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+    end,
+
+}
+
+--[[//booleens suspension reprise et terminaison
+]]node "ACT_Obj_Pion_INF_Detruire"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repObj = self.params[1]
+    end,
+
+    select = function( self )
+                self.actionID = self.actionID or nil
+        --[[// if ( !DEC_Agent_PeutDetruireObjet( ? ) )
+]]self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
+        --[[// 		halt( eActionImpossible );
+]]self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "destruction : debut" )
+                self.actionID = DEC_StartDetruireObjet( self._namedParams.repObj )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
+
+            end
+        end
+
+        switch_1 = self.eEtatObjet
+            if switch_1 == eActionObjetEnCours then
+                
+            elseif switch_1 == eActionObjetTerminee then
+                DEC_Trace( "destruction : fin" )
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            elseif switch_1 == eActionObjetImpossible
+            or switch_1 == eActionObjetManqueDotation then
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+            --[[// Pas de delais de reorganisation du chantier
+]]            end
+
+        if( self.bSuspendu ) then
+            do
+                self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_Trace( "destruction : reprise" )
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 12/05/2005 15:53
+]]--[[// Met a jour la position de regroupement
+]]--[[// ============================================================================
+]]    end,
+
+    deselect = function( self )
+                DEC_Trace( "destruction : suspendue" )
+        DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "destruction : arretee" )
+        self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptRegroupement = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            do
+                if( ( myself.ptRegroupement_ == 0 or myself.ptRegroupement_ == nil ) ) then
+                    myself.ptRegroupement_ = DEC_Geometrie_CreerPoint()
+                end
+
+                DEC_Copie_Point( self._namedParams.ptRegroupement, myself.ptRegroupement_ )
+            end
+        end
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 25/08/2005 10:36
+]]--[[// ACT_Dep_Pion_MILICE_ActiverFurtivite
+]]--[[// ============================================================================
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                myself.ptRegroupement_ = 0
+    end,
+
+}
+
+node "ACT_Dep_Pion_MILICE_ActiverFurtivite"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rFurtivite = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            DEC_Perception_Furtivite( self._namedParams.rFurtivite )
+        end
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 25/08/2005 10:36
+]]--[[// ACT_Misc_Pion_Ambiance
+]]--[[// ============================================================================
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                DEC_Perception_Furtivite( 1 )
+    end,
+
+}
+
+node "ACT_Misc_Pion_Ambiance"
+{
+    actuators =
+    {
+        etat_Ambiance = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatAmbiance = self.params[1]
+    end,
+
+    select = function( self )
+        F_Pion_SeteEtatAmbiance( myself, self._namedParams.eEtatAmbiance )
+    end,
+
+}
+

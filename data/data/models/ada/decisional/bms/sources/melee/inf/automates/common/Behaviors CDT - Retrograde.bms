@@ -1,0 +1,388 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/Behaviors CDT - Retrograde.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Behaviors CDT - Retrograde.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 2/09/05 13:37 $
+]]--[[// $Revision: 18 $
+]]--[[// $Workfile: Behaviors CDT - Retrograde.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+
+
+--[[//=============================================================================
+]]--[[// Rupture de contact pour la mission Coup d'Arret
+]]--[[//=============================================================================
+]]node "BEH_CoordDep_Automate_INF_RompreContact"
+{
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.bStop = self.bStop or false
+        self.ePhase = self.ePhase or ePhase_Decroche
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.lstLocRgpt = self.lstLocRgpt or {}
+        self.eCodeLoc = self.eCodeLoc or eNoError
+        self.ptRgpt_Bary = self.ptRgpt_Bary or nil
+        self.rItLoc = self.rItLoc or 0
+        self.sPion_PE = self.sPion_PE or S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Processus de rupture de contact : debut" )
+                if( ( #( self.sPion_PE ) == 0 or #( self.sPion_PE ) == nil ) ) then
+                    self.sPion_PE = DEC_Automate_PionsSansPC()
+                end
+
+            end
+--[[// Fin du processus de rupture de contact
+]]--[[// --------------------------------------------------------------------
+]]        end
+
+        if( self.rItLoc >= #( self.sPion_PE ) ) then
+            do
+                DEC_Trace( "Processus de rupture de contact : termine" )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+        end
+
+        do
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePhase_Decroche then
+                DEC_Trace( "Processus de rupture de contact : en cours [Decroche]" )
+                --[[// Calcul le point de regroupement
+]]--[[// ------------------------------------------------------------
+]]DEC_Trace( FloatToString( #( self.sPion_PE ) ) .. " pions pris en compte." )
+                --[[// Pas de point de regroupement trouve				
+]]self.ptRgpt_Bary = S_Geometrie_BarycentreZone( self.mission.zoneRegroupement_ )
+                if( #( self.sPion_PE ) > 0 ) then
+                    self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneRegroupement_, #( self.sPion_PE ), self.eCodeLoc )
+                    self.eCodeLoc = self.lstLocRgpt.second
+                    self.lstLocRgpt = self.lstLocRgpt.first
+                end
+
+                if( ( eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == 0 or eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == nil ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+                --[[// Fait rompre les pions par etape
+]]--[[// ------------------------------------------------------------
+]]self.ePhase = ePhase_RompreContact
+                
+            elseif switch_1 == ePhase_Attente then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                        self.ePhase = ePhase_RompreContact
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_ROMPRE_CONTACT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == ePhase_RompreContact then
+                --[[// Recupere le point de regroupement
+]]local ptRgrpt = nil
+                if( eNoError == self.eCodeLoc and #( self.lstLocRgpt ) > self.rItLoc ) then
+                    do
+                        --[[// TODO : Delete pt
+]]ptRgrpt = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.lstLocRgpt, self.rItLoc ) )
+                    end
+                else
+                    ptRgrpt = self.ptRgpt_Bary
+                end
+
+                --[[// On prend un pion a chaque phase
+]]local pionPE = DIA_GetAt( self.sPion_PE, self.rItLoc )
+                                self.rItLoc = self.rItLoc + 1
+                if( F_Pion_GeteEtatDestruction( pionPE ) == eEtatDestruction_Total ) then
+                    return
+                end
+
+                --[[// Demande aux pions qui interdisent de rompre le contact									
+]]StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pionPE, ptRgrpt, eEtatEchelon_Premier, } )
+                self.ePhase = ePhase_Attente
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+            end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 27/01/2004 18:26$
+]]--[[//
+]]--[[// Comportement utiliser pour gerer la rupture de contact du coup d'arret
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Conduite_Automate_INF_CoupArret"
+{
+    activations =
+    {
+        { "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre", {} },
+        { "ACT_Ordre_Suppression", {} },
+        { "BEH_CoordTir_Automate_INF_Intervention_LCAR", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.eActionDelai = self.eActionDelai or eActionEnCours
+        self.eAction = self.eAction or eActionEnCours
+        self.eAction_CoupArret = self.eAction_CoupArret or eActionEnCours
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                if( repOrdre:GetType() == "Rep_OrderConduite_Decrocher" ) then
+                    StartActivate( self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+        if( S_CompagnieAbimee() or self.eAction_CoupArret == eActionEffectuee ) then
+            do
+                if( self.eAction == eActionEnCours ) then
+                    StartActivate( self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                end
+
+            end
+--[[//
+]]--[[// Recherche les info des pions
+]]        end
+
+        local lst_Pions_EnTete = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        for _,x_EnTete in pairs( lst_Pions_EnTete ) do
+        local _continue = true
+do
+                Activate( self.activations.BEH_CoordTir_Automate_INF_Intervention_LCAR, 1, setmetatable( { x_EnTete, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_CoupArret = v else rawset( t, k, v ) end end } ) )
+            end
+
+        end
+
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 27/01/2004 18:35$
+]]--[[//
+]]--[[// Demande des Tirs d'artillerie et fait rompre le contact
+]]--[[// 
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre"
+{
+    activations =
+    {
+        { "BEH_CoordDep_Automate_INF_RompreContact_SurDelai", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.eActionDelai = self.eActionDelai or eActionEnCours
+        if( self.eActionDelai == eActionEffectuee ) then
+            do
+                self.eActionDelai = eActionEnCours
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+        end
+
+        Activate( self.activations.BEH_CoordDep_Automate_INF_RompreContact_SurDelai, 1, setmetatable( { M_DELAI_ROMPRE_CONTACT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 27/01/2004 19:02$
+]]--[[//
+]]--[[// Demande a rompre le contact dans rDelai min 
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_CoordDep_Automate_INF_RompreContact_SurDelai"
+{
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+        { "BEH_CoordDep_Automate_INF_RompreContact", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rDelai = self.params[1]
+    end,
+
+    activate = function( self )
+                self.eActionDelai = self.eActionDelai or eActionEnCours
+        self.eAction = self.eAction or eActionEnCours
+        self.bStop = self.bStop or false
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Declenchement rupture de contact : debut" )
+            end
+        end
+
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                do
+                    DEC_Trace( "Declenchement rupture de contact : termine" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+--[[// Declenche la rupture du contact apres rDelai..
+]]        end
+
+        if( self.eActionDelai == eActionEnCours ) then
+            do
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
+                                return
+
+            end
+        end
+
+        Activate( self.activations.BEH_CoordDep_Automate_INF_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+            end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 11/08/2005 15:25
+]]--[[// 
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Conduite_Automate_INF_DesactiveSauvegarde"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_ArretSauvegardeSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rDelai = self.params[1]
+    end,
+
+    activate = function( self )
+        self.selPions = self.selPions or S_ObtenirPionsOperationnels()
+        self.eAction = self.eAction or eActionEnCours
+        if( self.eAction ~= eActionEnCours ) then
+            Halt()
+        end
+
+        if( ModuleBegins() ) then
+for _,x in pairs( self.selPions ) do
+            local _continue = true
+                StartActivate( self.activations.BEH_Ordre_Automate_ArretSauvegardeSur, 1, setmetatable( { x, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_ArretSauvegardeSur(()
+]]--[[//
+]]--[[// Commentaires: JCR : 11/08/2005 15:37
+]]--[[// Desactive la sauvegarde pendant rTime (min) si rTime != 0
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_ArretSauvegardeSur"
+{
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.rTime = self.params[2]
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        if( ( self._namedParams.rTime == 0 or self._namedParams.rTime == nil ) ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Desactive sauvegarde sur pion " .. DEC_GetSzName( self._namedParams.pion ) )
+                self._namedParams.pion:S_Mot_EtatDesactiveSauvegarde( true )
+            end
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                self._namedParams.pion:S_Mot_EtatDesactiveSauvegarde( false )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+        end
+
+        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rTime, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+                self._namedParams.pion:S_Mot_EtatDesactiveSauvegarde( false )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_CoupArret, "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre", nodes.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_CoupArret, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_CoupArret, "BEH_CoordTir_Automate_INF_Intervention_LCAR", nodes.BEH_CoordTir_Automate_INF_Intervention_LCAR }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_DesactiveSauvegarde, "BEH_Ordre_Automate_ArretSauvegardeSur", nodes.BEH_Ordre_Automate_ArretSauvegardeSur }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_RompreContact, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_RompreContact, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_RompreContact_SurDelai, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_RompreContact_SurDelai, "BEH_CoordDep_Automate_INF_RompreContact", nodes.BEH_CoordDep_Automate_INF_RompreContact }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_ArretSauvegardeSur, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, "BEH_CoordDep_Automate_INF_RompreContact_SurDelai", nodes.BEH_CoordDep_Automate_INF_RompreContact_SurDelai }

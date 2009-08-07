@@ -134,6 +134,4 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
                             ", State : " << GetStateAsString() <<
                             ", Result : " << stream.str() );
     }
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( *this );
-    DecRef(); // We are no longer in the pathfind queue
 }

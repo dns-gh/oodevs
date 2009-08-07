@@ -1,0 +1,72 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/Types.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JVT 2004-08-03 $
+]]--[[// $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types.hal $
+]]--[[// $Author: Nld $
+]]--[[// $Modtime: 2/05/05 17:20 $
+]]--[[// $Revision: 13 $
+]]--[[// $Workfile: Types.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Type C++ : MT_Vector2D
+]]--[[// Type C++ : MT_Vector2D
+]]--[[// Type C++ : DEC_Path
+]]--[[// Type C++ : T_PointVector
+]]--[[// Type C++ : TER_Localisation
+]]--[[// Type C++ : DEC_FrontAndBackLinesComputer
+]]--[[// Type C++ : MIL_Lima
+]]--[[// Type C++ : uint d'index sur un DEC_Knowledge_Object
+]]--[[// Type C++ : uint d'index sur un DEC_Knowledge_Agent
+]]--[[// Type C++ : uint d'index sur un DEC_Knowledge_Population
+]]--[[// Type C++ : id de MIL_Agent_ABC (connaissances agents pour les entités population)
+]]--[[// Type C++ : id de MIL_RealObject_ABC (connaissances objets pour les entités population)
+]]--[[// Type C++ : PHY_Action_ABC
+]]--[[// Type C++ : PHY_DotationCategory
+]]--[[// Type C++ : PHY_ComposanteType_ABC
+]]--[[// Type C++ : uint d'ID de tir indirect
+]]
+
+
+
+
+
+
+
+--[[// Type C++ : DEC_Gen_Object
+]]--[[// Type C++ : MIL_Fuseau
+]]--[[// Type C++ : DEC_Objective
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+include "Common/Moteur/Types_Enums.bms"
+
+include "Common/Moteur/Types_RC.bms"
+
+include "Common/Moteur/Types_Objets.bms"
+
+include "Common/Moteur/Types_PathFind.bms"
+
+include "Common/Moteur/Types_Actions.bms"
+
+include "Common/Moteur/Types_Entites.bms"
+
+include "Common/Moteur/Types_Ordres.bms"
+
+
+--[[// TESTS
+]]include "Common/Moteur/Types_Tests.bms"
+

@@ -219,7 +219,7 @@ void MIL_AgentHLA::ChangeStatus( const std::vector< std::string >& statuses )
 // Name: MIL_AgentHLA::GetDecision
 // Created: LDC 2009-03-30
 // -----------------------------------------------------------------------------
-DEC_RolePion_Decision& MIL_AgentHLA::GetDecision()
+DEC_Decision_ABC& MIL_AgentHLA::GetDecision()
 {
     throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
 }
@@ -228,7 +228,7 @@ DEC_RolePion_Decision& MIL_AgentHLA::GetDecision()
 // Name: MIL_AgentHLA::GetDecision
 // Created: LDC 2009-03-30
 // -----------------------------------------------------------------------------
-const DEC_RolePion_Decision& MIL_AgentHLA::GetDecision() const
+const DEC_Decision_ABC& MIL_AgentHLA::GetDecision() const
 {
     throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
 }

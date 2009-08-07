@@ -1,0 +1,10 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/pions/Parameters.bms"] = true
+
+--[[// =============================================================================
+]]--[[// $$$ggr : ????????????? - sans doute à supprimer
+]]--[[// =============================================================================
+]]function M_LOG_RECO_CAPACITE()
+    return 250
+end
+

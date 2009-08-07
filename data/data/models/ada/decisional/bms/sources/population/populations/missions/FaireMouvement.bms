@@ -1,0 +1,41 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/populations/missions/FaireMouvement.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Population_FaireMouvement
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Population_FaireMouvement"
+{
+    activations =
+    {
+        { "BEH_Pop_RejoindrePoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_RC( eRC_DebutMission )
+                DEC_Trace( "** MIS_Population_FaireMouvement **" )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Rejoindre la destination
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Pop_RejoindrePoint, 1, { self._namedParams.mission.destination_, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Population_FaireMouvement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Population_FaireMouvement, "BEH_Pop_RejoindrePoint", nodes.BEH_Pop_RejoindrePoint }

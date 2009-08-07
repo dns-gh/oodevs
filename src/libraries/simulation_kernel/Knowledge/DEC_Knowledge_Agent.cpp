@@ -567,12 +567,13 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::SendMsgDestruction() const
 {
-    assert( pKnowledgeGroup_ );
-    
-    NET_ASN_MsgUnitKnowledgeDestruction asnMsg;
-    asnMsg().oid                   = nID_;
-    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
-    asnMsg.Send();
+    if( pKnowledgeGroup_ )
+    {    
+        NET_ASN_MsgUnitKnowledgeDestruction asnMsg;
+        asnMsg().oid                   = nID_;
+        asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
+        asnMsg.Send();
+    }
 }
     
 // =============================================================================

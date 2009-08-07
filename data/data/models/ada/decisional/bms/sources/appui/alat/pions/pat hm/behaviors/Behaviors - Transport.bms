@@ -1,0 +1,430 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/pat hm/behaviors/Behaviors - Transport.bms"] = true
+
+include "bit.lua"
+
+
+--[[//inclusion des action de transport
+]]include "Appui/Alat/Pions/Pat Hm/Actions/Actions - Transport.bms"
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Helitransporter/Heliporter
+]]--[[//
+]]--[[//
+]]--[[// Attention : on doit s'assurer que l'unité va traiter des agents qui peuvent
+]]--[[// effectivement etre transportés.
+]]--[[// -----------------------------------------------------------------------------
+]]node "BEH_Transport_Pion_ALAT_HM_Helitransporter"
+{
+    activations =
+    {
+        { "ACT_RC_SurPion", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer", {} },
+        { "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.posEmbarquement = self.params[1]
+        self._namedParams.posDebarquement = self.params[2]
+        self._namedParams.unitesAHelitransporter = self.params[3]
+        self._namedParams.avecMateriel = self.params[4]
+        self._namedParams.ePathType = self.params[5]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eTransporterAllerEmbarquer
+        self.bAuMoinsUneUniteSurPositionEmbarquement = self.bAuMoinsUneUniteSurPositionEmbarquement or false
+        self.listeUnitesPretes = self.listeUnitesPretes or {}
+        self.listeUnitesPretesPrecedantes = self.listeUnitesPretesPrecedantes or {}
+        self.listeUnitesDebarquees = self.listeUnitesDebarquees or {}
+        if( ModuleBegins() ) then
+            do
+                if( DEC_Transport_EnCoursDeTransport() ) then
+                    self.ePhase = eTransporterAllerDebarquer
+                end
+
+            end
+--[[//on arrete la mission quand on n'a plus d'unité plus proche du point
+]]--[[//d'embarquement que du point de débarquement et que l'on ne transporte 
+]]--[[//rien
+]]        end
+
+        local bUnitesEnAttenteSurPtEmbarquement = false
+        for _,x in pairs( self._namedParams.unitesAHelitransporter ) do
+        local _continue = true
+do
+                if( DEC_Geometrie_Distance( x:DEC_Agent_Position(), self._namedParams.posEmbarquement ) < DEC_Geometrie_Distance( x:DEC_Agent_Position(), self._namedParams.posDebarquement ) ) then
+                    bUnitesEnAttenteSurPtEmbarquement = true
+                end
+
+            end
+--[[//condition d'arret du comportement
+]]
+        end
+
+        if( not bUnitesEnAttenteSurPtEmbarquement and DEC_Transport_EstTermine() ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        DIA_Clear( self.listeUnitesPretesPrecedantes )
+        self.listeUnitesPretesPrecedantes = self.listeUnitesPretes
+        DIA_Clear( self.listeUnitesPretes )
+        self.listeUnitesPretes = S_Cherche_Filtre_TypeMission( self._namedParams.unitesAHelitransporter, "T_Mission_Pion_SeFaireTransporter" )
+        for _,x in pairs( --[[//liste des unites qui n'ont plus la mission se faire transporter
+]]self._namedParams.unitesAHelitransporter ) do
+        local _continue = true
+do
+                if( DIA_Contains( self.listeUnitesPretesPrecedantes, x ) and not DIA_Contains( self.listeUnitesPretes, x ) ) then
+                    do
+                        if( not DIA_Contains( self.listeUnitesDebarquees, x ) ) then
+                            DIA_PushBack( self.listeUnitesDebarquees, x )
+                        end
+
+                    end
+                end
+
+            end
+
+        end
+
+        self.bAuMoinsUneUniteSurPositionEmbarquement = false
+        for _,x in pairs( --[[// Affichage du RC unites pas pretes si des unites non encore debarquées
+]]--[[// n'ont pas la mission se faire transporter.
+]]self._namedParams.unitesAHelitransporter ) do
+        local _continue = true
+do
+                --[[// si pas ou plus mission se faire transporter
+]]if( not DIA_Contains( self.listeUnitesDebarquees, x ) and not DIA_Contains( self.listeUnitesPretes, x ) ) then
+                    Activate( self.activations.ACT_RC_SurPion, 1, { eRC_TransportUnitePasPrete, x, } )
+                else
+do
+                        --[[//si trop loin
+]]if( DEC_Geometrie_Distance( self._namedParams.posEmbarquement, x:DEC_Agent_Position() ) > M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
+                            do
+                                if( not x:DEC_Agent_EstTransporte() ) then
+                                    Activate( self.activations.ACT_RC_SurPion, 1, { eRC_UniteTropDistante, x, } )
+                                end
+
+                            end
+                        else
+do
+                                --[[//RC l'unité est prete
+]]Activate( self.activations.ACT_RC_SurPion, 1, { eRC_TransportUnitePrete, x, } )
+                                self.bAuMoinsUneUniteSurPositionEmbarquement = true
+                            end
+                        end
+
+                    end
+                end
+
+            end
+
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eTransporterAllerEmbarquer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            if( ( #( self.listeUnitesPretes ) == 0 or #( self.listeUnitesPretes ) == nil ) ) then
+                                do
+                                    self.eEtat = eActionEffectuee
+                                                                        return
+
+                                end
+                            end
+
+                            self.ePhase = eTransporterEmbarquer
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Transport_Annuler()
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
+                --[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
+]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.posEmbarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eAttendre then
+                if( myself.bEnPhaseRavitaillement_ ) then
+                    self.ePhase = eTransporterAllerEmbarquer
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )
+                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
+                for _,x in pairs( --[[//si pas d'unités prete sur position, on ne commence pas à s'organiser
+]]self.listeUnitesPretes ) do
+                local _continue = true
+do
+                        if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) > M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
+                            return
+                        end
+
+                    end
+
+                end
+
+                if( not self.bAuMoinsUneUniteSurPositionEmbarquement ) then
+                    return
+                end
+
+                self.ePhase = eTransporterEmbarquer
+                
+            elseif switch_1 == eTransporterEmbarquer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
+                for _,x in pairs( --[[//des que j'ai des unites pretes et à bonne distance du pion, alors, je
+]]--[[//les met dans la liste
+]]self.listeUnitesPretes ) do
+                local _continue = true
+do
+                        if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) <= M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
+                            DEC_Transport_AjouterPion( x, not self._namedParams.avecMateriel )
+                        end
+
+                    end
+--[[//se poser pour embarquement
+]]
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eTransporterAllerDebarquer
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Transport_Annuler()
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( not self.bAuMoinsUneUniteSurPositionEmbarquement ) then
+                    return
+                end
+
+                Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eTransporterAllerDebarquer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eTransporterDebarquer
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Transport_Annuler()
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
+                --[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
+]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.posDebarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eTransporterDebarquer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )--[[//se poser pour embarquement
+]]
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eTransporterAllerEmbarquer
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Transport_Annuler()
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Extraire Personnel
+]]--[[//
+]]--[[//  Commentaires :
+]]--[[//
+]]--[[//                  aller chercher les blessés au point où ils se sont déclarés
+]]--[[//                  touchés
+]]--[[//
+]]--[[//                  Se ravitailler quand on passe sur le TC2
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Transport_Pion_ALAT_HM_Extraire"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePion", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.TC2 = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.ePathType = self.params[3]
+    end,
+
+    activate = function( self )
+                self.ePhase = self.ePhase or eRejoindre
+        self.eEtat = self.eEtat or eActionEnCours
+        self.pointEmbarquement = self.pointEmbarquement or DEC_Geometrie_CreerPoint()
+        if( ModuleBegins() ) then
+            do
+                DEC_Copie_Point( self._namedParams.pion:DEC_Agent_Position(), self.pointEmbarquement )
+                myself.bEnCoursExtractionPersonnel_ = true
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                --[[//rejoindre le pion
+]]if( not DEC_NecessiteEvacuationBlesses( self._namedParams.pion ) ) then
+                    do
+                        myself.bEnCoursExtractionPersonnel_ = false
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eExtraire
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointEmbarquement, } )
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointEmbarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[//aller au tc2 et y déposer les humains blessés
+]]elseif switch_1 == eExtraire then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            DEC_EvacuerBlessesVersTC2( self._namedParams.pion, DEC_GetAutomate( self._namedParams.TC2 ) )
+                            myself.bEnPhaseRavitaillement_ = true
+                            myself.bEnCoursExtractionPersonnel_ = false
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.TC2:DEC_Agent_Position(), } )
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, setmetatable( { self._namedParams.TC2, eProgressionDefaut, self._namedParams.ePathType, 6000, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                myself.bEnCoursExtractionPersonnel_ = false
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Extraire, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Extraire, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Extraire, "BEH_Dep_Pion_ALAT_RejoindrePion", nodes.BEH_Dep_Pion_ALAT_RejoindrePion }
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Helitransporter, "ACT_RC_SurPion", nodes.ACT_RC_SurPion }
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Helitransporter, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Helitransporter, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Helitransporter, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Helitransporter, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Helitransporter, "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer", nodes.ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_ALAT_HM_Helitransporter, "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer", nodes.ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer }

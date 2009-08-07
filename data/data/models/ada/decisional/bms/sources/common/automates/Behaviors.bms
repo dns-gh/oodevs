@@ -1,0 +1,432 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/Behaviors.bms"] = true
+
+include "bit.lua"
+
+
+--[[// Actions communes à tous les Automate
+]]--[[//----------------------------------
+]]
+include "Common/behaviors.bms"
+
+include "Common/Automates/Actions.bms"
+
+
+--[[// Comportements Automates
+]]
+include "Common/Automates/Behaviors/Behaviors - CoordDep.bms"
+
+include "Common/Automates/Behaviors/Behaviors - Medo.bms"
+
+include "Common/Automates/Behaviors/Behaviors - Misc.bms"
+
+include "Common/Automates/Behaviors/Behaviors - RC.bms"
+
+include "Common/Automates/Behaviors/Behaviors - Ordre.bms"
+
+include "Common/Automates/Behaviors/Behaviors - Conduite.bms"
+
+include "Common/Automates/Behaviors/Behaviors - NBC.bms"
+
+include "Common/Automates/Behaviors/Behaviors - ROE.bms"
+
+include "Common/Automates/Behaviors/Behaviors - Rens.bms"
+
+
+include "Common/Automates/Missions/Behaviors.bms"
+
+
+--[[//capacites population
+]]include "Common/Automates/BehaviorsReactionPopulations.bms"
+--[[// *****************************************************************************
+]]--[[// default
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "DefaultBehavior"
+{
+    activations =
+    {
+        { "BEH_MAJ_Automate_EtatDefaut", {} },
+        { "BEH_MAJ_Automate_RecevoirOrdreGE", {} },
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Default_Automate_ReactionPopulations", {} },
+        { "ACT_AFFICHE_EtatDecisionnel", {} },
+        { "ACT_Info_Trace", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_MAJ_Automate_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ des états de l'automates
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_MAJ_Automate_RecevoirOrdreGE, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// CR
+]]--[[//-----------------------------------------------------------------------------
+]]
+        if( DEC_Automate_EstEmbraye() ) then
+            Activate( self.activations.BEH_Default_Automate_ReactionPopulations, 1, {} )
+        end
+
+        --[[// debug TEMP
+]]Activate( self.activations.ACT_AFFICHE_EtatDecisionnel, 1, { "Echelon", EnumToString( F_Automat_GeteEtatEchelon( myself ), E_EtatPion_Echelon ), } )
+        Activate( self.activations.ACT_AFFICHE_EtatDecisionnel, 1, { "Contact", EnumToString( F_Automat_GeteEtatDec( myself ), E_EtatPion_Dec ), } )
+        Activate( self.activations.ACT_AFFICHE_EtatDecisionnel, 1, { "Lima", EnumToString( F_Automat_GeteEtatLima( myself ), E_EtatPion_Lima ), } )
+        Activate( self.activations.ACT_Info_Trace, 1, { "Etat Phase mission =====> " .. EnumToString( F_Automat_GeteEtatPhaseMission( myself ), E_EtatPion_PhaseMission ), } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Automate_EtatDefaut()
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.DefaultBehavior }
+node "BEH_MAJ_Automate_EtatDefaut"
+{
+    activations =
+    {
+        { "BEH_MAJ_Automate_EtatOperationnel", {} },
+        { "BEH_MAJ_Automate_EtatMission", {} },
+        { "BEH_MAJ_Automate_EtatLima", {} },
+        { "BEH_MAJ_Automate_EtatRapFor", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_MAJ_Automate_EtatOperationnel, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ etat destruction
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_MAJ_Automate_EtatMission, 1, {} )
+        Activate( self.activations.BEH_MAJ_Automate_EtatLima, 1, {} )
+        Activate( self.activations.BEH_MAJ_Automate_EtatRapFor, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Automate_EtatRapFor
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//              
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Automate_EtatRapFor"
+{
+    activations =
+    {
+        { "ACT_MAJ_Automate_EtatRapFor", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( S_Automate_EstEnDifficulte() ) then
+            StartActivate( self.activations.ACT_MAJ_Automate_EtatRapFor, 1, { eEtatDec_Sauvegarde, } )
+        end
+
+        if( S_Automate_EstPasEnDifficulte() ) then
+            StopActivate( self.activations.ACT_MAJ_Automate_EtatRapFor, { eEtatDec_Sauvegarde, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_MAJ_Automate_EtatRapFor
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//              
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_MAJ_Automate_EtatRapFor"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatDec = self.params[1]
+    end,
+
+    select = function( self )
+                F_Automat_SeteEtatDec( myself, self._namedParams.eEtatDec )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Automat_SeteEtatDec( myself, eEtatDec_RAS )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Automate_EtatOperationnel
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//              
+]]--[[// *****************************************************************************
+]]node "BEH_MAJ_Automate_EtatOperationnel"
+{
+    activations =
+    {
+        { "ACT_MAJ_Automate_EtatDestruction", {} },
+        { "ACT_AFFICHE_EtatDecisionnel", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.selPionsInitiaux = self.selPionsInitiaux or DEC_Automate_PionsAvecPC()
+        local rCapaciteOp = S_Automate_CapaciteOperationnelle( self.selPionsInitiaux, DEC_Automate_PionsAvecPC() )
+        local rTauxDestruction = S_Automate_TauxDestruction( DEC_Automate_PionsAvecPC() )
+        local rEtatOps = S_Automate_EtatOperationnel( rCapaciteOp, rTauxDestruction )
+        Activate( self.activations.ACT_MAJ_Automate_EtatDestruction, 1, { rEtatOps, } )
+        if( rEtatOps <= 0.5 ) then
+            Activate( self.activations.ACT_AFFICHE_EtatDecisionnel, 1, { "EtatOps", EnumToString( eEtatDestruction_Tactique, E_EtatPion_Destruction ), } )
+        else
+            Activate( self.activations.ACT_AFFICHE_EtatDecisionnel, 1, { "EtatOps", EnumToString( eEtatDestruction_None, E_EtatPion_Destruction ), } )
+        end
+
+    end,
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_Automate_EtatDestruction
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]}
+
+node "ACT_MAJ_Automate_EtatDestruction"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rDestruction = self.params[1]
+    end,
+
+    select = function( self )
+        F_Automat_SetrDestruction( myself, self._namedParams.rDestruction )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Automate_EtatMission
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//              
+]]--[[// *****************************************************************************
+]]node "BEH_MAJ_Automate_EtatMission"
+{
+    activations =
+    {
+        { "ACT_MAJ_Automate_EtatMission", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// cas particulier de fin de mission si Pecl
+]]local listePionsPecl = S_ObtenirPionsDe( eEtatEchelon_Eclairage, eEtatDestruction_None )
+        local listePionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        local rIt = 0
+        for _,x in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Echelon ecl
+]]--[[//-------------------------------------------------------------------------
+]]listePionsPecl ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_FinMission ) then
+                                        rIt = rIt + 1
+                end
+
+            end
+
+        end
+
+        if( #( listePionsPecl ) == rIt and not DIA_IsListEmpty( listePionsPecl ) ) then
+            do
+                Activate( self.activations.ACT_MAJ_Automate_EtatMission, 1, { eEtatPhaseMission_FinMission, } )
+                                return
+
+            end
+--[[//-------------------------------------------------------------------------
+]]--[[// Premier echelon --> fin si tous le PE fin
+]]--[[//-------------------------------------------------------------------------
+]]        end
+
+        rIt = 0
+        for _,x in pairs( listePionsPE ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_FinMission ) then
+                                        rIt = rIt + 1
+                end
+
+            end
+
+        end
+
+        if( #( listePionsPE ) == rIt and not DIA_IsListEmpty( listePionsPE ) ) then
+            Activate( self.activations.ACT_MAJ_Automate_EtatMission, 1, { eEtatPhaseMission_FinMission, } )
+        end
+
+    end,
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_Automate_EtatMission
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]}
+
+node "ACT_MAJ_Automate_EtatMission"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhaseMission = self.params[1]
+    end,
+
+    select = function( self )
+                F_Automat_SeteEtatPhaseMission( myself, self._namedParams.ePhaseMission )
+--[[// F_Automat_SeteEtatPhaseMission( myself, eEtatPhaseMission_None ); // MIA Ada
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+            end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Automate_EtatLima
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//              
+]]--[[// *****************************************************************************
+]]node "BEH_MAJ_Automate_EtatLima"
+{
+    activations =
+    {
+        { "ACT_MAJ_Automate_EtatLima", {} },
+        { "BEH_MAJ_Automate_SurLima", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            Activate( self.activations.ACT_MAJ_Automate_EtatLima, 1, { eEtatLima_aucune, } )
+        end
+
+        local listePions = S_ObtenirTousPionsDe( eEtatEchelon_Eclairage )
+        if( DIA_IsListEmpty( listePions ) ) then
+            listePions = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
+        end
+
+        if( DIA_IsListEmpty( listePions ) ) then
+            return
+        end
+
+        Activate( self.activations.BEH_MAJ_Automate_SurLima, 1, { eEtatLima_LC, listePions, } )
+        Activate( self.activations.BEH_MAJ_Automate_SurLima, 1, { eEtatLima_LD, listePions, } )
+        Activate( self.activations.BEH_MAJ_Automate_SurLima, 1, { eEtatLima_LCA, listePions, } )
+        Activate( self.activations.BEH_MAJ_Automate_SurLima, 1, { eEtatLima_LIA, listePions, } )
+        Activate( self.activations.BEH_MAJ_Automate_SurLima, 1, { eEtatLima_LR, listePions, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Automate_SurLima
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Automate_SurLima"
+{
+    activations =
+    {
+        { "ACT_MAJ_Automate_EtatLima", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatLima = self.params[1]
+        self._namedParams.listePions = self.params[2]
+    end,
+
+    activate = function( self )
+        local listePionsLima = S_Cherche_Automate_Filtre_PionLima( self._namedParams.listePions, self._namedParams.eEtatLima )
+        --[[// au moins un pion est arrivé sur la lima
+]]if( #( listePionsLima ) == #( self._namedParams.listePions ) ) then
+            Activate( self.activations.ACT_MAJ_Automate_EtatLima, 1, { self._namedParams.eEtatLima, } )
+        end
+
+    end,
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_Automate_EtatLima
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]}
+
+node "ACT_MAJ_Automate_EtatLima"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatLima = self.params[1]
+    end,
+
+    select = function( self )
+                F_Automat_SeteEtatLima( myself, self._namedParams.eEtatLima )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Automat_SeteEtatLima( myself, eEtatLima_aucune )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatDefaut, "BEH_MAJ_Automate_EtatOperationnel", nodes.BEH_MAJ_Automate_EtatOperationnel }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatDefaut, "BEH_MAJ_Automate_EtatMission", nodes.BEH_MAJ_Automate_EtatMission }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatDefaut, "BEH_MAJ_Automate_EtatLima", nodes.BEH_MAJ_Automate_EtatLima }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatDefaut, "BEH_MAJ_Automate_EtatRapFor", nodes.BEH_MAJ_Automate_EtatRapFor }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatLima, "ACT_MAJ_Automate_EtatLima", nodes.ACT_MAJ_Automate_EtatLima }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatLima, "BEH_MAJ_Automate_SurLima", nodes.BEH_MAJ_Automate_SurLima }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatMission, "ACT_MAJ_Automate_EtatMission", nodes.ACT_MAJ_Automate_EtatMission }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatOperationnel, "ACT_MAJ_Automate_EtatDestruction", nodes.ACT_MAJ_Automate_EtatDestruction }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatOperationnel, "ACT_AFFICHE_EtatDecisionnel", nodes.ACT_AFFICHE_EtatDecisionnel }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_EtatRapFor, "ACT_MAJ_Automate_EtatRapFor", nodes.ACT_MAJ_Automate_EtatRapFor }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_SurLima, "ACT_MAJ_Automate_EtatLima", nodes.ACT_MAJ_Automate_EtatLima }
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "BEH_MAJ_Automate_EtatDefaut", nodes.BEH_MAJ_Automate_EtatDefaut }
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "BEH_MAJ_Automate_RecevoirOrdreGE", nodes.BEH_MAJ_Automate_RecevoirOrdreGE }
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "BEH_RC_Automate_Situation", nodes.BEH_RC_Automate_Situation }
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "BEH_Default_Automate_ReactionPopulations", nodes.BEH_Default_Automate_ReactionPopulations }
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "ACT_AFFICHE_EtatDecisionnel", nodes.ACT_AFFICHE_EtatDecisionnel }
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "ACT_Info_Trace", nodes.ACT_Info_Trace }

@@ -24,7 +24,7 @@ class PHY_ActionDirectFirePionUsingOnlyLoadable : public PHY_ActionDirectFirePio
 {
 
 public:
-    PHY_ActionDirectFirePionUsingOnlyLoadable( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+    PHY_ActionDirectFirePionUsingOnlyLoadable( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode );
     virtual ~PHY_ActionDirectFirePionUsingOnlyLoadable();
 };
 

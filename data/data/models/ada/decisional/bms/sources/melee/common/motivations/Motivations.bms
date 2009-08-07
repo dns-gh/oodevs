@@ -1,0 +1,86 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/common/motivations/Motivations.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: SDE 2003-03-27 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Common/Motivations/Motivations.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 11/02/05 15:38 $
+]]--[[// $Revision: 5 $
+]]--[[// $Workfile: Motivations.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// *****************************************************************************
+]]--[[//  MOT_TenirFaceAuxEnnemis
+]]--[[//
+]]--[[//	Commentaires: 
+]]--[[//
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.motivations[ "MOT_TenirFaceAuxEnnemis" ] =
+{
+    activation = {
+        VE_Tenir = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+        STIM_PriseAPartieTirDirect = { 0, 1 }    },
+    max_increase_rate = 150,
+    max_decrease_rate = 250,
+    max_output_value = 1000,
+}
+
+node "ActivatedByMOT_TenirFaceAuxEnnemis"
+{
+    activations =
+    {
+        { "BEH_MOT_TenirFaceAuxEnnemis", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellemnt d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[//ce comportement permet de décrocher à une position de sécurité/fixation
+]]Activate( self.activations.BEH_MOT_TenirFaceAuxEnnemis, GetMotivation( "MOT_TenirFaceAuxEnnemis" ), {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { motivation( "MOT_TenirFaceAuxEnnemis" ), nodes.ActivatedByMOT_TenirFaceAuxEnnemis }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_TenirFaceAuxEnnemis, "BEH_MOT_TenirFaceAuxEnnemis", nodes.BEH_MOT_TenirFaceAuxEnnemis }

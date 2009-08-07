@@ -23,16 +23,13 @@
 // Name: PHY_ActionIndirectFire_Knowledge constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_ActionIndirectFire_ABC( pion, diaCall )
+PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, unsigned int nTargetKnowledgeID )
+    : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
     , pEffect_                  ( 0 )
 {
-    assert( DEC_Tools::CheckTypeConnaissanceAgent( diaCall.GetParameter( 3 ) ) );
-    uint nTargetKnowledgeID_ = (uint)diaCall.GetParameter( 3 ).ToPtr();
-
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
-        pEffect_ = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID_, *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
+        pEffect_ = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID, *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
         pEffect_->IncRef();
         MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
     }
@@ -58,7 +55,7 @@ PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
 void PHY_ActionIndirectFire_Knowledge::Execute()
 {
     const int nResult = role_.Fire( pEffect_ );
-    diaReturnCode_.SetValue( nResult );
+    Callback( nResult );
 }
 
 // -----------------------------------------------------------------------------

@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/radint/cougar horizon/missions/Missions.bms"] = true
+
+--[[//=============================================================================
+]]--[[// Cougar Horizon
+]]--[[//=============================================================================
+]]include "Appui/Rens/Pions/Radint/Cougar Horizon/Missions/RenseignerSur.bms"

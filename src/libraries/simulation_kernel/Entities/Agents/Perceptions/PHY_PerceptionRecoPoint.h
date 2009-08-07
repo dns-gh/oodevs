@@ -12,13 +12,43 @@
 #ifndef __PHY_PerceptionRecoPoint_h_
 #define __PHY_PerceptionRecoPoint_h_
 
-#include "PHY_Perception_ABC.h"
+#include "PHY_PerceptionWithLocation.h"
+#include "PHY_PerceptionLocalisation.h"
+
+class DEC_Decision_ABC;
+
+
+class PHY_PerceptionRecoPointReco : public PHY_PerceptionLocalisation
+{
+public:
+    const MT_Vector2D vCenter_;
+    MT_Float          rCurrentSize_;
+    const MT_Float    rFinalSize_;
+    const MT_Float    rGrowthSpeed_;
+    DEC_Decision_ABC& callerAgent_;
+    bool              bProcessed_;
+
+    PHY_PerceptionRecoPointReco( const MT_Vector2D& vCenter, MT_Float rSize, MT_Float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
+        : vCenter_      ( vCenter )
+        , rCurrentSize_ ( 0.f )
+        , rFinalSize_   ( rSize )
+        , rGrowthSpeed_ ( rGrowthSpeed )
+        , callerAgent_  ( callerAgent )
+        , bProcessed_   ( false )
+    {
+        assert( rGrowthSpeed_ > 0.f );
+        assert( rFinalSize_ > 0.f );
+    }
+
+private:
+    PHY_PerceptionRecoPointReco& operator = ( const PHY_PerceptionRecoPointReco& );
+};
 
 // =============================================================================
 // @class  PHY_PerceptionRecoPoint
 // Created: JVT 2004-10-21
 // =============================================================================
-class PHY_PerceptionRecoPoint : public PHY_Perception_ABC
+class PHY_PerceptionRecoPoint : public PHY_PerceptionWithLocation< PHY_PerceptionRecoPointReco >
 {
 
 public:
@@ -29,10 +59,10 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    void* AddPoint   ( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DIA_Variable_ABC& result );
-    void  RemovePoint( void* );
+    int  AddPoint   ( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent );
+    void RemovePoint( int id );
 
-    bool  HasPointToHandle() const;
+    bool HasPointToHandle() const;
     //@}
 
     //! @name Execution
@@ -47,40 +77,6 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
     virtual const PHY_PerceptionLevel& Compute( const MIL_Object_ABC&   object    ) const;
     //@}
-
-private:
-    //! @name Types
-    //@{
-    struct sReco
-    {
-        const MT_Vector2D vCenter_;
-        MT_Float          rCurrentSize_;
-        const MT_Float    rFinalSize_;
-        const MT_Float    rGrowthSpeed_;
-        DIA_Variable_ABC* pReturn_;
-
-        sReco( const MT_Vector2D& vCenter, MT_Float rSize, MT_Float rGrowthSpeed, DIA_Variable_ABC& returnRes )
-            : vCenter_      ( vCenter )
-            , rCurrentSize_ ( 0.f )
-            , rFinalSize_   ( rSize )
-            , rGrowthSpeed_ ( rGrowthSpeed )
-            , pReturn_      ( &returnRes )
-        {
-            assert( rGrowthSpeed_ > 0.f );
-            assert( rFinalSize_ > 0.f );
-        }
-
-    private:
-        sReco& operator = ( const sReco& );
-    };
-
-    typedef std::vector< sReco* >        T_RecoVector;
-    typedef T_RecoVector::iterator       IT_RecoVector;
-    typedef T_RecoVector::const_iterator CIT_RecoVector;
-    //@}
-
-private:
-    T_RecoVector recos_;
 };
 
 #endif // __PHY_PerceptionRecoPoint_h_

@@ -1,0 +1,57 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/pel eei/missions/attaquer/Attaquer - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: SDE 03-04-25 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Esc Xl/Missions/Attaquer/Attaquer - CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 8 $
+]]--[[// $Workfile: Attaquer - CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_Attaquer
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_Attaquer"
+{
+    activations =
+    {
+        { "BEH_Auto_CDT_ABC_Attaquer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                                do
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Conduite générique 
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Auto_CDT_ABC_Attaquer, 1, {} )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_Attaquer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_Attaquer, "BEH_Auto_CDT_ABC_Attaquer", nodes.BEH_Auto_CDT_ABC_Attaquer }

@@ -13,6 +13,11 @@
 #define __DEC_DIAFunctions_h_
 
 #include "MIL.h"
+class MIL_Mission_ABC;
+class DEC_RolePion_Decision;
+class DEC_AutomateDecision;
+class DEC_Path_ABC;
+class DEC_PathPoint;
 
 //=============================================================================
 // Created: NLD 2002-12-24
@@ -24,37 +29,28 @@ public:
     //! @name DIA Functions
     //@{
     // Debug
-    static void PointToString    ( DIA_Call_ABC& );
-    static void DirectionToString( DIA_Call_ABC& );
-    static void PathToString     ( DIA_Call_ABC& );
+    static std::string PointToString    ( MT_Vector2D* p1 );
+    static std::string DirectionToString( MT_Vector2D* p1 );
+    static std::string PathToString     ( DEC_Path_ABC* pPath );
+    static void BreakForDebug           ( uint id, const std::string& message );
 
     // DIA user types list manipulation
-    static void UserTypeList_GetAt   ( DIA_Call_ABC& );
-    static void UserTypeList_Contains( DIA_Call_ABC& );
-    static void UserTypeList_PushBack( DIA_Call_ABC& );
-    static void UserTypeList_Remove  ( DIA_Call_ABC& );
-    static void ListPoint_GetAt      ( DIA_Call_ABC& );
-    static void ListPoint_Size       ( DIA_Call_ABC& );
-    static void ListPoint_PushBack   ( DIA_Call_ABC& );
-    static void ListPoint_Remove     ( DIA_Call_ABC& );
+    static boost::shared_ptr< MT_Vector2D > ListPoint_GetAt( std::vector< MT_Vector2D* > list, int nId );
+    static int  ListPoint_Size       ( std::vector< MT_Vector2D* > list );
 
     // Time management
-    static void GetSimTime         ( DIA_Call_ABC& );
-    static void GetRealTime        ( DIA_Call_ABC& );
-    static void IsNight            ( DIA_Call_ABC& );
+    static float GetSimTime ();
+    static float GetRealTime();
+    static bool  IsNight    ();
 
     // Parameters copy
-    static void CopyPoint                         ( DIA_Call_ABC& call );
-    static void CopyListPoint                     ( DIA_Call_ABC& call );
-    static void CopyPointToListPoint              ( DIA_Call_ABC& call );
-    static void CopyLocalisation                  ( DIA_Call_ABC& call );
-    static void CopyLocationList              ( DIA_Call_ABC& call );
-    static void CopyLocalisationToLocationList( DIA_Call_ABC& call );
-
-    // DIA Thing management
-    static void CreateDIAThing ( DIA_Call_ABC& call );    
-    static void DestroyDIAThing( DIA_Call_ABC& call );
-    //@}
+    static void CopyPoint                     ( MT_Vector2D* pPosSource, boost::shared_ptr< MT_Vector2D > pPosDest );
+    static void CopyPointMission              ( MT_Vector2D* pPosSource, MIL_Mission_ABC* pMission, const std::string& parameter );
+    static void CopyPathMission               ( std::vector< boost::shared_ptr< MT_Vector2D > > pointList, MIL_Mission_ABC* pMission, const std::string& parameter );
+    static void CopyPointToListPointMission   ( boost::shared_ptr< MT_Vector2D > pPosSource, MIL_Mission_ABC* pMission, const std::string& parameter );
+    static void CopyLocalisation              ( const TER_Localisation* pLocSource, TER_Localisation* pLocDest );
+    static void CopyLocalisationMission       ( boost::shared_ptr< TER_Localisation > pLocation, MIL_Mission_ABC* pMission, const std::string& parameter );
+    static void CopyLocalisationToLocationListMission( boost::shared_ptr< TER_Localisation > pLocSource, MIL_Mission_ABC* pMission, const std::string& parameter );
 };
 
 #endif // __DEC_DIAFunctions_h_

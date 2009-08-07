@@ -109,7 +109,7 @@ namespace
         void operator() ( DEC_Knowledge_Object& knowledge )
         {
             if( filter_.Test( knowledge.GetType() ) )
-                pContainer_->push_back( (void*)knowledge.GetID() );
+                pContainer_->push_back( knowledge.GetID() );
         }
 
     private:
@@ -182,7 +182,7 @@ namespace
         void operator() ( DEC_Knowledge_Object& knowledge )
         {
             if( filter_.Test( knowledge.GetType() ) && ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) && knowledge.GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
-                pContainer_->push_back( (void*)knowledge.GetID()  );
+                pContainer_->push_back( knowledge.GetID()  );
         }
 
     private:
@@ -221,7 +221,7 @@ namespace
         void operator() ( DEC_Knowledge_Object& knowledge )
         {
             if( filter_.Test( knowledge.GetType() ) && ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) && pZone_->IsInside( knowledge.GetLocalisation().ComputeBarycenter() ) )
-                pContainer_->push_back( (void*)knowledge.GetID()  );
+                pContainer_->push_back( knowledge.GetID()  );
         }
 
     private:

@@ -1,0 +1,112 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreZone.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_NBC_ReconnaitreZone
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// Comportements:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_NBC_ReconnaitreZone"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Nbc_Pion_FaireDesMesures", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.positionDansZone = self.positionDansZone or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Appuis ou soutiens
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                SetStateVariable( "VE_NiveauNBC", 4 )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Prepa
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Aera reconnaissance mission begining", } )
+                self.ePhaseMission = eRejoindrePosition
+                
+            --[[// 2) Progression jusqu'au point à reconnaitre
+]]elseif switch_1 == eRejoindrePosition then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Progresser vers le center de la zone
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionDansZone, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                --[[//---------------------------------------------------------------------
+]]--[[// Faire des mesures
+]]--[[//---------------------------------------------------------------------
+]]--[[// Poste pour mesure donc en complète avec deplacement
+]]Activate( self.activations.BEH_Nbc_Pion_FaireDesMesures, 1.1, {} )
+                
+            --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreZone, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreZone, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreZone, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreZone, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreZone, "BEH_Nbc_Pion_FaireDesMesures", nodes.BEH_Nbc_Pion_FaireDesMesures }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreZone, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

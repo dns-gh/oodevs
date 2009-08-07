@@ -1,0 +1,88 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/missions/FaireMouvement.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: SDE 02-04-16 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Common/Pions/Missions/FaireMouvement.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 9/09/05 13:11 $
+]]--[[// $Revision: 38 $
+]]--[[// $Workfile: FaireMouvement.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_FaireMouvement
+]]--[[//
+]]--[[// Commentaires: Aucune gestion des limites tactiques. Elles ne s'appliquent pas
+]]--[[//               aux unités de ce niveau
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_FaireMouvement"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_SeDeplacer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eCreerItineraire
+        self.it = self.it or nil
+        if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eCreerItineraire then
+                self.it = DEC_CreerItineraireListe( self._namedParams.mission.itineraire_, eTypeItiMouvement )
+                self.ePhase = eProgresser
+                
+            elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_FaireMouvement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Dep_SeDeplacer", nodes.BEH_Dep_SeDeplacer }

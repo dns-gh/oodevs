@@ -12,29 +12,29 @@
 #ifndef __PHY_ActionIndirectFire_ABC_h_
 #define __PHY_ActionIndirectFire_ABC_h_
 
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class PHY_RoleAction_IndirectFiring;
 class PHY_DotationCategory;
 class MIL_AgentPion;
+class DEC_Decision_ABC;
 
 // =============================================================================
 // @class  PHY_ActionIndirectFire_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionIndirectFire_ABC : public PHY_Action_ABC
+class PHY_ActionIndirectFire_ABC : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-             PHY_ActionIndirectFire_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionIndirectFire_ABC( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType );
     virtual ~PHY_ActionIndirectFire_ABC();
 
 protected:
           PHY_RoleAction_IndirectFiring& role_;
-          DIA_Variable_ABC&              diaReturnCode_;
     const PHY_DotationCategory*          pDotationCategory_;
     const MT_Float                       rNbInterventionType_;
 };

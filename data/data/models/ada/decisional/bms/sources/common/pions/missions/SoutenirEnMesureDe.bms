@@ -1,0 +1,231 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/missions/SoutenirEnMesureDe.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_SoutenirEnMesureDe
+]]--[[//
+]]--[[// Commentaires: Rajout ADA pour faire le "en mesure de"
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_SoutenirEnMesureDe"
+{
+    activations =
+    {
+        { "BEH_MAJ_Pion_EniDangereux", {} },
+        { "BEH_MAJ_Pion_AgressiviteTir", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionAvecEscortePossibleSur", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eEtat = self.eEtat or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+        end
+
+        Activate( self.activations.BEH_MAJ_Pion_EniDangereux, 1, {} )
+        Activate( self.activations.BEH_MAJ_Pion_AgressiviteTir, 1, { 0.5, } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhase = eProgresser
+                
+            elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionAvecEscortePossibleSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_SoutenirSurPositionEnMesureDe
+]]--[[//
+]]--[[// Commentaires: Rajout ADA pour faire le "en mesure de"
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "MIS_Pion_SoutenirSurPositionEnMesureDe"
+{
+    activations =
+    {
+        { "BEH_MAJ_Pion_EniDangereux", {} },
+        { "BEH_MAJ_Pion_AgressiviteTir", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtat = self.eEtat or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+        end
+
+        Activate( self.activations.BEH_MAJ_Pion_EniDangereux, 1, {} )
+        Activate( self.activations.BEH_MAJ_Pion_AgressiviteTir, 1, { 0.5, } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eProgresser
+                
+            elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eBarrer
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                --[[// force de 1.
+]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.position_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eBarrer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_AgressiviteTir
+]]--[[//
+]]--[[// Commentaires: // Ajout ADA
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_AgressiviteTir"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rPH = self.params[1]
+    end,
+
+    activate = function( self )
+                if( ModuleBegins() ) then
+            SetStateVariable( "VE_Agressivite_Tir", self._namedParams.rPH )
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_Agressivite_Tir", 0 )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_EniDangereux
+]]--[[//
+]]--[[//Commentaires : // Ajout ADA gestion mortier
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_EniDangereux"
+{
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
+        for _,repEni in pairs( listeConnaissances ) do
+        local _continue = true
+            Activate( self.activations.ACT_MAJ_EnnemiEnCours, S_Force_DangerSur( repEni ), { repEni, } )
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_SoutenirEnMesureDe = { "mission" }
+eventmanager_plugin.MIS_Pion_SoutenirSurPositionEnMesureDe = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Pion_EniDangereux, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirEnMesureDe, "BEH_MAJ_Pion_EniDangereux", nodes.BEH_MAJ_Pion_EniDangereux }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirEnMesureDe, "BEH_MAJ_Pion_AgressiviteTir", nodes.BEH_MAJ_Pion_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirEnMesureDe, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirEnMesureDe, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirEnMesureDe, "BEH_Dep_ProgressionAvecEscortePossibleSur", nodes.BEH_Dep_ProgressionAvecEscortePossibleSur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirEnMesureDe, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirSurPositionEnMesureDe, "BEH_MAJ_Pion_EniDangereux", nodes.BEH_MAJ_Pion_EniDangereux }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirSurPositionEnMesureDe, "BEH_MAJ_Pion_AgressiviteTir", nodes.BEH_MAJ_Pion_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirSurPositionEnMesureDe, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirSurPositionEnMesureDe, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirSurPositionEnMesureDe, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SoutenirSurPositionEnMesureDe, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

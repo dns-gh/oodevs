@@ -1,0 +1,64 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/Behaviors.bms"] = true
+
+--[[// Missions generiques automate
+]]--[[//----------------------------------
+]]
+include "Common/Automates/Missions/Decrocher/MRT - Decrocher.bms"
+
+include "Common/Automates/Missions/Decrocher/CDT - Decrocher.bms"
+
+
+include "Common/Automates/Missions/FaireMouvement/MRT - FaireMouvement.bms"
+
+include "Common/Automates/Missions/FaireMouvement/CDT - FaireMouvement.bms"
+
+
+include "Common/Automates/Missions/Transporter/Transporter - MRT.bms"
+
+include "Common/Automates/Missions/Transporter/Transporter - CDT.bms"
+
+
+include "Common/Automates/Missions/Franchir/MRT - Franchir.bms"
+
+include "Common/Automates/Missions/Franchir/CDT - Franchir.bms"
+
+
+include "Common/Automates/Missions/SeFaireDecontaminer/MRT - SeFaireDecontaminer.bms"
+
+include "Common/Automates/Missions/SeFaireDecontaminer/CDT - SeFaireDecontaminer.bms"
+
+
+include "Common/Automates/Missions/SeFaireTransporter/MRT - SeFaireTransporter.bms"
+
+include "Common/Automates/Missions/SeFaireTransporter/CDT - SeFaireTransporter.bms"
+
+
+include "Common/Automates/Missions/SeRecompleter/MRT - SeRecompleter.bms"
+
+include "Common/Automates/Missions/SeRecompleter/CDT - SeRecompleter.bms"
+
+
+include "Common/Automates/Missions/Stationner/MRT - Stationner.bms"
+
+include "Common/Automates/Missions/Stationner/CDT - Stationner.bms"
+
+
+include "Common/Automates/Missions/OrienterRefugies/MRT - OrienterRefugies.bms"
+
+include "Common/Automates/Missions/OrienterRefugies/CDT - OrienterRefugies.bms"
+
+
+include "Common/Automates/Missions/PrendreEnComptePrisonniers/MRT - PrendreEnComptePrisonniers.bms"
+
+include "Common/Automates/Missions/PrendreEnComptePrisonniers/CDT - PrendreEnComptePrisonniers.bms"
+
+
+include "Common/Automates/Missions/Suivre/Suivre - MRT.bms"
+
+include "Common/Automates/Missions/Suivre/Suivre - CDT.bms"
+
+
+include "Common/Automates/Missions/SoutenirEnMesureDe/MRT - SoutenirEnMesureDe.bms"
+
+include "Common/Automates/Missions/SoutenirEnMesureDe/CDT - SoutenirEnMesureDe.bms"

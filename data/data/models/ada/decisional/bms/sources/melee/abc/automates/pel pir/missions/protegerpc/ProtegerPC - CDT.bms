@@ -1,0 +1,40 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/pel pir/missions/protegerpc/ProtegerPC - CDT.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Pel PIR/Missions/ProtegerPC/ProtegerPC - CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 7 $
+]]--[[// $Workfile: ProtegerPC - CDT.hal $
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_ProtegerPC
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_ProtegerPC"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_ProtegerPC = { "mission" }

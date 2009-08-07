@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/functions/PionsLOG.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// globals
+]]--[[// *****************************************************************************
+]]--[[/*T_MaintenancePriorites*/]]--[[/*T_ListeAutomates*/]]--[[/*E_MaintenanceRegimeTravail*/]]--[[/*T_SantePriorites*/]]--[[/*T_ListeAutomates*/]]--[[/*T_Automate*/]]--[[/*T_Automate*/]]--[[/*T_Automate*/]]--[[/*T_Action*//*action terminee ?*/]]--[[/*T_Action*//*action terminee ?*/]]

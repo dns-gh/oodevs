@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -30,91 +29,28 @@
 // Name: DEC_ObjectFunctions::GetGenObjectType
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetGenObjectType( DIA_Call_ABC& call )
+std::string DEC_ObjectFunctions::GetGenObjectType( const DEC_Gen_Object* object)
 {
-    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
-    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
-    call.GetResult().SetValue( pTmp->GetType().GetName() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::GetGenObjectLocalisation
-// Created: NLD 2006-10-26
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetGenObjectLocalisation( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
-    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
-    call.GetResult().SetValue( (void*)&pTmp->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::GetGenObjectDensity
-// Created: NLD 2006-10-26
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetGenObjectDensity( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
-    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
-    call.GetResult().SetValue( (float)pTmp->GetDensity() );
+    return object->GetType().GetName();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::GetGenObjectReservedObstacle
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetGenObjectReservedObstacle( DIA_Call_ABC& call )
+bool DEC_ObjectFunctions::GetGenObjectReservedObstacle( const DEC_Gen_Object* object )
 {
-    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
-    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
-    call.GetResult().SetValue( pTmp->GetObstacleType() == EnumDemolitionTargetType::reserved );
+    return  object->GetObstacleType() == EnumDemolitionTargetType::reserved ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::GetGenObjectTC2
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetGenObjectTC2( DIA_Call_ABC& call )
+boost::shared_ptr<DEC_Decision_ABC> DEC_ObjectFunctions::GetGenObjectTC2( const DEC_Gen_Object* object )
 {
-    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
-    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
-    DEC_AutomateDecision* dec = pTmp->GetTC2() ? const_cast< DEC_AutomateDecision* >( &pTmp->GetTC2()->GetDecision() ) : (DEC_AutomateDecision*)0;
-    call.GetResult().SetValue( *dec );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::GetGenObjectMinesActivityTime
-// Created: NLD 2006-10-26
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetGenObjectMinesActivityTime( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
-    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
-    call.GetResult().SetValue( (float)pTmp->GetMinesActivityTime() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::GetObjectiveLocalisation
-// Created: NLD 2007-05-14
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::GetObjectiveLocalisation( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeObjectif( call.GetParameter( 0 ) ) );
-    DEC_Objective* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
-    assert( pTmp );
-    call.GetResult().SetValue( (void*)&pTmp->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::SetObjectiveFlag
-// Created: NLD 2007-05-15
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::SetObjectiveFlag( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeObjectif( call.GetParameter( 0 ) ) );
-    DEC_Objective* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
-    assert( pTmp );
-    pTmp->Flag( call.GetParameter( 1 ).ToBool() );
+    DEC_AutomateDecision* dec = object->GetTC2() ? const_cast< DEC_AutomateDecision* >( &object->GetTC2()->GetDecision() ) : (DEC_AutomateDecision*)0;
+    return boost::shared_ptr<DEC_Decision_ABC>(dec);
 }
 
 namespace
@@ -145,7 +81,7 @@ void DEC_ObjectFunctions::RegisterObjectNames( xml::xistream& xis )
 // Name: DEC_ObjectFunctions::ConvertTypeObjectToString
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::ConvertTypeObjectToString( DIA_Call_ABC& call )
+std::string DEC_ObjectFunctions::ConvertTypeObjectToString( int id )
 {
-    call.GetResult().SetValue( objectNames_[ call.GetParameter( 0 ).ToId() ] );
+    return objectNames_[ id ];
 }

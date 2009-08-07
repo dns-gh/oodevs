@@ -1,0 +1,90 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/radint/stations horizon/missions/MettreEnOeuvre.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_RENS_RADINT_MettreEnOeuvre
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_RENS_RADINT_MettreEnOeuvre"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Pion_Rens_InstallerDisposifif", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.eEtatRejoindre = self.eEtatRejoindre or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Ambiance
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Operating mission begining", } )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eSurveiller
+                
+            --[[// 3) Progression vers position
+]]elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_Pion_Rens_InstallerDisposifif, 1, {} )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            --[[// 4) Fin de la mission de reconnaissance
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_RENS_RADINT_MettreEnOeuvre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_MettreEnOeuvre, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_MettreEnOeuvre, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_MettreEnOeuvre, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_MettreEnOeuvre, "ACT_Pion_Rens_InstallerDisposifif", nodes.ACT_Pion_Rens_InstallerDisposifif }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_MettreEnOeuvre, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

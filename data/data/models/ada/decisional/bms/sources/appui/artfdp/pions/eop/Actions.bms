@@ -1,0 +1,119 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/eop/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 27/05/05 17:26 $
+ * $Revision: 13 $
+ *
+ */]]--[[// Created: JCR 03-02-13
+]]--[[// *****************************************************************************
+]]
+
+
+node "ACT_Dep_Pion_EOP_ActiverFurtivite"
+{
+    actuators =
+    {
+        furtivite = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rFurtivite = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            DEC_Perception_Furtivite( self._namedParams.rFurtivite )
+        end
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Action de Landingde la Section d'Infanterie
+]]--[[// @perc pourcentage total de debarquement
+]]--[[//-----------------------------------------------------------------------------
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                DEC_Perception_Furtivite( 1 )
+    end,
+
+}
+
+node "ACT_Transport_Pion_EOP_Debarquer"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.bLaisserTransporteur = self.params[1]
+    end,
+
+    select = function( self )
+                self.bReprise = self.bReprise or false
+        self.eEtat_EmbDeb = self.eEtat_EmbDeb or eActionEmbDeb_EnCours
+        self.actionID = self.actionID or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Landing: begin" )
+                self.actionID = DEC_StartDebarquement(  )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtat_EmbDeb = arg end
+
+            end
+        end
+
+        switch_1 = self.eEtat_EmbDeb
+            if switch_1 == eActionEmbDeb_EnCours then
+                
+            elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
+            or switch_1 == eActionEmbDeb_PasDeTransporteurs then
+                DEC_Trace( "Landing: carrier ignored" )
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            elseif switch_1 == eActionEmbDeb_Termine then
+                DEC_Trace( "Landing: end" )
+                if( self._namedParams.bLaisserTransporteur ) then
+                    DEC_LaisserTransporteursSansDelai()
+                end
+
+                self.actionID = DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                        end
+
+        if( self.bReprise ) then
+            do
+                DEC_Trace( "Landing: resume" )
+                DEC_ReprendAction( self.actionID )
+                --[[// arret du debarquement
+]]self.bReprise = false
+            end
+        end
+
+--[[// arret du debarquement
+]]    end,
+
+    deselect = function( self )
+                DEC_Trace( "Landing: paused" )
+        DEC_PauseAction( self.actionID )
+        self.bReprise = true
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Landing: spontaneous end" )
+        self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+

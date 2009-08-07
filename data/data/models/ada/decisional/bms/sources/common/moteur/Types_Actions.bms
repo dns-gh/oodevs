@@ -1,0 +1,86 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/Types_Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JVT 2004-08-03 $
+]]--[[// $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_Actions.hal $
+]]--[[// $Author: Jvt $
+]]--[[// $Modtime: 2/05/05 11:31 $
+]]--[[// $Revision: 6 $
+]]--[[// $Workfile: Types_Actions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+eActionTransport_Running = 0
+eActionTransport_Finished = 1
+eActionTransport_Impossible = 2
+
+
+eActionObjetEnCours = 0
+eActionObjetTerminee = 1
+eActionObjetImpossible = 2
+eActionObjetManqueDotation = 3
+eActionObjetPasDeCapacite = 4
+--[[// -> l'action est en cours d'exécution
+]]--[[// -> l'action est terminée
+]]--[[// -> l'action est impossible (cas arrivant, par exemple, quand un essaye de valoriser un objet qui ne peut pas l'être)
+]]--[[// -> l'action est arrêtée car l'unité ne posséde pas assez de dotations (mines, explosifs ...) pour la mener à bien
+]]--[[// -> l'action est arrêtée car l'unité ne posséde pas les capacités pour l'effectuer
+]]
+
+eTirDirectNormal = 0
+eTirDirectLibre = 1
+
+
+eActionTirDirect_Impossible = 0
+eActionTirDirect_EnemyDestroyed = 1
+eActionTirDirect_NoCapacity = 2
+eActionTirDirect_NoAmmo = 3
+eActionTirDirect_Running = 4
+eActionTirDirect_Finished = 5
+eActionTirDirect_None = 6
+--[[// -> le tir est terminé parceque le pion adverse est détruit
+]]--[[// -> le tir est terminé car il ne reste aucune composante ayant la capacité de tirer
+]]--[[// -> le tir est terminé parque qu'il reste des composante capables de tirer mais qu'il ne reste plus de munition adéquates
+]]--[[// -> le tir est en cours d'exécution
+]]--[[// Stop tir
+]]--[[// Utilisé comme valeur par défaut par les scripts
+]]
+
+eActionTirIndirect_EnCours = 0
+eActionTirIndirect_PasDeCapacite = 1
+eActionTirIndirect_Termine = 2
+eActionTirIndirect_Impossible = 3
+eActionTirIndirect_NoAmmo = 4
+eActionTirIndirect_None = 5
+--[[// Utilisé comme valeur par défaut par les scripts
+]]
+
+eEtatActionDeplacement_EnCours = 0
+eEtatActionDeplacement_Termine = 1
+eEtatActionDeplacement_Pause = 2
+eEtatActionDeplacement_ManqueCarburant = 3
+eEtatActionDeplacement_NonAutorise = 4
+eEtatActionDeplacement_DejaEnDeplacement = 5
+eEtatActionDeplacement_ItineraireDoitEtreRejoint = 6
+
+
+eActionEmbDeb_EnCours = 0
+eActionEmbDeb_Termine = 1
+eActionEmbDeb_PasDeTransporteurs = 2
+eActionEmbDeb_PasDeTransportes = 3
+eActionEmbDeb_ErreurEmbDebEnMemeTemps = 4
+
+
+eActionInfluence_EnCours = 0
+eActionInfluence_Terminee = 1
+eActionInfluence_Impossible = 2
+eActionInfluence_Activated = 3
+eActionInfluence_Deactivated = 4
+--[[// -> l'action est en cours d'exécution
+]]--[[// -> l'action est terminée
+]]--[[// -> l'action est impossible (cas arrivant, par exemple, quand un essaye de valoriser un objet qui ne peut pas l'être)
+]]--[[// -> l'objet influent est activé
+]]--[[// -> l'objet influent est désactivé 
+]]

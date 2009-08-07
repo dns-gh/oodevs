@@ -1,0 +1,4 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/pc/missions/Missions.bms"] = true
+
+--[[// ADA mission spéficifique PC]]include "Melee/Abc/Pions/PC/Missions/SeDeployer.bms"

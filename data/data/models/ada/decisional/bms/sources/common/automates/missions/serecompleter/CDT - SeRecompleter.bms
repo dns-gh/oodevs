@@ -1,0 +1,27 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/serecompleter/CDT - SeRecompleter.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_SeRecompleter
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_SeRecompleter"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            DEC_DemandeDeRavitaillement()
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_SeRecompleter = { "mission" }

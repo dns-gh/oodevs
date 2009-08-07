@@ -1,0 +1,86 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/pc/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/PC/Behaviors.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:07 $
+]]--[[// $Revision: 18 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = yes
+
+max_instances = 100000
+
+max_activations = 100000
+
+
+actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+debarquement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+vitesse = 1,
+ennemi = 1,
+etat_Mission = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+controlePopulation = 1,
+etat_ROE = 1,
+objectifEsquive = 1,
+}
+
+
+--[[// Commun pion ABC
+]]include "Melee/Abc/Pions/Common/Behaviors.bms"
+
+
+--[[// Embarquement (apres heliportage)
+]]include "Common/Pions/Behaviors/Behaviors - Embarquement.bms"
+
+
+--[[// Missions communes à part Suivre et se deplacer
+]]--[[// aucune
+]]
+--[[// PC
+]]include "Melee/Abc/Pions/PC/Missions/Missions.bms"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_ABC_Default
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//               
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Pion_ABC_Default"
+{
+    activations =
+    {
+        { "BEH_Mot_Pion_Embarquer", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//-------------------------------------------------------------------------
+]]--[[// Embarquement apres Heliportage
+]]--[[// ------------------------------------------------------------------------
+]]
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ABC_Default, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }

@@ -1,0 +1,166 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveiller - CDT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Conduite de la mission Automate ALAT Surveiller :
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_CDT_ALAT_Surveiller"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe", {} },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
+        { "BEH_Manoeuvre_Automate_ALAT_GererReleves", {} },
+        { "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne", {} },
+        { "BEH_Automate_ALAT_CoordonnerFeux", {} },
+        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", {} },
+        { "BEH_ROE_Automate_TirRestreint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eSurveiller
+        self.localisationsASurveiller = self.localisationsASurveiller or {}
+        self.listePionsSgpt = self.listePionsSgpt or {}
+        self.listeStationner = self.listeStationner or {}
+        self.listeSurveiller = self.listeSurveiller or {}
+        self.listeSurveillerPrec = self.listeSurveillerPrec or {}
+        self.listeSurveillerOperationnels = self.listeSurveillerOperationnels or {}
+        self.listePeutFaireSurveiller = self.listePeutFaireSurveiller or {}
+        self.listeHMLog = self.listeHMLog or {}
+        self.listePionsAAppuyerIMEX = self.listePionsAAppuyerIMEX or {}
+        self.listePionsPourStationner = self.listePionsPourStationner or {}
+        self.eEtatODC = self.eEtatODC or eActionEnCours
+        if( self.eEtatODC == eActionHalt ) then
+            do
+                self.ePhase = eSExfiltrer
+                self.eEtatODC = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        --[[// ---------------------------------------------------------------------
+]]--[[// Mise à Jour des selections de pions ( à tous les tics )
+]]--[[// ---------------------------------------------------------------------
+]]DIA_Clear( self.listePionsSgpt )
+        self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+        --[[// liste des pions qui Surveillent
+]]DIA_Clear( self.listeSurveillerOperationnels )
+        self.listeSurveillerOperationnels = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_ALAT_Surveiller" )
+        --[[//y compris les unites detruitent
+]]DIA_Clear( self.listeSurveiller )
+        self.listeSurveiller = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_ALAT_Surveiller" )
+        --[[// liste des pions qui peuvent Surveiller - Seulement en fonction de leurs natures
+]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AntitankHelicopterPatrol )
+        local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, EscortAndCloseSupportHelicopterPatrol )
+        local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AirDefenseHelicopterPatrol )
+        DIA_Clear( self.listePeutFaireSurveiller )
+        self.listePeutFaireSurveiller = S_Liste_Concatene( S_Liste_Concatene( listeHAC, listeHAP ), listeHAM )
+        self.fNbPeutSurveillerPrec = self.fNbPeutSurveillerPrec or #( self.listePeutFaireSurveiller )
+        --[[//liste des pions qui stationnent
+]]DIA_Clear( self.listeStationner )
+        self.listeStationner = S_Cherche_Automate_Filtre_TypeMission( self.listePeutFaireSurveiller, "T_Mission_Pion_Stationner" )
+        --[[// liste des pions qui doivent stationner
+]]DIA_Clear( self.listePionsPourStationner )
+        self.listePionsPourStationner = S_Cherche_Automate_Filtre_PionNonDansListe( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, self.listeStationner ), self.listeSurveiller )
+        --[[// liste des pions HM Log
+]]DIA_Clear( self.listeHMLog )
+        self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, GeneralPurposeHelicopterPatrol )
+        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
+        switch_1 = self.ePhase
+            if switch_1 == eSurveiller then
+                if( DIA_IsListEmpty( self.listeSurveillerOperationnels ) ) then
+                    do
+                        self.ePhase = eSExfiltrer
+                                                return
+
+                    end
+--[[// adaptation du dispositif pour la mission
+]]                end
+
+                if( #( self.listePeutFaireSurveiller ) ~= self.fNbPeutSurveillerPrec ) then
+                    do
+                        local listePionsSurveillerCDT = {}
+                        local nbPionsPouvantSurveiller = #( self.listePeutFaireSurveiller )
+                        local nbPionsReserve = nbPionsPouvantSurveiller / 4
+                        for _,x in pairs( self.listePeutFaireSurveiller ) do
+                        local _continue = true
+                            do
+                                if( nbPionsPouvantSurveiller - nbPionsReserve < 1 ) then
+                                    break
+                                end
+
+                                DIA_PushBack( listePionsSurveillerCDT, x )
+                                                                nbPionsPouvantSurveiller = nbPionsPouvantSurveiller - 1
+                            end
+--[[//decoupage de la zone en autant de sous zones a affecter à chacun 
+]]--[[//des pions.
+]]
+                        end
+
+                        self.localisationsASurveiller = S_Geometrie_DecoupeLocalisation( self._namedParams.mission.zone_, #( listePionsSurveillerCDT ) )
+                        --[[// Surveiller : ordre de creation des missions
+]]if( not DIA_IsListEmpty( listePionsSurveillerCDT ) ) then
+                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe, 1, { ePhase_CDT, listePionsSurveillerCDT, self.localisationsASurveiller, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, } )
+                        end
+
+                        --[[// mission stationner à tous les autres
+]]if( ( #( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ) ) ~= 0 and #( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ) ) ~= nil ) ) then
+                            Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, listePionsSurveillerCDT ), self._namedParams.mission.pointLogistique_, } )
+                        end
+
+                    end
+--[[// controle sur le dispositif courant
+]]                else
+do
+                        --[[// Gestion des releves - listeSurveillerPrec peut contenir des
+]]--[[// unités détruites
+]]Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererReleves, 1, { self.listeSurveillerPrec, self.listeStationner, } )
+                        self.listeSurveillerPrec = self.listeSurveiller
+                        --[[// Gestion Coordination Ravitaillement
+]]if( not DIA_IsListEmpty( self.listePeutFaireSurveiller ) ) then
+                            Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePeutFaireSurveiller, } )
+                        end
+
+                        --[[// Gestion de la coordination des feux
+]]Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeSurveillerOperationnels, 0, } )
+                        --[[// ravitaillements et IMEX
+]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointLogistique_, true, } )
+                        --[[// mission stationner à tous les pions qui peuvent surveiller et qui
+]]--[[// ne stationnent pas ou qui ne surveillent pas
+]]if( ( #( self.listePionsPourStationner ) ~= 0 and #( self.listePionsPourStationner ) ~= nil ) ) then
+                            Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, self.listePionsPourStationner, self._namedParams.mission.pointLogistique_, } )
+                        end
+
+                    end
+                end
+
+                self.fNbPeutSurveillerPrec = #( self.listePeutFaireSurveiller )
+                
+            elseif switch_1 == eSExfiltrer then
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
+                
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ALAT_Surveiller = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Surveiller, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Surveiller, "BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe", nodes.BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Surveiller, "BEH_Mission_Automate_AssignerStationnerAListe", nodes.BEH_Mission_Automate_AssignerStationnerAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Surveiller, "BEH_Manoeuvre_Automate_ALAT_GererReleves", nodes.BEH_Manoeuvre_Automate_ALAT_GererReleves }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Surveiller, "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne", nodes.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Surveiller, "BEH_Automate_ALAT_CoordonnerFeux", nodes.BEH_Automate_ALAT_CoordonnerFeux }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Surveiller, "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", nodes.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Surveiller, "BEH_ROE_Automate_TirRestreint", nodes.BEH_ROE_Automate_TirRestreint }

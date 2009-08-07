@@ -1,0 +1,414 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/offensives/Coordonner dispositif.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssurerLaCoordination
+]]--[[// 
+]]--[[// Commentaires:inclue la coordination interne de l'automate, et les ordres de 
+]]--[[//              coodination de l'anibas
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_GTIA_AssurerLaCoordination"
+{
+    activations =
+    {
+        { "BEH_GTIA_SePosterSurEntreeFuseau", {} },
+        { "BEH_GTIA_AssurerLaCoordinationInterne", {} },
+        { "BEH_GTIA_AssurerLaCoordinationExterne", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( not S_Analyse_GE_TousPionsDansFuseau( S_Cherche_GE_Filtre_TypeAutomate_Melee( DEC_Automate_AutomatesSubordonnes() ), DEC_Fuseau() ) ) then
+            Activate( self.activations.BEH_GTIA_SePosterSurEntreeFuseau, 1, { DEC_Fuseau(), } )
+        else
+do
+                Activate( self.activations.BEH_GTIA_AssurerLaCoordinationInterne, 1, {} )--[[// auto-coordination
+]]
+                Activate( self.activations.BEH_GTIA_AssurerLaCoordinationExterne, 1, {} )--[[// ordre de l'annimateur
+]]
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssurerLaCoordinationInterne
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssurerLaCoordinationInterne"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin", {} },
+        { "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePEcl = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) )
+        local listePE = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) )
+        local listeSEMelee = S_Cherche_GE_Filtre_TypeAutomate_Melee( S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ) )
+        local listeSEAppui = S_Cherche_GE_Filtre_TypeAutomate_Appui( S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ) )
+        local listeSEDetruit = S_Cherche_GE_AutomateNonOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) )
+        local listePionEnSoutien = S_Cherche_GE_Filtre_EnMesureDe( listeSEMelee )
+        --[[// Coordination PE / SE
+]]Activate( self.activations.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin, 1, { listePE, listePionEnSoutien, 1000, } )
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin, 1, { listePE, listeSEDetruit, 3000, } )
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin, 1, { listePE, listeSEAppui, 3000, } )
+        --[[// si retard on lache la coordination
+]]if( S_AnalyseDelai_GE_EstEnRetard() ) then
+            return
+        end
+
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax, 1, { listePE, listeSEMelee, 4000, } )
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax, 1, { listePEcl, listePE, 2000, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_SePosterSurEntreeFuseau
+]]--[[//
+]]--[[// Commentaires: donne l'ordre aux pions dans le fuseau du GTIA de se poster
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_SePosterSurEntreeFuseau"
+{
+    activations =
+    {
+        { "ACT_GTIA_Automate_DonnerOrdreAttendre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.fuseau = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( S_Cherche_GE_Filtre_PionsDansFuseau( DEC_Automate_AutomatesSubordonnes(), self._namedParams.fuseau ) ) do
+        local _continue = true
+            Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreAttendre, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssurerLaCoordinationExterne
+]]--[[//
+]]--[[// Commentaires: recevoir un ordre inopine de l'anibas. Améliorer ce
+]]--[[//               comportement, en donnant un ordre simple à l'automate sans
+]]--[[//               itérer sur ses pions subordonnés
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssurerLaCoordinationExterne"
+{
+    activations =
+    {
+        { "BEH_GTIA_Automate_Attendre", {} },
+        { "BEH_GTIA_Automate_Poursuivre", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,ordre in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = ordre
+                if( repOrdre:GetType() == "Rep_OrderConduite_AttendreSePoster" ) then
+                    StartActivate( self.activations.BEH_GTIA_Automate_Attendre, 1, { DEC_Automate_AutomatesSubordonnes(), } )
+                end
+
+                if( repOrdre:GetType() == "Rep_OrderConduite_Deboucher" or repOrdre:GetType() == "Rep_OrderConduite_Poursuivre" ) then
+                    do
+                        StopActivate( self.activations.BEH_GTIA_Automate_Attendre, { DEC_Automate_AutomatesSubordonnes(), } )
+                        Activate( self.activations.BEH_GTIA_Automate_Poursuivre, 1, { DEC_Automate_AutomatesSubordonnes(), } )
+                    end
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_Automate_Attendre
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_Automate_Attendre"
+{
+    activations =
+    {
+        { "ACT_GTIA_Automate_DonnerOrdreAttendre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+                self.resultatCalcul = self.resultatCalcul or nil
+        if( ModuleBegins() ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePions )
+        end
+
+        for _,pion in pairs( self._namedParams.listePions ) do
+        local _continue = true
+--[[// MIA à voir
+]]if( DEC_Geometrie_CalculerAutomateDistanceLigneAvant( self.resultatCalcul, pion ) < 300 ) then
+                Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreAttendre, 1, { pion, } )
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_Automate_Poursuivre
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_Automate_Poursuivre"
+{
+    activations =
+    {
+        { "ACT_GTIA_Automate_DonnerOrdrePoursuivre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( self._namedParams.listePions ) do
+        local _continue = true
+            Activate( self.activations.ACT_GTIA_Automate_DonnerOrdrePoursuivre, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax
+]]--[[// 
+]]--[[// Commentaires: RALENTIT les pions d'échelons différents pour coordination en 
+]]--[[//               ligne
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax"
+{
+    activations =
+    {
+        { "ACT_GTIA_Automate_DonnerOrdreRalentir", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions1 = self.params[1]
+        self._namedParams.listePions2 = self.params[2]
+        self._namedParams.rDistance = self.params[3]
+    end,
+
+    activate = function( self )
+                if( DIA_IsListEmpty( self._namedParams.listePions2 ) ) then
+            return
+        end
+
+        self.resultatCalcul = self.resultatCalcul or nil
+        if( ModuleBegins() ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePions2 )
+        end
+
+        for _,pion in pairs( self._namedParams.listePions1 ) do
+        local _continue = true
+if( DEC_Geometrie_CalculerAutomateDistanceLigneAvant( self.resultatCalcul, pion ) < -self._namedParams.rDistance ) then
+                Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreRalentir, 1, { pion, } )
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin
+]]--[[// 
+]]--[[// Commentaires: PAUSE les pions d'échelons différents pour coordination en 
+]]--[[//               ligne
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin"
+{
+    activations =
+    {
+        { "ACT_GTIA_Automate_DonnerOrdreAttendre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions1 = self.params[1]
+        self._namedParams.listePions2 = self.params[2]
+        self._namedParams.rDistance = self.params[3]
+    end,
+
+    activate = function( self )
+                if( DIA_IsListEmpty( self._namedParams.listePions1 ) ) then
+            return
+        end
+
+        self.resultatCalcul = self.resultatCalcul or nil
+        if( ModuleBegins() ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePions1 )
+        end
+
+        for _,pion in pairs( self._namedParams.listePions2 ) do
+        local _continue = true
+if( DEC_Geometrie_CalculerAutomateDistanceLigneArriere( self.resultatCalcul, pion ) < self._namedParams.rDistance ) then
+                Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreAttendre, 1, { pion, } )
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_Automate_DonnerOrdreAttendre
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_GTIA_Automate_DonnerOrdreAttendre"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                F_Automat_SetbOrdreAttendre( self._namedParams.pion, true )
+    end,
+
+    deselect = function( self )
+                F_Automat_SetbOrdreAttendre( self._namedParams.pion, false )
+    end,
+
+    destroy = function( self )
+                F_Automat_SetbOrdreAttendre( self._namedParams.pion, false )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_Automate_DonnerOrdrePoursuivre
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_GTIA_Automate_DonnerOrdrePoursuivre"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                F_Automat_SetbOrdrePoursuivre( self._namedParams.pion, true )
+    end,
+
+    deselect = function( self )
+                F_Automat_SetbOrdrePoursuivre( self._namedParams.pion, false )
+    end,
+
+    destroy = function( self )
+                F_Automat_SetbOrdrePoursuivre( self._namedParams.pion, false )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_Automate_DonnerOrdreRalentir
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_GTIA_Automate_DonnerOrdreRalentir"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                F_Automat_SetbOrdreRalentir( self._namedParams.pion, true )
+    end,
+
+    deselect = function( self )
+                F_Automat_SetbOrdreRalentir( self._namedParams.pion, false )
+    end,
+
+    destroy = function( self )
+                F_Automat_SetbOrdreRalentir( self._namedParams.pion, false )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordination, "BEH_GTIA_SePosterSurEntreeFuseau", nodes.BEH_GTIA_SePosterSurEntreeFuseau }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordination, "BEH_GTIA_AssurerLaCoordinationInterne", nodes.BEH_GTIA_AssurerLaCoordinationInterne }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordination, "BEH_GTIA_AssurerLaCoordinationExterne", nodes.BEH_GTIA_AssurerLaCoordinationExterne }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordinationExterne, "BEH_GTIA_Automate_Attendre", nodes.BEH_GTIA_Automate_Attendre }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordinationExterne, "BEH_GTIA_Automate_Poursuivre", nodes.BEH_GTIA_Automate_Poursuivre }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordinationExterne, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax, "ACT_GTIA_Automate_DonnerOrdreRalentir", nodes.ACT_GTIA_Automate_DonnerOrdreRalentir }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin, "ACT_GTIA_Automate_DonnerOrdreAttendre", nodes.ACT_GTIA_Automate_DonnerOrdreAttendre }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordinationInterne, "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin", nodes.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssurerLaCoordinationInterne, "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax", nodes.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_Automate_Attendre, "ACT_GTIA_Automate_DonnerOrdreAttendre", nodes.ACT_GTIA_Automate_DonnerOrdreAttendre }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_Automate_Poursuivre, "ACT_GTIA_Automate_DonnerOrdrePoursuivre", nodes.ACT_GTIA_Automate_DonnerOrdrePoursuivre }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_SePosterSurEntreeFuseau, "ACT_GTIA_Automate_DonnerOrdreAttendre", nodes.ACT_GTIA_Automate_DonnerOrdreAttendre }

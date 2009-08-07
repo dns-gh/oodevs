@@ -1,0 +1,81 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missionsreactionpopulations/interdirefranchissementpopulations/CDT - InterdireFranchissementPopulations.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_FiltrerPopulations
+]]--[[//
+]]--[[// Commentaires:    $$$$GGR : définir clairement les unités qui doivent suivre
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_InterdireFranchissementPopulations"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Mission_Automate_AssignerSuivreAListe", {} },
+        { "BEH_Automate_CreerPosteControle", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.listePionsInterdireFranchissement = self.listePionsInterdireFranchissement or {}
+        self.listePionsSuivre = self.listePionsSuivre or {}
+        self.points = self.points or DEC_Geometrie_CreerListePoints()
+        if( ModuleBegins() ) then
+            do
+                local i = 0
+                while i < DEC_ListePoints_Size( self._namedParams.mission.points_ ) do
+                    local _continue = true
+if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.mission.points_, i ) ) ) then
+                        DEC_ListePoints_PushBack( self.points, DEC_ListePoints_GetAt( self._namedParams.mission.points_, i ) )
+                    end
+                i = i + 1
+                end
+
+            end
+        end
+
+        self.eEtatODC = self.eEtatODC or eActionEnCours
+        if( self.eEtatODC == eActionHalt ) then
+            do
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                self.eEtatODC = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        DIA_Clear( self.listePionsInterdireFranchissement )
+        DIA_Clear( self.listePionsSuivre )
+        self.listePionsInterdireFranchissement = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_InterdireFranchissementPopulations" )
+        DIA_PushBack( self.listePionsSuivre, DEC_Automate_PionPC() )
+        if( not DIA_IsListEmpty( self.listePionsInterdireFranchissement ) ) then
+            do
+                local pionASuivre = DEC_Geometrie_PionDerriere( self.listePionsInterdireFranchissement, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
+                Activate( self.activations.BEH_Mission_Automate_AssignerSuivreAListe, 1, { ePhase_CDT, self.listePionsSuivre, pionASuivre, } )
+            end
+--[[// création des objets par l'automate et destruction en fin de mission
+]]        end
+
+        local i = 0
+        while i < DEC_ListePoints_Size( self.points ) do
+            local _continue = true
+            Activate( self.activations.BEH_Automate_CreerPosteControle, 1, { DEC_ListePoints_GetAt( self.points, i ), } )
+        i = i + 1
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_InterdireFranchissementPopulations = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_InterdireFranchissementPopulations, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_InterdireFranchissementPopulations, "BEH_Mission_Automate_AssignerSuivreAListe", nodes.BEH_Mission_Automate_AssignerSuivreAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_InterdireFranchissementPopulations, "BEH_Automate_CreerPosteControle", nodes.BEH_Automate_CreerPosteControle }

@@ -25,6 +25,8 @@
 #include "pathfind/TerrainRule_ABC.h"
 #include "pathfind/Node.h"
 #include "pathfind/SpatialContainerTraits.h"
+#include "simulation_kernel/MIL_AgentServer.h"
+#include "simulation_kernel/Decision/Path/DEC_PathFind_Manager.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MT/MT_Logger/MT_LogManager.h"
@@ -38,8 +40,8 @@ using namespace pathfind;
 // Name: TER_PathFinderThread constructor
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-TER_PathFinderThread::TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue )
-    : tools::thread::RequestProcessor_ABC< TER_PathFindRequest_ABC* >( queue )
+TER_PathFinderThread::TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue )
+    : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >( queue )
     , pPathfinder_( 0 )
 {
     pPathfinder_ = new TerrainPathfinder( strGraphArchive, strNodeArchive, strLinkArchive );
@@ -109,14 +111,17 @@ void TER_PathFinderThread::ProcessDynamicData()
 // Name: TER_PathFinderThread::Process
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::Process( TER_PathFindRequest_ABC* const& pRequest )
+void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest )
 {
     try
     {
         ProcessDynamicData();
         
-        if( pRequest )
-            pRequest->Execute( *pPathfinder_ );
+        if( pRequest.get() )
+        {
+            pRequest->Execute( *pPathfinder_ );            
+            MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( pRequest );
+        }
     }
     catch( std::exception& e )
     {

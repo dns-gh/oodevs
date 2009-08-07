@@ -1,0 +1,52 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/pel eei/missions/organiseraccueilcolonnerefugies/OrganiserAccueilColonneRefugies - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 04-02-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Pel EEI/Missions/OrganiserAccueilColonneRefugies/OrganiserAccueilColonneRefugies - CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 7 $
+]]--[[// $Workfile: OrganiserAccueilColonneRefugies - CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// ******************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ******************************************************************************
+]]node "MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_ABC_OrganiserAccueilColonneRefugies", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_ABC_OrganiserAccueilColonneRefugies, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Conduite générique 
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies, "BEH_Conduite_Automate_ABC_OrganiserAccueilColonneRefugies", nodes.BEH_Conduite_Automate_ABC_OrganiserAccueilColonneRefugies }

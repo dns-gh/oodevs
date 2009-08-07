@@ -1,0 +1,193 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/missions/Reprendre travaux.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_GEN_ReprendreTravaux
+]]--[[//
+]]--[[// Commentaires: refonte 27/10/2006
+]]--[[//
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_GEN_ReprendreTravaux"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Objet_Pion_GEN_ReprendreTravaux", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.travail_ ) ) then
+            Halt()
+        end
+
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.ptObst = self.ptObst or nil
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "MIS_Pion_GEN_ReprendreMissionConstruction" )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.travail_ ) )
+                if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progression 
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.ptObst ) < 800 ) then
+                    self.ePhaseMission = eRealiserObstacle
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObst, eProgressionReco, eTypeItiMouvement, } )
+                
+            --[[// Reprise des travaux
+]]elseif switch_1 == eRealiserObstacle then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                --[[// Si sauvegarde
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.ptObst ) > 800 ) then
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.ptObst, eProgressionReco, eTypeItiMouvement, } )
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.ePhaseMission = eFinMission
+                                                return
+
+                    end
+                end
+
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                        DEC_RC( eRC_MissionImpossible )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Objet_Pion_GEN_ReprendreTravaux, 1, setmetatable( { self._namedParams.mission.travail_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Objet_Pion_GEN_ReprendreTravaux( T_ConnaissanceObjet objMission )
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Objet_Pion_GEN_ReprendreTravaux"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_Obj_Pion_GEN_ReprendreTravaux", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.obj = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------
+]]--[[// Validité de l'objet
+]]--[[//-----------------------------------------------------------------
+]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.obj ) ) then
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------
+]]--[[// Organisation chantier, verification renfort, brechage et 
+]]--[[// desorganisation chantier
+]]--[[//-----------------------------------------------------------------
+]]local eType = DEC_ConnaissanceObjet_Type( self._namedParams.obj )
+        if( DEC_Agent_PeutConstruireObjet( eType ) ) then
+            do
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Obj_Pion_GEN_ReprendreTravaux, 1, setmetatable( { self._namedParams.obj, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+            end
+        else
+do
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Pion_GEN_AttendreRenforcementPour, 1, { self._namedParams.obj, } )
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_GEN_ReprendreTravaux = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_ReprendreTravaux, "ACT_Obj_Pion_GEN_ReprendreTravaux", nodes.ACT_Obj_Pion_GEN_ReprendreTravaux }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_ReprendreTravaux, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_ReprendreTravaux, "ACT_Pion_GEN_AttendreRenforcementPour", nodes.ACT_Pion_GEN_AttendreRenforcementPour }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReprendreTravaux, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReprendreTravaux, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReprendreTravaux, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReprendreTravaux, "BEH_Objet_Pion_GEN_ReprendreTravaux", nodes.BEH_Objet_Pion_GEN_ReprendreTravaux }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReprendreTravaux, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

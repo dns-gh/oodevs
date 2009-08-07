@@ -1,0 +1,37 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVersCampRefugies - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_FaireMouvementVersCampRefugies
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_FaireMouvementVersCampRefugies"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "$ Mvt en cours vers camp refugies $" )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Automate_ChangeEtatPriseEnCompteRefugies( false )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_FaireMouvementVersCampRefugies = { "mission" }

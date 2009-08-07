@@ -1,0 +1,158 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/log/pions/missions/SeDeployer.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_LOG_SeDeployer
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// Review MIA
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_LOG_SeDeployer"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_Log_InstallerDispositif", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "MIS_Pion_LOG_SeDeployer" )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                --[[// Déploiement sur place
+]]if( ( self._namedParams.mission.positionDeploiement_ == 0 or self._namedParams.mission.positionDeploiement_ == nil ) ) then
+                    self.ePhaseMission = eDeployer
+                else
+                    self.ePhaseMission = eProgresser
+                end
+
+                
+            --[[// Progression
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eDeployer
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Deploiement
+]]elseif switch_1 == eDeployer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                Activate( self.activations.BEH_Pion_Log_InstallerDispositif, 1, {} )
+                
+            --[[// Fin de la mission (sur ordre)
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_Log_InstallerDispositif
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_Log_InstallerDispositif"
+{
+    activations =
+    {
+        { "ACT_Pions_SInstaller", {} },
+        { "ACT_Pion_Log_DispositifInstalle", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Pions_SInstaller, 1, {} )
+        if( DEC_Agent_EstInstalle() ) then
+            Activate( self.activations.ACT_Pion_Log_DispositifInstalle, 1, {} )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pion_Log_DispositifInstalle
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Pion_Log_DispositifInstalle"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_SectionDeployee )
+                else
+                    DEC_Message( eRC_SectionDeployee )
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_LOG_SeDeployer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Log_InstallerDispositif, "ACT_Pions_SInstaller", nodes.ACT_Pions_SInstaller }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Log_InstallerDispositif, "ACT_Pion_Log_DispositifInstalle", nodes.ACT_Pion_Log_DispositifInstalle }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_SeDeployer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_SeDeployer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_SeDeployer, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_SeDeployer, "BEH_Pion_Log_InstallerDispositif", nodes.BEH_Pion_Log_InstallerDispositif }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_SeDeployer, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

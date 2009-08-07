@@ -15,7 +15,6 @@
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_Fuseau.h"
@@ -154,4 +153,21 @@ MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromBackLine( const MT_Ve
     // Back line ahead
     else // MT_Droite::eOnPositiveSide || MT_Droite::eOnBoundary
         return rDistFromBackLine;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FrontAndBackLinesComputer::UsedByDIA
+// Created: LDC 2009-04-24
+// -----------------------------------------------------------------------------
+void DEC_FrontAndBackLinesComputer::UsedByDIA()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FrontAndBackLinesComputer::ReleasedByDIA
+// Created: LDC 2009-04-24
+// -----------------------------------------------------------------------------
+void DEC_FrontAndBackLinesComputer::ReleasedByDIA()
+{
+    delete this;
 }

@@ -1,0 +1,38 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/RenseignerSur - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Auto_CDT_RENS_ROHUM_RenseignerSur
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Auto_CDT_RENS_ROHUM_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "BEH_Auto_CDT_RENS_ROHUM_RenseignerSur : debut " )
+        end
+
+        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererPionsDetruits_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Gestion 
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+--[[// behavior BEH_Dispositif_Automate_RENS_GererLeSE_(); // PAS ICI car infiltration
+]]}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Auto_CDT_RENS_ROHUM_RenseignerSur, "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", nodes.BEH_Dispositif_Automate_RENS_GererPionsDetruits_ }

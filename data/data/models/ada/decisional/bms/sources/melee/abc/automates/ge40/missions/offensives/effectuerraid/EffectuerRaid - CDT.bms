@@ -1,0 +1,89 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/offensives/effectuerraid/EffectuerRaid - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_GTIA_EffectuerRaid
+]]--[[// 
+]]--[[// Commentaires: idem Attaquer pour l'instant
+]]--[[// Définition doctrine: "Le raid n'est pas une mission mais un mode d'action
+]]--[[//                       Effectuer un raid: faire une incursion rapide et 
+]]--[[//                       profonde à l'intérieur du dispositif ennemi pour
+]]--[[//                       s'emparer d'un zone clé ou détruire un objectif de 
+]]--[[//                       grand intérêt opérationnel"
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_GTIA_EffectuerRaid"
+{
+    activations =
+    {
+        { "ACT_GTIA_AnalyserSituationPourAttaquer", {} },
+        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", {} },
+        { "BEH_GTIA_RendreCompte", {} },
+        { "BEH_GTIA_EchelonnerDispositif", {} },
+        { "BEH_GTIA_RepartirDansFuseaux", {} },
+        { "BEH_GTIA_GererAppuisInternes", {} },
+        { "BEH_GTIA_AssignerLesOrdresPourAttaquer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[// Analyse environnement
+]]--[[// idem Attaquer
+]]Activate( self.activations.ACT_GTIA_AnalyserSituationPourAttaquer, 1, { self._namedParams.mission.objectifs_, } )
+        --[[// Init
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                                do
+                    g_bPhaseReceuil = false
+                    local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
+                    for _,x in pairs( listePionsSubordonnes ) do
+                    local _continue = true
+                        do
+                            local automat = x
+                            F_Automat_SeteEtatEchelon( automat, eEtatEchelon_None )
+                            F_Automat_SeteEtatPhaseMission( automat, eEtatPhaseMission_None )
+                        end
+
+                    end
+
+                end
+
+                                return
+
+            end
+--[[/***************TEST *******************/]]        end
+
+        if( not self._namedParams.mission.sansRearticulation_ ) then
+            --[[//// tres moche priorite
+]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourAttaquer, 10, {} )
+        end
+
+        Activate( self.activations.BEH_GTIA_RendreCompte, 1, {} )--[[/***************TEST *******************/]]--[[// CR
+]]
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, {} )--[[// Dispositif 
+]]
+        Activate( self.activations.BEH_GTIA_RepartirDansFuseaux, 1, { self._namedParams.mission.objectifs_, } )
+        --[[// Missions
+]]--[[// priorite 1
+]]Activate( self.activations.BEH_GTIA_GererAppuisInternes, 10, {} )
+        --[[// priorite 2
+]]Activate( self.activations.BEH_GTIA_AssignerLesOrdresPourAttaquer, 1, { self._namedParams.mission.objectifs_, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_GTIA_EffectuerRaid = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_EffectuerRaid, "ACT_GTIA_AnalyserSituationPourAttaquer", nodes.ACT_GTIA_AnalyserSituationPourAttaquer }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_EffectuerRaid, "BEH_GTIA_OrganiserLesMoyensPourAttaquer", nodes.BEH_GTIA_OrganiserLesMoyensPourAttaquer }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_EffectuerRaid, "BEH_GTIA_RendreCompte", nodes.BEH_GTIA_RendreCompte }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_EffectuerRaid, "BEH_GTIA_EchelonnerDispositif", nodes.BEH_GTIA_EchelonnerDispositif }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_EffectuerRaid, "BEH_GTIA_RepartirDansFuseaux", nodes.BEH_GTIA_RepartirDansFuseaux }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_EffectuerRaid, "BEH_GTIA_GererAppuisInternes", nodes.BEH_GTIA_GererAppuisInternes }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_EffectuerRaid, "BEH_GTIA_AssignerLesOrdresPourAttaquer", nodes.BEH_GTIA_AssignerLesOrdresPourAttaquer }

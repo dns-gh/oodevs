@@ -14,6 +14,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_AgentKnowledgeList constructor
@@ -40,56 +41,17 @@ MIL_ParameterType_AgentKnowledgeList::~MIL_ParameterType_AgentKnowledgeList()
 // Name: MIL_ParameterType_AgentKnowledgeList::Copy
 // Created: NLD 2006-11-AgentList
 //-----------------------------------------------------------------------------
-void MIL_ParameterType_AgentKnowledgeList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
+bool MIL_ParameterType_AgentKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.value.t != T_MissionParameter_value_unitKnowledgeList ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeListeConnaissancesAgent( to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    if( !NET_ASN_Tools::CopyAgentKnowledgeList( *from.value.u.unitKnowledgeList, to, knowledgeResolver ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_AgentKnowledgeList::Copy
-// Created: NLD 2006-11-AgentList
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_AgentKnowledgeList::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeListeConnaissancesAgent( from ) )
-        return false;
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeListeConnaissancesObjet( to ) )
-        return false;
-
-    NET_ASN_Tools::CopyAgentKnowledgeList( from, to );
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_AgentKnowledgeList::Copy
-// Created: NLD 2006-11-AgentList
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_AgentKnowledgeList::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeListeConnaissancesAgent( from ) )
+    if( !from.IsOfType( *this ) )
         return false;
 
     to.null_value                 = false;
     to.value.t                    = T_MissionParameter_value_unitKnowledgeList;
     to.value.u.unitKnowledgeList = new ASN1T_UnitKnowledgeList();
 
-    if( !NET_ASN_Tools::CopyAgentKnowledgeList( from, *to.value.u.unitKnowledgeList, knowledgeResolver ) )
-        return false;
-
-    return true;    
+    return from.ToAgentKnowledgeList( *to.value.u.unitKnowledgeList );
 }
 
 //-----------------------------------------------------------------------------

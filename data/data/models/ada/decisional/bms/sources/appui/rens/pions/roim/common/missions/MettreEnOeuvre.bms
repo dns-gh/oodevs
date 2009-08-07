@@ -1,0 +1,265 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roim/common/missions/MettreEnOeuvre.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_RENS_MettreEnOeuvre
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_RENS_MettreEnOeuvre"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_RC", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.positionDeploiement = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.pionDrone = self.pionDrone or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[//Gestion drone
+]]--[[//-----------------------------------------------------------------------------
+]]if( not DIA_IsListEmpty( S_Misc_Pion_Rens_ObtenirDronesDisponibles() ) ) then
+            self.pionDrone = DIA_GetAt( S_Misc_Pion_Rens_ObtenirDronesDisponibles(), 0 )
+        else
+do
+                Activate( self.activations.ACT_Info_Trace, 1, { "No more drone available", } )
+                if( ModuleBegins() ) then
+                    Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
+                end
+
+                                return
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            Halt()
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progression vers position
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eSurveiller
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.positionDeploiement, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Mettre en oeuvre
+]]elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, 1, setmetatable( { self.pionDrone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission de reconnaissance
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_Transport_Pion_Rens_DebarquerDrone", {} },
+        { "ACT_Misc_ProgrammerDrone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDrone = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Programmation du drone
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "DRONE OPERATED", } )
+                Activate( self.activations.ACT_Transport_Pion_Rens_DebarquerDrone, 1, { self._namedParams.pionDrone, } )
+                                self.params.__returnValue = eActionEffectuee
+                return
+
+            end
+        end
+
+        Activate( self.activations.ACT_Misc_ProgrammerDrone, 1, setmetatable( { self._namedParams.pionDrone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_ProgrammerDrone
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Misc_ProgrammerDrone"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDrone = self.params[1]
+    end,
+
+    select = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutMiseEnOeuvreDrone )
+                    else
+                        DEC_Message( eRC_DebutMiseEnOeuvreDrone )
+                    end
+
+                end
+
+                DEC_Trace( "---- Programmation du drone ----" )
+            end
+        end
+
+        do
+            do
+                self.rTempsDebut = self.rTempsDebut or DEC_TempsSim()
+                if( ModuleBegins() ) then
+                    do
+                    end
+                end
+
+                do
+                end
+
+                if( 10 * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
+                    do
+                                                do
+                            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                                DEC_RC( eRC_FinMiseEnOeuvreDrone )
+                            else
+                                DEC_Message( eRC_FinMiseEnOeuvreDrone )
+                            end
+
+                        end
+
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Transport_Pion_Rens_DebarquerDrone
+]]--[[//
+]]--[[// Commentaires:lancer par la mission 'MettreEnOeuvre"
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Transport_Pion_Rens_DebarquerDrone"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDrone = self.params[1]
+    end,
+
+    select = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                self._namedParams.pionDrone:SetbMiseEnOeuvre_( true )
+                DEC_Transport_DebarquerPionSansDelais( self._namedParams.pionDrone )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, "ACT_Transport_Pion_Rens_DebarquerDrone", nodes.ACT_Transport_Pion_Rens_DebarquerDrone }
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, "ACT_Misc_ProgrammerDrone", nodes.ACT_Misc_ProgrammerDrone }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone", nodes.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

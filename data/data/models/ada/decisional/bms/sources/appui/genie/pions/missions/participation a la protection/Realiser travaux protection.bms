@@ -1,0 +1,339 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/missions/participation a la protection/Realiser travaux protection.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_GEN_RealiserTravauxProtection
+]]--[[//
+]]--[[// Commentaires: Refonte 27/10/2006
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_GEN_RealiserTravauxProtection"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_GEN_AllerFaireTravauxSur", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        --[[//-----------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "------------- Realiser des travaux protection -----------------" )
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Squelette de mission
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progression tactique
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                        self.ePhaseMission = eFinMission
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_GEN_AllerFaireTravauxSur, 1, setmetatable( { self._namedParams.mission.travaux_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_GEN_AllerFaireTravauxSur
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_GEN_AllerFaireTravauxSur"
+{
+    activations =
+    {
+        { "BEH_Obj_GEN_AllerContruireObjetSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.travaux = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.rIterateur = self.rIterateur or 0
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                self.rIterateur = self.rIterateur + 1
+            end
+        end
+
+        if( self.rIterateur == #( self._namedParams.travaux ) ) then
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+        Activate( self.activations.BEH_Obj_GEN_AllerContruireObjetSur, 1, setmetatable( { DEC_UserTypeList_GetAt( self._namedParams.travaux, self.rIterateur ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Obj_GEN_AllerContruireObjetSur
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Obj_GEN_AllerContruireObjetSur"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Objet_Pion_GEN_RealiserObjet", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.positionObjet = self.positionObjet or S_Geometrie_BarycentreZone( DEC_GenObject_Localisation( self._namedParams.objet ) )
+        --[[// Fin construction
+]]if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------
+]]--[[// Validité position
+]]--[[//-----------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                local positionTest = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_GenObject_Localisation( self._namedParams.objet ) )
+                if( ( positionTest == 0 or positionTest == nil ) ) then
+                    do
+                        DEC_Trace( "Objet planifie en dehors du fuseau..." )
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Mis générique
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        if( DEC_Geometrie_Distance( self.positionObjet, DEC_Agent_Position() ) > 10 ) then
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObjet, eProgressionDirect, eTypeItiMouvement, } )
+        else
+            Activate( self.activations.BEH_Objet_Pion_GEN_RealiserObjet, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Pion_GEN_RealiserObjet
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Pion_GEN_RealiserObjet"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_RC", {} },
+        { "ACT_Obj_Pion_GEN_PreparerObstacle", {} },
+        { "BEH_Objet_Pion_GEN_RealiserTravaux", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Organisation chantier, verification renfort, brechage et 
+]]--[[// desorganisation chantier
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        if( not DEC_Agent_PeutConstruireObjet( DEC_GenObject_Type( self._namedParams.objet ) ) ) then
+            do
+                Activate( self.activations.ACT_RC, 1, { eRC_AttenteRenforcement, } )
+                                return
+
+            end
+--[[// ...SINON OK pour construire l'objet
+]]--[[//-----------------------------------------------------------------
+]]--[[// En fonction du type d'objet...
+]]--[[//-----------------------------------------------------------------
+]]--[[// il s'agit d'un obstacle de manoeuvre
+]]        end
+
+        if( DEC_GenObject_TypeObstacleManoeuvre( self._namedParams.objet ) ) then
+            Activate( self.activations.ACT_Obj_Pion_GEN_PreparerObstacle, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        else
+            Activate( self.activations.BEH_Objet_Pion_GEN_RealiserTravaux, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Pion_GEN_RealiserTravaux
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Pion_GEN_RealiserTravaux"
+{
+    activations =
+    {
+        { "ACT_Obj_Pion_GEN_RealiserTravaux", {} },
+        { "ACT_Obj_Pion_GEN_ValoriserObstacle", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eRealiserObstacle
+        switch_1 = --[[//-----------------------------------------------------------------
+]]--[[// Realisation obstacle et valorisation
+]]--[[//-----------------------------------------------------------------
+]]self.ePhase
+            if switch_1 == eRealiserObstacle then
+                --[[//-----------------------------------------------------------------
+]]--[[// Construction
+]]--[[//-----------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eValoriserObstacle
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Obj_Pion_GEN_RealiserTravaux, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[//-----------------------------------------------------------------
+]]--[[// Valorisation si obsqtacle
+]]--[[//-----------------------------------------------------------------
+]]elseif switch_1 == eValoriserObstacle then
+                if( not DEC_Agent_PeutValoriserObjet( myself.objMisEnCours_ ) ) then
+                    self.params.__returnValue = eActionEffectuee
+                    Halt()
+                end
+
+                --[[// Valorisation
+]]if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Obj_Pion_GEN_ValoriserObstacle, 1, setmetatable( { myself.objMisEnCours_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_GEN_RealiserTravauxProtection = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GEN_AllerFaireTravauxSur, "BEH_Obj_GEN_AllerContruireObjetSur", nodes.BEH_Obj_GEN_AllerContruireObjetSur }
+connections[ #connections + 1 ] = { nodes.BEH_Obj_GEN_AllerContruireObjetSur, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Obj_GEN_AllerContruireObjetSur, "BEH_Objet_Pion_GEN_RealiserObjet", nodes.BEH_Objet_Pion_GEN_RealiserObjet }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_RealiserObjet, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_RealiserObjet, "ACT_Obj_Pion_GEN_PreparerObstacle", nodes.ACT_Obj_Pion_GEN_PreparerObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_RealiserObjet, "BEH_Objet_Pion_GEN_RealiserTravaux", nodes.BEH_Objet_Pion_GEN_RealiserTravaux }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_RealiserTravaux, "ACT_Obj_Pion_GEN_RealiserTravaux", nodes.ACT_Obj_Pion_GEN_RealiserTravaux }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_RealiserTravaux, "ACT_Obj_Pion_GEN_ValoriserObstacle", nodes.ACT_Obj_Pion_GEN_ValoriserObstacle }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_RealiserTravauxProtection, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_RealiserTravauxProtection, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_RealiserTravauxProtection, "BEH_Dep_GEN_AllerFaireTravauxSur", nodes.BEH_Dep_GEN_AllerFaireTravauxSur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_RealiserTravauxProtection, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

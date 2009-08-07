@@ -1,0 +1,35 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie blindee/missions/faire franchir/Faire franchir - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_GEN_FaireFranchir
+]]--[[//
+]]--[[// Commentaires: refonte 27/10/06
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_GEN_FaireFranchir"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                S_Dispositif_Automate_Init()
+                DEC_Trace( "------------------ to faire franchir Order  ------------------" )
+                DEC_MRT_Valide()
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_GEN_FaireFranchir = { "mission" }

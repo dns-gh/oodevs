@@ -1,0 +1,968 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/Types.bms"] = true
+
+include "bit.lua"
+
+
+include "Common/Moteur/Types.bms"
+
+
+include "Common/Types A VIRER.bms"
+
+
+
+
+--[[// MIA: a deplacer
+]]--[[//necessaire??
+]]
+--[[//FIN TEST
+]]
+--[[// Pour les automates
+]]eMRT_DelaisMission = 0
+eMRT_SelectionnerPions = 1
+eMRT_CalculerPosition = 2
+eMRT_AffecterFuseaux = 3
+eMRT_RetablirFuseau = 4
+eMRT_AssignerMissions = 5
+eMRT_DeterminerEchelonsLocals = 6
+eMRT_DeterminerEchelonsGlobals = 7
+eMRT_Valider = 8
+eMRT_Effectuee = 9
+eMRT_MissionImpossible = 10
+
+
+--[[// ==============================================================================
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// MISC
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// ==============================================================================
+]]
+eAborderObjectif = 0
+eActiverObstacle = 1
+eAgirSurEni = 2
+eAmenagerBerges = 3
+eAnimer = 4
+eAppliquerLesFeux = 5
+eAttendreOrdre = 6
+eAttendre = 7
+eAppuyer = 8
+eBaliserObstacle = 9
+eBarrer = 10
+eBousculer = 11
+eCalculerPosition = 12
+eCalculerItineraire = 13
+eCreerSite = 14
+eCalculerDesElementsDeTir = 15
+eChangerDePosition = 16
+eChoisirZone = 17
+eConduireLeTir = 18
+eCouvrir = 19
+eCreerItineraire = 20
+eCoordonner = 21
+eDepasser = 22
+eDebarquer = 23
+eDeborder = 24
+eDeboucher = 25
+eDecrocher = 26
+eDeminerObstacle = 27
+eDeployer = 28
+eDetruire = 29
+eDeterminerPosition = 30
+eDeterminerSite = 31
+eDeterminerItVersAmi = 32
+eDeterminerItVersEni = 33
+eDeterminerItVersZone = 34
+eDeterminerItVersPosition = 35
+eDeterminerItVersPositionSurete = 36
+eDeterminerItVersPositionPoste = 37
+eDeterminerItVersPositionObservation = 38
+eDispositifDeplacement = 39
+eDonnerAssaut = 40
+eDonnerMission = 41
+eDeterminerPion = 42
+eEclairer = 43
+eElargirTrouee = 44
+eEmbarquer = 45
+eEquiperItineraire = 46
+eEtatDisponiblePourAppliquerFeux = 47
+eExecuterLeTir = 48
+eExtraire = 49
+eEscorter = 50
+eFinDecontamination = 51
+eFinMission = 52
+eFixer = 53
+eFouiller = 54
+eFreiner = 55
+eHelitransporter = 56
+eSecuriser = 57
+eTransporterAllerEmbarquer = 58
+eTransporterAllerDebarquer = 59
+eTransporterEmbarquer = 60
+eTransporterDebarquer = 61
+eTransporter = 62
+eInstallerDispositif = 63
+eJalonner = 64
+eLeverDispositif = 65
+eMarquerObstacle = 66
+eMettreEnPlaceLesTirs = 67
+eMettreTenueProtectionNBC = 68
+eMettreEnOeuvre = 69
+eNettoyer = 70
+eObserver = 71
+eOrganiserChantier = 72
+eParcourir = 73
+ePasserEnAppui = 74
+ePrendreContact = 75
+ePreparerAuTir = 76
+ePreparerObstacle = 77
+ePreparerMission = 78
+eProgresser = 79
+ePreciserContact = 80
+eRealiserObstacle = 81
+eRealiserSiteDecontamination = 82
+eRealiserTravaux = 83
+eRecompleter = 84
+eReconnaitre = 85
+eReconnaitreEnProfondeur = 86
+eReconnaitreSommairement = 87
+eReconnaitreZoneComplementaire = 88
+eReduireObstacle = 89
+eReEmbarquer = 90
+eRejoindre = 91
+eRejoindreFuseau = 92
+eRejoindreAssaut = 93
+eRejoindrePointChantier = 94
+eRejoindrePosition = 95
+eRenforcer = 96
+eRetablirDispositif = 97
+eRetrouver = 98
+eRetirerTenueProtectionNBC = 99
+eRiposter = 100
+eRompreContact = 101
+eSecuriserItineraire = 102
+eSeDeployer = 103
+eSecourir = 104
+eSeFaireDecontaminer = 105
+eSeMettreEnOeuvreSurZoneDeDeploiement = 106
+eSeMettreEnPlace = 107
+eSePoster = 108
+eSeReplier = 109
+eSInfiltrer = 110
+eSExfiltrer = 111
+eSurveiller = 112
+eSuivreUnite = 113
+eTerminerMission = 114
+eTomberEnGarde = 115
+eValoriserObstacle = 116
+ePreparerTir = 117
+eFaireFeu = 118
+eRelever = 119
+eSeRavitailler = 120
+eVerifierRenforts = 121
+eDemanderRavitaillement = 122
+eAttendreReponseRavitaillement = 123
+eAttendreRavitaillement = 124
+eSeFaireRavitailler = 125
+eTransmettreInformations = 126
+eGererPionDetruit = 127
+eGererSecondEchelon = 128
+
+
+ePhase_MRT = 0
+ePhase_CDT = 1
+
+
+
+eProgressionDirect = 0
+eProgressionDefaut = 16
+eProgressionBond = 24
+eProgressionReco = 94
+--[[// deplacement simple : aucun points
+]]--[[// deplacement par defaut: Lima
+]]--[[// deplacement par bonds: Lima | Bonds
+]]--[[// Lima | Bond | CCT | Particulier | Observation
+]]
+
+
+eQuantiteFavorable = 0
+eQuantiteNeutre = 1
+eQuantiteDefavorable = 2
+
+
+
+eActionDebut = 0
+eActionEnCours = 1
+eActionEnPause = 2
+eActionHalt = 3
+eActionImpossible = 4
+eActionEffectuee = 5
+
+
+eRapportForce_Defavorable = 0
+eRapportForce_Neutre = 1
+eRapportForce_Favorable = 2
+
+
+eNatureObjectif_ElementTerrain = 0
+eNatureObjectif_Objets = 1
+eNatureObjectif_ElementMobile = 2
+
+
+
+--[[// ==============================================================================
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ETAT INTERNE DU PION
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ==============================================================================
+]]eEtatDec_RAS = 0
+eEtatDec_Continu = 1
+eEtatDec_Sauvegarde = 2
+
+
+eEtatDecPrudence_None = 0
+eEtatDecPrudence_Actif = 1
+
+
+--[[// E_EtatLima
+]]eEtatLima_aucune = 0
+eEtatLima_LD = 1
+eEtatLima_LCA = 2
+eEtatLima_LC = 3
+eEtatLima_LI = 4
+eEtatLima_LIA = 5
+eEtatLima_LO = 6
+eEtatLima_LCAR = 7
+eEtatLima_LR = 8
+eEtatLima_Fuseau = 9
+--[[// Ligne de débouché
+]]--[[// Ligne de changement d'attitude
+]]--[[// Ligne de coordination
+]]--[[// Ligne à interdire
+]]--[[// Ligne d'identification et d'acceuil
+]]--[[// Ligne d'objectif
+]]--[[// Ligne de coup d'arrêt
+]]--[[// Ligne de recueil
+]]--[[// Entre dans le fuseau
+]]
+
+eEtatDestruction_None = 0
+eEtatDestruction_Tactique = 1
+eEtatDestruction_Total = 2
+--[[// détruit tactiquement
+]]
+
+eEtatNbc_Niv0 = 0
+eEtatNbc_Niv4 = 1
+
+
+eEtatDeplacement_aucun = 0
+eEtatDeplacement_EnCours = 1
+eEtatDeplacement_PosteFaceAObstacle = 2
+eEtatDeplacement_EnReco = 3
+
+
+eEtatRadio_Ouverte = 0
+eEtatRadio_Silence = 1
+
+
+eEtatRadar_Silence = 0
+eEtatRadar_Ouvert = 1
+
+
+eEtatAmbiance_Vitesse = 0
+eEtatAmbiance_Surete = 1
+
+
+eEtatFeu_aucun = 0
+eEtatFeu_Executer = 1
+eEtatFeu_Impossible_PasDeMunition = 2
+
+
+--[[// ATTENTION MAJ PAR AUTOMATE SEULEMENT !!!
+]]eEtatEchelon_None = 0
+eEtatEchelon_Second = 1
+eEtatEchelon_Premier = 2
+eEtatEchelon_Eclairage = 3
+--[[// par defaut Ajout ADA
+]]
+
+--[[// ATTENTION MAJ PAR AUTOMATE SEULEMENT !!!
+]]eEtatSoutien_aucun = 0
+eEtatSoutien_OK = 1
+
+
+--[[// Etat d'embarquement dans lequel on veut se trouver
+]]eEtatTransport_Debarque = 0
+eEtatTransport_Embarque = 1
+
+
+--[[// POUR RC
+]]eEtatPhaseMission_None = 0
+eEtatPhaseMission_AnimationSite = 1
+eEtatPhaseMission_ArriveSurLocalisation = 2
+eEtatPhaseMission_AttenteConditionFavorablePourInfiltration = 3
+eEtatPhaseMission_AttenteTransporteur = 4
+eEtatPhaseMission_DebutMission = 5
+eEtatPhaseMission_Decontamination = 6
+eEtatPhaseMission_DecontaminationZone = 7
+eEtatPhaseMission_DeploiementSurPosition = 8
+eEtatPhaseMission_Decroche = 9
+eEtatPhaseMission_DispositifInstalle = 10
+eEtatPhaseMission_EnAppui = 11
+eEtatPhaseMission_EnAttenteDeMission = 12
+eEtatPhaseMission_EnAttaque = 13
+eEtatPhaseMission_EnControleZone = 14
+eEtatPhaseMission_EnCouverture = 15
+eEtatPhaseMission_EnCoupDeMain = 16
+eEtatPhaseMission_EnEclairage = 17
+eEtatPhaseMission_EnFranchissement = 18
+eEtatPhaseMission_EnFreinage = 19
+eEtatPhaseMission_EnInfiltration = 20
+eEtatPhaseMission_EnExfiltration = 21
+eEtatPhaseMission_EnJalonnement = 22
+eEtatPhaseMission_EnPosition = 23
+eEtatPhaseMission_EnRecueil = 24
+eEtatPhaseMission_EnSurveillance = 25
+eEtatPhaseMission_EscorteUnite = 26
+eEtatPhaseMission_FinMission = 27
+eEtatPhaseMission_InstallationDispositif = 28
+eEtatPhaseMission_InstallationSurZoneImplantation = 29
+eEtatPhaseMission_MissionImpossible = 30
+eEtatPhaseMission_PreparationMission = 31
+eEtatPhaseMission_ProgressionSurAxe = 32
+eEtatPhaseMission_ProgressionVersLocalisation = 33
+eEtatPhaseMission_PretPourConduiteTir = 34
+eEtatPhaseMission_Reconnaissance = 35
+eEtatPhaseMission_ReconnaissanceLocalisation = 36
+eEtatPhaseMission_RejointFuseau = 37
+eEtatPhaseMission_RejointUnite = 38
+eEtatPhaseMission_SuitUnite = 39
+eEtatPhaseMission_TransportEnCours = 40
+eEtatPhaseMission_TransportEmbarquement = 41
+eEtatPhaseMission_TransportDebarquement = 42
+--[[// le pion va avoir une mission au tic suivant	
+]]
+
+eEtatSituationEnnemi_None = 0
+eEtatSituationEnnemi_DemandeDeTir = 1
+eEtatSituationEnnemi_DemandeAppui = 2
+eEtatSituationEnnemi_RuptureContact = 3
+eEtatSituationEnnemi_PriseContact = 4
+eEtatSituationEnnemi_PrecisionContact = 5
+eEtatSituationEnnemi_PretPourConduiteTir = 6
+eEtatSituationEnnemi_EniSurObjectif = 7
+--[[// A VIRER
+]]--[[// A VIRER
+]]
+
+eEtatOrdreCoordination_aucun = 0
+eEtatOrdreCoordination_Attendre = 1
+
+
+--[[// Spe
+]]eTypeContact_Defaut = 0
+eTypeContact_Offensif = 1
+eTypeContact_Defensif = 2
+eTypeContact_Appui = 3
+
+
+--[[// Spe ASA
+]]eEtatDeploiement_directionnel = 0
+eEtatDeploiement_omnidirectionnel = 1
+
+
+--[[// ============================================================================
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//Types communs aux entités Decs
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ============================================================================
+]]--[[//abstraction des données T_Pion entre le moteur et le dec.
+]]--[[//-------------------------------------------------------------------------
+]]--[[// ETAT INTERNE
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Etat décisionnels du pion
+]]--[[// !! attention enum moteur
+]]--[[//!idem
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Propriétés de commandement
+]]--[[//-------------------------------------------------------------------------
+]]--[[// MAJ par Automate
+]]--[[// MAJ par Automate
+]]--[[//-------------------------------------------------------------------------
+]]--[[// RC, situation de comportement face aux eni et en fonction de la phase de
+]]--[[// mission
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Ordre interruption
+]]--[[//-------------------------------------------------------------------------
+]]--[[// ordre pour automate
+]]--[[// pour mission jalonner // TEMP
+]]--[[// ajout ADA
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Escorte
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Misc
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Eni en cours --> ATTENTION VALIDITE!
+]]--[[// MISC /  MIA a rediscuter
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// ---> Utilisés seulement par INF...a mon avis à virer/simplifier
+]]--[[// MIA à virer cf. avec génie
+]]--[[// MIA à virer cf. FT sur tenir avec JCR
+]]--[[//spe INF MILICE
+]]--[[//spé INF
+]]--[[//spé INF
+]]--[[// <--- 
+]]--[[// A revoir
+]]--[[//ASA-ALAT-INF
+]]--[[//ASA-ALAT-INF
+]]--[[//------------------------------------------------------------------------------
+]]--[[//------------------------------------------------------------------------------
+]]
+
+--[[//abstraction des données T_Automate entre le moteur et le dec.
+]]--[[// MAJ par l'automate
+]]--[[// Pour coordination GTIA
+]]--[[// Pour coordination GTIA
+]]--[[// Pour coordination GTIA
+]]--[[// Etat de destruction
+]]--[[// MAJ par Automate GTIA
+]]--[[// Pour mission Controler zone
+]]--[[// moche mais seule solution sans Motivation
+]]--[[// moche mais seule solution sans Motivation
+]]--[[// moche mais seule solution sans Motivation
+]]--[[// moche mais seule solution sans Motivation
+]]--[[////// TEMP crade
+]]--[[// ajout ADA
+]]--[[// ajout ADA
+]]
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Types spécifiques à chaque arme
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+
+
+
+
+--[[//etat sur le tir
+]]
+
+
+
+
+
+
+
+--[[// Contrôle de l'automate
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Trans
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// AUTOMATES
+]]
+
+--[[// PIONS
+]]
+
+
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Blindes
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// AUTOMATES
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[// PIONS
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Refugié
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Milice
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// ASA
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+--[[//--------------------------------------------------------------------------
+]]--[[// Objectif Courant
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// liste pions pour coordination
+]]--[[//--------------------------------------------------------------------------
+]]--[[// -------------------------------------------------------------------------
+]]--[[// type de deploiement de la section
+]]--[[// -------------------------------------------------------------------------
+]]
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// ASS
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+--[[//etat sur le tir
+]]
+
+
+
+--[[// Sections de tir
+]]--[[// ----------------------------------------------------------------------------
+]]
+
+
+
+--[[// Observations
+]]--[[// ----------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Air
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// gestion du vol
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Objectif Courant
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// liste pions pour coordination
+]]--[[//--------------------------------------------------------------------------
+]]
+
+
+
+--[[//------------------------------------------------------------------------------
+]]--[[// MARINE
+]]--[[//------------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Objectif Courant
+]]--[[//--------------------------------------------------------------------------
+]]
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// ALAT
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+eCourtePortee = 0
+eMoyennePortee = 1
+eLonguePortee = 2
+eSansMunitions = 3
+
+
+eAA = 0
+eAS = 1
+ePolyvalent = 2
+
+
+--[[// liste des plots de ravitaillement passé en paramètre mission
+]]--[[// = paramètre pion pour eviter de passer ce paramètre en argument des fonctions
+]]--[[// le plot de ravitaillement sur lequel va se faire le ravitaillement
+]]--[[//Logistique
+]]--[[//necessaire pour la coordination log alat
+]]--[[// gestion du vol
+]]--[[// hack pour les demandes d'ODC par l'automate
+]]--[[// $$$ggr : a supprimer quand solution générique
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Objectif Courant
+]]--[[//--------------------------------------------------------------------------
+]]--[[// -------------------------------------------------------------------------
+]]--[[// Point de regroupement
+]]--[[// point que l'on rejoint en fin de mission ou si détruit tactiquement
+]]--[[// -------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// liste pions pour coordination
+]]--[[//--------------------------------------------------------------------------
+]]
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// LOG
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+--[[// new
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[/// fin log
+]]
+
+
+
+
+
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// NBC
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+
+
+--[[// AUTOMATES
+]]
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// RENS
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+--[[// rohum
+]]
+
+
+
+
+
+
+
+
+
+--[[// roim
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+--[[// roem
+]]
+
+
+
+
+
+
+
+
+
+--[[// Radint
+]]
+
+
+
+
+--[[// AUTOMATES
+]]
+
+
+--[[// Rohum
+]]
+
+
+--[[// roim
+]]
+
+
+--[[// roem
+]]
+
+
+
+
+
+
+--[[// radint
+]]
+
+
+--[[//ASY
+]]
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Emergency
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Pions
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Automates
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+
+
+
+--[[//=============================================================================
+]]--[[// Missions INF
+]]--[[//=============================================================================
+]]include "Melee/Inf/Pions/Common/Types.bms"
+
+include "Melee/Inf/Automates/Common/Types.bms"
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// GENIE
+]]--[[// -----------------------------------------------------------------------------
+]]include "Appui/Genie/Pions/Types.bms"
+
+include "Appui/Genie/Automates/Types.bms"
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// ABC
+]]--[[// -----------------------------------------------------------------------------
+]]--[[/*include "Blindes\Pions\ABC - Pion - Types.bms"
+include "Blindes\Automates\ABC - Auto - Types.bms"*/]]
+--[[//-----------------------------------------------------------------------------
+]]
+--[[// NBC
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/*include "NBC\Pions\NBC - Pion - Types.bms"
+include "NBC\Automates\NBC - Auto - Types.bms"*/]]
+--[[// -----------------------------------------------------------------------------
+]]
+--[[// Air
+]]
+--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]include "Air/Common/Types.bms"
+
+--[[// MARINE
+]]
+--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// ALAT
+]]include "Marine/Common/Types.bms"
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]include "Appui/Alat/Common/Types.bms"
+
+--[[// ASA
+]]
+--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]include "Appui/ArtDsa/Common/Types.bms"
+
+--[[// ASY
+]]
+--[[// -----------------------------------------------------------------------------
+]]include "Population/Asymetriques/Common/Pion/Types.bms"
+
+--[[//-----------------------------------------------------------------------------
+]]
+--[[// RENS
+]]
+--[[//-----------------------------------------------------------------------------
+]]--[[/*include "RENS\Pions\Rens - Pion - Types.bms"
+include "RENS\Automates\Rens - Auto - Types.bms"*/]]--[[//-----------------------------------------------------------------------------
+]]--[[// LOG
+]]
+--[[//-----------------------------------------------------------------------------
+]]
+--[[/*
+include "Logistique\LOG - Types.bms"
+include "Appui\Alat\Types.bms"
+*/]]--[[// -----------------------------------------------------------------------------
+]]--[[// 3D
+]]--[[// -----------------------------------------------------------------------------
+]]--[[/*include "Art Sol - Sol\Pions\P ASS - Types.bms"
+include "Art Sol - Sol\Automates\A ASS - Types.bms"*/]]
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// RENS
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/*include "RENS\Pions\Rens - Pion - Types.bms"
+include "RENS\Automates\Rens - Auto - Types.bms"*/]]
+--[[//-----------------------------------------------------------------------------
+]]
+--[[// LOG
+]]
+--[[//-----------------------------------------------------------------------------
+]]--[[/*include "Logistique\LOG - Types.bms"*/]]
+
+

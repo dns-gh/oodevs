@@ -1,0 +1,87 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/actions/Actions - POP - Maj.bms"] = true
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Maj_Pion_PasserEnEmploiForceInterdit
+]]--[[// 
+]]--[[// Commentaires: MIA:Appelee une seule fois par le comportement 
+]]--[[// BEH_ROE_Recevoir_OrdreInopine. Juste encapsulation, pas d'actuateurs
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Maj_Pion_PasserEnEmploiForceInterdit"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        SetStateVariable( "VE_EmploiForceInterdit", 1 )
+        SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
+        SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
+        SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux
+]]--[[// 
+]]--[[// Commentaires: MIA:Appelee une seule fois par le comportement 
+]]--[[// BEH_ROE_Recevoir_OrdreInopine. Juste encapsulation, pas d'actuateurs
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        SetStateVariable( "VE_EmploiForceInterdit", 0 )
+        SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 1 )
+        SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
+        SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs
+]]--[[// 
+]]--[[// Commentaires: MIA:Appelee une seule fois par le comportement 
+]]--[[// BEH_ROE_Recevoir_OrdreInopine. Juste encapsulation, pas d'actuateurs
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        SetStateVariable( "VE_EmploiForceInterdit", 0 )
+        SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
+        SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 1 )
+        SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Maj_Pion_PasserEnArmesLetalesAutorisees
+]]--[[// 
+]]--[[// Commentaires: MIA:Appelee une seule fois par le comportement 
+]]--[[// BEH_ROE_Recevoir_OrdreInopine. Juste encapsulation, pas d'actuateurs
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        SetStateVariable( "VE_EmploiForceInterdit", 0 )
+        SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
+        SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
+        SetStateVariable( "VE_ArmesLetalesAutorisees", 1 )
+    end,
+
+}
+

@@ -1,0 +1,28 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/grp commando/Types.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Grp Commando/Types.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 8 $
+]]--[[// $Workfile: Types.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+eOrdreProgression = 0
+eOrdreRapportForce = 1
+eOrdrePriseAParti = 2
+eOrdreFinMission = 3
+
+
+eComposante_Debarque = 0
+eComposante_Vehicule = 1
+
+
+eNatureObjectif_ElementTerrain = 0
+eNatureObjectif_Objets = 1
+eNatureObjectif_ElementMobile = 2

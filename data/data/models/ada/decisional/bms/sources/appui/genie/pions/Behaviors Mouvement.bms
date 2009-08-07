@@ -1,0 +1,113 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/Behaviors Mouvement.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Lima_Pion_Gen_SePosterSurLCA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// New MIA
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Lima_Pion_Gen_SePosterSurLCA"
+{
+    activations =
+    {
+        { "ACT_Dep_PasserSurLima", {} },
+        { "BEH_Dep_SePoster", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// init
+]]self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( DEC_Agent_NiveauInstallation() == eNiveauInstallation_PosteReflexe ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "Ready on attitude changing phase line" )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// MAJ Etat Lima
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCA, } )
+        Activate( self.activations.BEH_Dep_SePoster, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Posture
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Obs_Pion_Gen_ReconnaitrePoint
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// New MIA
+]]--[[//
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Obs_Pion_Gen_ReconnaitrePoint"
+{
+    activations =
+    {
+        { "ACT_Obs_ReconnaitrePoint", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repPoint = self.params[1]
+    end,
+
+    activate = function( self )
+        self.point = self.point or DEC_Geometrie_CreerPoint()
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            --[[// Rep_Point
+]]DEC_Copie_Point( DEC_GetRepPoint( self._namedParams.repPoint ), self.point )
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// reco
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, setmetatable( { self.point, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.point, } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_Gen_SePosterSurLCA, "ACT_Dep_PasserSurLima", nodes.ACT_Dep_PasserSurLima }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_Gen_SePosterSurLCA, "BEH_Dep_SePoster", nodes.BEH_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_Gen_SePosterSurLCA, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_Gen_ReconnaitrePoint, "ACT_Obs_ReconnaitrePoint", nodes.ACT_Obs_ReconnaitrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_Gen_ReconnaitrePoint, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }

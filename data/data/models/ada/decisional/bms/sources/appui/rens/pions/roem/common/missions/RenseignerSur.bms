@@ -1,0 +1,88 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roem/common/missions/RenseignerSur.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_RENS_ROEM_RenseignerSur
+]]--[[//
+]]--[[// Commentaires: PAR L'ECOUTE
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_RENS_ROEM_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Rens_EnEcouteRadarSur", {} },
+        { "BEH_Rens_EnEcouteSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+        self._namedParams.bEcouteRadar = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( ModuleBegins() ) then
+            Activate( self.activations.ACT_Info_Trace, 1, { "Intelligence gathering mission begining", } )
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eSurveiller
+                
+            --[[// Surveiller
+]]elseif switch_1 == eSurveiller then
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                if( self._namedParams.bEcouteRadar ) then
+                    Activate( self.activations.BEH_Rens_EnEcouteRadarSur, 1, { self._namedParams.mission.zone_, } )
+                else
+                    Activate( self.activations.BEH_Rens_EnEcouteSur, 1, { self._namedParams.mission.zone_, } )
+                end
+
+                
+            --[[// Fin de la mission --> SUR ORDRE
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_ROEM_RenseignerSur, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_ROEM_RenseignerSur, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_ROEM_RenseignerSur, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_ROEM_RenseignerSur, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_ROEM_RenseignerSur, "BEH_Rens_EnEcouteRadarSur", nodes.BEH_Rens_EnEcouteRadarSur }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_ROEM_RenseignerSur, "BEH_Rens_EnEcouteSur", nodes.BEH_Rens_EnEcouteSur }

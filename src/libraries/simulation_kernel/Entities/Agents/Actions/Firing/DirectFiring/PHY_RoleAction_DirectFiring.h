@@ -62,8 +62,8 @@ public:
     int  FirePopulation         ( uint nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult );
     void FirePopulationSuspended( uint nTargetKnowledgeID );
 
-    int  FirePion               ( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
-    void FirePionSuspended      ( uint nTargetKnowledgeID );
+    int  FirePion               ( DEC_Knowledge_Agent* pAgent, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+    void FirePionSuspended      ( DEC_Knowledge_Agent* pAgent );
 
     void FireZone               ( const MIL_Object_ABC& zone, PHY_FireResults_Default*& pFireResult );
     //@}
@@ -91,7 +91,6 @@ private:
 private:
     //! @name Tools
     //@{
-    MIL_Agent_ABC*  GetAgentTarget     ( uint nTargetKnowledgeID );
     MIL_Population* GetPopulationTarget( uint nTargetKnowledgeID );
     void            FirePion           ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
     //@}

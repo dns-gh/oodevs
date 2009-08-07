@@ -1,0 +1,74 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/cie vab/missions/reconnaissanceoffenssive/ReconnaissanceOffenssive CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Cie Vab/Missions/ReconnaissanceOffenssive/ReconnaissanceOffenssive CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:55 $
+]]--[[// $Revision: 16 $
+]]--[[// $Workfile: ReconnaissanceOffenssive CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// ******************************************************************************
+]]--[[// MIS_Automate_CDT_INF_Reconnaitre
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ******************************************************************************
+]]node "MIS_Automate_CDT_INF_ReconnaissanceOffensive"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eActionMission = self.eActionMission or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Conduite Automate Reconnaissance Offenssive : debut" )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[/* MIA ADA //start behavior BEH_Conduite_Automate_GererFuseau();*/]]--[[// Gestion de la situation des pions de la compagnie
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eActionMission == eActionEffectuee ) then
+            do
+                self.eActionMission = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_INF_ReconnaissanceOffensive = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_ReconnaissanceOffensive, "BEH_Conduite_Automate_INF_Defaut", nodes.BEH_Conduite_Automate_INF_Defaut }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_ReconnaissanceOffensive, "BEH_Conduite_Automate_INF_CadreOffensif", nodes.BEH_Conduite_Automate_INF_CadreOffensif }

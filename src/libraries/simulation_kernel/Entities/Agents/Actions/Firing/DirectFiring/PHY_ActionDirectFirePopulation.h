@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class PHY_RoleAction_DirectFiring;
 class PHY_FireResults_Pion;
@@ -24,14 +24,14 @@ class MIL_AgentPion;
 // @class  PHY_ActionDirectFirePopulation
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionDirectFirePopulation : public PHY_Action_ABC
+class PHY_ActionDirectFirePopulation : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-    PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+    PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int nID );
     virtual ~PHY_ActionDirectFirePopulation();
 
     //! @name Operations
@@ -42,7 +42,6 @@ public:
 
 private:
           PHY_RoleAction_DirectFiring& role_;
-          DIA_Variable_ABC&            diaReturnCode_;
     const uint                         nTargetKnowledgeID_;
           PHY_FireResults_Pion*        pFireResult_;
 };

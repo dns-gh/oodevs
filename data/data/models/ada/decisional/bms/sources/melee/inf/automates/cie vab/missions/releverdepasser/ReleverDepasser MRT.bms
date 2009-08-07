@@ -1,0 +1,84 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/cie vab/missions/releverdepasser/ReleverDepasser MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-07-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Cie Vab/Missions/ReleverDepasser/ReleverDepasser MRT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 25/07/05 9:59 $
+]]--[[// $Revision: 18 $
+]]--[[// $Workfile: ReleverDepasser MRT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "MIS_Automate_MRT_INF_Relever"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eCreationMRT = self.eCreationMRT or eActionEnCours
+        self.rN_Position = self.rN_Position or #( S_ObtenirTousPionsPour( self._namedParams.mission.compagnie_, eEtatEchelon_Premier ) )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "MIS_Automate_MRT_INF_Relever : debut MRT" )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// MRT creee
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eCreationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_RC( eRC_MissionImpossible )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eCreationMRT == eActionEffectuee ) then
+            do
+                self.eCreationMRT = eActionEnCours
+                                do
+                    DEC_Trace( "MIS_Automate_MRT_INF_Relever : fin MRT" )
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Modalité d'exécution
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// behavior BEH_Medo_Automate_INF_Relever() return in eCreationMRT;	
+]]        end
+
+        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Manoeuvre, 1, setmetatable( { "T_Mission_Automate_INF_Relever", self.rN_Position, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_INF_Relever = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_INF_Relever, "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", nodes.BEH_Medo_Automate_INF_PreparerMission_Manoeuvre }

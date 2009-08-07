@@ -60,25 +60,28 @@ void PHY_PerceptionRadar::DisableRadar( const PHY_RadarClass& radarClass )
 // Name: PHY_PerceptionRadar::EnableRadar
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void* PHY_PerceptionRadar::EnableRadar( const PHY_RadarClass& radarClass, const TER_Localisation& zone )
+int PHY_PerceptionRadar::EnableRadar( const PHY_RadarClass& radarClass, const TER_Localisation& zone )
 {
     assert( radarZones_.size() > radarClass.GetID() );
     const TER_Localisation* pZone = new TER_Localisation( zone );
     bool bOut = radarZones_[ radarClass.GetID() ].insert( pZone ).second;
     assert( bOut );
-    return (void*)pZone;
+    int id = PHY_Perception_ABC::GetPerceptionId();
+    radarId_[ id ] = pZone;
+    return id;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar::DisableRadar
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRadar::DisableRadar( const PHY_RadarClass& radarClass, void* pID )
+void PHY_PerceptionRadar::DisableRadar( const PHY_RadarClass& radarClass, int id )
 {
     assert( radarZones_.size() > radarClass.GetID() );
-    const TER_Localisation* pLocalisation = (const TER_Localisation*)pID;
+    const TER_Localisation* pLocalisation = radarId_[ id ];
     if( radarZones_[ radarClass.GetID() ].erase( pLocalisation ) == 1 )
         delete pLocalisation;
+    radarId_.erase( id );
 }
 
 // -----------------------------------------------------------------------------

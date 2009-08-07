@@ -12,6 +12,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_MedicalPriorities constructor
@@ -36,56 +37,17 @@ MIL_ParameterType_MedicalPriorities::~MIL_ParameterType_MedicalPriorities()
 // Name: MIL_ParameterType_MedicalPriorities::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_MedicalPriorities::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_MedicalPriorities::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_logMedicalPriorities ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeSantePriorites( to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    if( !NET_ASN_Tools::CopyMedicalPriorities( *from.value.u.logMedicalPriorities, to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_MedicalPriorities::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_MedicalPriorities::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeSantePriorites( from ) )
+    if( !from.IsOfType( *this ) )
         return false;
 
-    // Check dest
-    if( !DEC_Tools::CheckTypeSantePriorites( to ) )
-        return false;
-
-    NET_ASN_Tools::CopyMedicalPriorities( from, to );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_MedicalPriorities::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_MedicalPriorities::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeSantePriorites( from ) )
-        return false;
-
-    to.null_value             = false;
-    to.value.t                = T_MissionParameter_value_logMedicalPriorities;
+    to.value.t                      = T_MissionParameter_value_logMedicalPriorities;
     to.value.u.logMedicalPriorities = new ASN1T_LogMedicalPriorities();
+    to.null_value                   = !from.ToMedicalPriorities( *to.value.u.logMedicalPriorities );
     
-    if( !NET_ASN_Tools::CopyMedicalPriorities( from, *to.value.u.logMedicalPriorities ) )
-        return false;
-
-    return true;
+    return !to.null_value || bIsOptional;
 }
 
 // -----------------------------------------------------------------------------

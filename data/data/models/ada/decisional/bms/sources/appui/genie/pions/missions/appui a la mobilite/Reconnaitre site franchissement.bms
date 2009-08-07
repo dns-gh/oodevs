@@ -1,0 +1,188 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Reconnaitre site franchissement.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_GEN_ReconnaitreSiteFranchissement
+]]--[[//
+]]--[[// Commentaires: Refonte 27/10/2006
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_GEN_ReconnaitreSiteFranchissement"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obs_ReconnaitreSiteFranchissement", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or ePreparerMission
+        self.ptObjet = self.ptObjet or nil
+        --[[// Valaidité de la connaissance sur laquelle on travaille
+]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.siteFranchissement_ ) ) then
+            do
+                DEC_Warning( eRC_MissionImpossible )
+                                Halt()
+
+            end
+        end
+
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "------ MIS Reconnaitre site franchissement -------" )
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                self.ptObjet = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.siteFranchissement_ ) )
+                if( self.ptObjet == nil ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Squelette de mission
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhase = eProgresser
+                
+            --[[// Progression
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eReconnaitre
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObjet, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Reconnaisance
+]]elseif switch_1 == eReconnaitre then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                --[[// Si sauvegarde
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.ptObjet ) > 300 ) then
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.ptObjet, eProgressionDirect, eTypeItiMouvement, } )
+                end
+
+                --[[// Reco site
+]]if( not DEC_ConnaissanceObjet_EstReconnu( self._namedParams.mission.siteFranchissement_ ) ) then
+                    Activate( self.activations.ACT_Obs_ReconnaitreSiteFranchissement, 1, { self._namedParams.mission.siteFranchissement_, } )
+                else
+                    self.ePhase = eFinMission
+                end
+
+                
+            --[[// Fin de la mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Obs_ReconnaitreSiteFranchissement
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Obs_ReconnaitreSiteFranchissement"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.obj = self.params[1]
+    end,
+
+    select = function( self )
+        --[[// ------------------------------------------------------------------------
+]]--[[// Init
+]]--[[// ------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_ReconnaissancePoint )
+                else
+                    DEC_Message( eRC_ReconnaissancePoint )
+                end
+
+            end
+        end
+
+        do
+            do
+                self.rTempsDebut = self.rTempsDebut or DEC_TempsSim()
+                if( ModuleBegins() ) then
+                    do
+                    end
+                end
+
+                do
+                end
+
+                if( 1 * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
+                    do
+                        DEC_ConnaissanceObjet_Reconnaitre( self._namedParams.obj )
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_GEN_ReconnaitreSiteFranchissement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReconnaitreSiteFranchissement, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReconnaitreSiteFranchissement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReconnaitreSiteFranchissement, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReconnaitreSiteFranchissement, "ACT_Obs_ReconnaitreSiteFranchissement", nodes.ACT_Obs_ReconnaitreSiteFranchissement }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_ReconnaitreSiteFranchissement, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

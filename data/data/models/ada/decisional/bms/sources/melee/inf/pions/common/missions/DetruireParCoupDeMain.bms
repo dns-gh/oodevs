@@ -1,0 +1,536 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/common/missions/DetruireParCoupDeMain.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Common/Missions/DetruireParCoupDeMain.hal $
+]]--[[// $Author: Jcr $
+]]--[[// $Modtime: 22/09/05 18:07 $
+]]--[[// $Revision: 20 $
+]]--[[// $Workfile: DetruireParCoupDeMain.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//=============================================================================
+]]--[[//                            Squelette de la mission
+]]--[[//=============================================================================
+]]node "BEH_Mission_Pion_INF_DetruireParCoupDeMain"
+{
+    activations =
+    {
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
+        { "ACT_Misc_Pion_DelaiInstallation", {} },
+        { "ACT_Dep_PasserEnModeFurtif", {} },
+        { "BEH_Pion_INF_Detruire_DetruireParCoupDeMain", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.ePhase = self.ePhase or eSeMettreEnPlace
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionPoste = self.eActionPoste or eActionEnCours
+        self.eActionOrdre = self.eActionOrdre or eActionEnCours
+        self.eActionDebarquer = self.eActionDebarquer or eActionEnCours
+        self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
+        --[[// Lorsqu'un comportement  ne  peut  pas  s'effectuer  correctement, la mission
+]]--[[// s'arrete
+]]if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                    DEC_Warning( eRC_MissionImpossible )
+                                        self.params.__returnValue = eFinMission
+                    Halt()
+
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        do
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eSeMettreEnPlace then
+                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// On va se mettre en position en restant sur nos garde
+]]
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eAborderObjectif
+                                                        self.params.__returnValue = self.ePhase
+                            return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointRegroupement_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eAborderObjectif then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eInstallerDispositif
+                        end
+
+                    end
+                else
+do
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                end
+
+            elseif switch_1 == eInstallerDispositif then
+                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointRegroupement_, false, } )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eSurveiller
+                                                        self.params.__returnValue = self.ePhase
+                            return
+
+                        end
+
+                    end
+--[[// Temps de mise en place du dispositif
+]]                end
+
+                Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                self.params.__returnValue = self.ePhase
+                return
+
+            elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
+                Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// Posture discret
+]]
+                if( self.eActionDeplacement == eActionEffectuee ) then
+                    do
+                        self.eActionDeplacement = eActionEnCours
+                                                self.params.__returnValue = eFinMission
+                        Halt()
+
+                    end
+--[[// Se replier a chaque fois sur une position differente
+]]--[[// Lorsque DetruireParCoupDeMain ne fait plus rien, progresser
+]]--[[// prend le pas
+]]                end
+
+                if( self.eActionDeplacement ~= eActionImpossible ) then
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1.5, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDeplacement = v else rawset( t, k, v ) end end } ) )
+                end
+
+                Activate( self.activations.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, 2, { self.mission.pointObjectif_, self.mission.natureDestruction_, self.mission.heureDestruction_, } )
+                
+            
+            else
+                        end
+
+                self.params.__returnValue = self.ePhase
+        return
+
+    end,
+
+}
+
+node "BEH_Pion_INF_Detruire_DetruireParCoupDeMain"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Pion_INF_Detruire_CoupDeMain", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptObjectif = self.params[1]
+        self._namedParams.eNatureObjectif = self.params[2]
+        self._namedParams.rHeureDestruction = self.params[3]
+    end,
+
+    activate = function( self )
+                self.locObjectif = self.locObjectif or DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.ptObjectif )
+        self.eAction = self.eAction or eActionEnCours
+        self.bHeureDepassee = self.bHeureDepassee or false
+        --[[// bHeureDepassee = bHeureDepassee || rHeureDestruction == DEC_TempsReel();
+]]local bNuit = DEC_Nuit() or ( self._namedParams.rHeureDestruction <= DEC_TempsReel() )
+        --[[// On intervient a l'heure prevue si elle est definie sinon on intervient
+]]--[[// de nuit.
+]]--[[// if ( ( rHeureDestruction == 0 && bNuit ) || ( rHeureDestruction == DEC_TempsReel() ) )
+]]if( bNuit and self.eAction == eActionEnCours ) then
+            do
+                if( self._namedParams.rHeureDestruction <= DEC_TempsReel() ) then
+                    self.eAction = eActionEffectuee
+                end
+
+                Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
+                --[[// On attend 1h apres le couche du soleil si la date n'est pas depassee
+]]Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 60, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                                return
+
+            end
+        end
+
+        if( bNuit ) then
+            do
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnCoupDeMain, } )
+                Activate( self.activations.BEH_Pion_INF_Detruire_CoupDeMain, 1, { self.locObjectif, self._namedParams.eNatureObjectif, } )
+            end
+        else
+do
+                Activate( self.activations.ACT_RC, 1, { eRC_AttenteConditionFavorablePourInfiltration, } )
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[// On se poste en attendant de faire le coup de main
+]]
+                self.eAction = eActionEnCours
+            end
+        end
+
+    end,
+
+    destroy = function( self )
+            end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// BEH_Obj_Pion_VAB_DestructionTerrain_DansZone
+]]--[[//
+]]--[[// Recherche les elements terrains pouvant etre detruit dans une zone donnee.
+]]--[[// Detruit tout d'abord les ponts puis les carrefours s'il y en a.
+]]--[[//
+]]--[[// Utilise dans les missions: 
+]]--[[//                - DetruireParCoup de main
+]]--[[//                - Harceler
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
+{
+    activations =
+    {
+        { "ACT_Obj_Pion_INF_RealiserObjet", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.locZone = self.params[1]
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
+        self.locObjet = self.locObjet or nil
+        self.ptMission = self.ptMission or nil
+        self.ptObst = self.ptObst or nil
+        self.eTypeObjet = self.eTypeObjet or nil
+        self.bReturnHalt = self.bReturnHalt or false
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "installation plan d'obstacle" )
+                self.ptMission = S_Geometrie_BarycentreZone( self._namedParams.locZone )
+                if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+                --[[// destruction-pont
+]]self.eTypeObjet = eTypeObjectDestructionPont
+                self.ptObst = DEC_Geometrie_CalculerPositionObstacle( self.ptMission, S_TypeObject_ToString( self.eTypeObjet ), 800 )
+                if( ( self.ptObst == 0 or self.ptObst == nil ) or DEC_Geometrie_PositionsEgales( self.ptObst, self.ptMission ) ) then
+                    do
+                        --[[// destruction-route
+]]self.eTypeObjet = eTypeObjectDestructionRoute
+                        self.ptObst = DEC_Geometrie_CalculerPositionObstacle( self.ptMission, S_TypeObject_ToString( self.eTypeObjet ), 500 )
+                    end
+--[[// Si on n'a pas trouve de position adhequate
+]]                end
+
+                if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
+                    self.ptObst = self.ptMission
+                end
+
+                self.locObjet = DEC_Geometrie_ConvertirPointEnLocalisation( self.ptObst )
+            end
+        end
+
+        if( self.bReturnHalt or self.eAction ~= eActionEnCours ) then
+            self.params.__returnValue = self.eAction
+            Halt()
+        end
+
+        --[[// Rejoins la position d'installation
+]]self.bReturnHalt = ( self.eActionDeplacement == eActionImpossible )
+        if( self.bReturnHalt ) then
+            return
+        end
+
+        --[[// Organise le chantier : detruit l'element terrain
+]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptObst, 550 ) ) then
+            do
+                self.bReturnHalt = ( self.eActionDeplacement ~= eActionEnCours )
+                if( self.bReturnHalt ) then
+                    return
+                end
+
+                Activate( self.activations.ACT_Obj_Pion_INF_RealiserObjet, 1, setmetatable( { self.eTypeObjet, self.locObjet, 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObst, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDeplacement = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+            end,
+
+--[[//=============================================================================
+]]--[[//    BEH_Pion_VAB_Detruire_CoupDeMain
+]]--[[//
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Pion_INF_Detruire_CoupDeMain"
+{
+    activations =
+    {
+        { "BEH_Obj_Pion_INF_Detruire_ElementsTerrain", {} },
+        { "BEH_Obj_Pion_INF_Detruire_Objets", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_Eni_Pion_VAB_Offensif_Manoeuvre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+        self._namedParams.eNatureObjectif = self.params[2]
+    end,
+
+    activate = function( self )
+        switch_1 = self._namedParams.eNatureObjectif
+            if switch_1 == eNatureObjectif_ElementTerrain then
+                Activate( self.activations.BEH_Obj_Pion_INF_Detruire_ElementsTerrain, 2, { self._namedParams.zone, } )
+                
+            elseif switch_1 == eNatureObjectif_Objets then
+                Activate( self.activations.BEH_Obj_Pion_INF_Detruire_Objets, 2, { self._namedParams.zone, } )
+                
+            elseif switch_1 == eNatureObjectif_ElementMobile then
+                
+                        end
+
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
+        Activate( self.activations.BEH_Eni_Pion_VAB_Offensif_Manoeuvre, 1, {} )
+    end,
+
+--[[//=============================================================================
+]]--[[//    BEH_Pion_VAB_Detruire_Objets
+]]--[[// 
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Obj_Pion_INF_Detruire_Objets"
+{
+    activations =
+    {
+        { "BEH_Dep_Pion_INF_IntervenirSurObjectif", {} },
+        { "BEH_Obj_Pion_INF_DetruireObjet", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.zone )
+        if( ModuleBegins() ) then
+            do
+                --[[// Recuperer les objets dans la zone :
+]]--[[// OPT MIA: Faire avec DEC_Connaissances_ObjetsDansZone()
+]]local lstObjets = DEC_Connaissances_ObjetsDansZone( self._namedParams.zone, S_TypeObject_ToString( eTypeObjectPosteTir ), S_TypeObject_ToString( eTypeObjectZoneProtegee ), S_TypeObject_ToString( eTypeObjectZoneImplantationCanon ), S_TypeObject_ToString( eTypeObjectZoneImplantationCOBRA ), S_TypeObject_ToString( eTypeObjectZoneImplantationMortier ), S_TypeObject_ToString( eTypeObjectZoneImplantationLRM ), S_TypeObject_ToString( eTypeObjectSiteFranchissement ), S_TypeObject_ToString( eTypeObjectPlotRavitaillement ), S_TypeObject_ToString( eTypeObjectSiteDecontamination ), S_TypeObject_ToString( eTypeObjectRota ) )
+                for _,x_obj in pairs( lstObjets ) do
+                local _continue = true
+                    do
+                        --[[/*    MIA OPT : attention on ne détruit que les objets dans la zone
+            if ( S_Obj_EstDansLocalisation( x_obj, zone ) ||
+                 S_Obj_EstObjetADistanceDe( ptZone, x_obj, 600 ) )
+            {    */]]--[[//    }
+]]local rForceObj = S_Obj_ForceDistance( x_obj )
+                        --[[// On ne fait qu'une seule manoeuvre par nuit
+]]StartActivate( self.activations.BEH_Dep_Pion_INF_IntervenirSurObjectif, rForceObj, { DEC_ConnaissanceObjet_Localisation( x_obj ), } )
+                        StartActivate( self.activations.BEH_Obj_Pion_INF_DetruireObjet, 1.5 * rForceObj, { x_obj, } )
+                                                return
+
+                    end
+--[[//=============================================================================
+]]
+                end
+
+            end
+--[[//    BEH_Dep_Pion_VAB_IntervenirSurObjectif
+]]        end
+
+    end,
+
+--[[// 
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Obj_Pion_INF_Detruire_ElementsTerrain"
+{
+    activations =
+    {
+        { "BEH_Obj_Pion_INF_DestructionTerrain_DansZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            StartActivate( self.activations.BEH_Obj_Pion_INF_DestructionTerrain_DansZone, 1, { self._namedParams.zone, } )
+        end
+
+    end,
+
+--[[//=============================================================================
+]]--[[//    BEH_Dep_Pion_VAB_IntervenirSurObjectif
+]]--[[// 
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
+{
+    instances =
+    {
+        boost = 1.5,
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zoneObj = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eRejoindrePointChantier
+        self.eAction = self.eAction or eActionEnCours
+        self.ptObj = self.ptObj or S_Geometrie_BarycentreZone( self._namedParams.zoneObj )
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindrePointChantier then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObj, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// ============================================================================
+]]            end
+--[[// BEH_Obj_Pion_VAB_DetruireObjet
+]]
+    end,
+
+--[[//    Detruit un objet si on est proche de lui
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Obj_Pion_INF_DetruireObjet"
+{
+    instances =
+    {
+        boost = 1.5,
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_Obj_Pion_INF_Detruire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ksObj = self.params[1]
+    end,
+
+    activate = function( self )
+        if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.ksObj ) ) then
+            Halt()
+        end
+
+        local locObj = DEC_ConnaissanceObjet_Localisation( self._namedParams.ksObj )
+        if( S_Geometrie_EstProcheLocalisation( DEC_Agent_Position(), locObj, 250 ) ) then
+            StartActivate( self.activations.ACT_Obj_Pion_INF_Detruire, 1, { self._namedParams.ksObj, } )
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_IntervenirSurObjectif, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_DetruireParCoupDeMain, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_DetruireParCoupDeMain, "BEH_Dep_Pion_INF_MiseEnPlace_Mission", nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_DetruireParCoupDeMain, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_DetruireParCoupDeMain, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_DetruireParCoupDeMain, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_DetruireParCoupDeMain, "BEH_Dispositif_Pion_VAB_InstallationDefensive", nodes.BEH_Dispositif_Pion_VAB_InstallationDefensive }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_DetruireParCoupDeMain, "ACT_Misc_Pion_DelaiInstallation", nodes.ACT_Misc_Pion_DelaiInstallation }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_DetruireParCoupDeMain, "ACT_Dep_PasserEnModeFurtif", nodes.ACT_Dep_PasserEnModeFurtif }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_DetruireParCoupDeMain, "BEH_Pion_INF_Detruire_DetruireParCoupDeMain", nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain }
+connections[ #connections + 1 ] = { nodes.BEH_Obj_Pion_INF_DestructionTerrain_DansZone, "ACT_Obj_Pion_INF_RealiserObjet", nodes.ACT_Obj_Pion_INF_RealiserObjet }
+connections[ #connections + 1 ] = { nodes.BEH_Obj_Pion_INF_DestructionTerrain_DansZone, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Obj_Pion_INF_DetruireObjet, "ACT_Obj_Pion_INF_Detruire", nodes.ACT_Obj_Pion_INF_Detruire }
+connections[ #connections + 1 ] = { nodes.BEH_Obj_Pion_INF_Detruire_ElementsTerrain, "BEH_Obj_Pion_INF_DestructionTerrain_DansZone", nodes.BEH_Obj_Pion_INF_DestructionTerrain_DansZone }
+connections[ #connections + 1 ] = { nodes.BEH_Obj_Pion_INF_Detruire_Objets, "BEH_Dep_Pion_INF_IntervenirSurObjectif", nodes.BEH_Dep_Pion_INF_IntervenirSurObjectif }
+connections[ #connections + 1 ] = { nodes.BEH_Obj_Pion_INF_Detruire_Objets, "BEH_Obj_Pion_INF_DetruireObjet", nodes.BEH_Obj_Pion_INF_DetruireObjet }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_CoupDeMain, "BEH_Obj_Pion_INF_Detruire_ElementsTerrain", nodes.BEH_Obj_Pion_INF_Detruire_ElementsTerrain }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_CoupDeMain, "BEH_Obj_Pion_INF_Detruire_Objets", nodes.BEH_Obj_Pion_INF_Detruire_Objets }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_CoupDeMain, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_CoupDeMain, "BEH_Eni_Pion_VAB_Offensif_Manoeuvre", nodes.BEH_Eni_Pion_VAB_Offensif_Manoeuvre }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, "BEH_Pion_INF_Detruire_CoupDeMain", nodes.BEH_Pion_INF_Detruire_CoupDeMain }

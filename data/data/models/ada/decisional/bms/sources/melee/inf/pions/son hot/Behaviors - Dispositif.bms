@@ -1,0 +1,53 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son hot/Behaviors - Dispositif.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son Hot/Behaviors - Dispositif.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 13 $
+]]--[[// $Workfile: Behaviors - Dispositif.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+node "BEH_Dispositif_Pion_VAB_InstallationDefensive"
+{
+    activations =
+    {
+        { "BEH_Obj_RejoindreEmbossements", {} },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptInstallation = self.params[1]
+        self._namedParams.bPlanObstacle = self.params[2]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                --[[//-----------------------------------------------------------------------------
+]]--[[// On se met en formation pour recevoir du monde :)
+]]--[[//-----------------------------------------------------------------------------
+]]DEC_Trace( "Mise en place des troupes .." )
+            end
+--[[// Si l'on trouve un embossement a proximite, on le rejoint
+]]        end
+
+        Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, {} )
+        Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
+        local mission = DEC_GetMission( myself )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Pion_VAB_InstallationDefensive, "BEH_Obj_RejoindreEmbossements", nodes.BEH_Obj_RejoindreEmbossements }
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Pion_VAB_InstallationDefensive, "ACT_Misc_Pion_Ambiance", nodes.ACT_Misc_Pion_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Pion_VAB_InstallationDefensive, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }

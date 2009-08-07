@@ -1,0 +1,77 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/pions/common/missions/GatherSurvivors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_Emergency_GatherSurvivors"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eRejoindre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                
+            elseif switch_1 == eDeployer then
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Emergency_GatherSurvivors = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_GatherSurvivors, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_GatherSurvivors, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

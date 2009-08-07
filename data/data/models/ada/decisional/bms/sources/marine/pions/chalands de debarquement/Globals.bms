@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/pions/chalands de debarquement/Globals.bms"] = true
+
+include "Marine/Pions/Common/Globals.bms"
+
+include "Marine/Pions/Chalands de Debarquement/Macros.bms"
+

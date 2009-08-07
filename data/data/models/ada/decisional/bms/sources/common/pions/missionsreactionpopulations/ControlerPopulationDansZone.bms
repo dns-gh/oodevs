@@ -1,0 +1,99 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/missionsreactionpopulations/ControlerPopulationDansZone.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ControlerPopulationsDansZone
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ControlerPopulationsDansZone"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Virtuel_ProgressionVers", {} },
+        { "BEH_Pop_Pion_SecuriserPopulationDans", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.ePhase = self.ePhase or ePreparerMission
+        self.eEtat = self.eEtat or eActionEnCours
+        self.objectif = self.objectif or nil
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+                --[[// Calcule position
+]]self.objectif = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( self._namedParams.mission.zone_ )
+                if( self.objectif == nil ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                        self.ePhase = eFinMission
+                                                return
+
+                    end
+                end
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                DEC_Trace( "** MIS_Pion_SecuriserZone **" )
+                self.ePhase = eProgresser
+                
+            --[[// Déplacement initial
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( not DEC_Geometrie_EstPointDansLocalisation( DEC_Agent_Position(), self._namedParams.mission.zone_ ) ) then
+                    Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, { self.objectif, eProgressionDefaut, eTypeItiMouvement, } )
+                else
+                    self.ePhase = eSecuriser
+                end
+
+                
+            --[[// Sécurisation
+]]elseif switch_1 == eSecuriser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                Activate( self.activations.BEH_Pop_Pion_SecuriserPopulationDans, 1, { self._namedParams.mission.zone_, } )
+                
+            --[[// Fin mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                                Halt()
+
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ControlerPopulationsDansZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ControlerPopulationsDansZone, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ControlerPopulationsDansZone, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ControlerPopulationsDansZone, "BEH_Dep_Virtuel_ProgressionVers", nodes.BEH_Dep_Virtuel_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ControlerPopulationsDansZone, "BEH_Pop_Pion_SecuriserPopulationDans", nodes.BEH_Pop_Pion_SecuriserPopulationDans }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ControlerPopulationsDansZone, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

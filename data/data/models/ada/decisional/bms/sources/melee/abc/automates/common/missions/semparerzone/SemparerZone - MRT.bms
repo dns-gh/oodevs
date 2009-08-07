@@ -1,0 +1,84 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/common/missions/semparerzone/SemparerZone - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA"
+{
+    activations =
+    {
+        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSemparerZoneA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions = self.params[1]
+        self._namedParams.zoneAPrendre = self.params[2]
+        self._namedParams.eEtatEchelon = self.params[3]
+    end,
+
+    activate = function( self )
+        self.listeSecteur = self.listeSecteur or {}
+        self.rIterateurSecteur = self.rIterateurSecteur or 0
+        self.nErrorCode = self.nErrorCode or nil
+        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+            return
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                --[[// Ajout ADA --> Main?
+]]DEC_MRT_AffecteFuseaux( self._namedParams.selPions )
+                self.listeSecteur = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zoneAPrendre, #( self._namedParams.selPions ), self.nErrorCode )
+                self.nErrorCode = self.listeSecteur.second
+                self.listeSecteur = self.listeSecteur.first
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Gestion erreur
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.nErrorCode ~= eNoError ) then
+                    do
+                        DEC_Trace( "$$$ impossible de trouver des positions dans la localisation" )
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
+                                                self.params.__returnValue = eActionImpossible
+                        return
+
+                    end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//-----------------------------------------------------------------------------
+]]                end
+
+                for _,pion in pairs( self._namedParams.selPions ) do
+                local _continue = true
+do
+                        if( self.rIterateurSecteur == #( self.listeSecteur ) ) then
+                            self.rIterateurSecteur = 0
+                        end
+
+                        --[[// Récuperation du secteur courant
+]]local secteur = DEC_UserTypeList_GetAt( self.listeSecteur, self.rIterateurSecteur )
+                        --[[// Assignation de la mission
+]]StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerSemparerZoneA, 1, { ePhase_MRT, pion, secteur, self._namedParams.eEtatEchelon, } )
+                                                self.rIterateurSecteur = self.rIterateurSecteur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA, "ACT_Warning", nodes.ACT_Warning }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA, "BEH_Mission_Automate_ABC_AssignerSemparerZoneA", nodes.BEH_Mission_Automate_ABC_AssignerSemparerZoneA }

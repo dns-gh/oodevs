@@ -1,0 +1,73 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Ambiance.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Gestion de l'ambiance de mission pour les elements de l'ALAT
+]]--[[// -----------------------------------------------------------------------------
+]]node "BEH_ALAT_Ambiance"
+{
+    activations =
+    {
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.eAmbiance = self.eAmbiance or F_Pion_GeteEtatAmbiance( myself )
+        self.presenceEnemie = self.presenceEnemie or false
+        local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
+        if( not DIA_IsListEmpty( listeConnaissances ) ) then
+            do
+                if( not self.presenceEnemie ) then
+                    do
+                        self.presenceEnemie = true
+                        self.eAmbiance = F_Pion_GeteEtatAmbiance( myself )
+                        F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
+                    end
+                end
+
+            end
+        else
+do
+                if( self.presenceEnemie ) then
+                    do
+                        F_Pion_SeteEtatAmbiance( myself, self.eAmbiance )
+                        self.presenceEnemie = false
+                    end
+                end
+
+            end
+--[[// Gestion des ordres
+]]--[[// ------------------
+]]        end
+
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                if( repOrdre:GetType() == "Rep_OrderConduite_ChangerAmbiance" ) then
+                    do
+                        local ordreAmbiance = repOrdre
+                        if( ordreAmbiance:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete ) then
+                            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
+                        else
+                            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_ALAT_Ambiance, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

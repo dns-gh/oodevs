@@ -1,0 +1,49 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/refugies/pions/refugie/Behaviors.bms"] = true
+
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = yes
+
+max_instances = 100
+
+max_activations = 100
+
+
+actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+vitesse = 1,
+ennemi = 1,
+etat_Mission = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+etat_ROE = 1,
+controlePopulation = 1,
+objectifEsquive = 1,
+}
+
+
+--[[// Commun pions Refugies
+]]include "Population/Refugies/Pions/Common/Behaviors.bms"
+
+
+--[[// Missions:
+]]--[[// Seulement mission comune 'Faire mouvement'
+]]
+--[[// Pion Refugie
+]]include "Population/Refugies/Pions/Refugie/Actions.bms"
+
+
+
+
+
+
+
+

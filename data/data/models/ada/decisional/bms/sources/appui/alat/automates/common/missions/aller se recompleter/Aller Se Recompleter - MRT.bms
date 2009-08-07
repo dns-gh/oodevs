@@ -1,0 +1,84 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter/Aller Se Recompleter - MRT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Aller Se Recompleter :
+]]--[[// ----------------------
+]]--[[//
+]]--[[// Commentaires : mission de recompletement spécifique aux unités de l'ALAT.
+]]--[[//                Les unités subordonnés recoivent la mission de recompletement
+]]--[[//                ALAT vers le point de ravitaillement le plus proche (TC2 ou 
+]]--[[//                plot de ravitaillement )
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_AllerSeRecompleter"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionsAllerSeRecompleter = self.eEtatMissionsAllerSeRecompleter or eActionEnCours
+        self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( S_ListePionsALAT( DEC_Automate_PionsAvecPC() ) )
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionsAllerSeRecompleter == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionsAllerSeRecompleter == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[// Reconnaitre le contour ennemi : controle de creation mission
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selPions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsAllerSeRecompleter = v else rawset( t, k, v ) end end } ) )
+                --[[// Reconnaitre le contour ennemi : ordre de creation des missions
+]]if( not DIA_IsListEmpty( self.selPions ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe, 1, { ePhase_MRT, self.selPions, self._namedParams.mission.plotsRavitaillement_, } )
+                end
+
+                
+            elseif switch_1 == eMRT_MissionImpossible then
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_AllerSeRecompleter = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_AllerSeRecompleter, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_AllerSeRecompleter, "BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe", nodes.BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe }

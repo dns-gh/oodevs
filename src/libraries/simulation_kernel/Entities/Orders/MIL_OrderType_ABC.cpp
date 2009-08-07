@@ -14,6 +14,8 @@
 #include "Decision/DEC_Tools.h"
 #include "Network/NET_AsnException.h"
 #include <xeumeuleu/xml.h>
+#include "MIL_MissionParameter_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC constructor
@@ -22,9 +24,19 @@
 MIL_OrderType_ABC::MIL_OrderType_ABC( uint nID, xml::xistream& xis )
     : nID_       ( nID )
     , strName_   ( xml::attribute< std::string >( xis, "name" ) )
-    , pDIAType_  ( &DEC_Tools::GetDIAType( xml::attribute< std::string >( xis, "dia-type" ) ) )
+    , diaType_  ( xml::attribute< std::string >( xis, "dia-type" ) )
 {
     xis >> xml::list( "parameter", *this, &MIL_OrderType_ABC::ReadParameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC constructor
+// Created: LDC 2009-04-27
+// -----------------------------------------------------------------------------
+MIL_OrderType_ABC::MIL_OrderType_ABC()
+    : nID_     ( 0 )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,53 +61,25 @@ MIL_OrderType_ABC::~MIL_OrderType_ABC()
 // Name: MIL_OrderType_ABC::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_OrderType_ABC::Copy( const ASN1T_MissionParameters& from, DIA_TypedObject& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const
+bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const
 {
-    unsigned int index = context.Length();
-    if( from.n - index != parameters_.size() || to.GetType() != *pDIAType_ )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index )
-        (**it).Copy( from.elem[index], to, knowledgeResolver );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_OrderType_ABC::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_OrderType_ABC::Copy( const DIA_TypedObject& from, DIA_TypedObject& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
-{
-    if( to.GetNumberOfFields() != from.GetNumberOfFields() || to.GetNumberOfFields() < (int)parameters_.size() )
-        return false;
-    if( from.GetType() != *pDIAType_  || to.GetType() != *pDIAType_ )
-        return false;
-
-    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it )
-        if( !(**it).Copy( from, to, knowledgeResolver ) )
-            return false;
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_OrderType_ABC::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_OrderType_ABC::Copy( const DIA_TypedObject& from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const
-{
-    if( from.GetNumberOfFields() < (int)parameters_.size() || from.GetType() != *pDIAType_ )
+    if( from.size() < (int)parameters_.size()  )//|| from.GetType() != *pDIAType_ )
         return false;
 
     unsigned int index = context.Length();
     to.n    = parameters_.size() + index;
     to.elem = new ASN1T_MissionParameter[ parameters_.size() + index ];
-    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index )
-        if( !(**it).Copy( from, to.elem[index], knowledgeResolver ) )
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >::const_iterator fromIt = from.begin();
+    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index, ++fromIt )
+    {
+        if( !(**it).Copy( **fromIt, to.elem[index], knowledgeResolver ) )
         {   
             assert( false );
             delete[] to.elem;
             to.n = 0;
             return false;
         }
+    }
     return true;
 }
 
@@ -120,10 +104,9 @@ void MIL_OrderType_ABC::CleanAfterSerialization( ASN1T_MissionParameters& to, co
 // Name: MIL_OrderType_ABC::GetDIAType
 // Created: NLD 2003-04-10
 //-----------------------------------------------------------------------------
-const DIA_TypeDef& MIL_OrderType_ABC::GetDIAType() const
+const std::string& MIL_OrderType_ABC::GetDIAType() const
 {
-    assert( pDIAType_ );
-    return *pDIAType_;
+    return diaType_;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,4 +125,37 @@ uint MIL_OrderType_ABC::GetID() const
 const std::string& MIL_OrderType_ABC::GetName() const
 {
     return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC::GetParameterType
+// Created: LDC 2009-04-30
+// -----------------------------------------------------------------------------
+const MIL_ParameterType_ABC& MIL_OrderType_ABC::GetParameterType( unsigned int index ) const
+{
+    return parameters_[index]->GetType();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC::GetParameterName
+// Created: LDC 2009-04-30
+// -----------------------------------------------------------------------------
+const std::string& MIL_OrderType_ABC::GetParameterName( unsigned int index ) const
+{
+    return parameters_[index]->GetDIAName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC::GetParameterIndex
+// Created: LDC 2009-07-08
+// -----------------------------------------------------------------------------
+unsigned int MIL_OrderType_ABC::GetParameterIndex( const std::string& name ) const
+{
+    unsigned int size = parameters_.size();
+    for( unsigned int i = 0; i < size; ++i )
+    {
+        if( parameters_[i]->GetDIAName() == name )
+            return i;
+    }
+    throw std::runtime_error( "Incorrect parameter name" );
 }

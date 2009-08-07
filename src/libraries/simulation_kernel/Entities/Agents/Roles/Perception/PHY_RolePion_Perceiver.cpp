@@ -301,7 +301,7 @@ void PHY_RolePion_Perceiver::DisableRecoAlat()
 // Name: PHY_RolePion_Perceiver::EnableSurveillanceLocalisation
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
-void* PHY_RolePion_Perceiver::EnableSurveillanceLocalisation( const TER_Localisation& localisation )
+int PHY_RolePion_Perceiver::EnableSurveillanceLocalisation( const TER_Localisation& localisation )
 {
     if ( !pPerceptionSurveillance_ )
     {
@@ -316,12 +316,12 @@ void* PHY_RolePion_Perceiver::EnableSurveillanceLocalisation( const TER_Localisa
 // Name: PHY_RolePion_Perceiver::DisableSurveillanceLocalisation
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::DisableSurveillanceLocalisation( void* pId )
+void PHY_RolePion_Perceiver::DisableSurveillanceLocalisation( int id )
 {
     if ( !pPerceptionSurveillance_ )
         return;
 
-    pPerceptionSurveillance_->RemoveLocalisation( pId );
+    pPerceptionSurveillance_->RemoveLocalisation( id );
     if ( !pPerceptionSurveillance_->HasLocalisationToHandle() )
     {
         activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionSurveillance_ ) );
@@ -335,7 +335,7 @@ void PHY_RolePion_Perceiver::DisableSurveillanceLocalisation( void* pId )
 // Name: PHY_RolePion_Perceiver::EnableRecoPoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void* PHY_RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DIA_Variable_ABC& result )
+int PHY_RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent )
 {
     if ( !pPerceptionRecoPoint_ )
     {
@@ -343,19 +343,19 @@ void* PHY_RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& center, MT_Flo
         activePerceptions_.push_back( pPerceptionRecoPoint_ );
     }
 
-    return pPerceptionRecoPoint_->AddPoint( center, rSize, rSpeed, result );
+    return pPerceptionRecoPoint_->AddPoint( center, rSize, rSpeed, callerAgent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::DisableRecoPoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::DisableRecoPoint( void* pId )
+void PHY_RolePion_Perceiver::DisableRecoPoint( int id )
 {
     if ( !pPerceptionRecoPoint_ )
         return;
 
-    pPerceptionRecoPoint_->RemovePoint( pId );
+    pPerceptionRecoPoint_->RemovePoint( id );
     if ( !pPerceptionRecoPoint_->HasPointToHandle() )
     {
         activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoPoint_ ) );
@@ -368,7 +368,7 @@ void PHY_RolePion_Perceiver::DisableRecoPoint( void* pId )
 // Name: PHY_RolePion_Perceiver::EnableRecoObjects
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void* PHY_RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DIA_Variable_ABC& result )
+int PHY_RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DEC_Decision_ABC& callerAgent )
 {
     if ( !pPerceptionRecoObjects_ )
     {
@@ -376,19 +376,19 @@ void* PHY_RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localis
         activePerceptions_.push_back( pPerceptionRecoObjects_ );
     }
     
-    return  pPerceptionRecoObjects_->AddLocalisation(localisation, vCenter, rSpeed, result );
+    return  pPerceptionRecoObjects_->AddLocalisation(localisation, vCenter, rSpeed, callerAgent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::DisableRecoObjects
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::DisableRecoObjects( void* pId )
+void PHY_RolePion_Perceiver::DisableRecoObjects( int id )
 {
     if ( !pPerceptionRecoObjects_ )
         return;
         
-    pPerceptionRecoObjects_->RemoveLocalisation( pId );
+    pPerceptionRecoObjects_->RemoveLocalisation( id );
     if ( !pPerceptionRecoObjects_->HasLocalisationToHandle() )
     {
         activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoObjects_ ) );
@@ -401,7 +401,7 @@ void PHY_RolePion_Perceiver::DisableRecoObjects( void* pId )
 // Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void* PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, MT_Float rRadius )
+int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, MT_Float rRadius )
 {
     if ( !pPerceptionRecoLocalisation_ )
     {
@@ -416,7 +416,7 @@ void* PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& lo
 // Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void* PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation )
+int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation )
 {
     if ( !pPerceptionRecoLocalisation_ )
     {
@@ -431,7 +431,7 @@ void* PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& lo
 // Name: PHY_RolePion_Perceiver::EnableControlLocalisation
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-void* PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation )
+int PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation )
 {
     if ( !pPerceptionRecoLocalisation_ )
     {
@@ -447,12 +447,12 @@ void* PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation&
 // Name: PHY_RolePion_Perceiver::DisableRecoLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::DisableRecoLocalisation( void* pId )
+void PHY_RolePion_Perceiver::DisableRecoLocalisation( int id )
 {
     if ( !pPerceptionRecoLocalisation_ )
         return;
 
-    pPerceptionRecoLocalisation_->RemoveLocalisation( pId );
+    pPerceptionRecoLocalisation_->RemoveLocalisation( id );
     if ( !pPerceptionRecoLocalisation_->HasLocalisationToHandle() )
     {
         activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoLocalisation_ ) );
@@ -474,7 +474,7 @@ bool PHY_RolePion_Perceiver::IsUsingActiveRadar() const
 // Name: PHY_RolePion_Perceiver::EnableRadarOnLocalisation
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void* PHY_RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& radarClass, const TER_Localisation& localisation )
+int PHY_RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& radarClass, const TER_Localisation& localisation )
 {
     if( !pPerceptionRadar_ )
     {
@@ -489,12 +489,12 @@ void* PHY_RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& r
 // Name: PHY_RolePion_Perceiver::DisableRadarOnLocalisation
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& radarClass, void* pID )
+void PHY_RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& radarClass, int id )
 {
    if( !pPerceptionRadar_ )
         return;
 
-    pPerceptionRadar_->DisableRadar( radarClass, pID );
+    pPerceptionRadar_->DisableRadar( radarClass, id );
     if( !pPerceptionRadar_->HasRadarToHandle() )
     {
         activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRadar_ ) );
@@ -542,7 +542,7 @@ void PHY_RolePion_Perceiver::DisableRadar( const PHY_RadarClass& radarClass )
 // Name: PHY_RolePion_Perceiver::EnableFlyingShellDetection
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-void* PHY_RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& localisation )
+int PHY_RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& localisation )
 {
     if( !pPerceptionFlyingShell_ )
     {
@@ -557,12 +557,12 @@ void* PHY_RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation
 // Name: PHY_RolePion_Perceiver::DisableFlyingShellDetection
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::DisableFlyingShellDetection( void* pId )
+void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 {
     if ( !pPerceptionFlyingShell_ )
         return;
 
-    pPerceptionFlyingShell_->RemoveLocalisation( pId );
+    pPerceptionFlyingShell_->RemoveLocalisation( id );
     if ( !pPerceptionFlyingShell_->HasLocalisationToHandle() )
     {
         activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionFlyingShell_ ) );

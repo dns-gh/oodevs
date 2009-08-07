@@ -1,0 +1,46 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/common/missions/reconnaitreaxe/ReconnaitreAxe - MRT.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_NBC_AssignerReconnaitreA
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_NBC_AssignerReconnaitreA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_NBC_AssignerReconnaitreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions = self.params[1]
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Le fuseau de l'escadron est coupé proportionnellement
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_MRT_AffecteFuseaux( self._namedParams.selPions )
+        end
+
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Affectation des missions du premier echelon
+]]--[[//-----------------------------------------------------------------------------
+]]self._namedParams.selPions ) do
+        local _continue = true
+            Activate( self.activations.BEH_Mission_Automate_NBC_AssignerReconnaitreA, 1, { ePhase_MRT, pion, } )
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_NBC_AssignerReconnaitreA, "BEH_Mission_Automate_NBC_AssignerReconnaitreA", nodes.BEH_Mission_Automate_NBC_AssignerReconnaitreA }

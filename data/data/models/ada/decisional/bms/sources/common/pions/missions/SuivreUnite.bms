@@ -1,0 +1,52 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/missions/SuivreUnite.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Common/Pions/Missions/SuivreUnite.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:07 $
+]]--[[// $Revision: 17 $
+]]--[[// $Workfile: SuivreUnite.hal $
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// SuivreUnite
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_Suivre"
+{
+    activations =
+    {
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_Suivre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.rDist_Min = self.rDist_Min or S_Dist_MissionSuivre_Min()
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "MISSION Suivre -----> " .. DEC_GetSzName( self._namedParams.mission.uniteASuivre_ ) )
+            end
+        end
+
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.mission.uniteASuivre_:DEC_Agent_Position(), } )
+        Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.mission.uniteASuivre_, self.rDist_Min, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Suivre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "BEH_Dep_Suivre", nodes.BEH_Dep_Suivre }

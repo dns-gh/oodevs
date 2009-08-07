@@ -1,0 +1,46 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - MRT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Quand on attaque, cela revient a freiner sans menager ses moyens.
+]]--[[// pour le moment, nous n'avons pas de mission pion attaquer => on freiner.
+]]--[[// nouvelle mission a implementer pour les pions
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_Attaquer"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, AntitankHelicopterPatrol )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, EscortAndCloseSupportHelicopterPatrol )
+        self.listeAttaquer = self.listeAttaquer or S_Liste_Concatene( self.listeHAC, self.listeHAP )
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( DIA_IsListEmpty( self.listeAttaquer ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+            end
+        end
+
+        DEC_MRT_Valide()
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_Attaquer = { "mission" }

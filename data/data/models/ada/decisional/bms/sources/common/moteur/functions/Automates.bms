@@ -1,0 +1,37 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/functions/Automates.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// globals
+]]--[[// *****************************************************************************
+]]--[[// RC
+]]--[[/*E_TypeRC*//*Paramètres dépendant du type de RC*/]]--[[/*E_TypeRC*//*Paramètres dépendant du type de RC*/]]--[[/*E_TypeRC*//*Paramètres dépendant du type de RC*/]]--[[// Accesseurs                     
+]]--[[/*T_ListePions*/]]--[[/*T_ListePions*/]]--[[/*T_Pion*/]]--[[/*T_ListeAutomates*/]]--[[/*T_ListePions*//*T_Automate*/]]--[[/*T_ListePions*//*T_Automate*/]]--[[/*T_Pion*//*T_Automate*/]]--[[// Missions
+]]--[[/*T_Mission_Pion*//*T_Pion*//*T_Mission_Pion_XXX*/]]--[[/*T_ListePions*/]]--[[/*T_Mission_Pion*//*T_Pion*//*T_Mission_Pion_XXX*/]]--[[/*T_Mission_Pion*/]]--[[/*T_Mission_Automate*//*T_Automate*//*T_Mission_Automate_XXX*/]]--[[/*T_Mission_Automate*/]]--[[/*T_Fuseau*//*T_Mission_Automate_XXX*/]]--[[/*T_Direction*//*T_Mission_Automate_XXX*/]]--[[/*T_ListeFuseaux*//*nbr*/]]--[[// Limas / Missions
+]]--[[/*T_Lima*//*E_TypeLima*/// Retourn un T_Lima, ou 0 si pas de lima du type demandé    
+]]--[[/*T_Fuseau*/// Retourne le fuseau courant
+]]--[[/*T_Lima*//*bFlag*/]]--[[/*T_Lima*/]]--[[/*T_Lima*//*bFlag*/]]--[[/*T_Lima*/]]--[[// Objets
+]]--[[/*connaissance objet*/]]--[[// Connaissance                  
+]]--[[/*T_Automate*//*delai en minutes*/]]--[[/*T_Automate*//*centre du cercle de la zone*//*rayon du cercle de la zone*/]]--[[/*T_ListeConnaissancesObjet*//*T_Point centre du cercle*//*rayon*//*E_TypeObjects*/]]--[[/*T_ListeConnaissancesObjet*//*T_Localisation zone*//*E_TypeObjects*/]]--[[/*T_ListeConnaissancesObjet*//*E_TypeObjects*/]]--[[/*T_ListeConnaissancesAgent*//*T_Pion*/]]--[[/*T_ListeConnaissancesAgent*//*T_Localisation*/]]--[[/*T_ListeLocalisations*//*T_ListeLocalisations*/// Retourne liste moins ouvert -> plus ouvert
+]]--[[/*T_ListeLocalisations*//*T_ListeLocalisations*/// Retourne liste moins ouvert -> plus ouvert
+]]--[[/*E_NiveauPerception*//*T_ConnaissanceAgent*/// Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)    
+]]--[[/*T_ConnaissanceAgent*/// Retourne une valeur entre 0 et 1
+]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_Point*//*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*E_ValiditeRequete*//*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*//*T_Pion*/// Retourne la dangerosité, entre 1 et 2
+]]--[[/*T_ConnaissanceAgent*//*T_ConnaissanceAgent*/// Retourne la dangerosité, entre 1 et 2        
+]]--[[/*T_ConnaissanceObjet*/]]--[[/*T_Localisation*//*T_ConnaissanceObjet*/]]--[[/*T_ConnaissanceObjet*/]]--[[/*E_Tristate*//*T_ConnaissanceObjet*/]]--[[/*T_ConnaissanceObjet*/]]--[[/*T_ConnaissanceObjet*/]]--[[/*E_TypeObject*//*T_ConnaissanceObjet*/]]--[[/*T_ConnaissanceObjet*/]]--[[// Geometrie                     
+]]--[[/*T_ListeLocalisations*//*profondeur des segments en m*/]]--[[/*T_Point*//*vCircleCenter*//*Object type*//*rayon*/]]--[[/*T_ListeLocalisations*//*T_Localisation*//*nbr part*//*E_LocalisationFunctionsReturnCode*/]]--[[/*T_Point*//*T_Localisation*/]]--[[/*T_Point*/]]--[[/*T_Point*/]]--[[/*T_Point*//*T_Pion*/]]--[[/*T_Point*/]]--[[/*T_Point*//*T_Lima*//*dist avant lima*//*fuseau*/]]--[[/*T_ListePoints*//*T_Lima*//*dist avant lima*//*nb points*/]]--[[/*T_ListePoints*//*T_ListePions*//*T_Localisation*//*dirdanger*//*Dist max*/// Retourne T_ListePoints à EFFACER !!!
+]]--[[/*T_CalculLignesAvantArriere*//*T_ListePions*/]]--[[/*T_CalculLignesAvantArriere*//*T_ListeAutomates*/]]--[[/*T_CalculLignesAvantArriere*/]]--[[/*T_CalculLignesAvantArriere*//*T_Pion*/]]--[[/*T_CalculLignesAvantArriere*//*T_Automate*/]]--[[/*T_CalculLignesAvantArriere*//*T_Pion*/]]--[[/*T_CalculLignesAvantArriere*//*T_Automate*/]]--[[/*T_Point *//*T_Localisation localisation*/]]--[[/*T_Point*//*T_Localisation localisation*/]]--[[/*T_ListePions*//*T_Direction*/]]--[[/*T_ListePions*//*T_Direction*/]]--[[/* entre 0 et 1*//*T_Fuseau*//*T_ListeAutomates*//*T_Lima*/]]--[[/* entre 0 et 1*//*T_Fuseau*//*T_ListeAutomates*//*list of T_Objectif*/]]--[[// Gestion des pions
+]]--[[/*T_Pion*//*T_Automate*/]]--[[/*T_Pion*/]]--[[/*T_Pion*/]]--[[/*T_Point*//*T_Pion*/]]--[[/*T_Pion*//*T_Pion*/]]--[[/*T_Pion*//*T_Pion*/]]--[[/*T_Position*//*T_Pion*/]]--[[/*T_Point*//*T_Lima*//*dist avant lima*//*T_Pion*/]]--[[/*T_Localisation localisation*//*T_Point result*//*T_Pion*/]]--[[/* temps en minutes *//*T_Pion*//*distance en m*/]]--[[// Objets
+]]--[[/*T_Pion*//*E_TypeObject*/]]--[[/*T_Pion*//*T_ConnaissanceObjet*/]]--[[/*T_Pion*//*T_ConnaissanceObjet*/]]--[[/*Objet type*//*localisation*/]]--[[/*T_ConnaissanceObjet*/]]--[[// Logistique
+]]--[[/*T_Automate*/// ATTENTION : La valeur de retour peut être nulle     
+]]--[[// Connaissance Populations
+]]--[[/*T_ConnaissancePopulation*//*E_ValiditeRequete&*/]]--[[/*T_ConnaissancePopulation*//*T_Localisation*/]]--[[/*T_ListeConnaissancesPopulation*/]]--[[// Renseignement eni
+]]--[[/*T_Fuseau*/]]--[[/*T_Fuseau*/]]--[[/*T_Localisation*/]]--[[/*T_Localisation*/]]--[[/*T_ListeLocalisations*//*T_ListeLocalisations*/// Retourne liste moins ouvert -> plus ouvert 
+]]--[[/*T_ListeFuseaux*//*T_ListeFuseaux*/// Retourne liste moins ouvert -> plus ouvert 
+]]--[[/*T_ListeFuseaux*//*T_ListeFuseaux*/// Retourne liste moins ouvert -> plus ouvert
+]]--[[/*T_Fuseau*/]]--[[/*T_Direction*//*T_Point*//*T_Fuseau*/]]--[[// Debug
+]]--[[/*T_Point*/]]--[[/*T_ListePoints*/]]--[[// Migration Representations
+]]--[[/*T_Direction */]]--[[/*T_Direction*/]]

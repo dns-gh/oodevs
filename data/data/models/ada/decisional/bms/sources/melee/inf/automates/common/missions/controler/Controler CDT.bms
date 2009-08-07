@@ -1,0 +1,156 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/missions/controler/Controler CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-09-01 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Missions/Controler/Controler CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 25/08/05 18:07 $
+]]--[[// $Revision: 7 $
+]]--[[// $Workfile: Controler CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "BEH_Situation_Automate_INF_Controler"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
+        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
+        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Situation_Automate_INF_Controler_Reduire", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Gestion des pions detruits
+]]--[[//-------------------------------------------------------------------------	
+]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )--[[//-------------------------------------------------------------------------
+]]--[[// Gestion des appuis
+]]--[[//-------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+        --[[// behavior BEH_Conduite_Automate_Gerer_UniteInconnues();
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Reduit les unites se trouvant dans la zone
+]]--[[// JCR : Plutot donner fixer ..
+]]--[[//-------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Situation_Automate_INF_Controler_Reduire, 1, { self.mission.zone_, } )
+    end,
+
+}
+
+node "BEH_Situation_Automate_INF_Controler_Reduire"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_GererReductionSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.locZone = self.params[1]
+    end,
+
+    activate = function( self )
+        local selPions_SE = S_ObtenirPionsDe( eEtatEchelon_Second, eEtatDestruction_None )
+        local selPions_SE_INF = S_Cherche_Automate_Filtre_TypePion_INF( selPions_SE )
+        for _,x_appui in pairs( selPions_SE_INF ) do
+        local _continue = true
+do
+                local pAppui = x_appui
+                do
+                end
+--[[// On cherche le pion appuye ( en controle de zone )
+]]--[[// A priori, c'est un pion INF .. Mais on ne sait jamais		
+]]--[[// On prend uniquement les unites en appuis..
+]]--[[// Si le pion en 2e echelon n'a pas la mission appuyer / soutenir, il
+]]--[[// n'est pas selectionne
+]]
+                local pionAppuye = S_Automate_INF_UniteMission_Appuyer( pAppui )
+                if( ( pionAppuye == 0 or pionAppuye == nil ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    --[[// Si pour une raison ou une autre, le pion a perdu sa mission ou n'a pas
+]]--[[// la mission de controle de zone
+]]if( not S_Misc_EstMissionAffectee_Pion( pionAppuye, "T_Mission_Pion_INF_ControlerSecteur" ) ) then
+                        _continue = false
+                    end
+
+                        if _continue then
+                        --[[// Dans la zone de l'element appuye		
+]]local misControler = DEC_GetMission( pionAppuye )
+                        --[[// On cherche a appuye un pion en reduction et n'ayant pas le rapfor
+]]--[[// favorable					
+]]local ksEni_Zone = S_Cherche_Automate_INF_EniDangereux_DansZone( pionAppuye, misControler:Getsecteur_() )
+                        if( ( ksEni_Zone ~= 0 and ksEni_Zone ~= nil ) ) then
+                            Activate( self.activations.BEH_Conduite_Automate_INF_GererReductionSur, 1, { pAppui, ksEni_Zone, } )
+                        end
+
+                    end
+                end
+            end
+
+        end
+
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_GererReductionSur"
+{
+    instances =
+    {
+        boost = 2,
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Mission_Automate_INF_AssignerA_Reduire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionAppui = self.params[1]
+        self._namedParams.ksEni_Zone = self.params[2]
+    end,
+
+    activate = function( self )
+                if( ModuleBegins() ) then
+            do
+                                do
+                end
+--[[// Assigne la mission Reduire
+]]
+                DEC_Trace( "Assigne mission Reduire a: " .. DEC_GetSzName( self._namedParams.pionAppui ) )
+                --[[// On reassigne la mission Appuye
+]]StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Reduire, 1, { ePhase_CDT, self._namedParams.pionAppui, self._namedParams.ksEni_Zone, eEtatEchelon_Second, } )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_GererReductionSur, "BEH_Mission_Automate_INF_AssignerA_Reduire", nodes.BEH_Mission_Automate_INF_AssignerA_Reduire }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Controler, "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", nodes.BEH_Dispositif_Automate_INF_GererLesPionsDetruits }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Controler, "BEH_Dispositif_Automate_INF_GererReleve", nodes.BEH_Dispositif_Automate_INF_GererReleve }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Controler, "BEH_Conduite_Automate_INF_GererAppuis_INF", nodes.BEH_Conduite_Automate_INF_GererAppuis_INF }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Controler, "BEH_Conduite_Automate_INF_GererAppui_Mortier", nodes.BEH_Conduite_Automate_INF_GererAppui_Mortier }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Controler, "BEH_Conduite_Automate_INF_GererAppuis_ABC", nodes.BEH_Conduite_Automate_INF_GererAppuis_ABC }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Controler, "BEH_Situation_Automate_INF_Controler_Reduire", nodes.BEH_Situation_Automate_INF_Controler_Reduire }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Controler_Reduire, "BEH_Conduite_Automate_INF_GererReductionSur", nodes.BEH_Conduite_Automate_INF_GererReductionSur }

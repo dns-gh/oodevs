@@ -1,0 +1,678 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/common/Behaviors - Dep.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Common/Behaviors - Dep.hal $
+]]--[[// $Author: Nld $
+]]--[[// $Modtime: 22/09/05 18:14 $
+]]--[[// $Revision: 30 $
+]]--[[// $Workfile: Behaviors - Dep.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Lima_Pion_RejoindreFuseau_EnAttente
+]]--[[//
+]]--[[// Commentaires: Gerer la coordination sur les fuseaux. Lorsque l'on rejoint
+]]--[[//	 son fuseau, le pion attent l'ordre de pousuivre (deboucher)
+]]--[[// *****************************************************************************
+]]node "BEH_Lima_Pion_RejoindreFuseau_EnAttente"
+{
+    activations =
+    {
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Dep_PasserSurLima", {} },
+        { "BEH_Ordre_SePoster_EnAttente", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eRejoindre
+        self.eOrdre = self.eOrdre or eActionEnCours
+        if( ModuleBegins() ) then
+if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
+                self.params.__returnValue = eActionEffectuee
+                Halt()
+            end
+        end
+
+        if( self.eOrdre == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointFuseau, } )
+        if( self.ePhase == eAttendre ) then
+            Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_Fuseau, } )
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
+                    return
+                end
+
+                self.ePhase = eAttendre
+            elseif switch_1 == eAttendre then
+                Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eOrdre = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+--[[//=============================================================================
+]]--[[// Reactions face aux objets
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Objet_Pion_INF_ReagirFaceAObstacle"
+{
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+        { "BEH_Dep_SePoster", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repObj = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.rConst_DelaiMin = self.rConst_DelaiMin or 10
+        self.rConst_Delai = self.rConst_Delai or 10 * 60
+        self.rTemps_Debut = self.rTemps_Debut or DEC_TempsSim()
+        if( ModuleBegins() ) then
+            do
+                --[[// Change l'ambiance		
+]]F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
+            end
+        end
+
+        if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.repObj ) ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+        end
+
+        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self.rConst_DelaiMin, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        --[[// 8 <=> Max de fixe .. 	
+]]--[[// rForceDelai = S_Force_PDelaiSurMemePosition( rConst_Delai, DEC_Agent_Position(), rForceDelai );
+]]local rTemps_Ecoule = DEC_TempsSim() - self.rTemps_Debut
+        local rForceDelai = 1 - rTemps_Ecoule / self.rConst_Delai
+        Activate( self.activations.BEH_Dep_SePoster, 8 * rForceDelai, {} )
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Action de rejoindre un itineraire
+]]--[[// Remarque : deplacement en 1er echelon 
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Dep_Pion_INF_RejoindreObjectif"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptMission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Rejoins l'objectif" )
+            end
+        end
+
+        Activate( self.activations.ACT_RC, 1, { eRC_ProgressionVersPosition, } )
+        --[[// rejoins	
+]]if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                    DEC_Trace( "progression sur itineraire impossible" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                do
+                    DEC_Trace( "Arrivee sur objectif" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptMission, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 16/04/2004 19:05
+]]--[[//
+]]--[[// La connaissance ksEni est valide
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Dep_Pion_INF_PreciserContact"
+{
+    instances =
+    {
+        boost = 1.1,
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ksEni = self.params[1]
+        self._namedParams.eLevel = self.params[2]
+        self._namedParams.bDistTir = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.ptDest = self.ptDest or DEC_Geometrie_CreerPoint()
+        local S_Demande_pHTir = GetStateVariable( "VE_Agressivite_Tir" )
+        if( ModuleBegins() ) then
+            do
+                DEC_RC( eRC_PrecisionContact, self._namedParams.ksEni )
+                DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), self.ptDest )
+            end
+        end
+
+        Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
+        --[[// Ennemi au contact
+]]if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.ksEni, self._namedParams.eLevel ) and ( not self._namedParams.bDistTir or S_Tir_EstAPortee( self._namedParams.ksEni, S_Demande_pHTir ) ) ) then
+            do
+                if( not S_Geometrie_EstProchePosition( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), 800 ) ) then
+                    DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), self.ptDest )
+                end
+
+                --[[// On fixe si pas detruit tactique
+]]if( not DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) ) then
+                    Activate( self.activations.ACT_Dep_SePosterFaceA, 1.1, { self._namedParams.ksEni, } )
+                end
+
+            end
+--[[// mise en ambiance surete absolue
+]]        end
+
+        Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
+        --[[// observation de l'unite
+]]Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptDest, } )
+        --[[// on rejoint le point d'observation pour identification
+]]--[[// de l unite ennemi						
+]]if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                    DEC_Trace( "impossible de rejoindre position d'observation" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                do
+                    DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), self.ptDest )
+                                        self.params.__returnValue = eActionHalt
+                    return
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptDest, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 16/04/2004 18:26
+]]--[[//
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_MAJ_EtatSituationEni", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_INF_PreciserContact", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ksEni = self.params[1]
+        self._namedParams.bDistTir = self.params[2]
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eRejoindre
+        self.ptDest = self.ptDest or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "deplacement sur position " .. EnumToString( F_Pion_GeteNiveauAction( myself ), E_NiveauPerception ) )
+            end
+        end
+
+        do
+        end
+
+        if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEni ) ) then
+            Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
+        end
+
+        --[[// $$$$ Reprise de contact
+]]if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEni ) ) then
+            do
+                self.ePhase = eRejoindre
+                if( not DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.ksEni ) ) then
+                    do
+                        --[[// action ACT_RC_SurEni( eRC_PerteDeContactVisuel, ksEni );									
+]]DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), self.ptDest )
+                    end
+                end
+
+            end
+--[[// Perte de contact				
+]]        else
+            self.ePhase = eRetrouver
+        end
+
+        Activate( self.activations.ACT_MAJ_EtatSituationEni, 1, { eEtatSituationEnnemi_PrecisionContact, } )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                --[[// Precise Le contact
+]]assert( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEni ), "BEH_Dep_Pion_INF_PreciserMaintenirContact" )
+                Activate( self.activations.BEH_Dep_Pion_INF_PreciserContact, 1, { self._namedParams.ksEni, F_Pion_GeteNiveauAction( myself ), self._namedParams.bDistTir, } )
+                
+            elseif switch_1 == eRetrouver then
+                if( ( self.ptDest == 0 or self.ptDest == nil ) or self.eAction == eActionImpossible ) then
+                    do
+                        DEC_Trace( "impossible de retrouver l'ennemi" )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            --[[// On n'a pas repri connaissance de l'ennemi
+]]DEC_Trace( "perte complete de contact sur ennemi" )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                    end
+--[[// dispositif d abordage
+]]                end
+
+                Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptDest, } )
+                --[[// On a perdu le contact sur l'unite ennemi !
+]]--[[// On retourne vers la derniere position ennemi connue				
+]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptDest, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Preciser Maintenir Contact : focus loss" )
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// BEH_Dep_Pion_INF_MiseEnPlace_Mission
+]]--[[// 
+]]--[[// 1  - Prepare la mission
+]]--[[// 2  - Progresse vers l'objectif
+]]--[[// 3  - Arrive a proximite de l'objectif, initie une reconnaissance.
+]]--[[// 4* - S'il est specifie, rejoint l'objectif sinon, s'installe a distance de tir
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
+{
+    activations =
+    {
+        { "BEH_Delai_Pion_INF_PreparerMission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Misc_Pion_DelaiInstallation", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rTempsPreparation = self.params[1]
+        self._namedParams.ptObjectif = self.params[2]
+        self._namedParams.bRejoindreObj = self.params[3]
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionRejoindre = self.eActionRejoindre or eActionEnCours
+        if( self.eActionRejoindre == eActionImpossible ) then
+            do
+                                do
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eActionRejoindre == eActionEffectuee ) then
+            do
+                self.eActionRejoindre = eActionEnCours
+                                do
+                    if( not S_Geometrie_EstProchePosition( self._namedParams.ptObjectif, DEC_Agent_Position(), 1000 ) ) then
+                        self.params.__returnValue = eActionImpossible
+                        Halt()
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        do
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
+                    do
+                        Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1.2, { self._namedParams.rTempsPreparation, } )
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhase = eReconnaitre
+            --[[// On cherche une position d'observation
+]]elseif switch_1 == eReconnaitre then
+                --[[// Calcul de position d'observation ?
+]]if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
+                    do
+                        StartActivate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptObjectif, } )
+                        if( DEC_Perception_PointEstVisible( self._namedParams.ptObjectif ) ) then
+                            self.eAction = eActionEffectuee
+                        end
+
+                    end
+                end
+
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            if( not self._namedParams.bRejoindreObj ) then
+                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+                            end
+
+                            self.ePhase = eSurveiller
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                StartActivate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptObjectif, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
+                --[[// Observe la direction dangereuse		
+]]Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1.1, {} )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eRejoindre
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eRejoindre then
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 04/04/2005 11:39
+]]--[[// 
+]]--[[// Fait une copie du point a observer
+]]--[[// On reconnait la position puis on la rejoins.
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Progression_Pion_INF_AborderObjectif"
+{
+    activations =
+    {
+        { "BEH_Obs_Pion_INF_RecoPoint", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "BEH_Dep_Pion_INF_RejoindreObjectif", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptMission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eReconnaitre
+        if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                --[[//On envoie une patrouille en reconnaissance.				
+]]if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eRejoindre
+                        end
+
+                    end
+                else
+do
+                        Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, setmetatable( { self._namedParams.ptMission, M_TEMPS_RECO_POINT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                end
+
+            elseif switch_1 == eRejoindre then
+                --[[// Voir avec la discretion
+]]--[[// On rejoint le plus rapidement possible			
+]]if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
+                Activate( self.activations.BEH_Dep_Pion_INF_RejoindreObjectif, 1, setmetatable( { self._namedParams.ptMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                        end
+
+    end,
+
+--[[//=============================================================================
+]]--[[// Aborder un point particulier
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Progression_Pion_INF_Aborder"
+{
+    activations =
+    {
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repPt = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.ptAborder_Copie = self.ptAborder_Copie or DEC_Geometrie_CreerPoint()
+        if( ModuleBegins() ) then
+            do
+                DEC_Copie_Point( DEC_GetRepPoint( self._namedParams.repPt ), self.ptAborder_Copie )
+                DEC_Trace( "debut abordement point particulier " )
+            end
+--[[// mise en formation
+]]        end
+
+        Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 0.5, } )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptAborder_Copie, } )
+        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+        --[[// le deplacement se fait dans le comportement 
+]]--[[// appellant
+]]if( DEC_Geometrie_PositionsEgales( self.ptAborder_Copie, DEC_Agent_Position() ) ) then
+            do
+                DEC_Trace( "fin abordement point particulier" )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission, "BEH_Delai_Pion_INF_PreparerMission", nodes.BEH_Delai_Pion_INF_PreparerMission }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission, "BEH_MOT_Pion_INF_Debarquer", nodes.BEH_MOT_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission, "ACT_Misc_Pion_DelaiInstallation", nodes.ACT_Misc_Pion_DelaiInstallation }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserContact, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserContact, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserContact, "ACT_Misc_Pion_Ambiance", nodes.ACT_Misc_Pion_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserContact, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserContact, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserMaintenirContact, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserMaintenirContact, "ACT_MAJ_EtatSituationEni", nodes.ACT_MAJ_EtatSituationEni }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserMaintenirContact, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserMaintenirContact, "BEH_Dep_Pion_INF_PreciserContact", nodes.BEH_Dep_Pion_INF_PreciserContact }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserMaintenirContact, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_PreciserMaintenirContact, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_RejoindreObjectif, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_RejoindreObjectif, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_RejoindreFuseau_EnAttente, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_RejoindreFuseau_EnAttente, "ACT_Dep_PasserSurLima", nodes.ACT_Dep_PasserSurLima }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_RejoindreFuseau_EnAttente, "BEH_Ordre_SePoster_EnAttente", nodes.BEH_Ordre_SePoster_EnAttente }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_INF_ReagirFaceAObstacle, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_INF_ReagirFaceAObstacle, "BEH_Dep_SePoster", nodes.BEH_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Progression_Pion_INF_Aborder, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Progression_Pion_INF_Aborder, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Progression_Pion_INF_Aborder, "BEH_MOT_Pion_INF_Debarquer", nodes.BEH_MOT_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Progression_Pion_INF_AborderObjectif, "BEH_Obs_Pion_INF_RecoPoint", nodes.BEH_Obs_Pion_INF_RecoPoint }
+connections[ #connections + 1 ] = { nodes.BEH_Progression_Pion_INF_AborderObjectif, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Progression_Pion_INF_AborderObjectif, "ACT_Misc_Pion_Ambiance", nodes.ACT_Misc_Pion_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Progression_Pion_INF_AborderObjectif, "BEH_Dep_Pion_INF_RejoindreObjectif", nodes.BEH_Dep_Pion_INF_RejoindreObjectif }

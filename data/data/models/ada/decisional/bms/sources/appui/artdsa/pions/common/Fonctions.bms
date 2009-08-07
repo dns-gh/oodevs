@@ -1,0 +1,12 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/common/Fonctions.bms"] = true
+
+--[[//fonctions génériques aux pions et automates asa
+]]include "Appui/ArtDsa/Common/Fonctions.bms"
+
+
+--[[//fonctions des Pions asa
+]]include "Appui/ArtDsa/Pions/Common/Fonctions/Fonctions - Listes.bms"
+
+include "Appui/ArtDsa/Pions/Common/Fonctions/Fonctions - Forces.bms"
+

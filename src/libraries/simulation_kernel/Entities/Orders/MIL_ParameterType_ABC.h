@@ -12,6 +12,7 @@
 
 class MIL_OrderType_ABC;
 class DEC_KnowledgeResolver_ABC;
+class MIL_MissionParameter_ABC;
 
 // =============================================================================
 /** @class  MIL_ParameterType_ABC
@@ -36,9 +37,7 @@ public:
     
     //! @name Operations
     //@{
-    virtual void Copy                   ( const ASN1T_MissionParameter& from, DIA_Variable_ABC&       to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const = 0;
-    virtual bool Copy                   ( const DIA_Variable_ABC&       from, DIA_Variable_ABC&       to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const = 0;
-    virtual bool Copy                   ( const DIA_Variable_ABC&       from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const = 0;
+    virtual bool Copy                   ( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const = 0;
     virtual void CleanAfterSerialization( ASN1T_MissionParameter& to ) const = 0;
     //@}
 

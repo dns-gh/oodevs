@@ -1,0 +1,106 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/missions/defendre site/Defendre Site - MRT.bms"] = true
+
+node "MIS_Automate_MRT_ASA_DefendreSite"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirLibre", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe", {} },
+        { "BEH_Mission_Automate_AssignerStationnerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[// variables persistantes
+]]self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionsDefendreSite = self.eEtatMissionsDefendreSite or eActionEnCours
+        self.pionPC = self.pionPC or DEC_Automate_PionPC()
+        self.barycentreZone = self.barycentreZone or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listeSectionRolandCarol = self.listeSectionRolandCarol or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, ShortRangeSurfaceToAirDefenseTroop )
+        if( ModuleBegins() ) then
+            do
+                if( DIA_IsListEmpty( self.listeSectionRolandCarol ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( ( DEC_ListePoints_Size( self._namedParams.mission.positionsSections_ ) == 0 or DEC_ListePoints_Size( self._namedParams.mission.positionsSections_ ) == nil ) ) then
+                    self.ePhase = eMRT_MissionImpossible
+                end
+
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+--[[// =============================================================================
+]]--[[// Vérifier les moyens, determiner les patrouilles qui vont aller reconnaitre
+]]--[[// le contour de l'ennemi
+]]--[[// =============================================================================                                  
+]]        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionsDefendreSite == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionsDefendreSite == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[//controle des creations de missions
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeSectionRolandCarol ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsDefendreSite = v else rawset( t, k, v ) end end } ) )
+                --[[//Defendre zone à partir de position calculées
+]]if( not DIA_IsListEmpty( self.listeSectionRolandCarol ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe, 1, { ePhase_MRT, self.listeSectionRolandCarol, self._namedParams.mission.positionsSections_, self._namedParams.mission.zone_, } )
+                end
+
+                --[[//Le pc va toujours stationner au centre de la zone défendue
+]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreZone, } )
+                
+            elseif switch_1 == eMRT_MissionImpossible then
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ASA_DefendreSite = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreSite, "BEH_ROE_Automate_TirLibre", nodes.BEH_ROE_Automate_TirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreSite, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreSite, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreSite, "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe", nodes.BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreSite, "BEH_Mission_Automate_AssignerStationnerA", nodes.BEH_Mission_Automate_AssignerStationnerA }

@@ -1,0 +1,116 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son vab/missions/FlancGarder.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son Vab/Missions/FlancGarder.hal $
+]]--[[// $Author: Jcr $
+]]--[[// $Modtime: 22/09/05 18:29 $
+]]--[[// $Revision: 19 $
+]]--[[// $Workfile: FlancGarder.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+node "MIS_Pion_INF_FlancGarder"
+{
+    activations =
+    {
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Mission_Pion_INF_RecoAxe", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eReconnaitre
+        self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Mission 'FlancGarder' : debut" )
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+            end
+        end
+
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_MANOEUVRE(), } )
+        --[[// Point de regroupement : uniteAFlancgarder_
+]]Activate( self.activations.ACT_Misc_Pion_INF_MAJ_PositionRegroupement, 1, { self._namedParams.mission.uniteAFlancgarder_:DEC_Agent_Position(), } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//=============================================================================
+]]--[[// Mission de Reconnaissance
+]]--[[//
+]]--[[// 1) preparation
+]]--[[// 2) - progression sur l axe
+]]--[[//    - retour sur l axe de progression si ce dernier a été quitte
+]]--[[// 3) fin mission
+]]--[[//=============================================================================
+]]        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                if( self.eCurrentPhase ~= eFinMission ) then
+                    do
+                        Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                        
+                    end
+                else
+                    self.ePhase = eFinMission
+                end
+
+            elseif switch_1 == eFinMission then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            DEC_Trace( "Fin mission de mission reconnaitre un axe" )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_INF_FlancGarder = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_FlancGarder, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_FlancGarder, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_FlancGarder, "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", nodes.ACT_Misc_Pion_INF_MAJ_PositionRegroupement }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_FlancGarder, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_FlancGarder, "BEH_Mission_Pion_INF_RecoAxe", nodes.BEH_Mission_Pion_INF_RecoAxe }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_FlancGarder, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_FlancGarder, "BEH_Poste_Pion_INF_TomberEnGarde", nodes.BEH_Poste_Pion_INF_TomberEnGarde }

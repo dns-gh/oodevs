@@ -1,0 +1,98 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/missions/Suivre.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// SuivreUnite
+]]--[[// 
+]]--[[// Commentaires: Suivre en arriere du pion à suivre, par rapport à la direction
+]]--[[//               danngereuse.
+]]--[[//               Prise en compte de l'ordre de conduite interrompre
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_Suivre"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Maj_Pions_ObjectifCourant", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "BEH_Dep_Pion_ALAT_Suivre", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eSuivreUnite
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                end
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eSuivreUnite then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
+                Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.uniteASuivre_:DEC_Agent_Position(), } )
+                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.uniteASuivre_:DEC_Agent_Position(), } )
+                Activate( self.activations.BEH_Dep_Pion_ALAT_Suivre, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.uniteASuivre_, 3000, eProgressionDefaut, eTypeItiInfiltration, } )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            DIA_Clear( myself.plotsRavitaillement_ )
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                DIA_Clear( myself.plotsRavitaillement_ )
+        F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Suivre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "ACT_Maj_Pions_ObjectifCourant", nodes.ACT_Maj_Pions_ObjectifCourant }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "BEH_Dep_Pion_ALAT_Suivre", nodes.BEH_Dep_Pion_ALAT_Suivre }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }

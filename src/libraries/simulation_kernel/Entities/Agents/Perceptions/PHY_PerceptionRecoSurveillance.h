@@ -12,7 +12,8 @@
 #ifndef __PHY_PerceptionRecoSurveillance_h_
 #define __PHY_PerceptionRecoSurveillance_h_
 
-#include "PHY_Perception_ABC.h"
+#include "PHY_PerceptionWithLocation.h"
+#include "PHY_PerceptionLocalisation.h"
 #include "simulation_terrain/TER_Localisation.h"
 
 namespace xml
@@ -20,12 +21,30 @@ namespace xml
     class xistream;
 }
 
+class PHY_PerceptionRecoSurveillanceReco : public PHY_PerceptionLocalisation
+{
+public:
+    PHY_PerceptionRecoSurveillanceReco( const TER_Localisation& localisation );
+
+    bool IsInside       ( const MT_Vector2D& vPoint )        const;
+    void GetAgentsInside( TER_Agent_ABC::T_AgentPtrVector& ) const;
+
+private:
+    PHY_PerceptionRecoSurveillanceReco& operator = ( const PHY_PerceptionRecoSurveillanceReco& );
+
+private:
+    const TER_Localisation localisation_;
+    const uint             nForestDetectionTimeStep_;
+    const uint             nUrbanDetectionTimeStep_;
+    const uint             nEmptyDetectionTimeStep_;
+};
+
 // =============================================================================
 // @class  PHY_PerceptionRecoSurveillance
 // Created: JVT 2004-10-21
 // Modified: JVT 2004-10-28
 // =============================================================================
-class PHY_PerceptionRecoSurveillance : public PHY_Perception_ABC
+class PHY_PerceptionRecoSurveillance : public PHY_PerceptionWithLocation< PHY_PerceptionRecoSurveillanceReco >
 {
 
 public:
@@ -39,10 +58,10 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    void* AddLocalisation    ( const TER_Localisation& );
-    void  RemoveLocalisation ( void* );
+    int  AddLocalisation    ( const TER_Localisation& );
+    void RemoveLocalisation ( int );
 
-    bool  HasLocalisationToHandle() const;
+    bool HasLocalisationToHandle() const;
     //@}
 
     //! @name Execution
@@ -55,43 +74,11 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    struct sReco
-    {
-        sReco( const TER_Localisation& localisation );
-
-        bool IsInside       ( const MT_Vector2D& vPoint )        const;
-        void GetAgentsInside( TER_Agent_ABC::T_AgentPtrVector& ) const;
-
-    private:
-        sReco& operator = ( const sReco& );
-
-    private:
-        const TER_Localisation localisation_;
-        const uint             nForestDetectionTimeStep_;
-        const uint             nUrbanDetectionTimeStep_;
-        const uint             nEmptyDetectionTimeStep_;
-    };
-
-    typedef std::vector< sReco* >        T_RecoVector;
-    typedef T_RecoVector::iterator       IT_RecoVector;
-    typedef T_RecoVector::const_iterator CIT_RecoVector;
-    //@}
-
     //! @name Helpers
     //@{
     struct LoadingWrapper;
     static void ReadAlatTime( xml::xistream& xis );
     //@}
-
-private:
-    static MT_Float rForestSurveillanceTime_;
-    static MT_Float rUrbanSurveillanceTime_;
-    static MT_Float rEmptySurveillanceTime_;
-
-private:
-    T_RecoVector recos_;
 };
 
 #endif // __PHY_PerceptionRecoSurveillance_h_

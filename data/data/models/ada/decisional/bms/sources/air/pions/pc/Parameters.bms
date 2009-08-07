@@ -1,0 +1,87 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/pions/pc/Parameters.bms"] = true
+
+--[[// =============================================================================
+]]--[[// Ph limite de l'ennemi accepté
+]]--[[// =============================================================================
+]]function M_POLY_PH_TIR_ENI_EFFICACE()
+    return 0
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Ph pour la riposte
+]]--[[// =============================================================================
+]]function M_POLY_PH_RIPOSTE()
+    return 0.3
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Distance de sécurité d'esquive
+]]--[[// =============================================================================
+]]function M_POLY_DISTANCE_SECURITE_ESQUIVE()
+    return 0
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Réaction si on rencontre un ennemi inopinément
+]]--[[// =============================================================================
+]]
+
+
+--[[// =============================================================================
+]]--[[// Paramétrage du vol
+]]--[[// =============================================================================
+]]function M_DEP_PION_AIR_VITESSE_PREMIERE_ALLURE()
+    return 0.4
+end
+
+
+
+function M_DEP_PION_AIR_VITESSE_PREMIERE_ALLURE_AVEC_APPUIS()
+    return 0.28
+end
+
+
+
+function M_DEP_PION_AIR_VITESSE_SECONDE_ALLURE()
+    return 0.6
+end
+
+
+
+function M_DEP_PION_AIR_VITESSE_SECONDE_ALLURE_AVEC_APPUIS()
+    return 0.42
+end
+
+
+
+function M_DEP_PION_AIR_VITESSE_TROISIEME_ALLURE()
+    return 1
+end
+
+
+
+function M_DEP_PION_AIR_VITESSE_TROISIEME_ALLURE_AVEC_APPUIS()
+    return 0.7
+end
+
+
+
+
+function M_POLY_PION_AIR_HAUTEUR_VOL_TACTIQUE()
+    return 6500
+end
+
+
+
+function M_POLY_PION_AIR_HAUTEUR_VOL_NORMAL()
+    return 6500
+end
+
+

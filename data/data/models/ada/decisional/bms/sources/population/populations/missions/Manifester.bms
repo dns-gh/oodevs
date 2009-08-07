@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/populations/missions/Manifester.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pop_Manifester
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Population_Manifester"
+{
+    activations =
+    {
+        { "BEH_Pop_RejoindrePoint", {} },
+        { "BEH_Pop_PAPPions", {} },
+        { "BEH_Pop_RalentissementPions", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.objectif = self.objectif or self._namedParams.mission.destination_
+        self.eEtatDelai = self.eEtatDelai or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                DEC_RC( eRC_DebutMission )
+                DEC_Trace( "** MIS_Population_Manifester **" )
+                --[[//La domination est magiquement reinitialisée à chaque mission agressive
+]]UpdateStateVariable( "VE_Domination", 1 - GetStateVariable( "VE_Domination" ) )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Rejoindre objectif
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Pop_RejoindrePoint, 1, { self.objectif, } )
+        Activate( self.activations.BEH_Pop_PAPPions, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Manifester
+]]--[[//----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Pop_RalentissementPions, 1, {} )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Population_Manifester = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Population_Manifester, "BEH_Pop_RejoindrePoint", nodes.BEH_Pop_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.MIS_Population_Manifester, "BEH_Pop_PAPPions", nodes.BEH_Pop_PAPPions }
+connections[ #connections + 1 ] = { nodes.MIS_Population_Manifester, "BEH_Pop_RalentissementPions", nodes.BEH_Pop_RalentissementPions }

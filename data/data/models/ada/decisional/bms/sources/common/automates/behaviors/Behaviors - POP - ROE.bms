@@ -1,0 +1,295 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/behaviors/Behaviors - POP - ROE.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE_Automate_RecevoirOrdreInopine
+]]--[[//
+]]--[[// Commentaires : MIA: ATTENTION --> La gestion des ordres a été implémenté de cette 
+]]--[[//                manière (systeme start/stop ) pour gerer le fait de rajouter
+]]--[[//                un pion en dynamique dans l'automate. 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_ROE_Automate_RecevoirOrdreInopinePopulation"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_EmploiForceInterdit", {} },
+        { "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux", {} },
+        { "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs", {} },
+        { "BEH_ROE_Automate_ArmesLetalesAutorisees", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
+                        local ordreROE = repOrdre
+                        switch_2 = ordreROE:GetorderConduiteChangerReglesEngagementPopulation_()
+                            if switch_2 == eEtatROEPopulation_EmploiForceInterdit then
+                                --[[// TIR INTERDIT POP
+]]DEC_Trace( " === ORDRE --> ROE POPULATION: EMPLOI FORCE INTERDIT" )
+                                Activate( self.activations.BEH_ROE_Automate_EmploiForceInterdit, 1, {} )
+                                
+                            --[[// TIR SOMMATION POP
+]]elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+                                DEC_Trace( " === ORDRE --> ROE POPULATION: MAINTIEN A DISTANCE PAR MOYENS NON LETAUX" )
+                                Activate( self.activations.BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux, 1, {} )
+                                
+                            --[[// TIR DISSUASION POP
+]]elseif switch_2 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
+                                DEC_Trace( " === ORDRE --> ROE POPULATION: ARMES LETALES AUTORISEES" )
+                                Activate( self.activations.BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs, 1, {} )
+                                
+                            --[[// TIR NEUTRALISATION POP
+]]elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
+                                DEC_Trace( " === ORDRE --> ROE TIR DE NEUTRALISATION SUR POPULATIONS" )
+                                Activate( self.activations.BEH_ROE_Automate_ArmesLetalesAutorisees, 1, {} )
+                                
+                                                        end
+
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE_Automate_EmploiForceInterdit
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ROE_Automate_EmploiForceInterdit"
+{
+    activations =
+    {
+        { "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+            Activate( self.activations.ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux"
+{
+    activations =
+    {
+        { "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+            Activate( self.activations.ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs"
+{
+    activations =
+    {
+        { "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+            Activate( self.activations.ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE_Automate_ArmesLetalesAutorisees
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ROE_Automate_ArmesLetalesAutorisees"
+{
+    activations =
+    {
+        { "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+            Activate( self.activations.ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 1 )
+                self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 1 )
+                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 1 )
+                self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
+            end
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                self._namedParams.pion:SetStateVariable( "VE_EmploiForceInterdit", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
+                self._namedParams.pion:SetStateVariable( "VE_ArmesLetalesAutorisees", 1 )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_ArmesLetalesAutorisees, "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees", nodes.ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs, "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs", nodes.ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_EmploiForceInterdit, "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit", nodes.ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux, "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux", nodes.ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "BEH_ROE_Automate_EmploiForceInterdit", nodes.BEH_ROE_Automate_EmploiForceInterdit }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux", nodes.BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs", nodes.BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "BEH_ROE_Automate_ArmesLetalesAutorisees", nodes.BEH_ROE_Automate_ArmesLetalesAutorisees }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

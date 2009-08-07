@@ -24,7 +24,6 @@ class PHY_Action_ABC : private boost::noncopyable
 {
 
 public:
-             PHY_Action_ABC( PHY_Actor& actor, DIA_Call_ABC& diaCall );
     explicit PHY_Action_ABC( PHY_Actor& actor );
     virtual ~PHY_Action_ABC();
 
@@ -49,6 +48,10 @@ private:
     bool bSuspended_;
 };
 
-#include "PHY_Action_ABC.inl"
+namespace directia
+{
+    void UsedByDIA( PHY_Action_ABC* );
+    void ReleasedByDIA( PHY_Action_ABC* );
+}
 
 #endif // __PHY_Action_ABC_h_

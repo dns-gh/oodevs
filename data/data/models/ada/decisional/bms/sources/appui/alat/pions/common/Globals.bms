@@ -1,0 +1,18 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/Globals.bms"] = true
+
+include "Common/Pions/Globals.bms"
+
+
+include "Appui/Alat/Pions/Common/Parameters.bms"
+
+include "Appui/Alat/Pions/Common/Fonctions.bms"
+
+include "Appui/Alat/Common/Globals.bms"
+
+
+local g_bCoupsArret = false
+
+local g_bRecalculItineraire = false
+
+local g_bEnRecueil = false

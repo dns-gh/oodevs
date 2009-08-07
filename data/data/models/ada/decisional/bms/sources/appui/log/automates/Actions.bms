@@ -1,0 +1,59 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/log/automates/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_LOG_OrdresInopines
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_LOG_OrdresInopines"
+{
+    activations =
+    {
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
+                        local repOrderRegimeMaint = repOrdre
+                        DEC_Maintenance_ChangerRegimeTravail( repOrderRegimeMaint:GetorderConduiteModifierRegimeTravailMaintenance_() )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesReparations" then
+                        local repOrdrePrioriteMain = repOrdre
+                        DEC_Maintenance_ChangerPriorites( repOrdrePrioriteMain:GetorderConduiteModifierPrioritesReparations_() )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesBlesses" then
+                        local repOrdrePrioriteSan = repOrdre
+                        DEC_Sante_ChangerPriorites( repOrdrePrioriteSan:GetorderConduiteModifierPrioritesBlesses_() )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
+                        local repOrdrePrioriteTactiqueMain = repOrdre
+                        DEC_Maintenance_ChangerPrioritesTactiques( repOrdrePrioriteTactiqueMain:GetorderConduiteModifierPrioritesTactiquesReparations_() )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
+                        local repOrdrePrioriteTactiqueSan = repOrdre
+                        DEC_Sante_ChangerPrioritesTactiques( repOrdrePrioriteTactiqueSan:GetorderConduiteModifierPrioritesTactiquesBlesses_() )
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.ACT_Ordre_Automate_LOG_OrdresInopines, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

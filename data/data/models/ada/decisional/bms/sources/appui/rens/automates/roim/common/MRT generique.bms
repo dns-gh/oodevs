@@ -1,0 +1,172 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roim/common/MRT generique.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_RENS_ROIM_AssignerMissions
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_RENS_ROIM_AssignerMissions"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eType = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// Pions subordonnés à l'Auto
+]]local selPions = DEC_Automate_PionsAvecPC()
+        self.ePhase = self.ePhase or eMRT_DeterminerEchelonsGlobals
+        self.eEtat = self.eEtat or eActionEnCours
+        self.sel_SMO = self.sel_SMO or {}
+        self.sel_Drone = self.sel_Drone or {}
+        self.sel_NonPrevu = self.sel_NonPrevu or {}--[[// suivre le SE
+]]
+        switch_1 = --[[// =============================================================================
+]]--[[// PHASE DU COMPORTEMENT
+]]--[[// 1) Vérifier les moyens, des renforts éventuels
+]]--[[// 2) Déterminer les échelons
+]]--[[// 2) Assigner certaines missions (les missions des unités de premier échelon)
+]]--[[// $$$$ MIA 2004-10-01: les missions du deuxieme échelon sont données dans la conduite
+]]--[[// $$$$ MIA 2004-10-01: car elles sont en permance évaluées durant la mission.
+]]--[[// =============================================================================                                  
+]]self.ePhase
+            if switch_1 == eMRT_DeterminerEchelonsGlobals then
+                for _,x in pairs( --[[//---------------------------------------------------------------------
+]]--[[// Assignation des grands échelons Ecl / Utile( PE + SE )/ non prevus
+]]--[[//---------------------------------------------------------------------
+]]selPions ) do
+                local _continue = true
+do
+                        local pion = x
+                        --[[// On ne traite pas les pions non opérationnels
+]]if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                            do
+                                DEC_Trace( "Attention " .. DEC_GetSzName( pion ) .. " n'est pas opérationnel" )
+                                DIA_PushFront( self.sel_NonPrevu, pion )
+                                _continue = false
+                            end
+                        end
+
+                            if _continue then
+                            switch_2 = pion:GetType()
+                                if switch_2 == "Section_CL289_MiseEnOeuvre"
+                                or switch_2 == "Section_SDTI_MiseEnOeuvre" then
+                                    DIA_PushFront( self.sel_SMO, pion )
+                                    
+                                elseif switch_2 == "Drone_CL289"
+                                or switch_2 == "Drone_SDTI" then
+                                    DIA_PushFront( self.sel_Drone, pion )
+                                    
+                                
+                                else
+                                    DIA_PushFront( self.sel_NonPrevu, pion )
+                                    
+                                                                end
+
+                        end
+                    end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Mission impossible si pas de premier echelon
+]]--[[//-----------------------------------------------------------------------------
+]]
+                end
+
+                if( DIA_IsListEmpty( self.sel_SMO ) or DIA_IsListEmpty( self.sel_Drone ) ) then
+                    do
+                        DEC_Trace( "$$ Pas de pions permettant d'effectuer la mission $$" )
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                self.ePhase = eMRT_AssignerMissions
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_AssignerMissions then
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_MissionImpossible
+                        DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                                                return
+
+                    end
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[// Suivant le type de mission...
+]]                end
+
+                switch_2 = self._namedParams.eType
+                    if switch_2 == "T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur" then
+                        --[[//-----------------------------------------------------------------------------
+]]--[[// CL 289
+]]--[[// Pour les besoins SCIPIO misenn oeuvre sur place
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Hack
+]]local position = DEC_Automate_PionPosition( DIA_GetAt( self.sel_SMO, 0 ) )
+                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_SMO ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        --[[/*mission.positionDeploiement_*/]]Activate( self.activations.BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, 1, { self.sel_SMO, position, eEtatEchelon_Premier, } )
+                        
+                    --[[//-----------------------------------------------------------------------------
+]]--[[// SDTI
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_2 == "T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" then
+                        --[[// Hack
+]]local position = DEC_Automate_PionPosition( DIA_GetAt( self.sel_SMO, 0 ) )
+                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_SMO ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        --[[/*mission.positionDeploiement_*/]]Activate( self.activations.BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, 1, { self.sel_SMO, position, eEtatEchelon_Premier, } )
+                        
+                    
+                    else
+                        DEC_Trace( "Mission inconnue..." )
+                        self.ePhase = eMRT_MissionImpossible
+                        
+                                        end
+
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_MissionImpossible then
+                DEC_Trace( "--Mission impossible--" )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            --[[//---------------------------------------------------------------------
+]]--[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            
+            else
+                        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROIM_AssignerMissions, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROIM_AssignerMissions, "BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", nodes.BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA }

@@ -1,0 +1,29 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/son reco/missions/Missions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-08-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Nbc/Automates/Son Reco/Missions/Missions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:47 $
+]]--[[// $Revision: 5 $
+]]--[[// $Workfile: Missions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//=============================================================================
+]]--[[// Liste des missions de la son Reco
+]]--[[//=============================================================================
+]]
+--[[/* Reconnaître axe */]]
+include "Appui/Nbc/Automates/Son Reco/Missions/ReconnaitreAxe/ReconnaitreAxe - MRT.bms"
+
+include "Appui/Nbc/Automates/Son Reco/Missions/ReconnaitreAxe/ReconnaitreAxe - CDT.bms"
+
+
+--[[/* Reconnaître zone */]]
+include "Appui/Nbc/Automates/Son Reco/Missions/ReconnaitreZone/ReconnaitreZone - MRT.bms"
+
+include "Appui/Nbc/Automates/Son Reco/Missions/ReconnaitreZone/ReconnaitreZone - CDT.bms"
+

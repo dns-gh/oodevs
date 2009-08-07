@@ -1,0 +1,443 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/Echelonner dispositif.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// behavior BEH_GTIA_EchelonnerDispositif()
+]]--[[// 
+]]--[[// Commentaires: échelonner suivant le terrain, les moyens etc.
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_GTIA_EchelonnerDispositif"
+{
+    activations =
+    {
+        { "BEH_GTIA_EchelonnerLesAppuis", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantDelais", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_GTIA_EchelonnerLesAppuis, 1, {} )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel, 1, {} )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques, g_rRapEniDebarques, {} )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques, g_rRapEniEmbarques, {} )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme, g_rRapTerrainComp, {} )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert, g_rRapTerrainOuvert, {} )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantDelais, g_rEstimationDelais, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_EchelonnerLesAppuis
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_EchelonnerLesAppuis"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerEchelonA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsEcl = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Eclairage( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local listePionsAppuis = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Appui( DEC_Automate_AutomatesSubordonnes() ) ) )
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Eclairage eventuel (une section/peloton habituellement)
+]]--[[// Seulement jusqu'a la LD pour attaquer
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsEcl ) do
+        local _continue = true
+            Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Eclairage, } )
+
+        end
+
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Appuis: log (TC2), Génie, DLO
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsAppuis ) do
+        local _continue = true
+            Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_EchelonnerDispositifSuivantDelais
+]]--[[// 
+]]--[[// Commentaires: R' -->les pions les plus rapide devant --> combat embarque
+]]--[[//               R''--> Deux échelons <==> nbre pions / 2
+]]--[[//               gestion des délais niveau GTIA ou pion. A voir
+]]--[[//               Ici calculer les délais avec fonction dec qui ne dépend pas 
+]]--[[//               du niveau de des pions.
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_EchelonnerDispositifSuivantDelais"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerEchelonA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
+        local rNbrePionPECourant = 0
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon ABC
+]]--[[//----------------------------------------------------------------------------- 
+]]listePionsABC ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon INF
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsINF ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme
+]]--[[// 
+]]--[[// Commentaires: R' -->les pions combat débarqué > combat embarque
+]]--[[//               R''--> Deux échelons <==> nbre pions / 2
+]]--[[//               Plus tard analyser le terrain en dynamique en fonction du
+]]--[[//               déplacement
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerEchelonA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
+        local rNbrePionPECourant = 0
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon INF
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsINF ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon ABC
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsABC ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert
+]]--[[// 
+]]--[[// Commentaires: R' -->les pions combat débarqué > combat embarque
+]]--[[//               R''--> Deux échelons <==> nbre pions / 2
+]]--[[//               Plus tard analyser le terrain en dynamique en fonction du
+]]--[[//               déplacement
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerEchelonA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
+        local rNbrePionPECourant = 0
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon ABC
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsABC ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon INF
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsINF ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques
+]]--[[// 
+]]--[[// Commentaires: R --> Enis débarqués = INF devant / ABC derrière
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerEchelonA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
+        local rNbrePionPECourant = 0
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon INF
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsINF ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon ABC
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsABC ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques
+]]--[[// 
+]]--[[// Commentaires: R --> Enis embarqués = ABC devant / INF derrière
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerEchelonA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsABC = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_ABC( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local listePionsINF = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_INF( DEC_Automate_AutomatesSubordonnes() ) ) )
+        local rNbrePionsPE = S_Dispositif_GE_NombreDePionsPE( #( listePionsABC ) + #( listePionsINF ) )
+        local rNbrePionPECourant = 0
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon ABC
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsABC ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation Echelon INF
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsINF ) do
+        local _continue = true
+if( rNbrePionPECourant < rNbrePionsPE ) then
+                do
+                    Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Premier, } )
+                                        rNbrePionPECourant = rNbrePionPECourant + 1
+                end
+            else
+                Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel
+]]--[[// 
+]]--[[// Commentaires: R --> pions non opérationnels en second échelon
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerEchelonA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsNop = S_Cherche_GE_AutomateNonOperationnels( DEC_Automate_AutomatesSubordonnes() )
+        for _,pion in pairs( listePionsNop ) do
+        local _continue = true
+            Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerEchelonA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_GTIA_AssignerEchelonA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.automat = self.params[1]
+        self._namedParams.echelon = self.params[2]
+    end,
+
+    select = function( self )
+        if( DIA_GetLocalFakeActuator( self._namedParams.automat ) < GetActivity() ) then
+            do
+                DIA_SetLocalFakeActuator( self._namedParams.automat, GetActivity() )
+                F_Automat_SeteEtatEchelon( self._namedParams.automat, self._namedParams.echelon )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositif, "BEH_GTIA_EchelonnerLesAppuis", nodes.BEH_GTIA_EchelonnerLesAppuis }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositif, "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel", nodes.BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositif, "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques", nodes.BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositif, "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques", nodes.BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositif, "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme", nodes.BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositif, "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert", nodes.BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositif, "BEH_GTIA_EchelonnerDispositifSuivantDelais", nodes.BEH_GTIA_EchelonnerDispositifSuivantDelais }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositifSuivantDelais, "ACT_GTIA_AssignerEchelonA", nodes.ACT_GTIA_AssignerEchelonA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques, "ACT_GTIA_AssignerEchelonA", nodes.ACT_GTIA_AssignerEchelonA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques, "ACT_GTIA_AssignerEchelonA", nodes.ACT_GTIA_AssignerEchelonA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel, "ACT_GTIA_AssignerEchelonA", nodes.ACT_GTIA_AssignerEchelonA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme, "ACT_GTIA_AssignerEchelonA", nodes.ACT_GTIA_AssignerEchelonA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert, "ACT_GTIA_AssignerEchelonA", nodes.ACT_GTIA_AssignerEchelonA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_EchelonnerLesAppuis, "ACT_GTIA_AssignerEchelonA", nodes.ACT_GTIA_AssignerEchelonA }

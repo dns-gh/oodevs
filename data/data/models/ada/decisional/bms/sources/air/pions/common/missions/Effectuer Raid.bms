@@ -1,0 +1,145 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/pions/common/missions/Effectuer Raid.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Effectuer RAID
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Pion_JOINT_AIR_EffectuerRaid"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "BEH_Dep_Pion_AIR_RejoindreParItineraire", {} },
+        { "BEH_Eni_Pion_AIR_EffectuerRaid", {} },
+        { "BEH_Dep_Pion_AIR_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eDetruire
+        self.barycentreZone = self.barycentreZone or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
+        Activate( self.activations.ACT_Info_Trace, 1, { "Mission AIR : Effectuer un Raid", } )
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                end
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eDetruire then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAttaque, } )
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.barycentreZone, } )
+                Activate( self.activations.BEH_Dep_Pion_AIR_RejoindreParItineraire, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, 0, 500, 0, 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                Activate( self.activations.BEH_Eni_Pion_AIR_EffectuerRaid, GetMotivation( "MOT_ManoeuvrerSurEnis" ), { self._namedParams.mission.zone_, } )
+                
+            elseif switch_1 == eFinMission then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// GererEniDetruireDansZone
+]]--[[//
+]]--[[// Dans ce cas, c'est un tir indirect dans la zone
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_AIR_EffectuerRaid"
+{
+    activations =
+    {
+        { "BEH_Eni_Pion_AIR_FrappeIndirecteSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        local listeConnaissances = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone )
+        for _,x in pairs( listeConnaissances ) do
+        local _continue = true
+do
+                Activate( self.activations.BEH_Eni_Pion_AIR_FrappeIndirecteSur, S_Eni_Pion_AIR_ForceDetruire( x, eNatureAtlas_None ), { x, eDetecte, 1, eObus_Explosif, M_DOCTRINE_PION_AIR_PH(), } )
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_JOINT_AIR_EffectuerRaid = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_AIR_EffectuerRaid, "BEH_Eni_Pion_AIR_FrappeIndirecteSur", nodes.BEH_Eni_Pion_AIR_FrappeIndirecteSur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_Maj_Pion_PasserEnTirLibre", nodes.ACT_Maj_Pion_PasserEnTirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "BEH_Dep_Pion_AIR_RejoindreParItineraire", nodes.BEH_Dep_Pion_AIR_RejoindreParItineraire }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "BEH_Eni_Pion_AIR_EffectuerRaid", nodes.BEH_Eni_Pion_AIR_EffectuerRaid }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_JOINT_AIR_EffectuerRaid, "BEH_Dep_Pion_AIR_SePoser", nodes.BEH_Dep_Pion_AIR_SePoser }

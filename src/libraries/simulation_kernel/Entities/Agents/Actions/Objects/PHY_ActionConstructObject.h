@@ -12,24 +12,25 @@
 #ifndef __PHY_ActionConstructObject_h_
 #define __PHY_ActionConstructObject_h_
 
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class PHY_RoleAction_Objects;
 class MIL_Object_ABC;
 class MIL_AgentPion;
+class TER_Localisation;
 
 // =============================================================================
 // @class  PHY_ActionConstructObject
 // Constructd: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionConstructObject : public PHY_Action_ABC
+class PHY_ActionConstructObject : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionConstructObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* );
     virtual ~PHY_ActionConstructObject();
 
     //! @name Operations
@@ -41,8 +42,6 @@ public:
 private:
     PHY_RoleAction_Objects& role_;
     MIL_Object_ABC*          pObject_;
-    DIA_Variable_ABC&        diaReturnCode_;
-    DIA_Variable_ABC&        diaReturnKnowledge_;
 };
 
 #endif // __PHY_ActionConstructObject_h_

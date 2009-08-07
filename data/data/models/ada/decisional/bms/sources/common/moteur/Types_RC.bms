@@ -1,0 +1,314 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/Types_RC.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JVT 2004-08-03 $
+]]--[[// $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_RC.hal $
+]]--[[// $Author: Nld $
+]]--[[// $Modtime: 29/07/05 12:06 $
+]]--[[// $Revision: 14 $
+]]--[[// $Workfile: Types_RC.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//-----------------------------------------------------------------------------
+]]--[[// Types de RCs
+]]--[[//-----------------------------------------------------------------------------
+]]eRC_RAS = 0
+eRC_EnPosteFaceAObstacle = 1
+eRC_EnContournementObstacle = 2
+eRC_MissionImpossible = 3
+eRC_ProgressionSurAxe = 4
+eRC_ProgressionVersPosition = 5
+eRC_ArriveSurPosition = 6
+eRC_ReconnaissancePoint = 7
+eRC_EnPosteFaceADirectionDangereuse = 8
+eRC_EnJalonnement = 9
+eRC_PreparationMission = 10
+eRC_DebutMission = 11
+eRC_FinMission = 12
+eRC_DispositifInstalle = 13
+eRC_EnPosition = 14
+eRC_ObjectifAtteint = 15
+eRC_Debouche = 16
+eRC_RejointUnite = 17
+eRC_EscorteUnite = 18
+eRC_EnFreinage = 19
+eRC_Assaut = 20
+eRC_EnCouverture = 21
+eRC_EnEclairage = 22
+eRC_EnManoeuvreRavitaillement = 23
+eRC_SurPIA = 24
+eRC_PassageSurPIA = 25
+eRC_UniteRecueillie = 26
+eRC_EnCoursDeFranchissement = 27
+eRC_AttenteOrdrePoursuivre = 28
+eRC_AttenteOrdreDeboucher = 29
+eRC_Fixe = 30
+eRC_EnEsquive = 31
+eRC_PriseContact = 32
+eRC_RuptureContact = 33
+eRC_PrecisionContact = 34
+eRC_EnnemiDetruit = 35
+eRC_PrisAPartieParTirDirect = 36
+eRC_PrisSousTirArtillerie = 37
+eRC_PointTenuParEni = 38
+eRC_ProgressionVersEni = 39
+eRC_Decroche = 40
+eRC_EniSurObjectif = 41
+eRC_Riposte = 42
+eRC_PretPourEngagementSurEnnemi = 43
+eRC_DebutControleZone = 44
+eRC_FinControleZone = 45
+eRC_DebutSurveillance = 46
+eRC_FinSurveillance = 47
+eRC_EnInfiltration = 48
+eRC_EnExfiltration = 49
+eRC_AttenteConditionFavorablePourInfiltration = 50
+eRC_DroneLance = 51
+eRC_DroneEnExploitation = 52
+eRC_DroneExploite = 53
+eRC_DroneDisponible = 54
+eRC_DebutMiseEnOeuvreDrone = 55
+eRC_FinMiseEnOeuvreDrone = 56
+eRC_ActivationBrouillage = 57
+eRC_DesactivationBrouillage = 58
+eRC_ActivationSystemeEcoute = 59
+eRC_DesactivationSystemeEcoute = 60
+eRC_ActivationSystemeEcouteRadar = 61
+eRC_DesactivationSystemeEcouteRadar = 62
+eRC_DebutLiaison = 63
+eRC_FinLiaison = 64
+eRC_EtablissementLiaisonImpossible = 65
+eRC_UniteTropDistante = 66
+eRC_EnregistrementDonnes = 67
+eRC_ExploitationDonnees = 68
+eRC_ExtractionDonnes = 69
+eRC_Releve = 70
+eRC_SuitUnite = 71
+eRC_PasseEnAppui = 72
+eRC_EnAppui = 73
+eRC_NonOperationnel = 74
+eRC_Operationnel = 75
+eRC_AmbianceVitesse = 76
+eRC_AmbianceSurete = 77
+eRC_SurLima = 78
+eRC_DebutTravaux = 79
+eRC_FinTravaux = 80
+eRC_ObstacleDegage = 81
+eRC_OrganisationChantier = 82
+eRC_DesorganisationChantier = 83
+eRC_ReconnaissancePositionObstacle = 84
+eRC_ContournementRealise = 85
+eRC_AttenteRenforcement = 86
+eRC_DebutExploitationSiteFranchissement = 87
+eRC_FinExploitationSiteFranchissement = 88
+eRC_ReussiteRenforcement = 89
+eRC_EchecRenforcement = 90
+eRC_ObstacleEnAttenteActivation = 91
+eRC_DebutAmenagementBerges = 92
+eRC_FinAmenagementBerges = 93
+eRC_RegimeMaintenanceDelaiDepasse = 94
+eRC_SectionDeployee = 95
+eRC_ANouveauDisponibleApresReparation = 96
+eRC_MaterielRetourDeMaintenance = 97
+eRC_MaterielRepareSurPlace = 98
+eRC_DemandeRavitaillementDotations = 99
+eRC_DemandeRavitaillementStocks = 100
+eRC_DemandeEvacuationSanitaire = 101
+eRC_DemandeEvacuationMateriel = 102
+eRC_AllocationConsentieBientotEpuisee = 103
+eRC_DepassementCapaciteStockage = 104
+eRC_SeuilLogistiqueDotationDepasse = 105
+eRC_SeuilLogistiqueStockDepasse = 106
+eRC_RavitaillementDotationsEffectue = 107
+eRC_RavitaillementStockEffectue = 108
+eRC_RavitaillementDotationsAnnule = 109
+eRC_RavitaillementStockAnnule = 110
+eRC_HumainRetourDeSante = 111
+eRC_AlerteDisponibiliteMoyensReleve = 112
+eRC_AlerteDisponibiliteMoyensRamassage = 113
+eRC_AlerteDisponibiliteMedecins = 114
+eRC_AlerteDisponibiliteRemorqueurs = 115
+eRC_AlerteDisponibiliteReparateurs = 116
+eRC_AlerteDisponibiliteVecteurs = 117
+eRC_PretMaterielEnCours = 118
+eRC_PretMaterielAnnule = 119
+eRC_PretMaterielEffectue = 120
+eRC_PretMaterielImpossible = 121
+eRC_PretMaterielPartiellementEffectue = 122
+eRC_RecuperationMaterielPreteImpossible = 123
+eRC_RecuperationMaterielPreteEffectuee = 124
+eRC_RecuperationMaterielPretePartiellementEffectuee = 125
+eRC_MaterielPrete = 126
+eRC_MaterielRendu = 127
+eRC_Convoi_DeplacementVersPointChargement = 128
+eRC_Convoi_ChargementEnCours = 129
+eRC_Convoi_ChargementEffectue = 130
+eRC_Convoi_DeplacementVersPointDechargement = 131
+eRC_Convoi_DechargementEnCours = 132
+eRC_Convoi_DechargementEffectue = 133
+eRC_Convoi_Retour = 134
+eRC_EnCoursRavitaillement = 135
+eRC_RavitaillementTermine = 136
+eRC_HelicoptereEnObservation = 137
+eRC_PerteInfoGuidage = 138
+eRC_TransportUnitePasPrete = 139
+eRC_TransportUnitePrete = 140
+eRC_TransportEnCours = 141
+eRC_TransportEmbarquement = 142
+eRC_TransportDebarquement = 143
+eRC_TransportImpossiblePasDeMoyens = 144
+eRC_VehiculeLaisseSurPosition = 145
+eRC_RejointPositionEmbarquement = 146
+eRC_EnAttenteTransporteurs = 147
+eRC_ContamineNBC = 148
+eRC_DecontamineNBC = 149
+eRC_TenueProtectionNBCMise = 150
+eRC_TenueProtectionNBCEnlevee = 151
+eRC_AlerteNBCNiveau4 = 152
+eRC_FinAlerteNBCNiveau4 = 153
+eRC_SiteDecontaminationAnime = 154
+eRC_SiteDecontaminationDesactive = 155
+eRC_DemandeDecontamination = 156
+eRC_ZoneReconnue = 157
+eRC_ZoneDecontaminee = 158
+eRC_SiteROTAReconnu = 159
+eRC_IncidentNBCTermine = 160
+eRC_UniteDecontaminee = 161
+eRC_SiteSature = 162
+eRC_DebutMesure = 163
+eRC_FinMesure = 164
+eRC_ReconnaissanceTerminee = 165
+eRC_ReconnaissanceInitialeTerminee = 166
+eRC_RejointPlotRavitaillement = 167
+eRC_PremierCoupParti = 168
+eRC_TirExecute = 169
+eRC_TirHorsDePortee = 170
+eRC_TirImpossiblePlusDeMunitions = 171
+eRC_TirAnnule = 172
+eRC_ChangementDePosition = 173
+eRC_DebutInstallation = 174
+eRC_FinInstallation = 175
+eRC_PretPourConduiteTir = 176
+eRC_ObservationTirIndirect = 177
+eRC_ZoneImplantationOccupee = 178
+eRC_InstallationSurZoneImplantation = 179
+eRC_ReceptionOrdreDeFeu = 180
+eRC_PretAuTir = 181
+eRC_PresencePopulation = 182
+eRC_OrientationPopulationVersCampRefugies = 183
+eRC_PasDeCampRefugiesDisponible = 184
+eRC_PresenceEnnemiRendu = 185
+eRC_OrientationEnnemiRenduVersCampPrisonniers = 186
+eRC_PasDeCampPrisonniersDisponible = 187
+eRC_Rendu = 188
+eRC_RedditionAnnulee = 189
+eRC_TirDansZoneInterdite = 190
+eRC_TirSurCampAmi = 191
+eRC_TireParCampAmi = 192
+eRC_TirSurCampNeutre = 193
+eRC_TireParCampNeutre = 194
+eRC_TirSurCivil = 195
+eRC_TireParCivil = 196
+eRC_TirIndirectFratricide = 197
+eRC_TirIndirectSurPopulation = 198
+eRC_DestructionPC = 199
+eRC_DecesBlesse = 200
+eRC_DecesBlessePendantTransport = 201
+eRC_DecesBlessePendantHospitalisation = 202
+eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles = 203
+eRC_MissionImpossibleLimaInvalide = 204
+eRC_MissionImpossibleZoneHorsFuseau = 205
+eRC_RapportDeForceDefavorable = 206
+eRC_TerrainDifficile = 207
+eRC_PlusDeCarburant = 208
+eRC_DispositifDisperse = 209
+eRC_DebutNeutralisation = 210
+eRC_FinNeutralisation = 211
+eRC_DebutSilenceRadio = 212
+eRC_FinSilenceRadio = 213
+eRC_DebutSilenceRadar = 214
+eRC_FinSilenceRadar = 215
+eRC_TirRestreint = 216
+eRC_TirInterdit = 217
+eRC_TirLibre = 218
+eRC_Trace = 219
+eRC_TraceID = 220
+eRC_EmploiForceInterdit = 221
+eRC_MaintienADistanceParMoyensNonLetaux = 222
+eRC_DispersionParMoyensDeDefenseActifs = 223
+eRC_ArmesLetalesAutorisees = 224
+eRC_PopulationDetectee = 225
+eRC_PriseAPartieParPopulation = 226
+eRC_RiposteContrePopulation = 227
+eRC_PopulationDangereuseAProximite = 228
+eRC_EsquiveFaceAPopulation = 229
+eRC_DecrochageFaceAPopulation = 230
+eRC_MiseEnPlaceControleDeFoule = 231
+eRC_MiseEnPlaceFiltrage = 232
+eRC_AnimationBarrage = 233
+eRC_AnimationCanalisation = 234
+eRC_CollecteRenseignementsSurPopulations = 235
+eRC_PopulationReconnue = 236
+eRC_SituationDifficilementTenableFaceAPopulation = 237
+eRC_UtilisationArmesNonLetalesFaceAPopulation = 238
+eRC_UtilisationMoyensDefenseActifsFaceAPopulation = 239
+eRC_UtilisationArmementsFaceAPopulation = 240
+eRC_DebutInterventionFaceAPopulation = 241
+eRC_PopulationVictimeAffrontements = 242
+eRC_AttitudePopulation = 243
+eRC_AggravationAttitude = 244
+eRC_AffrontementAvecForcesEnnemies = 245
+eRC_PopulationTemporairementControlee = 246
+eRC_PopulationTemporairementRepoussee = 247
+eRC_RepriseDesAffrontements = 248
+eRC_AgressionDePopulation = 249
+eRC_AgressionParPopulation = 250
+eRC_RiposteContreAgressionParPopulation = 251
+eRC_AttaqueInstallation = 252
+eRC_EnStationnement = 253
+eRC_Bloquee = 254
+eRC_Filtree = 255
+eRC_AttentatTerroristeDansPopulation = 256
+eRC_PopulationVictimeExplosionMines = 257
+eRC_ExecutionAttentat = 258
+eNbr = 259
+--[[// Parametre : T_ConnaissanceObjet
+]]--[[// Parametre : float
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_ConnaissanceAgent
+]]--[[// Parametre : T_ConnaissanceAgent
+]]--[[// Parametre : T_ConnaissanceAgent
+]]--[[// Parametre : T_ConnaissanceAgent
+]]--[[// Parametre : T_ConnaissanceAgent
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : id
+]]--[[// Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion), 
+]]--[[// Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion), 
+]]--[[// Parametre : T_ConnaissanceObjet
+]]--[[// Parametre : TypeEquipement
+]]--[[// Parametre : TypeEquipement
+]]--[[// Parametre : TypeDotation
+]]--[[// Parametre : TypeDotation
+]]--[[// Parametre : TypeDotation
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : T_Pion
+]]--[[// Parametre : TirPion
+]]--[[// Parametre : message
+]]--[[// Parametre : float
+]]--[[// Parametre : T_ConnaissancePopulation
+]]--[[// Parametre : T_ConnaissancePopulation
+]]--[[// Parametre : T_ConnaissancePopulation
+]]--[[// Parametre : id
+]]--[[// Parametres : victimes (float), dont_blesses (float), 
+]]--[[// Parametre : id
+]]--[[// Parametre : T_ConnaissancePopulation
+]]--[[// Parametre : T_ConnaissancePopulation
+]]--[[// Parametre : T_ConnaissancePopulation
+]]--[[// Parametres : victimes (float), dont_blesses (float), 
+]]

@@ -1,0 +1,81 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_ABC_Tenir_AssignerMissionBarrerA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[//  N'a pas de point de regroupement !!!!
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_ABC_AssignerMissionBarrerA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_ABC_AssignerBarrerA", {} },
+        { "ACT_Warning", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions = self.params[1]
+        self._namedParams.zoneInstallation = self.params[2]
+        self._namedParams.eEtatEchelon = self.params[3]
+    end,
+
+    activate = function( self )
+        self.listePoint = self.listePoint or {}
+        self.rIterateurPoint = self.rIterateurPoint or 0
+        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+            return
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                local mission = DEC_GetMission( myself )
+                self.listePoint = DEC_Geometrie_PositionsParRapportALocalisation( self._namedParams.selPions, self._namedParams.zoneInstallation, DEC_GetDirectionEnnemi( mission ), M_MODELE_AUTOMATE_ABC_DISTANCE_MAX_POSITION_SUR_LOCALISATION() )
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Gestion erreur
+]]--[[//-----------------------------------------------------------------------------
+]]if( ( self.listePoint ~= 0 and self.listePoint ~= nil ) ) then
+                    do
+                        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation des mission une par une au pion (pas simultanément)
+]]--[[//-----------------------------------------------------------------------------
+]]self._namedParams.selPions ) do
+                        local _continue = true
+                            do
+                                if( self.rIterateurPoint == DEC_ListePoints_Size( self.listePoint ) ) then
+                                    self.rIterateurPoint = 0
+                                end
+
+                                local point = DEC_ListePoints_GetAt( self.listePoint, self.rIterateurPoint )
+                                StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerBarrerA, 1, { ePhase_MRT, pion, point, self._namedParams.eEtatEchelon, } )
+                                                                self.rIterateurPoint = self.rIterateurPoint + 1
+                            end
+
+                        end
+
+                    end
+                else
+do
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
+                                                self.params.__returnValue = eActionImpossible
+                        return
+
+                    end
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_AssignerMissionBarrerA, "BEH_Mission_Automate_ABC_AssignerBarrerA", nodes.BEH_Mission_Automate_ABC_AssignerBarrerA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_ABC_AssignerMissionBarrerA, "ACT_Warning", nodes.ACT_Warning }

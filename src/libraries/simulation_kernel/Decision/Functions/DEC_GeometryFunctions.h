@@ -13,12 +13,18 @@
 #define __DEC_GeometryFunctions_h_
 
 #include "MIL.h"
-#include "Entities\Objects\MIL_ObjectType_ABC.h"
+#include <boost/shared_ptr.hpp>
 
+class DEC_Decision_ABC;
+class DEC_FrontAndBackLinesComputer;
+class DEC_Knowledge_Agent;
+class DEC_Objective;
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Fuseau;
-class DEC_RolePion_Decision;
+class MIL_LimaOrder;
+class MT_Vector2D;
+class TER_Localisation;
 
 // =============================================================================
 // Created: NLD 2003-08-20
@@ -29,101 +35,99 @@ public:
     //! @name Functions
     //@{
     // Creation / destruction
-    static void CreateLocalisation     ( DIA_Call_ABC& );
-    static void CreateListPoint        ( DIA_Call_ABC& );
-    static void CreatePoint            ( DIA_Call_ABC& );  
-    static void CreateDirection        ( DIA_Call_ABC& );
-    static void CreateOrthoDirection   ( DIA_Call_ABC& );
+    static boost::shared_ptr< TER_Localisation > CreateLocalisation ();
+    static std::vector< boost::shared_ptr< MT_Vector2D > > CreateListPoint();
+    static boost::shared_ptr< MT_Vector2D > CreatePoint         ();  
+    static boost::shared_ptr< MT_Vector2D > CreateDirection     ( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest );
+    static boost::shared_ptr< MT_Vector2D > CreateOrthoDirection( MT_Vector2D* pDir, bool bCounterClockwise );
 
-    static void ReverseDirection                    ( DIA_Call_ABC& );
-    static void CopyAndReverseDirection             ( DIA_Call_ABC& );
-    static void CopyAndRotateDirection              ( DIA_Call_ABC& );
-    static void IsPointInsideLocalisation           ( DIA_Call_ABC& );
-    static void ComparePositions                    ( DIA_Call_ABC& );
-    static void TranslatePosition                   ( DIA_Call_ABC& );
-    static void TranslatePositionInDirection        ( DIA_Call_ABC& );
-    static void Distance                            ( DIA_Call_ABC& );
-    static void ConvertPointToLocalisation          ( DIA_Call_ABC& );
-    static void CreateCircleLocalisation            ( DIA_Call_ABC& );
-    static void ComputeMeanDirection                ( DIA_Call_ABC& );
-    static void ComputeAgentsBarycenter             ( DIA_Call_ABC& ); //$$$ Pourri
-    static void ComputeDistanceFromMiddleLine       ( DIA_Call_ABC& );
-    static void ComputeLocalisationBarycenter       ( DIA_Call_ABC& );
-    static void ComputeCoverPosition                ( DIA_Call_ABC& );
-    static void ComputeRandomPointOnCircle          ( DIA_Call_ABC& );
-    static void ComputeRandomPointInCircle          ( DIA_Call_ABC& );
-    static void IsPionCoordinated                   ( DIA_Call_ABC& );
-    static void SplitListPoints                     ( DIA_Call_ABC& );
-    static void ComputeClosedTerrainRatioInZone     ( DIA_Call_ABC& );
-    static void ComputeOpenTerrainRatioInZone       ( DIA_Call_ABC& );
-    static void ComputeClosedTerrainRatioInFuseau   ( DIA_Call_ABC& );
-    static void ComputeOpenTerrainRatioInFuseau     ( DIA_Call_ABC& );
-    static void SortZonesAccordingToTerrainOpening  ( DIA_Call_ABC& );
-    static void SortFuseauxAccordingToTerrainOpening( DIA_Call_ABC& );
-    static void ConvertFuseauToLocalisation         ( DIA_Call_ABC& );
-    static void GetNextObjectiveInFuseau            ( DIA_Call_ABC& );
-    static void ComputeAreaInZone                   ( DIA_Call_ABC& call );
-
+    static void ReverseDirection                    ( boost::shared_ptr< MT_Vector2D > pDir );
+    static boost::shared_ptr< MT_Vector2D > CopyAndReverseDirection( const MT_Vector2D* );
+    static boost::shared_ptr< MT_Vector2D > CopyAndRotateDirection ( const MT_Vector2D*, const MT_Float angle );
+    static bool IsPointInsideLocalisation           ( MT_Vector2D* pPoint, TER_Localisation* pLocalisation );
+    static bool ComparePositions                    (  MT_Vector2D* p1, MT_Vector2D* p2 );
+    static boost::shared_ptr< MT_Vector2D >      TranslatePosition           ( MT_Vector2D* p1, MT_Vector2D* p2, MT_Float d );
+    static boost::shared_ptr< MT_Vector2D >      TranslatePositionInDirection( MT_Vector2D* p1, MT_Vector2D* p2, MT_Float d );
+    static MT_Float       Distance                    ( const MT_Vector2D* p1, const MT_Vector2D* p2 );
+    static boost::shared_ptr< TER_Localisation > ConvertPointToLocalisation  ( const MT_Vector2D* pPos );
+    static boost::shared_ptr< TER_Localisation > CreateCircleLocalisation    ( const MT_Vector2D* pCenter, const MT_Float );
+    static boost::shared_ptr< MT_Vector2D > ComputeMeanDirection( const std::vector< MT_Vector2D* >& selection );
+    static boost::shared_ptr< MT_Vector2D > ComputeAgentsBarycenter( const std::vector< DEC_Decision_ABC* >& selection ); //$$$ Pourri
+    static float ComputeDistanceFromMiddleLine( const std::vector< DEC_Decision_ABC*>& selPions, DEC_Decision_ABC* pReferencePion );
+    static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenter( TER_Localisation* pLocalisation );
+    static boost::shared_ptr< MT_Vector2D > ComputeCoverPosition( const std::vector< DEC_Decision_ABC* >& pions, MT_Vector2D* pDirection, float distance );
+    static boost::shared_ptr< MT_Vector2D > ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius );
+    static boost::shared_ptr< MT_Vector2D > ComputeRandomPointInCircle( MT_Vector2D* pCenter, float radius );
+    static std::vector< DEC_Decision_ABC* > ListUncoordinatedPawns          ( DEC_Decision_ABC* pion, const std::vector< DEC_Decision_ABC* >& unCoordinatedPions, float minDist );
+    static std::vector< boost::shared_ptr< MT_Vector2D > >  SplitListPoints( const std::vector< MT_Vector2D* >& listPoints, unsigned int nNbrParts );
+    static float ComputeClosedTerrainRatioInZone    ( const TER_Localisation* location );
+    static float ComputeOpenTerrainRatioInZone      ( const TER_Localisation* location );
+    static float ComputeClosedTerrainRatioInFuseau  ( const MIL_Fuseau* );
+    static float ComputeOpenTerrainRatioInFuseau    ( const MIL_Fuseau* pFuseau);
+    static std::vector< TER_Localisation* > SortZonesAccordingToTerrainOpening( const std::vector< TER_Localisation* >& list );
+    static std::vector< MIL_Fuseau* > SortFuseauxAccordingToTerrainOpening( const std::vector< MIL_Fuseau* >& list );
+    static boost::shared_ptr< TER_Localisation > ConvertFuseauToLocalisation( const MIL_Fuseau* pFuseau );
+    static DEC_Objective* GetNextObjectiveInFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pRefPoint, const std::vector< DEC_Objective* >& objectives );
+    static boost::shared_ptr< TER_Localisation > ComputeAreaInZone( const MIL_Fuseau* zone, const MT_Vector2D* center );
     
-                           static void StartComputingFrontAndBackLines                  ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-                           static void StartComputingAutomatFrontAndBackLines           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-                           static void StopComputingFrontAndBackLines                   ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-                           static void ComputeDistanceFromFrontLine                     ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-                           static void ComputeDistanceAutomatFromFrontLine              ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-                           static void ComputeDistanceFromBackLine                      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-                           static void ComputeDistanceAutomatFromBackLine               ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-                           static void ComputeNearestFuseauEntryPoint                   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
-                           static void ComputeSupportPosition                           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
-                           static void ComputeAmbushPosition                            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
-                           static void ComputeSafetyPosition                            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
-                           static void ComputeSafetyPositionWithPopulation              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
-                           static void ComputeSafetyPositionWithObjective               ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
-    template< typename T > static void ComputeDestPoint                                 ( DIA_Call_ABC& call, const T&              caller       );
-                           static void ComputeDestPointForPion                          ( DIA_Call_ABC& call, MIL_Automate& callerAutomate       );
-    template< typename T > static void ComputeStartPoint                                ( DIA_Call_ABC& call, const T&              caller       );
-    template< typename T > static void ComputeObstaclePosition                          ( DIA_Call_ABC& call, const T&              caller       );
-                           static void ComputePointsBeforeLima                          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    template< typename T > static void ComputePointBeforeLima                           ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void ComputePointBeforeLimaInFuseau                   ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void SplitLocalisationInParts                         ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void SplitLocalisationInSurfaces                      ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void SplitLocalisationInSections                      ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void ComputeLocalisationBarycenterInFuseau            ( DIA_Call_ABC& call, const T& caller                    );
-                           static void ComputeLocalisationPointsForPionsInFuseau        ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    template< typename T > static void ComputeNearestLocalisationPointInFuseau          ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void ComputeNearestUnclippedLocalisationPointInFuseau ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void IsPointInFuseau                                  ( DIA_Call_ABC& call, const T& caller                    );
-                           static void ComputeKnowledgeAgentBarycenter                  ( DIA_Call_ABC& call, const MIL_AgentPion& caller        );
-    template< typename T > static void ComputeFrontestAgent                             ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void ComputeBackestAgent                              ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void ComputeDelayFromSchedule                         ( DIA_Call_ABC& call, const T& caller                    );
-    template< typename T > static void ComputeDelayFromScheduleAndObjectives            ( DIA_Call_ABC& call, const T& caller                    );
+    static DEC_FrontAndBackLinesComputer* StartComputingFrontAndBackLines       ( const MIL_Automate& callerAutomate, const std::vector< DEC_Decision_ABC* >& pionDecisionList );
+    static DEC_FrontAndBackLinesComputer* StartComputingAutomatFrontAndBackLines( const MIL_Automate& callerAutomate, const std::vector< DEC_Decision_ABC* >& automatDecisionList );
+    static void StopComputingFrontAndBackLines                   ( DEC_FrontAndBackLinesComputer* pComputer );
+    static float ComputeDistanceFromFrontLine                    ( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pPion );
+    static float ComputeDistanceAutomatFromFrontLine             ( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pAutomate );
+    static float ComputeDistanceFromBackLine                     ( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pPion );
+    static float ComputeDistanceAutomatFromBackLine               ( const MIL_Automate& callerAutomate, DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pAutomate );
+    static boost::shared_ptr< MT_Vector2D > ComputeNearestFuseauEntryPoint( const MIL_AgentPion& callerAgent );
+    static boost::shared_ptr< MT_Vector2D > ComputeSupportPosition( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgentToSupport, MT_Float rDist );
+    static boost::shared_ptr< MT_Vector2D > ComputeAmbushPosition ( const MIL_AgentPion& callerAgent, MT_Vector2D* pAmbushPosition, MT_Vector2D* pRetreatPosition, MT_Float rDist );
+    static boost::shared_ptr< MT_Vector2D > ComputeSafetyPosition( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledgeEnemy, MT_Float rMinDistance );
+    static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithPopulation              ( const MIL_AgentPion& callerAgent, uint nPopulationKnowledgeID, MT_Float rMinDistance );
+    static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithObjective( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledgeEnnemy, MT_Float rMinMeterDistance, MT_Vector2D* pObjective );
+    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeDestPoint     ( const T& caller );
+    static boost::shared_ptr< MT_Vector2D > ComputeDestPointForPion( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion );
+    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeStartPoint    ( const T& caller );
+    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeObstaclePosition( const T& caller, MT_Vector2D* pCenter, const std::string& type, MT_Float rRadius );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePointsBeforeLima ( const MIL_Automate& callerAutomate, uint nLimaID, MT_Float rDistBeforeLima, uint nNbrPoints );
+    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLima( const T& caller, int phaseLine, float distanceBefore );
+    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLimaInFuseau( const T& caller, uint limaID, MT_Float rDistBeforeLima, const MIL_Fuseau* pFuseau );
+    template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisationInParts   ( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts );
+    template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const MT_Float rAverageArea );
+    template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisationInSections( const T& caller, const MT_Float rSectionLength );
+    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenterInFuseau( const T& caller, TER_Localisation* pLocalisation );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeLocalisationPointsForPionsInFuseau( const std::vector< DEC_Decision_ABC* >& pions, TER_Localisation* pLocalisation, MT_Vector2D* pDirDanger, MT_Float rDistMaxBtwPoints );
+    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeNearestLocalisationPointInFuseau( const T& caller, const TER_Localisation* location );
+    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeNearestUnclippedLocalisationPointInFuseau ( const T& caller, const TER_Localisation* pLocation );
+    template< typename T > static bool IsPointInFuseau           ( const T& caller, MT_Vector2D* pVect );
+    static boost::shared_ptr< MT_Vector2D > ComputeKnowledgeAgentBarycenter ( const MIL_AgentPion& caller, const std::vector< const DEC_Knowledge_Agent* > vKnowledges );
+    static DEC_Decision_ABC* GetFrontestPion    ( const std::vector< DEC_Decision_ABC* >& pions, const MT_Vector2D* pDirection );
+    static DEC_Decision_ABC* ComputeBackestAgent( const std::vector< DEC_Decision_ABC* >& pions, const MT_Vector2D* pDirection );
+    static float ComputeAutomatDelayFromSchedule                 ( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, const MIL_LimaOrder* pLima );
+    template< typename T > static float ComputeDelayFromScheduleAndObjectives           ( const T& caller, const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, const std::vector< DEC_Objective* >& objectives );
 
     // ASA
-    static void ComputePosDeploiementASANasseDBG    ( DIA_Call_ABC& );
-    static void ComputePosDeploiementASAOmni        ( DIA_Call_ABC&, const MIL_Automate& );
-    static void ComputePosDeploiementASANasse       ( DIA_Call_ABC&, const MIL_Automate& );
-    static void ComputePosDeploiementASADoubleRideau( DIA_Call_ABC&, const MIL_Automate& );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePosDeploiementASAOmni( const MIL_Automate& automat, int positionCount, const MT_Vector2D* center, float radius );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePosDeploiementASANasse( int positionCount, const MT_Vector2D* center, float angle, float initialDistance, float spacing, const MT_Vector2D* direction );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePosDeploiementASADoubleRideau( int positionCount, const MT_Vector2D* center, float initialDistance, float lineSpacing, float pointSpacing, const MT_Vector2D* direction );
     
     // Interception
-    static void GetInterceptionPosition( DIA_Call_ABC& call, const MIL_AgentPion& );
+    static boost::shared_ptr< MT_Vector2D > GetInterceptionPosition( const MIL_AgentPion& caller, DEC_Knowledge_Agent* pKnowledge, MT_Vector2D* pInterceptingPosition, MT_Float rSpeed );
+
     static bool GetInterceptionPoint   ( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, MT_Float rInterceptingSpeed, MT_Vector2D& result );
     //@}
 
 private:
     static const MT_Vector2D& GetPosition                ( const MIL_Automate&  );
     static const MT_Vector2D& GetPosition                ( const MIL_AgentPion& );
-    static       MT_Vector2D  _ComputeAutomatesBarycenter( const T_ObjectVector& automates );
+    static       MT_Vector2D  _ComputeAutomatesBarycenter( const std::vector< DEC_Decision_ABC* >& automates );
 
 private:
     static bool ClipLocalisationInFuseau( const TER_Localisation& localisation, const MIL_Fuseau& fuseau, TER_Localisation& clippedLocalisation );
-    static void SplitLocalisation       ( const TER_Localisation& localisation, uint nNbrParts, DIA_Variable_ABC& diaReturnCode, DIA_Variable_ObjectList& result );
-    static void SplitLocalisation       ( const TER_Localisation& localisation, MT_Vector2D vOrigin,  const MT_Vector2D& vDirection, MT_Float rSectionLength, DIA_Variable_ObjectList& diaObjectList );
+    static unsigned int SplitLocalisation( const TER_Localisation& localisation, uint nNbrParts, std::vector< boost::shared_ptr< TER_Localisation > >& result );
+    static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisation       ( const TER_Localisation& localisation, MT_Vector2D vOrigin,  const MT_Vector2D& vDirection, MT_Float rSectionLength );
 
     //! @name Tools
     //@{
-    static DEC_RolePion_Decision* GetFrontestPion( const T_ObjectVector& pions, const MT_Vector2D& vDirection );
-    static void ComputeDelayFromSchedule( DIA_Call_ABC& call, float rDistanceFromScheduled, int nSchedule );
+    static float ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, float rDistanceFromScheduled, int nSchedule );
     //@}
 
 private:

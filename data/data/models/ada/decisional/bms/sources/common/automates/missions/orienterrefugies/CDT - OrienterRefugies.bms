@@ -1,0 +1,43 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/orienterrefugies/CDT - OrienterRefugies.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_OrienterRefugies
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_OrienterRefugies"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_FaireSuivreLeSE", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        Activate( self.activations.BEH_Dispositif_Automate_FaireSuivreLeSE, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Mission suivre au autres pions
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// défini dans MIS_Automate_CDT_PrendreEnComptePrisonniers
+]]
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_OrienterRefugies = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_OrienterRefugies, "BEH_Dispositif_Automate_FaireSuivreLeSE", nodes.BEH_Dispositif_Automate_FaireSuivreLeSE }

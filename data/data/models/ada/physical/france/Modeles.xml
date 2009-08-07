@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models>
   <units>
-    <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.hal" name="Patrouille AIR Assaut">
+    <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">
       <missions>
         <mission name="JOINT AIR Effectuer Raid"/>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
       </missions>
     </unit>
-    <unit dia-type="AirCP" file="Air\Pions\PC\model.hal" name="PC AIR">
+    <unit dia-type="AirCP" file="Air\Pions\PC\model.bms" name="PC AIR">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
       </missions>
     </unit>
-    <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.hal" name="Chalands de Debarquement">
+    <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.bms" name="Chalands de Debarquement">
       <missions>
         <mission name="Transporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -27,7 +27,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="MarineCP" file="Marine\Pions\PC\model.hal" name="PC Marine">
+    <unit dia-type="MarineCP" file="Marine\Pions\PC\model.bms" name="PC Marine">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -37,7 +37,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.hal" name="PC Alat">
+    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.bms" name="PC Alat">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Se Faire Decontaminer"/>
@@ -47,7 +47,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="AntitankHelicopterPatrol" file="\Appui\Alat\Pions\Pat Hac\Model.hal" name="Patrouille HAH">
+    <unit dia-type="AntitankHelicopterPatrol" file="\Appui\Alat\Pions\Pat Hac\Model.bms" name="Patrouille HAH">
       <missions>
         <mission name="ALAT Appuyer Direct Au Contact"/>
         <mission name="ALAT Couvrir"/>
@@ -70,7 +70,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\model.hal" name="Patrouille HAC">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\model.bms" name="Patrouille HAC">
       <missions>
         <mission name="ALAT Appuyer Direct Au Contact"/>
         <mission name="ALAT Couvrir"/>
@@ -92,7 +92,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.hal" name="Patrouille HAM">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" name="Patrouille HAM">
       <missions>
         <mission name="ALAT Couvrir"/>
         <mission name="ALAT Detruire Aeromobile"/>
@@ -113,7 +113,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.hal" name="Patrouille HM">
+    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" name="Patrouille HM">
       <missions>
         <mission name="ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -133,7 +133,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.hal" name="Patrouille HM Log">
+    <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" name="Patrouille HM Log">
       <missions>
         <mission name="ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -151,7 +151,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.hal" name="Patrouille Tigre">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" name="Patrouille Tigre">
       <missions>
         <mission name="ALAT Appuyer Direct Au Contact"/>
         <mission name="ALAT Couvrir"/>
@@ -175,7 +175,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.hal" name="SACP CAROL">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" name="SACP CAROL">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Zone A Partir Position"/>
@@ -195,7 +195,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.hal" name="SACP ROLAND">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" name="SACP ROLAND">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Zone A Partir Position"/>
@@ -216,7 +216,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.hal" name="SATCP MISTRAL">
+    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" name="SATCP MISTRAL">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -236,7 +236,7 @@
         <mission name="ASA MISTRAL Surveiller"/>
       </missions>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.hal" name="PC MISTRAL">
+    <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.bms" name="PC MISTRAL">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -251,7 +251,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.hal" name="PC ROLAND CAROL">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" name="PC ROLAND CAROL">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -266,7 +266,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.hal" name="PC HAWK">
+    <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.bms" name="PC HAWK">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -281,7 +281,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Section GEN">
+    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Section GEN">
       <missions>
         <mission name="GEN Ameliorer Mobilite"/>
         <mission name="GEN Realiser Travaux Appui Deploiement"/>
@@ -314,7 +314,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.hal" name="PC GEN">
+    <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.bms" name="PC GEN">
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
@@ -329,7 +329,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="SectionPFM" file="Appui\Genie\Pions\Model.hal" name="Section PFM">
+    <unit dia-type="SectionPFM" file="Appui\Genie\Pions\Model.bms" name="Section PFM">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Franchir"/>
@@ -345,30 +345,14 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="SectionDeminageLourd" file="Appui\Genie\Pions\Model.hal" name="Section Deminage Lourd">
+    <unit dia-type="SectionDeminageLourd" file="Appui\Genie\Pions\Model.bms" name="Section Deminage Lourd">
       <missions>
         <mission name="Franchir"/>
-        <mission name="GEN Renforcer"/>
-        <mission name="Faire Mouvement"/>
-        <mission name="Soutenir En Mesure De"/>
-        <mission name="Soutenir sur position en mesure de"/>
-        <mission name="Suivre"/>
-        <mission name="Se Faire Decontaminer"/>
-        <mission name="Se Faire Transporter"/>
-        <mission name="Stationner"/>
-        <mission name="Orienter Refugies"/>
-        <mission name="Prendre En Compte Prisonniers"/>
-        <mission name="Decrocher"/>
-      </missions>
-    </unit>
-    <unit dia-type="GroupeMADEZ" file="Appui\Genie\Pions\Model.hal" name="Groupe MADEZ">
-      <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
         <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
-        <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Stationner"/>
@@ -377,7 +361,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeOT" file="Appui\Genie\Pions\Model.hal" name="Groupe OT">
+    <unit dia-type="GroupeMADEZ" file="Appui\Genie\Pions\Model.bms" name="Groupe MADEZ">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -393,7 +377,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeMFRD" file="Appui\Genie\Pions\Model.hal" name="Groupe MFRD">
+    <unit dia-type="GroupeOT" file="Appui\Genie\Pions\Model.bms" name="Groupe OT">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -409,7 +393,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.hal" name="Groupe EFA">
+    <unit dia-type="GroupeMFRD" file="Appui\Genie\Pions\Model.bms" name="Groupe MFRD">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -425,7 +409,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeEBG" file="Appui\Genie\Pions\Model.hal" name="Groupe EBG">
+    <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.bms" name="Groupe EFA">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -433,7 +417,6 @@
         <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
-        <mission name="GEN Realiser Travaux Protection"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Stationner"/>
@@ -442,7 +425,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.hal" name="Groupe MPG">
+    <unit dia-type="GroupeEBG" file="Appui\Genie\Pions\Model.bms" name="Groupe EBG">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -459,7 +442,24 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupePAA" file="Appui\Genie\Pions\Model.hal" name="Groupe PAA">
+    <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.bms" name="Groupe MPG">
+      <missions>
+        <mission name="GEN Renforcer"/>
+        <mission name="Faire Mouvement"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
+        <mission name="Suivre"/>
+        <mission name="Franchir"/>
+        <mission name="GEN Realiser Travaux Protection"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Stationner"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="Decrocher"/>
+      </missions>
+    </unit>
+    <unit dia-type="GroupePAA" file="Appui\Genie\Pions\Model.bms" name="Groupe PAA">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -475,7 +475,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeDISP" file="Appui\Genie\Pions\Model.hal" name="Groupe DISP">
+    <unit dia-type="GroupeDISP" file="Appui\Genie\Pions\Model.bms" name="Groupe DISP">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -491,7 +491,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="SectionSOUVIM" file="Appui\Genie\Pions\Model.hal" name="Section SOUVIM">
+    <unit dia-type="SectionSOUVIM" file="Appui\Genie\Pions\Model.bms" name="Section SOUVIM">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -507,7 +507,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="DLRG" file="Appui\Genie\Pions\Model.hal" name="DLRG">
+    <unit dia-type="DLRG" file="Appui\Genie\Pions\Model.bms" name="DLRG">
       <missions>
         <mission name="GEN Reconnaitre Site Franchissement"/>
         <mission name="GEN Reconnaitre Itineraire"/>
@@ -525,7 +525,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="GroupePAT" file="Appui\Genie\Pions\Model.hal" name="Groupe PAT">
+    <unit dia-type="GroupePAT" file="Appui\Genie\Pions\Model.bms" name="Groupe PAT">
       <missions>
         <mission name="GEN Reconnaitre Site Franchissement"/>
         <mission name="GEN Reconnaitre Zone"/>
@@ -542,7 +542,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.hal" name="Groupe Enfouisseur">
+    <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.bms" name="Groupe Enfouisseur">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -558,7 +558,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeMLF" file="Appui\Genie\Pions\Model.hal" name="Groupe MLF">
+    <unit dia-type="GroupeMLF" file="Appui\Genie\Pions\Model.bms" name="Groupe MLF">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -574,7 +574,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeChantier" file="Appui\Genie\Pions\Model.hal" name="Groupe Chantier">
+    <unit dia-type="GroupeChantier" file="Appui\Genie\Pions\Model.bms" name="Groupe Chantier">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -590,7 +590,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.hal" name="Section INF">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="Section INF">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Contre Attaquer"/>
@@ -641,7 +641,7 @@
         <mission name="Securiser Zone Contre Populations"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.hal" name="Section INF MILAN">
+    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" name="Section INF MILAN">
       <missions>
         <mission name="INF Barrer"/>
         <mission name="INF Appuyer"/>
@@ -661,7 +661,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.hal" name="Section INF HOT">
+    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" name="Section INF HOT">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Barrer"/>
@@ -681,7 +681,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie_Appui" file="Melee\Inf\Pions\Son Appui\Model.hal" name="Section Appui">
+    <unit dia-type="SectionInfanterie_Appui" file="Melee\Inf\Pions\Son Appui\Model.bms" name="Section Appui">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Interdire"/>
@@ -700,7 +700,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.hal" name="Groupe Appui Mortier">
+    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" name="Groupe Appui Mortier">
       <missions>
         <mission name="INF Appuyer">
           <fragorder name="Pion Appliquer Feux"/>
@@ -718,7 +718,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.hal" name="PC INF">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="PC INF">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -739,7 +739,7 @@
         <mission name="Securiser Zone Contre Populations"/>
       </missions>
     </unit>
-    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.hal" name="Peloton XL">
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="Peloton XL">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -786,7 +786,7 @@
         <mission name="Securiser Zone Contre Populations"/>
       </missions>
     </unit>
-    <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.hal" name="Peloton AMX_ERC">
+    <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.bms" name="Peloton AMX_ERC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -837,7 +837,7 @@
         <mission name="Securiser Zone Contre Populations"/>
       </missions>
     </unit>
-    <unit dia-type="Peloton_AD" file="Melee\Abc\Pions\Pel AD\model.hal" name="Peloton AD">
+    <unit dia-type="Peloton_AD" file="Melee\Abc\Pions\Pel AD\model.bms" name="Peloton AD">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -859,7 +859,7 @@
         <mission name="ABC Escorter Unites"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_EI_Milan" file="Melee\Abc\Pions\Pat Milan\model.hal" name="Patrouille Milan">
+    <unit dia-type="Patrouille_EI_Milan" file="Melee\Abc\Pions\Pat Milan\model.bms" name="Patrouille Milan">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -887,7 +887,7 @@
         <mission name="ABC Appuyer Sur Position"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="Patrouille EI">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Patrouille EI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -913,7 +913,7 @@
         <mission name="ABC Escorter Unites"/>
       </missions>
     </unit>
-    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.hal" name="PC ABC">
+    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" name="PC ABC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -929,7 +929,7 @@
         <mission name="ABC PC Se Deployer"/>
       </missions>
     </unit>
-    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.hal" name="PC ASS Tir">
+    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" name="PC ASS Tir">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -944,7 +944,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="PC_Peloton_PIR" file="Melee\Abc\Pions\Pel PIR\model.hal" name="PC Peloton PIR">
+    <unit dia-type="PC_Peloton_PIR" file="Melee\Abc\Pions\Pel PIR\model.bms" name="PC Peloton PIR">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -960,7 +960,7 @@
         <mission name="ABC Soutenir"/>
       </missions>
     </unit>
-    <unit dia-type="Groupe_RASIT" file="Melee\Abc\Pions\Grp Rasit\Model.hal" name="Groupe RASIT ABC">
+    <unit dia-type="Groupe_RASIT" file="Melee\Abc\Pions\Grp Rasit\Model.bms" name="Groupe RASIT ABC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -975,7 +975,7 @@
         <mission name="ABC RASIT Renseigner Sur"/>
       </missions>
     </unit>
-    <unit dia-type="Equipe_NBC_Dec" file="Appui\Nbc\Pions\Pat Dec\model.hal" name="Equipe Decontamination NBC">
+    <unit dia-type="Equipe_NBC_Dec" file="Appui\Nbc\Pions\Pat Dec\model.bms" name="Equipe Decontamination NBC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -992,7 +992,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.hal" name="Patrouille Reco NBC">
+    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" name="Patrouille Reco NBC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1009,7 +1009,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_NBC_RE" file="Appui\Nbc\Pions\Pat RE\model.hal" name="Patrouille RE">
+    <unit dia-type="Patrouille_NBC_RE" file="Appui\Nbc\Pions\Pat RE\model.bms" name="Patrouille RE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1025,7 +1025,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="PC_NBC" file="Appui\Nbc\Pions\PC NBC\model.hal" name="PC NBC">
+    <unit dia-type="PC_NBC" file="Appui\Nbc\Pions\PC NBC\model.bms" name="PC NBC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1040,7 +1040,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.hal" name="PC TC2">
+    <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.bms" name="PC TC2">
       <missions>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
@@ -1059,7 +1059,7 @@
         <mission name="Franchir"/>
       </missions>
     </unit>
-    <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.hal" name="Section Maintenance">
+    <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.bms" name="Section Maintenance">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Regime Travail Maintenance"/>
@@ -1082,7 +1082,7 @@
         <mission name="Franchir"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.hal" name="Groupe Maintenance Evacuation">
+    <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.bms" name="Groupe Maintenance Evacuation">
       <missions>
         <mission name="LOG Se Deployer">
           <fragorder name="Modifier Regime Travail Maintenance"/>
@@ -1108,7 +1108,7 @@
         <mission name="Franchir"/>
       </missions>
     </unit>
-    <unit dia-type="SectionTriage" file="Appui\Log\Pions\Model.hal" name="Section Triage Modulaire">
+    <unit dia-type="SectionTriage" file="Appui\Log\Pions\Model.bms" name="Section Triage Modulaire">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -1129,7 +1129,7 @@
         <mission name="LOG Renforcer"/>
       </missions>
     </unit>
-    <unit dia-type="ACA" file="Appui\Log\Pions\Model.hal" name="ACA">
+    <unit dia-type="ACA" file="Appui\Log\Pions\Model.bms" name="ACA">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -1154,7 +1154,7 @@
         <mission name="LOG Renforcer"/>
       </missions>
     </unit>
-    <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.hal" name="Unite de soin">
+    <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.bms" name="Unite de soin">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -1175,7 +1175,7 @@
         <mission name="LOG Renforcer"/>
       </missions>
     </unit>
-    <unit dia-type="DecontaminationNBC" file="Appui\Log\Pions\Model.hal" name="Decontamination NBC">
+    <unit dia-type="DecontaminationNBC" file="Appui\Log\Pions\Model.bms" name="Decontamination NBC">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -1196,7 +1196,7 @@
         <mission name="LOG Renforcer"/>
       </missions>
     </unit>
-    <unit dia-type="UniteSpy" file="Appui\Log\Pions\Model.hal" name="Unite PSY">
+    <unit dia-type="UniteSpy" file="Appui\Log\Pions\Model.bms" name="Unite PSY">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -1217,7 +1217,7 @@
         <mission name="LOG Renforcer"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.hal" name="Groupe Ramassage">
+    <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.bms" name="Groupe Ramassage">
       <missions>
         <mission name="LOG Se Deployer">
           <fragorder name="Pion Renforcer En VSRAM"/>
@@ -1244,7 +1244,7 @@
         <mission name="Franchir"/>
       </missions>
     </unit>
-    <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.hal" name="PC Log">
+    <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.bms" name="PC Log">
       <missions>
         <mission name="LOG Se Deployer"/>
         <mission name="Suivre"/>
@@ -1257,7 +1257,7 @@
         <mission name="Franchir"/>
       </missions>
     </unit>
-    <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.hal" name="Convoi">
+    <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.bms" name="Convoi">
       <missions>
         <mission name="LOG Convoyer"/>
         <mission name="Suivre"/>
@@ -1273,7 +1273,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.hal" name="Peloton Transport">
+    <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" name="Peloton Transport">
       <missions>
         <mission name="LOG Se Deployer"/>
         <mission name="LOG Preparer Bascule"/>
@@ -1288,7 +1288,7 @@
         <mission name="Franchir"/>
       </missions>
     </unit>
-    <unit dia-type="PionStock" file="Appui\Log\Pions\Model.hal" name="Stock">
+    <unit dia-type="PionStock" file="Appui\Log\Pions\Model.bms" name="Stock">
       <missions>
         <mission name="LOG Se Deployer"/>
         <mission name="LOG Preparer Bascule"/>
@@ -1303,7 +1303,7 @@
         <mission name="LOG Renforcer"/>
       </missions>
     </unit>
-    <unit dia-type="SectionTravaux" file="Appui\Genie\Pions\Model.hal" name="Section Travaux">
+    <unit dia-type="SectionTravaux" file="Appui\Genie\Pions\Model.bms" name="Section Travaux">
       <missions>
         <mission name="GEN Ameliorer Mobilite"/>
         <mission name="GEN Realiser Travaux Appui Deploiement"/>
@@ -1322,7 +1322,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.hal" name="Section AUF1">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" name="Section AUF1">
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
@@ -1343,7 +1343,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.hal" name="Section Reco AUF1">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.bms" name="Section Reco AUF1">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -1359,7 +1359,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.hal" name="Section TRF1">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.bms" name="Section TRF1">
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
@@ -1380,7 +1380,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.hal" name="Section Reco TRF1">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.bms" name="Section Reco TRF1">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -1396,7 +1396,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.hal" name="Lanceur LRM">
+    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" name="Lanceur LRM">
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
@@ -1417,7 +1417,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco LRM\Model.hal" name="Equipe Reco LRM">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco LRM\Model.bms" name="Equipe Reco LRM">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -1433,7 +1433,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\SAM\Model.hal" name="SAM">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\SAM\Model.bms" name="SAM">
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
@@ -1454,7 +1454,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco SAM\Model.hal" name="Equipe Reco SAM">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco SAM\Model.bms" name="Equipe Reco SAM">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -1470,7 +1470,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco COBRA\Model.hal" name="Equipe Reco COBRA">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco COBRA\Model.bms" name="Equipe Reco COBRA">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -1486,7 +1486,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.hal" name="Radar COBRA">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.bms" name="Radar COBRA">
       <missions>
         <mission name="ASS Acquerir Lanceurs Eni"/>
         <mission name="Faire Mouvement"/>
@@ -1502,7 +1502,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeASS_RATAC" file="Appui\ArtFdp\Pions\Grp RATAC\Model.hal" name="Groupe RATAC">
+    <unit dia-type="GroupeASS_RATAC" file="Appui\ArtFdp\Pions\Grp RATAC\Model.bms" name="Groupe RATAC">
       <missions>
         <mission name="ASS RATAC Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -1518,7 +1518,7 @@
         <mission name="Franchir"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.hal" name="EO">
+    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" name="EO">
       <missions>
         <mission name="ASS EO Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -1534,7 +1534,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EOP\Model.hal" name="EOP">
+    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EOP\Model.bms" name="EOP">
       <missions>
         <mission name="ASS EOP Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -1550,7 +1550,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.hal" name="Pat recherche blindee">
+    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.bms" name="Pat recherche blindee">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1566,7 +1566,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_RBRR_Moto" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche motorisee\Model.hal" name="Pat recherche moto">
+    <unit dia-type="Patrouille_RBRR_Moto" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche motorisee\Model.bms" name="Pat recherche moto">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1582,7 +1582,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_RBRR_Nautique" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche nautique\Model.hal" name="Pat recherche nautique">
+    <unit dia-type="Patrouille_RBRR_Nautique" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche nautique\Model.bms" name="Pat recherche nautique">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1598,7 +1598,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_RBRR_RASIT" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.hal" name="Pat recherche RASIT">
+    <unit dia-type="Patrouille_RBRR_RASIT" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.bms" name="Pat recherche RASIT">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1614,7 +1614,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.hal" name="Pat URH">
+    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" name="Pat URH">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1630,7 +1630,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Section_Coge" file="Appui\Rens\Pions\Roem\Coge\Model.hal" name="Coge">
+    <unit dia-type="Section_Coge" file="Appui\Rens\Pions\Roem\Coge\Model.bms" name="Coge">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1646,7 +1646,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Stations_Lynx" file="Appui\Rens\Pions\Roem\Stations Lynx\Model.hal" name="Stations Linx">
+    <unit dia-type="Stations_Lynx" file="Appui\Rens\Pions\Roem\Stations Lynx\Model.bms" name="Stations Linx">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1661,7 +1661,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Stations_Horizon" file="Appui\Rens\Pions\Radint\Stations Horizon\Model.hal" name="Stations Horizon">
+    <unit dia-type="Stations_Horizon" file="Appui\Rens\Pions\Radint\Stations Horizon\Model.bms" name="Stations Horizon">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1674,7 +1674,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Cougar_Horizon" file="Appui\Rens\Pions\Radint\Cougar Horizon\Model.hal" name="Cougar Horizon">
+    <unit dia-type="Cougar_Horizon" file="Appui\Rens\Pions\Radint\Cougar Horizon\Model.bms" name="Cougar Horizon">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Decrocher"/>
@@ -1683,7 +1683,7 @@
         <mission name="Se Faire Decontaminer"/>
       </missions>
     </unit>
-    <unit dia-type="Section_CL289_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre CL289\Model.hal" name="Sections mise en oeuvre CL289">
+    <unit dia-type="Section_CL289_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre CL289\Model.bms" name="Sections mise en oeuvre CL289">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1696,12 +1696,12 @@
         <mission name="Stationner"/>
       </missions>
     </unit>
-    <unit dia-type="Drone_CL289" file="Appui\Rens\Pions\Roim\Drone CL289\Model.hal" name="Drone CL289">
+    <unit dia-type="Drone_CL289" file="Appui\Rens\Pions\Roim\Drone CL289\Model.bms" name="Drone CL289">
       <missions>
         <mission name="RENS ROIM CL289 Renseigner Sur"/>
       </missions>
     </unit>
-    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.hal" name="Sections mise en oeuvre SDTI">
+    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.bms" name="Sections mise en oeuvre SDTI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1714,12 +1714,12 @@
         <mission name="Stationner"/>
       </missions>
     </unit>
-    <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone SDTI\Model.hal" name="Drone SDTI">
+    <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone SDTI\Model.bms" name="Drone SDTI">
       <missions>
         <mission name="RENS ROIM SDTI Renseigner Sur"/>
       </missions>
     </unit>
-    <unit dia-type="Stations_MrodELodee" file="Appui\Rens\Pions\Roem\Stations MROD_ELODEE\Model.hal" name="Stations MROD_ELODEE">
+    <unit dia-type="Stations_MrodELodee" file="Appui\Rens\Pions\Roem\Stations MROD_ELODEE\Model.bms" name="Stations MROD_ELODEE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1732,22 +1732,7 @@
         <mission name="Stationner"/>
       </missions>
     </unit>
-    <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.hal" name="Systeme STAIR">
-      <missions>
-        <mission name="Decrocher"/>
-        <mission name="Faire Mouvement"/>
-        <mission name="Soutenir En Mesure De"/>
-        <mission name="Soutenir sur position en mesure de"/>
-        <mission name="Suivre"/>
-        <mission name="RENS ROEM Renseigner Sur"/>
-        <mission name="Se Faire Decontaminer"/>
-        <mission name="Se Faire Transporter"/>
-        <mission name="Stationner"/>
-        <mission name="Orienter Refugies"/>
-        <mission name="Prendre En Compte Prisonniers"/>
-      </missions>
-    </unit>
-    <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.hal" name="Systeme_START">
+    <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.bms" name="Systeme STAIR">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1762,7 +1747,22 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="section_Elge" file="Appui\Rens\Pions\Roem\ELGE\Model.hal" name="Groupe ELGE">
+    <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.bms" name="Systeme_START">
+      <missions>
+        <mission name="Decrocher"/>
+        <mission name="Faire Mouvement"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
+        <mission name="Suivre"/>
+        <mission name="RENS ROEM Renseigner Sur"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Stationner"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+      </missions>
+    </unit>
+    <unit dia-type="section_Elge" file="Appui\Rens\Pions\Roem\ELGE\Model.bms" name="Groupe ELGE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1778,7 +1778,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.hal" name="Groupe BROVAB">
+    <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.bms" name="Groupe BROVAB">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -1793,7 +1793,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="Peloton Transport Blindes">
+    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" name="Peloton Transport Blindes">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -1809,7 +1809,7 @@
         <mission name="Franchir"/>
       </missions>
     </unit>
-    <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.hal" name="Patrouille Circulation">
+    <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.bms" name="Patrouille Circulation">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -1834,7 +1834,7 @@
         <mission name="GEN Renforcer"/>
       </missions>
     </unit>
-    <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.hal" name="Refugie">
+    <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.bms" name="Refugie">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -1847,7 +1847,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Milice" file="Population\Milices\Pion\Model.hal" name="Milice">
+    <unit dia-type="Milice" file="Population\Milices\Pion\Model.bms" name="Milice">
       <missions>
         <mission name="MILICE Prendre Et Tenir"/>
         <mission name="MILICE Detruire Embuscade"/>
@@ -1868,7 +1868,7 @@
         <mission name="ASY Renseigner"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeMATS" file="Appui\Genie\Pions\Model.hal" name="Groupe MATS">
+    <unit dia-type="GroupeMATS" file="Appui\Genie\Pions\Model.bms" name="Groupe MATS">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1884,7 +1884,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeEnergie" file="Appui\Genie\Pions\Model.hal" name="Groupe Energie">
+    <unit dia-type="GroupeEnergie" file="Appui\Genie\Pions\Model.bms" name="Groupe Energie">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1900,7 +1900,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeEquipementPoser" file="Appui\Genie\Pions\Model.hal" name="Section Equipement zone de poser">
+    <unit dia-type="GroupeEquipementPoser" file="Appui\Genie\Pions\Model.bms" name="Section Equipement zone de poser">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1916,7 +1916,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="SectionEquipementPlage" file="Appui\Genie\Pions\Model.hal" name="Section Equipement Plage">
+    <unit dia-type="SectionEquipementPlage" file="Appui\Genie\Pions\Model.bms" name="Section Equipement Plage">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1932,7 +1932,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="SectionEau" file="Appui\Genie\Pions\Model.hal" name="Section Traitement Eau">
+    <unit dia-type="SectionEau" file="Appui\Genie\Pions\Model.bms" name="Section Traitement Eau">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1948,7 +1948,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_Viviane" file="Appui\Rens\Pions\Radint\Pat Viviane\Model.hal" name="Patrouille Viviane">
+    <unit dia-type="Patrouille_Viviane" file="Appui\Rens\Pions\Radint\Pat Viviane\Model.bms" name="Patrouille Viviane">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Decrocher"/>
@@ -1957,35 +1957,35 @@
         <mission name="Se Faire Decontaminer"/>
       </missions>
     </unit>
-    <unit dia-type="PCDIV" file="Appui\Trans\Pions\Model.hal" name="PC DIV">
+    <unit dia-type="PCDIV" file="Appui\Trans\Pions\Model.bms" name="PC DIV">
       <missions>
         <mission name="TRANS Etablir Gerer Liaison"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
       </missions>
     </unit>
-    <unit dia-type="PCTAC" file="Appui\Trans\Pions\Model.hal" name="PC TAC">
+    <unit dia-type="PCTAC" file="Appui\Trans\Pions\Model.bms" name="PC TAC">
       <missions>
         <mission name="TRANS Etablir Gerer Liaison"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
       </missions>
     </unit>
-    <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.hal" name="PC BIA">
+    <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.bms" name="PC BIA">
       <missions>
         <mission name="TRANS Etablir Gerer Liaison"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
       </missions>
     </unit>
-    <unit dia-type="SectionTRANS" file="Appui\Trans\Pions\Model.hal" name="Section TRANS">
+    <unit dia-type="SectionTRANS" file="Appui\Trans\Pions\Model.bms" name="Section TRANS">
       <missions>
         <mission name="TRANS Etablir Gerer Liaison"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeInfanterie_Commando" file="Melee\Inf\Pions\Grp Commando\Model.hal" name="Groupe Commando">
+    <unit dia-type="GroupeInfanterie_Commando" file="Melee\Inf\Pions\Grp Commando\Model.bms" name="Groupe Commando">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2002,7 +2002,7 @@
         <mission name="INF Surveiller Secteur"/>
       </missions>
     </unit>
-    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.hal" name="SAMP HAWK">
+    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" name="SAMP HAWK">
       <missions>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -2022,7 +2022,7 @@
         <mission name="ASA Surveiller"/>
       </missions>
     </unit>
-    <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="PC Appui Mob">
+    <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" name="PC Appui Mob">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2036,27 +2036,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="Patrouille BRDM2">
-      <missions>
-        <mission name="Decrocher"/>
-        <mission name="Faire Mouvement"/>
-        <mission name="Soutenir En Mesure De"/>
-        <mission name="Soutenir sur position en mesure de"/>
-        <mission name="Franchir"/>
-        <mission name="Suivre"/>
-        <mission name="Stationner"/>
-        <mission name="Orienter Refugies"/>
-        <mission name="Prendre En Compte Prisonniers"/>
-        <mission name="Se Faire Decontaminer"/>
-        <mission name="ABC Controler Zone"/>
-        <mission name="ABC Eclairer"/>
-        <mission name="ABC Jalonner"/>
-        <mission name="ABC Ouvrir Itineraire"/>
-        <mission name="ABC Renseigner Sur"/>
-        <mission name="Se Faire Transporter"/>
-      </missions>
-    </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="Patrouille BRM1">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Patrouille BRDM2">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2076,7 +2056,27 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.hal" name="Terroriste">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Patrouille BRM1">
+      <missions>
+        <mission name="Decrocher"/>
+        <mission name="Faire Mouvement"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
+        <mission name="Franchir"/>
+        <mission name="Suivre"/>
+        <mission name="Stationner"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="ABC Controler Zone"/>
+        <mission name="ABC Eclairer"/>
+        <mission name="ABC Jalonner"/>
+        <mission name="ABC Ouvrir Itineraire"/>
+        <mission name="ABC Renseigner Sur"/>
+        <mission name="Se Faire Transporter"/>
+      </missions>
+    </unit>
+    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" name="Terroriste">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2089,7 +2089,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.hal" name="Patrouille HR">
+    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" name="Patrouille HR">
       <missions>
         <mission name="ALAT Eclairer"/>
         <mission name="ALAT Jalonner"/>
@@ -2106,7 +2106,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.hal" name="GLAISE ABC section char lourd">
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="GLAISE ABC section char lourd">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2143,7 +2143,7 @@
         <mission name="ABC Appuyer Sur Position"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.hal" name="GLAISE INF section inf">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="GLAISE INF section inf">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Contre Attaquer"/>
@@ -2188,7 +2188,7 @@
         <mission name="INF Escorter Unite"/>
       </missions>
     </unit>
-    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.hal" name="GLAISE ABC PC">
+    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" name="GLAISE ABC PC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2203,7 +2203,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="GLAISE ABC patrouille EI">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="GLAISE ABC patrouille EI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2227,7 +2227,7 @@
         <mission name="ABC Escorter Unites"/>
       </missions>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.hal" name="GLAISE ASA section tcp">
+    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" name="GLAISE ASA section tcp">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2247,7 +2247,7 @@
         <mission name="ASA MISTRAL Surveiller"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.hal" name="GLAISE ASS SAM">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" name="GLAISE ASS SAM">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2265,7 +2265,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="GLAISE GEN section combat">
+    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN section combat">
       <missions>
         <mission name="GEN Ameliorer Mobilite"/>
         <mission name="GEN Realiser Travaux Appui Deploiement"/>
@@ -2298,7 +2298,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.hal" name="GLAISE INF PC inf">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="GLAISE INF PC inf">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2313,7 +2313,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.hal" name="GLAISE INF groupe appui mortier">
+    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" name="GLAISE INF groupe appui mortier">
       <missions>
         <mission name="INF Appuyer">
           <fragorder name="Pion Appliquer Feux"/>
@@ -2331,7 +2331,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.hal" name="GLAISE ASS section tractee">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" name="GLAISE ASS section tractee">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2350,7 +2350,7 @@
         <mission name="ASS Assurer Mise En Oeuvre"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.hal" name="GLAISE ASS section automoteur">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" name="GLAISE ASS section automoteur">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2369,7 +2369,7 @@
         <mission name="ASS Assurer Mise En Oeuvre"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.hal" name="GLAISE ASS section LRM">
+    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" name="GLAISE ASS section LRM">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2387,7 +2387,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.hal" name="GLAISE ASS PC ART">
+    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" name="GLAISE ASS PC ART">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2402,7 +2402,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.hal" name="GLAISE ASA section cp">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" name="GLAISE ASA section cp">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Zone A Partir Position"/>
@@ -2423,7 +2423,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.hal" name="GLAISE AC section sur vehicule">
+    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" name="GLAISE AC section sur vehicule">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Barrer"/>
@@ -2443,7 +2443,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.hal" name="GLAISE GEN groupe enfouisseur">
+    <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN groupe enfouisseur">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -2459,7 +2459,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.hal" name="GLAISE GEN groupe amenagement terrain">
+    <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN groupe amenagement terrain">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -2475,7 +2475,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.hal" name="GLAISE GEN groupe franchissement">
+    <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN groupe franchissement">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -2491,7 +2491,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.hal" name="GLAISE ASA groupe tcp">
+    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" name="GLAISE ASA groupe tcp">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2511,7 +2511,7 @@
         <mission name="ASA MISTRAL Surveiller"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.hal" name="GLAISE NBC Groupe Reco">
+    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" name="GLAISE NBC Groupe Reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2528,7 +2528,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.hal" name="GLAISE GEN PC">
+    <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN PC">
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
@@ -2543,7 +2543,7 @@
         <mission name="Decrocher"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.hal" name="GLAISE RENS Pat URH">
+    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" name="GLAISE RENS Pat URH">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2559,7 +2559,7 @@
         <mission name="RENS ROHUM Renseigner Sur"/>
       </missions>
     </unit>
-    <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.hal" name="GLAISE ABC Peloton Reco">
+    <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.bms" name="GLAISE ABC Peloton Reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2604,7 +2604,7 @@
         <mission name="Securiser Zone Contre Populations"/>
       </missions>
     </unit>
-    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.hal" name="GLAISE ASA  Section MP">
+    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" name="GLAISE ASA  Section MP">
       <missions>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -2624,7 +2624,7 @@
         <mission name="ASA Surveiller"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.hal" name="Groupe AC MILAN">
+    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" name="Groupe AC MILAN">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2642,7 +2642,7 @@
         <mission name="INF Surveiller Secteur"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="PC peloton ERIAC">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="PC peloton ERIAC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2660,7 +2660,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.hal" name="GLAISE ASS EO">
+    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" name="GLAISE ASS EO">
       <missions>
         <mission name="ASS EO Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -2676,7 +2676,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.hal" name="GLAISE ASS RECO">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.bms" name="GLAISE ASS RECO">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -2692,7 +2692,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.hal" name="GLAISE ASA PC">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" name="GLAISE ASA PC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2707,7 +2707,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.hal" name="GLAISE ALFT Patrouille UH">
+    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" name="GLAISE ALFT Patrouille UH">
       <missions>
         <mission name="ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -2727,7 +2727,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\model.hal" name="GLAISE ALFT Patrouille A">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\model.bms" name="GLAISE ALFT Patrouille A">
       <missions>
         <mission name="ALAT Appuyer Direct Au Contact"/>
         <mission name="ALAT Couvrir"/>
@@ -2749,7 +2749,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.hal" name="GLAISE ALFT Patrouille R">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" name="GLAISE ALFT Patrouille R">
       <missions>
         <mission name="ALAT Eclairer"/>
         <mission name="ALAT Jalonner"/>
@@ -2766,7 +2766,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.hal" name="GLAISE ALFT PC">
+    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.bms" name="GLAISE ALFT PC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Se Faire Decontaminer"/>
@@ -2776,7 +2776,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son ProTerre\Model.hal" name="Section PROTERRE">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son ProTerre\Model.bms" name="Section PROTERRE">
       <missions>
         <mission name="INF Interdire"/>
         <mission name="INF Surveiller Secteur">
@@ -2806,7 +2806,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Grp ProTerre\Model.hal" name="Groupe PROTERRE">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Grp ProTerre\Model.bms" name="Groupe PROTERRE">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Couvrir"/>
@@ -2842,13 +2842,13 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.hal" name="Groupe Assaut AIR">
+    <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
       </missions>
     </automat>
-    <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.hal" name="Groupe Chalands">
+    <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" name="Groupe Chalands">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2861,7 +2861,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.hal" name="Sgpt Satcp Mistral">
+    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" name="Sgpt Satcp Mistral">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2881,7 +2881,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.hal" name="Sgpt Sacp Carol">
+    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" name="Sgpt Sacp Carol">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Site"/>
@@ -2901,7 +2901,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.hal" name="Sgpt Sacp Roland">
+    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" name="Sgpt Sacp Roland">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Site"/>
@@ -2921,7 +2921,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.hal" name="Sgpt Hap Mixte">
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" name="Sgpt Hap Mixte">
       <missions>
         <mission name="ALAT Reconnaitre"/>
         <mission name="ALAT Jalonner"/>
@@ -2950,7 +2950,7 @@
         <mission name="Decrocher"/>
       </missions>
     </automat>
-    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Tigre\model.hal" name="Sgpt Tigre">
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Tigre\model.bms" name="Sgpt Tigre">
       <missions>
         <mission name="ALAT Reconnaitre"/>
         <mission name="ALAT Jalonner"/>
@@ -2977,7 +2977,7 @@
         <mission name="Decrocher"/>
       </missions>
     </automat>
-    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.hal" name="Sgpt Hm">
+    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" name="Sgpt Hm">
       <missions>
         <mission name="ALAT Heliporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -2997,7 +2997,7 @@
         <mission name="Decrocher"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Compagnie GEN">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Compagnie GEN">
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
@@ -3024,7 +3024,7 @@
         <mission name="Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.hal" name="Compagnie GEN APPUI">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.bms" name="Compagnie GEN APPUI">
       <missions>
         <mission name="Franchir"/>
         <mission name="GEN Se Deployer"/>
@@ -3041,7 +3041,7 @@
         <mission name="Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="Escadron char lourd">
+    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="Escadron char lourd">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3088,7 +3088,7 @@
         <mission name="ABC Appuyer Sur Position"/>
       </missions>
     </automat>
-    <automat dia-type="Escadron_AMX" file="Melee\Abc\Automates\Esc AMX-ERC\model.hal" name="Escadron char moyen">
+    <automat dia-type="Escadron_AMX" file="Melee\Abc\Automates\Esc AMX-ERC\model.bms" name="Escadron char moyen">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3138,7 +3138,7 @@
         <mission name="ABC Appuyer Sur Position"/>
       </missions>
     </automat>
-    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.hal" name="Peloton EI">
+    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.bms" name="Peloton EI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3165,7 +3165,7 @@
         <mission name="ABC Escorter Unites"/>
       </missions>
     </automat>
-    <automat dia-type="Peloton_PIR" file="Melee\Abc\Automates\Pel PIR\model.hal" name="Peloton PIR">
+    <automat dia-type="Peloton_PIR" file="Melee\Abc\Automates\Pel PIR\model.bms" name="Peloton PIR">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3182,7 +3182,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="Section_NBC_Dec" file="Appui\Nbc\Automates\Son Dec\model.hal" name="Section dec">
+    <automat dia-type="Section_NBC_Dec" file="Appui\Nbc\Automates\Son Dec\model.bms" name="Section dec">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3200,7 +3200,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.hal" name="Section reco">
+    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" name="Section reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3218,7 +3218,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="Section_NBC_RE" file="Appui\Nbc\Automates\Son RE\model.hal" name="Section RE">
+    <automat dia-type="Section_NBC_RE" file="Appui\Nbc\Automates\Son RE\model.bms" name="Section RE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3234,7 +3234,7 @@
         <mission name="NBC Reconnaitre Des Sites ROTA"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.hal" name="Compagnie INF">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" name="Compagnie INF">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Attaquer Souplesse">
@@ -3281,7 +3281,7 @@
         <mission name="INF Surveiller"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Abc\Model.hal" name="SsGrpt INF ABC">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Abc\Model.bms" name="SsGrpt INF ABC">
       <missions>
         <mission name="INF Attaquer Souplesse">
           <fragorder name="Deboucher"/>
@@ -3320,7 +3320,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Ac\Model.hal" name="SsGrpt INF AC">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Ac\Model.bms" name="SsGrpt INF AC">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Barrer Direction"/>
@@ -3352,7 +3352,7 @@
         <mission name="INF Rompre Contact"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.hal" name="Compagnie HOT">
+    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" name="Compagnie HOT">
       <missions>
         <mission name="INF Barrer Direction"/>
         <mission name="INF Couvrir"/>
@@ -3378,7 +3378,7 @@
         <mission name="INF Soutenir"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieLogTC2" file="Appui\Log\Automates\Model.hal" name="TC2">
+    <automat dia-type="CompagnieLogTC2" file="Appui\Log\Automates\Model.bms" name="TC2">
       <missions>
         <mission name="LOG Se Deployer">
           <fragorder name="Modifier Regime Travail Maintenance"/>
@@ -3396,7 +3396,7 @@
         <mission name="Suivre"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.hal" name="Log">
+    <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.bms" name="Log">
       <missions>
         <mission name="LOG Se Deployer"/>
         <mission name="Se Faire Decontaminer"/>
@@ -3408,7 +3408,7 @@
         <mission name="Suivre"/>
       </missions>
     </automat>
-    <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.hal" name="Escadron Transport Blindes">
+    <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.bms" name="Escadron Transport Blindes">
       <missions>
         <mission name="Se Recompleter"/>
         <mission name="Faire Mouvement"/>
@@ -3424,7 +3424,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.hal" name="Peloton Circulation">
+    <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.bms" name="Peloton Circulation">
       <missions>
         <mission name="Se Recompleter"/>
         <mission name="Faire Mouvement"/>
@@ -3449,7 +3449,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.hal" name="Batterie Tir AUF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" name="Batterie Tir AUF1">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -3465,7 +3465,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.hal" name="Batterie Reco AUF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.bms" name="Batterie Reco AUF1">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3481,7 +3481,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.hal" name="Batterie Tir LRM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.bms" name="Batterie Tir LRM">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -3497,7 +3497,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco LRM\Model.hal" name="Batterie Reco LRM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco LRM\Model.bms" name="Batterie Reco LRM">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3513,7 +3513,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir TRF1\Model.hal" name="Batterie Tir TRF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir TRF1\Model.bms" name="Batterie Tir TRF1">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -3529,7 +3529,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.hal" name="Batterie Reco TRF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.bms" name="Batterie Reco TRF1">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3545,7 +3545,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir SAM\Model.hal" name="Batterie Tir SAM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir SAM\Model.bms" name="Batterie Tir SAM">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -3561,7 +3561,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco SAM\Model.hal" name="Batterie Reco SAM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco SAM\Model.bms" name="Batterie Reco SAM">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3577,7 +3577,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat COBRA\Model.hal" name="Batterie COBRA">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat COBRA\Model.bms" name="Batterie COBRA">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -3593,7 +3593,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.hal" name="Batterie Reco COBRA">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.bms" name="Batterie Reco COBRA">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3609,7 +3609,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Section RATAC\Model.hal" name="Section RATAC">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Section RATAC\Model.bms" name="Section RATAC">
       <missions>
         <mission name="ASS Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -3626,7 +3626,7 @@
         <mission name="Franchir"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.hal" name="DLO">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" name="DLO">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -3643,7 +3643,7 @@
         <mission name="ASS AcquerirObjectifsDLO"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLOP\Model.hal" name="DLOP">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLOP\Model.bms" name="DLOP">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -3659,7 +3659,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="Cl289" file="Appui\Rens\Automates\Roim\CL289\Model.hal" name="CL289">
+    <automat dia-type="Cl289" file="Appui\Rens\Automates\Roim\CL289\Model.bms" name="CL289">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3676,7 +3676,7 @@
         <mission name="Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.hal" name="SDTI">
+    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.bms" name="SDTI">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3692,7 +3692,7 @@
         <mission name="Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.hal" name="CDER RBRR">
+    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" name="CDER RBRR">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3709,7 +3709,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.hal" name="URH">
+    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" name="URH">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3726,7 +3726,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="Brovab" file="Appui\Rens\Automates\Roem\BROVAB\Model.hal" name="BROVAB">
+    <automat dia-type="Brovab" file="Appui\Rens\Automates\Roem\BROVAB\Model.bms" name="BROVAB">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3742,7 +3742,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="Elge" file="Appui\Rens\Automates\Roem\ELGE\Model.hal" name="ELGE">
+    <automat dia-type="Elge" file="Appui\Rens\Automates\Roem\ELGE\Model.bms" name="ELGE">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3759,7 +3759,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.hal" name="START_">
+    <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.bms" name="START_">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3772,23 +3772,7 @@
         <mission name="Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.hal" name="STAIR">
-      <missions>
-        <mission name="Se Faire Transporter"/>
-        <mission name="Faire Mouvement"/>
-        <mission name="Soutenir En Mesure De"/>
-        <mission name="Soutenir Sur Position En Mesure De"/>
-        <mission name="Suivre"/>
-        <mission name="Decrocher"/>
-        <mission name="RENS ROEM Renseigner Sur"/>
-        <mission name="Se Faire Decontaminer"/>
-        <mission name="Se Recompleter"/>
-        <mission name="Stationner"/>
-        <mission name="Orienter Refugies"/>
-        <mission name="Prendre En Compte Prisonniers"/>
-      </missions>
-    </automat>
-    <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.hal" name="MROD_ELODEE">
+    <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.bms" name="STAIR">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3804,7 +3788,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="Linx" file="Appui\Rens\Automates\Roem\Systeme LINX\Model.hal" name="Systeme Linx">
+    <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.bms" name="MROD_ELODEE">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3820,7 +3804,23 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.hal" name="Escadrille Horizon">
+    <automat dia-type="Linx" file="Appui\Rens\Automates\Roem\Systeme LINX\Model.bms" name="Systeme Linx">
+      <missions>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Faire Mouvement"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir Sur Position En Mesure De"/>
+        <mission name="Suivre"/>
+        <mission name="Decrocher"/>
+        <mission name="RENS ROEM Renseigner Sur"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="Se Recompleter"/>
+        <mission name="Stationner"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+      </missions>
+    </automat>
+    <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" name="Escadrille Horizon">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -3831,7 +3831,7 @@
         <mission name="Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="Refugies" file="Population\Refugies\Automates\Refugie\Model.hal" name="Refugies">
+    <automat dia-type="Refugies" file="Population\Refugies\Automates\Refugie\Model.bms" name="Refugies">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3845,7 +3845,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.hal" name="DIV">
+    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="DIV">
       <missions>
         <mission name="TRANS Commander"/>
         <mission name="Se Faire Transporter"/>
@@ -3853,7 +3853,7 @@
         <mission name="Faire Mouvement"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.hal" name="TAC">
+    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="TAC">
       <missions>
         <mission name="TRANS Commander"/>
         <mission name="Se Faire Transporter"/>
@@ -3861,7 +3861,7 @@
         <mission name="Faire Mouvement"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.hal" name="BIA">
+    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="BIA">
       <missions>
         <mission name="TRANS Commander"/>
         <mission name="Se Faire Transporter"/>
@@ -3869,7 +3869,7 @@
         <mission name="Faire Mouvement"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.hal" name="Compagnie TRANS">
+    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="Compagnie TRANS">
       <missions>
         <mission name="TRANS Commander"/>
         <mission name="Se Faire Transporter"/>
@@ -3877,7 +3877,7 @@
         <mission name="Faire Mouvement"/>
       </missions>
     </automat>
-    <automat dia-type="Viviane" file="Appui\Rens\Automates\Radint\Pat Viviane\Model.hal" name="Viviane">
+    <automat dia-type="Viviane" file="Appui\Rens\Automates\Radint\Pat Viviane\Model.bms" name="Viviane">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -3888,7 +3888,7 @@
         <mission name="Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Population\Milices\Automate\Model.hal" name="Milices">
+    <automat dia-type="T_AutomateModeleDEC" file="Population\Milices\Automate\Model.bms" name="Milices">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3905,7 +3905,7 @@
         <mission name="ASY Commettre Exactions Sur Population Dans Zone"/>
       </missions>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.hal" name="Section Commando">
+    <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.bms" name="Section Commando">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -3921,7 +3921,7 @@
         <mission name="Decrocher"/>
       </missions>
     </automat>
-    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.hal" name="Sgpt Samp Hawk">
+    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" name="Sgpt Samp Hawk">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3940,7 +3940,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.hal" name="Peloton RASIT">
+    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" name="Peloton RASIT">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -3955,7 +3955,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.hal" name="Terroristes">
+    <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" name="Terroristes">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -3964,7 +3964,7 @@
         <mission name="Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="GLAISE ABC cie char lourd">
+    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="GLAISE ABC cie char lourd">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4011,7 +4011,7 @@
         <mission name="ABC Appuyer Sur Position"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.hal" name="GLAISE INF cie inf">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" name="GLAISE INF cie inf">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Attaquer Souplesse">
@@ -4058,7 +4058,7 @@
         <mission name="INF Surveiller"/>
       </missions>
     </automat>
-    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.hal" name="GLAISE ABC peloton EI">
+    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.bms" name="GLAISE ABC peloton EI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4085,7 +4085,7 @@
         <mission name="ABC Escorter Unites"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="GLAISE GEN cie combat">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="GLAISE GEN cie combat">
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
@@ -4112,7 +4112,7 @@
         <mission name="Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.hal" name="GLAISE ASS batterie automoteur">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" name="GLAISE ASS batterie automoteur">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -4128,7 +4128,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.hal" name="GLAISE ASS batterie tractee">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" name="GLAISE ASS batterie tractee">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -4144,7 +4144,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.hal" name="GLAISE ASS batterie LRM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.bms" name="GLAISE ASS batterie LRM">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -4160,7 +4160,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.hal" name="GLAISE AC cie AC">
+    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" name="GLAISE AC cie AC">
       <missions>
         <mission name="INF Barrer Direction"/>
         <mission name="INF Couvrir"/>
@@ -4186,7 +4186,7 @@
         <mission name="INF Soutenir"/>
       </missions>
     </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.hal" name="GLAISE ASA batterie TCP">
+    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" name="GLAISE ASA batterie TCP">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4206,7 +4206,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.hal" name="GLAISE ASA batterie CP">
+    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" name="GLAISE ASA batterie CP">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Site"/>
@@ -4226,7 +4226,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.hal" name="GLAISE GEN compagnie appui">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.bms" name="GLAISE GEN compagnie appui">
       <missions>
         <mission name="Franchir"/>
         <mission name="GEN Se Deployer"/>
@@ -4242,7 +4242,7 @@
         <mission name="Decrocher"/>
       </missions>
     </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.hal" name="GLAISE ASA section tcp independante">
+    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" name="GLAISE ASA section tcp independante">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4262,7 +4262,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.hal" name="GLAISE NBC section reco">
+    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" name="GLAISE NBC section reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4280,7 +4280,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="SSGroupeBlindeEcl" file="Melee\Abc\Automates\Sgpt Blindes Ecl\model.hal" name="GLAISE ABC Escadron Reco">
+    <automat dia-type="SSGroupeBlindeEcl" file="Melee\Abc\Automates\Sgpt Blindes Ecl\model.bms" name="GLAISE ABC Escadron Reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4310,7 +4310,7 @@
         <mission name="ABC Escorter Unites"/>
       </missions>
     </automat>
-    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.hal" name="GLAISE ASA Batterie MP">
+    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" name="GLAISE ASA Batterie MP">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4329,7 +4329,7 @@
         <mission name="Se Faire Transporter"/>
       </missions>
     </automat>
-    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.hal" name="GLAISE URH">
+    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" name="GLAISE URH">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -4346,7 +4346,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.hal" name="Section AC MILAN">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" name="Section AC MILAN">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4370,7 +4370,7 @@
         <mission name="INF Surveiller"/>
       </missions>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="Peloton ERIAC">
+    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="Peloton ERIAC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4401,7 +4401,7 @@
         <mission name="ABC Appuyer Sur Position"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.hal" name="GLAISE ASS DLO">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" name="GLAISE ASS DLO">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -4417,7 +4417,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.hal" name="GLAISE ASS Bat RECO">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.bms" name="GLAISE ASS Bat RECO">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -4433,7 +4433,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.hal" name="GLAISE ALFT esc UH et UM">
+    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" name="GLAISE ALFT esc UH et UM">
       <missions>
         <mission name="ALAT Heliporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -4452,7 +4452,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.hal" name="GLAISE ALFT Esc A et Reco">
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" name="GLAISE ALFT Esc A et Reco">
       <missions>
         <mission name="ALAT Reconnaitre"/>
         <mission name="ALAT Jalonner"/>
@@ -4478,7 +4478,7 @@
         <mission name="ALAT Aller Se Recompleter"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie ProTerre\Model.hal" name="Compagnie PROTERRE">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie ProTerre\Model.bms" name="Compagnie PROTERRE">
       <missions>
         <mission name="INF Barrer Direction"/>
         <mission name="INF Controler"/>
@@ -4506,7 +4506,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Son ProTerre\Model.hal" name="Section PROTERRE">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Son ProTerre\Model.bms" name="Section PROTERRE">
       <missions>
         <mission name="INF Interdire"/>
         <mission name="INF Tenir"/>
@@ -4531,7 +4531,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="appui\PC de CIE\automates\model.hal" name="PC CIE">
+    <automat dia-type="T_AutomateModeleDEC" file="appui\PC de CIE\automates\model.bms" name="PC CIE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4546,7 +4546,7 @@
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
     </automat>
-    <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.hal" name="GTIA">
+    <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.bms" name="GTIA">
       <missions>
         <mission name="ABC GTIA Attaquer">
           <fragorder name="Poursuivre"/>
@@ -4566,7 +4566,7 @@
     </automat>
   </automats>
   <populations>
-    <population dia-type="T_Population" file="Population\Populations\Model.hal" name="Population">
+    <population dia-type="T_Population" file="Population\Populations\Model.bms" name="Population">
       <missions>
         <mission name="Faire Mouvement">
           <fragorder name="Population Changer Attitude"/>

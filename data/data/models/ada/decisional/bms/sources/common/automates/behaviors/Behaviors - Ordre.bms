@@ -1,0 +1,441 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/behaviors/Behaviors - Ordre.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Automate_RecevoirOrdreGE
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_MAJ_Automate_RecevoirOrdreGE"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_Ralentir_", {} },
+        { "BEH_Ordre_Automate_Attendre_", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Ordre_Automate_Decrocher_", {} },
+        { "BEH_Ordre_Automate_TenirSurLR_", {} },
+        { "BEH_Ordre_Automate_Tenir_", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( F_Automat_GetbOrdreRalentir( myself ) == true ) then
+            Activate( self.activations.BEH_Ordre_Automate_Ralentir_, 1, {} )
+        end
+
+        if( F_Automat_GetbOrdreAttendre( myself ) == true ) then
+            Activate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+        end
+
+        if( F_Automat_GetbOrdrePoursuivre( myself ) == true ) then
+            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+        end
+
+        if( F_Automat_GetbOrdreDecrocher( myself ) == true ) then
+            Activate( self.activations.BEH_Ordre_Automate_Decrocher_, 1, {} )--[[// Mis jalonner/Freiner du GE
+]]
+        end
+
+        if( F_Automat_GetbOrdreTenirSurLR( myself ) == true ) then
+            Activate( self.activations.BEH_Ordre_Automate_TenirSurLR_, 1, {} )--[[// Mis jalonner/Freiner du GE
+]]
+        end
+
+        if( F_Automat_GetbOrdreTenir( myself ) == true ) then
+            Activate( self.activations.BEH_Ordre_Automate_Tenir_, 1, {} )--[[// Mis jalonner/Freiner du GE
+]]
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_RecevoirOrdreInopine
+]]--[[//
+]]--[[// Commentaires: recevoir un ordre inopine de l'anibas
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_RecevoirOrdreInopine"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_Interrompre_", {} },
+        { "BEH_Ordre_Automate_Attendre_", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Ordre_Automate_AmbianceSurete_", {} },
+        { "BEH_Ordre_Automate_AmbianceVitesse_", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_Interrompre" then
+                        DEC_Trace( "$ --- ORDRE Interruption mission ---$" )
+                        Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, {} )
+                                                self.params.__returnValue = eActionHalt
+                        return
+
+                        
+                    elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                        DEC_Trace( "$ --- ORDRE Attendre ---$" )
+                        g_bOrdreAnibas = true
+                        StartActivate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_Deboucher"
+                    or switch_1 == "Rep_OrderConduite_Poursuivre" then
+                        DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
+                        g_bOrdreAnibas = false
+                        StopActivate( self.activations.BEH_Ordre_Automate_Attendre_, {} )
+                        Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
+]]
+                        
+                    elseif switch_1 == "Rep_OrderConduite_ChangerAmbiance" then
+                        DEC_Trace( "======= Ordre --> Changer ambiance =====" )
+                        --[[// Cast
+]]local ordreAmbiance = repOrdre
+                        if( ordreAmbiance:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete ) then
+                            Activate( self.activations.BEH_Ordre_Automate_AmbianceSurete_, 1, {} )
+                        else
+                            Activate( self.activations.BEH_Ordre_Automate_AmbianceVitesse_, 1, {} )--[[//eAmbianceMission_Vitesse
+]]
+                        end
+
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                g_bOrdreAnibas = false
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_Interrompre_()
+]]--[[//
+]]--[[// Commentaires: comportement starté si ordre inopinné de l'annibas
+]]--[[//				 stopé si ordre poursuivre
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_Interrompre_"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Interrompre", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Le PC peut avoir une mission
+]]local listePions = DEC_Automate_PionsAvecPC()
+        for _,pion in pairs( listePions ) do
+        local _continue = true
+            Activate( self.activations.ACT_Ordre_Automate_Interrompre, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_Attendre_()
+]]--[[//
+]]--[[// Commentaires: comportement starté si ordre inopinné de l'annibas
+]]--[[//				 stopé si ordre poursuivre
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_Attendre_"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Pause", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.resultatCalcul = self.resultatCalcul or nil
+        local listePions = DEC_Automate_PionsAvecPC()
+        if( ModuleBegins() ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( listePions )
+        end
+
+        for _,pion in pairs( listePions ) do
+        local _continue = true
+do
+                local rDistanceLigne = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion )
+                --[[// MIA à voir
+]]if( rDistanceLigne < 300 ) then
+                    Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { pion, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_Ralentir_()
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_Ralentir_"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Ralentir", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.resultatCalcul = self.resultatCalcul or nil
+        local listePions = DEC_Automate_PionsAvecPC()
+        if( ModuleBegins() ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( listePions )
+        end
+
+        for _,pion in pairs( listePions ) do
+        local _continue = true
+do
+                local rDistanceLigne = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion )
+                --[[// MIA à voir
+]]if( rDistanceLigne < 300 ) then
+                    Activate( self.activations.ACT_Ordre_Automate_Ralentir, 1, { pion, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_Poursuivre_()
+]]--[[//
+]]--[[// Commentaires: comportement starté si ordre inopinné de l'annibas
+]]--[[//				 stopé si ordre poursuivre
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_Poursuivre_"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Continue", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
+        for _,pion in pairs( listePionsPE ) do
+        local _continue = true
+            Activate( self.activations.ACT_Ordre_Automate_Continue, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_Decrocher_()
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_Decrocher_"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Decrocher", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
+        for _,pion in pairs( listePionsPE ) do
+        local _continue = true
+            Activate( self.activations.ACT_Ordre_Automate_Decrocher, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_AmbianceSurete_()
+]]--[[//
+]]--[[// Commentaires: Fait passer ponctuellement les pions en ambiance Surete
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_AmbianceSurete_"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_PasserEnAmbianceSurete", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
+        for _,pion in pairs( listePionsPE ) do
+        local _continue = true
+            Activate( self.activations.ACT_Ordre_Automate_PasserEnAmbianceSurete, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_AmbianceVitesse_()
+]]--[[//
+]]--[[// Commentaires: Fait passer ponctuellement les pions en ambiance vitesse
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_AmbianceVitesse_"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_PasserEnAmbianceVitesse", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
+        for _,pion in pairs( listePionsPE ) do
+        local _continue = true
+            Activate( self.activations.ACT_Ordre_Automate_PasserEnAmbianceVitesse, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_TenirSurLR_()
+]]--[[//
+]]--[[// Commentaires: ajout ADA
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_TenirSurLR_"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_TenirSurLR", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
+        for _,pion in pairs( listePionsPE ) do
+        local _continue = true
+            Activate( self.activations.ACT_Ordre_Automate_TenirSurLR, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_Tenir_()
+]]--[[//
+]]--[[// Commentaires: ajout ADA
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_Tenir_"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Tenir", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
+        for _,pion in pairs( listePionsPE ) do
+        local _continue = true
+            Activate( self.activations.ACT_Ordre_Automate_Tenir, 1, { pion, } )
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_RecevoirOrdreGE, "BEH_Ordre_Automate_Ralentir_", nodes.BEH_Ordre_Automate_Ralentir_ }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_RecevoirOrdreGE, "BEH_Ordre_Automate_Attendre_", nodes.BEH_Ordre_Automate_Attendre_ }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_RecevoirOrdreGE, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_RecevoirOrdreGE, "BEH_Ordre_Automate_Decrocher_", nodes.BEH_Ordre_Automate_Decrocher_ }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_RecevoirOrdreGE, "BEH_Ordre_Automate_TenirSurLR_", nodes.BEH_Ordre_Automate_TenirSurLR_ }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Automate_RecevoirOrdreGE, "BEH_Ordre_Automate_Tenir_", nodes.BEH_Ordre_Automate_Tenir_ }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_AmbianceSurete_, "ACT_Ordre_Automate_PasserEnAmbianceSurete", nodes.ACT_Ordre_Automate_PasserEnAmbianceSurete }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_AmbianceVitesse_, "ACT_Ordre_Automate_PasserEnAmbianceVitesse", nodes.ACT_Ordre_Automate_PasserEnAmbianceVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_Attendre_, "ACT_Ordre_Automate_Pause", nodes.ACT_Ordre_Automate_Pause }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_Decrocher_, "ACT_Ordre_Automate_Decrocher", nodes.ACT_Ordre_Automate_Decrocher }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_Interrompre_, "ACT_Ordre_Automate_Interrompre", nodes.ACT_Ordre_Automate_Interrompre }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_Poursuivre_, "ACT_Ordre_Automate_Continue", nodes.ACT_Ordre_Automate_Continue }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_Ralentir_, "ACT_Ordre_Automate_Ralentir", nodes.ACT_Ordre_Automate_Ralentir }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreInopine, "BEH_Ordre_Automate_Interrompre_", nodes.BEH_Ordre_Automate_Interrompre_ }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreInopine, "BEH_Ordre_Automate_Attendre_", nodes.BEH_Ordre_Automate_Attendre_ }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreInopine, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreInopine, "BEH_Ordre_Automate_AmbianceSurete_", nodes.BEH_Ordre_Automate_AmbianceSurete_ }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreInopine, "BEH_Ordre_Automate_AmbianceVitesse_", nodes.BEH_Ordre_Automate_AmbianceVitesse_ }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreInopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_TenirSurLR_, "ACT_Ordre_Automate_TenirSurLR", nodes.ACT_Ordre_Automate_TenirSurLR }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_Tenir_, "ACT_Ordre_Automate_Tenir", nodes.ACT_Ordre_Automate_Tenir }

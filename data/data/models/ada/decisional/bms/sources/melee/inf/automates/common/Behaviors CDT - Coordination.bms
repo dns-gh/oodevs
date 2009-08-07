@@ -1,0 +1,505 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/Behaviors CDT - Coordination.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Behaviors CDT - Coordination.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:07 $
+]]--[[// $Revision: 17 $
+]]--[[// $Workfile: Behaviors CDT - Coordination.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// *****************************************************************************
+]]--[[// BEH_CoordDep_Automate_AvecPions // MIA OPT: deplacer de common
+]]--[[// 
+]]--[[// Commentaires: coordination Sur l'etalement de la compagnie
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_CoordDep_Automate_AvecPions"
+{
+    activations =
+    {
+        { "ACT_Info_Automate_Trace", {} },
+        { "ACT_Ordre_Automate_Ralentir", {} },
+        { "ACT_Ordre_Automate_Pause", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions = self.params[1]
+        self._namedParams.rDist_Max = self.params[2]
+        self._namedParams.rDist_Min = self.params[3]
+        self._namedParams.bRalentir = self.params[4]
+    end,
+
+    activate = function( self )
+                self.resultatCalcul = self.resultatCalcul or nil
+        self.bEnAttente = self.bEnAttente or false
+        if( #( self._namedParams.selPions ) == 1 ) then
+            return
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------                  
+]]if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( self._namedParams.selPions )
+        end
+
+        if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+            return
+        end
+
+        Activate( self.activations.ACT_Info_Automate_Trace, 1, { "$$ Coordinnation du premier Echelon : activation $$", } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Determiner le pion de queue
+]]--[[//-----------------------------------------------------------------------------
+]]local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, self._namedParams.selPions, true )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Pas de pion en queue
+]]--[[//-----------------------------------------------------------------------------
+]]if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
+            return
+        end
+
+        --[[//=============================================================================
+]]--[[// Coordinnation
+]]--[[//=============================================================================        
+]]local rDist_AvtLigne = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pionEnQueue )
+        local rActivity = 1 / GetActivity()
+        if( rDist_AvtLigne > self._namedParams.rDist_Max or ( self.bEnAttente and rDist_AvtLigne >= self._namedParams.rDist_Min ) ) then
+            do
+                                do
+                end
+
+                Activate( self.activations.ACT_Info_Automate_Trace, 1, { "==< Coordinnation : debut >==", } )
+                for _,x in pairs( self._namedParams.selPions ) do
+                local _continue = true
+                    do
+                        local pion = x
+                                                do
+                        end
+--[[// On dit a tout ceux qui sont en tete d'attendre
+]]
+                        if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion ) < 200 ) then
+                            do
+                                                                do
+                                end
+
+                                Activate( self.activations.ACT_Info_Automate_Trace, 1, { " ==> Coordinnation ESC --> ORDRE attendre à " .. DEC_GetSzName( pion ), } )
+                                --[[// On dit que tous les 1000 metres > a l'ecart on ajoute 1 a l'envie de se poster
+]]--[[// du pion ..
+]]if( self._namedParams.bRalentir ) then
+                                    Activate( self.activations.ACT_Ordre_Automate_Ralentir, 1, { pion, } )
+                                else
+                                    Activate( self.activations.ACT_Ordre_Automate_Pause, rDist_AvtLigne / 2500, { pion, } )
+                                end
+
+                            end
+                        end
+
+                    end
+
+                end
+
+                self.bEnAttente = true
+            end
+        else
+if( self.bEnAttente and rDist_AvtLigne < self._namedParams.rDist_Min ) then
+                self.bEnAttente = false
+            end
+        end
+
+    end,
+
+    destroy = function( self )
+                if( ( self.resultatCalcul ~= 0 and self.resultatCalcul ~= nil ) ) then
+            DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Automate_INF_SeCoordonnerAvecAmi
+]]--[[//
+]]--[[// Commentaires: coordonner l'escadron avec l'unité appuyée ou soutenue
+]]--[[//
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_CoordDep_Automate_INF_AvecAutomate"
+{
+    activations =
+    {
+        { "BEH_CoordDep_Automate_INF_AvecAutomate_Pion", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.compagnieAmie = self.params[1]
+        self._namedParams.bResterAHauteur = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            do
+                                do
+                end
+
+                DEC_Trace( "$$ Coordinnation avec Compagnie Amie $$" )
+            end
+        end
+
+        local rActivity = 1 / GetActivity()
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Determiner les pions à coordonner
+]]--[[//-----------------------------------------------------------------------------        
+]]local selPionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        --[[// Si un pion se trouve sur une ligne de debouche ou sur une ligne de 
+]]--[[// coordination, on arrete la coordination sur l'etalement de la compagnie
+]]if( S_Conduite_PionEnAttente_OrdreCoordination( selPionsPE ) ) then
+            return
+        end
+
+        for _,x_pion in pairs( selPionsPE ) do
+        local _continue = true
+            Activate( self.activations.BEH_CoordDep_Automate_INF_AvecAutomate_Pion, rActivity, { self._namedParams.compagnieAmie, self._namedParams.bResterAHauteur, x_pion, } )
+
+        end
+
+    end,
+
+}
+
+node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Info_Automate_Trace", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.compagnieAmie = self.params[1]
+        self._namedParams.bResterAHauteur = self.params[2]
+        self._namedParams.pion = self.params[3]
+    end,
+
+    activate = function( self )
+        --[[// persistent T_CalculLignesAvantArriere  resultatCalcul = nil;
+]]        self.resultatCalcul_Ami = self.resultatCalcul_Ami or nil
+        self.bEnAttente = self.bEnAttente or false
+        --[[// On se poste en attente
+]]if( ( DEC_GetMission( self._namedParams.compagnieAmie ) == 0 or DEC_GetMission( self._namedParams.compagnieAmie ) == nil ) ) then
+            do
+                Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { self._namedParams.pion, } )
+                Activate( self.activations.ACT_Info_Automate_Trace, 1, { " ==> Coordinnation avec AMI --> ORDRE attendre à " .. DEC_GetSzName( self._namedParams.pion ), } )
+                                return
+
+            end
+        end
+
+        local selPionsCompagnie_Amie = DEC_Automate_PionsDeAutomateSansPC( self._namedParams.compagnieAmie )
+        if( ( self.resultatCalcul_Ami == 0 or self.resultatCalcul_Ami == nil ) ) then
+            self.resultatCalcul_Ami = DEC_Geometrie_StartCalculLignesAvantEtArriere( selPionsCompagnie_Amie )
+        end
+
+        if( ( self.resultatCalcul_Ami == 0 or self.resultatCalcul_Ami == nil ) ) then
+            return
+        end
+
+        Activate( self.activations.ACT_Info_Automate_Trace, 1, { "$$ Coordinnation avec " .. DEC_GetSzName( self._namedParams.pion ) .. " $$", } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Determiner le pion de tete
+]]--[[//-----------------------------------------------------------------------------
+]]local pionEnQueue_Ami = S_Coordination_PionEnQueue( self.resultatCalcul_Ami, selPionsCompagnie_Amie, true )
+        if( ( pionEnQueue_Ami == 0 or pionEnQueue_Ami == nil ) ) then
+            return
+        end
+
+        --[[// Calcule distance LAV (si on veut être à hauteur) ou LAR     
+]]local rDistance_Min = 0
+        --[[// Appuyer
+]]if( S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_FlancGarder" ) ) then
+            do
+                if( self.bEnAttente ) then
+                    rDistance_Min = -0.5 * ( M_DISTANCE_ECART_MAX_LAVT() )
+                else
+                    rDistance_Min = M_DISTANCE_ECART_MAX_LAVT()
+                end
+
+            end
+--[[// Calcul l'etalement de la compagnie        
+]]        end
+
+        local rDistanceLigne_AV = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul_Ami, self._namedParams.pion )
+        local rDistanceLigne_AR = DEC_Geometrie_CalculerDistanceLigneArriere( self.resultatCalcul_Ami, self._namedParams.pion )
+        do
+        end
+--[[// On veut etre du bon cote : sinon, on se poste
+]]
+        local bCoordonner = false
+        --[[// On veut rester en arriere de la compagnie
+]]if( not self._namedParams.bResterAHauteur ) then
+            bCoordonner = rDistanceLigne_AR < 0
+        else
+do
+                --[[// On reste sur le meme plan
+]]if( S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_FlancGarder" ) ) then
+                    bCoordonner = ( rDistanceLigne_AV + rDistance_Min ) < 0
+                else
+                    --[[// On essaie d'etre en avant
+]]bCoordonner = rDistanceLigne_AV < 0
+                end
+
+            end
+        end
+
+        if( bCoordonner ) then
+            do
+                Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { self._namedParams.pion, } )
+                Activate( self.activations.ACT_Info_Automate_Trace, 1, { " ==> Coordinnation avec AMI --> ORDRE attendre à " .. DEC_GetSzName( self._namedParams.pion ), } )
+                self.bEnAttente = true
+            end
+        else
+            self.bEnAttente = false
+        end
+
+    end,
+
+    destroy = function( self )
+                if( ( self.resultatCalcul_Ami ~= 0 and self.resultatCalcul_Ami ~= nil ) ) then
+            DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul_Ami )
+        end
+
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// Coordination du PC
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_CoordDep_Automate_INF_Retrograde"
+{
+    activations =
+    {
+        { "ACT_Info_Automate_Trace", {} },
+        { "ACT_Ordre_Automate_Pause", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.resultatCalcul = self.resultatCalcul or nil
+        self.bPoste = self.bPoste or false
+        self.pionPC = self.pionPC or DEC_Automate_PionPC()
+        self.rDistanceEcart_PC_Max = self.rDistanceEcart_PC_Max or M_DISTANCE_ECART_PC_MAX()
+        local sPionsOperationnels = S_ObtenirPionsOperationnels_SansPC_Coordination()
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------                  
+]]if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( sPionsOperationnels )
+        end
+
+        if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
+            return
+        end
+
+        Activate( self.activations.ACT_Info_Automate_Trace, 1, { "$$ Coordinnation Retrograde : activation $$", } )
+        if( ModuleBegins() and S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_MenerDefenseUsure" ) ) then
+            do
+                self.rDistanceEcart_PC_Max = M_DISTANCE_ECART_PC_MAX_DEFENRE_USURE()
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Determiner le pion de queue
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, sPionsOperationnels, true )
+        if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
+            return
+        end
+
+        local rEtalementCompagnie = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pionEnQueue )
+        local rDistance_PC_LAR = DEC_Geometrie_CalculerDistanceLigneArriere( self.resultatCalcul, self.pionPC )
+        local rDistance_PC_LAV = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, self.pionPC )
+        --[[// Est ce que l'on se trouve du bon cote de la compagnie
+]]--[[// Si non, on poursuit        
+]]if( rDistance_PC_LAR > 0 ) then
+            return
+        end
+
+        do
+        end
+
+        if( rDistance_PC_LAV > ( rEtalementCompagnie * 0.67 ) ) then
+            self.bPoste = false
+        end
+
+        if( self.bPoste or ( rDistance_PC_LAV < -self.rDistanceEcart_PC_Max ) ) then
+            do
+                Activate( self.activations.ACT_Ordre_Automate_Pause, 2, { self.pionPC, } )
+                self.bPoste = true
+            end
+        end
+
+    end,
+
+    destroy = function( self )
+                if( ( self.resultatCalcul ~= 0 and self.resultatCalcul ~= nil ) ) then
+            DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+        end
+
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// Sur rapport de force 'Fixe',
+]]--[[// Fait poster le premier echelon
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Automate_INF_ConduitePause"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_FlancGarder"
+{
+    activations =
+    {
+        { "BEH_CoordDep_Automate_INF_AvecAutomate", {} },
+        { "BEH_Conduite_Automate_INF_FlancGarder_Regroupement", {} },
+        { "BEH_Conduite_Automate_INF_FlancGarder_Tenir", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.compagnie = self.params[1]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_CoordDep_Automate_INF_AvecAutomate, 1, { self._namedParams.compagnie, true, } )
+        Activate( self.activations.BEH_Conduite_Automate_INF_FlancGarder_Regroupement, 1, { self._namedParams.compagnie, } )
+        Activate( self.activations.BEH_Conduite_Automate_INF_FlancGarder_Tenir, 1, { self._namedParams.compagnie, } )
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_FlancGarder_Regroupement"
+{
+    activations =
+    {
+        { "ACT_Conduite_Automate_PointRegroupement_Pion", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.compagnie = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// Coordination avec les pions du 1er echelons de la compagnie voisine
+]]local selPions_PE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
+        local selPionsCompagnie_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
+        if( ( #( selPionsCompagnie_PE ) == 0 or #( selPionsCompagnie_PE ) == nil ) ) then
+            return
+        end
+
+        local ptRegroupement_PE = DEC_Automate_PionPosition( DIA_GetAt( selPionsCompagnie_PE, 0 ) )
+        for _,x in pairs( selPions_PE ) do
+        local _continue = true
+            Activate( self.activations.ACT_Conduite_Automate_PointRegroupement_Pion, 1, { x, ptRegroupement_PE, } )
+
+        end
+
+        --[[// Coordination avec les pions du 2e echelons de la compagnie voisine
+]]local selPions_SE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
+        local selPionsCompagnie_SE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Second )
+        local ptRegroupement_SE = ptRegroupement_PE
+        if( ( #( selPionsCompagnie_SE ) ~= 0 and #( selPionsCompagnie_SE ) ~= nil ) ) then
+            ptRegroupement_SE = DEC_Automate_PionPosition( DIA_GetAt( selPionsCompagnie_SE, 0 ) )
+        end
+
+        for _,x in pairs( selPions_SE ) do
+        local _continue = true
+            Activate( self.activations.ACT_Conduite_Automate_PointRegroupement_Pion, 1, { x, ptRegroupement_SE, } )
+
+        end
+
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_FlancGarder_Tenir"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Pause", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.compagnie = self.params[1]
+    end,
+
+    activate = function( self )
+        local selPion = DEC_Automate_PionsAvecPC()
+        local selPion_PE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
+        local bAuContact = false
+        for _,x in pairs( selPion ) do
+        local _continue = true
+do
+                local pion = x
+                if( ( F_Pion_GeteEtatSituationEnnemi( pion ) ~= eEtatSituationEnnemi_None ) or ( F_Pion_GeteEtatDec( pion ) == eEtatDec_Sauvegarde ) ) then
+                    bAuContact = true
+                end
+
+            end
+
+        end
+
+        if( bAuContact ) then
+for _,x in pairs( selPion_PE ) do
+            local _continue = true
+                Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { x, } )
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_FlancGarder, "BEH_CoordDep_Automate_INF_AvecAutomate", nodes.BEH_CoordDep_Automate_INF_AvecAutomate }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_FlancGarder, "BEH_Conduite_Automate_INF_FlancGarder_Regroupement", nodes.BEH_Conduite_Automate_INF_FlancGarder_Regroupement }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_FlancGarder, "BEH_Conduite_Automate_INF_FlancGarder_Tenir", nodes.BEH_Conduite_Automate_INF_FlancGarder_Tenir }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_FlancGarder_Regroupement, "ACT_Conduite_Automate_PointRegroupement_Pion", nodes.ACT_Conduite_Automate_PointRegroupement_Pion }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_FlancGarder_Tenir, "ACT_Ordre_Automate_Pause", nodes.ACT_Ordre_Automate_Pause }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_AvecPions, "ACT_Info_Automate_Trace", nodes.ACT_Info_Automate_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_AvecPions, "ACT_Ordre_Automate_Ralentir", nodes.ACT_Ordre_Automate_Ralentir }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_AvecPions, "ACT_Ordre_Automate_Pause", nodes.ACT_Ordre_Automate_Pause }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_AvecAutomate, "BEH_CoordDep_Automate_INF_AvecAutomate_Pion", nodes.BEH_CoordDep_Automate_INF_AvecAutomate_Pion }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_AvecAutomate_Pion, "ACT_Ordre_Automate_Pause", nodes.ACT_Ordre_Automate_Pause }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_AvecAutomate_Pion, "ACT_Info_Automate_Trace", nodes.ACT_Info_Automate_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_Retrograde, "ACT_Info_Automate_Trace", nodes.ACT_Info_Automate_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_Retrograde, "ACT_Ordre_Automate_Pause", nodes.ACT_Ordre_Automate_Pause }

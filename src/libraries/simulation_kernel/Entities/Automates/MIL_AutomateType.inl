@@ -77,17 +77,6 @@ uint MIL_AutomateType::GetID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DIA_FunctionTable< MIL_Automate >& MIL_AutomateType::GetFunctionTable
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-inline
-DIA_FunctionTable< MIL_Automate >& MIL_AutomateType::GetFunctionTable() const
-{
-    assert( pDIAFunctionTable_ );
-    return *pDIAFunctionTable_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::GetName
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------

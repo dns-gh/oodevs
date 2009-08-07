@@ -1,0 +1,136 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/satcp mistral/missions/Surveiller.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Mission Surveiller
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Pion_ASA_MISTRAL_Surveiller"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "ACT_Maj_Pions_ObjectifCourant", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Dep_SePosterFaceADir", {} },
+        { "BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller", {} },
+        { "BEH_Manoeuvre_Pion_ASA_SeDeployer", {} },
+        { "ACT_RC", {} },
+        { "ACT_Warning", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or ePreparerMission
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                end
+
+                myself.typeDeploiement_ = self._namedParams.mission.modeDeploiement_
+            end
+        end
+
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_DOCTRINE_PION_ASA_PH(), } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                self.ePhase = eRejoindre
+                
+            elseif switch_1 == eRejoindre then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eSurveiller
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointDeDeploiement_, } )
+                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDeDeploiement_, } )
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointDeDeploiement_, eProgressionDefaut, eTypeItiMouvement, } )
+                
+            elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
+                Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
+                Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller, 1, {} )
+                Activate( self.activations.BEH_Manoeuvre_Pion_ASA_SeDeployer, 1, { 0, } )
+                if( F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then
+                    Activate( self.activations.ACT_RC, 1, { eRC_PretAuTir, } )
+                else
+do
+                        if( F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirSurRiposte ) then
+                            Activate( self.activations.ACT_Warning, 1, { eRC_TirRestreint, } )
+                        end
+
+                        if( F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirInterdit ) then
+                            Activate( self.activations.ACT_Warning, 1, { eRC_TirInterdit, } )
+                        end
+
+                    end
+                end
+
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        F_Pion_SetobjectifEsquive( myself, nil )
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ASA_MISTRAL_Surveiller = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "ACT_Maj_Pions_ObjectifCourant", nodes.ACT_Maj_Pions_ObjectifCourant }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "ACT_Dep_SePosterFaceADir", nodes.ACT_Dep_SePosterFaceADir }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller", nodes.BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "BEH_Manoeuvre_Pion_ASA_SeDeployer", nodes.BEH_Manoeuvre_Pion_ASA_SeDeployer }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASA_MISTRAL_Surveiller, "ACT_Warning", nodes.ACT_Warning }

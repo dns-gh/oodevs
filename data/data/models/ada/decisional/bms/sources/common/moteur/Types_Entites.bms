@@ -1,0 +1,30 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/Types_Entites.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JVT 2004-08-03 $
+]]--[[// $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_Entites.hal $
+]]--[[// $Author: Jvt $
+]]--[[// $Modtime: 27/10/04 8:58 $
+]]--[[// $Revision: 1 $
+]]--[[// $Workfile: Types_Entites.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Automates
+]]
+
+
+--[[// Pions
+]]
+
+
+
+--[[// Populations
+]]
+
+
+
+
+

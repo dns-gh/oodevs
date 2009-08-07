@@ -1,0 +1,240 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/EngineReports.bms"] = true
+
+
+function EVT_RC_ANouveauDisponibleApresReparation( )
+    DEC_RC( eRC_ANouveauDisponibleApresReparation )
+end
+
+function EVT_RC_DemandeRavitaillementStocks( )
+    DEC_RC( eRC_DemandeRavitaillementStocks )
+end
+
+function EVT_RC_DemandeRavitaillementDotations( )
+    DEC_RC( eRC_DemandeRavitaillementDotations )
+end
+
+function EVT_RC_DemandeEvacuationSanitaire( )
+    DEC_RC( eRC_DemandeEvacuationSanitaire )
+end
+
+function EVT_RC_DemandeEvacuationMateriel( )
+    DEC_RC( eRC_DemandeEvacuationMateriel )
+end
+
+function EVT_RC_RavitaillementDotationsEffectue( )
+    DEC_RC( eRC_RavitaillementDotationsEffectue )
+end
+
+function EVT_RC_RavitaillementStockEffectue( )
+    DEC_RC( eRC_RavitaillementStockEffectue )
+end
+
+function EVT_RC_RavitaillementDotationsAnnule( )
+    DEC_RC( eRC_RavitaillementDotationsAnnule )
+end
+
+function EVT_RC_RavitaillementStockAnnule( )
+    DEC_RC( eRC_RavitaillementStockAnnule )
+end
+
+function EVT_RC_HumainRetourDeSante( )
+    DEC_RC( eRC_HumainRetourDeSante )
+end
+
+function EVT_RC_DecesBlesse( )
+    DEC_RC( eRC_DecesBlesse )
+end
+
+function EVT_RC_DecesBlessePendantTransport( )
+    DEC_RC( eRC_DecesBlessePendantTransport )
+end
+
+function EVT_RC_DecesBlessePendantHospitalisation( )
+    DEC_RC( eRC_DecesBlessePendantHospitalisation )
+end
+
+function EVT_RC_TirDansZoneInterdite( )
+    DEC_RC( eRC_TirDansZoneInterdite )
+end
+
+function EVT_RC_TirIndirectFratricide( )
+    DEC_RC( eRC_TirIndirectFratricide )
+end
+
+function EVT_RC_TirIndirectSurPopulation( )
+    DEC_RC( eRC_TirIndirectSurPopulation )
+end
+
+function EVT_RC_TirSurCampAmi( )
+    DEC_RC( eRC_TirSurCampAmi )
+end
+
+function EVT_RC_TireParCampAmi( )
+    DEC_RC( eRC_TireParCampAmi )
+end
+
+function EVT_RC_TirSurCampNeutre( )
+    DEC_RC( eRC_TirSurCampNeutre )
+end
+
+function EVT_RC_TireParCampNeutre( )
+    DEC_RC( eRC_TireParCampNeutre )
+end
+
+function EVT_RC_TirSurCivil( )
+    DEC_RC( eRC_TirSurCivil )
+end
+
+function EVT_RC_TireParCivil( )
+    DEC_RC( eRC_TireParCivil )
+end
+
+function EVT_RC_DestructionPC( )
+    DEC_RC( eRC_DestructionPC )
+end
+
+function EVT_RC_DepassementCapaciteStockage( )
+    DEC_RC( eRC_DepassementCapaciteStockage )
+end
+
+function EVT_RC_MissionImpossible( )
+    DEC_RC( eRC_MissionImpossible )
+end
+
+function EVT_RC_UniteDecontaminee( )
+    DEC_RC( eRC_UniteDecontaminee )
+end
+
+function EVT_RC_PlusDeCarburant( )
+    DEC_RC( eRC_PlusDeCarburant )
+end
+
+function EVT_RC_TerrainDifficile( )
+    DEC_RC( eRC_TerrainDifficile )
+end
+
+function EVT_RC_Rendu( )
+    DEC_RC( eRC_Rendu )
+end
+
+function EVT_RC_RedditionAnnulee( )
+    DEC_RC( eRC_RedditionAnnulee )
+end
+
+function EVT_RC_RegimeMaintenanceDelaiDepasse( )
+    DEC_RC( eRC_RegimeMaintenanceDelaiDepasse )
+end
+
+function EVT_RC_PretMaterielEnCours( )
+    DEC_RC( eRC_PretMaterielEnCours )
+end
+
+function EVT_RC_PretMaterielAnnule( )
+    DEC_RC( eRC_PretMaterielAnnule )
+end
+
+function EVT_RC_PretMaterielEffectue( )
+    DEC_RC( eRC_PretMaterielEffectue )
+end
+
+function EVT_RC_PretMaterielPartiellementEffectue( )
+    DEC_RC( eRC_PretMaterielPartiellementEffectue )
+end
+
+function EVT_RC_PretMaterielImpossible( )
+    DEC_RC( eRC_PretMaterielImpossible )
+end
+
+function EVT_RC_RecuperationMaterielPreteEffectuee( )
+    DEC_RC( eRC_RecuperationMaterielPreteEffectuee )
+end
+
+function EVT_RC_RecuperationMaterielPretePartiellementEffectuee( )
+    DEC_RC( eRC_RecuperationMaterielPretePartiellementEffectuee )
+end
+
+function EVT_RC_RecuperationMaterielPreteImpossible( )
+    DEC_RC( eRC_RecuperationMaterielPreteImpossible )
+end
+
+function EVT_RC_MaterielPrete( )
+    DEC_RC( eRC_MaterielPrete )
+end
+
+function EVT_RC_MaterielRendu( )
+    DEC_RC( eRC_MaterielRendu )
+end
+
+function EVT_RC_Bloquee( )
+    DEC_RC( eRC_Bloquee )
+end
+
+function EVT_RC_Filtree( )
+    DEC_RC( eRC_Filtree )
+end
+
+function EVT_RC_AttentatTerroristeDansPopulation( )
+    DEC_RC( eRC_AttentatTerroristeDansPopulation )
+end
+
+function EVT_RC_AlerteDisponibiliteMoyensReleve( )
+    DEC_RC( eRC_AlerteDisponibiliteMoyensReleve )
+end
+
+function EVT_RC_AlerteDisponibiliteMoyensRamassage( )
+    DEC_RC( eRC_AlerteDisponibiliteMoyensRamassage )
+end
+
+function EVT_RC_AlerteDisponibiliteMedecins( )
+    DEC_RC( eRC_AlerteDisponibiliteMedecins )
+end
+
+function EVT_RC_AlerteDisponibiliteRemorqueurs( )
+    DEC_RC( eRC_AlerteDisponibiliteRemorqueurs )
+end
+
+function EVT_RC_AlerteDisponibiliteReparateurs( )
+    DEC_RC( eRC_AlerteDisponibiliteReparateurs )
+end
+
+function EVT_RC_AlerteDisponibiliteVecteurs( )
+    DEC_RC( eRC_AlerteDisponibiliteVecteurs )
+end
+
+function EVT_RC_MaterielRepareSurPlace( p )
+    DEC_RC( eRC_MaterielRepareSurPlace, p )
+end
+
+function EVT_RC_MaterielRetourDeMaintenance( p )
+    DEC_RC( eRC_MaterielRetourDeMaintenance, p )
+end
+
+function EVT_RC_PopulationVictimeExplosionMines( p1, p2 )
+    DEC_RC( eRC_PopulationVictimeExplosionMines, p1, p2 )
+end
+
+function EVT_RC_PopulationVictimeAffrontements( p1, p2 )
+    DEC_RC( eRC_PopulationVictimeAffrontements, p1, p2 )
+end
+
+function EVT_RC_AllocationConsentieBientotEpuisee( p )
+    DEC_RC( eRC_AllocationConsentieBientotEpuisee, p )
+end
+
+function EVT_RC_SeuilLogistiqueStockDepasse( p )
+    DEC_RC( eRC_SeuilLogistiqueStockDepasse, p )
+end
+
+function EVT_RC_SeuilLogistiqueDotationDepasse( p )
+    DEC_RC( eRC_SeuilLogistiqueDotationDepasse, p )
+end
+
+function EVT_RC_ObservationTirIndirect( p )
+    DEC_RC( eRC_ObservationTirIndirect, p )
+end
+
+function EVT_RC_DebutInterventionFaceAPopulation( p )
+    DEC_RC( eRC_DebutInterventionFaceAPopulation, p )
+end
+

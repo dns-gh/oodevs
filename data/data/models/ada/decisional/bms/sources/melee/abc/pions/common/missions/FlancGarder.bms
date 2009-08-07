@@ -1,0 +1,165 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/common/missions/FlancGarder.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 04-04-26 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Common/Missions/FlancGarder.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:07 $
+]]--[[// $Revision: 17 $
+]]--[[// $Workfile: FlancGarder.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_ABC_FlancGarder
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_ABC_FlancGarder"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Agressivite
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { self._namedParams.rPH, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Ambiance
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Mobile flank gard mission begining", } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// 2) Progression tactique
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                --[[//-----------------------------------------------------------------------------
+]]--[[// $$$$ : GGR humhum : Coordination (foireuse d'ailleurs)
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//   if( ! DEC_EstEmbraye( DEC_GetAutomate(myself)) )
+]]--[[//       behavior BEH_Dep_Pion_ABC_SeCoordonnerAvecAmis( mission.unitesACouvrir_ ) : strength = 1.1;
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Progression
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+--[[// force de 1.
+]]                end
+
+                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// 4) Fin de la mission de reconnaissance
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Dep_Pion_ABC_SeCoordonnerAvecAmis
+]]--[[// 
+]]--[[// Commentaires: utilisé par les missions de couverture
+]]--[[//
+]]--[[// 
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Dep_Pion_ABC_SeCoordonnerAvecAmis"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+    end,
+
+--[[/*
+   
+	// -----------------------------------------------------------------------------
+	// Cas ou aucun ami en paramètre (ex:si tous détruits)
+	// -----------------------------------------------------------------------------
+	if( DIA_IsListEmpty( listePions ) )
+    {
+        action ACT_Dep_SePoster();
+        action ACT_Info_Trace( "No friendly units to coordinate with..." );
+        return;
+    }
+
+    //-----------------------------------------------------------------------------
+    // Se coordonner par rapport au centre de gravité des pions couvert
+    //-----------------------------------------------------------------------------
+    float rDistance = DEC_Geometrie_CalculerDistanceLigneMoyenne( listePions );
+    if( rDistance < M_MODELE_PION_ABC_DISTANCE_LIGNE_AMI_MIN() )
+    {
+        action ACT_Info_Trace( "Staying on position" );
+        action ACT_Dep_SePoster();
+    }
+    */]]}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_FlancGarder, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_FlancGarder, "BEH_MAJ_Pion_ABC_AgressiviteTir", nodes.BEH_MAJ_Pion_ABC_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_FlancGarder, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_FlancGarder, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_FlancGarder, "BEH_Dep_ProgressionSur", nodes.BEH_Dep_ProgressionSur }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_FlancGarder, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

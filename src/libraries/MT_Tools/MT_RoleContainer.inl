@@ -20,6 +20,18 @@ inline uint MT_RoleContainer::GetIdx() const
     return nIdxForRole;
 }
 
+// -----------------------------------------------------------------------------
+// Name: template< typename Role > void MT_RoleContainer::EnsureSize
+// Created: LDC 2009-06-09
+// -----------------------------------------------------------------------------
+template< typename Role >
+unsigned int MT_RoleContainer::EnsureSize()
+{
+    const unsigned int nIdx = GetIdx< Role::RoleInterface >();
+    if( roles_.size() <= nIdx )
+        roles_.resize( nIdx + 1  );
+    return nIdx;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MT_RoleContainer::RegisterRole
@@ -28,14 +40,8 @@ inline uint MT_RoleContainer::GetIdx() const
 template< typename Role >
 void MT_RoleContainer::RegisterRole( Role* pRole )
 {
-    const uint nIdx = GetIdx< Role::RoleInterface >();
-    
-    if ( roles_.size() <= nIdx )
-        roles_.resize( nIdx + 1, 0 );
-    else if ( roles_[ nIdx ] != pRole )
-        delete roles_[ nIdx ];
-    
-    roles_[ nIdx ] = pRole;
+    unsigned int nIdx = EnsureSize< Role >();
+    roles_[ nIdx ].reset( pRole );
 }
 
 //-----------------------------------------------------------------------------
@@ -45,15 +51,9 @@ void MT_RoleContainer::RegisterRole( Role* pRole )
 template< typename Role > 
 typename Role::RoleInterface& MT_RoleContainer::RegisterRole()
 {
-    const uint nIdx = GetIdx< Role::RoleInterface >();
-
-    if( roles_.size() <= nIdx )
-        roles_.resize( nIdx + 1, 0 );
-    else
-        delete roles_[ nIdx ];
-
+    unsigned int nIdx = EnsureSize< Role >();
     Role* pNewRole = new Role( *this );
-    roles_[ nIdx ] = pNewRole;
+    roles_[ nIdx ].reset( pNewRole );
     return static_cast< Role::RoleInterface& >( *pNewRole );
 }
 
@@ -64,15 +64,9 @@ typename Role::RoleInterface& MT_RoleContainer::RegisterRole()
 template< typename Role, typename P1 > 
 typename Role::RoleInterface& MT_RoleContainer::RegisterRole( P1& param1 )
 {
-    const uint nIdx = GetIdx< Role::RoleInterface >();
-
-    if( roles_.size() <= nIdx )
-        roles_.resize( nIdx + 1, 0 );
-    else
-        delete roles_[ nIdx ];
-
+    unsigned int nIdx = EnsureSize< Role >();
     Role* pNewRole = new Role( *this, param1 );
-    roles_[ nIdx ] = pNewRole;
+    roles_[ nIdx ].reset( pNewRole );
     return static_cast< Role::RoleInterface& >( *pNewRole );
 }
 
@@ -83,15 +77,9 @@ typename Role::RoleInterface& MT_RoleContainer::RegisterRole( P1& param1 )
 template< typename Role, typename P1, typename P2 >
 typename Role::RoleInterface& MT_RoleContainer::RegisterRole( P1& param1, P2& param2 )
 {
-    const uint nIdx = GetIdx< Role::RoleInterface >();
-
-    if( roles_.size() <= nIdx )
-        roles_.resize( nIdx + 1, 0 );
-    else
-        delete roles_[ nIdx ];
-
+    unsigned int nIdx = EnsureSize< Role >();
     Role* pNewRole = new Role( *this, param1, param2 );
-    roles_[ nIdx ] = pNewRole;
+    roles_[ nIdx ].reset( pNewRole );
     return static_cast< Role::RoleInterface& >( *pNewRole );
 }
 
@@ -102,15 +90,9 @@ typename Role::RoleInterface& MT_RoleContainer::RegisterRole( P1& param1, P2& pa
 template< typename Role, typename P1, typename P2, typename P3 >
 typename Role::RoleInterface& MT_RoleContainer::RegisterRole( P1& param1, P2& param2, P3& param3 )
 {
-    const uint nIdx = GetIdx< Role::RoleInterface >();
-
-    if( roles_.size() <= nIdx )
-        roles_.resize( nIdx + 1, 0 );
-    else
-        delete roles_[ nIdx ];
-
+    unsigned int nIdx = EnsureSize< Role >();
     Role* pNewRole = new Role( *this, param1, param2, param3 );
-    roles_[ nIdx ] = pNewRole;
+    roles_[ nIdx ].reset( pNewRole );
     return static_cast< Role::RoleInterface& >( *pNewRole );
 }
 

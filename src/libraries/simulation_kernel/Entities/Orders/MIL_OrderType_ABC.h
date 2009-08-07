@@ -15,10 +15,11 @@ namespace xml
     class xistream;
 }
 
-class MIL_OrderTypeParameter;
 class DEC_KnowledgeResolver_ABC;
-class DIA_Model;
+class MIL_MissionParameter_ABC;
 class MIL_OrderContext;
+class MIL_OrderTypeParameter;
+class MIL_ParameterType_ABC;
 
 // =============================================================================
 /** @class  MIL_OrderType_ABC
@@ -38,17 +39,21 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName   () const;
-    const DIA_TypeDef& GetDIAType() const;
+    const std::string& GetDIAType() const;
           uint         GetID     () const;
+    const MIL_ParameterType_ABC& GetParameterType( unsigned int ) const;
+    const std::string&           GetParameterName( unsigned int ) const;
+    unsigned int                 GetParameterIndex( const std::string& name ) const;
     //@}
 
     //! @name Copy operations
     //@{
-    void Copy                   ( const ASN1T_MissionParameters& from, DIA_TypedObject&         to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const;
-    bool Copy                   ( const DIA_TypedObject&         from, DIA_TypedObject&         to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
-    bool Copy                   ( const DIA_TypedObject&         from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const;
+    bool Copy                   ( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const;
     void CleanAfterSerialization( ASN1T_MissionParameters& to, const MIL_OrderContext& context ) const;
     //@}
+
+protected:
+    MIL_OrderType_ABC();
 
 private:
     //! @name Types
@@ -65,7 +70,7 @@ private:
 private:
     const uint                     nID_;
           std::string              strName_;
-    const DIA_TypeDef*             pDIAType_;
+          std::string              diaType_;
           T_MissionParameterVector parameters_;
 };
 

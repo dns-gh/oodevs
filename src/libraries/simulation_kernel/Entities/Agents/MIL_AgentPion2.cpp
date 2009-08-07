@@ -89,7 +89,6 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     assert( pType_ );
     
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    file << boost::serialization::base_object< PHY_Actor     >( *this );
     unsigned type = pType_->GetID();
     file << type
          << bIsPC_

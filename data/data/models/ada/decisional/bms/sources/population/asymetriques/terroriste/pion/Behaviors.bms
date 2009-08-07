@@ -1,0 +1,129 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/asymetriques/terroriste/pion/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+
+--[[//=============================================================================
+]]--[[// Définition des actuateurs
+]]--[[//=============================================================================
+]]
+actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+etat_SilenceRadio = 1,
+etat_Deplacement = 1,
+deplacement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+tir_indirect = 1,
+controle_zone = 1,
+dispositif = 1,
+attitude = 1,
+vitesse = 1,
+ennemi = 1,
+rcEni = 1,
+agression = 1,
+calculIt = 1,
+itiPrincipal = 1,
+calculPos = 1,
+objectifEsquive = 1,
+changerROE = 1,
+etat_Ambiance = 1,
+etat_Mission = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+controlePopulation = 1,
+etat_Nbc = 1,
+etat_Destruction = 1,
+etat_Feu = 1,
+etat_ROE = 1,
+}
+
+
+--[[//=============================================================================
+]]--[[//missions génériques
+]]--[[//=============================================================================
+]]
+include "Common/Pions/Behaviors.bms"
+
+
+include "Common/Pions/MissionsGeneriques.bms"
+
+
+--[[//=============================================================================
+]]--[[// Actions des pions Asymetriques
+]]--[[//=============================================================================
+]]
+include "Population/Asymetriques/Common/Pion/Actions.bms"
+
+
+--[[//=============================================================================
+]]--[[// Comportements des pions Asymetriques
+]]--[[//=============================================================================
+]]
+include "Population/Asymetriques/Common/Pion/Behaviors.bms"
+
+
+--[[//=============================================================================
+]]--[[// Declaration de toutes les missions
+]]--[[//=============================================================================
+]]
+include "Population/Asymetriques/Common/Pion/Missions/Renseigner.bms"
+
+include "Population/Asymetriques/Common/Pion/Missions/SInfiltrer.bms"
+
+include "Population/Asymetriques/Common/Pion/Missions/CommettreAttentatContreForcesArmees.bms"
+
+include "Population/Asymetriques/Common/Pion/Missions/CommettreAttentatContrePopulation.bms"
+
+include "Population/Asymetriques/Common/Pion/Missions/CommettreAttentatContreInstallation.bms"
+
+include "Population/Asymetriques/Common/Pion/Missions/CommettreExactions.bms"
+
+
+--[[//=============================================================================
+]]--[[// BEH_DEFAULT
+]]--[[//=============================================================================
+]]node "BEH_Defaut"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            DEC_Perception_Furtivite( 0 )
+        end
+
+    end,
+
+}
+
+node "ACT_ASY_DevenirVisible"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+                DEC_Perception_Furtivite( 1 )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                DEC_Perception_Furtivite( 0 )
+    end,
+
+}
+

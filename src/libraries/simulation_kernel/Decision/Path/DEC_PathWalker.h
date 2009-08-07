@@ -23,6 +23,7 @@
 
 #include "DEC_PathResult.h"
 #include "Entities/Effects/MIL_Effect_Move.h"
+#include <boost/shared_ptr.hpp>
 
 class MIL_Object_ABC;
 class TerrainData;
@@ -57,9 +58,9 @@ public:
 
     //! @name Operations
     //@{
-    int  Move         ( DEC_PathResult& path );
-    void MoveSuspended( DEC_PathResult& path );
-    void MoveCanceled ( DEC_PathResult& path );
+    int  Move         ( boost::shared_ptr< DEC_PathResult > pPath );
+    void MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath );
+    void MoveCanceled ( boost::shared_ptr< DEC_PathResult > pPath );
 
     void Apply(); // Called by MIL_Effect_Move
 
@@ -135,8 +136,8 @@ private:
     void ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
     void ComputeCurrentSpeed    ();
     void InitializeEnvironment  ( const DEC_PathResult& path );
-    bool SetCurrentPath         (       DEC_PathResult& path );
     bool GoToNextNavPoint       ( const DEC_PathResult& path );
+    bool SetCurrentPath         ( boost::shared_ptr< DEC_PathResult > pPath );
     //@}
 
 private:
@@ -156,7 +157,7 @@ private:
     bool            bForcePathCheck_;
     bool            bHasMoved_; 
 
-    DEC_PathResult* pCurrentPath_; // Toujours valide : le role fait un IncRef() / DecRef() tant qu'il veut garder une reference dessus
+    boost::shared_ptr< DEC_PathResult > pCurrentPath_;
 };
 
 

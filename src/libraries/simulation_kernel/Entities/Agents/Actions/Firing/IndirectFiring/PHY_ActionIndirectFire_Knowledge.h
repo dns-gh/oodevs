@@ -24,7 +24,7 @@ class PHY_ActionIndirectFire_Knowledge : public PHY_ActionIndirectFire_ABC
 {
 
 public:
-             PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, unsigned int nTargetKnowledgeID );
     virtual ~PHY_ActionIndirectFire_Knowledge();
 
     //! @name Operations

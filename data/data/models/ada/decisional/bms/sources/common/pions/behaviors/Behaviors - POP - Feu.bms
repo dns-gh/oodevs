@@ -1,0 +1,121 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/behaviors/Behaviors - POP - Feu.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_AttaqueDePopulation
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_AttaqueDePopulation"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RiposteSurPopulation", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pop = self.params[1]
+    end,
+
+    activate = function( self )
+                self.eEtatDelai = self.eEtatDelai or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_RiposteContrePopulation, self._namedParams.pop )
+                else
+                    DEC_Message( eRC_RiposteContrePopulation, self._namedParams.pop )
+                end
+
+            end
+        end
+
+        local rDelai = 0
+        --[[//une altercation dure 2 minutes     rDelai  =  rDelai  + Randf( 0, ( rDelai  / 1.5) ); //Pour que les pions ne tirent pas tous ensemble
+]]rDelai = 2.0
+        if( self.eEtatDelai == eActionEnCours ) then
+            Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_AttaqueDePopulation, rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+        else
+do
+                --[[//DEC_Trace(  "--->>> Attaque de population ---"  );
+]]Activate( self.activations.ACT_RiposteSurPopulation, 1, { self._namedParams.pop, } )
+                self.eEtatDelai = eActionEnCours
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RiposteSurPopulation
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RiposteSurPopulation"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RiposteSurPopulation", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pop = self.params[1]
+    end,
+
+    activate = function( self )
+                self.eEtatDelai = self.eEtatDelai or eActionEnCours
+        local lstPops = DEC_Connaissances_PopulationsPrenantAPartie()
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_RiposteContrePopulation, self._namedParams.pop )
+                else
+                    DEC_Message( eRC_RiposteContrePopulation, self._namedParams.pop )
+                end
+
+            end
+        end
+
+        local rDelai = 0
+        --[[//une altercation dure 2 minutes     rDelai  =  rDelai  + Randf( 0, ( rDelai  / 1.5) ); //Pour que les pions ne tirent pas tous ensemble
+]]rDelai = 2.0
+        if( self.eEtatDelai == eActionEnCours ) then
+            Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_RiposteSurPopulation, rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+        else
+for _,popPrenantAPartie in pairs( lstPops ) do
+            local _continue = true
+do
+                    --[[//DEC_Trace(  "--->>> Fire in return on population ---"  );
+]]Activate( self.activations.ACT_RiposteSurPopulation, DEC_ConnaissancePopulation_Dangerosite( popPrenantAPartie ), { popPrenantAPartie, } )
+                    self.eEtatDelai = eActionEnCours
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_AttaqueDePopulation, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_AttaqueDePopulation, "ACT_RiposteSurPopulation", nodes.ACT_RiposteSurPopulation }
+connections[ #connections + 1 ] = { nodes.BEH_RiposteSurPopulation, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_RiposteSurPopulation, "ACT_RiposteSurPopulation", nodes.ACT_RiposteSurPopulation }

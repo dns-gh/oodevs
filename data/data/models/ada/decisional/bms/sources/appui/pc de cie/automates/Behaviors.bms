@@ -1,0 +1,33 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/pc de cie/automates/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 04-02-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Pel PIR/Behaviors.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:07 $
+]]--[[// $Revision: 9 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 200
+
+max_activations = 200
+
+
+actuators = {
+etat_OrdreCoordination = 1,
+releve = 1,
+}
+
+
+include "Common/Automates/Behaviors.bms"
+
+

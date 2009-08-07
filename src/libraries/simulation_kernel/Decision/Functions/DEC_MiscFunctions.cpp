@@ -29,9 +29,8 @@
 // Name: DEC_MiscFunctions::SetCurrentSpeedModificator
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::SetCurrentSpeedModificator( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_MiscFunctions::SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, MT_Float rFactor )
 {
-    MT_Float rFactor = call.GetParameter( 0 ).ToFloat();
     callerAgent.GetRole< PHY_RoleAction_Moving >().SetSpeedModificator( rFactor );
 }
 
@@ -39,9 +38,8 @@ void DEC_MiscFunctions::SetCurrentSpeedModificator( DIA_Call_ABC& call, MIL_Agen
 // Name: DEC_MiscFunctions::SetMaxSpeedModificator
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::SetMaxSpeedModificator( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, MT_Float rFactor )
 {
-    MT_Float rFactor = call.GetParameter( 0 ).ToFloat();
     callerAgent.GetRole< PHY_RoleAction_Moving >().SetMaxSpeedModificator( rFactor );
 }
 
@@ -52,151 +50,141 @@ void DEC_MiscFunctions::SetMaxSpeedModificator( DIA_Call_ABC& call, MIL_AgentPio
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetReinforcements
 // Created: NLD 2004-10-01
+// Modified: RPD 2009-08-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::GetReinforcements( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetReinforcements( const MIL_AgentPion& callerAgent )
 {
     const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = callerAgent.GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
-    T_ObjectVector out; out.reserve( reinforcements.size() );
+    std::vector<DEC_Decision_ABC*> result;
+    result.reserve( reinforcements.size() );
     for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        out.push_back( &(**it).GetRole< DEC_RolePion_Decision >() );
-
-    call.GetResult().SetValue( out );
+        result.push_back( &(**it).GetRole< DEC_RolePion_Decision >() );
+    return result;
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_ABC::Reinforce
 // Created: NLD 2003-03-12
+// Modified: RPD 2009-08-03
 //-----------------------------------------------------------------------------
-void DEC_MiscFunctions::Reinforce( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+bool DEC_MiscFunctions::Reinforce( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pTarget = call.GetParameter( 0 ).ToUserObject( pTarget );
-    if( !pTarget )
-    {
-        assert( false );
-        call.GetResult().SetValue( false );
-        return;
-    }
-    bool bResult = callerAgent.GetRole< PHY_RolePion_Reinforcement >().Reinforce( pTarget->GetPion() );
-    call.GetResult().SetValue( bResult );
+    assert ( pTarget );
+    return callerAgent.GetRole< PHY_RolePion_Reinforcement >().Reinforce( pTarget->GetPion() );
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_ABC::CancelReinforcement
 // Created: NLD 2003-03-12
+// Modified: RPD 2009-08-03
 //-----------------------------------------------------------------------------
-void DEC_MiscFunctions::CancelReinforcement( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_MiscFunctions::CancelReinforcement( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Reinforcement >().CancelReinforcement();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_MiscFunctions::DEC_MiscFunctions::GetCategory
+// Name: DEC_MiscFunctions::GetOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::GetCategory( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+std::vector<MIL_FragOrder*> DEC_MiscFunctions::GetOrdersCategory( MIL_Entity_ABC& callerAgent )
 {
     DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
-    const T_ObjectVector& category = role.GetCategory( call.GetParameter( 0 ).ToString() );
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValue( category );
+    return role.GetOrdersCategory();
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetPointsCategory
+// Created: LDC 2009-04-03
+// -----------------------------------------------------------------------------
+std::vector<DEC_PathPoint*> DEC_MiscFunctions::GetPointsCategory( MIL_Entity_ABC& callerAgent )
+{
+    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    return role.GetPointsCategory();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_MiscFunctions::DEC_MiscFunctions::AddToCategory
+// Name: DEC_MiscFunctions::RemoveFromOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::AddToCategory( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+void DEC_MiscFunctions::RemoveFromOrdersCategory( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder )
 {
     DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
-    role.AddToCategory( call.GetParameter( 0 ).ToString(), call.GetParameter( 1 ).ToObject() );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: DEC_MiscFunctions::DEC_MiscFunctions::RemoveFromCategory
-// Created: LDC 2009-04-03
-// -----------------------------------------------------------------------------
-void DEC_MiscFunctions::RemoveFromCategory( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
-{
-    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
-    role.RemoveFromCategory( call.GetParameter( 0 ).ToString(), call.GetParameter( 1 ).ToObject() );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: DEC_MiscFunctions::DEC_MiscFunctions::DeleteRepresentation
-// Created: LDC 2009-04-03
-// -----------------------------------------------------------------------------
-void DEC_MiscFunctions::DeleteRepresentation( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
-{
-    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
-    role.DeleteRepresentation( call.GetParameter( 0 ).ToObject() );
+    role.RemoveFromOrdersCategory( pOrder );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_MiscFunctions::GetMission
-// Created: LDC 2009-04-09
+// Name: DEC_MiscFunctions::RemoveFromPointsCategory
+// Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::GetMission( DIA_Call_ABC& call, MIL_Entity_ABC& /*callerAgent*/ )
+void DEC_MiscFunctions::RemoveFromPointsCategory( MIL_Entity_ABC& callerAgent, DEC_PathPoint* pPoint )
 {
-    call.GetResult().SetValue( *dynamic_cast<DEC_Decision_ABC*>( call.GetParameter( 0 ).ToObject() )->GetMission() );
+    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    role.RemoveFromPointsCategory( pPoint );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_MiscFunctions::SetMission
-// Created: LDC 2009-04-09
+// Name: DEC_MiscFunctions::DeleteOrderRepresentation
+// Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::SetMission( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+void DEC_MiscFunctions::DeleteOrderRepresentation( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder )
 {
-    dynamic_cast<DEC_Decision_ABC*>( call.GetParameter( 0 ).ToObject() )->SetMission( static_cast<MIL_Mission_ABC*>( call.GetParameter( 1 ).ToObject() ) );
+    DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
+    role.DeleteOrderRepresentation( pOrder );
+}
+
+namespace DEC_DecisionImpl
+{
+    void RegisterMissionParameters( const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::FillMissionParameters
+// Created: LDC 2009-05-04
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::FillMissionParameters( const directia::ScriptRef& refMission, MIL_Mission_ABC* pMission )
+{
+    //$$$$ LDC: FIXME 
+    if( pMission )
+        DEC_DecisionImpl::RegisterMissionParameters( refMission, *pMission );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetName
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::GetName( DIA_Call_ABC& call,     MIL_Entity_ABC& callerAgent )
+std::string DEC_MiscFunctions::GetName( DEC_Decision_ABC* pEntity )
 {
-    call.GetResult().SetValue( dynamic_cast<DEC_Decision_ABC*>( call.GetParameter( 0 ).ToObject() )->GetName() );
+    return pEntity->GetName();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetAutomate
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::GetAutomate( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+DEC_Decision_ABC* DEC_MiscFunctions::GetAutomate( DEC_Decision_ABC* pAgent )
 {
-    DEC_Decision_ABC* pAgent = dynamic_cast<DEC_Decision_ABC*>( call.GetParameter( 0 ).ToObject() );
-    DEC_AutomateDecision* pAutomate = pAgent->GetDecAutomate();
-    call.GetResult().SetValue( pAutomate ? *pAutomate : *(DEC_AutomateDecision*)0 );
+    return pAgent->GetDecAutomate();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetDirectionEnnemi
 // Created: LDC 2009-04-20
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::GetDirectionEnnemi( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+boost::shared_ptr< MT_Vector2D > DEC_MiscFunctions::GetDirectionEnnemi( MIL_Mission_ABC* pMission )
 {
-    MIL_AutomateMission* pMission = dynamic_cast<MIL_AutomateMission*>( call.GetParameter( 0 ).ToObject() );
-    call.GetResult().SetValue( new MT_Vector2D( pMission->GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
+    boost::shared_ptr< MT_Vector2D > result( new MT_Vector2D( pMission->GetDirDanger() ) );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::CopyDirectionDanger
 // Created: LDC 2009-04-21
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::CopyDirectionDanger( DIA_Call_ABC& call, MIL_Entity_ABC& callerAgent )
+void DEC_MiscFunctions::CopyDirectionDanger( MT_Vector2D* pPosSource, MIL_Mission_ABC* pMission )
 {
-    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 0 ) ) );
-
-    DIA_Parameters& params = call.GetParameters();
-
-    MT_Vector2D* pPosSource = params[0].ToUserPtr( pPosSource );
-
     assert( pPosSource );
     assert( !pPosSource->IsZero() );
     assert( MT_IsZero( pPosSource->SquareMagnitude() - 1. ) );    
 
-    MIL_PionMission* pMission = dynamic_cast<MIL_PionMission*>( call.GetParameter( 1 ).ToObject() );
     pMission->AffectDirection( *pPosSource );
 }

@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/cie vab/missions/prendreprecisermaintenircontact/PrendrePreciserMaintenirContact CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eActionMission = self.eActionMission or eActionEnCours
+        --[[// BEH_Conduite_Automate_GererFuseau // virer pour ADA
+]]--[[// Init
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        --[[// Conduite des pions au niveau section
+]]if( self.eActionMission == eActionEffectuee ) then
+            do
+                self.eActionMission = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact, "BEH_Conduite_Automate_INF_Defaut", nodes.BEH_Conduite_Automate_INF_Defaut }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact, "BEH_Conduite_Automate_INF_CadreOffensif", nodes.BEH_Conduite_Automate_INF_CadreOffensif }

@@ -1,0 +1,44 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roim/common/missions/renseignersur/RenseignerSur - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selSMO = self.params[1]
+        self._namedParams.positionDeploiement = self.params[2]
+        self._namedParams.eEtatEchelon = self.params[3]
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Affectation des missions à l'echelon
+]]--[[//-----------------------------------------------------------------------------
+]]self._namedParams.selSMO ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_Info_Trace, 1, { "Operating mission assigned", } )
+                Activate( self.activations.BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, 1, { ePhase_MRT, pion, self._namedParams.positionDeploiement, self._namedParams.eEtatEchelon, } )
+            end
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, "BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", nodes.BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA }

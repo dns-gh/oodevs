@@ -1,0 +1,41 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roem/systeme start_/missions/renseignersur/RenseignerSur - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_RENS_ROEM_RenseignerSur
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_RENS_ROEM_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Automate_CDT_RENS_ROEM_RenseignerSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Conduite générique 
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Automate_CDT_RENS_ROEM_RenseignerSur, 1, { self._namedParams.mission, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_RENS_ROEM_RenseignerSur = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_RENS_ROEM_RenseignerSur, "BEH_Automate_CDT_RENS_ROEM_RenseignerSur", nodes.BEH_Automate_CDT_RENS_ROEM_RenseignerSur }

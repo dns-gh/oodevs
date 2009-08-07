@@ -1,0 +1,55 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie blindee/missions/realiser travaux/RealiserTravaux - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_GEN_RealiserTravaux
+]]--[[//
+]]--[[// Commentaires: refonte 27/10/06
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_GEN_RealiserTravaux"
+{
+    activations =
+    {
+        { "ACT_Warning", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "------------------ To perform works ------------------" )
+                S_Dispositif_Automate_Init()
+                --[[//---------------------------------------------------------------------
+]]--[[// Vérification des moyens
+]]--[[//---------------------------------------------------------------------
+]]local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( SectionGenie )
+                if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+                    do
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                                                Halt()
+
+                    end
+--[[// Fin MRT
+]]                end
+
+                DEC_MRT_Valide()
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_GEN_RealiserTravaux = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_GEN_RealiserTravaux, "ACT_Warning", nodes.ACT_Warning }

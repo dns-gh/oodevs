@@ -16,7 +16,6 @@
 #include "MIL_Agent_ABC.h"
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
-#include "Entities/Actions/PHY_Actor.h"
 
 namespace xml
 {
@@ -28,9 +27,9 @@ class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Fuseau;
 class MIL_LimaFunction;
+class DEC_Decision_ABC;
 class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_KS_AgentQuerier;
-class DEC_RolePion_Decision;
 class HLA_UpdateFunctor;
 class MIL_EntityManager;
 
@@ -39,7 +38,6 @@ class MIL_EntityManager;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_AgentPion : public MIL_Agent_ABC
-                    , public PHY_Actor
 {
 
 public:
@@ -68,8 +66,8 @@ public:
     virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const;        
     const   MIL_PionOrderManager&              GetOrderManager() const;
             MIL_PionOrderManager&              GetOrderManager();
-            DEC_RolePion_Decision&             GetDecision    (); //$$$ Dérolifier DEC_RolePion_Decision
-    const   DEC_RolePion_Decision&             GetDecision    () const; //$$$ Dérolifier DEC_RolePion_Decision
+    virtual DEC_Decision_ABC&                  GetDecision    (); //$$$ Dérolifier DEC_Decision_ABC
+    virtual const   DEC_Decision_ABC&                  GetDecision    () const; //$$$ Dérolifier DEC_Decision_ABC
 
     virtual       MIL_Army_ABC&       GetArmy            () const;
                   MIL_KnowledgeGroup& GetKnowledgeGroup  () const;
@@ -92,7 +90,7 @@ public:
     void PreprocessRandomBreakdowns( uint nEndDayTimeStep ) const;
     void UpdateKnowledges          ();
     void CleanKnowledges           ();
-    void UpdateDecision            ();
+    void UpdateDecision            ( float duration );
     void UpdateState               ();
     void UpdateNetwork             ();
     void Clean                     ();
@@ -133,6 +131,9 @@ public:
     virtual void NotifyAttackedBy( MIL_Population& population );
             void ChangeSuperior  ( MIL_Automate& newAutomate );
     //@}
+
+protected:
+    MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate );
 
 private:
     //! @name Operations

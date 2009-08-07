@@ -24,6 +24,16 @@ MIL_ObjectFilter::MIL_ObjectFilter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFilter constructor
+// Created: LDC 2009-06-18
+// -----------------------------------------------------------------------------
+MIL_ObjectFilter::MIL_ObjectFilter( const std::vector< std::string >& params )
+{
+    for( std::vector< std::string >::const_iterator it = params.begin(); it != params.end(); ++it )
+        Set( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectFilter constructor
 // Created: NLD 2004-10-22
 // -----------------------------------------------------------------------------
 MIL_ObjectFilter::MIL_ObjectFilter( DIA_Parameters& diaParameters, uint nFirstDiaParam )

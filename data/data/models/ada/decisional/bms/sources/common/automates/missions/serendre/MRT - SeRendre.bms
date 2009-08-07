@@ -1,0 +1,130 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/serendre/MRT - SeRendre.bms"] = true
+
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_SeRendre
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_SeRendre"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        self.posCampPrisonnier = self.posCampPrisonnier or DEC_PositionCampPrisonniers()
+        --[[//---------------------------------------------------------------------
+]]--[[// Test présence camps prisonniers
+]]--[[//---------------------------------------------------------------------
+]]if( ( self.posCampPrisonnier == 0 or self.posCampPrisonnier == nil ) ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "----- No prisoner of war camp ----- ", } )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+--[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]        end
+
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "$----- L'UNITE EST PRISONNIERE ----- $" )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Assignation et vérification
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eValidationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_MRT_Valide()
+                    DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données!!" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eValidationMRT == eActionEffectuee ) then
+            do
+                self.eValidationMRT = eActionEnCours
+                                do
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA, 1, { DEC_Automate_PionsAvecPC(), self.posCampPrisonnier, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+        self._namedParams.posCampPrisonnier = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------	
+]]if( ModuleBegins() ) then
+            do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                local _continue = true
+                    StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, pion, self._namedParams.posCampPrisonnier, eEtatEchelon_Premier, } )
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_SeRendre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_SeRendre, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_SeRendre, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_SeRendre, "BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA", nodes.BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA }

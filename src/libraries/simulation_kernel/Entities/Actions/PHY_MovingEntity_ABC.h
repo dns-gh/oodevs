@@ -11,6 +11,7 @@
 #define __PHY_MovingEntity_ABC_h_
 
 #include "Decision/Path/DEC_PathWalker.h"
+#include <boost/shared_ptr.hpp>
 
 class MIL_Object_ABC;
 class MIL_Object_ABC;
@@ -30,9 +31,9 @@ public:
 
     //! @name Operations
     //@{
-    int  Move         ( DEC_PathResult& path );
-    void MoveSuspended( DEC_PathResult& path );
-    void MoveCanceled ( DEC_PathResult& path );
+    int  Move         ( boost::shared_ptr< DEC_PathResult > pPath );
+    void MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath );
+    void MoveCanceled ( boost::shared_ptr< DEC_PathResult > pPath );
 
     virtual void Clean();
     //@}

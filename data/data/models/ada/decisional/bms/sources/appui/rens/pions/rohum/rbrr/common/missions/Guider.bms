@@ -1,0 +1,78 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/rohum/rbrr/common/missions/Guider.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_RENS_OrienterGuider
+]]--[[//
+]]--[[// Commentaires:	
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_RENS_OrienterGuider"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Pion_Rens_AssurerLaLiaisonAvec", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or eAttendre
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == eAttendre then
+                --[[// Pazs de progression juste assurer la liaison radio
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                --[[// A moins de 50km mètres assurer la liaison radio
+]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.ami_:DEC_Agent_Position() ) < 50000 ) then
+                    do
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Distance OK", } )
+                        Activate( self.activations.ACT_Pion_Rens_AssurerLaLiaisonAvec, 1, { self._namedParams.mission.ami_, } )
+                    end
+                end
+
+                
+            --[[// Fin de la mission --> SUR ORDRE
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_OrienterGuider, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_OrienterGuider, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_OrienterGuider, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_OrienterGuider, "ACT_Pion_Rens_AssurerLaLiaisonAvec", nodes.ACT_Pion_Rens_AssurerLaLiaisonAvec }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_OrienterGuider, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

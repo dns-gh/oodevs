@@ -1,0 +1,522 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/common/missions/MettreEnOeuvre.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/Common/Missions/MettreEnOeuvre.hal $
+]]--[[// $Author: Jcr $
+]]--[[// $Modtime: 22/09/05 18:04 $
+]]--[[// $Revision: 35 $
+]]--[[// $Workfile: MettreEnOeuvre.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_RC", {} },
+        { "BEH_Tir_Pion_ASS_AppliquerFeux", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.bAutorise_Inopine = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// Prise en charge de l'ordre d'application des feux
+]]--[[//---------------------------------------------------------------------	
+]]local selOrder = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( selOrder ) do
+        local _continue = true
+do
+                local repOrdreCond = x
+                if( repOrdreCond:GetType() == "Rep_OrderConduite_Pion_AppliquerFeux" ) then
+                    do
+                        if( self._namedParams.bAutorise_Inopine or F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_PretPourConduiteTir ) then
+                            do
+                                local repOrdre_Tir = repOrdreCond
+                                Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
+                                Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
+                                StartActivate( self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunitions_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:GetpointCible_(), } )
+                            end
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+}
+
+node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+        { "ACT_RC_PreparationMission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_ASS_InstallationSurZone", {} },
+        { "BEH_Pion_ASS_InstallationSurPosition", {} },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir", {} },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rDelaiPreparation = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eAction = self.eAction or eActionEnCours
+        --[[// Parametres de la mission
+]]self.ptObjImplantation = self.ptObjImplantation or DEC_Geometrie_CreerPoint()
+        self.repObjImplantation = self.repObjImplantation or 0
+        self.bPresenceContreBatterie = self.bPresenceContreBatterie or false
+        if( ModuleBegins() ) then
+            do
+                --[[// Suivant le type de mission, on possede ou non des informations sur 
+]]--[[// les zones d'implantation
+]]local missionPion = DEC_GetMission( myself )
+                switch_1 = missionPion:GetType()
+                    if switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" then
+                                            local mission = DEC_GetMission( myself )
+                        DEC_Copie_Point( mission.positionImplantation_, self.ptObjImplantation )
+                        self.bPresenceContreBatterie = mission.presenceContreBatterie_
+                        
+                    elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
+                                            local mission = DEC_GetMission( myself )
+                        self.repObjImplantation = mission.zoneImplantation_
+                        self.ptObjImplantation = S_Obj_Position( self.repObjImplantation )
+                        self.bPresenceContreBatterie = mission.presenceContreBatterie_
+                        
+                                        end
+
+            end
+--[[// behavior BEH_Info_Pion_ASS_GererDisponibiliteAuTir();
+]]        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Preparation de la mission
+]]--[[//-----------------------------------------------------------------------------		        
+]]if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
+                            self.ePhase = eRejoindre
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_RC_PreparationMission, 1, { self._namedParams.rDelaiPreparation, } )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.2, { eEtatPhaseMission_PreparationMission, } )
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelaiPreparation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// -----------------------------------------------------------------------------
+]]--[[// Rejoindre la position du site
+]]--[[// -----------------------------------------------------------------------------
+]]elseif switch_1 == eRejoindre then
+                if( self.eAction == eActionEnCours ) then
+                    do
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Rejoins position d'installation", } )
+                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObjImplantation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                self.ePhase = eDeployer
+            elseif switch_1 == eDeployer then
+                if( DEC_ConnaissanceObjet_EstValide( self.repObjImplantation ) ) then
+                    do
+                        if( not DEC_ConnaissanceObjet_PeutEtreAnime( self.repObjImplantation ) ) then
+                            do
+                                Activate( self.activations.ACT_RC, 1, { eRC_ZoneImplantationOccupee, } )
+                                Activate( self.activations.ACT_Info_Trace, 1, { "Zone d'implantation occupee : en attente.", } )
+                                                                return
+
+                            end
+                        end
+
+                        Activate( self.activations.BEH_Pion_ASS_InstallationSurZone, 1, { self.repObjImplantation, } )
+                    end
+                else
+                    Activate( self.activations.BEH_Pion_ASS_InstallationSurPosition, 1, { self.ptObjImplantation, } )
+                end
+
+                Activate( self.activations.ACT_Info_Trace, 1, { "Rejoins position d'installation", } )
+                --[[// Mouvements de sauvegarde.
+]]if( self.bPresenceContreBatterie or ( myself:GetType() == "SectionASS_LRM" ) ) then
+                    Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, 2.1, { self.ptObjImplantation, } )
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, 2, { self.ptObjImplantation, } )
+                
+            --[[// -----------------------------------------------------------------------------
+]]--[[//  Fin de mission --> rejoindre plot munition
+]]--[[// -----------------------------------------------------------------------------
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    self.params.__returnValue = eActionEffectuee
+                    Halt()
+                end
+
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 24/10/2005 11:37
+]]--[[// Installation sur une position ..
+]]--[[// Met a jour la phase de mission
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Pion_ASS_InstallationSurZone"
+{
+    activations =
+    {
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Obj_Pion_AnimerSite", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repObjImplantation = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ptObjImplantation = self.ptObjImplantation or S_Obj_Position( self._namedParams.repObjImplantation )
+        local eNiveauInstallation = DEC_Agent_NiveauInstallation()
+        --[[// S'oriente vers la direction dangereuses
+]]local mission = DEC_GetMission( myself )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+        Activate( self.activations.ACT_Obj_Pion_AnimerSite, 1, { self._namedParams.repObjImplantation, } )
+        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationSurZoneImplantation, } )
+        --[[// Lorsque l'on est sur la zone d'implantation
+]]local bPretPour_ConduiteTir = false
+        local rDist = DEC_Geometrie_Distance( DEC_Agent_Position(), self.ptObjImplantation )
+        if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptObjImplantation, 10 ) or ( rDist > 450 and rDist < 550 ) ) then
+            bPretPour_ConduiteTir = eNiveauInstallation_PosteReflexe == eNiveauInstallation
+        end
+
+        if( bPretPour_ConduiteTir or ( eNiveauInstallation_Poste == eNiveauInstallation ) or ( eNiveauInstallation_PosteAmenage == eNiveauInstallation ) ) then
+            do
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.5, { eEtatPhaseMission_PretPourConduiteTir, } )
+            end
+        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 24/10/2005 11:37
+]]--[[// Installation sur une position ..
+]]--[[// Met a jour la phase de mission
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Pion_ASS_InstallationSurPosition"
+{
+    activations =
+    {
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptInstallation = self.params[1]
+    end,
+
+    activate = function( self )
+        local eNiveauInstallation = DEC_Agent_NiveauInstallation()
+        --[[// S'oriente vers la direction dangereuses
+]]local mission = DEC_GetMission( myself )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
+        --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_DeploiementSurPosition );
+]]--[[// Debut installation -> Fin Installation
+]]--[[// Lorsque l'on est sur la zone d'implantation
+]]local bPretPour_ConduiteTir = false
+        local rDist = DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ptInstallation )
+        if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ptInstallation, 10 ) or ( rDist > 450 and rDist < 550 ) ) then
+            bPretPour_ConduiteTir = ( eNiveauInstallation_Poste == eNiveauInstallation ) or ( eNiveauInstallation_PosteAmenage == eNiveauInstallation )
+        end
+
+        if( bPretPour_ConduiteTir ) then
+            do
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.5, { eEtatPhaseMission_DispositifInstalle, } )
+            end
+        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 24/03/2005 14:12
+]]--[[// 
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptCentre = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ptTir = self.ptTir or nil
+        self.eAction = self.eAction or eActionDebut
+        if( myself.eEtatTir_Indirect_ == eActionTirIndirect_EnCours ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "Declenchement tir indirect : sauvegarde", } )
+                StartActivate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_SAUVEGARDE_TIR(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            end
+        end
+
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.ptTir = DEC_Geometrie_PositionAleatoireSurCercle( self._namedParams.ptCentre, 500 )
+                Activate( self.activations.ACT_RC, 1, { eRC_ChangementDePosition, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Changement position : contre batterie", } )
+                StartActivate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptTir, eProgressionDirect, eTypeItiMouvement, } )
+                self.eAction = eActionEnCours
+            end
+        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 24/03/2005 11:42
+]]--[[// Se poste pour pouvoir appliquer les feux
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Dep_Pion_ASS_SePosterPourTirer"
+{
+    activations =
+    {
+        { "ACT_Dep_SePoster", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// On termine une fois que le tir a ete effectue
+]]--[[// Il faut avoir la meme condition d'arret que 
+]]--[[// ACT_Tir_Pion_ASS_SurPosition s'arrete sur 
+]]if( ( myself.eEtatTir_Indirect_ ~= eActionTirIndirect_EnCours ) and ( myself.eEtatTir_Indirect_ ~= eActionTirIndirect_None ) ) then
+            Halt()
+        end
+
+        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+    end,
+
+}
+
+node "BEH_Info_Pion_ASS_GererDisponibiliteAuTir"
+{
+    activations =
+    {
+        { "ACT_Info_Pion_ASS_DisponibiliteAuTir", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.bAutorise_SurPosition = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_PretPourConduiteTir ) or ( self._namedParams.bAutorise_SurPosition and ( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_DispositifInstalle ) ) ) then
+            Activate( self.activations.ACT_Info_Pion_ASS_DisponibiliteAuTir, 1, { eDisponibiliteAuTir_PretAuTir, } )
+        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 23/03/2005 16:04
+]]--[[// Apres reception des ordres de tir, on applique les feux sur la position
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Tir_Pion_ASS_AppliquerFeux"
+{
+    instances =
+    {
+        boost = 1.1,
+    },
+
+    activations =
+    {
+        { "BEH_Tir_Pion_ASS_PreparerTirSur", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Tir_Pion_ASS_SurPosition", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.dotation = self.params[1]
+        self._namedParams.rNObus = self.params[2]
+        self._namedParams.ptCible = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                if( not S_Tir_MunitionIndirect_EstValide( self._namedParams.dotation ) ) then
+                    do
+                                                do
+                            --[[// Tir Impossible plus de munition
+]]if( not DEC_Agent_AutomateEstEmbraye() ) then
+                                DEC_RC( eRC_TirImpossiblePlusDeMunitions )
+                            else
+                                DEC_Message( eRC_TirImpossiblePlusDeMunitions )
+                            end
+
+                        end
+
+                                                Halt()
+
+                    end
+                end
+
+                if( not S_Tir_DistancePorteeIndirect_EstValide( self._namedParams.dotation, self._namedParams.ptCible ) ) then
+                    do
+                                                do
+                            --[[// Tir Impossible Hors de portee
+]]if( not DEC_Agent_AutomateEstEmbraye() ) then
+                                DEC_RC( eRC_TirHorsDePortee )
+                            else
+                                DEC_Message( eRC_TirHorsDePortee )
+                            end
+
+                        end
+
+                                                Halt()
+
+                    end
+                end
+
+                DEC_Trace( "To deliver indirect fire" )
+            end
+--[[// Se poste pour pouvoir appliquer les feux		
+]]        end
+
+        Activate( self.activations.BEH_Tir_Pion_ASS_PreparerTirSur, 1.1, { self._namedParams.ptCible, M_DELAI_PREPARATION_TIR(), } )
+        Activate( self.activations.ACT_Dep_SePoster, 0.5, {} )
+        if( self.eAction ~= eActionEnCours ) then
+            Halt()
+        end
+
+        local eNiveauInstallation = DEC_Agent_NiveauInstallation()
+        if( ( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_PretPourConduiteTir ) or ( eNiveauInstallation_Poste == eNiveauInstallation ) or ( eNiveauInstallation_PosteAmenage == eNiveauInstallation ) ) then
+            do
+                Activate( self.activations.ACT_Tir_Pion_ASS_SurPosition, 1, setmetatable( { self._namedParams.dotation, self._namedParams.rNObus, self._namedParams.ptCible, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            end
+        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// BEH_Tir_Pion_ASS_PreparerTirSur:
+]]--[[//		Prepare un tir sur la position @ptCible pendant @rDelai
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Tir_Pion_ASS_PreparerTirSur"
+{
+    activations =
+    {
+        { "ACT_Tir_Pion_ASS_PreparerTirSur", {} },
+        { "ACT_Misc_Delai", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptCible = self.params[1]
+        self._namedParams.rDelai = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        if( self.eAction == eActionEnCours ) then
+            do
+                Activate( self.activations.ACT_Tir_Pion_ASS_PreparerTirSur, 1, { self._namedParams.ptCible, } )
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_SePosterPourTirer, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, "ACT_Info_Pion_ASS_DisponibiliteAuTir", nodes.ACT_Info_Pion_ASS_DisponibiliteAuTir }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "ACT_RC_PreparationMission", nodes.ACT_RC_PreparationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "BEH_Pion_ASS_InstallationSurZone", nodes.BEH_Pion_ASS_InstallationSurZone }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "BEH_Pion_ASS_InstallationSurPosition", nodes.BEH_Pion_ASS_InstallationSurPosition }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir", nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", nodes.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "BEH_Tir_Pion_ASS_AppliquerFeux", nodes.BEH_Tir_Pion_ASS_AppliquerFeux }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_InstallationSurPosition, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_InstallationSurPosition, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_InstallationSurZone, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_InstallationSurZone, "ACT_Obj_Pion_AnimerSite", nodes.ACT_Obj_Pion_AnimerSite }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_InstallationSurZone, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Tir_Pion_ASS_AppliquerFeux, "BEH_Tir_Pion_ASS_PreparerTirSur", nodes.BEH_Tir_Pion_ASS_PreparerTirSur }
+connections[ #connections + 1 ] = { nodes.BEH_Tir_Pion_ASS_AppliquerFeux, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Tir_Pion_ASS_AppliquerFeux, "ACT_Tir_Pion_ASS_SurPosition", nodes.ACT_Tir_Pion_ASS_SurPosition }
+connections[ #connections + 1 ] = { nodes.BEH_Tir_Pion_ASS_PreparerTirSur, "ACT_Tir_Pion_ASS_PreparerTirSur", nodes.ACT_Tir_Pion_ASS_PreparerTirSur }
+connections[ #connections + 1 ] = { nodes.BEH_Tir_Pion_ASS_PreparerTirSur, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }

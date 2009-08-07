@@ -1,0 +1,595 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/behaviors/medo/Behaviors - Medo - LOG.bms"] = true
+
+include "Common/Automates/Actions/Medo/Actions - Medo - LOG.bms"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerSeDeployerAListe
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Automate_LOG_AssignerSeDeployerAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_LOG_AssignerSeDeployerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.positionDeploiement = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                local pointBuffer = nil
+                for _,pion in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                            pointBuffer = 0
+                        else
+                            pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerSeDeployerA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerSeDeployerA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerSeDeployerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pt = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerSeDeployerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pt, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.positionDeploiement = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                local pointBuffer = nil
+                for _,pion in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                            pointBuffer = 0
+                        else
+                            pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerDecontaminerBlessesA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pt = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerDecontaminerBlessesA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pt, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.positionDeploiement = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                local pointBuffer = nil
+                for _,pion in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                            pointBuffer = 0
+                        else
+                            pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pt = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pt, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.positionDeploiement = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                local pointBuffer = nil
+                for _,pion in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                            pointBuffer = 0
+                        else
+                            pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerTraiterBlessesA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerTraiterBlessesA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pt = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerTraiterBlessesA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pt, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.positionDeploiement = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                local pointBuffer = nil
+                for _,pion in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                            pointBuffer = 0
+                        else
+                            pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pt = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pt, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerReparerAListe
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerReparerAListe"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_LOG_AssignerReparerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.listePions = self.params[2]
+        self._namedParams.positionDeploiement = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                local pointBuffer = nil
+                for _,pion in pairs( self._namedParams.listePions ) do
+                local _continue = true
+                    do
+                        if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
+                            pointBuffer = 0
+                        else
+                            pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
+                        end
+
+                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerReparerA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_LOG_AssignerReparerA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_LOG_AssignerReparerA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerReparerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pt = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerReparerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pt, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA, "ACT_Mission_Automate_LOG_AssignerDecontaminerBlessesA", nodes.ACT_Mission_Automate_LOG_AssignerDecontaminerBlessesA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe, "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA", nodes.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA, "ACT_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", nodes.ACT_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe, "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", nodes.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerReparerA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerReparerA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerReparerA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerReparerA, "ACT_Mission_Automate_LOG_AssignerReparerA", nodes.ACT_Mission_Automate_LOG_AssignerReparerA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerReparerAListe, "BEH_Mission_Automate_LOG_AssignerReparerA", nodes.BEH_Mission_Automate_LOG_AssignerReparerA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerSeDeployerA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerSeDeployerA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerSeDeployerA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerSeDeployerA, "ACT_Mission_Automate_LOG_AssignerSeDeployerA", nodes.ACT_Mission_Automate_LOG_AssignerSeDeployerA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, "BEH_Mission_Automate_LOG_AssignerSeDeployerA", nodes.BEH_Mission_Automate_LOG_AssignerSeDeployerA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA, "ACT_Mission_Automate_LOG_AssignerTraiterBlessesA", nodes.ACT_Mission_Automate_LOG_AssignerTraiterBlessesA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA", nodes.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA, "ACT_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", nodes.ACT_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe, "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", nodes.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA }

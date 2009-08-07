@@ -13,7 +13,8 @@
 #include "DEC_OrdersFunctions.h"
 
 #include "MIL_AgentServer.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -21,7 +22,6 @@
 #include "Entities/Orders/MIL_PionMission.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_AutomateMission.h"
-#include "Decision/DEC_Tools.h"
 
 //=============================================================================
 // DIA MRT
@@ -31,25 +31,22 @@
 // Name: DEC_OrdersFunctions::MRT_CreatePionMission
 // Created: NLD 2003-04-14
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::MRT_CreatePionMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+MIL_Mission_ABC* DEC_OrdersFunctions::MRT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
     assert( pPion );
 
-    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     assert( pMissionType );
 
     MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
-    call.GetResult().SetValue( *pPionMission );
+    return pPionMission;
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::MRT_Validate
 // Created: NLD 2003-04-14
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::MRT_Validate( DIA_Call_ABC& /*call*/, MIL_Automate& callerAutomate )
+void DEC_OrdersFunctions::MRT_Validate( MIL_Automate& callerAutomate )
 {
     callerAutomate.GetOrderManager().MRT_Validate();
 }
@@ -58,11 +55,8 @@ void DEC_OrdersFunctions::MRT_Validate( DIA_Call_ABC& /*call*/, MIL_Automate& ca
 // Name: DEC_OrdersFunctions::MRT_AffectFuseaux
 // Created: NLD 2003-04-22
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::vector< DEC_Decision_ABC* > pions )
 {
-    assert( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) );
-    T_ObjectVector pions = call.GetParameter( 0 ).ToSelection();
-
     //$$$ NAZE
     assert( callerAutomate.IsEngaged() );
 
@@ -72,9 +66,9 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
         return;
 
     // Affectation des fuseaux
-    for( CIT_ObjectVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+    for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
-        MIL_AgentPion& pion = static_cast< DEC_RolePion_Decision* >( *itPion )->GetPion();
+        MIL_AgentPion& pion = ( *itPion )->GetPion();
         MIL_Fuseau::IT_FuseauPtrList itFuseau;
         for( itFuseau = subFuseaux.begin(); itFuseau != subFuseaux.end(); ++itFuseau )
         {
@@ -107,32 +101,25 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
 // Name: DEC_OrdersFunctions::CDT_CreatePionMission
 // Created: NLD 2003-04-16
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_CreatePionMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+MIL_Mission_ABC* DEC_OrdersFunctions::CDT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    // Pion
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
     assert( pPion );
 
     // Instanciate and check the new mission
-    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     assert( pMissionType );
 
     MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
-    call.GetResult().SetValue( *pPionMission );
+    return pPionMission;
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::CDT_GivePionMission
 // Created: NLD 2003-04-16
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_GivePionMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_OrdersFunctions::CDT_GivePionMission( MIL_Automate& callerAutomate, MIL_Mission_ABC* pMission )
 {
-    assert( DEC_Tools::CheckTypeMissionPion( call.GetParameter( 0 ) ) );
-    MIL_PionMission* pPionMission = call.GetParameter( 0 ).ToUserObject( pPionMission );
-    assert( pPionMission );
-    callerAutomate.GetOrderManager().CDT_GivePionMission( *pPionMission );
+    callerAutomate.GetOrderManager().CDT_GivePionMission( *pMission );
 }
 
 // =============================================================================
@@ -143,29 +130,24 @@ void DEC_OrdersFunctions::CDT_GivePionMission( DIA_Call_ABC& call, MIL_Automate&
 // Name: DEC_OrdersFunctions::CreateAutomateMission
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CreateAutomateMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+MIL_Mission_ABC* DEC_OrdersFunctions::CreateAutomateMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission   )
 {
-    assert( DEC_Tools::CheckTypeAutomate( call.GetParameter( 0 ) ) );
-
-    DEC_AutomateDecision* pAutomate = call.GetParameter( 0 ).ToUserObject( pAutomate );
+   // DEC_AutomateDecision* pAutomate = reinterpret_cast< DEC_AutomateDecision* >( call.GetParameter( 0 ).ToObject() );// $$$$ LDC: Remove DIA_TypedObjects
     assert( pAutomate );
 
-    const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
+    const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::FindFromDiaID( mission );
     assert( pMissionType );
 
     MIL_AutomateMission* pMission = callerAutomate.GetOrderManager().CreateAutomateMission( pAutomate->GetAutomate(), *pMissionType );
-    call.GetResult().SetValue( *pMission );
+    return pMission;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::GiveAutomateMission
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::GiveAutomateMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_OrdersFunctions::GiveAutomateMission( MIL_AutomateMission* pMission, MIL_Automate& callerAutomate )
 {
-    assert( DEC_Tools::CheckTypeMissionAutomate( call.GetParameter( 0 ) ) );
-    MIL_AutomateMission* pMission = call.GetParameter( 0 ).ToUserObject( pMission );
-    assert( pMission );
     callerAutomate.GetOrderManager().GiveAutomateMission( *pMission );
 }
 
@@ -173,26 +155,19 @@ void DEC_OrdersFunctions::GiveAutomateMission( DIA_Call_ABC& call, MIL_Automate&
 // Name: DEC_OrdersFunctions::SplitFuseau
 // Created: NLD 2007-04-05
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::SplitFuseau( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+std::list<MIL_Fuseau*> DEC_OrdersFunctions::SplitFuseau( MIL_Automate& callerAutomate, unsigned int nbrSubFuseaux )
 {
-    DIA_Variable_ObjectList& result = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-
     MIL_Fuseau::T_FuseauPtrList subFuseaux;
-    callerAutomate.GetOrderManager().GetFuseau().SplitIntoSubFuseaux( (uint)call.GetParameter( 0 ).ToFloat(), subFuseaux );
-    result.SetValueUserType( subFuseaux, DEC_Tools::GetTypeFuseau() );
+    callerAutomate.GetOrderManager().GetFuseau().SplitIntoSubFuseaux( nbrSubFuseaux, subFuseaux );
+    return subFuseaux;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::AssignFuseauToAutomateMission
 // Created: NLD 2007-04-05
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::AssignFuseauToAutomateMission( DIA_Call_ABC& call, MIL_Automate& /*callerAutomate*/ )
+void DEC_OrdersFunctions::AssignFuseauToAutomateMission( MIL_Fuseau* pFuseau, MIL_AutomateMission* pMission )
 {
-    assert( DEC_Tools::CheckTypeFuseau         ( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeMissionAutomate( call.GetParameter( 1 ) ) );
-
-    MIL_Fuseau*          pFuseau  = call.GetParameter( 0 ).ToUserPtr   ( pFuseau  );
-    MIL_AutomateMission* pMission = call.GetParameter( 1 ).ToUserObject( pMission );
     assert( pMission && pFuseau );
 
     pMission->AffectFuseau( *pFuseau );
@@ -202,13 +177,8 @@ void DEC_OrdersFunctions::AssignFuseauToAutomateMission( DIA_Call_ABC& call, MIL
 // Name: DEC_OrdersFunctions::AssignDirectionToAutomateMission
 // Created: SBO 2008-01-04
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::AssignDirectionToAutomateMission( DIA_Call_ABC& call, MIL_Automate& /*callerAutomate*/ )
+void DEC_OrdersFunctions::AssignDirectionToAutomateMission( MT_Vector2D* pDirection, MIL_AutomateMission* pMission )
 {
-    assert( DEC_Tools::CheckTypeDirection      ( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeMissionAutomate( call.GetParameter( 1 ) ) );
-
-    MT_Vector2D*         pDirection = call.GetParameter( 0 ).ToUserPtr   ( pDirection );
-    MIL_AutomateMission* pMission   = call.GetParameter( 1 ).ToUserObject( pMission );
     assert( pMission && pDirection );
 
     pMission->AffectDirection( *pDirection );
@@ -270,11 +240,9 @@ namespace
 // Name: DEC_OrdersFunctions::PionSetMissionLimaFlag
 // Created: NLD 2007-05-08
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::PionSetMissionLimaFlag( DIA_Call_ABC& call, MIL_AgentPion& caller )
+void DEC_OrdersFunctions::PionSetMissionLimaFlag( MIL_AgentPion& caller, unsigned int limaId, bool flag )
 {
-    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-
-    FlagMissionLima functor( (uint)call.GetParameter( 0 ).ToPtr(), call.GetParameter( 1 ).ToBool() );
+    FlagMissionLima functor( limaId, flag );
     if( !caller.GetAutomate().IsEngaged() )
         functor( caller );
     else
@@ -285,11 +253,9 @@ void DEC_OrdersFunctions::PionSetMissionLimaFlag( DIA_Call_ABC& call, MIL_AgentP
 // Name: DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag
 // Created: NLD 2007-05-08
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag( DIA_Call_ABC& call, MIL_AgentPion& caller )
+void DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag( MIL_AgentPion& caller, unsigned int limaId, bool flag  )
 {
-    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-
-    FlagScheduleMissionLima functor( (uint)call.GetParameter( 0 ).ToPtr(), call.GetParameter( 1 ).ToBool() );
+    FlagScheduleMissionLima functor( limaId, flag );
     if( !caller.GetAutomate().IsEngaged() )
         functor( caller );
     else
@@ -300,11 +266,9 @@ void DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag( DIA_Call_ABC& call, MI
 // Name: DEC_OrdersFunctions::AutomateSetMissionLimaFlag
 // Created: NLD 2007-05-08
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( DIA_Call_ABC& call, MIL_Automate& caller )
+void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( MIL_Automate& caller, unsigned int limaId, bool flag  )
 {
-    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-
-    FlagMissionLima functor( (uint)call.GetParameter( 0 ).ToPtr(), call.GetParameter( 1 ).ToBool() );
+    FlagMissionLima functor( limaId, flag );
     GetHigherEngagedAutomate( caller ).ApplyOnHierarchy( functor );
 }
 
@@ -312,11 +276,9 @@ void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( DIA_Call_ABC& call, MIL_Au
 // Name: DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag
 // Created: NLD 2007-05-08
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag( DIA_Call_ABC& call, MIL_Automate& caller )
+void DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag( MIL_Automate& caller, unsigned int limaId, bool flag  )
 {
-    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-
-    FlagScheduleMissionLima functor( (uint)call.GetParameter( 0 ).ToPtr(), call.GetParameter( 1 ).ToBool() );
+    FlagScheduleMissionLima functor( limaId, flag );
     GetHigherEngagedAutomate( caller ).ApplyOnHierarchy( functor );
 }
 

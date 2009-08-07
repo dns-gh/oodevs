@@ -12,6 +12,8 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "Entities/MIL_EntityManager.h"
+#include "MIL_MissionParameter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_GenObjectList constructor
@@ -36,52 +38,17 @@ MIL_ParameterType_GenObjectList::~MIL_ParameterType_GenObjectList()
 // Name: MIL_ParameterType_GenObjectList::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_GenObjectList::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_GenObjectList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.value.t != T_MissionParameter_value_plannedWorkList ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeListeGenObjets( to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    NET_ASN_Tools::CopyGenObjectList( *from.value.u.plannedWorkList, to );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_GenObjectList::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_GenObjectList::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeListeGenObjets( from ) )
-        return false;
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeListeGenObjets( to ) )
-        return false;
-
-    NET_ASN_Tools::CopyGenObjectList( from, to );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_GenObjectList::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_GenObjectList::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeListeGenObjets( from ) )
+    if( !from.IsOfType( *this ) )
         return false;
 
     to.null_value                   = false;
     to.value.t                      = T_MissionParameter_value_plannedWorkList;
     to.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
     
-    return NET_ASN_Tools::CopyGenObjectList( from, *to.value.u.plannedWorkList );
+    return from.ToGenObjectList( *to.value.u.plannedWorkList );
 }
 
 // -----------------------------------------------------------------------------

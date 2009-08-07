@@ -21,6 +21,7 @@ class PHY_RolePion_Perceiver;
 class PHY_FireResults_Default;
 class MIL_AgentPion;
 class MIL_Object_ABC;
+class TER_Localisation;
 
 // =============================================================================
 // @class  PHY_ActionControlZone
@@ -33,7 +34,7 @@ public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-            PHY_ActionControlZone( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Localisation* pLocalisation, MT_Float rRadius, bool bFire );
     virtual ~PHY_ActionControlZone();
 
     //! @name Operations
@@ -47,7 +48,7 @@ private:
     PHY_RoleAction_DirectFiring& roleDirectFiring_;
     MIL_Object_ABC*              pZoneControlled_;
     PHY_FireResults_Default*     pFireResult_;
-    void*                        pPerceptionZoneID_;
+    int                          perceptionZoneID_;
 };
 
 #endif // __PHY_ActionControlZone_h_

@@ -1,0 +1,301 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/common/behaviors/Behaviors - Eni.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// DecrocherFaceA
+]]--[[//
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Eni_Pion_ASA_DecrocherFaceA"
+{
+    instances =
+    {
+        max = 1,
+        boost = 1.01,
+    },
+
+    activations =
+    {
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repUnite = self.params[1]
+        self._namedParams.rDistance = self.params[2]
+        self._namedParams.rDistanceSecurite = self.params[3]
+    end,
+
+    activate = function( self )
+        self.rDistanceEffective = self.rDistanceEffective or self._namedParams.rDistance + self._namedParams.rDistanceSecurite
+        self.eEtat = self.eEtat or eActionEnCours
+        self.positionSurete = self.positionSurete or nil
+        if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( ModuleBegins() ) then
+            do
+                if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
+                    self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, F_Pion_GetobjectifEsquive( myself ) )
+                else
+if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
+                        self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, myself.ptRegroupement_ )
+                    else
+                        self.positionSurete = DEC_Geometrie_CalculerPositionSurete( self._namedParams.repUnite, self.rDistanceEffective )
+                    end
+                end
+
+                if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+                    Halt()
+                end
+
+            end
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionSurete, eProgressionDefaut, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Detruire Ennemi :
+]]--[[// 
+]]--[[// Pas de valeur de retour dans ce comportement
+]]--[[// On decide de tirer quand l'objectif est identifié et qu'on le voit.
+]]--[[//
+]]--[[// On ne tir pas sur une connaissance non vue pas l'un de nos capteur 
+]]--[[// 
+]]--[[// Ce comportement ne doit pas etre appellé directement. En effet, il n'a pas
+]]--[[// de selected boost => gros risques d'oscillation. On préferera utiliser un
+]]--[[// comportement de plus haut niveau, comme par exemple attendrePuisDetuireDirect
+]]--[[// avec un temps nul. On ne veut pas avoir des selected boost encapsulés dans
+]]--[[// les compostement de plus bas niveau afin de bien controler la propagation
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ASA_DetruireEnnemiDirect"
+{
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_Tir_DirectSurTypeMunition", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ennemi = self.params[1]
+        self._namedParams.niveauPerception = self.params[2]
+        self._namedParams.pourcentageComposantes = self.params[3]
+        self._namedParams.pH = self.params[4]
+    end,
+
+    activate = function( self )
+        --[[// variables persistantes
+]]        self.eEtatAttaque = self.eEtatAttaque or eActionEnCours
+        self.eEtatTir = self.eEtatTir or eActionEnCours
+        if( self.eEtatTir == eActionEffectuee ) then
+            do
+                self.eEtatTir = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        if( self.eEtatTir == eActionImpossible ) then
+            do
+                                do
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+--[[//si la connaissance n'est plus valide, on arrete le comportement
+]]        end
+
+        if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
+            Halt()
+        end
+
+        --[[//MAJ de l'ennemi en cours de traitement
+]]Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ennemi, } )
+        --[[//on fait feu
+]]if( DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.ennemi ) and S_Eni_EstNiveauPerceptionGTIA( self._namedParams.ennemi, self._namedParams.niveauPerception ) and S_Tir_EstAPorteePosturesReelles( self._namedParams.ennemi, self._namedParams.pH ) ) then
+            do
+                Activate( self.activations.ACT_Tir_DirectSurTypeMunition, GetMotivation( "MOT_ASA_TirerSurEnis" ), setmetatable( { self._namedParams.ennemi, self._namedParams.pourcentageComposantes, eMunitionClasse_MissileAir, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatTir = v else rawset( t, k, v ) end end } ) )
+            end
+        end
+
+--[[//on peut passer ici si l'unité est détruite ou si myself est détruit.
+]]    end,
+
+    destroy = function( self )
+                if( not S_Misc_EstDetruitPhysique() ) then
+if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
+if( DEC_ConnaissanceAgent_EstMort( self._namedParams.ennemi ) ) then
+                    DEC_RC( eRC_EnnemiDetruit, self._namedParams.ennemi )
+                end
+            end
+        end
+
+    end,
+
+}
+
+node "BEH_Eni_Pion_ASA_AttendreDetruireDirect"
+{
+    instances =
+    {
+        boost = 1.0001,
+    },
+
+    activations =
+    {
+        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Obs_ObserverPoint", {} },
+        { "ACT_Misc_Delai", {} },
+        { "BEH_Eni_Pion_ASA_DetruireEnnemiDirect", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.delai = self.params[1]
+        self._namedParams.bufferConnaissanceAgent = self.params[2]
+        self._namedParams.niveauPerception = self.params[3]
+        self._namedParams.pourcentageComposantes = self.params[4]
+        self._namedParams.pH = self.params[5]
+        self._namedParams.sePosterEnAttendant = self.params[6]
+    end,
+
+    activate = function( self )
+        --[[// variables persistantes
+]]        self.eEtat = self.eEtat or eActionEnCours
+        --[[//si la connaissance est invalide, halter le comportement
+]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.bufferConnaissanceAgent ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        --[[//attendre le temps "delai"
+]]if( self.eEtat == eActionEnCours ) then
+            do
+                if( self._namedParams.sePosterEnAttendant ) then
+                    Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { self._namedParams.bufferConnaissanceAgent, } )
+                end
+
+                Activate( self.activations.ACT_Obs_ObserverPoint, 1, { myself:DEC_Agent_Position(), } )
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.delai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                return
+
+            end
+        end
+
+        Activate( self.activations.BEH_Eni_Pion_ASA_DetruireEnnemiDirect, 1, { self._namedParams.bufferConnaissanceAgent, self._namedParams.niveauPerception, self._namedParams.pourcentageComposantes, self._namedParams.pH, } )
+    end,
+
+}
+
+node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
+{
+    activations =
+    {
+        { "BEH_Eni_Pion_ASA_AttendreDetruireDirect", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ennemi = self.params[1]
+        self._namedParams.niveauPerception = self.params[2]
+        self._namedParams.pourcentageComposantes = self.params[3]
+        self._namedParams.pH = self.params[4]
+        self._namedParams.vitesseProjectile = self.params[5]
+        self._namedParams.sePosterEnAttendant = self.params[6]
+    end,
+
+    activate = function( self )
+        --[[//la vitesse du projectile sera dans adn
+]]assert( ( self._namedParams.vitesseProjectile ~= 0 and self._namedParams.vitesseProjectile ~= nil ), "Vitesse Nulle" )
+        self.distanceCouverte = self.distanceCouverte or 0--[[// variables persistantes
+]]
+        self.pointInterception = self.pointInterception or nil
+        self.distancePointInterception = self.distancePointInterception or 0
+        self.tempsInterception = self.tempsInterception or 0
+        if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
+            Halt()
+        end
+
+        --[[//determination de la position d'interception
+]]self.distanceCouverte = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( self._namedParams.ennemi, self._namedParams.pH )
+        --[[//doit etre fonction du ph doctrine
+]]self.pointInterception = DEC_Geometrie_PositionInterception( self._namedParams.ennemi, myself:DEC_Agent_Position(), self._namedParams.vitesseProjectile )
+        --[[//si pas de position d'interception possible => fin comportememnt
+]]--[[//Si on était en train d'ouvrir le feu et que l'on perd le point 
+]]--[[//d'interception, alors, on arrete le comportement 
+]]if( ( self.pointInterception == 0 or self.pointInterception == nil ) ) then
+            do
+                                Halt()
+
+            end
+        end
+
+        if( ModuleBegins() ) then
+            do
+                self.distancePointInterception = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointInterception )
+                self.tempsInterception = self.distancePointInterception / ( self._namedParams.vitesseProjectile * 60 )
+            end
+        end
+
+        if( self.distancePointInterception <= self.distanceCouverte ) then
+            do
+                Activate( self.activations.BEH_Eni_Pion_ASA_AttendreDetruireDirect, 1, { self.tempsInterception, self._namedParams.ennemi, self._namedParams.niveauPerception, self._namedParams.pourcentageComposantes, self._namedParams.pH, self._namedParams.sePosterEnAttendant, } )
+            end
+        else
+do
+                                Halt()
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASA_AttendreDetruireDirect, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASA_AttendreDetruireDirect, "ACT_Obs_ObserverPoint", nodes.ACT_Obs_ObserverPoint }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASA_AttendreDetruireDirect, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASA_AttendreDetruireDirect, "BEH_Eni_Pion_ASA_DetruireEnnemiDirect", nodes.BEH_Eni_Pion_ASA_DetruireEnnemiDirect }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASA_DecrocherFaceA, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASA_DecrocherFaceA, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASA_DetruireEnnemiDirect, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASA_DetruireEnnemiDirect, "ACT_Tir_DirectSurTypeMunition", nodes.ACT_Tir_DirectSurTypeMunition }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASA_InterceptionBalistique_Direct, "BEH_Eni_Pion_ASA_AttendreDetruireDirect", nodes.BEH_Eni_Pion_ASA_AttendreDetruireDirect }

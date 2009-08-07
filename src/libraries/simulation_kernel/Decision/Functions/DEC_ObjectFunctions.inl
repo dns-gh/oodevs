@@ -37,25 +37,18 @@ namespace
 // Created: NLD 2005-07-26
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_ObjectFunctions::ActivateObject( DIA_Call_ABC& call, const T& caller )
+bool DEC_ObjectFunctions::ActivateObject( const T& caller, unsigned int nID )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( nID, caller.GetArmy() );
     if( !pKnowledge )
-    {
-        call.GetResult().SetValue( false );
-        return;
-    }
+        return false;
 
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
     if( !pObject || !(*pObject)().CanBeActivated() )
-    {
-        call.GetResult().SetValue( false );
-        return;
-    }
+        return false;
 
     (*pObject)().Activate();
-    call.GetResult().SetValue( true );
-    return;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -63,10 +56,10 @@ void DEC_ObjectFunctions::ActivateObject( DIA_Call_ABC& call, const T& caller )
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_ObjectFunctions::MagicCreateObject( DIA_Call_ABC& call, const T& caller )
+void DEC_ObjectFunctions::MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation )
 {
-    //$$$ A réencapsuler
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), call.GetParameters(), 0, EnumDemolitionTargetType::preliminary );
+    //$$$ A réencapsuler    
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), type, pLocalisation, EnumDemolitionTargetType::preliminary );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,11 +67,9 @@ void DEC_ObjectFunctions::MagicCreateObject( DIA_Call_ABC& call, const T& caller
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_ObjectFunctions::MagicDestroyObject( DIA_Call_ABC& call, const T& caller )
+void DEC_ObjectFunctions::MagicDestroyObject( const T& caller, int knowledgeId )
 {
-    DEC_Tools::CheckTypeConnaissanceObjet( call.GetParameter( 0 ) );
-
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( knowledgeId, caller.GetArmy() );
     if( pKnowledge )
     {
         MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();

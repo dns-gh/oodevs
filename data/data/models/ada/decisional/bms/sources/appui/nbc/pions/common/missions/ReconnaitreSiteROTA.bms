@@ -1,0 +1,189 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreSiteROTA.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// Comportements:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_Nbc_ReconnaitreSiteROTA", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.positionROTA = self.positionROTA or S_Obj_Position( self._namedParams.mission.siteROTA_ )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Conditions de terminaisons --> validité objet
+]]--[[//-----------------------------------------------------------------------------
+]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.siteROTA_ ) ) then
+            do
+                DEC_Trace( "$************ Le site ROTA a été détruit ***********$" )
+                self.ePhaseMission = eFinMission
+                                return
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Appuis ou soutiens
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                SetStateVariable( "VE_NiveauNBC", 4 )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Prepa
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "ROTA site reconnaissance mission begining", } )
+                self.ePhaseMission = eRejoindrePosition
+                
+            --[[// 2) Progression jusqu'au point à reconnaitre
+]]elseif switch_1 == eRejoindrePosition then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Progresser vers le center de la zone
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eSePoster
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionROTA, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                --[[//---------------------------------------------------------------------
+]]--[[// Faire des mesures
+]]--[[//---------------------------------------------------------------------
+]]--[[//behavior BEH_Nbc_Pion_FaireDesMesures() : strength = 1.1; // Poste pour mesure donc en comptète avec deplacement
+]]
+            --[[// Se poster
+]]elseif switch_1 == eSePoster then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                --[[//---------------------------------------------------------------------
+]]--[[// Si site reconnu fin de mission
+]]--[[//---------------------------------------------------------------------
+]]if( DEC_ConnaissanceObjet_EstReconnu( self._namedParams.mission.siteROTA_ ) ) then
+                    do
+                        self.ePhaseMission = eFinMission
+                                                return
+
+                    end
+--[[//---------------------------------------------------------------------
+]]--[[// Reconnaître le site
+]]--[[//---------------------------------------------------------------------
+]]                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+--[[// return in pas nécéssaire
+]]                end
+
+                Activate( self.activations.BEH_Pion_Nbc_ReconnaitreSiteROTA, 1, setmetatable( { self._namedParams.mission.siteROTA_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_Nbc_ReconnaitreSiteROTA
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_Nbc_ReconnaitreSiteROTA"
+{
+    activations =
+    {
+        { "ACT_Pion_Nbc_ReconnaitreSiteROTA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.siteROTA = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Pion_Nbc_ReconnaitreSiteROTA, 1, setmetatable( { self._namedParams.siteROTA, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA, "BEH_Pion_Nbc_ReconnaitreSiteROTA", nodes.BEH_Pion_Nbc_ReconnaitreSiteROTA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Nbc_ReconnaitreSiteROTA, "ACT_Pion_Nbc_ReconnaitreSiteROTA", nodes.ACT_Pion_Nbc_ReconnaitreSiteROTA }

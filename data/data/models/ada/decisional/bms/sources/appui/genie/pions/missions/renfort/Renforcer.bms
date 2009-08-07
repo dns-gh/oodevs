@@ -1,0 +1,186 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/missions/renfort/Renforcer.bms"] = true
+
+include "bit.lua"
+
+
+--[[// ******************************************************************************
+]]--[[// MIS_GEN_Renforcer
+]]--[[//
+]]--[[// Commentaires: Refonte 27/10/2006 - le groupe specifique renforce la section 
+]]--[[//               du génie
+]]--[[//
+]]--[[// ******************************************************************************
+]]node "MIS_Pion_GEN_Renforcer"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_Pion_GEN_RenforcerSurPosition", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.bRenforceAutomate = self.bRenforceAutomate or self._namedParams.mission.unite_:DEC_Agent_EstPC()
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "MIS_Pion_GEN_Renforcer : debut" )
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eRejoindrePosition
+                
+            --[[// Progression
+]]elseif switch_1 == eRejoindrePosition then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                --[[// Progression
+]]--[[// si mission donnée par automate apres renforcement par anibas
+]]if( ( DEC_Agent_AutomateEstEmbraye() or self.bRenforceAutomate or self._namedParams.mission.lieuRenforcement_ == 0 or DEC_Agent_AutomateEstEmbraye() or self.bRenforceAutomate or self._namedParams.mission.lieuRenforcement_ == nil ) ) then
+                    Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.mission.unite_, 100, } )
+                else
+do
+                        if( self.eEtat == eActionEffectuee ) then
+                            do
+                                self.eEtat = eActionEnCours
+                                                                do
+                                    self.ePhaseMission = eFinMission
+                                                                        return
+
+                                end
+
+                            end
+                        end
+
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.lieuRenforcement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    end
+--[[// Renforcement
+]]                end
+
+                Activate( self.activations.BEH_Dep_Pion_GEN_RenforcerSurPosition, 1, { self._namedParams.mission.unite_, self.bRenforceAutomate, } )
+                
+            --[[// Fin de la mission --> sur ordre
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Dep_Pion_GEN_RenforcerSurPosition
+]]--[[//
+]]--[[// Commentaires: le groupe specifique renforce la section du génie
+]]--[[//
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Dep_Pion_GEN_RenforcerSurPosition"
+{
+    activations =
+    {
+        { "ACT_Misc_Pion_GEN_Renforcer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.unite = self.params[1]
+        self._namedParams.bRenforceAutomate = self.params[2]
+    end,
+
+    activate = function( self )
+        if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.unite:DEC_Agent_Position() ) < 800 ) then
+            Activate( self.activations.ACT_Misc_Pion_GEN_Renforcer, 1, { self._namedParams.unite, self._namedParams.bRenforceAutomate, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_GEN_Renforcer
+]]--[[//
+]]--[[// Commentaires: renforcement au niveau "physique"
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Misc_Pion_GEN_Renforcer"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.unite = self.params[1]
+        self._namedParams.bRenforceAutomate = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//-----------------------------------------------------------------
+]]--[[// Renforcement d'un pion
+]]--[[//-----------------------------------------------------------------
+]]        if( ModuleBegins() and not self._namedParams.bRenforceAutomate ) then
+            DEC_Renforce( self._namedParams.unite )
+        end
+
+        --[[//-----------------------------------------------------------------
+]]--[[// Renforcement d'un automate
+]]--[[//-----------------------------------------------------------------
+]]if( ModuleBegins() and self._namedParams.bRenforceAutomate ) then
+            do
+                local automate = DEC_GetAutomate( self._namedParams.unite )
+                if( DEC_Pion_ChangeAutomate( automate ) ) then
+                    DEC_RC( eRC_ReussiteRenforcement, myself, automate )
+                else
+                    DEC_RC( eRC_EchecRenforcement, myself, automate )
+                end
+
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                if( not self._namedParams.bRenforceAutomate ) then
+            DEC_AnnuleRenforcement()
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_GEN_Renforcer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_GEN_RenforcerSurPosition, "ACT_Misc_Pion_GEN_Renforcer", nodes.ACT_Misc_Pion_GEN_Renforcer }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_Renforcer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_Renforcer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_Renforcer, "BEH_Dep_Suivre", nodes.BEH_Dep_Suivre }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_Renforcer, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_Renforcer, "BEH_Dep_Pion_GEN_RenforcerSurPosition", nodes.BEH_Dep_Pion_GEN_RenforcerSurPosition }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_Renforcer, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

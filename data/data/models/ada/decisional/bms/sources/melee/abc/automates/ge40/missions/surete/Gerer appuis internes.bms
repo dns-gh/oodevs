@@ -1,0 +1,174 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/surete/Gerer appuis internes.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_GererAppuisInternesDansZone
+]]--[[// 
+]]--[[// Commentaires: Faire un retour vers la doctrine --> qu'a-t-on tendance à faire 
+]]--[[//               quand le rapport de force n'est pas favorable
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_GTIA_GererAppuisInternesPourSurete"
+{
+    activations =
+    {
+        { "BEH_GTIA_GererAppuiDansZonePour", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// On récupère les pions de premier échelons en difficultés 
+]]local listePEEnDifficultes = S_Cherche_GE_Filtre_EtatSauvegarde( S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ) )
+        if( DIA_IsListEmpty( listePEEnDifficultes ) ) then
+            return
+        end
+
+        --[[// Assignation appuis
+]]Activate( self.activations.BEH_GTIA_GererAppuiDansZonePour, 1, { listePEEnDifficultes, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_GererAppuiDansZonePour
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_GererAppuiDansZonePour"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionsPourAppuyerDansZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePEEnDifficultes = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( self._namedParams.listePEEnDifficultes ) do
+        local _continue = true
+            StartActivate( self.activations.BEH_GTIA_AssignerMissionsPourAppuyerDansZone, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsPourAppuyer
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsPourAppuyerDansZone"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionAppuyerPourSurete", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionAAppuyer = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// On récupère les pions de second échelons "en mesure de" 
+]]local listePionsSE = S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second )
+        local listePionSEAppui = S_Cherche_GE_Filtre_EnMesureDe( S_Cherche_GE_AutomateOperationnels( listePionsSE ) )
+        for _,x in pairs( --[[// Assignation missions ABC
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( listePionSEAppui ) ) do
+        local _continue = true
+do
+                local pion = x
+                StartActivate( self.activations.ACT_GTIA_AssignerMissionAppuyerPourSurete, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_ABC_Semparer", F_Automat_Getzone( self._namedParams.pionAAppuyer ), } )
+            end
+--[[// Assignation missions INF
+]]
+        end
+
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( listePionSEAppui ) ) do
+        local _continue = true
+do
+                local pion = x
+                StartActivate( self.activations.ACT_GTIA_AssignerMissionAppuyerPourSurete, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_INF_Semparer", F_Automat_Getzone( self._namedParams.pionAAppuyer ), } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerMissionAppuyerPourSurete
+]]--[[// 
+]]--[[// Commentaires: ACTUATEUR = pionAppuye
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_GTIA_AssignerMissionAppuyerPourSurete"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionAppui = self.params[1]
+        self._namedParams.pionAppuye = self.params[2]
+        self._namedParams.fuseau = self.params[3]
+        self._namedParams.typeMission = self.params[4]
+        self._namedParams.zone = self.params[5]
+    end,
+
+    select = function( self )
+                self.mission = self.mission or DEC_GetMission( myself )
+        if( DIA_GetLocalFakeActuator( self._namedParams.pionAppuye ) < GetActivity() ) then
+            do
+                DIA_SetLocalFakeActuator( self._namedParams.pionAppuye, GetActivity() )
+                self.bMissionAssignee = self.bMissionAssignee or false
+                if( ( self._namedParams.zone ~= nil and self._namedParams.fuseau ~= 0 and self._namedParams.zone ~= nil and self._namedParams.fuseau ~= nil ) and not self.bMissionAssignee ) then
+                    do
+                        --[[// Assignation de la mission en fonction du type
+]]self.bMissionAssignee = true
+                        switch_1 = self._namedParams.typeMission
+                            if switch_1 == "T_Mission_Automate_ABC_Semparer" then
+                                                            --[[// Utilisées dans les missions d'appuis
+]]local missionPion = DEC_CreerMissionAutomate( self._namedParams.pionAppui, self._namedParams.typeMission )
+                                DEC_AssignMissionParameter( missionPion, "objectif_", self._namedParams.zone )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                            elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
+                                                            local missionPion = DEC_CreerMissionAutomate( self._namedParams.pionAppui, self._namedParams.typeMission )
+                                DEC_AssignMissionParameter( missionPion, "objectif_", self._namedParams.zone )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                                                        end
+
+                    end
+                end
+
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+            end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsPourAppuyerDansZone, "ACT_GTIA_AssignerMissionAppuyerPourSurete", nodes.ACT_GTIA_AssignerMissionAppuyerPourSurete }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_GererAppuiDansZonePour, "BEH_GTIA_AssignerMissionsPourAppuyerDansZone", nodes.BEH_GTIA_AssignerMissionsPourAppuyerDansZone }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_GererAppuisInternesPourSurete, "BEH_GTIA_GererAppuiDansZonePour", nodes.BEH_GTIA_GererAppuiDansZonePour }

@@ -1,0 +1,35 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/common/missions/reconnaitrezone/ReconnaitreZone - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_Automate_NBC_ReconnaitreUneZone
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Conduite_Automate_NBC_ReconnaitreUneZone"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", {} },
+        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Gen
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// PC y compris
+]]
+        Activate( self.activations.BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_, 1, {} )--[[// PC y compris
+]]
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_NBC_ReconnaitreUneZone, "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", nodes.BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_NBC_ReconnaitreUneZone, "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", nodes.BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_ }

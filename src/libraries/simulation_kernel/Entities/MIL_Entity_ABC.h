@@ -11,6 +11,7 @@
 #define __MIL_Entity_ABC_h_
 
 #include "MT_Tools/MT_RoleContainer.h"
+#include "Entities/Actions/PHY_Actor.h"
 
 namespace xml
 {
@@ -25,6 +26,7 @@ namespace xml
 // Created: RDS 2008-04-25
 // =============================================================================
 class MIL_Entity_ABC : public MT_RoleContainer
+                     , public PHY_Actor // $$$$ LDC: That should be a role.
 {
 public:
     //! @name Constructors/Destructor

@@ -1,0 +1,224 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/milices/pion/Behaviors - Eni.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Population/Milices/Pion/Behaviors - Eni.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 9/09/05 16:16 $
+]]--[[// $Revision: 13 $
+]]--[[// $Workfile: Behaviors - Eni.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "BEH_Eni_Pion_Milice_GererContactEni"
+{
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ksEni = self.params[1]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
+        Activate( self.activations.BEH_Feu_Pion_Milice_ConduireLesFeux_Sur, 1, { self._namedParams.ksEni, } )
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// Gere uniquement le feu a partir de l'arme principale, c'est a dire que l'on
+]]--[[// prend en compte uniquement les series sur le type de formation proposée.
+]]--[[//
+]]--[[// On ne se charge pas de la couverture
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
+{
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_RC_SurEni", {} },
+        { "BEH_Tir_Pion_Milice_FaireFeu", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ksEni = self.params[1]
+    end,
+
+    activate = function( self )
+        self.rEtatInitialAvantSerie = self.rEtatInitialAvantSerie or DEC_ConnaissanceAgent_EtatOps( self._namedParams.ksEni )
+        self.eAction_Tir = self.eAction_Tir or eActionEnCours
+        self.eActionEfficacite = self.eActionEfficacite or eActionEnCours
+        self.rNombreSeries = self.rNombreSeries or 0
+        local rPH = GetStateVariable( "VE_Agressivite_Tir" )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// On tir sur l'ennemi
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eAction_Tir == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( self.eAction_Tir == eActionImpossible ) then
+            do
+                                do
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
+        if( S_Tir_EstAPortee( self._namedParams.ksEni, rPH ) ) then
+            do
+                Activate( self.activations.ACT_RC_SurEni, 1, { eRC_PriseContact, self._namedParams.ksEni, } )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Si le tir est inefficace, on ne tir pas (uniquement fixer)
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// FIN DE SERIE
+]]        end
+
+        if( self.eAction_Tir == eActionEnPause ) then
+            do
+                                self.rNombreSeries = self.rNombreSeries + 1
+                DEC_Trace( ">> FIN SERIE nun " .. FloatToString( self.rNombreSeries ) .. " <<" )
+                --[[// le tir n'est pas efficace
+]]if( not S_Tir_EfficaceSur( self._namedParams.ksEni, self.rEtatInitialAvantSerie ) ) then
+                    do
+                        DEC_Trace( ">> Tir inefficace <<" )
+                        self.eAction_Tir = eActionEnCours
+                        --[[// MAJ Stimulus tir inefficace
+]]g_bTirInefficace = true
+                                                self.params.__returnValue = eActionEnPause
+                        return
+
+                    end
+--[[// init avec nouvel etat de l'eni
+]]                end
+
+                self.rEtatInitialAvantSerie = DEC_ConnaissanceAgent_EtatOps( self._namedParams.ksEni )
+            end
+--[[// Tout le monde tir lorsque l'on est a distance de tir			
+]]        end
+
+        Activate( self.activations.BEH_Tir_Pion_Milice_FaireFeu, 1, setmetatable( { self._namedParams.ksEni, rPH, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// Tir Embarque
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Tir_Pion_Milice_FaireFeu"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_Tir_DirectSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+        self._namedParams.rPrcComposante = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.stMsg = self.stMsg or "Distance tir ( " .. FloatToString( GetStateVariable( "VE_Agressivite_Tir" ) ) .. " ) : "
+        local eActionReturn = self.eAction
+        if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+        end
+
+        if( S_Tir_EstAPortee( self._namedParams.repEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "OK.", } )
+                Activate( self.activations.ACT_Tir_DirectSur, 1, { self._namedParams.repEni, self._namedParams.rPrcComposante, } )
+            end
+        else
+            Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "NOK.", } )
+        end
+
+                self.params.__returnValue = eActionReturn
+        return
+
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// Manoeuvre sur les unites potentiellement dangereuses
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Si le pion n'est pas dans son fuseau, on n'agit pas sur les ennemis
+]]if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
+            return
+        end
+
+        local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
+        for _,ksEni in pairs( listeUnitesEnnemiesDangereuses ) do
+        local _continue = true
+do
+                if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) or ( DEC_ConnaissanceAgent_EstUnEnnemi( ksEni ) == eTristate_False ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    --[[// On traite l'unite si elle est dans le fuseau de la section
+]]if( DEC_Geometrie_EstPointDansFuseau( DEC_ConnaissanceAgent_Position( ksEni ) ) ) then
+                        do
+                            local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
+                        end
+                    end
+
+                end
+            end
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_Milice_GererContactEni, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_Milice_GererContactEni, "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur", nodes.BEH_Feu_Pion_Milice_ConduireLesFeux_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_Feu_Pion_Milice_ConduireLesFeux_Sur, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Feu_Pion_Milice_ConduireLesFeux_Sur, "ACT_RC_SurEni", nodes.ACT_RC_SurEni }
+connections[ #connections + 1 ] = { nodes.BEH_Feu_Pion_Milice_ConduireLesFeux_Sur, "BEH_Tir_Pion_Milice_FaireFeu", nodes.BEH_Tir_Pion_Milice_FaireFeu }
+connections[ #connections + 1 ] = { nodes.BEH_Tir_Pion_Milice_FaireFeu, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Tir_Pion_Milice_FaireFeu, "ACT_Tir_DirectSur", nodes.ACT_Tir_DirectSur }

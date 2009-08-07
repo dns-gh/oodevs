@@ -12,7 +12,7 @@
 #ifndef __PHY_ActionBypassObject_h_
 #define __PHY_ActionBypassObject_h_
 
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class PHY_RoleAction_Objects;
 class MIL_AgentPion;
@@ -21,14 +21,14 @@ class MIL_AgentPion;
 // @class  PHY_ActionBypassObject
 // Bypassd: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionBypassObject : public PHY_Action_ABC
+class PHY_ActionBypassObject : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionBypassObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionBypassObject( MIL_AgentPion& pion, unsigned int nKnowledgeID );
     virtual ~PHY_ActionBypassObject();
 
     //! @name Operations
@@ -39,7 +39,6 @@ public:
 
 private:
     PHY_RoleAction_Objects&  role_;
-    DIA_Variable_ABC&        diaReturnCode_;
     uint                     nKnowledgeID_;    
 };
 

@@ -51,7 +51,7 @@ void MIL_OrderManager_ABC::Update()
         assert( !pMission_ );
 
         pNextMission_ = pNewMission;
-        pMission_     = pNewMission;
+        pMission_ = pNewMission;
         if( pNewMission )
         {
             pMission_->Start();

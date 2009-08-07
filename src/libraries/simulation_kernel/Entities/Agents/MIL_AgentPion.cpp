@@ -82,7 +82,6 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
     : MIL_Agent_ABC            ( type.GetName(), xis, nID )
-    , PHY_Actor                ()
     , pType_                   ( &type )
     , bIsPC_                   ( false )
     , pAutomate_               ( &automate )
@@ -98,7 +97,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
     : MIL_Agent_ABC            ( type.GetName(), nID )
-    , PHY_Actor                ()
     , pType_                   ( &type )
     , bIsPC_                   ( false )
     , pAutomate_               ( &automate )
@@ -114,12 +112,26 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion()
     : MIL_Agent_ABC        ()
-    , PHY_Actor            ()
     , pType_               ( 0 )
     , bIsPC_               ()
     , pKnowledgeBlackBoard_( 0 )
     , orderManager_        ( *new MIL_PionOrderManager( *this ) )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion constructor
+// Created: LDC 2009-04-23
+// -----------------------------------------------------------------------------
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate )
+    : MIL_Agent_ABC        ()
+    , pType_               ( &type )
+    , bIsPC_               ()
+    , pAutomate_           ( &automate )
+    , pKnowledgeBlackBoard_( 0 )
+    , orderManager_        ( *new MIL_PionOrderManager( *this ) )
+{
+    automate.RegisterPion( *this );
 }
 
 // =============================================================================
@@ -134,8 +146,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
 {
     uint nTypeID;
     
-    file >> boost::serialization::base_object< MIL_Agent_ABC >( *this )
-         >> boost::serialization::base_object< PHY_Actor     >( *this );
+    file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
 
     file >> nTypeID;
     pType_ = MIL_AgentTypePion::Find( nTypeID );
@@ -340,12 +351,12 @@ void MIL_AgentPion::CleanKnowledges()
 // Name: MIL_AgentPion::UpdateDecision
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::UpdateDecision()
+void MIL_AgentPion::UpdateDecision( float duration )
 {
     if( IsDead() )
         orderManager_.ReplaceMission( 0 );
     orderManager_.Update();
-    GetRole< DEC_Decision_ABC >().UpdateDecision();
+    GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
 }
 
 // -----------------------------------------------------------------------------
@@ -471,7 +482,7 @@ bool MIL_AgentPion::IsAutonomous() const
 // Name: MIL_AgentPion::GetDecision
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-DEC_RolePion_Decision& MIL_AgentPion::GetDecision()
+DEC_Decision_ABC& MIL_AgentPion::GetDecision()
 {
     return GetRole< DEC_RolePion_Decision >();
 }
@@ -480,7 +491,7 @@ DEC_RolePion_Decision& MIL_AgentPion::GetDecision()
 // Name: MIL_AgentPion::GetDecision
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-const DEC_RolePion_Decision& MIL_AgentPion::GetDecision() const
+const DEC_Decision_ABC& MIL_AgentPion::GetDecision() const
 {
     return GetRole< DEC_RolePion_Decision >();
 }
@@ -959,7 +970,7 @@ void MIL_AgentPion::NotifyAttacking( MIL_Agent_ABC& target ) const
 // Name: MIL_AgentPion::NotifyAttacking
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::NotifyAttacking( MIL_Population& target ) const
+void MIL_AgentPion::NotifyAttacking( MIL_Population& /*target*/ ) const
 {
     //$$$ CRS ??
 }
@@ -973,7 +984,7 @@ bool MIL_AgentPion::IsPerceived( const MIL_Agent_ABC& agent ) const
     return GetKnowledge().IsPerceived( agent );    
 }
 
-int MIL_AgentPion::GetNumberOfFireHoses( int bestExtinguisherAgent )
+int MIL_AgentPion::GetNumberOfFireHoses( int /*bestExtinguisherAgent*/ )
 {
     return 4;
 }

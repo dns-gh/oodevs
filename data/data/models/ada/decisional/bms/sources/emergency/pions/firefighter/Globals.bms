@@ -1,0 +1,37 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/pions/firefighter/Globals.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// variables globales
+]]--[[//-----------------------------------------------------------------------------
+]]include "Emergency/Pions/Common/Globals.bms"
+
+include "Common/Pions/Globals.bms"
+
+
+--[[//=============================================================================
+]]--[[// Parametres constants 
+]]--[[//=============================================================================
+]]
+function M_DEPLACEMENT_ACTUATEURS()
+    return deplacement
+end
+
+
+
+function M_TIR_ACTUATEURS()
+    return tir
+end
+
+
+

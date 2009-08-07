@@ -1,0 +1,73 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/satcp mistral/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+--[[// Définition des actuateurs
+]]--[[// -------------------------
+]]actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+debarquement = 1,
+observation = 1,
+tir = 1,
+vitesse = 1,
+ennemi = 1,
+reconnaissance = 1,
+etat_Lima = 1,
+hauteur = 1,
+etat_destruction = 1,
+stim_Peur = 1,
+etat_Dec = 1,
+surveiller = 1,
+objectifCourant = 1,
+etat_Mission = 1,
+etat_Destruction = 1,
+objectifEsquive = 1,
+parametresRecompletement = 1,
+ravitaillementMot = 1,
+controlePopulation = 1,
+etat_ROE = 1,
+}
+
+
+--[[//Comportements
+]]--[[//-------------
+]]--[[//génériques pions asa
+]]include "Appui/ArtDsa/Pions/Common/Behaviors.bms"
+
+--[[//actions spécifiques a la section Mistral
+]]--[[//----------------------------------------
+]]include "Appui/ArtDsa/Pions/Satcp Mistral/Behaviors/Behaviors - Eni.bms"
+
+
+node "BEH_ASA_Defaut"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+    end,
+
+--[[// Missions Satcp Mistral
+]]--[[// ----------------------
+]]}
+
+include "Appui/ArtDsa/Pions/Satcp Mistral/Missions/Defendre Zone.bms"
+
+include "Appui/ArtDsa/Pions/Satcp Mistral/Missions/Defendre Zone A Partir Position.bms"
+
+include "Appui/ArtDsa/Pions/Satcp Mistral/Missions/Defendre Site.bms"
+
+include "Appui/ArtDsa/Pions/Satcp Mistral/Missions/Defendre Site A Partir Position.bms"
+
+include "Appui/ArtDsa/Pions/Satcp Mistral/Missions/Surveiller.bms"
+

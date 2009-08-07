@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/common/Actions.bms"] = true
+
+--[[// actions génériques à tous les pions de l'ASA
+]]include "Appui/ArtDsa/Pions/Common/Actions/Actions - Maj.bms"
+
+

@@ -1,0 +1,162 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/pions/common/missions/ArmerPlotDecontamination.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_NBC_AnimerPlotDecontamination
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_NBC_AnimerPlotDecontamination"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Pion_Nbc_CreerSiteSur", {} },
+        { "ACT_Warning", {} },
+        { "BEH_Pion_NBC_AnimerSite", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.siteDecontamination = self.siteDecontamination or nil
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Ambiance
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                SetStateVariable( "VE_NiveauNBC", 4 )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparer mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Arming decontamination site mission begining", } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// 2) Rejoindre la position
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionSiteDecontamination_ ) < 300 ) then
+                    self.ePhaseMission = eAnimer
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionSiteDecontamination_, eProgressionBond, eTypeItiMouvement, } )
+                
+            --[[// 3) Qd prêt Barrer la direction dangereuse
+]]elseif switch_1 == eAnimer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                self.siteDecontamination = S_Nbc_ObtenirSiteSur( self._namedParams.mission.positionSiteDecontamination_ )
+                if( ( self.siteDecontamination == 0 or self.siteDecontamination == nil ) ) then
+                    do
+                        Activate( self.activations.ACT_Pion_Nbc_CreerSiteSur, 1, { self._namedParams.mission.positionSiteDecontamination_, } )
+                                                return
+
+                    end
+--[[//---------------------------------------------------------------------
+]]--[[// Tester la saturation du site
+]]--[[//---------------------------------------------------------------------
+]]                end
+
+                if( not DEC_ConnaissanceObjet_PeutEtreAnime( self.siteDecontamination ) ) then
+                    do
+                        Activate( self.activations.ACT_Warning, 1, { eRC_SiteSature, } )
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Site overloaded...", } )
+                                                return
+
+                    end
+--[[//---------------------------------------------------------------------
+]]--[[// Rejoindre le site
+]]--[[//---------------------------------------------------------------------
+]]                end
+
+                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionSiteDecontamination_ ) > 300 ) then
+                    self.ePhaseMission = eProgresser
+                end
+
+                --[[//---------------------------------------------------------------------
+]]--[[// Animer le site
+]]--[[//---------------------------------------------------------------------
+]]Activate( self.activations.BEH_Pion_NBC_AnimerSite, 1, { self.siteDecontamination, } )
+                
+            --[[// 4) Fin de la mission de reconnaissance SUR ORDRE
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_NBC_AnimerSite
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_NBC_AnimerSite"
+{
+    activations =
+    {
+        { "ACT_Pion_Nbc_AnimerSite", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.siteDecontamination = self.params[1]
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Pion_Nbc_AnimerSite, 1, { self._namedParams.siteDecontamination, } )
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_AnimerPlotDecontamination, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_AnimerPlotDecontamination, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_AnimerPlotDecontamination, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_AnimerPlotDecontamination, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_AnimerPlotDecontamination, "ACT_Pion_Nbc_CreerSiteSur", nodes.ACT_Pion_Nbc_CreerSiteSur }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_AnimerPlotDecontamination, "ACT_Warning", nodes.ACT_Warning }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_AnimerPlotDecontamination, "BEH_Pion_NBC_AnimerSite", nodes.BEH_Pion_NBC_AnimerSite }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_NBC_AnimerPlotDecontamination, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_NBC_AnimerSite, "ACT_Pion_Nbc_AnimerSite", nodes.ACT_Pion_Nbc_AnimerSite }

@@ -16,12 +16,6 @@
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_Tools.h"
-#include "Decision/Functions/DEC_PopulationFunctions.h"
-#include "Decision/Functions/DEC_ActionFunctions.h"
-#include "Decision/Functions/DEC_MiscFunctions.h"
-#include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
-#include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
-#include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
@@ -104,7 +98,6 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     , slowDownData_         ( MIL_PopulationAttitude::GetAttitudes().size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
     , attritionData_        ()
     , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), sDamageData( 0., 0. ) )
-    , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "concentration-density", rConcentrationDensity_ )
@@ -132,13 +125,23 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     InitializeDiaFunctions();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType constructor
+// Created: LDC 2009-04-24
+// -----------------------------------------------------------------------------
+MIL_PopulationType::MIL_PopulationType( const DEC_Model_ABC& model )
+    : pModel_               ( &model )
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationType destructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 MIL_PopulationType::~MIL_PopulationType()
 {
-    delete pDIAFunctionTable_;
 }
 
 // -----------------------------------------------------------------------------
@@ -244,60 +247,6 @@ void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeDiaFunctions()
 {
-    // Actions
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_Population                   >, "DEC_StopAction"       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_Population                   >, "DEC_PauseAction"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_Population                   >, "DEC_ReprendAction"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionMove        >, "DEC__StartDeplacement" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionFireOnPions >, "DEC__StartTirSurPions" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionFireOnPion  >, "DEC__StartTirSurPion"  );
-
-    // Knowledge agents
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation, "DEC_ConnaissanceAgent_RoePopulation"   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetPionsAttacking             , "DEC_Connaissances_PionsPrenantAPartie" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetPionsSecuring              , "DEC_Connaissances_PionsSecurisant"     );
-
-    // Knowledge objects
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeObjectLocalisation, "DEC_ConnaissanceObjet_Localisation"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::IsKnowledgeObjectValid        , "DEC_ConnaissanceObjet_EstValide"       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetObjectsInZone              , "DEC_Connaissances_ObjetsDansZone"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DamageObject                  , "DEC_ConnaissanceObjet_Degrader"        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeObjectDistance    , "DEC_ConnaissanceObjet_Distance"        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint, "DEC_ConnaissanceObjet_PointPlusProche" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::IsEnemy                       , "DEC_ConnaissanceObjet_EstEnnemi"       );
-
-    // Debug
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DebugDrawPoint , "DEC_DebugAffichePoint"  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DebugDrawPoints, "DEC_DebugAffichePoints" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug          , "DEC_Debug"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Trace          , "DEC_Trace"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DecisionalState, "DEC_DecisionalState"    );
-
-    // RC
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_Population >, "DEC_RC"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Message    < MIL_Population >, "DEC_Message" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_Population >, "DEC_Warning" );
-
-    // Effects
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetPionMaxSpeed  , "DEC_Population_RalentissementPion_ChangeVitesse"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::ResetPionMaxSpeed, "DEC_Population_RalentissementPion_VitesseParDefaut" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetAttitude      , "DEC_Population_ChangerAttitude"                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetAttitude      , "DEC_Population_Attitude"                            );
-
-    // Etats decisionnel
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::NotifyDominationStateChanged, "DEC_Population_ChangeEtatDomination" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetNbrDeadHumans            , "DEC_Population_Morts"                );
-
-    // Representations
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetCategory         , "DEC_GetCategory" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::AddToCategory       , "DEC_AddToCategory" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RemoveFromCategory  , "DEC_RemoveFromCategory" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::DeleteRepresentation, "DEC_DeleteRepresentation" );
-    
-    // Former szName_, mission_, automate_:
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetSzName, "DEC_GetSzName"   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::GetMission     , "DEC_GetMission"  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::SetMission     , "DEC_SetMission"  );
 } 
 
 // -----------------------------------------------------------------------------
@@ -357,16 +306,6 @@ MT_Float MIL_PopulationType::GetDamagePH( const PHY_RoePopulation& roeFirer ) co
 {
     assert( damageData_.size() > roeFirer.GetID() );
     return damageData_[ roeFirer.GetID() ].rPH_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DIA_FunctionTable< MIL_Population >& MIL_PopulationType::GetFunctionTable
-// Created: NLD 2005-09-28
-// -----------------------------------------------------------------------------
-DIA_FunctionTable< MIL_Population >& MIL_PopulationType::GetFunctionTable() const
-{
-    assert( pDIAFunctionTable_ );
-    return *pDIAFunctionTable_;
 }
 
 // -----------------------------------------------------------------------------

@@ -1,0 +1,110 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/Fonctions - Obj.bms"] = true
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la position d'un objet (barycentre de sa localisation)
+]]--[[//
+]]--[[// Si l'objet est dans le fuseau, on ne considère que sa localisation 
+]]--[[// inscrite dans le fuseau, sinon, toute sa localisation
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Calcul de la position de l'objet dans la fuseau
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'objet est dans la localisation
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'objet est dans la localisation
+]]--[[// OPT: MIA: utilisé seulement dans l'ALAT et une seule fois
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie l'objet le plus proche du point
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Filtre sur la validité des objets de la liste
+]]--[[//-----------------------------------------------------------------------------
+]]function S_Obj_Position( repObjet )
+    local _returnValue = nil
+    assert( ( repObjet ~= 0 and repObjet ~= nil ), "Pointeur Invalide" )
+    local returnCode = nil
+    local locObjet = DEC_ConnaissanceObjet_Localisation( repObjet )
+    assert( ( locObjet ~= 0 and locObjet ~= nil ), "localisation objet invalide" )
+    _returnValue = S_Geometrie_BarycentreZone( locObjet )
+    return _returnValue
+end
+
+function S_Obj_EstDansLocalisation( obj, loc )
+    local _returnValue = false
+    _returnValue = false
+    local ptObj = S_Obj_Position( obj )
+    if( ( ptObj == 0 or ptObj == nil ) ) then
+        return _returnValue
+    end
+
+    _returnValue = DEC_Geometrie_EstPointDansLocalisation( ptObj, loc )
+    return _returnValue
+end
+
+function S_Geometrie_PositionObjetPlusProche( listeObjets, point )
+    local _returnValue = nil
+    local ptBuffer = nil
+    local distanceMax = 1105199104
+    for _,x in pairs( listeObjets ) do
+    local _continue = true
+do
+            local ptX = S_Obj_Position( x )
+            local rDistance = DEC_Geometrie_Distance( point, ptX )
+            if( rDistance < distanceMax ) then
+                do
+                    distanceMax = rDistance
+                    ptBuffer = ptX
+                end
+            end
+
+        end
+
+    end
+
+    _returnValue = ptBuffer
+    return _returnValue
+end
+
+function S_Geometrie_ObjetPlusProche( listeObjets, point )
+    local _returnValue = nil
+    _returnValue = 0
+    local distanceMax = 1105199104
+    local objetProche = 0
+    for _,x in pairs( listeObjets ) do
+    local _continue = true
+do
+            local objet = x
+            local rDistance = DEC_Geometrie_Distance( point, S_Obj_Position( objet ) )
+            if( rDistance < distanceMax ) then
+                do
+                    distanceMax = rDistance
+                    objetProche = objet
+                end
+            end
+
+        end
+
+    end
+
+    _returnValue = objetProche
+    return _returnValue
+end
+
+function S_Obj_ListeObjetsValides( liste )
+    local _returnValue = {}
+    local listeBuffer = {}
+    for _,x in pairs( liste ) do
+    local _continue = true
+if( DEC_ConnaissanceObjet_EstValide( x ) ) then
+            DEC_UserTypeList_PushBack( listeBuffer, x )
+        end
+
+    end
+
+    _returnValue = listeBuffer
+    return _returnValue
+end
+

@@ -11,10 +11,11 @@
 #define __PHY_ActionTriggerActivityInArea_h_
 
 #include "MIL.h"
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class MIL_AgentPion;
 class PHY_RoleAction_FolkInfluence;
+class TER_Localisation;
 
 namespace population
 {
@@ -28,7 +29,7 @@ namespace population
 */
 // Created: JCR 2007-09-12
 // =============================================================================
-class PHY_ActionTriggerActivityInArea : public PHY_Action_ABC
+class PHY_ActionTriggerActivityInArea : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
@@ -40,7 +41,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionTriggerActivityInArea( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionTriggerActivityInArea( MIL_AgentPion& pion, const std::string& activity, double influence, const TER_Localisation* pLocalisation );
     virtual ~PHY_ActionTriggerActivityInArea();
     //@}
 
@@ -55,7 +56,6 @@ private:
     //@{
     const MIL_AgentPion&            pion_;
     PHY_RoleAction_FolkInfluence&   role_;
-    DIA_Variable_ABC&               diaReturnCode_;
     std::string                     activity_;
     double                          influence_;
     population::Object_ABC*         pObject_;

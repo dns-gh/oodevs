@@ -19,6 +19,7 @@
 class MIL_Mission_ABC;
 
 class NET_ASN_MsgAutomatAttributes;
+class DEC_Decision_ABC;
 
 enum E_ForceRatioState;
 enum E_RulesOfEngagementState;
@@ -33,7 +34,7 @@ class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
 {
 
 public:
-    explicit DEC_AutomateDecision( MIL_Automate& automate );
+             DEC_AutomateDecision( MT_RoleContainer& container, MIL_Automate& automate );
              DEC_AutomateDecision();
     virtual ~DEC_AutomateDecision();
 
@@ -43,11 +44,6 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
-    //@}
-
-    //! @name Init
-    //@{
-    static void InitializeDIA();
     //@}
     
     //! @name Operations
@@ -74,27 +70,80 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Automate& GetAutomate() const;
+    virtual MIL_Automate& GetAutomate() const;
     virtual DEC_AutomateDecision* GetDecAutomate() const;
     virtual std::string GetName() const;
+
+    virtual int GeteEtatPhaseMission() const;
+    virtual void SeteEtatPhaseMission( int value );
+    virtual int GeteEtatLima() const;
+    virtual void SeteEtatLima(  int value );
+    virtual int GeteEtatDec() const;
+    virtual void SeteEtatDec(  int value );
+    float GetrDestruction() const;
+    void SetrDestruction( float value );
+    virtual int GeteEtatEchelon() const;
+    virtual void SeteEtatEchelon( int );
+    MIL_Fuseau* Getfuseau() const;
+    void Setfuseau( MIL_Fuseau* value );
+    TER_Localisation* Getzone() const;
+    void Setzone( TER_Localisation* value );
+    bool GetbOrdreAttendre() const;
+    void SetbOrdreAttendre( bool value );
+    bool GetbOrdrePoursuivre() const;
+    void SetbOrdrePoursuivre( bool value );
+    bool GetbOrdreRalentir() const;
+    void SetbOrdreRalentir( bool value );
+    virtual bool GetbOrdreDecrocher() const;
+    virtual void SetbOrdreDecrocher( bool value );
+    virtual bool GetbOrdreTenirSurLR() const;
+    virtual void SetbOrdreTenirSurLR( bool value );
+    virtual bool GetbOrdreTenir() const;
+    virtual void SetbOrdreTenir( bool value );
+
+    virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
+
+    virtual const std::string& GetDIAType() const;
+    //@}
+
+protected:
+    //! @name Tools
+    //@{
+    virtual void      EndCleanStateAfterCrash      ();
+
+    virtual void RegisterUserFunctions( directia::Brain& brain );
     //@}
 
 private:
     //! @name Tools
     //@{
-    virtual void      EndCleanStateAfterCrash      ();
+    virtual void RegisterSelf( directia::Brain& brain );
     //@}
 
 private:
-    DIA_FunctionCaller< MIL_Automate > diaFunctionCaller_;
-    DIA_Parameters                     missionMrtBehaviorParameters_;   
-    DIA_Parameters                     missionConduiteBehaviorParameters_;   
+    //! @name Functions
+    //@{
+    bool IsPionNeutralized( DEC_Decision_ABC* );
+    //@}
 
+private:
     // Etat décisionnel
     E_RulesOfEngagementState nRulesOfEngagementState_;
     E_CloseCombatState       nCloseCombatState_;
     E_OperationalState       nOperationalState_;
     bool                     bStateHasChanged_;
+    int                      ePhaseMission_;
+    int                      eEtatLima_;
+    int                      eEtatDec_;
+    float                    rDestruction_;
+    int                      eEtatEchelon_;
+    bool                     bOrdreAttendre_;
+    bool                     bOrdrePoursuivre_;
+    bool                     bOrdreRalentir_;
+    bool                     bOrdreDecrocher_;
+    bool                     bOrdreTenirSurLR_;
+    bool                     bOrdreTenir_;
+
 
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Automate

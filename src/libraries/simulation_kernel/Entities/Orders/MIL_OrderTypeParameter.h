@@ -18,6 +18,7 @@ namespace xml
 class MIL_OrderType_ABC;
 class DEC_KnowledgeResolver_ABC;
 class MIL_ParameterType_ABC;
+class MIL_MissionParameter_ABC;
 
 // =============================================================================
 /** @class  MIL_OrderTypeParameter
@@ -37,10 +38,15 @@ public:
 
     //! @name Operations
     //@{
-    void Copy( const ASN1T_MissionParameter& from, DIA_TypedObject&        to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
-    bool Copy( const DIA_TypedObject&        from, DIA_TypedObject&        to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
-    bool Copy( const DIA_TypedObject&        from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
+    bool Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
     void CleanAfterSerialization( ASN1T_MissionParameter& to ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    const std::string& GetName() const;
+    const std::string& GetDIAName() const;
+    const MIL_ParameterType_ABC& GetType() const;
     //@}
 
 private:
@@ -48,6 +54,7 @@ private:
     //@{
           int                    nDIAParameter_;
           std::string            strName_;
+          std::string            strDiaName_;
           bool                   bIsOptional_;
     const MIL_ParameterType_ABC* pParameter_;
     //@}

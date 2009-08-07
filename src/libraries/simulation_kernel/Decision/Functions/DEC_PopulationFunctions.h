@@ -14,7 +14,9 @@
 
 #include "MIL.h"
 
+class DEC_Decision_ABC;
 class MIL_Population;
+class MIL_Mission_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -25,38 +27,33 @@ public:
     //! @name Functions
     //@{  
     // Test / debug
-    static void Debug          ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void Trace          ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void DecisionalState( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void DebugDrawPoints( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void DebugDrawPoint ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void DecisionalState( const MIL_Population& callerPopulation, const std::string& key, const std::string& value );
 
     // Effects
-    static void SetPionMaxSpeed  ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
-    static void ResetPionMaxSpeed( DIA_Call_ABC& call, MIL_Population& callerPopulation );
-    static void SetAttitude      ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
-    static void GetAttitude      ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
-    static void GetNbrDeadHumans ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
+    static void SetAttitude    ( MIL_Population& callerPopulation, unsigned int attitudeId );
+    static unsigned int  GetAttitude    ( const MIL_Population& callerPopulation );
 
     // Knowledge agents
-    static void GetKnowledgeAgentRoePopulation( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void GetPionsAttacking             ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void GetPionsSecuring              ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static int GetKnowledgeAgentRoePopulation ( uint agentId );
 
     // Knowledge objects
-    static void GetKnowledgeObjectLocalisation  ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void IsKnowledgeObjectValid          ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void GetObjectsInZone                ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void DamageObject                    ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void GetKnowledgeObjectDistance      ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void GetKnowledgeObjectClosestPoint  ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void IsEnemy                         ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectLocalisation 	( int knowledgeId);
+    static bool IsKnowledgeObjectValid										( unsigned int nID );
+    static std::vector< unsigned int > GetObjectsInZone						( const TER_Localisation* pZone, const std::vector< std::string >& parameters );
+    static int DamageObject													( int knowledgeId, double damageFactor ) ;
+    static float GetKnowledgeObjectDistance									( const MIL_Population& callerPopulation, int knowledgeId ) ;
+    static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectClosestPoint 	( const MIL_Population& callerPopulation, int knowledgeId ) ;
+    static int IsEnemy                         								( const MIL_Population& callerPopulation, int knowledgeId   );
 
     // Etat decisionnel
-    static void NotifyDominationStateChanged( DIA_Call_ABC& call, MIL_Population& callerPopulation );
+    static void NotifyDominationStateChanged( MIL_Population& callerPopulation, MT_Float dominationState );
 
-    static void GetSzName( DIA_Call_ABC& call, MIL_Population& callerPopulation );
+    static std::string  GetSzName( MIL_Population& callerPopulation );
     //@}    
+    
+    static MIL_Mission_ABC* GetMission( DEC_Decision_ABC* pAgent );
+    static void SetMission            ( DEC_Decision_ABC* object, MIL_Mission_ABC* mission );  
+
 };
 
 #endif // __DEC_PopulationFunctions_h_

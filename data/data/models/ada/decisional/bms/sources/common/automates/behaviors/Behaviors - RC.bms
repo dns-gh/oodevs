@@ -1,0 +1,729 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/behaviors/Behaviors - RC.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_RC_Automate_Situation"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Situation_Ambiance", {} },
+        { "BEH_RC_Automate_Situation_RapFor", {} },
+        { "BEH_RC_Automate_Situation_NBC", {} },
+        { "BEH_RC_Automate_Situation_ROE", {} },
+        { "BEH_RC_Automate_Situation_Radio", {} },
+        { "BEH_RC_Automate_Situation_Radar", {} },
+        { "BEH_RC_Automate_Situation_Coordination", {} },
+        { "BEH_RC_Automate_Situation_Neutralisation", {} },
+        { "BEH_RC_Automate_Situation_Contact", {} },
+        { "BEH_RC_Automate_Situation_Mission", {} },
+        { "BEH_RC_Automate_Situation_Limas", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_RC_Automate_Situation_Ambiance, 1, {} )--[[//-------------------------------------------------------------------------
+]]--[[// CRs en dehors du cadre de la mission
+]]--[[//-------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_RC_Automate_Situation_RapFor, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation_NBC, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation_ROE, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation_Radio, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation_Radar, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation_Coordination, 1, {} )--[[// Ordre anibas attendre poursuivre.
+]]
+        Activate( self.activations.BEH_RC_Automate_Situation_Neutralisation, 1, {} )
+        --[[//-------------------------------------------------------------------------
+]]--[[// CRs valables pendant une mission --> reinit des que nouvelle mission
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Valable un tic
+]]if( DEC_NouvelleMission() ) then
+            return
+        end
+
+        Activate( self.activations.BEH_RC_Automate_Situation_Contact, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation_Mission, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation_Limas, 1, {} )--[[// lié à la mission
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_Neutralisation()
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_Neutralisation"
+{
+    activations =
+    {
+        { "ACT_RC_Automate", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Juste CR Prise à partie par Art
+]]--[[// pour voir neutralisation cf CR. des pions
+]]--[[//-------------------------------------------------------------------------
+]]DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                if( DEC_Automate_PionEstNeutralise( pion ) ) then
+                    Activate( self.activations.ACT_RC_Automate, 1, { eRC_PrisSousTirArtillerie, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_Ambiance()
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_Ambiance"
+{
+    activations =
+    {
+        { "ACT_RC_Automate", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Des qu'un pion à changé d'ambiance...
+]]--[[//-------------------------------------------------------------------------
+]]DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatAmbiance( pion ) == eEtatAmbiance_Surete ) then
+                    do
+                        Activate( self.activations.ACT_RC_Automate, 1, { eRC_AmbianceSurete, } )
+                                                return
+
+                    end
+                end
+
+            end
+
+        end
+
+        Activate( self.activations.ACT_RC_Automate, 1, { eRC_AmbianceVitesse, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_Coordination()
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_Coordination"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Sur", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// CR si on donne l'ordre à l'automate d'attendre
+]]--[[//-------------------------------------------------------------------------
+]]local listePions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
+        for _,x in pairs( listePions ) do
+        local _continue = true
+do
+                local pion = x
+                --[[// Evite de faire un CR qd coordination sur LC
+]]--[[// si coordination interne g_bOrdreAnibas = false --> pas de CR //
+]]if( F_Pion_GeteEtatLima( pion ) == eEtatLima_aucune and F_Pion_GeteEtatOrdreCoordination( pion ) == eEtatOrdreCoordination_Attendre and g_bOrdreAnibas ) then
+                    Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_AttenteOrdrePoursuivre, pion, #( listePions ), } )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_RapFor
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_RapFor"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Situation_RapForDef", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Peut être testé le rapFort du premier echelon plutôt...
+]]--[[//-------------------------------------------------------------------------
+]]if( S_Automate_EstEnDifficulte() ) then
+            Activate( self.activations.BEH_RC_Automate_Situation_RapForDef, 1, {} )
+        end
+
+    end,
+
+--[[// $$$$ MIA pour être sur vrai sur au moins deux ticks
+]]}
+
+node "BEH_RC_Automate_Situation_RapForDef"
+{
+    activations =
+    {
+        { "ACT_Warning", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            return
+        end
+
+        Activate( self.activations.ACT_Warning, 1, { eRC_RapportDeForceDefavorable, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_ROE
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_ROE"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Sur", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// ROE
+]]--[[//-------------------------------------------------------------------------
+]]local nbrePions = #( DEC_Automate_PionsAvecPC() )
+        for _,x in pairs( --[[// AVEC PC!
+]]DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                local pion = x
+                switch_1 = F_Pion_GeteConsigneTir( pion )
+                    if switch_1 == eEtatROE_None
+                    or switch_1 == eEtatROE_TirLibre then
+                        --[[// MIA : ????? devrait pas exister!
+]]Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_TirLibre, pion, nbrePions, } )
+                        
+                    elseif switch_1 == eEtatROE_TirSurRiposte then
+                        Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_TirRestreint, pion, nbrePions, } )
+                        
+                    elseif switch_1 == eEtatROE_TirInterdit then
+                        Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_TirInterdit, pion, nbrePions, } )
+                        
+                                        end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_Radio
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_Radio"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Sur", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Sur tous les pions
+]]--[[//-------------------------------------------------------------------------
+]]--[[// AVEC PC!
+]]DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatRadio( pion ) == eEtatRadio_Silence ) then
+                    Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_DebutSilenceRadio, pion, #( DEC_Automate_PionsAvecPC() ), } )
+                else
+                    Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_FinSilenceRadio, pion, #( DEC_Automate_PionsAvecPC() ), } )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_Radar
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_Radar"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Sur", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Sur tous les pions
+]]--[[//-------------------------------------------------------------------------
+]]--[[// AVEC PC!
+]]DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatRadar( pion ) == eEtatRadar_Silence ) then
+                    Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_DebutSilenceRadar, pion, #( DEC_Automate_PionsAvecPC() ), } )
+                else
+                    Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_FinSilenceRadar, pion, #( DEC_Automate_PionsAvecPC() ), } )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_NBC
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_NBC"
+{
+    activations =
+    {
+        { "ACT_RC_Automate", {} },
+        { "BEH_RC_Automate_Sur", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local rNbrePions = #( DEC_Automate_PionsAvecPC() )
+        for _,x in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Alerte de niveau 4 sur ordre
+]]--[[//-------------------------------------------------------------------------
+]]--[[// AVEC PC!
+]]DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                local pion = x
+                if( DEC_Automate_PionEstContamine( pion ) ) then
+                    Activate( self.activations.ACT_RC_Automate, 1, { eRC_ContamineNBC, } )
+                end
+
+                if( F_Pion_GeteEtatNbc( pion ) == eEtatNbc_Niv4 ) then
+                    do
+                        --[[// Alerte niv NBC4
+]]Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_TenueProtectionNBCMise, pion, rNbrePions, } )
+                        Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_AlerteNBCNiveau4, pion, rNbrePions, } )
+                    end
+--[[// Niveau NBC 0
+]]                else
+do
+                        --[[// Alerte niv NBC4
+]]Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_TenueProtectionNBCEnlevee, pion, rNbrePions, } )
+                        Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_FinAlerteNBCNiveau4, pion, rNbrePions, } )
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// RC_Automate_GererReception_Mission
+]]--[[//
+]]--[[// Commentaires: seulement sur la sitaution mission des pions de premier echelon
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_Mission"
+{
+    activations =
+    {
+        { "ACT_RC_Automate", {} },
+        { "ACT_MAJ_Automate_EtatPhaseMission", {} },
+        { "BEH_RC_Automate_Situation_FinMission", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Situation mission
+]]--[[//-------------------------------------------------------------------------
+]]local listePions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
+        for _,x in pairs( listePions ) do
+        local _continue = true
+do
+                local pion = x
+                --[[// Fin mission --> cas particulier traité ailleurs
+]]if( F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_FinMission ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    --[[// Toutes phases		
+]]if( F_Pion_GeteEtatPhaseMission( pion ) ~= eEtatPhaseMission_None ) then
+                        do
+                            local eTypeRC = S_Convertir_SituationMission_RC( F_Pion_GeteEtatPhaseMission( pion ) )
+                            if( eTypeRC == eNbr ) then
+                                _continue = false
+                            end
+
+                                if _continue then
+                                StartActivate( self.activations.ACT_RC_Automate, 1, { eTypeRC, } )
+                                StartActivate( self.activations.ACT_MAJ_Automate_EtatPhaseMission, 1, { F_Pion_GeteEtatPhaseMission( pion ), } )
+                            end
+                        end
+                    end
+
+                end
+            end
+--[[//-------------------------------------------------------------------------
+]]--[[// Spé sur fin mission
+]]--[[//-------------------------------------------------------------------------
+]]
+        end
+
+        Activate( self.activations.BEH_RC_Automate_Situation_FinMission, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_FinMission
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_FinMission"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Sur", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// cas particulier de fin de mission si Pecl
+]]local listePionsPecl = S_ObtenirPionsDe( eEtatEchelon_Eclairage, eEtatDestruction_None )
+        local listePionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        for _,x in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Echelon ecl
+]]--[[//-------------------------------------------------------------------------
+]]listePionsPecl ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_FinMission ) then
+                    Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_FinMission, pion, #( listePionsPecl ), } )
+                end
+
+            end
+--[[//-------------------------------------------------------------------------
+]]--[[// Premier echelon --> fin si tous le PE fin
+]]--[[//-------------------------------------------------------------------------
+]]
+        end
+
+        for _,x in pairs( listePionsPE ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_FinMission ) then
+                    Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_FinMission, pion, #( listePionsPE ), } )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_Contact
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_Contact"
+{
+    activations =
+    {
+        { "ACT_RC_Automate", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Sur tous les pions même le PC...
+]]--[[//-------------------------------------------------------------------------
+]]myself:DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatFeu( pion ) == eEtatFeu_Executer ) then
+                    StartActivate( self.activations.ACT_RC_Automate, 1, { eRC_PriseContact, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_Situation_Limas
+]]--[[//
+]]--[[// Commentaires:     
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Situation_Limas"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_SurLima", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Suivant le diffétent type de lima
+]]--[[//-------------------------------------------------------------------------
+]]Activate( self.activations.BEH_RC_Automate_SurLima, 1, { eTypeLima_LC, } )
+        Activate( self.activations.BEH_RC_Automate_SurLima, 1, { eTypeLima_LD, } )
+        Activate( self.activations.BEH_RC_Automate_SurLima, 1, { eTypeLima_LCA, } )
+        Activate( self.activations.BEH_RC_Automate_SurLima, 1, { eTypeLima_LIA, } )
+        Activate( self.activations.BEH_RC_Automate_SurLima, 1, { eTypeLima_LR, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate_SurLima
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_SurLima"
+{
+    activations =
+    {
+        { "ACT_RC_Automate_SurLima", {} },
+        { "ACT_RC_Automate", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eTypeLima = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Le premier pion a atteindre la lima = CR
+]]--[[//-------------------------------------------------------------------------
+]]DEC_Automate_PionsSansPC() ) do
+        local _continue = true
+do
+                local pion = x
+                if( F_Pion_GeteEtatLima( pion ) == S_Convertir_TypeLima_EtatLima( self._namedParams.eTypeLima ) ) then
+                    do
+                        Activate( self.activations.ACT_RC_Automate_SurLima, 1, { self._namedParams.eTypeLima, } )
+                        switch_1 = --[[// cas particuliers
+]]self._namedParams.eTypeLima
+                            if switch_1 == eTypeLima_LC then
+                                                            Activate( self.activations.ACT_RC_Automate, 1, { eRC_AttenteOrdrePoursuivre, } )
+                                
+                            elseif switch_1 == eTypeLima_LD then
+                                                            Activate( self.activations.ACT_RC_Automate, 1, { eRC_AttenteOrdreDeboucher, } )
+                                
+                            elseif switch_1 == eTypeLima_LCA
+                            or switch_1 == eTypeLima_LIA
+                            or switch_1 == eTypeLima_LR then
+                                                            StartActivate( self.activations.ACT_RC_Automate_SurLima, 1, { self._namedParams.eTypeLima, } )
+                                --[[// Passage sur  LCA une seule fois! mais pas forcément en même temps
+]]
+                                                        end
+
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// Automate_RC_Sur
+]]--[[//
+]]--[[// Commentaires: RC provenant d'un pion
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate_Sur"
+{
+    activations =
+    {
+        { "BEH_RC_Automate", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeRC = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.rNombrePions = self.params[3]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_RC_Automate, 1, { self._namedParams.typeRC, self._namedParams.rNombrePions, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Automate
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_RC_Automate"
+{
+    activations =
+    {
+        { "ACT_RC_Automate", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeRC = self.params[1]
+        self._namedParams.rNombrePions = self.params[2]
+    end,
+
+    activate = function( self )
+        if( GetActivity() >= self._namedParams.rNombrePions ) then
+            Activate( self.activations.ACT_RC_Automate, 1, { self._namedParams.typeRC, } )
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate, "ACT_RC_Automate", nodes.ACT_RC_Automate }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_Ambiance", nodes.BEH_RC_Automate_Situation_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_RapFor", nodes.BEH_RC_Automate_Situation_RapFor }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_NBC", nodes.BEH_RC_Automate_Situation_NBC }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_ROE", nodes.BEH_RC_Automate_Situation_ROE }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_Radio", nodes.BEH_RC_Automate_Situation_Radio }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_Radar", nodes.BEH_RC_Automate_Situation_Radar }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_Coordination", nodes.BEH_RC_Automate_Situation_Coordination }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_Neutralisation", nodes.BEH_RC_Automate_Situation_Neutralisation }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_Contact", nodes.BEH_RC_Automate_Situation_Contact }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_Mission", nodes.BEH_RC_Automate_Situation_Mission }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation, "BEH_RC_Automate_Situation_Limas", nodes.BEH_RC_Automate_Situation_Limas }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Ambiance, "ACT_RC_Automate", nodes.ACT_RC_Automate }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Contact, "ACT_RC_Automate", nodes.ACT_RC_Automate }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Coordination, "BEH_RC_Automate_Sur", nodes.BEH_RC_Automate_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_FinMission, "BEH_RC_Automate_Sur", nodes.BEH_RC_Automate_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Limas, "BEH_RC_Automate_SurLima", nodes.BEH_RC_Automate_SurLima }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Mission, "ACT_RC_Automate", nodes.ACT_RC_Automate }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Mission, "ACT_MAJ_Automate_EtatPhaseMission", nodes.ACT_MAJ_Automate_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Mission, "BEH_RC_Automate_Situation_FinMission", nodes.BEH_RC_Automate_Situation_FinMission }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_NBC, "ACT_RC_Automate", nodes.ACT_RC_Automate }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_NBC, "BEH_RC_Automate_Sur", nodes.BEH_RC_Automate_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Neutralisation, "ACT_RC_Automate", nodes.ACT_RC_Automate }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_ROE, "BEH_RC_Automate_Sur", nodes.BEH_RC_Automate_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Radar, "BEH_RC_Automate_Sur", nodes.BEH_RC_Automate_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_Radio, "BEH_RC_Automate_Sur", nodes.BEH_RC_Automate_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_RapFor, "BEH_RC_Automate_Situation_RapForDef", nodes.BEH_RC_Automate_Situation_RapForDef }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Situation_RapForDef, "ACT_Warning", nodes.ACT_Warning }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_Sur, "BEH_RC_Automate", nodes.BEH_RC_Automate }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_SurLima, "ACT_RC_Automate_SurLima", nodes.ACT_RC_Automate_SurLima }
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_SurLima, "ACT_RC_Automate", nodes.ACT_RC_Automate }

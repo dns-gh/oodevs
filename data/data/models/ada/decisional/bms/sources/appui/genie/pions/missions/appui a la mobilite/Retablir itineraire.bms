@@ -1,0 +1,203 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Retablir itineraire.bms"] = true
+
+include "bit.lua"
+
+
+--[[// ******************************************************************************
+]]--[[// MIS_Pion_GEN_RetablirItineraire
+]]--[[//
+]]--[[// Commentaires: Refonte 27/10/2006
+]]--[[//
+]]--[[// ******************************************************************************
+]]node "MIS_Pion_GEN_RetablirItineraire"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+        { "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "------------- Retablir itineraire -----------------" )
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Squelette de mission
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progression
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                --[[// Progression
+]]if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiDeminage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                --[[// Nettoyage obstacle si possible
+]]Activate( self.activations.BEH_Dep_GEN_Retablir_ReagirFaceAObstacles, 2, {} )
+                
+            --[[// Fin de la mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_GEN_Retablir_ReagirFaceAObstacles
+]]--[[//
+]]--[[// Commentaires: --> Reduction si possible des obstacles
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles"
+{
+    activations =
+    {
+        { "BEH_Objet_Pion_GEN_ReduireObstacle", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.repObjet = self.repObjet or 0
+        self.rDist = self.rDist or 0
+        self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
+        self.bObjetProcheSurItineraire = DEC_Itineraire_ProchainObjet( self.repObjet, self.rDist, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
+        self.repObjet = self.bObjetProcheSurItineraire.second.first
+        self.rDist = self.bObjetProcheSurItineraire.second.second
+        self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire.first
+        if( self.bObjetProcheSurItineraire and DEC_ConnaissanceObjet_EstValide( self.repObjet ) and self.rDist < 200 ) then
+            Activate( self.activations.BEH_Objet_Pion_GEN_ReduireObstacle, 1, { self.repObjet, } )
+        end
+
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Objet_Pion_GEN_ReduireObstacle
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Objet_Pion_GEN_ReduireObstacle"
+{
+    activations =
+    {
+        { "ACT_Obj_Pion_GEN_ReduireObstacle", {} },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
+        { "ACT_Dep_SePoster", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.obj = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------
+]]--[[// Validité de l'objet
+]]--[[//-----------------------------------------------------------------
+]]        if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.obj ) ) then
+            do
+                --[[// hum hum
+]]myself.objMisEnCours_ = 0
+                                Halt()
+
+            end
+        end
+
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------
+]]--[[// Organisation chantier, verification renfort, brechage et 
+]]--[[// desorganisation chantier
+]]--[[//-----------------------------------------------------------------                
+]]if( DEC_Agent_PeutDetruireObjet( self._namedParams.obj ) ) then
+            do
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Obj_Pion_GEN_ReduireObstacle, 1, setmetatable( { self._namedParams.obj, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+            end
+        else
+do
+                Activate( self.activations.ACT_Pion_GEN_AttendreRenforcementPour, 1, { self._namedParams.obj, } )
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+            end
+        end
+
+--[[// hum hum
+]]    end,
+
+    destroy = function( self )
+                myself.objMisEnCours_ = 0
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_GEN_RetablirItineraire = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GEN_Retablir_ReagirFaceAObstacles, "BEH_Objet_Pion_GEN_ReduireObstacle", nodes.BEH_Objet_Pion_GEN_ReduireObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_ReduireObstacle, "ACT_Obj_Pion_GEN_ReduireObstacle", nodes.ACT_Obj_Pion_GEN_ReduireObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_ReduireObstacle, "ACT_Pion_GEN_AttendreRenforcementPour", nodes.ACT_Pion_GEN_AttendreRenforcementPour }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_ReduireObstacle, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_RetablirItineraire, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_RetablirItineraire, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_RetablirItineraire, "BEH_Dep_ProgressionSur", nodes.BEH_Dep_ProgressionSur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_RetablirItineraire, "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles", nodes.BEH_Dep_GEN_Retablir_ReagirFaceAObstacles }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_RetablirItineraire, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

@@ -1,0 +1,530 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/Globals.bms"] = true
+
+include "bit.lua"
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// fichiers à inclure
+]]--[[//-----------------------------------------------------------------------------
+]]include "Melee/Abc/Automates/Common/Globals.bms"
+
+include "Melee/Abc/Automates/GE40/Parameters.bms"
+
+
+--[[// GLOBAL -- pour optim
+]]local g_rRapEniDebarques = 0
+local g_rRapEniEmbarques = 0
+local g_rRapTerrainComp = 0
+local g_rRapTerrainOuvert = 0
+local g_rEstimationRetard = 0
+local g_rEstimationDelais = 0
+local g_bPhaseReceuil = false
+--[[//-----------------------------------------------------------------------------
+]]--[[// Macros
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//=============================================================================
+]]--[[// Fonctions
+]]--[[//=============================================================================
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de Type ABC
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de Type INF 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de Type Melee 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de Type Melee 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de Type Melee 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de Type Genie 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de Type Genie 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de Type Genie 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie si l'agent est au moins détruit tactiquement
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions opérationnels 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions non opérationnels 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions subordonnés correspondant au paramètre
+]]--[[// Ici on ignore l'aspect opérationnel.
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions "En mesure de" 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions dont la mission est en cours 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions dont la mission est en cours 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions dont la mission est en cours 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'automate commence à passer la lima passée en parmètre
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'automate commence à être en retard
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie le nombre de pions à mettre en premier échelon 2/2
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// 3/1 --> triangle base avant
+]]--[[// 2/2
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si tous les pions sont dans le fuseau
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions qui sont dans le fuseau
+]]--[[//-----------------------------------------------------------------------------    
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'automate est en difficulté (Cf. pour CR et Coup Arret ABC)
+]]--[[// ----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la position d'un automate (barycentre)
+]]--[[//-----------------------------------------------------------------------------   
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Calcul d'une force entre 1 et 2 pour gestion des appuis
+]]--[[//
+]]--[[//                                   1
+]]--[[//  force = 1 + -----------------------------------------------
+]]--[[//                            1 + ( dist / 1000 )
+]]--[[//
+]]--[[//-----------------------------------------------------------------------------
+]]function S_Cherche_GE_Filtre_TypeAutomate_ABC( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == "Escadron_AMX" or pion:GetType() == "Escadron_XL" ) then
+                DIA_PushBack( sFiltre, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_TypeAutomate_INF( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == "CompagnieInfanterie_HOT" or pion:GetType() == "CompagnieInfanterie" ) then
+                DIA_PushBack( sFiltre, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_TypeAutomate_Melee( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local pion = x
+            switch_1 = pion:GetType()
+                if switch_1 == "Escadron_AMX"
+                or switch_1 == "Escadron_XL"
+                or switch_1 == "CompagnieInfanterie_HOT"
+                or switch_1 == "CompagnieInfanterie" then
+                    DIA_PushBack( sFiltre, pion )
+                    
+                                end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_TypeAutomate_Log( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == "CompagnieLogTC2" or pion:GetType() == "CompagnieLog" ) then
+                DIA_PushBack( sFiltre, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_TypeAutomate_Eclairage( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == "Peloton_ER" or pion:GetType() == "Peloton_EEI" ) then
+                DIA_PushBack( sFiltre, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_TypeAutomate_Genie( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == "CompagnieGenie" ) then
+                DIA_PushBack( sFiltre, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_TypeAutomate_ART( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == "BatterieASS" ) then
+                DIA_PushBack( sFiltre, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_TypeAutomate_Appui( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local pion = x
+            switch_1 = pion:GetType()
+                if switch_1 == "BatterieASS"
+                or switch_1 == "CompagnieGenie"
+                or switch_1 == "CompagnieLogTC2"
+                or switch_1 == "CompagnieLog" then
+                    DIA_PushBack( sFiltre, pion )
+                end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_EstDetruitTactique( automat )
+    local _returnValue = false
+    _returnValue = ( F_Automat_GetrDestruction( automat ) <= 0.5 )
+    return _returnValue
+end
+
+function S_Cherche_GE_AutomateOperationnels( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local automat = x
+            if( not S_Cherche_GE_EstDetruitTactique( automat ) ) then
+                DIA_PushBack( sFiltre, automat )
+            end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_AutomateNonOperationnels( sPions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,pion in pairs( sPions ) do
+    local _continue = true
+if( S_Cherche_GE_EstDetruitTactique( pion ) ) then
+            DIA_PushBack( sFiltre, pion )
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_ObtenirPionsDe( eEtatEchelon )
+    local _returnValue = {}
+    local selTemp = {}
+    local selPions = DEC_Automate_AutomatesSubordonnes()
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local automat = x
+            if( F_Automat_GeteEtatEchelon( automat ) == eEtatEchelon ) then
+                DIA_PushBack( selTemp, automat )
+            end
+
+        end
+
+    end
+
+    _returnValue = selTemp
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_EnMesureDe( listePions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local pion = x
+            local mission = DEC_GetMission( pion )
+            if( mission ~= nil and ( mission:GetType() == "T_Mission_Automate_SoutenirEnMesureDe" or mission:GetType() == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" ) ) then
+                DIA_PushBack( sFiltre, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_PasFinMission( listePions )
+    local _returnValue = {}
+    local sFiltre = {}
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local automat = x
+            if( F_Automat_GeteEtatPhaseMission( automat ) ~= eEtatPhaseMission_FinMission ) then
+                DIA_PushBack( sFiltre, automat )
+            else
+do
+                    local mission = DEC_GetMission( automat )
+                    if( mission:GetType() ~= "T_Mission_Automate_ABC_Semparer" and mission:GetType() ~= "T_Mission_Automate_INF_Semparer" ) then
+                        DIA_PushBack( sFiltre, automat )
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+    _returnValue = sFiltre
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_EtatLima( eEtatLima, listePions )
+    local _returnValue = {}
+    local selTemp = {}
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local automat = x
+            if( F_Automat_GeteEtatLima( automat ) == eEtatLima ) then
+                DIA_PushFront( selTemp, automat )
+            end
+
+        end
+
+    end
+
+    _returnValue = selTemp
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_EtatSauvegarde( listePions )
+    local _returnValue = {}
+    local selTemp = {}
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local automat = x
+            if( F_Automat_GeteEtatDec( automat ) == eEtatDec_Sauvegarde ) then
+                DIA_PushFront( selTemp, automat )
+            end
+
+        end
+
+    end
+
+    _returnValue = selTemp
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_APasserLima( pionAuto, eEtatLima )
+    local _returnValue = false
+    _returnValue = false
+    local listePionsSubordonnes = DEC_Automate_PionsDeAutomateAvecPC( pionAuto )
+    for _,x in pairs( listePionsSubordonnes ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatLima( pion ) == eEtatLima ) then
+                _returnValue = true
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_AnalyseDelai_GE_EstEnRetard( )
+    local _returnValue = false
+    _returnValue = false
+    if( g_rEstimationRetard > 0.2 ) then
+        _returnValue = true
+    end
+
+    return _returnValue
+end
+
+function S_Dispositif_GE_NombreDePionsPE( rNombrePionsTotal )
+    local _returnValue = 0
+    local mission = DEC_GetMission( myself )
+    if( mission:GetType() == "T_Mission_Automate_ABC_GTIA_Controler" ) then
+        _returnValue = Floor( ( rNombrePionsTotal / 2 ) + 1 )
+    else
+do
+            if( rNombrePionsTotal > 2 ) then
+                _returnValue = rNombrePionsTotal / 2
+            else
+                _returnValue = rNombrePionsTotal
+            end
+
+        end
+    end
+
+    return _returnValue
+end
+
+function S_Analyse_GE_TousPionsDansFuseau( listePions, fuseau )
+    local _returnValue = false
+    _returnValue = true
+    local locFuseau = DEC_Geometrie_ConvertirFuseauEnLocalisation( fuseau )
+    for _,pion in pairs( listePions ) do
+    local _continue = true
+if( not DEC_Geometrie_EstPointDansLocalisation( DEC_Geometrie_CalculerBarycentreAgents( DEC_Automate_PionsDeAutomateAvecPC( pion ) ), locFuseau ) ) then
+            _returnValue = false
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Cherche_GE_Filtre_PionsDansFuseau( listePions, fuseau )
+    local _returnValue = {}
+    local sel = {}
+    local locFuseau = DEC_Geometrie_ConvertirFuseauEnLocalisation( fuseau )
+    for _,pion in pairs( listePions ) do
+    local _continue = true
+if( DEC_Geometrie_EstPointDansLocalisation( DEC_Geometrie_CalculerBarycentreAgents( DEC_Automate_PionsDeAutomateAvecPC( pion ) ), locFuseau ) ) then
+            DIA_PushFront( sel, pion )
+        end
+
+    end
+
+    _returnValue = sel
+    return _returnValue
+end
+
+function S_Automate_EchelonEnDifficulte( echelon )
+    local _returnValue = false
+    _returnValue = false
+    local listePions = S_Cherche_GE_ObtenirPionsDe( echelon )
+    local rIterateur = 0
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local automat = x
+            if( F_Automat_GeteEtatDec( automat ) == eEtatDec_Sauvegarde ) then
+                                rIterateur = rIterateur + 1
+            end
+
+        end
+
+    end
+
+    if( ( rIterateur ~= 0 and rIterateur ~= nil ) and rIterateur == #( listePions ) ) then
+        _returnValue = true
+    end
+
+    return _returnValue
+end
+
+function S_Analyse_GE_PositionAgent( automat )
+    local _returnValue = nil
+    _returnValue = DEC_Geometrie_CalculerBarycentreAgents( DEC_Automate_PionsDeAutomateSansPC( automat ) )
+    return _returnValue
+end
+
+function S_Force_GE_DistanceAgent( pion1, pion2 )
+    local _returnValue = 0
+    local rDist = DEC_Geometrie_Distance( S_Analyse_GE_PositionAgent( pion1 ), S_Analyse_GE_PositionAgent( pion2 ) )
+    _returnValue = 1 + 1 / ( 1 + rDist / 1000 )
+    return _returnValue
+end
+

@@ -24,15 +24,19 @@
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
-MT_Float PHY_PerceptionRecoSurveillance::rForestSurveillanceTime_ = std::numeric_limits< MT_Float >::max();
-MT_Float PHY_PerceptionRecoSurveillance::rUrbanSurveillanceTime_  = std::numeric_limits< MT_Float >::max();
-MT_Float PHY_PerceptionRecoSurveillance::rEmptySurveillanceTime_  = std::numeric_limits< MT_Float >::max();
+
+namespace
+{
+    MT_Float rForestSurveillanceTime_ = std::numeric_limits< MT_Float >::max();
+    MT_Float rUrbanSurveillanceTime_  = std::numeric_limits< MT_Float >::max();
+    MT_Float rEmptySurveillanceTime_  = std::numeric_limits< MT_Float >::max();
+}
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoSurveillance::sReco constructor
+// Name: PHY_PerceptionRecoSurveillanceReco constructor
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoSurveillance::sReco::sReco( const TER_Localisation& localisation )
+PHY_PerceptionRecoSurveillanceReco::PHY_PerceptionRecoSurveillanceReco( const TER_Localisation& localisation )
     : localisation_             ( localisation )
     , nForestDetectionTimeStep_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , nUrbanDetectionTimeStep_  ( nForestDetectionTimeStep_ )
@@ -94,11 +98,10 @@ void PHY_PerceptionRecoSurveillance::ReadAlatTime( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoSurveillance::sReco::IsInside
+// Name: PHY_PerceptionRecoSurveillanceReco::IsInside
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-inline
-bool PHY_PerceptionRecoSurveillance::sReco::IsInside( const MT_Vector2D& vPoint ) const
+bool PHY_PerceptionRecoSurveillanceReco::IsInside( const MT_Vector2D& vPoint ) const
 {
     if ( !localisation_.IsInside( vPoint ) )
         return false;
@@ -121,11 +124,10 @@ bool PHY_PerceptionRecoSurveillance::sReco::IsInside( const MT_Vector2D& vPoint 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoSurveillance::sReco::GetAgentsInside
+// Name: PHY_PerceptionRecoSurveillanceReco::GetAgentsInside
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-inline
-void PHY_PerceptionRecoSurveillance::sReco::GetAgentsInside( TER_Agent_ABC::T_AgentPtrVector& result ) const
+void PHY_PerceptionRecoSurveillanceReco::GetAgentsInside( TER_Agent_ABC::T_AgentPtrVector& result ) const
 {
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, result );
 
@@ -141,7 +143,7 @@ void PHY_PerceptionRecoSurveillance::sReco::GetAgentsInside( TER_Agent_ABC::T_Ag
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoSurveillance::PHY_PerceptionRecoSurveillance( PHY_RolePion_Perceiver& perceiver )
-    : PHY_Perception_ABC( perceiver )
+    : PHY_PerceptionWithLocation< PHY_PerceptionRecoSurveillanceReco >( perceiver )
 {
     // NOTHING
 }
@@ -161,30 +163,20 @@ PHY_PerceptionRecoSurveillance::~PHY_PerceptionRecoSurveillance()
 // Name: PHY_PerceptionRecoSurveillance::AddLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void* PHY_PerceptionRecoSurveillance::AddLocalisation( const TER_Localisation& localisation )
+int PHY_PerceptionRecoSurveillance::AddLocalisation( const TER_Localisation& localisation )
 {
-    sReco* pNewReco = new sReco( localisation );
-    
+    PHY_PerceptionRecoSurveillanceReco* pNewReco = new PHY_PerceptionRecoSurveillanceReco( localisation );    
     assert( pNewReco );
-    recos_.push_back( pNewReco );
-    return pNewReco;
+    return Add( pNewReco );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoSurveillance::RemoveLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoSurveillance::RemoveLocalisation( void* pId )
+void PHY_PerceptionRecoSurveillance::RemoveLocalisation( int id )
 {
-    sReco* pReco = static_cast< sReco* >( pId );
-
-    IT_RecoVector it = std::find( recos_.begin(), recos_.end(), pReco );
-
-    if ( it != recos_.end() )
-    {
-        delete pReco;
-        recos_.erase( it );    
-    }
+    Remove( id );
 }
 
 // -----------------------------------------------------------------------------

@@ -1,0 +1,126 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/decrocher/MRT - Decrocher.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_Decrocher
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_Decrocher"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_AssignerDecrocherA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "$ MIS_Automate_Decrocher : debut MRT $" )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Assignation et vérification
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eValidationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_MRT_Valide()
+                    DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eValidationMRT == eActionEffectuee ) then
+            do
+                self.eValidationMRT = eActionEnCours
+                                do
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_AssignerDecrocherA, 1, { DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_AssignerDecrocherA
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Medo_Automate_AssignerDecrocherA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+        self._namedParams.zoneRegroupement = self.params[2]
+    end,
+
+    activate = function( self )
+        self.ptRegroupement = self.ptRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
+        if( ( self.ptRegroupement == 0 or self.ptRegroupement == nil ) ) then
+            do
+                DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                self.params.__returnValue = eActionImpossible
+                return
+
+            end
+--[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------	
+]]        end
+
+        if( ModuleBegins() ) then
+            do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                local _continue = true
+                    StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, pion, self.ptRegroupement, eEtatEchelon_Premier, } )
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_Decrocher = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_AssignerDecrocherA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_AssignerDecrocherA, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_Decrocher, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_Decrocher, "BEH_Medo_Automate_AssignerDecrocherA", nodes.BEH_Medo_Automate_AssignerDecrocherA }

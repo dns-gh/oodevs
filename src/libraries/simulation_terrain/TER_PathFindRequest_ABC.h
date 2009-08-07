@@ -41,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual void Execute( TerrainPathfinder& pathfind ) = 0;
+    virtual void CleanAfterComputation() = 0;
     //@}
 };
 

@@ -1,0 +1,68 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/actions/Actions - Nbc.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pion_Nbc_DemanderDecontaminationSur
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Pion_Nbc_DemanderDecontaminationSur"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.siteDecontamination = self.params[1]
+    end,
+
+    select = function( self )
+        self.eValiditeRequete = self.eValiditeRequete or eRequeteValide
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_RC( eRC_DemandeDecontamination )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Demander le decontamination
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eValiditeRequete ~= eRequeteInvalide ) then
+            self.eValiditeRequete = DEC_ConnaissanceObjet_DemandeDeDecontamination( self._namedParams.siteDecontamination )
+        end
+
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Nbc_PasserEnNiveauNBC
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Nbc_PasserEnNiveauNBC"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatNbc = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatNbc( myself, self._namedParams.eEtatNbc )
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatNbc( myself, eEtatNbc_Niv0 )
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatNbc( myself, eEtatNbc_Niv0 )
+    end,
+
+}
+

@@ -1,0 +1,106 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/missions/Decrocher.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_Decrocher
+]]--[[//
+]]--[[// Commentaires: BUT: au niveau de la patrouille, renseigner en permanence sur
+]]--[[//               un eni sans se laisser accrocher NI identifier. Au niveau de
+]]--[[//               de la patrouille, pas d'opportunité d'ouverture du feu.
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_Decrocher"
+{
+    activations =
+    {
+        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Manoeuvre_Pion_GererRecueil", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                StartActivate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Manoeuvre_Pion_GererRecueil, 10, {} )
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eDecrocher
+                
+            --[[// 2) Decrocher
+]]elseif switch_1 == eDecrocher then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Decroche, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// 4) Fin de la mission
+]]elseif switch_1 == eFinMission then
+                StopActivate( self.activations.BEH_MOT_DesactiveSauvegarde, {} )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                --[[// quand on stationne, on débarque les passagers
+]]if( self.eEtat == eActionEffectuee ) then
+                    do
+                        DEC_Transport_Annuler()
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Decrocher = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_MOT_DesactiveSauvegarde", nodes.BEH_MOT_DesactiveSauvegarde }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_Manoeuvre_Pion_GererRecueil", nodes.BEH_Manoeuvre_Pion_GererRecueil }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }

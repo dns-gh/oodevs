@@ -1,0 +1,383 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/motivationsreactionpopulations/Motivations.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[//  MOT_RiposteSurPopulations
+]]--[[//
+]]--[[//  Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.motivations[ "MOT_RiposteSurPopulations" ] =
+{
+    activation = {
+        STIM_PriseAPartiParPopulation = 170,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 1000,
+    max_decrease_rate = 5,
+    max_output_value = 1000,
+}
+
+node "ActivatedByMOT_RiposteSurPopulations"
+{
+    activations =
+    {
+        { "BEH_MOT_RiposteSurPopulations", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_RiposteSurPopulations, GetMotivation( "MOT_RiposteSurPopulations" ), {} )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOT_EsquivePopulations
+]]--[[//
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_EsquivePopulations" ] =
+{
+    activation = {
+        STIM_PopulationDangereuse = 170,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 1000,
+    max_decrease_rate = 5,
+    max_output_value = 1000,
+}
+
+node "ActivatedByMOT_EsquivePopulations"
+{
+    activations =
+    {
+        { "BEH_MOT_DecrochageFaceAPopulations", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[//ce comportement permet de décrocher à une position de sécurité
+]]Activate( self.activations.BEH_MOT_DecrochageFaceAPopulations, GetMotivation( "MOT_EsquivePopulations" ), {} )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// MOT_PasserEnEmploiForceInterdit
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnEmploiForceInterdit" ] =
+{
+    activation = {
+        VE_EmploiForceInterdit = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnEmploiForceInterdit"
+{
+    activations =
+    {
+        { "BEH_MOT_PasserEnEmploiForceInterdit", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnEmploiForceInterdit, GetMotivation( "MOT_PasserEnEmploiForceInterdit" ), {} )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// MOT_PasserEnMaintienADistanceParMoyensNonLetaux
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnMaintienADistanceParMoyensNonLetaux" ] =
+{
+    activation = {
+        VE_MaintienADistanceParMoyensNonLetaux = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux"
+{
+    activations =
+    {
+        { "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux, GetMotivation( "MOT_PasserEnMaintienADistanceParMoyensNonLetaux" ), {} )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// MOT_PasserEnDispersionParMoyensDeDefenseActifs
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnDispersionParMoyensDeDefenseActifs" ] =
+{
+    activation = {
+        VE_DispersionParMoyensDeDefenseActifs = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
+{
+    activations =
+    {
+        { "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs, GetMotivation( "MOT_PasserEnDispersionParMoyensDeDefenseActifs" ), {} )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// MOT_PasserEnArmesLetalesAutorisees
+]]--[[//
+]]--[[//  Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnArmesLetalesAutorisees" ] =
+{
+    activation = {
+        VE_ArmesLetalesAutorisees = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 5,
+    max_decrease_rate = 5,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnArmesLetalesAutorisees"
+{
+    activations =
+    {
+        { "BEH_MOT_PasserEnArmesLetalesAutorisees", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnArmesLetalesAutorisees, GetMotivation( "MOT_PasserEnArmesLetalesAutorisees" ), {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { motivation( "MOT_RiposteSurPopulations" ), nodes.ActivatedByMOT_RiposteSurPopulations }
+connections[ #connections + 1 ] = { motivation( "MOT_EsquivePopulations" ), nodes.ActivatedByMOT_EsquivePopulations }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnEmploiForceInterdit" ), nodes.ActivatedByMOT_PasserEnEmploiForceInterdit }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnMaintienADistanceParMoyensNonLetaux" ), nodes.ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnDispersionParMoyensDeDefenseActifs" ), nodes.ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnArmesLetalesAutorisees" ), nodes.ActivatedByMOT_PasserEnArmesLetalesAutorisees }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_EsquivePopulations, "BEH_MOT_DecrochageFaceAPopulations", nodes.BEH_MOT_DecrochageFaceAPopulations }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnArmesLetalesAutorisees, "BEH_MOT_PasserEnArmesLetalesAutorisees", nodes.BEH_MOT_PasserEnArmesLetalesAutorisees }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs, "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs", nodes.BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnEmploiForceInterdit, "BEH_MOT_PasserEnEmploiForceInterdit", nodes.BEH_MOT_PasserEnEmploiForceInterdit }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux, "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux", nodes.BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_RiposteSurPopulations, "BEH_MOT_RiposteSurPopulations", nodes.BEH_MOT_RiposteSurPopulations }

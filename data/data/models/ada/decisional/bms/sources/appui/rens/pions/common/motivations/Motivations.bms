@@ -1,0 +1,71 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/common/motivations/Motivations.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//  MOTIVATION MISSION --> ordre de mission strength = 1
+]]--[[//
+]]--[[//	Commentaires: PAS EN COMPETITON, SPE RENS donc f = 1
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.motivations[ "MOT_Furtivite" ] =
+{
+    activation = {
+        VE_Furtivite = 1,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 1,
+    max_decrease_rate = 1,
+    max_output_value = 1,
+}
+
+node "ActivatedByMOT_Furtivite"
+{
+    activations =
+    {
+        { "BEH_MOT_Rens_ActiverFurtivite", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_MOT_Rens_ActiverFurtivite, 1, {} )--[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executer quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// strength = 1
+]]
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { motivation( "MOT_Furtivite" ), nodes.ActivatedByMOT_Furtivite }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_Furtivite, "BEH_MOT_Rens_ActiverFurtivite", nodes.BEH_MOT_Rens_ActiverFurtivite }

@@ -1,0 +1,5 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/common/Globals.bms"] = true
+
+include "Appui/Alat/Common/Parameters.bms"
+

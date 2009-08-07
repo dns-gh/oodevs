@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/pel amx-erc/missions/AppuyerSurPosition.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ABC_AppuyerSurPosition
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ABC_AppuyerSurPosition"
+{
+    activations =
+    {
+        { "BEH_Mission_Pion_ABC_AppuyerSurPosition", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionImpossible ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Mission_Pion_ABC_AppuyerSurPosition, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_BARRER_PH(), M_MODELE_PION_ABC_BARRER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ABC_AppuyerSurPosition = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ABC_AppuyerSurPosition, "BEH_Mission_Pion_ABC_AppuyerSurPosition", nodes.BEH_Mission_Pion_ABC_AppuyerSurPosition }

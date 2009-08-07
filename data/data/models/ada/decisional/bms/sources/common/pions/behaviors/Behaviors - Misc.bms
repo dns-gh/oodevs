@@ -1,0 +1,71 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/behaviors/Behaviors - Misc.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Defini_AppuisMobile
+]]--[[//
+]]--[[// Commentaires: Lors du controle de zone, dit aux pions en appuis, 
+]]--[[//               qu'ils peuvent etre mobile dans la zone.
+]]--[[//          
+]]--[[//              OPT: MIA: Spé JCR (inf, commando, milice) A DEPLACER
+]]--[[//               
+]]--[[// *****************************************************************************
+]]node "BEH_Misc_Defini_AppuisMobile"
+{
+    activations =
+    {
+        { "ACT_MAJ_EnAppuiPionMobile", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,x_appui in pairs( F_Pion_GetselUnitesEnAppui( myself ) ) do
+        local _continue = true
+            Activate( self.activations.ACT_MAJ_EnAppuiPionMobile, 1, { x_appui, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Pion_DefinirTypeMission
+]]--[[//
+]]--[[// Commentaires: Utiliser lors du combat de rencontre, pour definir le type 
+]]--[[//               de gestion du feu face a l'ennemi
+]]--[[//              
+]]--[[//               OPT: MIA: Spé JCR (inf, commando, milice) A DEPLACER
+]]--[[//              
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Misc_Pion_DefinirTypeMission"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eTypeContact = self.params[1]
+    end,
+
+    activate = function( self )
+                self.eTypeContact_Old = self.eTypeContact_Old or F_Pion_GeteTypeContact( myself )
+        if( ModuleBegins() ) then
+            F_Pion_SeteTypeContact( myself, self._namedParams.eTypeContact )
+        end
+
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteTypeContact( myself, self.eTypeContact_Old )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Defini_AppuisMobile, "ACT_MAJ_EnAppuiPionMobile", nodes.ACT_MAJ_EnAppuiPionMobile }

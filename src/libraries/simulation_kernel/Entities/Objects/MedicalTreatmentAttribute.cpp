@@ -88,7 +88,7 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // Name: MedicalTreatmentAttribute InitializePatientDiagnosisList
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::InitializePatientDiagnosisList( int occupiedBeds , int occupiedDoctors )
+void MedicalTreatmentAttribute::InitializePatientDiagnosisList( int /*occupiedBeds*/ , int /*occupiedDoctors*/ )
 {
 }
 
@@ -167,7 +167,7 @@ void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const uint )
 // Name: MedicalTreatmentAttribute::Instanciate
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& object ) const
+void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& /*object*/ ) const
 {
 }
 

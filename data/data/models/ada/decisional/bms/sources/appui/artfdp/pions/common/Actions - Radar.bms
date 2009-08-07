@@ -1,0 +1,175 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/common/Actions - Radar.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Pions/Common/Actions - Radar.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 23/08/05 15:21 $
+]]--[[// $Revision: 15 $
+]]--[[// $Workfile: Actions - Radar.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// ============================================================================
+]]--[[// $Created : JCR : 23/03/2005 15:21
+]]--[[// Active un radar Doppler : Detecte les unites en mouvement dans une zone
+]]--[[// ============================================================================
+]]node "ACT_Obs_Pion_ASS_ActiverRadar_DansZone"
+{
+    actuators =
+    {
+        radar = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eRadar = self.params[1]
+        self._namedParams.locZone = self.params[2]
+    end,
+
+    select = function( self )
+                self.eTir = self.eTir or eActionTirIndirect_EnCours
+        self.bInit = self.bInit or true
+        self.actionID = self.actionID or nil
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_DebutSurveillance )
+                else
+                    DEC_Message( eRC_DebutSurveillance )
+                end
+
+            end
+        end
+
+        if( self.bInit ) then
+            do
+                DEC_Trace( "Activate radar in zone" )
+                self.actionID = DEC_Perception_ActiverRadarSurLocalisation( self._namedParams.eRadar, self._namedParams.locZone )
+                self.bInit = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_Trace( "Activate radar in zone: pause" )
+        self.bInit = true
+        DEC_Perception_DesactiverRadarSurLocalisation( self._namedParams.eRadar, self.actionID )
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Activate radar in zone: end" )
+        do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinSurveillance )
+            else
+                DEC_Message( eRC_FinSurveillance )
+            end
+
+        end
+
+        DEC_Perception_DesactiverRadarSurLocalisation( self._namedParams.eRadar, self.actionID )
+    end,
+
+}
+
+node "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone"
+{
+    actuators =
+    {
+        radar = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.locZone = self.params[1]
+        self._namedParams.bMenaceRoem = self.params[2]
+    end,
+
+    select = function( self )
+                self.eTir = self.eTir or eActionTirIndirect_EnCours
+        self.bInit = self.bInit or true
+        self.actionID = self.actionID or nil
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_DebutSurveillance )
+                else
+                    DEC_Message( eRC_DebutSurveillance )
+                end
+
+            end
+        end
+
+        if( self.bInit ) then
+            do
+                DEC_Trace( "Activate radar in zone" )
+                --[[// Integrere la menace Roem
+]]--[[/*, bMenaceRoem */]]self.actionID = DEC_Perception_ActiverPerceptionTirsIndirect( self._namedParams.locZone )
+                self.bInit = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_Trace( "Activate radar in zone: pause" )
+        self.bInit = true
+        DEC_Perception_DesactiverPerceptionTirsIndirect( self.actionID )
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Activate radar in zone: end" )
+        do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinSurveillance )
+            else
+                DEC_Message( eRC_FinSurveillance )
+            end
+
+        end
+
+        DEC_Perception_DesactiverPerceptionTirsIndirect( self.actionID )
+    end,
+
+}
+
+node "ACT_Obs_Pion_ASS_DelaiAllumageRadar"
+{
+    actuators = F_CAPTEURS_RADAR_ACTUATEURS()
+,
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rDelai = self.params[1]
+    end,
+
+    select = function( self )
+        do
+            do
+                self.rTempsDebut = self.rTempsDebut or DEC_TempsSim()
+                if( ModuleBegins() ) then
+                    DEC_Trace( "Turn radar on: begin" )
+                end
+
+                do
+                end
+
+                if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
+                    DEC_Trace( "Turn radar on: end" )
+                end
+
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+
+        end
+
+    end,
+
+}
+

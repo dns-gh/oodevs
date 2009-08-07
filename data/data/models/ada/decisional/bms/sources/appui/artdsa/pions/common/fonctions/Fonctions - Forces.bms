@@ -1,0 +1,111 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/common/fonctions/Fonctions - Forces.bms"] = true
+
+
+--[[// -------------------------------------------------------------------------
+]]--[[// force entre 1 et 2
+]]--[[// Me proteger en priorité, Detruire tout ce qui ce rapproche des amis qui
+]]--[[// sont dans la zone
+]]--[[// -------------------------------------------------------------------------
+]]--[[//dangerosité moyenne de la connaissance ennemie sur les connaissances
+]]--[[//amies. Une unite est dangereuse en fonction uniquement de sa distance.
+]]--[[// -------------------------------------------------------------------------
+]]--[[// force entre 1 et 2
+]]--[[// Me proteger en priorité, Detruire tout ce qui ce rapproche de la zone
+]]--[[// -------------------------------------------------------------------------
+]]--[[// -------------------------------------------------------------------------
+]]--[[// force entre 1 et 2
+]]--[[// Me proteger en priorité, et défendre les amis qui sont dans ma zone 
+]]--[[// -------------------------------------------------------------------------
+]]function S_ForceRejoindre( distanceAuPoint, distanceArretAvantPoint )
+    local _returnValue = 0
+    assert( distanceAuPoint >= 0, "distanceAuPoint : distance negative" )
+    assert( distanceArretAvantPoint >= 0, "distanceArretAvantPoint : distance negative" )
+    if( distanceAuPoint - distanceArretAvantPoint <= 0 ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    _returnValue = 1 - ( 1 / ( 1 + ( distanceAuPoint - distanceArretAvantPoint ) ) )
+    return _returnValue
+end
+
+function S_Eni_Pion_ASA_DefendreZone( ennemi, zone )
+    local _returnValue = 0
+    assert( zone ~= nil, "Zone non Valide" )
+    local listeAmis = DEC_Connaissances_UnitesAmiesDansZone( zone )
+    local dangerosite = 0
+    for _,x in pairs( listeAmis ) do
+    local _continue = true
+        dangerosite = dangerosite + S_Connaissance_ForceDistance( x, ennemi )
+
+    end
+
+    if( not DIA_IsListEmpty( listeAmis ) ) then
+        do
+            dangerosite = dangerosite / #( listeAmis )
+            dangerosite = ( dangerosite + S_Pion_ForceDistance( myself, ennemi ) ) / 2
+        end
+    else
+        dangerosite = S_Pion_ForceDistance( myself, ennemi )
+    end
+
+    _returnValue = dangerosite
+    return _returnValue
+end
+
+function S_Eni_Pion_ASA_DefendreSite( ennemi, zone )
+    local _returnValue = 0
+    assert( zone ~= nil, "Zone non Valide" )
+    local barycentreZone = S_Geometrie_BarycentreZone( zone )
+    local dangerPourAgent = S_Pion_ForceDistance( myself, ennemi )
+    local dangerPourZone = 2 - S_ForceRejoindre( DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( ennemi ), barycentreZone ), 0 )
+    _returnValue = ( dangerPourAgent + dangerPourZone ) / 2
+    return _returnValue
+end
+
+function S_Eni_Pion_ASA_Surveiller( ennemi )
+    local _returnValue = 0
+    local danger = 2 - S_ForceRejoindre( DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( ennemi ), myself:DEC_Agent_Position() ), 0 )
+    _returnValue = danger
+    return _returnValue
+end
+
+function S_Eni_Pion_ASA_DefendreUnites( listePions )
+    local _returnValue = 0
+    local sommeDangerositeSurAmis = 0
+    local dangerGlobale = 0
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local dangerSurEnnemis = 0
+            local nbEnnemisDangereuxVolant = 0
+            for _,y in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() ) do
+            local _continue = true
+do
+                                        nbEnnemisDangereuxVolant = nbEnnemisDangereuxVolant + 1
+                    dangerSurEnnemis = dangerSurEnnemis + S_Pion_ForceDistance( x, y )
+                end
+
+            end
+
+            if( ( nbEnnemisDangereuxVolant ~= 0 and nbEnnemisDangereuxVolant ~= nil ) ) then
+                dangerSurEnnemis = dangerSurEnnemis / nbEnnemisDangereuxVolant
+            end
+
+            dangerGlobale = dangerGlobale + dangerSurEnnemis
+        end
+
+    end
+
+    if( not DIA_IsListEmpty( listePions ) ) then
+        dangerGlobale = dangerGlobale / #( listePions )
+    end
+
+    _returnValue = dangerGlobale
+    return _returnValue
+end
+

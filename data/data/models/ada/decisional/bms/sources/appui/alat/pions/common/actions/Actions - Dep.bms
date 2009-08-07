@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/actions/Actions - Dep.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Au maximum, une action pour setter la hauteur de vol
+]]--[[//------------------------------------------------------------------------------
+]]node "ACT_Dep_Pions_ALAT_Voler"
+{
+    actuators =
+    {
+        self._namedParams.hauteur = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.hauteur = self.params[1]
+    end,
+
+    select = function( self )
+                self.actionEnPause = self.actionEnPause or false
+        if( ModuleBegins() ) then
+            DEC_Agent_HauteurDeVol( self._namedParams.hauteur )
+        end
+
+        --[[//gestion du crash sur avarie carburant
+]]--[[//le moteur dit que si pas de carburant, hauteur nulle
+]]if( not DEC_Agent_EstEnVol() ) then
+            DEC_Agent_HauteurDeVol( self._namedParams.hauteur )
+        end
+
+        if( self.actionEnPause ) then
+            do
+                DEC_Agent_HauteurDeVol( self._namedParams.hauteur )
+                self.actionEnPause = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                self.actionEnPause = true
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+

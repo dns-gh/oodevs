@@ -63,7 +63,7 @@ const MIL_Automate* DEC_Gen_Object::GetTC2() const
 // Created: NLD 2007-02-06
 // -----------------------------------------------------------------------------
 inline
-uint DEC_Gen_Object::GetMinesActivityTime() const
+unsigned int DEC_Gen_Object::GetMinesActivityTime() const
 {
     return nMinesActivityTime_;
 }

@@ -1,0 +1,82 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/behaviors/Behaviors - CoordDep.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_CoordDep_Automate_ActiverCoordinationSur
+]]--[[//
+]]--[[// Commentaires: si 'listePions' change alors nouvelle instance 
+]]--[[//               du comportement
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_CoordDep_Automate_ActiverCoordinationSur"
+{
+    activations =
+    {
+        { "ACT_Info_Automate_Trace", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Ordre_Automate_Ralentir", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+        self._namedParams.rDistanceEtalementMax = self.params[2]
+    end,
+
+    activate = function( self )
+                self.resultatCalcul = self.resultatCalcul or nil
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "$$ Nombre de pions a coordonner = " .. FloatToString( #( self._namedParams.listePions ) ) .. " $$" )
+                self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( self._namedParams.listePions )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Determiner distance entre LAV et LAR
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, self._namedParams.listePions, true )
+        if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
+            return
+        end
+
+        --[[// Si la compagnie n'est pas trop étalée
+]]if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pionEnQueue ) < self._namedParams.rDistanceEtalementMax ) then
+            return
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Escadron trop etalé --> le PE ralentit
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Info_Automate_Trace, 1, { "==< Coordinnation active >==", } )
+        for _,x in pairs( self._namedParams.listePions ) do
+        local _continue = true
+do
+                local pion = x
+                if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion ) < 200 ) then
+                    do
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Frag order to : " .. DEC_GetSzName( pion ) .. " --> 'slow down'", } )
+                        Activate( self.activations.ACT_Ordre_Automate_Ralentir, 1, { pion, } )
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_ActiverCoordinationSur, "ACT_Info_Automate_Trace", nodes.ACT_Info_Automate_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_ActiverCoordinationSur, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_ActiverCoordinationSur, "ACT_Ordre_Automate_Ralentir", nodes.ACT_Ordre_Automate_Ralentir }

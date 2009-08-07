@@ -1,0 +1,23 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/pions/common/Motivations.bms"] = true
+
+--[[// ces motivations sont propres à la Marine
+]]--[[// elle ne répondent nulement aux besoins des autres armes en matières de
+]]--[[// doctrine
+]]
+--[[// normalement, les stimuli doivent être communs à toutes les armes puisque c'est
+]]--[[// notre interface de réglage (boutons dans l'outil d'adaptation
+]]include "Marine/Pions/Common/Motivations/Stimulus.bms"
+
+
+--[[// variables d'état du pion. Les intervales de confort sont définis pour la Marine
+]]include "Marine/Common/Motivations/Etats.bms"
+
+
+--[[// nécessite l'implémentation des stimuli (fonctions de transfert des STIM)
+]]include "Marine/Pions/Common/Motivations/Emotions.bms"
+
+
+--[[// les motivations ne corresondent qu'au modèle de la Marine
+]]include "Marine/Pions/Common/Motivations/Motivations.bms"
+

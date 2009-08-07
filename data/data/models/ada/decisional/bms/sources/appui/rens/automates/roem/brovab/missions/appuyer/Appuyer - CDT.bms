@@ -1,0 +1,41 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roem/brovab/missions/appuyer/Appuyer - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_RENS_ROEM_Appuyer
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_RENS_ROEM_Appuyer"
+{
+    activations =
+    {
+        { "BEH_Automate_CDT_RENS_ROEM_Appuyer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Conduite générique 
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Automate_CDT_RENS_ROEM_Appuyer, 1, { self._namedParams.mission, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_RENS_ROEM_Appuyer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_RENS_ROEM_Appuyer, "BEH_Automate_CDT_RENS_ROEM_Appuyer", nodes.BEH_Automate_CDT_RENS_ROEM_Appuyer }

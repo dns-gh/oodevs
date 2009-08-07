@@ -29,6 +29,8 @@ class MIL_AgentTypePionNBC : public MIL_AgentTypePion
 public:
              MIL_AgentTypePionNBC( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionNBC();
+    
+    virtual void RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const;
 
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };

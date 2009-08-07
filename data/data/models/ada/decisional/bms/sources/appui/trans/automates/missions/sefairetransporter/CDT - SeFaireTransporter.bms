@@ -1,0 +1,36 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/automates/missions/sefairetransporter/CDT - SeFaireTransporter.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Common/Automates/Missions/SeFaireTransporter/CDT - SeFaireTransporter.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 20/06/05 11:05 $
+]]--[[// $Revision: 4 $
+]]--[[// $Workfile: CDT - SeFaireTransporter.hal $
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_SeFaireTransporter
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_SeFaireTransporter"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_SeFaireTransporter = { "mission" }

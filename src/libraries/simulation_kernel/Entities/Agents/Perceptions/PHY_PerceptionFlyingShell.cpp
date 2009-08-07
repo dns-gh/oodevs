@@ -64,20 +64,22 @@ PHY_PerceptionFlyingShell::~PHY_PerceptionFlyingShell()
 // Name: PHY_PerceptionFlyingShell::AddLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void* PHY_PerceptionFlyingShell::AddLocalisation( const TER_Localisation& localisation )
+int PHY_PerceptionFlyingShell::AddLocalisation( const TER_Localisation& localisation )
 {
     TER_Localisation* pLocalisation = new TER_Localisation( localisation );
     zones_.push_back( pLocalisation );
-    return pLocalisation;
+    int id = PHY_Perception_ABC::GetPerceptionId();
+    ids_[ id ] = pLocalisation;
+    return id;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionFlyingShell::RemoveLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void PHY_PerceptionFlyingShell::RemoveLocalisation( void* pId )
+void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 {
-    TER_Localisation* pLoc = static_cast< TER_Localisation* >( pId );
+    const TER_Localisation* pLoc = ids_[ id ];
 
     IT_ZoneVector it = std::find( zones_.begin(), zones_.end(), pLoc );
     if ( it != zones_.end() )
@@ -85,6 +87,7 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( void* pId )
         delete pLoc;
         zones_.erase( it );    
     }
+    ids_.erase( id );
 }
 
 // -----------------------------------------------------------------------------

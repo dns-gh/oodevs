@@ -33,9 +33,9 @@ typedef std::vector< DEC_Knowledge_Agent* >     T_KnowledgeAgentVector;
 typedef T_KnowledgeAgentVector::iterator        IT_KnowledgeAgentVector;
 typedef T_KnowledgeAgentVector::const_iterator  CIT_KnowledgeAgentVector;
 
-typedef std::vector< void* >                         T_KnowledgeAgentDiaIDVector;
-typedef T_KnowledgeAgentDiaIDVector::iterator        IT_KnowledgeAgentDiaIDVector;
-typedef T_KnowledgeAgentDiaIDVector::const_iterator  CIT_KnowledgeAgentDiaIDVector;
+typedef std::vector< const DEC_Knowledge_Agent* >    T_ConstKnowledgeAgentVector;
+typedef T_ConstKnowledgeAgentVector::iterator        IT_ConstKnowledgeAgentVector;
+typedef T_ConstKnowledgeAgentVector::const_iterator  CIT_ConstKnowledgeAgentVector;
 
 typedef std::vector< DEC_Knowledge_ObjectCollision* >     T_KnowledgeObjectCollisionVector;
 typedef T_KnowledgeObjectCollisionVector::iterator        IT_KnowledgeObjectCollisionVector;
@@ -45,7 +45,7 @@ typedef std::vector< DEC_Knowledge_Object* >     T_KnowledgeObjectVector;
 typedef T_KnowledgeObjectVector::iterator        IT_KnowledgeObjectVector;
 typedef T_KnowledgeObjectVector::const_iterator  CIT_KnowledgeObjectVector;
 
-typedef std::vector< void* >                          T_KnowledgeObjectDiaIDVector;
+typedef std::vector< unsigned int >                   T_KnowledgeObjectDiaIDVector;
 typedef T_KnowledgeObjectDiaIDVector::iterator        IT_KnowledgeObjectDiaIDVector;
 typedef T_KnowledgeObjectDiaIDVector::const_iterator  CIT_KnowledgeObjectDiaIDVector;
 
@@ -53,7 +53,7 @@ typedef std::vector< DEC_Knowledge_PopulationCollision* >     T_KnowledgePopulat
 typedef T_KnowledgePopulationCollisionVector::iterator        IT_KnowledgePopulationCollisionVector;
 typedef T_KnowledgePopulationCollisionVector::const_iterator  CIT_KnowledgePopulationCollisionVector;
 
-typedef std::vector< void* >                              T_KnowledgePopulationDiaIDVector;
+typedef std::vector< unsigned int >                       T_KnowledgePopulationDiaIDVector;
 typedef T_KnowledgePopulationDiaIDVector::iterator        IT_KnowledgePopulationDiaIDVector;
 typedef T_KnowledgePopulationDiaIDVector::const_iterator  CIT_KnowledgePopulationDiaIDVector;
 

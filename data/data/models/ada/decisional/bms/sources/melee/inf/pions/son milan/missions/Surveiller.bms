@@ -1,0 +1,183 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son milan/missions/Surveiller.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son Milan/Missions/Surveiller.hal $
+]]--[[// $Author: Jcr $
+]]--[[// $Modtime: 22/09/05 18:26 $
+]]--[[// $Revision: 19 $
+]]--[[// $Workfile: Surveiller.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "MIS_Pion_INF_SurveillerSecteur"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Eni_Pion_INF_SurveillerSecteur", {} },
+        { "BEH_Mission_Pion_INF_SurveillerSecteur", {} },
+        { "BEH_Manoeuvre_RompreContact", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eSurveiller
+        self.eCurrentPhase = self.eCurrentPhase or eSeMettreEnPlace
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionEnnemi = self.eActionEnnemi or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+            end
+        end
+
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_TIR_PH_MISSION_STATIQUE(), } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eSeReplier
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_Pion_ExecuterTir" then
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_Decrocher" then
+                        self.ePhase = eSeReplier
+                        self.eAction = eActionEnCours
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+        if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                    DEC_Warning( eRC_MissionImpossible )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eSurveiller then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( self.eActionEnnemi == eActionEffectuee ) then
+                    do
+                        self.eActionEnnemi = eActionEnCours
+                                                do
+                            self.ePhase = eSeReplier
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionEnnemi = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_Mission" ), {} )
+                
+            --[[// Rejoins une position de replis
+]]elseif switch_1 == eSeReplier then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                        end
+
+                    end
+                else
+do
+                        Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                end
+
+            elseif switch_1 == eFinMission then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            DEC_Trace( "fin de mission" )
+                            --[[//-----------------------------------------------------------------------------
+]]--[[// On rend compte de la mission
+]]--[[//-----------------------------------------------------------------------------												
+]]DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_INF_SurveillerSecteur = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "ACT_Maj_Pion_PasserEnTirLibre", nodes.ACT_Maj_Pion_PasserEnTirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "BEH_Eni_Pion_INF_SurveillerSecteur", nodes.BEH_Eni_Pion_INF_SurveillerSecteur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "BEH_Mission_Pion_INF_SurveillerSecteur", nodes.BEH_Mission_Pion_INF_SurveillerSecteur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "BEH_Manoeuvre_RompreContact", nodes.BEH_Manoeuvre_RompreContact }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_SurveillerSecteur, "BEH_Poste_Pion_INF_TomberEnGarde", nodes.BEH_Poste_Pion_INF_TomberEnGarde }

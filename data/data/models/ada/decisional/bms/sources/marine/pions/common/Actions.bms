@@ -1,0 +1,6 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/pions/common/Actions.bms"] = true
+
+--[[// actions génériques à tous les pions de la Marine
+]]include "Marine/Pions/Common/Actions/Actions - Maj.bms"
+

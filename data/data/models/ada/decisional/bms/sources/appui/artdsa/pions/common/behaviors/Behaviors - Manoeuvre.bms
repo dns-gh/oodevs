@@ -1,0 +1,55 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/common/behaviors/Behaviors - Manoeuvre.bms"] = true
+
+node "BEH_Manoeuvre_Pion_ASA_SeDeployer"
+{
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Pions_SInstaller", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.tempsDeploiement = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eAttendre
+        if( not myself:DEC_Agent_EstEnMouvement() ) then
+            do
+                switch_1 = self.ePhase
+                    if switch_1 == eAttendre then
+                                            if( self.eEtat == eActionEffectuee ) then
+                            do
+                                self.eEtat = eActionEnCours
+                                                                do
+                                    self.ePhase = eSeDeployer
+                                                                        return
+
+                                end
+
+                            end
+                        end
+
+                        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.tempsDeploiement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        
+                    elseif switch_1 == eSeDeployer then
+                        Activate( self.activations.ACT_Pions_SInstaller, 1, {} )--[[//action de déploiement
+]]
+                                                self.params.__returnValue = eActionEffectuee
+                        return
+
+                                        end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Manoeuvre_Pion_ASA_SeDeployer, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Manoeuvre_Pion_ASA_SeDeployer, "ACT_Pions_SInstaller", nodes.ACT_Pions_SInstaller }

@@ -1,0 +1,20 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/automates/groupe chalands/Behaviors.bms"] = true
+
+use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+actuators = {
+etat_OrdreCoordination = 1,
+posture = 1,
+tir = 1,
+ennemi = 1,
+}
+
+
+include "Marine/Automates/Common/Behaviors.bms"
+

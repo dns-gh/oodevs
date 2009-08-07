@@ -1,0 +1,108 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/missions/FaireMouvement.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Faire mouvement
+]]--[[//
+]]--[[// Commentaires: pour l'ALAT, faire mouvement est toujours tres dangereux.
+]]--[[// Cette mission n'est pas agressive, on fait donc un itinéraire d'infiltration.
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_FaireMouvement"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindreParItineraire", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eRejoindre
+        self.pointFinItineraire = self.pointFinItineraire or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                self.pointFinItineraire = DEC_ListePoints_GetAt( self._namedParams.mission.itineraire_, DEC_ListePoints_Size( self._namedParams.mission.itineraire_ ) - 1 )
+                local position = DEC_Geometrie_PositionAleatoireDansCercle( self.pointFinItineraire, 300 )
+                DEC_Copie_Point( position, myself.pointRegroupement_ )
+                DEC_ListePoints_PushBack( self._namedParams.mission.itineraire_, position )
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                end
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindreParItineraire, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            DIA_Clear( myself.plotsRavitaillement_ )
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                DIA_Clear( myself.plotsRavitaillement_ )
+        F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_FaireMouvement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Dep_Pion_ALAT_RejoindreParItineraire", nodes.BEH_Dep_Pion_ALAT_RejoindreParItineraire }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }

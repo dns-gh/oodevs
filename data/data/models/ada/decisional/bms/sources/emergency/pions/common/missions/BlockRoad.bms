@@ -1,0 +1,122 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/pions/common/missions/BlockRoad.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_Emergency_BlockRoad"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_RC", {} },
+        { "BEH_Pion_Emergency_BlockRoad", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eReconnaitre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                if( self.eAction == eActionEnCours ) then
+                    do
+                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                        Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.mission.position_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                self.ePhase = eDeployer
+            elseif switch_1 == eDeployer then
+                Activate( self.activations.BEH_Pion_Emergency_BlockRoad, 1, {} )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                
+                        end
+
+    end,
+
+}
+
+node "BEH_Pion_Emergency_BlockRoad"
+{
+    activations =
+    {
+        { "ACT_Obj_Pion_Emergency_RealiserObjet", {} },
+        { "ACT_Pion_Emergency_Influence", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.locPosition = self.locPosition or nil
+        if( ModuleBegins() ) then
+            do
+                local point = DEC_Geometrie_CalculerPositionObstacle( DEC_Agent_Position(), S_TypeObject_ToString( eTypeObjectPosteControle ), 100 )
+                self.locPosition = DEC_Geometrie_ConvertirPointEnLocalisation( point )
+                StartActivate( self.activations.ACT_Obj_Pion_Emergency_RealiserObjet, 1, { eTypeObjectPosteControle, self.locPosition, } )
+            end
+        end
+
+        Activate( self.activations.ACT_Pion_Emergency_Influence, 1, { "any", -100, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Emergency_BlockRoad = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Emergency_BlockRoad, "ACT_Obj_Pion_Emergency_RealiserObjet", nodes.ACT_Obj_Pion_Emergency_RealiserObjet }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Emergency_BlockRoad, "ACT_Pion_Emergency_Influence", nodes.ACT_Pion_Emergency_Influence }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_BlockRoad, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_BlockRoad, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_BlockRoad, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_BlockRoad, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_BlockRoad, "BEH_Pion_Emergency_BlockRoad", nodes.BEH_Pion_Emergency_BlockRoad }

@@ -1,0 +1,292 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/missions/PrendreEnComptePrisonniers.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_PrendreEnComptePrisonniers
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_PrendreEnComptePrisonniers"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_AllerRecupererPrisonniers", {} },
+        { "BEH_Dep_Pion_AllerDebarquerPrisonniers", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.ePhase = self.ePhase or ePreparerMission
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[// Init
+]]if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[// Validite camp
+]]        end
+
+        if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.campPrisonniers_ ) ) then
+            self.ePhase = eFinMission
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhase = eEmbarquer
+                
+            elseif switch_1 == eEmbarquer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                --[[// Récuperer les prisonniers et aller les déposer dans le camp
+]]if( S_Liste_PrisonniersTousEmbarques( self._namedParams.mission.unitesRendues_ ) ) then
+                    self.ePhase = eDebarquer
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_AllerRecupererPrisonniers, 1, { self._namedParams.mission.unitesRendues_, } )
+                
+            elseif switch_1 == eDebarquer then
+                if( S_Misc_Pion_PrisonniersTousDebarquesDansCamp( self._namedParams.mission.unitesRendues_, self._namedParams.mission.campPrisonniers_ ) ) then
+                    self.ePhase = eFinMission
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_AllerDebarquerPrisonniers, 1, setmetatable( { self._namedParams.mission.unitesRendues_, self._namedParams.mission.campPrisonniers_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                for _,prisonnier in pairs( self._namedParams.mission.unitesRendues_ ) do
+        local _continue = true
+            DEC_Prisonniers_Debarquer( prisonnier )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_AllerRecupererPrisonniers
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Pion_AllerRecupererPrisonniers"
+{
+    activations =
+    {
+        { "BEH_Dep_Pion_GererEmbarquementPrisonnier", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.prisonniers = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,prisonnier in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Gestion de chaque pion prisonnier
+]]--[[//-----------------------------------------------------------------------------
+]]self._namedParams.prisonniers ) do
+        local _continue = true
+if( DEC_ConnaissanceAgent_EstValide( prisonnier ) and not DEC_Prisonniers_EstEmbarque( prisonnier ) ) then
+                Activate( self.activations.BEH_Dep_Pion_GererEmbarquementPrisonnier, S_Force_DistancePt( DEC_ConnaissanceAgent_Position( prisonnier ) ), { prisonnier, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_GererEmbarquementPrisonnier
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Pion_GererEmbarquementPrisonnier"
+{
+    activations =
+    {
+        { "ACT_Transport_Pion_EmbarquerPrisonnier", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.prisonnier = self.params[1]
+    end,
+
+    activate = function( self )
+        if( DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( self._namedParams.prisonnier ), DEC_Agent_Position() ) < 100 ) then
+            Activate( self.activations.ACT_Transport_Pion_EmbarquerPrisonnier, 1, { self._namedParams.prisonnier, } )
+        else
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.prisonnier ), eProgressionDirect, eTypeItiMouvement, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_AllerDebarquerPrisonniers
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
+{
+    activations =
+    {
+        { "ACT_Transport_Pion_DebarquerPrisonnierDansCamp", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.prisonniers = self.params[1]
+        self._namedParams.campPrisonnier = self.params[2]
+    end,
+
+    activate = function( self )
+        self.point = self.point or nil
+        self.localisation = self.localisation or DEC_ConnaissanceObjet_Localisation( self._namedParams.campPrisonnier )
+        --[[// Gestion erreur
+]]if( ( self.localisation == 0 or self.localisation == nil ) ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[// Calcule position
+]]if( ModuleBegins() ) then
+            do
+                self.point = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( self.localisation )
+                if( self.point == nil ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+            end
+--[[// Rejoindre position et déarquer les prisonniers
+]]        end
+
+        if( DEC_Geometrie_Distance( self.point, DEC_Agent_Position() ) < 100 ) then
+            do
+                for _,prisonnier in pairs( self._namedParams.prisonniers ) do
+                local _continue = true
+                    Activate( self.activations.ACT_Transport_Pion_DebarquerPrisonnierDansCamp, 1, { prisonnier, self._namedParams.campPrisonnier, } )
+
+                end
+
+            end
+        else
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.point, eProgressionDirect, eTypeItiMouvement, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Transport_Pion_EmbarquerPrisonnier
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Transport_Pion_EmbarquerPrisonnier"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.prisonnier = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Prisonniers_CapturerEtEmbarquer( self._namedParams.prisonnier )
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Transport_Pion_DebarquerPrisonnierDansCamp
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Transport_Pion_DebarquerPrisonnierDansCamp"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.prisonnier = self.params[1]
+        self._namedParams.campPrisonnier = self.params[2]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Prisonniers_DebarquerDansCamp( self._namedParams.prisonnier, self._namedParams.campPrisonnier )
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_PrendreEnComptePrisonniers = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AllerDebarquerPrisonniers, "ACT_Transport_Pion_DebarquerPrisonnierDansCamp", nodes.ACT_Transport_Pion_DebarquerPrisonnierDansCamp }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AllerDebarquerPrisonniers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_AllerRecupererPrisonniers, "BEH_Dep_Pion_GererEmbarquementPrisonnier", nodes.BEH_Dep_Pion_GererEmbarquementPrisonnier }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_GererEmbarquementPrisonnier, "ACT_Transport_Pion_EmbarquerPrisonnier", nodes.ACT_Transport_Pion_EmbarquerPrisonnier }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_GererEmbarquementPrisonnier, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PrendreEnComptePrisonniers, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PrendreEnComptePrisonniers, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PrendreEnComptePrisonniers, "BEH_Dep_Pion_AllerRecupererPrisonniers", nodes.BEH_Dep_Pion_AllerRecupererPrisonniers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PrendreEnComptePrisonniers, "BEH_Dep_Pion_AllerDebarquerPrisonniers", nodes.BEH_Dep_Pion_AllerDebarquerPrisonniers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_PrendreEnComptePrisonniers, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

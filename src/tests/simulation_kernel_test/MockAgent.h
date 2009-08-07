@@ -12,6 +12,8 @@
 
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 
+class DEC_Decision_ABC;
+
 // =============================================================================
 /** @class  MockAgent
     @brief  MockAgent
@@ -63,8 +65,8 @@ public:
         throw;
     }
     
-    virtual       DEC_RolePion_Decision& GetDecision   () { throw;}
-    virtual const DEC_RolePion_Decision& GetDecision   () const { throw; }
+    virtual       DEC_Decision_ABC& GetDecision   () { throw; }
+    virtual const DEC_Decision_ABC& GetDecision   () const { throw; }
 
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, uint, GetID );
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsDead );

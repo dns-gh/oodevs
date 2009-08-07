@@ -18,18 +18,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Action_ABC constructor
-// Created: NLD 2004-08-18
-// -----------------------------------------------------------------------------
-PHY_Action_ABC::PHY_Action_ABC( PHY_Actor& actor, DIA_Call_ABC& diaCall )
-    : bSuspended_( false )
-    , actor_     ( actor )
-{
-    actor_.RegisterAction( *this );
-    diaCall.GetResult().SetValue( (void*)this, &DEC_Tools::GetTypeAction() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Action_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 PHY_Action_ABC::PHY_Action_ABC( PHY_Actor& actor )
@@ -49,3 +37,32 @@ PHY_Action_ABC::~PHY_Action_ABC()
 }
 
 
+// -----------------------------------------------------------------------------
+// Name: PHY_Action_ABC::Suspend
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+void PHY_Action_ABC::Suspend()
+{
+    bSuspended_ = true;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Action_ABC::Resume
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+void PHY_Action_ABC::Resume()
+{
+    bSuspended_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Action_ABC::Update
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void PHY_Action_ABC::Update()
+{
+    if( bSuspended_ )
+        ExecuteSuspended();
+    else
+        Execute();
+}

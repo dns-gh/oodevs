@@ -1,0 +1,271 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/common/Behaviors.bms"] = true
+
+
+
+--[[// Communs aux pions Rens
+]]include "Appui/Rens/Pions/Common/Actions.bms"
+
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_MOT_Rens_ActiverFurtivite
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_MOT_Rens_ActiverFurtivite"
+{
+    activations =
+    {
+        { "ACT_Dep_Pion_Rens_ActiverFurtivite", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// TEMP 0
+]]Activate( self.activations.ACT_Dep_Pion_Rens_ActiverFurtivite, 1, { 0.01, } )
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Dep_Pion_GererFurtivite
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Pion_GererFurtivite"
+{
+    activations =
+    {
+        { "BEH_MAJ_Pion_Rens_Furtivite", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_MAJ_Pion_Rens_Furtivite, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Furtivite
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_Rens_Furtivite
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_Rens_Furtivite"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            SetStateVariable( "VE_Furtivite", 2 )
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_Furtivite", 0 )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Rens_EnSurveillanceDe
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Rens_EnSurveillanceDe"
+{
+    activations =
+    {
+        { "ACT_Obs_SurveillerZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Obs_SurveillerZone, 1, { self._namedParams.zone, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Rens_EnSurveillanceRadarDe
+]]--[[//
+]]--[[// Commentaires: radar dopler
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Rens_EnSurveillanceRadarDe"
+{
+    activations =
+    {
+        { "ACT_Obs_Pion_RENS_ActiverRadarDans", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Obs_Pion_RENS_ActiverRadarDans, 1, { self._namedParams.zone, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Rens_EnEcouteSur
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Rens_EnEcouteSur"
+{
+    activations =
+    {
+        { "ACT_Obs_Pion_RENS_ActiverEcouteDans", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Obs_Pion_RENS_ActiverEcouteDans, 1, { self._namedParams.zone, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_RC_Rens_EnEcouteRadarSur
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Rens_EnEcouteRadarSur"
+{
+    activations =
+    {
+        { "ACT_Obs_Pion_RENS_ActiverEcouteRadarDans", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Obs_Pion_RENS_ActiverEcouteRadarDans, 1, { self._namedParams.zone, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Rens_ActiverBrouillage
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Rens_ActiverBrouillage"
+{
+    activations =
+    {
+        { "ACT_Obs_Pion_RENS_ActiverBrouillage", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eTypeObjectZoneBrouillage = self.params[1]
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Obs_Pion_RENS_ActiverBrouillage, 1, { self._namedParams.eTypeObjectZoneBrouillage, } )
+        end
+
+    end,
+
+--[[////////////////////////////// PARTIE COMPORTEMENTS VIRTUELS /////////////////////////////////////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_ProgressionVers
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_ProgressionVers"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+        self._namedParams.eTypeProgression = self.params[2]
+        self._namedParams.eTypeIti = self.params[3]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_PreparationAction
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_PreparationAction"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_GererFurtivite, "BEH_MAJ_Pion_Rens_Furtivite", nodes.BEH_MAJ_Pion_Rens_Furtivite }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Rens_ActiverFurtivite, "ACT_Dep_Pion_Rens_ActiverFurtivite", nodes.ACT_Dep_Pion_Rens_ActiverFurtivite }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_ActiverBrouillage, "ACT_Obs_Pion_RENS_ActiverBrouillage", nodes.ACT_Obs_Pion_RENS_ActiverBrouillage }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_EnEcouteRadarSur, "ACT_Obs_Pion_RENS_ActiverEcouteRadarDans", nodes.ACT_Obs_Pion_RENS_ActiverEcouteRadarDans }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_EnEcouteSur, "ACT_Obs_Pion_RENS_ActiverEcouteDans", nodes.ACT_Obs_Pion_RENS_ActiverEcouteDans }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_EnSurveillanceDe, "ACT_Obs_SurveillerZone", nodes.ACT_Obs_SurveillerZone }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_EnSurveillanceRadarDe, "ACT_Obs_Pion_RENS_ActiverRadarDans", nodes.ACT_Obs_Pion_RENS_ActiverRadarDans }

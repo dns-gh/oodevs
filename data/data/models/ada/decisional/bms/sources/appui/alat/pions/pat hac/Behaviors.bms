@@ -1,0 +1,76 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/pat hac/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+
+--[[// Définition des actuateurs
+]]--[[// -------------------------
+]]actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+observation = 1,
+tir = 1,
+vitesse = 1,
+ennemi = 1,
+reconnaissance = 1,
+etat_Lima = 1,
+hauteur = 1,
+etat_destruction = 1,
+etat_Dec = 1,
+surveiller = 1,
+objectifCourant = 1,
+etat_Mission = 1,
+etat_Destruction = 1,
+objectifEsquive = 1,
+parametresRecompletement = 1,
+controlePopulation = 1,
+ravitaillementMot = 1,
+etat_ROE = 1,
+}
+
+
+
+--[[//Comportements du pion HAC
+]]--[[//-------------------------
+]]--[[//génériques pions alat
+]]include "Appui/Alat/Pions/Common/Behaviors.bms"
+
+--[[//Comportements Specifiques a la patrouille Pat HAC
+]]--[[//-------------------------------------------------
+]]
+
+--[[// Missions HAC
+]]--[[// ------------
+]]include "Appui/Alat/Pions/Common/Missions/Appui Direct Au Contact.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Couvrir.bms"
+
+include "Appui/Alat/Pions/Common/Missions/DetruireUneUniteAeromobile.bms"
+
+include "Appui/Alat/Pions/Common/Missions/DetruireNeutraliserDansZone.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Eclairer.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Escorter.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Jalonner.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Freiner.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Attaquer.bms"
+
+include "Appui/Alat/Pions/Common/Missions/ReconnaitreDansLaProfondeur.bms"
+
+include "Appui/Alat/Pions/Common/Missions/ReconnaitreContourEnnemi.bms"
+
+include "Appui/Alat/Pions/Common/Missions/Surveiller.bms"
+

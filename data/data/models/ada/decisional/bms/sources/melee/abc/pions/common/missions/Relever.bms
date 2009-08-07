@@ -1,0 +1,160 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Common/Missions/Relever.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:07 $
+]]--[[// $Revision: 19 $
+]]--[[// $Workfile: Relever.hal $
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_ABC_ReleverUnite
+]]--[[//
+]]--[[// Commentaires: Rejoind l'unite que l'on doit relever puis s'approprie c'est
+]]--[[//  paramètres.
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_ABC_ReleverUnite"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Misc_ReleverUnite", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.positionPionARelever = self.positionPionARelever or self._namedParams.mission.uniteARelever_:DEC_Agent_Position()
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Agressivite
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { self._namedParams.rPH, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_PeutReleverPion( self._namedParams.mission.uniteARelever_ ) ) then
+                    do
+                        DEC_Trace( "==> L'unité n'a pas les moyens d'effectuer la relever" )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( ( DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == 0 or DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == nil ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+                --[[// Ambiance
+]]F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Relief of " .. DEC_GetSzName( self._namedParams.mission.uniteARelever_ ) .. " mission begining", } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progression tactique
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
+                --[[// Relever l'unite à bonne distance
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.positionPionARelever ) < M_MODELE_PION_ABC_DISTANCE_RELEVE() ) then
+                    do
+                        self.ePhaseMission = eRelever
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionPionARelever, eProgressionDirect, eTypeItiMouvement, } )
+                --[[// se dépecher
+]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
+                
+            --[[// Releve
+]]elseif switch_1 == eRelever then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Reliefing unit", } )
+                Activate( self.activations.ACT_Misc_ReleverUnite, 1, { self._namedParams.mission.uniteARelever_, } )
+                --[[// cas particulier
+]]DEC_RC( eRC_Releve, self._namedParams.mission.uniteARelever_ )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_ReleverUnite
+]]--[[// 
+]]--[[// Commentaires: MIA OPT:pour l'instant seul l'ABC se sert de cette action
+]]--[[//               ATTENTION le test DEC_PeutRelever doit être fait avant d'appeler
+]]--[[//				 cette action sinon ASSERT possible
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Misc_ReleverUnite"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "** Releve du pion " .. DEC_GetSzName( self._namedParams.pion ) .. " **" )
+                local bRelevePossible = DEC_ReleverPion( self._namedParams.pion )
+                assert( bRelevePossible, "ACT_Misc_ReleverUnite: relève impossible" )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReleverUnite, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReleverUnite, "BEH_MAJ_Pion_ABC_AgressiviteTir", nodes.BEH_MAJ_Pion_ABC_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReleverUnite, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReleverUnite, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReleverUnite, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReleverUnite, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReleverUnite, "ACT_Misc_ReleverUnite", nodes.ACT_Misc_ReleverUnite }

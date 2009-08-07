@@ -11,27 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint.h"
-
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint::InitializeDIA
-// Created: NLD 2003-01-13
-//-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint::InitializeDIA()
-{
-    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "Rep_Point" );
-}
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint constructor
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType )
-    : DEC_PathPoint     ( vPos )
-    , DIA_TypedObject   ( *DIA_TypeManager::Instance().GetType( szDIARepType ), "$$$ nom tmp" )
+    : DEC_PathPoint     ( vPos, szDIARepType )
     , nTypePoint_       ( nTypePoint )
     , nTypeTerrain_     ( nTypeTerrain )
     , pSentToDiaAgent_  ( 0 )
@@ -47,8 +35,7 @@ DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 {
     if( pSentToDiaAgent_ )
     {
-        pSentToDiaAgent_->RemoveFromCategory   ( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
-        pSentToDiaAgent_->RemoveAllReferencesOf( *this );
+        pSentToDiaAgent_->RemoveFromPointsCategory( const_cast< DEC_Rep_PathPoint* >( this ) );
     }
 }
 
@@ -62,7 +49,7 @@ void DEC_Rep_PathPoint::SendToDIA( DEC_Representations& agent ) const
         return;
         
     // ATTENTION, si cette fonction est appelée, alors l'agent physique s'est automatiquement arrêté sur la position du point...
-    agent.AddToCategory( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
+    agent.AddToPointsCategory( const_cast< DEC_Rep_PathPoint* >( this ) );
 
     pSentToDiaAgent_ = &agent;
 }

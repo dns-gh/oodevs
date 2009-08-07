@@ -1,0 +1,106 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/suivre/Suivre - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_Suivre
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_Suivre"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvement", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "$ MIS_Automate_Suivre : debut MRT $" )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Assignation et vérification
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eValidationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_MRT_Valide()
+                    DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eValidationMRT == eActionEffectuee ) then
+            do
+                self.eValidationMRT = eActionEnCours
+                                do
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvement, 1, { DEC_Automate_PionsAvecPC(), } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_AssignerFaireMouvement
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_AssignerFaireMouvement"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+for _,pion in pairs( self._namedParams.listePions ) do
+            local _continue = true
+                StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, pion, DEC_Geometrie_CalculerPointArriveePourPion( pion ), eEtatEchelon_Premier, } )
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_Suivre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerFaireMouvement, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_Suivre, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_Suivre, "BEH_Mission_Automate_AssignerFaireMouvement", nodes.BEH_Mission_Automate_AssignerFaireMouvement }

@@ -1,0 +1,8 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roim/drone cl289/missions/Missions.bms"] = true
+
+--[[//=============================================================================
+]]--[[// Drone CL289
+]]--[[//=============================================================================
+]]include "Appui/Rens/Pions/Roim/Drone CL289/Missions/RenseignerSur.bms"
+

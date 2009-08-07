@@ -1,0 +1,10 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/pions/common/Fonctions.bms"] = true
+
+--[[//fonctions génériques aux pions et automates air
+]]include "Air/Common/Fonctions.bms"
+
+
+--[[//fonctions des Pions air
+]]include "Air/Pions/Common/Fonctions/Fonctions - Forces.bms"
+

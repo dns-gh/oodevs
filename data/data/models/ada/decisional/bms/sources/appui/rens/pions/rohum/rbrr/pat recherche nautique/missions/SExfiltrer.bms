@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche nautique/missions/SExfiltrer.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_RENS_ROHUM_SExfiltrer
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_RENS_ROHUM_SExfiltrer"
+{
+    activations =
+    {
+        { "BEH_Dep_Pion_GererFurtivite", {} },
+        { "BEH_Mission_Pion_RENS_SExfiltrer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionImpossible ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        Activate( self.activations.BEH_Dep_Pion_GererFurtivite, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Furtivite
+]]--[[//-----------------------------------------------------------------------------
+]]
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Mission_Pion_RENS_SExfiltrer, 1, setmetatable( { self._namedParams.mission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_RENS_ROHUM_SExfiltrer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROHUM_SExfiltrer, "BEH_Dep_Pion_GererFurtivite", nodes.BEH_Dep_Pion_GererFurtivite }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROHUM_SExfiltrer, "BEH_Mission_Pion_RENS_SExfiltrer", nodes.BEH_Mission_Pion_RENS_SExfiltrer }

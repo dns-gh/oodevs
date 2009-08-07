@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<sensors>
+  <alat-monitoring-times>
+    <alat-monitoring-time terrain="Vide" time="10s"/>
+    <alat-monitoring-time terrain="Foret" time="20s"/>
+    <alat-monitoring-time terrain="Urbain" time="32s"/>
+  </alat-monitoring-times>
+  <cobra-radar action-range="100000"/>
+  <radars>
+  </radars>
+  <sensors>
+  </sensors>
+</sensors>

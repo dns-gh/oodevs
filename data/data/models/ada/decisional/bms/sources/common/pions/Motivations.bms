@@ -1,0 +1,13 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/Motivations.bms"] = true
+
+include "Common/Pions/Motivations v3/Stimulus.bms"
+
+include "Common/Pions/Motivations v3/Etats.bms"
+
+include "Common/Pions/Motivations v3/Motivations.bms"
+
+
+--[[// CAPACITE POPU
+]]include "Common/Pions/MotivationsReactionPopulations.bms"
+

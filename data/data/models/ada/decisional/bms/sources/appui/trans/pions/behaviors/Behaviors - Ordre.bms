@@ -1,0 +1,49 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Ordre.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Inopine
+]]--[[//
+]]--[[//Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Ordre_Inopine"
+{
+    activations =
+    {
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local bOrdreConduiteInterrompre = false
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                if( repOrdre:GetType() == "Rep_OrderConduite_Interrompre" ) then
+                    bOrdreConduiteInterrompre = true
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+        if( F_Pion_GetbOrdreInterrompreMission( myself ) or bOrdreConduiteInterrompre ) then
+            self.params.__returnValue = eActionHalt
+            return
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Inopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

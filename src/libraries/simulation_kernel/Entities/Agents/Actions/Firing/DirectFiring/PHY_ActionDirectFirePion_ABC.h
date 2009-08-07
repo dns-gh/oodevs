@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "PHY_RoleAction_DirectFiring.h"
 
 class PHY_FireResults_Pion;
@@ -25,14 +25,14 @@ class MIL_AgentPion;
 // @class  PHY_ActionDirectFirePion_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionDirectFirePion_ABC : public PHY_Action_ABC
+class PHY_ActionDirectFirePion_ABC : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-    PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType );
+             PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType );
     virtual ~PHY_ActionDirectFirePion_ABC();
 
     //! @name Operations
@@ -43,8 +43,7 @@ public:
 
 private:
           PHY_RoleAction_DirectFiring&               role_;
-          DIA_Variable_ABC&                          diaReturnCode_;
-    const uint                                       nTargetKnowledgeID_;
+          DEC_Knowledge_Agent*                       pEnemy_;
     const MT_Float                                   rPercentageComposantesToUse_;
     const PHY_DirectFireData::E_FiringMode           nFiringMode_;
     const PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;

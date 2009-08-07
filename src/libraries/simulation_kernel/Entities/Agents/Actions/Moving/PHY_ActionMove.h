@@ -13,24 +13,27 @@
 #define __PHY_ActionMove_h_
 
 #include "Knowledge/DEC_Knowledge_Def.h"
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 class MIL_AgentPion;
 class PHY_RoleAction_Moving;
+class DEC_Path_ABC;
 class DEC_Agent_Path;
+class DEC_Decision_ABC;
 
 // =============================================================================
 // @class  PHY_ActionMove
 // Bypassd: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionMove : public PHY_Action_ABC
+class PHY_ActionMove : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath );
     virtual ~PHY_ActionMove();
 
     //! @name Operations
@@ -55,13 +58,12 @@ private:
     //@}
 
 private:
-    MIL_AgentPion&          pion_;   
-    PHY_RoleAction_Moving&  role_;
-    DIA_Variable_ABC&       diaReturnCode_;
-    DEC_Agent_Path*         pMainPath_;
-    DEC_Agent_Path*         pJoiningPath_;
-    T_ObjectKnowledgeSet    objectAvoidAttempts_;
-    T_KnowledgeObjectVector objectsToAvoid_;
+    MIL_AgentPion&                      pion_;   
+    PHY_RoleAction_Moving&              role_;
+    boost::shared_ptr< DEC_Agent_Path > pMainPath_;
+    boost::shared_ptr< DEC_Agent_Path > pJoiningPath_;
+    T_ObjectKnowledgeSet                objectAvoidAttempts_;
+    T_KnowledgeObjectVector             objectsToAvoid_;
 };
 
 #endif // __PHY_ActionMove_h_

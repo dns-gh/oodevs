@@ -1,0 +1,129 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/common/missions/reconnaitresitesrota/ReconnaitreSitesROTA - CDT.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", {} },
+        { "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dispositif_Automate_NBC_GererPionsDetruits_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Gen
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// behavior BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_();  // PC y compris
+]]--[[//behavior BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_(); 			    // PC y compris
+]]
+        Activate( self.activations.BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA, 1, {} )--[[//-------------------------------------------------------------------------
+]]--[[// Spé
+]]--[[//-------------------------------------------------------------------------
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.listeSitesNonReconnus = self.listeSitesNonReconnus or S_NBC_ObtenirSitesNonReconnus( self.mission.sitesROTA_ )
+        --[[//-------------------------------------------------------------------------
+]]--[[// MAJ des listes
+]]--[[//-------------------------------------------------------------------------
+]]local listePionsPE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
+        local listePionsROTA = S_NBC_ObtenirPionsROTADisposnibles()
+        --[[//-------------------------------------------------------------------------
+]]--[[// MAJ des listes
+]]--[[//-------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Info_Trace, 1, { "----> Number of ROTA troop = " .. FloatToString( #( listePionsROTA ) ), } )
+        Activate( self.activations.ACT_Info_Trace, 1, { "----> Number of sites to be reconnized = " .. FloatToString( #( self.listeSitesNonReconnus ) ), } )
+        for _,pion in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// Assignation des mission
+]]--[[//-------------------------------------------------------------------------
+]]listePionsROTA ) do
+        local _continue = true
+do
+                --[[// Cherche le site le plus proche du pion disponible
+]]local siteROTA = S_Misc_ObtenirSiteProche( self.listeSitesNonReconnus, DEC_Automate_PionPosition( pion ) )
+                if( ( siteROTA ~= 0 and siteROTA ~= nil ) ) then
+                    do
+                        Activate( self.activations.BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA, 1, { pion, siteROTA, } )
+                        DEC_UserTypeList_Remove( self.listeSitesNonReconnus, siteROTA )
+                    end
+                else
+do
+                        if( ( #( listePionsPE ) ~= 0 and #( listePionsPE ) ~= nil ) ) then
+                            Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DIA_GetAt( listePionsPE, 0 ), } )
+                        end
+
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.siteROTA = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[/*: max_instances( 1 )*/]]Activate( self.activations.BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA, 1, { ePhase_CDT, self._namedParams.pion, self._namedParams.siteROTA, } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA, "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA", nodes.BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA, "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", nodes.BEH_Dispositif_Automate_NBC_GererPionsDetruits_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA, "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA", nodes.BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA }
+connections[ #connections + 1 ] = { nodes.BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA, "BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA", nodes.BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA }

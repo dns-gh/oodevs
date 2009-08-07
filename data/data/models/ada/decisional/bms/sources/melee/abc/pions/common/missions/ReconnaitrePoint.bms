@@ -1,0 +1,210 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/common/missions/ReconnaitrePoint.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 02-11-21 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Common/Missions/ReconnaitrePoint.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 23/08/05 15:21 $
+]]--[[// $Revision: 21 $
+]]--[[// $Workfile: ReconnaitrePoint.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_ABC_ReconnaitreUnPoint
+]]--[[//
+]]--[[// Commentaires: idem reconnaitre jusqu'au point. Puis fin différente: RC si point tenu
+]]--[[// ou non tenu. Si non tenu s'installer et surveiller; attendre ordre.
+]]--[[//
+]]--[[// Le point à reconnaitre doit être le dernier point de l'itineraire
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_ABC_ReconnaitreUnPoint"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Obs_Pion_ABC_ReconnaitrePointMission", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Agressivite
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { self._namedParams.rPH, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Ambiance
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_Info_Trace, 1, { "Point reconnaissance beginig", } )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progression tactique et reconnaissance du point
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Progression
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointAReconnaitre_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                --[[// Changement d'ambiance
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POUR_SURETE() ) then
+                    F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
+                end
+
+                --[[// Abordage du point
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POSITION_OBSERVATION() ) then
+                    self.ePhaseMission = eReconnaitre
+                end
+
+                
+            --[[// Abordage et reconnaissance du point
+]]elseif switch_1 == eReconnaitre then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Obs_Pion_ABC_ReconnaitrePointMission, 1, setmetatable( { self._namedParams.mission.pointAReconnaitre_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                return
+
+            --[[// Fin de la mission de reconnaissance
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                else
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointAReconnaitre_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                end
+
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Obs_Pion_ABC_ReconnaitrePointMission
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Obs_Pion_ABC_ReconnaitrePointMission"
+{
+    activations =
+    {
+        { "ACT_Obs_ReconnaitrePoint", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "--> Debut reconnaissnace du point de la mission" )
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                    DEC_Trace( "Fin reconnaissance point" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// reco
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, setmetatable( { self._namedParams.point, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.point, } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReconnaitreUnPoint, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReconnaitreUnPoint, "BEH_MAJ_Pion_ABC_AgressiviteTir", nodes.BEH_MAJ_Pion_ABC_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReconnaitreUnPoint, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReconnaitreUnPoint, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReconnaitreUnPoint, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReconnaitreUnPoint, "BEH_Obs_Pion_ABC_ReconnaitrePointMission", nodes.BEH_Obs_Pion_ABC_ReconnaitrePointMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_ReconnaitreUnPoint, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ABC_ReconnaitrePointMission, "ACT_Obs_ReconnaitrePoint", nodes.ACT_Obs_ReconnaitrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ABC_ReconnaitrePointMission, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }

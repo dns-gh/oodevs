@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoObjects.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -19,25 +20,25 @@
 #include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoObjects::sReco copnstructor
+// Name: PHY_PerceptionRecoObjectsReco constructor
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoObjects::sReco::sReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rGrowthSpeed, DIA_Variable_ABC& result )
+PHY_PerceptionRecoObjectsReco::PHY_PerceptionRecoObjectsReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
     : vCenter_            ( vCenter )
     , localisation_       ( localisation )
     , rCurrentSize_       ( 0. )
     , rGrowthSpeed_       ( rGrowthSpeed )
-    , pReturn_            ( &result )
+    , callerAgent_        ( callerAgent )
     , bMaxSizeDone_       ( false )
 {
-    result.SetValue( false );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoObjects::sReco::UpdateLocalisation
+// Name: PHY_PerceptionRecoObjectsReco::UpdateLocalisation
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoObjects::sReco::UpdateLocalisation()
+void PHY_PerceptionRecoObjectsReco::UpdateLocalisation()
 {
     if ( bMaxSizeDone_ )
         return;
@@ -54,23 +55,23 @@ void PHY_PerceptionRecoObjects::sReco::UpdateLocalisation()
     bMaxSizeDone_ = true;
     for ( CIT_PointVector it = pointLocalisationFinale.begin(); bMaxSizeDone_ && it != pointLocalisationFinale.end(); ++it )
         bMaxSizeDone_ = circle_.IsInside( *it );
-    pReturn_->SetValue( bMaxSizeDone_ );
+    callerAgent_.CallbackPerception( Id() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoObjects::sReco::IsInside
+// Name: PHY_PerceptionRecoObjectsReco::IsInside
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-bool PHY_PerceptionRecoObjects::sReco::IsInside( const TER_Localisation& localisation ) const
+bool PHY_PerceptionRecoObjectsReco::IsInside( const TER_Localisation& localisation ) const
 {
     return localisation_.IsIntersecting( localisation ) && circle_.IsIntersecting( localisation );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoObjects::sReco::GetObjectsInside
+// Name: PHY_PerceptionRecoObjectsReco::GetObjectsInside
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoObjects::sReco::GetObjectsInside( TER_Object_ABC::T_ObjectVector& result ) const
+void PHY_PerceptionRecoObjectsReco::GetObjectsInside( TER_Object_ABC::T_ObjectVector& result ) const
 {
     TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vCenter_, rCurrentSize_, result );
 
@@ -86,7 +87,7 @@ void PHY_PerceptionRecoObjects::sReco::GetObjectsInside( TER_Object_ABC::T_Objec
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoObjects::PHY_PerceptionRecoObjects( PHY_RolePion_Perceiver& perceiver )
-    : PHY_Perception_ABC( perceiver )
+    : PHY_PerceptionWithLocation< PHY_PerceptionRecoObjectsReco >( perceiver )
 {
     // NOTHING
 }
@@ -106,29 +107,19 @@ PHY_PerceptionRecoObjects::~PHY_PerceptionRecoObjects()
 // Name: PHY_PerceptionRecoObjects::AddLocalisation
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void* PHY_PerceptionRecoObjects::AddLocalisation( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DIA_Variable_ABC& result )
+int PHY_PerceptionRecoObjects::AddLocalisation( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DEC_Decision_ABC& callerAgent )
 {
-    sReco* pNewReco = new sReco( localisation, vCenter, rSpeed, result );
-    recos_.push_back( pNewReco );
-    return pNewReco;
-    
+    PHY_PerceptionRecoObjectsReco* pNewReco = new PHY_PerceptionRecoObjectsReco( localisation, vCenter, rSpeed, callerAgent );
+    return Add( pNewReco );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoObjects::RemoveLocalisation
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoObjects::RemoveLocalisation( void* pId )
+void PHY_PerceptionRecoObjects::RemoveLocalisation( int id )
 {
-    sReco* pReco = static_cast< sReco* >( pId );
-
-    IT_RecoVector it = std::find( recos_.begin(), recos_.end(), pReco );
-    
-    if ( it != recos_.end() )
-    {
-        delete pReco;
-        recos_.erase( it );
-    }
+    Remove( id );
 }
 
 // -----------------------------------------------------------------------------

@@ -1,0 +1,6 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roem/systeme linx/Knowledge.bms"] = true
+
+precache_on_type = false
+
+precache_on_represented_object = false

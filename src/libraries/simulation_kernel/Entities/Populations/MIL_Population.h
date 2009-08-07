@@ -14,7 +14,6 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
-#include "Entities/Actions/PHY_Actor.h"
 
 namespace xml
 {
@@ -40,7 +39,6 @@ class TER_Localisation;
 // Created: NLD 2005-09-28
 // =============================================================================
 class MIL_Population : public MIL_Entity_ABC
-                     , public PHY_Actor
                      , public MIL_VisitableEntity_ABC< MIL_PopulationElement_ABC >
 {
 public:
@@ -102,7 +100,7 @@ public:
     //@{
     void UpdateKnowledges();
     void CleanKnowledges ();
-    void UpdateDecision  ();
+    void UpdateDecision  ( float duration );
     void UpdateState     ();
     void Clean           ();
     uint GetBoundedPeople( MT_Float rPeople );
@@ -151,6 +149,9 @@ public:
     //@{
     virtual void Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& visitor ) const;
     //@}
+
+protected:
+    MIL_Population( const MIL_PopulationType& type );
 
 private:
     //! @name Copy/Assignement

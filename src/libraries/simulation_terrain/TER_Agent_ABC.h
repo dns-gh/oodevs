@@ -23,6 +23,8 @@
 
 #include "TER_AgentTraits.h"
 
+class TER_AgentManager;
+
 namespace pathfind
 {
     template< typename T, typename Traits, typename Coordinate > class SpatialContainerNode;
@@ -55,6 +57,13 @@ public:
     virtual    const MT_Vector2D& GetPosition() const = 0;
 
     void UpdatePatch    ();
+
+    void SetListener( TER_AgentManager& agentManager );
+    //@}
+    
+protected:
+    //! @name Operations
+    //@{
     void RemoveFromPatch();
     //@}
 
@@ -74,6 +83,7 @@ private:
     //! @name Member data
     //@{
     T_Hint hint_;
+    TER_AgentManager* pAgentManager_;
     //@}
 };
 

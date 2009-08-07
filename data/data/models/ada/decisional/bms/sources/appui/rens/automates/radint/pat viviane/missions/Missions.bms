@@ -1,0 +1,14 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/Missions.bms"] = true
+
+
+
+--[[//=============================================================================
+]]--[[// Liste des missions Pat Viviane
+]]--[[//=============================================================================
+]]
+--[[/* RenseignerSur */]]
+include "Appui/Rens/Automates/Radint/Pat Viviane/Missions/RenseignerSur/RenseignerSur - MRT.bms"
+
+include "Appui/Rens/Automates/Radint/Pat Viviane/Missions/RenseignerSur/RenseignerSur - CDT.bms"
+

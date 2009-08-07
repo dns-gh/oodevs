@@ -13,6 +13,7 @@
 #define __MT_RoleContainer_h_
 
 #include "MT_Tools_Types.h"
+#include <boost/shared_ptr.hpp>
 
 class MT_Role_ABC;
 
@@ -48,7 +49,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_Role_ABC* > T_RoleVector;
+    typedef std::vector< boost::shared_ptr< MT_Role_ABC > > T_RoleVector;
     //@}
 
 protected:
@@ -60,7 +61,8 @@ protected:
 private:
     //! @name Role initialization
     //@{
-    template< typename Role > uint GetIdx() const;
+    template< typename Role > unsigned int EnsureSize();
+    template< typename Role > unsigned int GetIdx() const;
     //@}
 
 private:

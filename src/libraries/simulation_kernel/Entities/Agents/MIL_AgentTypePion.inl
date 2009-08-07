@@ -43,17 +43,6 @@ const PHY_UnitType& MIL_AgentTypePion::GetUnitType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DIA_FunctionTable< MIL_AgentPion > MIL_AgentTypePion::GetFunctionTable
-// Created: NLD 2004-08-19
-// -----------------------------------------------------------------------------
-inline
-DIA_FunctionTable< MIL_AgentPion >& MIL_AgentTypePion::GetFunctionTable() const
-{
-    assert( pDIAFunctionTable_ );
-    return *pDIAFunctionTable_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::GetModel
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
@@ -113,7 +102,6 @@ bool MIL_AgentTypePion::operator==( const MIL_AgentTypePion& rhs ) const
 template< typename T >
 MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* )
     : MIL_AgentType_ABC( strName, xis )
-    , pDIAFunctionTable_( new DIA_FunctionTable< MIL_AgentPion >() )
 {
     pUnitType_ = new T( xis );
 

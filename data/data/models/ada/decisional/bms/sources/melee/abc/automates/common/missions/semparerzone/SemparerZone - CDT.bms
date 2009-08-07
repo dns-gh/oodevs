@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/common/missions/semparerzone/SemparerZone - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_Automate_ABC_SemparerDUneZone
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Conduite_Automate_ABC_SemparerDUneZone"
+{
+    activations =
+    {
+        { "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_", {} },
+        { "BEH_CoordDep_Automate_ABC_CoordonnerPEcl_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", {} },
+        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Coordination, partielle ici, le PE se coordonne pas avec l'Ecl
+]]--[[//----------------------------------------------------------------------------- 
+]]
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEcl_, 1, {} )
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Gestion appuis et releve et SE
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositif_, 1, { true, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Condition opérationnelle
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_RC_Automate_GererConditionOperationnelle, 1, { eEtatEchelon_Premier, } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_SemparerDUneZone, "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_", nodes.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_SemparerDUneZone, "BEH_CoordDep_Automate_ABC_CoordonnerPEcl_", nodes.BEH_CoordDep_Automate_ABC_CoordonnerPEcl_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_SemparerDUneZone, "BEH_Dispositif_Automate_ABC_GererLesAppuis_", nodes.BEH_Dispositif_Automate_ABC_GererLesAppuis_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_SemparerDUneZone, "BEH_Dispositif_Automate_ABC_GererLeDispositif_", nodes.BEH_Dispositif_Automate_ABC_GererLeDispositif_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_SemparerDUneZone, "BEH_RC_Automate_GererConditionOperationnelle", nodes.BEH_RC_Automate_GererConditionOperationnelle }

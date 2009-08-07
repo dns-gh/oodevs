@@ -1,0 +1,93 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/prendreencompteprisonniers/CDT - PrendreEnComptePrisonniers.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_PrendreEnComptePrisonniers
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_PrendreEnComptePrisonniers"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_FaireSuivreLeSE", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        Activate( self.activations.BEH_Dispositif_Automate_FaireSuivreLeSE, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Mission suivre au autres pions
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dispositif_Automate_FaireSuivreLeSE
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dispositif_Automate_FaireSuivreLeSE"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local rIterateurPionASuivre = 0
+        --[[// Ces listes peuvent évoluer...en fonction des destructions
+]]local sel_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        local sel_SE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//-----------------------------------------------------------------------------
+]]if( DIA_IsListEmpty( sel_SE ) or DIA_IsListEmpty( sel_PE ) ) then
+            return
+        end
+
+        for _,x in pairs( sel_SE ) do
+        local _continue = true
+do
+                local pion = x
+                local pionPE = DIA_GetAt( sel_PE, rIterateurPionASuivre )
+                Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, pionPE, } )
+                                rIterateurPionASuivre = rIterateurPionASuivre + 1
+                if( rIterateurPionASuivre >= #( sel_PE ) ) then
+                    --[[// revenir au premier élément de la liste de PE
+]]rIterateurPionASuivre = 0
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_PrendreEnComptePrisonniers = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_FaireSuivreLeSE, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_PrendreEnComptePrisonniers, "BEH_Dispositif_Automate_FaireSuivreLeSE", nodes.BEH_Dispositif_Automate_FaireSuivreLeSE }

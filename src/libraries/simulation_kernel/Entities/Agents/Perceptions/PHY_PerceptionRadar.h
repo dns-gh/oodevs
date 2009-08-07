@@ -32,8 +32,8 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    void* EnableRadar( const PHY_RadarClass& radarClass, const TER_Localisation& );
-    void DisableRadar( const PHY_RadarClass& radarClass, void* pID );
+    int  EnableRadar( const PHY_RadarClass& radarClass, const TER_Localisation& );
+    void DisableRadar( const PHY_RadarClass& radarClass, int id );
 
     void EnableRadar ( const PHY_RadarClass& radarClass );
     void DisableRadar( const PHY_RadarClass& radarClass );
@@ -62,12 +62,16 @@ private:
 
     typedef std::map< const PHY_RadarType*, PHY_PerceptionRadarData > T_RadarDataMap;
     typedef T_RadarDataMap::iterator                                  IT_RadarDataMap;
+    
+    typedef std::map< int, const TER_Localisation* > T_RadarIdMap;
+    typedef T_RadarIdMap::iterator                   IT_RadarIdMap;
     //@}
 
 private:
     T_RadarZonesVector          radarZones_;
     T_RadarOnUnitPositionVector radarOnUnitPosition_;
     T_RadarDataMap              radarData_;
+    T_RadarIdMap                radarId_;
 };
 
 #endif // __PHY_PerceptionRadar_h_

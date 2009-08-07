@@ -36,7 +36,7 @@ TimeLimitedCapacity::TimeLimitedCapacity()
 // Name: TimeLimitedCapacityconstructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-TimeLimitedCapacity::TimeLimitedCapacity( const TimeLimitedCapacity& from )
+TimeLimitedCapacity::TimeLimitedCapacity( const TimeLimitedCapacity& /*from*/ )
 {
     // NOTHING
 }

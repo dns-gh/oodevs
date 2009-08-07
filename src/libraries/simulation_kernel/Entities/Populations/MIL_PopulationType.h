@@ -52,7 +52,6 @@ public:
           MT_Float                             GetMaxSpeed            () const;
 
     const DEC_Model_ABC&                       GetModel               () const;
-          DIA_FunctionTable< MIL_Population >& GetFunctionTable       () const;
     //@}
 
     //! @name Operations
@@ -72,6 +71,10 @@ public:
           MT_Float           GetDamagePH               ( const PHY_RoePopulation& roeFirer ) const;
     //@}
 
+protected:
+    MIL_PopulationType( const DEC_Model_ABC& model );
+    ~MIL_PopulationType();
+
 private:
     //! @name Types
     //@{
@@ -81,7 +84,6 @@ private:
 
 private:
      MIL_PopulationType( const std::string& strName, xml::xistream& xis );
-    ~MIL_PopulationType();
 
     //! @name Initialization
     //@{
@@ -130,7 +132,6 @@ private:
           T_DamageData                         damageData_;
 
     const DEC_Model_ABC*                       pModel_;
-          DIA_FunctionTable< MIL_Population >* pDIAFunctionTable_;
 
 private:
     static T_PopulationMap populations_;

@@ -1,0 +1,30 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roem/common/missions/appuyer/Appuyer - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_RENS_ROEM_AssignerAppuyerA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_RENS_ROEM_AssignerAppuyerA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionPC = self.params[1]
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        Activate( self.activations.BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA, 1, { ePhase_MRT, self._namedParams.pionPC, self.mission.positionDeploiement_, self.mission.pointRegroupement_, eEtatEchelon_Premier, } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROEM_AssignerAppuyerA, "BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA", nodes.BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA }

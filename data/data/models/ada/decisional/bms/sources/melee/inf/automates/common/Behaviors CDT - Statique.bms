@@ -1,0 +1,112 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/Behaviors CDT - Statique.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Behaviors CDT - Statique.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 9 $
+]]--[[// $Workfile: Behaviors CDT - Statique.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+node "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_AssignerMission_PC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        switch_1 = --[[// Situation Mission
+]]--[[// --------------------------------------------------------------------
+]]F_Automat_GeteEtatPhaseMission( myself )
+            if switch_1 == eEtatPhaseMission_InstallationDispositif
+            or switch_1 == eEtatPhaseMission_EnSurveillance then
+                Activate( self.activations.BEH_Conduite_Automate_INF_AssignerMission_PC, 1, { "T_Mission_Pion_FaireMouvement", } )
+                
+            --[[//default:
+]]--[[//behavior BEH_Conduite_Automate_INF_AssignerMission_PC( T_Mission_Pion_Suivre );			
+]]            end
+
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// PC
+]]--[[//-----------------------------------------------------------------------------    	
+]]}
+
+node "BEH_Conduite_Automate_INF_AssignerMission_PC"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eMission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ptStatique = self.ptStatique or nil
+        self.pAppui = self.pAppui or nil
+        self.pFoo = self.pFoo or nil
+        local selPions_PE = S_ObtenirPionsDe_SansPC( eEtatEchelon_Premier, eEtatDestruction_None )
+        local selPions_SE = S_ObtenirTousPionsDe_SansPC( eEtatEchelon_Second )
+        if( ( ModuleBegins() or self.pAppui == 0 or ModuleBegins() or self.pAppui == nil ) ) then
+            do
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------    			    
+]]if( ( #( selPions_SE ) ~= 0 and #( selPions_SE ) ~= nil ) ) then
+                    self.pAppui = DIA_GetAt( selPions_SE, Floor( #( selPions_SE ) / 2 ) )
+                else
+                    self.pAppui = DIA_GetAt( selPions_PE, Floor( #( selPions_PE ) / 2 ) )
+                end
+
+                if( ( self.pAppui == 0 or self.pAppui == nil ) ) then
+                    return
+                end
+
+                switch_1 = self._namedParams.eMission
+                    if switch_1 == "T_Mission_Pion_Suivre" then
+                        Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.pAppui, } )
+                        
+                    elseif switch_1 == "T_Mission_Pion_FaireMouvement" then
+                        if( F_Pion_GeteEtatPhaseMission( self.pAppui ) ~= eEtatPhaseMission_InstallationDispositif ) then
+                            do
+                                self.pAppui = self.pFoo
+                                                                return
+
+                            end
+                        end
+
+                        local mission = DEC_GetMission( myself )
+                        self.ptStatique = S_Geometrie_PtInvDirDangereuse( DEC_Automate_PionPosition( self.pAppui ), DEC_GetDirectionEnnemi( mission ), 1263 )
+                        Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.ptStatique, eEtatEchelon_Second, } )
+                        
+                                        end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_AssignerMission_PC, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_AssignerMission_PC, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_CadreDefensif_InstallerPC, "BEH_Conduite_Automate_INF_AssignerMission_PC", nodes.BEH_Conduite_Automate_INF_AssignerMission_PC }

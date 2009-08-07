@@ -1,0 +1,278 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// ReconnaitreZones (T_Localisation)
+]]--[[//
+]]--[[// Ce comportement permet de reconnaitre une zone. Il s'agit de la traverser et 
+]]--[[// de tenter d'y detecter la presence de l'ennemi
+]]--[[//
+]]--[[// on se poste à l'entrée de la zone suivante
+]]--[[//
+]]--[[// Dans le cas où l'on a qu'une seule zone a traiter, on doit specifier cette zone
+]]--[[// comme arg1 et arg2. On ne va reconnaitre que jusqu'au centre de la zone
+]]--[[//------------------------------------------------------------------------------
+]]node "BEH_Obs_Pion_ALAT_ReconnaitreZone"
+{
+    activations =
+    {
+        { "ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        assert( self._namedParams.zone ~= nil, "ReconnaitreZone : zone invalide" )
+        self.positionARejoindre = self.positionARejoindre or S_Geometrie_BarycentreZone( self._namedParams.zone )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eRejoindre
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                Activate( self.activations.ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus, 1, { self._namedParams.zone, } )
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eSePoster
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                for _,x in pairs( DEC_Connaissances_UnitesEnnemiesDangereuses() ) do
+                local _continue = true
+for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone ) ) do
+                    local _continue = true
+if( x == y ) then
+                            self.params.__returnValue = eActionEffectuee
+                            Halt()
+                        end
+
+                    end
+
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionARejoindre, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eSePoster then
+                if( DEC_ALAT_ReconnaissanceNonVuTerminee() ) then
+                    self.params.__returnValue = eActionEffectuee
+                    Halt()
+                end
+
+                
+                        end
+
+    end,
+
+--[[//------------------------------------------------------------------------------
+]]--[[// ProgressionTactiqueVers :
+]]--[[// Ce comportement permet d'avancer tres doucement
+]]--[[// on réalise un pas, et on se poste autant de temps qu'il faut pour que notre
+]]--[[// posture donne un max de porté a nos capteurs
+]]--[[//------------------------------------------------------------------------------
+]]}
+
+node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_Misc_VerouillerConnaissance", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Misc_Delai", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.distance = self.params[1]
+        self._namedParams.temps = self.params[2]
+        self._namedParams.eni = self.params[3]
+    end,
+
+    activate = function( self )
+        self.anciennePosition = self.anciennePosition or DEC_Geometrie_CreerPoint()
+        self.eEtat = self.eEtat or eActionEnCours
+        self.eEtatDeplacement = self.eEtatDeplacement or eActionEnCours
+        if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.eni ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                    DEC_Copie_Point( myself:DEC_Agent_Position(), self.anciennePosition )
+                end
+
+            end
+        end
+
+        if( self.eEtat == eActionImpossible ) then
+            do
+                                do
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eEtatDeplacement == eActionEffectuee ) then
+            do
+                self.eEtatDeplacement = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        if( self.eEtatDeplacement == eActionImpossible ) then
+            do
+                                do
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( ModuleBegins() ) then
+            DEC_Copie_Point( myself:DEC_Agent_Position(), self.anciennePosition )
+        end
+
+        Activate( self.activations.ACT_Misc_VerouillerConnaissance, 1, { self._namedParams.eni, } )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.eni ), } )
+        if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.anciennePosition ) >= self._namedParams.distance ) then
+            do
+                Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { self._namedParams.eni, } )
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.temps, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+            end
+        else
+do
+                Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.eni ), } )
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { DEC_ConnaissanceAgent_Position( self._namedParams.eni ), eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDeplacement = v else rawset( t, k, v ) end end } ) )
+            end
+        end
+
+    end,
+
+}
+
+node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
+{
+    instances =
+    {
+        boost = 1.000001,
+    },
+
+    activations =
+    {
+        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.distance = self.params[1]
+        self._namedParams.temps = self.params[2]
+        self._namedParams.eni = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.eni ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( DEC_ConnaissanceAgent_EstMort( self._namedParams.eni ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( not S_Eni_EstNiveauPerceptionGTIA( self._namedParams.eni, eReconnu ) ) then
+            Activate( self.activations.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, 1, setmetatable( { self._namedParams.distance, self._namedParams.temps, self._namedParams.eni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        end
+
+                self.params.__returnValue = self.eEtat
+        return
+
+    end,
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Ce comportement permet de gerer la progression tactique sur les ennemis
+]]--[[// ainsi que le poste. Si on a decidé de poursuivre, alors, les connaissances
+]]--[[// sont copiée dans une liste de pions a laquelle on se referera afin de ne pas
+]]--[[// se poster sur une connaissance sur laquelle on s'est deja posté
+]]--[[//------------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ALAT_GererUnitesDetectes"
+{
+    activations =
+    {
+        { "BEH_Obs_Pion_ALAT_ReconnaitreUnite", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// variable persistantes
+]]self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
+        local listeUnitesDetecteesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()
+        for _,x in pairs( listeUnitesDetecteesDansFuseau ) do
+        local _continue = true
+do
+                if( DEC_ConnaissanceAgent_EstMort( x ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    Activate( self.activations.BEH_Obs_Pion_ALAT_ReconnaitreUnite, S_Force_Pion_ALAT_ConnaissanceProche( x, 0 ), { 500, 1, x, } )
+                end
+            end
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_GererUnitesDetectes, "BEH_Obs_Pion_ALAT_ReconnaitreUnite", nodes.BEH_Obs_Pion_ALAT_ReconnaitreUnite }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, "ACT_Misc_VerouillerConnaissance", nodes.ACT_Misc_VerouillerConnaissance }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ALAT_ReconnaitreUnite, "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", nodes.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ALAT_ReconnaitreZone, "ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus", nodes.ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ALAT_ReconnaitreZone, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ALAT_ReconnaitreZone, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }

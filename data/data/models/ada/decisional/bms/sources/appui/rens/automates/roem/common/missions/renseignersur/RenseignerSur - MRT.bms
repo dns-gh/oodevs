@@ -1,0 +1,68 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roem/common/missions/renseignersur/RenseignerSur - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_RENS_ROEM_AssignerRenseignerA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_RENS_ROEM_AssignerRenseignerA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_RENS_ROEM_AssignerRenseignerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        Activate( self.activations.BEH_Mission_Automate_RENS_ROEM_AssignerRenseignerA, 1, { ePhase_MRT, self._namedParams.pion, self.mission.zone_, eEtatEchelon_Premier, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_RENS_ROEM_AssignerMettreEnOeuvreA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Medo_Automate_RENS_ROEM_AssignerMettreEnOeuvreA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// $$$$MIA : HACK -- Attente ASN
+]]self.positionDeploiement = self.positionDeploiement or DEC_Geometrie_CreerPoint()
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[// Hack: position deploiement pour SMO = position départ pour l'instant
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Copie_Point( DEC_Automate_PionPosition( DEC_Automate_PionPC() ), self.positionDeploiement )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Assignations des missions
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA, 1, { ePhase_MRT, self._namedParams.pion, self.positionDeploiement, eEtatEchelon_Premier, } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROEM_AssignerMettreEnOeuvreA, "BEH_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA", nodes.BEH_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROEM_AssignerRenseignerA, "BEH_Mission_Automate_RENS_ROEM_AssignerRenseignerA", nodes.BEH_Mission_Automate_RENS_ROEM_AssignerRenseignerA }

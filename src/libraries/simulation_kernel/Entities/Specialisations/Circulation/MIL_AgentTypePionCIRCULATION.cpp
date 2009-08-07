@@ -13,6 +13,9 @@
 #include "MIL_AgentTypePionCIRCULATION.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <directia/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionCIRCULATION constructor
@@ -21,7 +24,6 @@
 MIL_AgentTypePionCIRCULATION::MIL_AgentTypePionCIRCULATION( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePion( strName, xis )
 {
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::EquipLogisticRoute, "DEC_Circulation_EquiperItineraireLogistique" );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,4 +42,14 @@ MIL_AgentTypePionCIRCULATION::~MIL_AgentTypePionCIRCULATION()
 const MIL_AgentTypePion* MIL_AgentTypePionCIRCULATION::Create( const std::string& strName, xml::xistream& xis )
 {
     return new MIL_AgentTypePionCIRCULATION( strName, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionCIRCULATION::RegisterFunctions
+// Created: LDC 2009-04-23
+// -----------------------------------------------------------------------------
+void MIL_AgentTypePionCIRCULATION::RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const
+{    
+    brain.RegisterFunction( "DEC_Circulation_EquiperItineraireLogistique", 
+        boost::function< int( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::EquipLogisticRoute, boost::cref( agent ), _1 ) ) );
 }

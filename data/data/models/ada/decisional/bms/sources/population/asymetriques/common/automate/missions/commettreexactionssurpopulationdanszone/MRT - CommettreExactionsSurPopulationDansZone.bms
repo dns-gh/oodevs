@@ -1,0 +1,218 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/asymetriques/common/automate/missions/commettreexactionssurpopulationdanszone/MRT - CommettreExactionsSurPopulationDansZone.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_CommettreExactionsSurPopulationDansZone
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        self.missionExaction = self.missionExaction or self._namedParams.mission
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self.missionExaction )
+                DEC_Trace( "$ MIS_Automate_MRT_CommettreExactionsSurPopulationDansZone : debut MRT $" )
+                local szListeZones = #( self.missionExaction.zones_ )
+                if( szListeZones > 0 ) then
+                    do
+                        local nCurrentZoneIndex = 0
+                        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                        local _continue = true
+                            do
+                                StartActivate( self.activations.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, 1, { ePhase_MRT, pion, DEC_UserTypeList_GetAt( self.missionExaction.zones_, nCurrentZoneIndex ), } )
+                                if( nCurrentZoneIndex >= szListeZones - 1 ) then
+                                    nCurrentZoneIndex = 0
+                                else
+                                                                        nCurrentZoneIndex = nCurrentZoneIndex + 1
+                                end
+
+                            end
+
+                        end
+
+                    end
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Assignation et vérification
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eValidationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_MRT_Valide()
+                    DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eValidationMRT == eActionEffectuee ) then
+            do
+                self.eValidationMRT = eActionEnCours
+                                do
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_ASY_AssignerCommettreExactionsA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_AssignerCommettreExactionsDansZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.zone = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_AssignerCommettreExactionsDansZone, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Mission_Automate_AssignerCommettreExactionsDansZone
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Mission_Automate_AssignerCommettreExactionsDansZone"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.zone = self.params[3]
+    end,
+
+    select = function( self )
+        self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
+]]--[[// Cree la Mission
+]]--[[//-----------------------------------------------------------------------------	
+]]
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//-----------------------------------------------------------------------------		
+]]if( ModuleBegins() ) then
+            DEC_Trace( "$$ Commettre Exactions Dans Zone : " .. DEC_GetSzName( self._namedParams.pPion ) .. " $$" )
+        else
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+        --[[// Infos globales	    
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[// zone
+]]DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
+        --[[// Marquage échelon
+]]F_Pion_SeteEtatEchelon( self._namedParams.pPion, eEtatEchelon_Premier )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Envoie la mission si l'on se trouve dans la conduite
+]]--[[//-----------------------------------------------------------------------------
+]]if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[//-----------------------------------------------------------------------------    
+]]eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, "ACT_Mission_Automate_AssignerCommettreExactionsDansZone", nodes.ACT_Mission_Automate_AssignerCommettreExactionsDansZone }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone, "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA", nodes.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }

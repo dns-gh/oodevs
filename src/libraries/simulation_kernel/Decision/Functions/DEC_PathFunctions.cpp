@@ -18,7 +18,6 @@
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/MIL_Army.h"
@@ -36,85 +35,67 @@
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::CreatePathToPoint( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
 {
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
-
-    MT_Vector2D* pEnd = call.GetParameter( 0 ).ToUserPtr( pEnd   );
     assert( pEnd );
-
-    const DEC_PathType* pPathType = DEC_PathType::Find( call.GetParameter( 1 ).ToId() );
+    
+    const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
 
-    DEC_Agent_Path* pPath = new DEC_Agent_Path( callerAgent, *pEnd, *pPathType );
-    pPath->IncDIARef();
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pPath );
-    call.GetResult().SetValue( pPath, &DEC_Tools::GetTypeItineraire() );
+    boost::shared_ptr< DEC_Path_ABC > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType ) );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
+    return pPath;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPointList
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::CreatePathToPointList( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_AgentPion& callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType  )
 {
-    assert( DEC_Tools::CheckTypeListePoints( call.GetParameter( 0 ) ) );
+    assert( !listPt.empty() );
 
-    T_PointVector* pListPt = call.GetParameter( 0 ).ToUserPtr( pListPt );
-
-    assert( pListPt );
-    assert( !pListPt->empty() );
-
-    const DEC_PathType* pPathType = DEC_PathType::Find( call.GetParameter( 1 ).ToId() );
+    const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
 
-    DEC_Agent_Path* pPath = new DEC_Agent_Path( callerAgent, *pListPt, *pPathType );
-    pPath->IncDIARef();  
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pPath );
-    call.GetResult().SetValue( pPath, &DEC_Tools::GetTypeItineraire() );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Agent_ABC::DeletePath
-// Created: AGN 02-12-19
-//-----------------------------------------------------------------------------
-void DEC_PathFunctions::DeletePath( DIA_Call_ABC& /*call*/, MIL_AgentPion& /*callerAgent*/ )
-{
+    boost::shared_ptr< DEC_Path_ABC > pPath( new DEC_Agent_Path( callerAgent, listPt, *pPathType ) );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
+    return pPath;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetPathState
 // Created: NLD 2004-09-23
+// Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetPathState( DIA_Call_ABC& call, MIL_AgentPion& /*callerAgent*/ )
+int DEC_PathFunctions::GetPathState( MIL_AgentPion& /*callerAgent*/, DEC_Path_ABC* pPath )
 {
-    assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
-    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
     assert( pPath );
-    call.GetResult().SetValue( pPath->GetState() );
+    return pPath->GetState();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::ExtrapolatePosition
 // Created: NLD 2004-05-13
+// Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::ExtrapolatePosition( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const MIL_AgentPion& callerAgent, const MT_Float time, bool bBoundOnPath )
 {
-    MT_Float        rTime        = MIL_Tools::ConvertMinutesToSim( call.GetParameter( 0 ).ToFloat() );
-    bool            bBoundOnPath = call.GetParameter( 1 ).ToBool();
-
-    MT_Vector2D*    pPos   = new MT_Vector2D( callerAgent.GetRole< PHY_RoleAction_Moving >().ExtrapolatePosition( rTime, bBoundOnPath ) ); // $$$$ RAM
-    call.GetResult().SetValue( (void*)pPos, &DEC_Tools::GetTypePoint() );
+    MT_Float simulationTime        = MIL_Tools::ConvertMinutesToSim( time );
+    boost::shared_ptr< MT_Vector2D > pPos( new MT_Vector2D( callerAgent.GetRole< PHY_RoleAction_Moving >().ExtrapolatePosition( simulationTime, bBoundOnPath ) ) );
+    return pPos;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetNextObjectOnPath
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+std::pair< bool, std::pair< int, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_AgentPion& callerAgent, int oId, float oDistance, const std::vector< std::string >& params )
 {
-    MIL_ObjectFilter filter( call.GetParameters(), 2 );
-
+    MIL_ObjectFilter filter( params );
+    
+    std::pair< bool, std::pair< int, float > > result;
+    
     const DEC_Knowledge_Object* pObjectColliding   = 0;
           MT_Float              rDistanceCollision = 0.;
 
@@ -127,110 +108,104 @@ void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_Agent
 
     if( knowledges.empty() || !callerAgent.GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, &pObjectColliding ) )
     {
-        call.GetResult().SetValue( false );
-        return;
+        result.first = false;
+        return result;
     }
     assert( pObjectColliding );
 
-    call.GetParameter( 0 ).SetValue( (void*)pObjectColliding->GetID(), &DEC_Tools::GetTypeConnaissanceObjet() );
-    call.GetParameter( 1 ).SetValue( (float)MIL_Tools::ConvertSimToMeter( rDistanceCollision ) );
-    call.GetResult().SetValue( true );
+    result.first = true;
+    result.second.first = pObjectColliding->GetID();
+    result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetLastPointOfPath
 // Created: JVT 2004-11-30
+// Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetLastPointOfPath( DIA_Call_ABC& call, const MIL_AgentPion& /*callerAgent*/ )
+boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MIL_AgentPion& /*callerAgent*/, const DEC_Path_ABC* pPath )
 {
-    assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
-
-    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
     assert( pPath );
-
-    MT_Vector2D* pPos = new MT_Vector2D( pPath->GetResult().back()->GetPos() );
-    call.GetResult().SetValue( (void*)pPos, &DEC_Tools::GetTypePoint() );
+    boost::shared_ptr< MT_Vector2D > pPos ( new MT_Vector2D( dynamic_cast< const DEC_PathResult* > ( pPath )->GetResult().back()->GetPos() ) );
+    return pPos;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::IsMovingOnPath
 // Created: JVT 2004-11-30
+// Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::IsMovingOnPath( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath )
 {
-    assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
-
-    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
-    
-    call.GetResult().SetValue( pPath ? callerAgent.GetRole< PHY_RoleAction_Moving >().IsMovingOn( *pPath ) : false );    
+    return pPath ? callerAgent.GetRole< PHY_RoleAction_Moving >().IsMovingOn( *pPath ) : false;    
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetRepPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetRepPoint( DIA_Call_ABC& call )
+MT_Vector2D* DEC_PathFunctions::GetRepPoint( DEC_PathPoint* pPoint )
 {
-    DEC_PathPoint* pPoint = dynamic_cast< DEC_PathPoint* >( call.GetParameter( 0 ).ToObject() );
-    call.GetResult().SetValue( (void*)&pPoint->GetPos(), &DEC_Tools::GetTypePoint(), 1 );
+    return (MT_Vector2D*)&pPoint->GetPos();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::IsAvantPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::IsAvantPoint( DIA_Call_ABC& call )
+bool DEC_PathFunctions::IsAvantPoint( DEC_PathPoint* pPoint )
 {
-    DEC_Rep_PathPoint_Front* pFront = dynamic_cast< DEC_Rep_PathPoint_Front* >( call.GetParameter( 0 ).ToObject() );
-    call.GetResult().SetValue( pFront ? true : false );
+    DEC_Rep_PathPoint_Front* pFront = dynamic_cast< DEC_Rep_PathPoint_Front* >( pPoint );
+    return pFront ? true : false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::IsPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::IsPoint( DIA_Call_ABC& call )
+bool DEC_PathFunctions::IsPoint( DEC_PathPoint* pPoint )
 {
-    DEC_Rep_PathPoint* pPoint = dynamic_cast< DEC_Rep_PathPoint* >( call.GetParameter( 0 ).ToObject() );
-    call.GetResult().SetValue( pPoint ? true : false );
+    DEC_Rep_PathPoint* pPathPoint = dynamic_cast< DEC_Rep_PathPoint* >( pPoint );
+    return pPathPoint ? true : false;
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetTypePoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetTypePoint( DIA_Call_ABC& call )
+int DEC_PathFunctions::GetTypePoint( DEC_PathPoint* pPoint )
 {
-    DEC_Rep_PathPoint* pPoint = dynamic_cast< DEC_Rep_PathPoint* >( call.GetParameter( 0 ).ToObject() );
-    call.GetResult().SetValue( pPoint->GetTypePoint() );
+    DEC_Rep_PathPoint* pPathPoint = dynamic_cast< DEC_Rep_PathPoint* >( pPoint );
+    return static_cast< int >( pPathPoint->GetTypePoint() );
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetDestPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetDestPoint( DIA_Call_ABC& call )
+DEC_PathPoint* DEC_PathFunctions::GetDestPoint( DEC_PathPoint* pPoint )
 {
-    DEC_Rep_PathPoint_Front* pFront = dynamic_cast< DEC_Rep_PathPoint_Front* >( call.GetParameter( 0 ).ToObject() );
-    call.GetResult().SetValue( pFront->GetDestPoint() );
+    DEC_Rep_PathPoint_Front* pFront = dynamic_cast< DEC_Rep_PathPoint_Front* >( pPoint );
+    return &pFront->GetDestPoint();
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetTypeLimaPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetTypeLimaPoint( DIA_Call_ABC& call )
+int DEC_PathFunctions::GetTypeLimaPoint( DEC_PathPoint* pPoint )
 {
-    DEC_Rep_PathPoint_Lima* pPoint = dynamic_cast< DEC_Rep_PathPoint_Lima* >( call.GetParameter( 0 ).ToObject() );
-    call.GetResult().SetValue( pPoint->GetTypeLima() );
+    DEC_Rep_PathPoint_Lima* pLimaPoint = dynamic_cast< DEC_Rep_PathPoint_Lima* >( pPoint );
+    return pLimaPoint->GetTypeLima();
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetLimaPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetLimaPoint( DIA_Call_ABC& call )
+unsigned int DEC_PathFunctions::GetLimaPoint( DEC_PathPoint* pPoint )
 {
-    DEC_Rep_PathPoint_Lima* pPoint = dynamic_cast< DEC_Rep_PathPoint_Lima* >( call.GetParameter( 0 ).ToObject() );
-    call.GetResult().SetValue( pPoint->GetLimaID(), &DEC_Tools::GetTypeLima() );
+    DEC_Rep_PathPoint_Lima* pLimaPoint = dynamic_cast< DEC_Rep_PathPoint_Lima* >( pPoint );
+    return pLimaPoint->GetLimaID();
 }

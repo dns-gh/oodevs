@@ -52,7 +52,7 @@ public:
     MIL_PionMission*        MRT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
     void                    MRT_Validate         ();
     MIL_PionMission*        CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
-    void                    CDT_GivePionMission  ( MIL_PionMission& mission );
+    void                    CDT_GivePionMission  ( MIL_Mission_ABC& mission );
 
     MIL_AutomateMission*    CreateAutomateMission( MIL_Automate& automate, const MIL_MissionType_ABC& missionType );
     void                    GiveAutomateMission  ( MIL_AutomateMission& mission );

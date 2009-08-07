@@ -1,0 +1,143 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/behaviors/Behaviors - Maj.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_EtatDefaut()
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_MAJ_EtatDefaut"
+{
+    activations =
+    {
+        { "BEH_MAJ_EtatOperationnel", {} },
+        { "ACT_MAJ_EtatDec", {} },
+        { "ACT_MAJ_EtatOrdreCoordination", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_MAJ_EtatOperationnel, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ etat destruction
+]]--[[//-----------------------------------------------------------------------------
+]]
+        --[[//-----------------------------------------------------------------------------
+]]--[[// MAJ par defaut des etats de HAUT NIVEAU
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.ACT_MAJ_EtatDec, 0.5, { eEtatDec_RAS, } )
+        Activate( self.activations.ACT_MAJ_EtatOrdreCoordination, 0.5, { eEtatOrdreCoordination_aucun, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_AgressiviteMission
+]]--[[//
+]]--[[// Commentaires: OPT MIA : SPE JCR
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_AgressiviteMission"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eNiveauAction = self.params[1]
+        self._namedParams.rPH = self.params[2]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                SetStateVariable( "VE_Agressivite_Tir", self._namedParams.rPH )
+                F_Pion_SeteNiveauAction( myself, self._namedParams.eNiveauAction )
+                --[[// $$$GGR : MAJ Agressivité manoeuvre pour infanterie
+]]if( ( self._namedParams.rPH == 0 or self._namedParams.rPH == nil ) ) then
+                    SetStateVariable( "VE_Agressivite_Manoeuvre", 0 )
+                else
+                    SetStateVariable( "VE_Agressivite_Manoeuvre", 10 / self._namedParams.rPH )
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_EtatOperationnel
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//              
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_EtatOperationnel"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatDestruction", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Destruction totale --> plus aucune composante
+]]if( S_Misc_EstDetruitPhysique() ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { " ++++ UNIT IS COMPLETLY DESTROYED  ++++", } )
+                Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_Total, } )
+                                return
+
+            end
+--[[// Destruction tactique --> plus de composantes majeurs
+]]        end
+
+        if( S_Misc_EstDetruitTactique() ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "+++++++  UNIT IS NON OPERATIONNAL +++++++", } )
+                Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_Tactique, } )
+                                return
+
+            end
+--[[// Par defaut
+]]        end
+
+        Activate( self.activations.ACT_Info_Trace, 1, { " ++++ Unit is operationnal ++++", } )
+        Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_None, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_EnvieTenir
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//               
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_EnvieTenir"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+                if( ModuleBegins() ) then
+            SetStateVariable( "VE_Courage", 2 )
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_Courage", 0 )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_EtatDefaut, "BEH_MAJ_EtatOperationnel", nodes.BEH_MAJ_EtatOperationnel }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_EtatDefaut, "ACT_MAJ_EtatDec", nodes.ACT_MAJ_EtatDec }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_EtatDefaut, "ACT_MAJ_EtatOrdreCoordination", nodes.ACT_MAJ_EtatOrdreCoordination }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_EtatOperationnel, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_EtatOperationnel, "ACT_MAJ_EtatDestruction", nodes.ACT_MAJ_EtatDestruction }

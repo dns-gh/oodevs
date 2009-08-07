@@ -1,0 +1,135 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnaitre - CDT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Reconnaitre :
+]]--[[//
+]]--[[// Commentaire :
+]]--[[//               - Gestion de l'étalement du dispositif
+]]--[[//
+]]--[[//               - Les pions Log font de l'imex s'il n'est pas nécessaire 
+]]--[[//                 d'utiliser leur fonction logistique ( plots de 
+]]--[[//                 ravitaillement si les unités sont à plus de 30 km du plot 
+]]--[[//                 le plus proche
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_CDT_ALAT_Reconnaitre"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Mission_Automate_AssignerSuivreAListe", {} },
+        { "BEH_Manoeuvre_Automate_ALAT_GererReleves", {} },
+        { "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne", {} },
+        { "BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif", {} },
+        { "BEH_Automate_ALAT_CoordonnerFeux", {} },
+        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", {} },
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eReconnaitre
+        self.listePionsSgpt = self.listePionsSgpt or {}
+        self.listeReserve = self.listeReserve or {}
+        self.listeSuivre = self.listeSuivre or {}
+        self.listeReconnaitre = self.listeReconnaitre or {}
+        self.listeReconnaitrePrec = self.listeReconnaitrePrec or {}
+        self.listePeutFaireReconnaitre = self.listePeutFaireReconnaitre or {}
+        self.listeReconnaitreOperationnels = self.listeReconnaitreOperationnels or {}
+        self.listeHMLog = self.listeHMLog or {}
+        self.listePionsAAppuyerIMEX = self.listePionsAAppuyerIMEX or {}
+        self.eEtatODC = self.eEtatODC or eActionEnCours
+        if( self.eEtatODC == eActionHalt ) then
+            do
+                self.ePhase = eSExfiltrer
+                self.eEtatODC = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        --[[// ---------------------------------------------------------------------
+]]--[[// Mise à Jour des selections de pions ( à tous les tics )
+]]--[[// ---------------------------------------------------------------------
+]]DIA_Clear( self.listePionsSgpt )
+        self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+        --[[// liste des pions qui reconnaissent le contour de l'ennemi
+]]DIA_Clear( self.listeReconnaitre )
+        self.listeReconnaitre = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" )
+        DIA_Clear( self.listeReconnaitreOperationnels )
+        self.listeReconnaitreOperationnels = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" )
+        DIA_Clear( self.listeSuivre )
+        self.listeSuivre = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_Suivre" )
+        --[[// liste des pions qui peuvent Reconnaitre
+]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AntitankHelicopterPatrol )
+        local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, EscortAndCloseSupportHelicopterPatrol )
+        local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AirDefenseHelicopterPatrol )
+        DIA_Clear( self.listePeutFaireReconnaitre )
+        self.listePeutFaireReconnaitre = S_Liste_Concatene( S_Liste_Concatene( listeHAC, listeHAP ), listeHAM )
+        --[[//liste des pions de reserve
+]]DIA_Clear( self.listeReserve )
+        self.listeReserve = S_Cherche_Automate_Filtre_PionNonDansListe( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireReconnaitre, self.listeReconnaitreOperationnels ), self.listeSuivre )
+        --[[// liste des pions HM Log
+]]DIA_Clear( self.listeHMLog )
+        self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, GeneralPurposeHelicopterPatrol )
+        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                if( DIA_IsListEmpty( self.listeReconnaitreOperationnels ) ) then
+                    do
+                        self.ePhase = eSExfiltrer
+                                                return
+
+                    end
+                end
+
+                if( not DIA_IsListEmpty( self.listeReconnaitreOperationnels ) ) then
+                    do
+                        local pionASuivre = DEC_Geometrie_PionDerriere( self.listeReconnaitreOperationnels, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
+                        Activate( self.activations.BEH_Mission_Automate_AssignerSuivreAListe, 1, { ePhase_CDT, self.listeReserve, pionASuivre, } )
+                    end
+--[[// gestion des releves - listeReconnaitrePrec peut contenir des
+]]--[[// unités détruites
+]]                end
+
+                Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererReleves, 1, { self.listeReconnaitrePrec, self.listeSuivre, } )
+                self.listeReconnaitrePrec = self.listeReconnaitre
+                --[[// Gestion Coordination Ravitaillements
+]]if( not DIA_IsListEmpty( self.listePeutFaireReconnaitre ) ) then
+                    Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePeutFaireReconnaitre, } )
+                end
+
+                --[[// Gestion de l'étalement du dispositif
+]]Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif, 1, { self.listeReconnaitreOperationnels, 15000, } )
+                --[[// Gestion de la coordination des feux
+]]Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeReconnaitreOperationnels, 0, } )
+                --[[// ravitaillements et IMEX
+]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
+                
+            elseif switch_1 == eSExfiltrer then
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
+                
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ALAT_Reconnaitre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Reconnaitre, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Reconnaitre, "BEH_Mission_Automate_AssignerSuivreAListe", nodes.BEH_Mission_Automate_AssignerSuivreAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Reconnaitre, "BEH_Manoeuvre_Automate_ALAT_GererReleves", nodes.BEH_Manoeuvre_Automate_ALAT_GererReleves }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Reconnaitre, "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne", nodes.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Reconnaitre, "BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif", nodes.BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Reconnaitre, "BEH_Automate_ALAT_CoordonnerFeux", nodes.BEH_Automate_ALAT_CoordonnerFeux }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Reconnaitre, "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", nodes.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Reconnaitre, "BEH_ROE_Automate_TirRestreint", nodes.BEH_ROE_Automate_TirRestreint }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ALAT_Reconnaitre, "BEH_Mission_Automate_AssignerStationnerAListe", nodes.BEH_Mission_Automate_AssignerStationnerAListe }

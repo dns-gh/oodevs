@@ -1,0 +1,1100 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Action Permettant de Donner Une Mission à un Pion ALAT
+]]--[[// -----------------------------------------------------------------------------
+]]
+--[[// Donner Mission Aller Se Ravitailler
+]]--[[// -----------------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerAllerAllerSeRecompleterA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.plotsRavitaillement = self.params[3]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_AllerSeRecompleter" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_AllerSeRecompleter" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres particuliers de cette mission
+]]DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission IMEX
+]]--[[// -------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerIMEXA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.listePionsAAppuyer = self.params[3]
+        self._namedParams.pointRegroupement = self.params[4]
+        self._namedParams.plotsRavitaillement = self.params[5]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_IMEX" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_IMEX" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres particuliers de cette mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "unitesAAppuyer_", self._namedParams.listePionsAAppuyer )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Héliporter Hélitransporter Plot de Ravitaillement
+]]--[[// ----------------------------------------------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerHeliporterPlotsRavitaillementA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.pointDebarquement = self.params[4]
+        self._namedParams.plotsRavitaillement = self.params[5]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres particuliers de cette mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointDebarquement, self.missionPion, "pointDebarquement_" )
+        DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "positionRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Héliporter
+]]--[[// -------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerHeliporterA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.pointEmbarquement = self.params[4]
+        self._namedParams.pointDebarquement = self.params[5]
+        self._namedParams.plotsRavitaillement = self.params[6]
+        self._namedParams.listeUnitesAHeliporter = self.params[7]
+        self._namedParams.avecMateriel = self.params[8]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Heliporter" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Heliporter" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres particuliers de cette mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointDebarquement, self.missionPion, "pointDebarquement_" )
+        DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_Copie_Point_Mission( self._namedParams.pointEmbarquement, self.missionPion, "pointEmbarquement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "unitesAHeliporter_", self._namedParams.listeUnitesAHeliporter )
+        DEC_AssignMissionParameter( self.missionPion, "avecMateriel_", self._namedParams.avecMateriel )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Hélitransporer
+]]--[[// -----------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerHelitransporterA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.pointEmbarquement = self.params[4]
+        self._namedParams.pointDebarquement = self.params[5]
+        self._namedParams.plotsRavitaillement = self.params[6]
+        self._namedParams.listeUnitesAHelitransporter = self.params[7]
+        self._namedParams.avecMateriel = self.params[8]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Helitransporter" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Helitransporter" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres particuliers de cette mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointDebarquement, self.missionPion, "pointDebarquement_" )
+        DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_Copie_Point_Mission( self._namedParams.pointEmbarquement, self.missionPion, "pointEmbarquement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "unitesAHelitransporter_", self._namedParams.listeUnitesAHelitransporter )
+        DEC_AssignMissionParameter( self.missionPion, "avecMateriel_", self._namedParams.avecMateriel )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Reconnaitre le Contour Ennemi
+]]--[[// --------------------------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerReconnaitreContourEniA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.plotsRavitaillement = self.params[4]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Reconnaitre dans la Profondeur
+]]--[[// ---------------------------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerReconnaitreDansLaProfondeurA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointDislocation = self.params[3]
+        self._namedParams.zone = self.params[4]
+        self._namedParams.pointRegroupement = self.params[5]
+        self._namedParams.plotsRavitaillement = self.params[6]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_Copie_Point_Mission( self._namedParams.pointDislocation, self.missionPion, "pointDislocation_" )
+        DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Jalonner
+]]--[[// -----------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerJalonnerA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.ciblesPrioritaires = self.params[5]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Jalonner" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Jalonner" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Eclairer
+]]--[[// -----------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerEclairerA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.plotsRavitaillement = self.params[4]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Eclairer" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Eclairer" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Freiner
+]]--[[// ----------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerFreinerA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.ciblesPrioritaires = self.params[5]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Freiner" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Freiner" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Attaquer
+]]--[[// -----------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerAttaquerA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.ciblesPrioritaires = self.params[5]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Attaquer" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Attaquer" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission AttaquerUneFormationAeromobile
+]]--[[// ---------------------------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerAttaquerUneFormationAeromobileA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.listeEnis = self.params[5]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_DetruireAeromobile" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_DetruireAeromobile" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "uniteADetruire_", self._namedParams.listeEnis )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Detruire Neutraliser dans Zone
+]]--[[// ---------------------------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerDetruireNeutraliserDansZoneA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.zone = self.params[3]
+        self._namedParams.pointDislocation = self.params[4]
+        self._namedParams.pointRegroupement = self.params[5]
+        self._namedParams.plotsRavitaillement = self.params[6]
+        self._namedParams.ciblesPrioritaires = self.params[7]
+        self._namedParams.neutraliser = self.params[8]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_DetruireNeutraliserDansZone" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_DetruireNeutraliserDansZone" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
+        DEC_Copie_Point_Mission( self._namedParams.pointDislocation, self.missionPion, "pointDislocation_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "neutraliser_", self._namedParams.neutraliser )
+        DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Appuyer Direct Au Contact
+]]--[[// ----------------------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerAppuyerDirectAuContactA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.unitesAAppuyer = self.params[6]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_AppuyerDirectAuContact" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_AppuyerDirectAuContact" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        DEC_AssignMissionParameter( self.missionPion, "unitesAAppuyer_", self._namedParams.unitesAAppuyer )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Escorter
+]]--[[// -----------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerEscorterA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.plotsRavitaillements = self.params[4]
+        self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.uniteAEscorter = self.params[6]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Escorter" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Escorter" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_AssignMissionParameter( self.missionPion, "unitesAEscorter_", self._namedParams.uniteAEscorter )
+        DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements )
+        DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Couvrir
+]]--[[// ----------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerCouvrirA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.pointRegroupement = self.params[3]
+        self._namedParams.plotsRavitaillements = self.params[4]
+        self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.uniteACouvrir = self.params[6]
+        self._namedParams.directionCouverture = self.params[7]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Couvrir" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Couvrir" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//on ecrase la direction de l'ennemi donnée par la mission automate par la
+]]--[[//direction par laquelle on attend l'ennemi ( direction couverture )
+]]DEC_Copie_DirectionDanger_Mission( self._namedParams.directionCouverture, self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_AssignMissionParameter( self.missionPion, "unitesACouvrir_", self._namedParams.uniteACouvrir )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements )
+        DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[// Donner Mission Surveiller
+]]--[[// -------------------------
+]]node "ACT_Mission_Automate_ALAT_AssignerSurveillerA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.localisation = self.params[3]
+        self._namedParams.pointRegroupement = self.params[4]
+        self._namedParams.plotsRavitaillements = self.params[5]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+            end
+--[[//cree l'instance de missionPion
+]]        end
+
+        self.missionPion = self.missionPion or nil
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Surveiller" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ALAT_Surveiller" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//copie de tous les elements génériques de la mission automate
+]]--[[//( dir dangereuse, ROE... )
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//copie des paramètres mission
+]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
+        DEC_Copie_Localisation_Mission( self._namedParams.localisation, self.missionPion, "zone_" )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements )
+        if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+

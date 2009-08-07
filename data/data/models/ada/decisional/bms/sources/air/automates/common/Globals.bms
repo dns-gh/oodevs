@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/automates/common/Globals.bms"] = true
+
+include "Common/Automates/Globals.bms"
+
+include "Air/Automates/Common/Fonctions.bms"
+

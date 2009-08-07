@@ -1,0 +1,113 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/pions/medical/Parameters.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Grp Mortier/Parameters.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 25/07/05 9:59 $
+]]--[[// $Revision: 10 $
+]]--[[// $Workfile: Parameters.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// -----------------------------------------------------------------------------
+]]--[[//			Distances d'appuis
+]]--[[// -----------------------------------------------------------------------------
+]]
+function M_DISTANCE_SUIVI_MIN()
+    return 600
+end
+
+
+
+function M_DISTANCE_SUIVI_MAX()
+    return 2000
+end
+
+
+
+function M_DISTANCE_APPUIS()
+    return 1000
+end
+
+
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[//		Delais de preparation mission
+]]--[[// -----------------------------------------------------------------------------
+]]
+function M_TEMPS_PREPARATION_APPUYER()
+    return 2
+end
+
+
+
+function M_DELAI_NETTOYAGE()
+    return 5
+end
+
+
+
+
+--[[// Delai decisionnel entre 2 tirs mortier
+]]function M_DELAI_PREPARATION_TIR()
+    return 0.5
+end
+
+
+
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[//				Distances
+]]--[[// -----------------------------------------------------------------------------
+]]
+--[[// Diametre de la zone pour la recherche de points 
+]]function M_DIAMETRE_ZONE()
+    return 1000
+end
+
+
+
+
+function M_DISTANCE_CONTOURNEMENT_OBSTACLE()
+    return 1200
+end
+
+
+
+
+--[[// Distance de Tir Minimum des Milan
+]]--[[// --------------------------------------------
+]]function M_MIN_DISTANCE_TIR()
+    return 300
+end
+
+
+
+
+--[[// Distance utile, approximative pour fixer
+]]--[[// (debarque)
+]]--[[// --------------------------------------------
+]]function M_DISTANCE_TIR_FIXE()
+    return 2000
+end
+
+
+
+--[[// Distance entre les obstacles creer pour defendre ou interdire et le point
+]]--[[// d'attente de la section
+]]function M_DIST_OBSTACLE()
+    return 300
+end
+
+function S_EstADistanceTir_Pt( ptTir )
+    local _returnValue = false
+    _returnValue = DEC_Geometrie_Distance( DEC_Agent_Position(), ptTir ) < M_DISTANCE_TIR_FIXE()
+    return _returnValue
+end
+

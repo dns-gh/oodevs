@@ -1,0 +1,42 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/esc amx-erc/missions/freiner/Freiner - CDT.bms"] = true
+
+--[[// ******************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_Freiner
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ******************************************************************************
+]]node "MIS_Automate_CDT_ABC_Freiner"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_ABC_Jalonner", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_ABC_Jalonner, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Comportement génériques
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ADA "Jalonner dur"
+]]
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_Freiner = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_Freiner, "BEH_Conduite_Automate_ABC_Jalonner", nodes.BEH_Conduite_Automate_ABC_Jalonner }

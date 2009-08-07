@@ -1,0 +1,275 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/missions/Escorter.bms"] = true
+
+include "bit.lua"
+
+
+--[[//------------------------------------------------------------------------------
+]]--[[// MIS_Escorter
+]]--[[//
+]]--[[// Définition :
+]]--[[// ------------
+]]--[[// L’escorte est la mission principale des hélicoptères d’appui-protection. 
+]]--[[// Il peut s’agir d’escorter un convoi terrestre mais plus fréquemment une 
+]]--[[// formation aéromobile et plus particulièrement un héliportage (HM) ou une 
+]]--[[// action de destruction (HA) au sein du dispositif ennemi. 
+]]--[[//
+]]--[[// Commentaires:
+]]--[[// -------------
+]]--[[// Cette mission consiste à accompagner une unité aéromobile ou terrestre 
+]]--[[// (plus rare) afin de la protéger en cas d'une éventuelle renontre avec 
+]]--[[// l'ennemi
+]]--[[// Compte tenu de l'implémentation des deplacements dans SCIPIO, il est 
+]]--[[// necessaire de commencer l'escorte loin dans la zone amie afin que le pion hap
+]]--[[// ait le temps de passer devant le pion escorté (le pion escorté n'attend pas 
+]]--[[// le pion d'appuis)
+]]--[[//
+]]--[[// Remaque importante : on interpôle la position du pion par rapport au temps. 
+]]--[[// De cette facon, la distance d'escorte depends directement de la nature du 
+]]--[[// pion => généricité du comportement par rapport a une interpolation sur une 
+]]--[[// distance.
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_ALAT_Escorter"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "Act_AbonnerPionAAppui", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "BEH_Dep_Pion_ALAT_EclairerItinerairePion", {} },
+        { "BEH_Eni_Pion_ALAT_GererEniEscorter", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.eEtatAttendre = self.eEtatAttendre or eActionEnCours
+        self.ePhase = self.ePhase or eAppuyer
+        self.pionDeTete = self.pionDeTete or nil
+        self.pointARejoindre = self.pointARejoindre or nil
+        self.listePionsAEscorter = self.listePionsAEscorter or {}
+        self.listeCourantePionsAEscorter = self.listeCourantePionsAEscorter or {}
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                self.pointARejoindre = DEC_Geometrie_CreerPoint()
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                end
+
+                DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
+            end
+        end
+
+        if( not DEC_Agent_AutomateEstEmbraye() ) then
+            self.listePionsAEscorter = S_PionsNonDetruits( S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAEscorter_ ) )
+        else
+            self.listePionsAEscorter = S_PionsNonDetruits( self._namedParams.mission.unitesAEscorter_ )
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                if( self.ePhase ~= eFinMission and self.ePhase ~= eSExfiltrer ) then
+                    do
+                        self.ePhase = eSExfiltrer
+                        self.eEtat = eActionEnCours
+                    end
+                end
+
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[// selection des pions que l'on va réellement Escorter
+]]--[[// ---------------------------------------------------
+]]        end
+
+        DIA_Clear( self.listeCourantePionsAEscorter )
+        self.listeCourantePionsAEscorter = S_Liste_Pion_ALAT_UnitesASuivre( self.listePionsAEscorter )
+        for _,x in pairs( --[[//  Gestion de l'abonnement a la liste des pions qui appuient
+]]--[[//  ---------------------------------------------------------
+]]self.listeCourantePionsAEscorter ) do
+        local _continue = true
+            Activate( self.activations.Act_AbonnerPionAAppui, 1, { x, } )
+
+        end
+
+        if( not DIA_IsListEmpty( self.listeCourantePionsAEscorter ) ) then
+            do
+                self.pionDeTete = DEC_Geometrie_PionDevant( self.listeCourantePionsAEscorter, DEC_GetDirectionDanger( self._namedParams.mission ) )
+                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pionDeTete:DEC_Agent_Position(), } )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eAppuyer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
+                for _,x in pairs( --[[// partage de la connaissance
+]]self.listePionsAEscorter ) do
+                local _continue = true
+do
+                        local pion = x
+                        Activate( self.activations.ACT_Pion_Rens_PartageConnaissancesDansZoneAvec, 1, { DEC_GetAutomate( pion ), pion:DEC_Agent_Position(), 10000, } )
+                    end
+
+                end
+
+                local bSePoser = true
+                for _,x in pairs( self.listeCourantePionsAEscorter ) do
+                local _continue = true
+do
+                        if( S_EstPatrouilleALAT( x ) ) then
+                            do
+                                if( x:DEC_Agent_EstEnVol() ) then
+                                    bSePoser = false
+                                end
+
+                            end
+                        else
+                            bSePoser = false
+                        end
+
+                    end
+
+                end
+
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                if( bSePoser ) then
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                else
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_EclairerItinerairePion, GetMotivation( "MOT_Manoeuvrer" ), { self.pionDeTete, eProgressionDefaut, eTypeItiReconnaissance, } )
+                end
+
+                Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniEscorter, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self._namedParams.mission.ciblesPrioritaires_, self.listePionsAEscorter, } )
+                
+            elseif switch_1 == eSExfiltrer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Warning( eRC_MissionImpossible )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            DIA_Clear( myself.plotsRavitaillement_ )
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                DIA_Clear( myself.plotsRavitaillement_ )
+        F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Gestion des ennemis dans la mission Escorter
+]]--[[// -----------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ALAT_GererEniEscorter"
+{
+    activations =
+    {
+        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeCiblePrioritaire = self.params[1]
+        self._namedParams.listePionsEscortes = self.params[2]
+    end,
+
+    activate = function( self )
+        for _,x in pairs( self._namedParams.listePionsEscortes ) do
+        local _continue = true
+do
+                local listeUnitesEnnemiesPercues = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( x:DEC_Agent_Position(), 3 * DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) )
+                for _,y in pairs( listeUnitesEnnemiesPercues ) do
+                local _continue = true
+do
+                        Activate( self.activations.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, S_Force_Pion_ALAT_Defendre( x, y, self._namedParams.typeCiblePrioritaire ), { 0, y, eReconnu, 1, M_DOCTRINE_PION_ALAT_PH(), false, } )
+                    end
+
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ALAT_Escorter = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_GererEniEscorter, "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", nodes.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "ACT_Maj_Pion_PasserEnTirLibre", nodes.ACT_Maj_Pion_PasserEnTirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "Act_AbonnerPionAAppui", nodes.Act_AbonnerPionAAppui }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec", nodes.ACT_Pion_Rens_PartageConnaissancesDansZoneAvec }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "BEH_Dep_Pion_ALAT_EclairerItinerairePion", nodes.BEH_Dep_Pion_ALAT_EclairerItinerairePion }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "BEH_Eni_Pion_ALAT_GererEniEscorter", nodes.BEH_Eni_Pion_ALAT_GererEniEscorter }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Escorter, "BEH_Manoeuvre_Pion_AllerStationner", nodes.BEH_Manoeuvre_Pion_AllerStationner }

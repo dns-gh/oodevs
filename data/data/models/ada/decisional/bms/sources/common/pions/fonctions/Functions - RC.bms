@@ -1,0 +1,8 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/fonctions/Functions - RC.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// Fonctions Communes aux pions
+]]--[[// Thème : Comptes Rendus
+]]--[[// *****************************************************************************
+]]

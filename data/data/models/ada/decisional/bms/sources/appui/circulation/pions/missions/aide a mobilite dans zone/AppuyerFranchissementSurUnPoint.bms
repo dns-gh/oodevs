@@ -1,0 +1,50 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zone/AppuyerFranchissementSurUnPoint.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// MIS_Pion_LOG_AppuyerFranchissementSurUnPoint
+]]--[[//
+]]--[[//
+]]--[[// Commentaires: créé une zone de mobilité améliorée à la position de l'objet
+]]--[[// mission.pontFlottant_
+]]--[[//
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Pion_LOG_AppuyerFranchissementSurUnPoint"
+{
+    activations =
+    {
+        { "BEH_Pion_CIRCU_RealiserObjetDansZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[// Validité de la connaissance
+]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.pontFlottant_ ) ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        self.localisationPontFlottant = self.localisationPontFlottant or DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.pontFlottant_ )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        --[[//---------------------------------------------------------------------
+]]--[[// Comportement générique
+]]--[[//---------------------------------------------------------------------
+]]Activate( self.activations.BEH_Pion_CIRCU_RealiserObjetDansZone, 1, { self.localisationPontFlottant, eTypeObjectZoneMobiliteAmelioree, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_LOG_AppuyerFranchissementSurUnPoint = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_AppuyerFranchissementSurUnPoint, "BEH_Pion_CIRCU_RealiserObjetDansZone", nodes.BEH_Pion_CIRCU_RealiserObjetDansZone }

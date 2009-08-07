@@ -17,9 +17,10 @@
 // Name: DEC_PathPoint constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos )
+DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, const char* szDIARepType )
     : vPos_                   ( vPos )
     , nType_                  ( eTypePointSpecial )
+    , diaType_                ( szDIARepType )
 {
     // NOTHING
 }
@@ -85,4 +86,13 @@ void DEC_PathPoint::Dump() const
               << " - Type : " << nObjectTypes_.DumpToString() 
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
               << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathPoint::GetDIAType
+// Created: LDC 2009-07-09
+// -----------------------------------------------------------------------------
+const std::string& DEC_PathPoint::GetDIAType() const
+{
+    return diaType_;
 }

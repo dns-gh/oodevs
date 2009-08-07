@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<models>
+  <units>
+    <unit dia-type="DumpPion" file="DumbPion.bms" name="DumbPion">
+      <missions>
+        <mission name="Dumb Pion Mission"/>
+        <mission name="Dumb Pion LOG"/>
+      </missions>
+    </unit>
+  </units>
+  <automats>
+    <automat dia-type="DumbAutomat" file="DumbAutomat.bms" name="DumbAutomat">
+      <missions>
+        <mission name="Dumb Automat Mission"/>
+      </missions>
+    </automat>
+  </automats>
+  <populations>
+  </populations>
+</models>

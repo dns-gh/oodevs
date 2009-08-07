@@ -1,0 +1,406 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie blindee/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+actuators = {
+etat_OrdreCoordination = 1,
+releve = 1,
+}
+
+
+include "Appui/Genie/Automates/Cie Blindee/Actions.bms"
+
+include "Appui/Genie/Automates/Behaviors.bms"
+
+include "Appui/Genie/Automates/Cie Blindee/Missions/Missions.bms"
+
+
+
+--[[// *****************************************************************************
+]]--[[// Comportement par défaut.
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Defaut"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Ordre_Automate_GEN_ActiverObstacle", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
+        { "BEH_ROE_Automate_GererOrdre", {} },
+        { "BEH_Misc_Automate_GererLesMoyens", {} },
+        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// CR
+]]--[[//-----------------------------------------------------------------------------
+]]
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Automate actif si embrayé
+]]--[[//-----------------------------------------------------------------------------
+]]if( not DEC_Automate_EstEmbraye() ) then
+            return
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_GEN_ActiverObstacle, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Activation des obstacles
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// NBC --> alerte de niveau 4
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// ROE --> Tir libre, sur riposte, interdit
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Gestion des pions --> init de la place dans le dispositif
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Silence radio
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_GEN_ActiverObstacle
+]]--[[//
+]]--[[// Commentaires:activation de l'objet passer en parmètre
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_GEN_ActiverObstacle"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_GEN_Activer", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------
+]]--[[// En fonction de l'ordre recu
+]]--[[//-----------------------------------------------------------------
+]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                --[[// cast
+]]local repOrdre = x
+                if( repOrdre:GetType() == "Rep_OrderConduite_Automate_ActiverObstacle" ) then
+                    do
+                        --[[// cast
+]]local ordreActiver = repOrdre
+                        DEC_Trace( "$ --- FRAGMENTARY ORDER: ACTIVATE OBSTACLE ---$" )
+                        Activate( self.activations.ACT_Ordre_Automate_GEN_Activer, 1, { ordreActiver:GetorderConduiteAutomateActiverObstacle_(), } )
+                    end
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets"
+{
+    activations =
+    {
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objets = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,objet in pairs( self._namedParams.objets ) do
+        local _continue = true
+            Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire, 1, { objet, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire"
+{
+    activations =
+    {
+        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+    end,
+
+    activate = function( self )
+        local eValidite = nil
+        local listePions = DEC_Automate_PionsSansPC()
+        for _,pion in pairs( listePions ) do
+        local _continue = true
+do
+                if( DEC_Automate_PionPeutConstruireObjet( pion, DEC_GenObject_Type( self._namedParams.objet ) ) ) then
+                    return
+--[[// au moins un pion est capable
+]]                end
+
+            end
+
+        end
+
+        Activate( self.activations.ACT_Info_Automate_GEN_RendreComptePourRenfort, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets"
+{
+    activations =
+    {
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objets = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,objet in pairs( self._namedParams.objets ) do
+        local _continue = true
+if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
+                Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet, 1, { objet, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet"
+{
+    activations =
+    {
+        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+    end,
+
+    activate = function( self )
+        local eValidite = nil
+        local listePions = DEC_Automate_PionsSansPC()
+        for _,pion in pairs( listePions ) do
+        local _continue = true
+do
+                if( DEC_Automate_PionPeutDetruireObjet( pion, self._namedParams.objet ) ) then
+                    return
+--[[// au moins un pion est capable
+]]                end
+
+            end
+
+        end
+
+        Activate( self.activations.ACT_Info_Automate_GEN_RendreComptePourRenfort, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets"
+{
+    activations =
+    {
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objets = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,objet in pairs( self._namedParams.objets ) do
+        local _continue = true
+if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
+                Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourContourner, 1, { objet, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Automate_GEN_VerifierRenfortPourContourner
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner"
+{
+    activations =
+    {
+        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+    end,
+
+    activate = function( self )
+        if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.objet ) ) then
+            Halt()
+        end
+
+        local eValidite = nil
+        local listePions = DEC_Automate_PionsSansPC()
+        for _,pion in pairs( listePions ) do
+        local _continue = true
+do
+                if( DEC_Automate_PionPeutConstruireContournementObjet( pion, self._namedParams.objet ) ) then
+                    return
+--[[// au moins un pion est capable
+]]                end
+
+            end
+
+        end
+
+        Activate( self.activations.ACT_Info_Automate_GEN_RendreComptePourRenfort, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Info_Automate_GEN_RendreComptePourRenfort
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Info_Automate_GEN_RendreComptePourRenfort"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            DEC_Warning( eRC_AttenteRenforcement )
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                DEC_Warning( eRC_Operationnel )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_GEN_Activer
+]]--[[//
+]]--[[// Commentaires:activation de l'objet passer en parmètre
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_GEN_Activer"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objetAActiver = self.params[1]
+    end,
+
+    select = function( self )
+        --[[//-----------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_ActiverObjet( self._namedParams.objetAActiver )
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_RC_Automate_Situation", nodes.BEH_RC_Automate_Situation }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ordre_Automate_GEN_ActiverObstacle", nodes.BEH_Ordre_Automate_GEN_ActiverObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc_Automate_GererAlerteNiv4", nodes.BEH_Nbc_Automate_GererAlerteNiv4 }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE_Automate_GererOrdre", nodes.BEH_ROE_Automate_GererOrdre }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Misc_Automate_GererLesMoyens", nodes.BEH_Misc_Automate_GererLesMoyens }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens_Automate_GererSilenceRadio", nodes.BEH_Rens_Automate_GererSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire, "ACT_Info_Automate_GEN_RendreComptePourRenfort", nodes.ACT_Info_Automate_GEN_RendreComptePourRenfort }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets, "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire", nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourContourner, "ACT_Info_Automate_GEN_RendreComptePourRenfort", nodes.ACT_Info_Automate_GEN_RendreComptePourRenfort }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets, "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourContourner }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet, "ACT_Info_Automate_GEN_RendreComptePourRenfort", nodes.ACT_Info_Automate_GEN_RendreComptePourRenfort }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_GEN_ActiverObstacle, "ACT_Ordre_Automate_GEN_Activer", nodes.ACT_Ordre_Automate_GEN_Activer }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_GEN_ActiverObstacle, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets, "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet }

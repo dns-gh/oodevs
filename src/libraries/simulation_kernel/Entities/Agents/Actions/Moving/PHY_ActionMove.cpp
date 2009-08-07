@@ -20,6 +20,7 @@
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathWalker.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -33,25 +34,18 @@
 // Name: PHY_ActionMove constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC      ( pion, diaCall )
+PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath )
+    : PHY_DecisionCallbackAction_ABC( pion )
     , pion_               ( pion )
     , role_               ( pion.GetRole< PHY_RoleAction_Moving >() )
-    , diaReturnCode_      ( diaCall.GetParameter( 0 ) )
-    , pMainPath_          ( diaCall.GetParameter( 1 ).ToUserPtr( pMainPath_ ) )
-    , pJoiningPath_       ( 0 )
+    , pMainPath_          ( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
     , objectAvoidAttempts_()
     , objectsToAvoid_     ()
-{    
-    assert( DEC_Tools::CheckTypeItineraire( diaCall.GetParameter( 1 ) ) );
-
-    if( pMainPath_ )
-    {
-        diaReturnCode_.SetValue( DEC_PathWalker::eRunning );
-        pMainPath_->IncRef();
-    }
+{
+    if( pMainPath_.get() )
+        Callback( static_cast< int >( DEC_PathWalker::eRunning ) );
     else
-        diaReturnCode_.SetValue( DEC_PathWalker::eNotAllowed );        
+        Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );        
 }
 
 // -----------------------------------------------------------------------------
@@ -60,14 +54,11 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
 // -----------------------------------------------------------------------------
 PHY_ActionMove::~PHY_ActionMove()
 {
-    diaReturnCode_.SetValue( DEC_PathWalker::eFinished );
+    Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
     
     DestroyJoiningPath();
-    if( pMainPath_ )
-    {
-        role_.MoveCanceled( *pMainPath_ );
-        pMainPath_->DecRef();
-    }
+    if( pMainPath_.get() )
+        role_.MoveCanceled( pMainPath_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,13 +67,12 @@ PHY_ActionMove::~PHY_ActionMove()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::CreateJoiningPath()
 {
-    assert( pMainPath_ );
-    assert( pMainPath_->GetState() != DEC_Agent_Path::eComputing );
-    assert( !pJoiningPath_ );
+    assert( pMainPath_.get() );
+    assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
+    assert( !pJoiningPath_.get() );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();
-    pJoiningPath_ = new DEC_Agent_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos ), pMainPath_->GetPathType() );
-    pJoiningPath_->IncRef();
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pJoiningPath_ );
+    pJoiningPath_.reset( new DEC_Agent_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos ), pMainPath_->GetPathType() ) );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,12 +81,11 @@ void PHY_ActionMove::CreateJoiningPath()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::DestroyJoiningPath()
 {
-    if( !pJoiningPath_ )
+    if( !pJoiningPath_.get() )
         return;
-    role_.MoveCanceled( *pJoiningPath_ );
+    role_.MoveCanceled( pJoiningPath_ );
     pJoiningPath_->Cancel();
-    pJoiningPath_->DecRef();
-    pJoiningPath_ = 0;
+    pJoiningPath_.reset();
 }
 
 namespace 
@@ -154,21 +143,19 @@ void PHY_ActionMove::AvoidObstacles()
         return; 
     objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
 
-    if( pJoiningPath_ )
+    if( pJoiningPath_.get() )
     {
         DestroyJoiningPath();
         CreateJoiningPath ();
     }
     else
     {
-        assert( pMainPath_ );
-        DEC_Agent_Path* pNewMainPath = new DEC_Agent_Path( *pMainPath_ );
-        pNewMainPath->IncRef();
-        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pNewMainPath ); // $$$ à déplacer dans DEC_Agent_Path::Initialize()
+        assert( pMainPath_.get() );
+        boost::shared_ptr< DEC_Agent_Path > pNewMainPath( new DEC_Agent_Path( *pMainPath_ ) );
+        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewMainPath ); // $$$ à déplacer dans DEC_Agent_Path::Initialize()
 
-        role_.MoveCanceled( *pMainPath_ );
+        role_.MoveCanceled( pMainPath_ );
         pMainPath_->Cancel();
-        pMainPath_->DecRef();
         
         pMainPath_ = pNewMainPath;
     }
@@ -184,34 +171,33 @@ void PHY_ActionMove::AvoidObstacles()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::Execute()
 {   
-    if( !pMainPath_ )
+    if( !pMainPath_.get() )
     {
-        diaReturnCode_.SetValue( DEC_PathWalker::eNotAllowed );
+        Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );
         return;
     }
 
     AvoidObstacles();
     
-    DEC_Agent_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
-    int nReturn = role_.Move( *pCurrentPath );
+    boost::shared_ptr< DEC_PathResult > pCurrentPath( pJoiningPath_.get() ? pJoiningPath_ : pMainPath_ );
+    int nReturn = role_.Move( pCurrentPath );
 
     if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
     {
-        role_.MoveSuspended( *pCurrentPath );
+        role_.MoveSuspended( pCurrentPath );
         DestroyJoiningPath();
         CreateJoiningPath ();
         pCurrentPath = pJoiningPath_;
-        nReturn      = role_.Move( *pCurrentPath );
+        nReturn      = role_.Move( pCurrentPath );
     }
 
     if( pCurrentPath == pJoiningPath_ && nReturn == DEC_PathWalker::eFinished )
     {
         DestroyJoiningPath();
-        pCurrentPath = pMainPath_;
         nReturn      = DEC_PathWalker::eRunning;
     }
 
-    diaReturnCode_.SetValue( nReturn );
+    Callback( nReturn );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,8 +206,8 @@ void PHY_ActionMove::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::ExecuteSuspended()
 {
-    DEC_Agent_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
+    boost::shared_ptr< DEC_Agent_Path > pCurrentPath = pJoiningPath_.get() ? pJoiningPath_ : pMainPath_;
     if( pCurrentPath )
-        role_.MoveSuspended( *pCurrentPath );
-    diaReturnCode_.SetValue( DEC_PathWalker::ePaused );
+        role_.MoveSuspended( pCurrentPath );
+    Callback( static_cast< int >( DEC_PathWalker::ePaused ) );
 }

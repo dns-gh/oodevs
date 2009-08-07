@@ -1,0 +1,83 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/automates/common/missions/Actions - Medo.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//=============================================================================
+]]--[[// Mission : Controler une Zone
+]]--[[//
+]]--[[//=============================================================================
+]]node "ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.locZone = self.params[3]
+    end,
+
+    select = function( self )
+        self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
+]]--[[// Cree la Mission
+]]--[[//-----------------------------------------------------------------------------		
+]]
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.ePhase
+                    if switch_1 == ePhase_MRT then
+                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_Emergency_EvacuateArea" )
+                        self.missionPion = misMRT
+                        
+                    elseif switch_1 == ePhase_CDT then
+                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_Emergency_EvacuateArea" )
+                        self.missionPion = misCDT
+                        
+                    
+                    else
+                        assert( false, "parametre invalide : ePhase" )
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Issue mission order 'EvacuateArea' to " .. DEC_GetSzName( self._namedParams.pPion ) )
+            end
+        else
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+        S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[// Inscription du secteur
+]]DEC_Copie_Localisation_Mission( self._namedParams.locZone, self.missionPion, "area_" )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Envoie la mission si l'on se trouve dans la conduite
+]]--[[//-----------------------------------------------------------------------------
+]]if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+--[[//-----------------------------------------------------------------------------
+]]

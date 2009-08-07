@@ -1,0 +1,141 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/actions/Actions - Info.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// ACT_Info_EtatRapFor
+]]--[[// 
+]]--[[// Commentaires: enum moteur:
+]]--[[// typedef enum E_EtatRapportDeForce
+]]--[[// {
+]]--[[//    eEtatRapportDeForce_None,
+]]--[[//    eEtatRapportDeForce_Neutre,
+]]--[[//    eEtatRapportDeForce_Favorable,
+]]--[[//    eEtatRapportDeForce_Defavorable
+]]--[[// };
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Info_EtatRapFor"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatRapFor = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Agent_ChangeEtatRapportDeForce( self._namedParams.eEtatRapFor )
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Info_EtatROE
+]]--[[// 
+]]--[[// Commentaires: enum moteur:
+]]--[[// typedef enum E_EtatROE 
+]]--[[// {
+]]--[[//    eEtatROE_None,
+]]--[[//    eEtatROE_TirLibre,
+]]--[[//    eEtatROE_TirSurRiposte,
+]]--[[//    eEtatROE_TirInterdit
+]]--[[// };
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Info_EtatROE"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatROE = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Agent_ChangeEtatROE( self._namedParams.eEtatROE )
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Info_EtatROEPopulation
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Info_EtatROEPopulation"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatROE = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Agent_ChangeEtatROEPopulation( self._namedParams.eEtatROE )
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Info_EtatDec
+]]--[[// 
+]]--[[//  Commentaires: enum moteur:
+]]--[[// 	typedef enum E_EtatCombatDeRencontre
+]]--[[//  {
+]]--[[//    	eEtatCombatDeRencontre_None,
+]]--[[//    	eEtatCombatDeRencontre_Esquive,
+]]--[[//    	eEtatCombatDeRencontre_Fixe,
+]]--[[//    	eEtatCombatDeRencontre_PoursuiteMission
+]]--[[//	};
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Info_EtatDec"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatDec = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Agent_ChangeEtatCombatDeRencontre( self._namedParams.eEtatDec )
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// action ACT_Info_EtatOperationnel
+]]--[[// 
+]]--[[//  Commentaires: enum moteur:
+]]--[[// 	typedef enum E_EtatOperationnel
+]]--[[//  {
+]]--[[//    eEtatOp_DetruitTotalement,
+]]--[[//    eEtatOp_DetruitTactiquement,
+]]--[[//    eEtatOp_Operationnel
+]]--[[//  };
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Info_EtatOperationnel"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatOperationnel = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Agent_ChangeEtatOperationnel( self._namedParams.eEtatOperationnel )
+        end
+
+    end,
+
+}
+

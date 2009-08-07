@@ -1,0 +1,15 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/Types.bms"] = true
+
+--[[//=============================================================================
+]]--[[// GENIE
+]]--[[//=============================================================================
+]]--[[// Cas des camps
+]]
+
+eFranchissement_Continu = 0
+eFranchissement_Discontinu = 1
+
+
+eTerrainPoser_AirePoser = 0
+eTerrainPoser_TerrainLargage = 1

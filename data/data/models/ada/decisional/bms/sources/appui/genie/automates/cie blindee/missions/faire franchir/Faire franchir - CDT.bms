@@ -1,0 +1,770 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie blindee/missions/faire franchir/Faire franchir - CDT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_GEN_FaireFranchir
+]]--[[//
+]]--[[// Commentaires: refonte 27/10/06
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_GEN_FaireFranchir"
+{
+    activations =
+    {
+        { "BEH_Misc_Automate_GEN_CDT_GererFinMission", {} },
+        { "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererExploitation", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererRenforcements", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererVariantement", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtatOrdreConduite = self.eEtatOrdreConduite or eActionEnCours
+        self.positionRegroupement = self.positionRegroupement or nil
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                for _,site in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// 1) TEST erreur sur site de franchissement
+]]--[[//-------------------------------------------------------------------------
+]]self._namedParams.mission.sitesDeFranchissement_ ) do
+                local _continue = true
+                    do
+                        --[[// Erreur si position site
+]]local localisationObjet = DEC_ConnaissanceObjet_Localisation( site )
+                        if( ( localisationObjet == 0 or localisationObjet == nil ) ) then
+                            do
+                                DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                                Halt()
+
+                            end
+--[[// Erreur si position site suite...
+]]                        end
+
+                        local ptObjet = S_Geometrie_BarycentreZone( localisationObjet )
+                        if( ( ptObjet == 0 or ptObjet == nil ) ) then
+                            do
+                                DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                                Halt()
+
+                            end
+                        end
+
+                    end
+--[[//-------------------------------------------------------------------------
+]]--[[// 2) TEST erreur sur point de regroupement
+]]--[[//-------------------------------------------------------------------------
+]]
+                end
+
+                self.positionRegroupement = S_Geometrie_BarycentreZone( self._namedParams.mission.zoneRegroupement_ )
+                if( ( self.positionRegroupement == 0 or self.positionRegroupement == nil ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                Halt()
+
+                    end
+--[[// ----> Sinon OK on fait la mission
+]]                end
+
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[//-------------------------------------------------------------------------
+]]--[[// Reception des ordres de conduites
+]]--[[// Attention: L'usage est particulier à la mission
+]]--[[//------------------------------------------------------------------------- 
+]]        end
+
+        if( self.eEtatOrdreConduite == eActionHalt ) then
+            do
+                Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererFinMission, 1, { self.positionRegroupement, } )
+                                return
+
+            end
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreConduite = v else rawset( t, k, v ) end end } ) )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Gestion reconnaissance
+]]--[[// Gestion exploitation
+]]--[[// Gestion renforcement
+]]--[[// Gestion variantement
+]]--[[//-------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites, 1, { self._namedParams.mission.sitesDeFranchissement_, } )
+        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererExploitation, 1, { self.positionRegroupement, } )
+        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererRenforcements, 1, {} )
+        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererVariantement, 1, {} )
+    end,
+
+    destroy = function( self )
+                DIA_Clear( g_selConnaissanceObs )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites"
+{
+    activations =
+    {
+        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listSites = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                local selSectionGen = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), SectionGenie )
+                if( DIA_IsListEmpty( selSectionGen ) ) then
+                    return
+                end
+
+                --[[// Assignation 1 site <==> 1 pion
+]]local rIterateurSections = 0
+                for _,site in pairs( self._namedParams.listSites ) do
+                local _continue = true
+do
+                        local section = DIA_GetAt( selSectionGen, rIterateurSections )
+                        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA, 1, { site, section, } )
+                                                rIterateurSections = rIterateurSections + 1
+                        if( rIterateurSections >= #( selSectionGen ) ) then
+                            return
+                        end
+
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.site = self.params[1]
+        self._namedParams.section = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                local conSite = DEC_CreerDIAThing( "T_ConnaissanceObjet_local" )
+                --[[// Init de la connaissance sur le site  
+]]conSite:Setobstacle_( self._namedParams.site )
+                conSite:Setpion_( self._namedParams.section )
+                DIA_PushBack( g_selConnaissanceObs, conSite )
+            end
+--[[//-------------------------------------------------------------------------
+]]--[[// Assignation de la mission
+]]--[[//-------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA, 1, { ePhase_CDT, self._namedParams.section, self._namedParams.site, eEtatEchelon_Premier, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Automate_GEN_CDT_GererExploitation
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Misc_Automate_GEN_CDT_GererExploitation"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.positionRegroupement = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,site in pairs( --[[//-------------------------------------------------------------------------
+]]--[[// On gère ici seulement les sites reconnus
+]]--[[//-------------------------------------------------------------------------
+]]g_selConnaissanceObs ) do
+        local _continue = true
+do
+                local conSite = site
+                --[[// Si taille connue alors site reconnu
+]]if( not DEC_ConnaissanceObjet_EstReconnu( conSite:Getobstacle_() ) ) then
+                    return
+                end
+
+                --[[//////// début hack /////////
+]]local rTailleSite = DEC_ConnaissanceObjet_LargeurSiteFranchissement( conSite:Getobstacle_() )
+                --[[//par défaut
+]]local eFranchissement = eFranchissement_Continu
+                --[[// MIA :temp à voir PAA ne fait que du continu à 22 m max.
+]]if( rTailleSite > 22 ) then
+                    eFranchissement = eFranchissement_Discontinu
+                end
+
+                --[[//////// fin hack   /////////
+]]--[[// Assignation de la mission
+]]Activate( self.activations.BEH_Mission_Automate_GEN_AssignerEquiperExploiterA, 1, { ePhase_CDT, conSite:Getpion_(), conSite:Getobstacle_(), self._namedParams.positionRegroupement, eFranchissement, eEtatEchelon_Premier, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Automate_GEN_CDT_GererRenforcements
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Misc_Automate_GEN_CDT_GererRenforcements"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eDeterminerSite
+        self.rIterateur = self.rIterateur or 0
+        --[[//-------------------------------------------------------------------------
+]]--[[// On gère ici seulement les sites reconnus
+]]--[[//-------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Info_Trace, 1, { "Nombre de sites à renforcer " .. FloatToString( #( g_selConnaissanceObs ) ), } )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Aucun sites encore reconnus
+]]--[[//-------------------------------------------------------------------------
+]]if( ( #( g_selConnaissanceObs ) == 0 or #( g_selConnaissanceObs ) == nil ) ) then
+            return
+        end
+
+        switch_1 = --[[//-------------------------------------------------------------------------
+]]--[[// Renforcement des sites un par un
+]]--[[//-------------------------------------------------------------------------
+]]self.ePhase
+            if switch_1 == eDeterminerSite then
+                --[[//-------------------------------------------------------------------------
+]]--[[// Sites
+]]--[[//-------------------------------------------------------------------------
+]]local conSite = DIA_GetAt( g_selConnaissanceObs, self.rIterateur )
+                local rTailleSite = DEC_ConnaissanceObjet_LargeurSiteFranchissement( conSite:Getobstacle_() )
+                --[[// Renforcement si reconnu
+]]if( rTailleSite > 0 and not conSite:GetbEstRenforce_() ) then
+                    Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour, 1, { conSite, rTailleSite, } )
+                end
+
+                                self.rIterateur = self.rIterateur + 1
+                self.ePhase = eAttendre
+                
+            --[[//-------------------------------------------------------------------------
+]]--[[// Vérification iteration
+]]--[[//-------------------------------------------------------------------------
+]]elseif switch_1 == eAttendre then
+                if( self.rIterateur == #( g_selConnaissanceObs ) ) then
+                    self.rIterateur = 0
+                end
+
+                self.ePhase = eDeterminerSite
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour
+]]--[[//
+]]--[[// Commentaires: DEC_Automate_PionPeutConstruireObjet( pion, typeObjet )
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Mission_Automate_GEN_AssignerRenforcer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.conSite = self.params[1]
+        self._namedParams.rTailleSite = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[//liste des moyens disponibles dans le sous groupement  
+]]local selPAA = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), GroupePAA, eEtatEchelon_Second )
+        local selMLF = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), GroupeMLF, eEtatEchelon_Second )
+        local selEFA = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), GroupeEFA, eEtatEchelon_Second )
+        local selPFM = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), SectionPFM, eEtatEchelon_Second )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Renforcement PAA
+]]--[[//-------------------------------------------------------------------------
+]]if( self._namedParams.rTailleSite <= M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PAA() * #( selPAA ) ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "******** renforcement PAA ***********", } )
+                local rCompteur = 0
+                for _,x in pairs( selPAA ) do
+                local _continue = true
+                    do
+                        local pionPAA = x
+                        Activate( self.activations.BEH_Mission_Automate_GEN_AssignerRenforcer, 1, { pionPAA, self._namedParams.conSite, } )
+                                                rCompteur = rCompteur + 1
+                        if( rCompteur * M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PAA() >= self._namedParams.rTailleSite ) then
+                            return
+                        end
+
+                    end
+
+                end
+
+            end
+--[[//-------------------------------------------------------------------------
+]]--[[// Renforcement selMLF
+]]--[[//-------------------------------------------------------------------------
+]]        end
+
+        if( self._namedParams.rTailleSite <= M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_MLF() * #( selMLF ) ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "******** renforcement MLF ***********", } )
+                local rCompteur = 0
+                for _,x in pairs( selMLF ) do
+                local _continue = true
+                    do
+                        local pionMLF = x
+                        Activate( self.activations.BEH_Mission_Automate_GEN_AssignerRenforcer, 1, { pionMLF, self._namedParams.conSite, } )
+                                                rCompteur = rCompteur + 1
+                        if( rCompteur * M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_MLF() >= self._namedParams.rTailleSite ) then
+                            return
+                        end
+
+                    end
+
+                end
+
+            end
+--[[//-------------------------------------------------------------------------
+]]--[[// Renforcement selEFA
+]]--[[//-------------------------------------------------------------------------
+]]        end
+
+        if( self._namedParams.rTailleSite <= M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_EFA() * #( selEFA ) ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "******** renforcement EFA ***********", } )
+                local rCompteur = 0
+                for _,x in pairs( selEFA ) do
+                local _continue = true
+                    do
+                        local pionEFA = x
+                        Activate( self.activations.BEH_Mission_Automate_GEN_AssignerRenforcer, 1, { pionEFA, self._namedParams.conSite, } )
+                                                rCompteur = rCompteur + 1
+                        if( rCompteur * M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_EFA() >= self._namedParams.rTailleSite ) then
+                            return
+                        end
+
+                    end
+
+                end
+
+            end
+--[[//-------------------------------------------------------------------------
+]]--[[// Renforcement selPFM
+]]--[[//-------------------------------------------------------------------------
+]]        end
+
+        if( self._namedParams.rTailleSite <= M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PFM() * #( selPFM ) ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "******** renforcement PFM ***********", } )
+                local rCompteur = 0
+                for _,x in pairs( selPFM ) do
+                local _continue = true
+                    do
+                        local pionPFM = x
+                        Activate( self.activations.BEH_Mission_Automate_GEN_AssignerRenforcer, 1, { pionPFM, self._namedParams.conSite, } )
+                                                rCompteur = rCompteur + 1
+                        if( rCompteur * M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PFM() >= self._namedParams.rTailleSite ) then
+                            return
+                        end
+
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_GEN_AssignerRenforcer
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_GEN_AssignerRenforcer"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_GEN_AssignerRenforcerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.conSite = self.params[2]
+    end,
+
+    activate = function( self )
+        self._namedParams.conSite:SetbEstRenforce_( true )
+        --[[// MIA : Hack ne pas virer
+]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
+        Activate( self.activations.BEH_Mission_Automate_GEN_AssignerRenforcerA, 1, { ePhase_CDT, self._namedParams.pion, self._namedParams.conSite:Getpion_(), DEC_ConnaissanceObjet_Localisation( self._namedParams.conSite:Getobstacle_() ), eEtatEchelon_Premier, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local rIterateurPionASuivre = 0
+        local listePionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        local listePionsSE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
+        if( DIA_IsListEmpty( listePionsPE ) ) then
+            return
+        end
+
+        for _,x in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//-----------------------------------------------------------------------------
+]]listePionsSE ) do
+        local _continue = true
+do
+                local pion = x
+                local pionPE = DIA_GetAt( listePionsPE, rIterateurPionASuivre )
+                if( pion:GetType() ~= "GroupePAA" and pion:GetType() ~= "GroupeMLF" and pion:GetType() ~= "GroupeMLF" and pion:GetType() ~= "GroupeEFA" and pion:GetType() ~= "SectionPFM" ) then
+                    Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, pionPE, } )
+                end
+
+                                rIterateurPionASuivre = rIterateurPionASuivre + 1
+                if( rIterateurPionASuivre >= #( listePionsPE ) ) then
+                    --[[// revenir au premier élément de la liste de PE
+]]rIterateurPionASuivre = 0
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Automate_GEN_CDT_GererFinMission
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Misc_Automate_GEN_CDT_GererFinMission"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Interrompre", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.positionRegroupement = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------
+]]--[[// Init
+]]--[[// Donner l'ordre d'interrompre aux section du génie:
+]]--[[// démontage du pont. Ensuite c'est à l'untilisateur de donner un ordre
+]]--[[// de mission.
+]]--[[//-----------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                local listePions = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), SectionGenie )
+                for _,x in pairs( listePions ) do
+                local _continue = true
+                    do
+                        local pion = x
+                        Activate( self.activations.ACT_Ordre_Automate_Interrompre, 1, { pion, } )
+                    end
+--[[// Attention on laisse les pions en renforcement renforcer!
+]]
+                end
+
+                local listePionsSE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
+                for _,x in pairs( listePionsSE ) do
+                local _continue = true
+                    do
+                        local pion = x
+                        StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self._namedParams.positionRegroupement, eEtatEchelon_Second, } )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_Attendre_", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        self.obs = self.obs or nil
+        local bOrdreConduiteInterrompre = false
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_Interrompre" then
+                        bOrdreConduiteInterrompre = true
+                        
+                    elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                        --[[// Mise en attente de la progression
+]]DEC_Trace( "$ --- Wait fragmentary order ---$" )
+                        StartActivate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
+                        --[[// ordre de poursuivre -> on reprend la progression
+]]--[[// la section n est plus en attente d'ordre
+]]DEC_Trace( "$ --- Resume fragmentary order ---$" )
+                        StopActivate( self.activations.BEH_Ordre_Automate_Attendre_, {} )
+                        Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
+]]
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+        if( bOrdreConduiteInterrompre ) then
+            self.params.__returnValue = eActionHalt
+            return
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Misc_Automate_GEN_CDT_GererVariantement
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Misc_Automate_GEN_CDT_GererVariantement"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_GEN_CDT_Varianter", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        self.obs = self.obs or nil
+        for _,x in pairs( --[[//-----------------------------------------------------------------
+]]--[[// En fonction de l'ordre recu
+]]--[[//-----------------------------------------------------------------
+]]ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                if( repOrdre:GetType() == "Rep_OrderConduite_Automate_RealiserVariantement" ) then
+                    do
+                        DEC_Trace( "******* Ordre varianter *******" )
+                        --[[// cast
+]]local ordreVariantement = repOrdre
+                        Activate( self.activations.BEH_Ordre_Automate_GEN_CDT_Varianter, 1, { ordreVariantement:GetsiteFranchissementOriginal_(), ordreVariantement:GetsiteFranchissementVariante_(), } )
+                    end
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_GEN_CDT_Varianter
+]]--[[//
+]]--[[// Commentaires: marche une seule fois
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_GEN_CDT_Varianter"
+{
+    activations =
+    {
+        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.siteFranchissementOriginal = self.params[1]
+        self._namedParams.siteFranchissementVariante = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------
+]]--[[// Validité
+]]--[[//-----------------------------------------------------------------
+]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteFranchissementOriginal ) or not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteFranchissementVariante ) ) then
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------
+]]--[[// Variantement
+]]--[[//-----------------------------------------------------------------
+]]local conSiteOriginal = 0
+        for _,site in pairs( g_selConnaissanceObs ) do
+        local _continue = true
+do
+                --[[// cast
+]]local conSite = site
+                if( conSite:Getobstacle_() == self._namedParams.siteFranchissementOriginal ) then
+                    do
+                        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA, 1, { self._namedParams.siteFranchissementVariante, conSite:Getpion_(), } )
+                        conSiteOriginal = conSite
+                    end
+                end
+
+            end
+--[[// on remove l'ancien site, ce qui donne la possibilité de revarianter dessus plus tard.
+]]
+        end
+
+        if( ( conSiteOriginal ~= 0 and conSiteOriginal ~= nil ) ) then
+            DIA_Remove( g_selConnaissanceObs, conSiteOriginal )
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_GEN_FaireFranchir = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite, "BEH_Ordre_Automate_Attendre_", nodes.BEH_Ordre_Automate_Attendre_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA, "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA", nodes.BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererExploitation, "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA", nodes.BEH_Mission_Automate_GEN_AssignerEquiperExploiterA }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererFinMission, "ACT_Ordre_Automate_Interrompre", nodes.ACT_Ordre_Automate_Interrompre }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererFinMission, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites, "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", nodes.BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererRenforcements, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererRenforcements, "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour", nodes.BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour, "BEH_Mission_Automate_GEN_AssignerRenforcer", nodes.BEH_Mission_Automate_GEN_AssignerRenforcer }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererVariantement, "BEH_Ordre_Automate_GEN_CDT_Varianter", nodes.BEH_Ordre_Automate_GEN_CDT_Varianter }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_CDT_GererVariantement, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_GEN_AssignerRenforcer, "BEH_Mission_Automate_GEN_AssignerRenforcerA", nodes.BEH_Mission_Automate_GEN_AssignerRenforcerA }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_GEN_CDT_Varianter, "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", nodes.BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_FaireFranchir, "BEH_Misc_Automate_GEN_CDT_GererFinMission", nodes.BEH_Misc_Automate_GEN_CDT_GererFinMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_FaireFranchir, "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite", nodes.BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_FaireFranchir, "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites", nodes.BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_FaireFranchir, "BEH_Misc_Automate_GEN_CDT_GererExploitation", nodes.BEH_Misc_Automate_GEN_CDT_GererExploitation }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_FaireFranchir, "BEH_Misc_Automate_GEN_CDT_GererRenforcements", nodes.BEH_Misc_Automate_GEN_CDT_GererRenforcements }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_FaireFranchir, "BEH_Misc_Automate_GEN_CDT_GererVariantement", nodes.BEH_Misc_Automate_GEN_CDT_GererVariantement }

@@ -1,0 +1,16 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/common/missions/releverdepasser/ReleverDepasser - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-08-26 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Common/Missions/ReleverDepasser/ReleverDepasser - MRT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:30 $
+]]--[[// $Revision: 7 $
+]]--[[// $Workfile: ReleverDepasser - MRT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// cf attaquer
+]]

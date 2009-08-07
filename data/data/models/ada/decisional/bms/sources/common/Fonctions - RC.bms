@@ -1,0 +1,151 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/Fonctions - RC.bms"] = true
+
+
+--[[//-------------------------------------------------------------------------
+]]--[[// Convertie E_EtatPion_PhaseMission en E_TypeRC
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// MELEE
+]]--[[//-------------------------------------------------------------------------
+]]--[[//a faire
+]]--[[// MIA phase = En progressionSurAxe si reco it ou axe non?
+]]--[[// ggr : ajouter un RC pour la reconnaissance 
+]]--[[// ( quand ce n'est pas une localisation )
+]]--[[// MIA --> pas une phase de mission CR dans l'action de contrôle de zone
+]]--[[// : eRC_DebutControleZone, eRC_FinControleZone
+]]--[[// JCR --> Permet a l'automate de faire un compte rendu de controle 
+]]--[[// de zone. Si l'action est en pause ou interrompue, le pion fait un 
+]]--[[// rc eRC_FinControleZone ...
+]]--[[//Donc CR à faire dans l'action    			
+]]--[[// MIA IDEM sauf ALAT peut être
+]]--[[// MIA: idem pas phase de mission?: Arrive sur Position et si pas de déplacement de sauvegarde 
+]]--[[// et en poste (aménagé alors CR enPosition DANS l'action d'installation
+]]--[[// A voir ca se discute
+]]--[[// Pour automate
+]]--[[// !! A faire absoluement !!
+]]--[[//ASS
+]]--[[//------------------------------------------------------------------
+]]--[[// TRANSPORT
+]]--[[//------------------------------------------------------------------
+]]--[[//a faire
+]]--[[//a faire
+]]--[[// A discuter phase de mission??
+]]--[[// TEMP
+]]--[[// TEMP
+]]function S_Convertir_SituationMission_RC( eSituationMission )
+    local _returnValue = nil
+    switch_1 = eSituationMission
+        if switch_1 == eEtatPhaseMission_DebutMission then
+            _returnValue = eRC_DebutMission
+            
+        elseif switch_1 == eEtatPhaseMission_PreparationMission then
+            _returnValue = eRC_PreparationMission
+            
+        elseif switch_1 == eEtatPhaseMission_RejointUnite then
+            _returnValue = eRC_RejointUnite
+            
+        elseif switch_1 == eEtatPhaseMission_ProgressionSurAxe then
+            _returnValue = eRC_ProgressionSurAxe
+            
+        elseif switch_1 == eEtatPhaseMission_ProgressionVersLocalisation then
+            _returnValue = eRC_ProgressionVersPosition
+            
+        elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
+            _returnValue = eRC_ArriveSurPosition
+            
+        elseif switch_1 == eEtatPhaseMission_ReconnaissanceLocalisation then
+            _returnValue = eRC_ReconnaissancePoint
+            
+        elseif switch_1 == eEtatPhaseMission_EscorteUnite then
+            _returnValue = eRC_EscorteUnite
+            
+        elseif switch_1 == eEtatPhaseMission_Reconnaissance then
+            _returnValue = eRC_ReconnaissancePoint
+            
+        elseif switch_1 == eEtatPhaseMission_DispositifInstalle then
+            _returnValue = eRC_DispositifInstalle
+            
+        elseif switch_1 == eEtatPhaseMission_EnControleZone then
+            _returnValue = eRC_DebutControleZone
+            
+        elseif switch_1 == eEtatPhaseMission_EnSurveillance then
+            _returnValue = eRC_DebutSurveillance
+            
+        elseif switch_1 == eEtatPhaseMission_EnFreinage then
+            _returnValue = eRC_EnFreinage
+            
+        elseif switch_1 == eEtatPhaseMission_EnJalonnement then
+            _returnValue = eRC_EnJalonnement
+            
+        elseif switch_1 == eEtatPhaseMission_EnPosition then
+            _returnValue = eRC_EnPosition
+            
+        elseif switch_1 == eEtatPhaseMission_FinMission then
+            _returnValue = eRC_FinMission
+            
+        elseif switch_1 == eEtatPhaseMission_MissionImpossible then
+            _returnValue = eRC_MissionImpossible
+            
+        elseif switch_1 == eEtatPhaseMission_InstallationDispositif then
+            _returnValue = eRC_DebutInstallation
+            
+        elseif switch_1 == eEtatPhaseMission_InstallationSurZoneImplantation then
+            _returnValue = eRC_InstallationSurZoneImplantation
+            
+        elseif switch_1 == eEtatPhaseMission_PretPourConduiteTir then
+            _returnValue = eRC_PretPourConduiteTir
+            
+        elseif switch_1 == eEtatPhaseMission_SuitUnite then
+            _returnValue = eRC_SuitUnite
+            
+        elseif switch_1 == eEtatPhaseMission_EnAppui then
+            _returnValue = eRC_EnAppui
+            
+        elseif switch_1 == eEtatPhaseMission_Decroche then
+            _returnValue = eRC_Decroche
+            
+        elseif switch_1 == eEtatPhaseMission_AttenteTransporteur then
+            _returnValue = eRC_EnAttenteTransporteurs
+            
+        elseif switch_1 == eEtatPhaseMission_TransportEnCours then
+            _returnValue = eRC_TransportEnCours
+            
+        elseif switch_1 == eEtatPhaseMission_TransportEmbarquement then
+            _returnValue = eRC_TransportEmbarquement
+            
+        elseif switch_1 == eEtatPhaseMission_TransportDebarquement then
+            _returnValue = eRC_TransportDebarquement
+            
+        elseif switch_1 == eEtatPhaseMission_EnExfiltration then
+            _returnValue = eRC_EnExfiltration
+            
+        elseif switch_1 == eEtatPhaseMission_EnInfiltration then
+            _returnValue = eRC_EnInfiltration
+            
+        elseif switch_1 == eEtatPhaseMission_AttenteConditionFavorablePourInfiltration then
+            _returnValue = eRC_AttenteConditionFavorablePourInfiltration
+            
+        elseif switch_1 == eEtatPhaseMission_EnAttaque then
+            _returnValue = eRC_Assaut
+            
+        elseif switch_1 == eEtatPhaseMission_EnCouverture then
+            _returnValue = eRC_EnCouverture
+            
+        elseif switch_1 == eEtatPhaseMission_EnEclairage then
+            _returnValue = eRC_EnEclairage
+            
+        elseif switch_1 == eEtatPhaseMission_EnFranchissement then
+            _returnValue = eRC_EnCoursDeFranchissement
+            
+        elseif switch_1 == eEtatPhaseMission_None then
+            _returnValue = eNbr
+            
+        
+        else
+            _returnValue = eNbr
+                end
+
+    return _returnValue
+end
+

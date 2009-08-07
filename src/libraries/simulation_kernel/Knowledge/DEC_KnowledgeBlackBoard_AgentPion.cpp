@@ -209,7 +209,7 @@ namespace {
     class sLivingEnemiesPerceivedInsertor
     {
     public:
-        sLivingEnemiesPerceivedInsertor( const MIL_AgentPion& pion, T_KnowledgeAgentDiaIDVector& container, const T* pZone = 0 )
+        sLivingEnemiesPerceivedInsertor( const MIL_AgentPion& pion, T_ConstKnowledgeAgentVector& container, const T* pZone = 0 )
             : pContainer_( &container )
             , pPion_     ( &pion )
             , pArmy_     ( &pion.GetArmy() )
@@ -235,11 +235,11 @@ namespace {
             if( pZone_ && !pZone_->IsInside( pKnowledge->GetPosition() ) )
                 return;
 
-            pContainer_->push_back( (void*)pKnowledge->GetID() );            
+            pContainer_->push_back( pKnowledge );            
         }
 
     private:
-              T_KnowledgeAgentDiaIDVector* pContainer_;
+              T_ConstKnowledgeAgentVector* pContainer_;
         const MIL_AgentPion*               pPion_;
         const MIL_Army_ABC*                pArmy_;
         const T*                           pZone_;
@@ -250,7 +250,7 @@ namespace {
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceived
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceived( T_KnowledgeObjectDiaIDVector& container ) const
+void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceived( T_ConstKnowledgeAgentVector& container ) const
 {
     assert( pPion_ );
     assert( pKnowledgeAgentPerceptionContainer_ );
@@ -264,7 +264,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceived( T_KnowledgeOb
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone( T_KnowledgeObjectDiaIDVector& container, const TER_Localisation& zone ) const
+void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
 {
     assert( pPion_ );
     assert( pKnowledgeAgentPerceptionContainer_ );
@@ -278,7 +278,7 @@ namespace {
     class sAgentsAttackingInsertor
     {
     public:
-        sAgentsAttackingInsertor( const MIL_AgentPion& pion, T_KnowledgeAgentDiaIDVector& container )
+        sAgentsAttackingInsertor( const MIL_AgentPion& pion, T_ConstKnowledgeAgentVector& container )
             : pContainer_( &container )
             , pPion_     ( &pion )
         {
@@ -291,11 +291,11 @@ namespace {
 
             DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );
             assert( pKnowledge );
-            pContainer_->push_back( (void*)pKnowledge->GetID() );
+            pContainer_->push_back( pKnowledge );
         }
 
     private:
-            T_KnowledgeAgentDiaIDVector* pContainer_;
+              T_ConstKnowledgeAgentVector* pContainer_;
         const MIL_AgentPion*               pPion_;
     };
 }
@@ -304,7 +304,7 @@ namespace {
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetAgentsAttacking
 // Created: NLD 2004-03-29
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_AgentPion::GetAgentsAttacking( T_KnowledgeAgentDiaIDVector& container ) const
+void DEC_KnowledgeBlackBoard_AgentPion::GetAgentsAttacking( T_ConstKnowledgeAgentVector& container ) const
 {
     assert( pPion_ );
     assert( pKnowledgeAgentPerceptionContainer_ );
@@ -328,27 +328,27 @@ MT_Float DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue() const
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
-const T_KnowledgeAgentDiaIDVector& DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies() const
+const T_ConstKnowledgeAgentVector& DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies() const
 {
     assert( pKnowledgeRapForLocal_ );
-    return pKnowledgeRapForLocal_->GetDangerousEnemiesIDs();
+    return pKnowledgeRapForLocal_->GetDangerousEnemies();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const
+void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
 {    
     container.clear();
 
     assert( pKnowledgeRapForLocal_ );
-    const T_KnowledgeAgentVector& knowledges = pKnowledgeRapForLocal_->GetDangerousEnemies();
-    for( CIT_KnowledgeAgentVector it = knowledges.begin(); it != knowledges.end(); ++it )
+    const T_ConstKnowledgeAgentVector& knowledges = pKnowledgeRapForLocal_->GetDangerousEnemies();
+    for( CIT_ConstKnowledgeAgentVector it = knowledges.begin(); it != knowledges.end(); ++it )
     {
-        const DEC_Knowledge_Agent& knowledge = **it;
-        if( zone.IsInside( knowledge.GetPosition() ) )
-            container.push_back( (void*)knowledge.GetID() );
+        const DEC_Knowledge_Agent* pKnowledge = *it;
+        if( zone.IsInside( pKnowledge->GetPosition() ) )
+            container.push_back( pKnowledge );
     }
 }
 
@@ -410,7 +410,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
     {
         DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObject( **itObjectColliding );
         assert( pKnowledge );
-        container.push_back( (void*)( pKnowledge->GetID() ) );
+        container.push_back( pKnowledge->GetID() );
     }
 }
 
@@ -472,7 +472,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsColliding( T_KnowledgePopu
     {
         DEC_Knowledge_Population* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulation( **it );
         assert( pKnowledge );
-        container.push_back( (void*)( pKnowledge->GetID() ) );
+        container.push_back( pKnowledge->GetID() );
     }
 }
   
@@ -493,7 +493,7 @@ namespace {
 
             DEC_Knowledge_Population* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulation( knowledge );
             assert( pKnowledge );
-            pContainer_->push_back( (void*)pKnowledge->GetID() );
+            pContainer_->push_back( pKnowledge->GetID() );
         }
 
     private:
@@ -533,17 +533,6 @@ DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( c
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const DIA_Variable_ABC& dia ) const
-{
-    assert( DEC_Tools::CheckTypeConnaissanceAgent( dia ) );
-    uint nDiaID = (uint)dia.ToPtr();
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nDiaID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
 DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( uint nID ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nID );
@@ -562,17 +551,6 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject(
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const DIA_Variable_ABC& dia ) const
-{
-    assert( DEC_Tools::CheckTypeConnaissanceObjet( dia ) );
-    uint nDiaID = (uint)dia.ToPtr();
-    return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nDiaID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
 DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( uint nID ) const
 {
     return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
@@ -585,17 +563,6 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject(
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const DIA_Variable_ABC& dia ) const
-{
-    assert( DEC_Tools::CheckTypeConnaissancePopulation( dia ) );
-    uint nDiaID = (uint)dia.ToPtr();
-    return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nDiaID );
 }
 
 // -----------------------------------------------------------------------------

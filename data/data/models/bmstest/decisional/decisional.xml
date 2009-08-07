@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<decisional>
+    <RepertoireBinaires>Binaires</RepertoireBinaires>
+    <RepertoireSources>.</RepertoireSources>
+    <DIATypes>Common/Types.hal</DIATypes>
+    <DIAWorkspace>Common/Moteur/Workspace.hal</DIAWorkspace>
+</decisional>

@@ -1,0 +1,99 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche rasit/missions/RenseignerSur.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_RENS_ROHUM_RenseignerSur
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_RENS_ROHUM_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Rens_EnSurveillanceRadarDe", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.pointARenseigner = self.pointARenseigner or S_Geometrie_BarycentreZone( self._namedParams.mission.zoneAObserver_ )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Intelligence gathering mission begining", } )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Test le positionnement, si bonne distance surveiller la zone
+]]--[[// Recuper la donne et faire un RC
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// MIA: rajouter un warning!
+]]--[[// doctrine distance porte du RADAR environ 40 km
+]]        end
+
+        if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointARenseigner ) ) < 400000 ) then
+            Activate( self.activations.ACT_Info_Trace, 1, { "L'unité n'est pas à distance d'observation", } )
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eSurveiller
+                
+            --[[// Surveiller 
+]]elseif switch_1 == eSurveiller then
+                --[[//action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );// sert à rien car on est déjà sur place
+]]Activate( self.activations.BEH_Rens_EnSurveillanceRadarDe, 1, { self._namedParams.mission.zoneAObserver_, } )
+                Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.1, { self.pointARenseigner, } )
+                
+            --[[// Fin de la mission --> SUR ORDRE
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_RENS_ROHUM_RenseignerSur = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROHUM_RenseignerSur, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROHUM_RenseignerSur, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROHUM_RenseignerSur, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROHUM_RenseignerSur, "BEH_Rens_EnSurveillanceRadarDe", nodes.BEH_Rens_EnSurveillanceRadarDe }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROHUM_RenseignerSur, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_ROHUM_RenseignerSur, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

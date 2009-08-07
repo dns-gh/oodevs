@@ -1,0 +1,23 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/automates/missions/reconnaitreitineraire/ReconnaitreItineraire - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_LOG_ReconnaitreItineraire
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_LOG_ReconnaitreItineraire"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_LOG_ReconnaitreItineraire = { "mission" }

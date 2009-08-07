@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/esc amx-erc/missions/releverdepasser/ReleverDepasser - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 04-02-05 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Esc AMX-ERC/Missions/ReleverDepasser/ReleverDepasser - CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:30 $
+]]--[[// $Revision: 8 $
+]]--[[// $Workfile: ReleverDepasser - CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_ReleverEnDepassant
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_ReleverEnDepassant"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_ABC_ReleverEnDepassant", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Conduite générique 
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Conduite_Automate_ABC_ReleverEnDepassant, 1, { self._namedParams.mission.compagnie_, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_ReleverEnDepassant = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_ReleverEnDepassant, "BEH_Conduite_Automate_ABC_ReleverEnDepassant", nodes.BEH_Conduite_Automate_ABC_ReleverEnDepassant }

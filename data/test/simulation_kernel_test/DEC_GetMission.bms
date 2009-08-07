@@ -1,0 +1,7 @@
+pragma "once"
+
+DEC_GetMission = function( entity )
+    local mission = DEC_GetRawMission( entity )
+    DEC_FillMissionParameters( mission, mission )
+    return mission
+end

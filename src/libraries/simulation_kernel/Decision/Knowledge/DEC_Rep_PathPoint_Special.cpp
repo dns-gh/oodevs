@@ -14,16 +14,6 @@
 #include "Decision/DEC_Tools.h"
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Lima::InitializeDIA
-// Created: NLD 2003-01-13
-//-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Special::InitializeDIA()
-{
-    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "Rep_PointParticulier" );
-}
-
-
-//-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Special constructor
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------

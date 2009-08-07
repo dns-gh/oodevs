@@ -28,7 +28,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionOccupyObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionOccupyObject( MIL_AgentPion& pion, unsigned int nKnowledgeID );
     virtual ~PHY_ActionOccupyObject();
 
     //! @name Operations

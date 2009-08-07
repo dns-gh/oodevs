@@ -27,11 +27,10 @@ public:
     DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, uint nLimaID, const MIL_LimaFunction& function );
     virtual ~DEC_Rep_PathPoint_Lima();
 
-    //! @name Init
+    //! @name Accessors
     //@{
-    static void InitializeDIA();
     int GetTypeLima();
-    void* GetLimaID();
+    unsigned int GetLimaID();
     //@}
 
     //! @name Debug
@@ -41,7 +40,7 @@ public:
 
 private:
     int   typeLima_;
-    void* limaID_;
+    unsigned int limaID_;
 };
 
 #endif // __DEC_Rep_PathPoint_Lima_h_

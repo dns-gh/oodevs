@@ -1,0 +1,708 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/missions/Behaviors MRT - Retrograde.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Missions/Behaviors MRT - Retrograde.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 9/09/05 16:55 $
+]]--[[// $Revision: 25 $
+]]--[[// $Workfile: Behaviors MRT - Retrograde.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+node "BEH_Medo_Automate_INF_PreparerMission_Retrograde"
+{
+    activations =
+    {
+        { "ACT_Medo_Automate_AffecterFuseaux", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_INF_AssignerInterdire_Lima", {} },
+        { "BEH_Medo_Automate_INF_AssignerSurveiller_Lima", {} },
+        { "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone", {} },
+        { "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC", {} },
+        { "BEH_Medo_Automate_INF_OrganiserMissions_Freiner", {} },
+        { "BEH_Medo_Automate_INF_AssignerFreiner", {} },
+        { "BEH_Medo_Automate_INF_AssignerAppuyerFreinage", {} },
+        { "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC", {} },
+        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", {} },
+        { "BEH_Medo_Automate_INF_InitialiseSE", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eTypeMission = self.params[1]
+        self._namedParams.rN_Position = self.params[2]
+    end,
+
+    activate = function( self )
+        self.selPions = self.selPions or S_ObtenirPionsOperationnels_SansPC()
+        self.lstPionsAttaque = self.lstPionsAttaque or {}
+        self.lstPionsAppui = self.lstPionsAppui or {}
+        self.lstPionsSurveillance = self.lstPionsSurveillance or {}
+        self.lstPionsAppui_AC = self.lstPionsAppui_AC or {}
+        self.selPions_PE_HOT = self.selPions_PE_HOT or {}
+        self.selPions_PE_MILAN = self.selPions_PE_MILAN or {}
+        self.selPions_PE_INF = self.selPions_PE_INF or {}
+        self.selPions_INF_Mortier = self.selPions_INF_Mortier or {}
+        self.ePhase = self.ePhase or eMRT_SelectionnerPions
+        self.eActionMRT = self.eActionMRT or eActionEnCours
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        self.limaLCAR = self.limaLCAR or DEC_GetLima( eTypeLima_LCAR )
+        self.limaLR = self.limaLR or DEC_GetLima( eTypeLima_LR )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                if( ( self.limaLCAR == 0 or self.limaLCAR == nil ) ) then
+                    self.limaLCAR = DEC_GetLima( eTypeLima_LI )
+                end
+
+                DEC_Trace( "Nombre de pions : " .. FloatToString( #( self.selPions ) ) )
+                S_Medo_Automate_InitialiseSE( self.selPions, eEtatEchelon_Second )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_SelectionnerPions then
+                self.ePhase = eMRT_AffecterFuseaux
+                --[[//-----------------------------------------------------------------------------
+]]--[[//	Distribution des types de mission
+]]--[[//-----------------------------------------------------------------------------								
+]]DEC_Trace( "Selection des composantes pion : Infanterie" )
+                --[[// Selection les types de composantes
+]]local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie )
+                local sUnites_HOT = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie_HOT )
+                local sUnites_MILAN = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie_MILAN )
+                local sUnites_ABC = S_Cherche_Automate_Filtre_TypePion_ABC( self.selPions )
+                self.selPions_INF_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, GroupeInfanterie_Mortier )
+                --[[// Dans les missions retrograde, tout les pions ABC sont en appuis
+]]S_Automate_ValideEchelonPion( sUnites_ABC, self.lstPionsAttaque, 0, self.lstPionsAppui )
+                --[[// Determine les echelons	
+]]local rN_PE_AC = 0
+                local rN_PE = 0
+                local rN_SE = 0
+                switch_2 = self._namedParams.eTypeMission
+                    if switch_2 == "T_Mission_Automate_INF_MenerDefenseUsure" then
+                        --[[// On affecte un fuseau au pions de toutes maniere
+]]self.ePhase = eMRT_AffecterFuseaux
+                        --[[// Premier Echelon
+]]rN_PE = 2
+                        DEC_Trace( "Selection des composantes pion" )
+                        S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsSurveillance, rN_PE, self.lstPionsAppui )
+                        S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsSurveillance, rN_PE, self.lstPionsAppui )
+                        S_Automate_ValideTroisEchelons_Pion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsSurveillance, rN_PE, self.lstPionsAppui )
+                        
+                    elseif switch_2 == "T_Mission_Automate_INF_RompreContact" then
+                        --[[// Determine les echelons	
+]]rN_PE_AC = #( sUnites_INF ) + #( sUnites_MILAN )
+                        rN_PE = Max( #( sUnites_HOT ), rN_PE_AC - Floor( rN_PE_AC / 3 ) )
+                        if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
+                            rN_PE = Min( self._namedParams.rN_Position, rN_PE )
+                        end
+
+                        rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
+                        --[[// Selection des composantes
+]]DEC_Trace( "Selection des composantes pion" )
+                        self.selPions_PE_HOT = S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                        self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                        self.selPions_PE_MILAN = S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                        
+                    elseif switch_2 == "T_Mission_Automate_INF_Freiner" then
+                        --[[// Regarde le nombre de localisation				
+]]--[[// Premier Echelon
+]]rN_PE = 2
+                        rN_PE_AC = 1
+                        --[[// Second Echelon
+]]rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
+                        self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                        --[[// Regarde si la compagnie dispose d'appuis anti-char					
+]]self.selPions_PE_MILAN = S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsAppui_AC, rN_PE_AC, self.lstPionsAppui )
+                        self.selPions_PE_HOT = S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsAppui_AC, rN_PE_AC, self.lstPionsAppui )
+                        
+                    elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
+                        --[[// On prend toutes les unites HOT dispo										
+]]--[[// Selection des composantes
+]]DEC_Trace( "Selection des composantes pion" )
+                        --[[// selPions_PE_HOT = sUnites_HOT;										
+]]self.lstPionsAttaque = sUnites_HOT
+                        self.ePhase = eMRT_AssignerMissions
+                        
+                                        end
+--[[// 
+]]--[[// L'execution de la mission necessite la presence d'un 1er ech
+]]
+                if( ( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == 0 or self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == nil ) ) then
+                    do
+                        DEC_Trace( "Pas de 1er echelon" )
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                
+            elseif switch_1 == eMRT_AffecterFuseaux then
+                --[[//-----------------------------------------------------------------------------
+]]--[[//Le fuseau de la compagnie est coupe en DEUX
+]]--[[//le pion en appui utilise le fuseau de la compagnie
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eActionMRT == eActionEffectuee ) then
+                    do
+                        self.eActionMRT = eActionEnCours
+                                                do
+                            self.ePhase = eMRT_AssignerMissions
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { self.lstPionsAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, { self.lstPionsSurveillance, } )
+                
+            elseif switch_1 == eMRT_AssignerMissions then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------				
+]]if( self.eActionMRT == eActionImpossible ) then
+                    do
+                                                do
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( self.eValidationMRT == eActionImpossible ) then
+                    do
+                                                do
+                            DEC_Trace( "eValidationMRT == eActionImpossible" )
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                if( self.eValidationMRT == eActionEffectuee ) then
+                    do
+                        self.eValidationMRT = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+--[[// Dans le cas ou l'on passe le test du nombre de pions en attaque 
+]]--[[// lorsque l'on rompt le contact
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { Max( 1, #( self.lstPionsAttaque ) ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                switch_2 = self._namedParams.eTypeMission
+                    if switch_2 == "T_Mission_Automate_INF_MenerDefenseUsure" then
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerInterdire_Lima, 1, { self.lstPionsAttaque, self.limaLCAR, } )
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Lima, 1, { self.lstPionsSurveillance, self.limaLCAR, } )
+                        
+                    elseif switch_2 == "T_Mission_Automate_INF_RompreContact" then
+                        local mission = DEC_GetMission( myself )
+                        local selPionsDetruits = S_ObtenirPionsDetruits_SansPC()
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone, 1, { self.lstPionsAttaque, mission.zoneRegroupement_, } )
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone, 1, { selPionsDetruits, mission.zoneRegroupement_, } )
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, mission.zoneRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                        
+                    elseif switch_2 == "T_Mission_Automate_INF_Freiner" then
+                        Activate( self.activations.BEH_Medo_Automate_INF_OrganiserMissions_Freiner, 1, { self.lstPionsAttaque, self.lstPionsAppui_AC, } )
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerFreiner, 1, { self.lstPionsAttaque, } )
+                        
+                    elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
+                        local mission = DEC_GetMission( myself )
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerFreinage, 1, { self.lstPionsAttaque, mission.compagnie_, } )
+                        
+                    
+                    else
+                        DEC_Trace( "Mission Inconnue" )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                                        end
+--[[// Donner une mission retrograde
+]]
+                if( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" ) then
+                    Activate( self.activations.BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                end
+
+                Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
+                Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
+                
+                        end
+
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Assigne missions pions pour Freiner
+]]--[[//
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Medo_Automate_INF_OrganiserMissions_Freiner"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions_PE = self.params[1]
+        self._namedParams.selPions_AC = self.params[2]
+    end,
+
+    activate = function( self )
+        self.bAppui = self.bAppui or true
+        local rItPion = 0
+        local rItLoc = 0
+        local rNSize_PE = #( self._namedParams.selPions_PE )
+        if( ( rNSize_PE == 0 or rNSize_PE == nil ) ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        local rNSize_Appui = #( self._namedParams.selPions_AC )
+        local rLocDebut = Floor( rNSize_PE / 2 ) - ( Floor( rNSize_Appui / 2 ) + 1 )
+        local rNAppui = Floor( rNSize_Appui / rNSize_PE )
+        local sAppuisVide = {}
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                for _,x_inf in pairs( self._namedParams.selPions_PE ) do
+                local _continue = true
+                    do
+                        --[[// On affecte appuyer aux pions qui vont freiner en PE
+]]--[[// Dans la conduite, on alterne les echelons en train de freiner ..
+]]--[[// Cela permet de repartir les appuis suivant le PE.
+]]if( self.bAppui ) then
+                            do
+                                local pionAppui = 0
+                                local rItAppuis = 0
+                                if( rNSize_PE >= rNSize_Appui ) then
+                                    do
+                                        if( rItLoc >= rLocDebut and rItPion < #( self._namedParams.selPions_AC ) ) then
+                                            do
+                                                pionAppui = DIA_GetAt( self._namedParams.selPions_AC, rItPion )
+                                                                                                do
+                                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, pionAppui, x_inf, eEtatEchelon_Second, } )
+                                                end
+
+                                                                                                rItPion = rItPion + 1
+                                            end
+                                        end
+
+                                    end
+                                else
+do
+                                        rItAppuis = 0
+                                        while rItAppuis < rNAppui do
+                                            local _continue = true
+do
+                                                if( rItPion >= rNSize_Appui ) then
+                                                    break
+                                                end
+
+                                                pionAppui = DIA_GetAt( self._namedParams.selPions_AC, rItPion )
+                                                do
+                                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, pionAppui, x_inf, eEtatEchelon_Second, } )
+                                                end
+
+                                                                                                rItPion = rItPion + 1
+                                            end
+                                        rItAppuis = rItAppuis + 1
+                                        end
+
+                                        if( rItPion < rNSize_Appui and rItLoc == ( rNSize_PE - 1 ) ) then
+                                            do
+                                                                                                while rItPion < rNSize_Appui do
+                                                    local _continue = true
+                                                    do
+                                                        pionAppui = DIA_GetAt( self._namedParams.selPions_AC, rItPion )
+                                                                                                                do
+                                                            StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, pionAppui, x_inf, eEtatEchelon_Second, } )
+                                                        end
+
+                                                    end
+                                                rItPion = rItPion + 1
+                                                end
+
+                                            end
+                                        end
+
+                                    end
+                                end
+
+                                                                rItLoc = rItLoc + 1
+                            end
+                        end
+
+                        self.bAppui = not self.bAppui
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Mission Freiner
+]]--[[//-----------------------------------------------------------------------------		
+]]}
+
+node "BEH_Medo_Automate_INF_AssignerFreiner"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_INF_AssignerA_Freiner", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions_PE = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ptRgpt_Foo = self.ptRgpt_Foo or nil
+        --[[// Mission Pion		
+]]if( ModuleBegins() ) then
+for _,x_inf in pairs( self._namedParams.selPions_PE ) do
+            local _continue = true
+                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Freiner, 1, { ePhase_MRT, x_inf, self.ptRgpt_Foo, } )
+
+            end
+        end
+
+    end,
+
+}
+
+node "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions_PE = self.params[1]
+        self._namedParams.locRgpt = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[// Mission Pion		
+]]if( ModuleBegins() ) then
+for _,x_inf in pairs( self._namedParams.selPions_PE ) do
+            local _continue = true
+                StartActivate( self.activations.BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone, 1, { x_inf, self._namedParams.locRgpt, } )
+
+            end
+        end
+
+    end,
+
+}
+
+node "BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pPion = self.params[1]
+        self._namedParams.locRgpt = self.params[2]
+    end,
+
+    activate = function( self )
+        self.ptRgpt_Automate = self.ptRgpt_Automate or S_Geometrie_BarycentreZone( self._namedParams.locRgpt )
+        Activate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, self._namedParams.pPion, self.ptRgpt_Automate, eEtatEchelon_Premier, } )
+    end,
+
+}
+
+node "BEH_Medo_Automate_INF_AssignerInterdire_Lima"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPionsAttaque = self.params[1]
+        self._namedParams.lima = self.params[2]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+for _,x in pairs( self._namedParams.lstPionsAttaque ) do
+            local _continue = true
+                StartActivate( self.activations.BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion, 1, { x, self._namedParams.lima, } )
+
+            end
+        end
+
+    end,
+
+}
+
+node "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Interdire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pPion = self.params[1]
+        self._namedParams.lima = self.params[2]
+    end,
+
+    activate = function( self )
+                self.ptLima = self.ptLima or nil
+        self.ptInterdire = self.ptInterdire or nil
+        self.ptRecherche = self.ptRecherche or nil
+        self.bCalcul = self.bCalcul or false
+        if( ModuleBegins() ) then
+            do
+                --[[// Calcule une position sur la LIMA
+]]--[[// ------------------------------------------------------------			
+]]self.ptLima = DEC_Automate_CalculerPositionParRapportALimaPourPion( self._namedParams.lima, 0, self._namedParams.pPion )
+                self.bCalcul = ( self.ptLima ~= nil )
+                if( not self.bCalcul ) then
+                    do
+                        DEC_Trace( "Pas de position LCAR : Impossible d'assigner mission." )
+                        DEC_Warning( eRC_MissionImpossibleLimaInvalide )
+                        StartActivate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                                self.params.__returnValue = eActionImpossible
+                        return
+
+                    end
+--[[// Cherche un meilleurs point a proximite, dans le fuseau
+]]                end
+
+                self.ptRecherche = S_Geometrie_Automate_INF_ChercherPosition_Interdire( self.ptLima, 600 )
+                self.ptInterdire = self.ptRecherche
+                if( ( self.ptInterdire == 0 or self.ptInterdire == nil ) ) then
+                    self.ptInterdire = self.ptLima
+                end
+
+            end
+        end
+
+        if( not self.bCalcul ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        Activate( self.activations.BEH_Mission_Automate_INF_AssignerA_Interdire, 1, { ePhase_MRT, self._namedParams.pPion, self.ptInterdire, false, } )
+    end,
+
+    destroy = function( self )
+            end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 17/03/2005 10:51
+]]--[[// Surveiller
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPionsSurveillance = self.params[1]
+        self._namedParams.lima = self.params[2]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+for _,x in pairs( self._namedParams.lstPionsSurveillance ) do
+            local _continue = true
+                StartActivate( self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion, 1, { x, self._namedParams.lima, } )
+
+            end
+        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 17/03/2005 10:51
+]]--[[// Surveiller
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pPion = self.params[1]
+        self._namedParams.lima = self.params[2]
+    end,
+
+    activate = function( self )
+                self.ptLima = self.ptLima or nil
+        self.bCalcul = self.bCalcul or false
+        if( ModuleBegins() ) then
+            do
+                --[[// Calcule une position sur la LIMA
+]]--[[// ------------------------------------------------------------		
+]]self.ptLima = DEC_Automate_CalculerPositionParRapportALimaPourPion( self._namedParams.lima, M_DISTANCE_AVT_LIMA_DEFENDRE_USURE(), self._namedParams.pPion )
+                self.bCalcul = ( ( self.ptLima ~= 0 and self.ptLima ~= nil ) )
+                if( not self.bCalcul ) then
+                    do
+                        DEC_Trace( "Pas de position LCAR : Impossible d'assigner mission." )
+                        DEC_Warning( eRC_MissionImpossibleLimaInvalide )
+                        StartActivate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                    end
+                end
+
+            end
+        end
+
+        if( not self.bCalcul ) then
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+        Activate( self.activations.BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition, 1, { ePhase_MRT, self._namedParams.pPion, self.ptLima, } )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+node "BEH_Medo_Automate_INF_AssignerAppuyerFreinage"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions_PE = self.params[1]
+        self._namedParams.compagnie = self.params[2]
+    end,
+
+    activate = function( self )
+        local selPionsAppui_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
+        if( ( #( self._namedParams.selPions_PE ) == 0 or #( self._namedParams.selPions_PE ) == nil ) ) then
+            do
+                if( ModuleBegins() ) then
+                    DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                end
+
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                self.params.__returnValue = eActionImpossible
+                return
+
+            end
+        end
+
+        if( ( #( selPionsAppui_PE ) == 0 or #( selPionsAppui_PE ) == nil ) ) then
+            selPionsAppui_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Second )
+        end
+
+        if( ModuleBegins() ) then
+            do
+                local rIt_Pion = 0
+                local rIt_Appui = 0
+                local rIt_NbrAppuisMax = 1 + Floor( ( 1 + #( self._namedParams.selPions_PE ) ) / #( selPionsAppui_PE ) )
+                for _,x_pion in pairs( self._namedParams.selPions_PE ) do
+                local _continue = true
+                    do
+                        if( rIt_Pion < #( selPionsAppui_PE ) ) then
+                            do
+                                local pionAppui = DIA_GetAt( selPionsAppui_PE, rIt_Pion )
+                                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, x_pion, pionAppui, eEtatEchelon_Premier, } )
+                            end
+                        end
+
+                                                rIt_Appui = rIt_Appui + 1
+                        if( rIt_Appui < rIt_NbrAppuisMax ) then
+                            _continue = false
+                        end
+
+                            if _continue then
+                            rIt_Appui = 0
+                                                        rIt_Pion = rIt_Pion + 1
+                        end
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerAppuyerFreinage, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerAppuyerFreinage, "BEH_Mission_Automate_INF_AssignerAppuyerA", nodes.BEH_Mission_Automate_INF_AssignerAppuyerA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone, "BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone", nodes.BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerFreiner, "BEH_Mission_Automate_INF_AssignerA_Freiner", nodes.BEH_Mission_Automate_INF_AssignerA_Freiner }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerInterdire_Lima, "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion", nodes.BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion, "BEH_Mission_Automate_INF_AssignerA_Interdire", nodes.BEH_Mission_Automate_INF_AssignerA_Interdire }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerSurveiller_Lima, "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion", nodes.BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion, "BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition", nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_OrganiserMissions_Freiner, "BEH_Mission_Automate_INF_AssignerAppuyerA", nodes.BEH_Mission_Automate_INF_AssignerAppuyerA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "ACT_Medo_Automate_AffecterFuseaux", nodes.ACT_Medo_Automate_AffecterFuseaux }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_AssignerInterdire_Lima", nodes.BEH_Medo_Automate_INF_AssignerInterdire_Lima }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_AssignerSurveiller_Lima", nodes.BEH_Medo_Automate_INF_AssignerSurveiller_Lima }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone", nodes.BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC", nodes.BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_OrganiserMissions_Freiner", nodes.BEH_Medo_Automate_INF_OrganiserMissions_Freiner }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_AssignerFreiner", nodes.BEH_Medo_Automate_INF_AssignerFreiner }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_AssignerAppuyerFreinage", nodes.BEH_Medo_Automate_INF_AssignerAppuyerFreinage }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC", nodes.BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", nodes.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Retrograde, "BEH_Medo_Automate_INF_InitialiseSE", nodes.BEH_Medo_Automate_INF_InitialiseSE }

@@ -1,0 +1,13 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/Parameters.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// temps de sécurité dans le calcul des alertes ravitaillement générées par
+]]--[[// l'automate. Ce temps est ajouté pour chaque appareil
+]]--[[//------------------------------------------------------------------------------
+]]function M_DOCTRINE_ALAT_TEMPS_RECOMPLETEMENT_SECURITE()
+    return 0
+end
+
+
+

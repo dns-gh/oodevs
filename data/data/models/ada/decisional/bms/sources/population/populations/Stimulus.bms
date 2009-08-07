@@ -1,0 +1,104 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/populations/Stimulus.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[//  STIMULUS ORDRE MISSION
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_Mission"
+node "ActivationForSTIM_Mission"
+{
+    activate = function( self )
+        if( DEC_GetMission( myself ) ~= nil ) then
+            SetStimulus( "STIM_Mission", 1 )
+        else
+            SetStimulus( "STIM_Mission", 0 )
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIMULUS STIM_PriseAPartieTirDirect
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirDirect"
+node "ActivationForSTIM_PriseAPartieTirDirect"
+{
+    activate = function( self )
+        local lstPions = DEC_Connaissances_PionsPrenantAPartie()
+        for _,pion in pairs( lstPions ) do
+        local _continue = true
+do
+                local roe = DEC_ConnaissanceAgent_RoePopulation( pion )
+                --[[//effet sur la domination
+]]UpdateStateVariable( "VE_Domination", S_EffetTirSurDomination( roe ) )
+            end
+--[[//aggravation de l'attitude suite à un tir surdimensionné
+]]--[[//E_AttitudePopulation eNouvelleAttitude = S_AggraveAttitudeTirDirect( roe );
+]]--[[//if( eNouvelleAttitude != DEC_Population_Attitude() )
+]]--[[//{
+]]--[[//    DEC_RC( eRC_AggravationAttitude );
+]]--[[//    S_ChangerAttitude( eNouvelleAttitude );
+]]--[[//}
+]]
+        end
+
+        if( not DIA_IsListEmpty( lstPions ) ) then
+            do
+                --[[//DEC_Trace(  FloatToString( DIA_GetInternalState(VE_Domination ) )  );
+]]SetStimulus( "STIM_PriseAPartieTirDirect", 1 )
+                --[[//on signale la PAP
+]]if( not g_PAPSignalee ) then
+                    do
+                        DEC_RC( eRC_AffrontementAvecForcesEnnemies )
+                        g_PAPSignalee = true
+                    end
+                end
+
+            end
+        else
+            SetStimulus( "STIM_PriseAPartieTirDirect", 0 )
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIMULUS STIM_ZoneSecurisee
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_ZoneSecurisee"
+node "ActivationForSTIM_ZoneSecurisee"
+{
+    activate = function( self )
+        local lstSecus = DEC_Connaissances_PionsSecurisant()
+        for _,secu in pairs( lstSecus ) do
+        local _continue = true
+do
+                UpdateStateVariable( "VE_Domination", S_EffetSecurisationSurDomination( DEC_ConnaissanceAgent_RoePopulation( secu ) ) )
+            end
+--[[//DEC_Trace(  FloatToString( S_EffetSecurisationSurDomination( DEC_ConnaissanceAgent_RoePopulation( secu ) ) )  );
+]]
+        end
+
+        if( not DIA_IsListEmpty( lstSecus ) ) then
+            SetStimulus( "STIM_ZoneSecurisee", 1 )
+        else
+            SetStimulus( "STIM_ZoneSecurisee", 0 )
+        end
+
+        end
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_Mission }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PriseAPartieTirDirect }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_ZoneSecurisee }

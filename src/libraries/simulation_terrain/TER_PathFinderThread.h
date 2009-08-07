@@ -32,13 +32,13 @@ class TER_DynamicData;
 // =============================================================================
 // Created: AGE 2005-02-23
 // =============================================================================
-class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< TER_PathFindRequest_ABC* >
+class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue );
+             TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue );
     virtual ~TER_PathFinderThread();
     //@}
 
@@ -69,7 +69,7 @@ private:
 
     //! @name Tools
     //@{
-    virtual void Process           ( TER_PathFindRequest_ABC* const& pRequest );
+    virtual void Process           ( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );
             void ProcessDynamicData();
             void Dump              () const;
     //@}

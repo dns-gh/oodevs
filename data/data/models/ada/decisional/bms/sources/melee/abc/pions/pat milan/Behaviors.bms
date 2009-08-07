@@ -1,0 +1,283 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/pat milan/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = yes
+
+max_instances = 100
+
+max_activations = 100
+
+
+actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+debarquement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+vitesse = 1,
+ennemi = 1,
+etat_Mission = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+controlePopulation = 1,
+etat_ROE = 1,
+objectifEsquive = 1,
+}
+
+
+--[[// Commun pion ABC
+]]include "Melee/Abc/Pions/Common/Behaviors.bms"
+
+--[[// Embarquement (apres heliportage)
+]]include "Common/Pions/Behaviors/Behaviors - Embarquement.bms"
+
+
+--[[// mission commune
+]]include "Melee/Abc/Pions/Common/Missions/Barrer.bms"
+
+include "Melee/Abc/Pions/Common/Missions/Jalonner.bms"
+
+include "Melee/Abc/Pions/Common/Missions/Eclairer.bms"
+
+include "Melee/Abc/Pions/Common/Missions/Appuyer.bms"
+
+include "Melee/Abc/Pions/Common/Missions/AppuyerSurPosition.bms"
+
+include "Melee/Abc/Pions/Common/Missions/Surveiller.bms"
+
+include "Melee/Abc/Pions/Common/Missions/RenseignerSur.bms"
+
+include "Melee/Abc/Pions/Common/Missions/ArmerPIA.bms"
+
+include "Melee/Abc/Pions/Common/Missions/ArmerPointControle.bms"
+
+include "Melee/Abc/Pions/Common/Missions/ControlerZone.bms"
+
+include "Melee/Abc/Pions/Common/Missions/Escorter.bms"
+
+
+
+--[[// Pat Milan
+]]include "Melee/Abc/Pions/Pat Milan/Actions.bms"
+
+include "Melee/Abc/Pions/Pat Milan/Missions/Missions.bms"
+
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_ABC_Default
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//               
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Pion_ABC_Default"
+{
+    activations =
+    {
+        { "BEH_Mot_Pion_Embarquer", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//-------------------------------------------------------------------------
+]]--[[// Embarquement apres Heliportage
+]]--[[// ------------------------------------------------------------------------
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//               
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init / On ne s'esquive pas --> indépendant du moral
+]]--[[//-----------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            SetStateVariable( "VE_RapForInfiltration", 5 - DEC_RapportDeForceLocal() )
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_RapForInfiltration", 0 )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer
+]]--[[//
+]]--[[// Commentaires: pour mission Eclairer
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer"
+{
+    activations =
+    {
+        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Garder ses distances sur enis dangereux
+]]local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
+        for _,repEni in pairs( listeConnaissances ) do
+        local _continue = true
+            Activate( self.activations.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA, S_Force_Distance( repEni ), { repEni, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA
+]]--[[//
+]]--[[// Commentaires: pour mission Eclairer
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA"
+{
+    instances =
+    {
+        boost = 1.01,
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Pion_ABC_Eni_SInfiltrerFaceA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+    end,
+
+    activate = function( self )
+        self.rDistanceEfficace = self.rDistanceEfficace or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, M_POLY_PH_TIR_ENI_EFFICACE() )
+        --[[//Cf. erreur de precision
+]]self.rDistanceSurete = self.rDistanceSurete or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, 0.2 ) + 10
+        self.rDeltaDistance = self.rDeltaDistance or self.rDistanceSurete - self.rDistanceEfficace
+        local rCoefEsquive = ( GetStateVariable( "VE_RapFor" ) - 2.6 ) / 2.6
+        local rDistanceEsquive = self.rDistanceEfficace + ( self.rDeltaDistance * rCoefEsquive )
+        --[[// S'infiltrer
+]]Activate( self.activations.BEH_Pion_ABC_Eni_SInfiltrerFaceA, 1, { self._namedParams.repEni, self.rDistanceSurete, 0, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_ABC_Eni_SInfiltrerFaceA
+]]--[[//
+]]--[[// Commentaires: pour mission Eclairer
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
+{
+    instances =
+    {
+        max = 1,
+        boost = 1.01,
+    },
+
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repUnite = self.params[1]
+        self._namedParams.rDistance = self.params[2]
+        self._namedParams.rDistanceSecurite = self.params[3]
+    end,
+
+    activate = function( self )
+        self.rDistanceEffective = self.rDistanceEffective or self._namedParams.rDistance + self._namedParams.rDistanceSecurite
+        self.eEtat = self.eEtat or eActionEnCours
+        self.positionSurete = self.positionSurete or nil
+        --[[//----------------------------------------------------------------------
+]]--[[// Connaissance invalide
+]]--[[//----------------------------------------------------------------------
+]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        --[[//----------------------------------------------------------------------
+]]--[[// Si je suis a une distance supérieure a rDistance, alors, ce n'est pas
+]]--[[// la peine de decrocher
+]]--[[//----------------------------------------------------------------------
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//----------------------------------------------------------------------
+]]--[[// Init comp
+]]--[[//----------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                --[[// Calcul position    	
+]]if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
+                    self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, F_Pion_GetobjectifEsquive( myself ) )
+                else
+                    Halt()
+                end
+
+                --[[// Vérification
+]]if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+                    Halt()
+                end
+
+            end
+--[[//----------------------------------------------------------------------
+]]--[[// Déplacement le plus rapide possible
+]]--[[//----------------------------------------------------------------------
+]]        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionSurete, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ABC_Default, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ABC_Eni_SInfiltrerFaceA, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer, "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA", nodes.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA, "BEH_Pion_ABC_Eni_SInfiltrerFaceA", nodes.BEH_Pion_ABC_Eni_SInfiltrerFaceA }

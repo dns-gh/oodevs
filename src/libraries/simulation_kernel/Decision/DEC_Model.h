@@ -29,9 +29,10 @@ namespace xml
 // =============================================================================
 class DEC_Model : public DEC_Model_ABC
 {
+    MT_COPYNOTALLOWED( DEC_Model );
 
 public:
-             DEC_Model( const DEC_Workspace& decWorkspace, const std::string& strName, xml::xistream& xis, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strArchivePath, const std::string& strPrefix, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
+             DEC_Model( const std::string& strName, xml::xistream& xis, const std::string& strSourcePath, const std::string& strPrefix, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
     virtual ~DEC_Model();
 };
 

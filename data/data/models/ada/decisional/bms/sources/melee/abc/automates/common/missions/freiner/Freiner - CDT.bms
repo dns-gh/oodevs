@@ -1,0 +1,74 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/common/missions/freiner/Freiner - CDT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_Automate_ABC_Freiner
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Conduite_Automate_ABC_Freiner"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", {} },
+        { "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", {} },
+        { "BEH_Conduite_ABC_Automate_Freiner_GererLesLC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Mission
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordinationRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Coordination
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Conduite_ABC_Automate_Freiner_GererLesLC, 1, {} )--[[// Ajout ADA
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_ABC_Automate_Freiner_GererLesLC
+]]--[[//
+]]--[[// Commentaires: TEMP //// RAJOUT ADA
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Conduite_ABC_Automate_Freiner_GererLesLC"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_PasserSurLC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local selPionsFr = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_ABC_Freiner" )
+        if( DEC_AutomateSuperieur_EstEmbraye() and F_Automat_GeteEtatEchelon( myself ) ~= eEtatEchelon_Premier ) then
+for _,pion in pairs( selPionsFr ) do
+            local _continue = true
+                Activate( self.activations.ACT_Ordre_Automate_PasserSurLC, 1, { pion, } )
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_ABC_Automate_Freiner_GererLesLC, "ACT_Ordre_Automate_PasserSurLC", nodes.ACT_Ordre_Automate_PasserSurLC }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_Freiner, "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", nodes.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_Freiner, "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", nodes.BEH_CoordDep_Automate_ABC_CoordinationRetrograde_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_Freiner, "BEH_Conduite_ABC_Automate_Freiner_GererLesLC", nodes.BEH_Conduite_ABC_Automate_Freiner_GererLesLC }

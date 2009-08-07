@@ -1,0 +1,20 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/sgpt chars ecl/Motivations.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 04-02-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Sgpt Chars Ecl/Motivations.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 10 $
+]]--[[// $Workfile: Motivations.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+include "Common/Pions/Motivations V3/Etats.bms"
+
+include "Melee/Common/Motivations/Etats.bms"
+
+include "Melee/Inf/Etats.bms"
+

@@ -65,6 +65,38 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
     Initialize( pathPoints_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path constructor
+// Created: LDC 2009-06-18
+// -----------------------------------------------------------------------------
+DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType )
+    : DEC_PathResult           ()
+    , queryMaker_              ( queryMaker )
+    , bRefine_                 ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
+    , fuseau_                  () //$$$ Debile
+    , automateFuseau_          () //$$$ Debile
+    , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
+    , unitSpeeds_              ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
+    , rMaxSlope_               ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
+    , pathKnowledgeAgents_     ()
+    , pathKnowledgeObjects_    ( )
+    , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_()
+    , pathType_                ( pathType )
+    , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , bDecPointsInserted_      ( false )
+    , pathPoints_              ()
+{
+    fuseau_         = queryMaker.GetOrderManager().GetFuseau();
+    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
+    
+    pathPoints_.reserve( 1 + points.size() );
+    pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+        pathPoints_.push_back( **it );
+    Initialize( pathPoints_ );
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path constructor
 // Created: JVT 02-09-17
@@ -230,7 +262,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         queryMaker_.GetKnowledgeGroup().GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
         for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, queryMaker_ ) );
+            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, !queryMaker_.GetType().IsTerrorist() ) );
     }
 }
 
@@ -579,8 +611,6 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
                             ", State : " << GetStateAsString() <<
                             ", Result : " << stream.str() );
     }
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( *this );
-    DecRef(); // We are no longer in the pathfind queue    
 }
 
 

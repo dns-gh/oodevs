@@ -1,0 +1,239 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Depolluer-deminer zone.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_GEN_DepolluerZone
+]]--[[//
+]]--[[// Commentaires: Refonte 27/10/2006
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_GEN_DepolluerZone"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Objet_Pion_GEN_DeminerZone", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or ePreparerMission
+        self.ptObst = self.ptObst or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "------------- To rid of polluted zone -----------------" )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+                --[[// Calcule de la position
+]]self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.mission.zone_ )
+                if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Squelette de mission
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhase = eProgresser
+                
+            --[[// Rejoindre la zone
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eDeminerObstacle
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObst, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Depolluer
+]]elseif switch_1 == eDeminerObstacle then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Objet_Pion_GEN_DeminerZone, 1, setmetatable( { self._namedParams.mission.zone_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Pion_GEN_DeminerZone
+]]--[[//
+]]--[[// Commentaires: Réduction des objets un par un
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Pion_GEN_DeminerZone"
+{
+    activations =
+    {
+        { "BEH_Objet_Pion_GEN_Deminer", {} },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
+        { "ACT_Info_Trace", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.locSite = self.params[1]
+    end,
+
+    activate = function( self )
+        local ListObjets = DEC_Connaissances_ObjetsDansZone( self._namedParams.locSite, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ) )
+        --[[//-----------------------------------------------------------------
+]]--[[// Pour chaque obstacles de la zone
+]]--[[//-----------------------------------------------------------------
+]]local rIterateur = 0
+        for _,objet in pairs( ListObjets ) do
+        local _continue = true
+do
+                                rIterateur = rIterateur + 1
+                --[[// Si on peut détruire l'objet        
+]]if( DEC_Agent_PeutDetruireObjet( objet ) ) then
+                    Activate( self.activations.BEH_Objet_Pion_GEN_Deminer, S_Force_DistancePt( S_Obj_Position( objet ) ), { objet, } )
+                else
+                    --[[// Sinon besoin de renforcement
+]]Activate( self.activations.ACT_Pion_GEN_AttendreRenforcementPour, 1, { objet, } )
+                end
+
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Condition de terminaison : plus d'obstacle dans la zone
+]]--[[//----------------------------------------------------------------- 
+]]
+        end
+
+        if( ( rIterateur == 0 or rIterateur == nil ) ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "Plus d'obstacles connus dans la zone", } )
+                --[[// pas sûr: peut être laisser "tourner" le comportement si reco en même temps
+]]                self.params.__returnValue = eActionEffectuee
+                return
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Pion_GEN_DeminerZone
+]]--[[//
+]]--[[// Commentaires: réduction de l'objet passé en paramètre
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Pion_GEN_Deminer"
+{
+    instances =
+    {
+        max = 1,
+        boost = 1.01,
+    },
+
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obj_Pion_GEN_ReduireObstacle", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.obj = self.params[1]
+    end,
+
+    activate = function( self )
+        self.positionProcheObjet = self.positionProcheObjet or nil
+        --[[//-----------------------------------------------------------------
+]]--[[// Init
+]]--[[//----------------------------------------------------------------- 
+]]if( ModuleBegins() ) then
+            do
+                --[[// Normalement tj ok car localisation dans zone
+]]self.positionProcheObjet = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.obj ) )
+                if( ( self.positionProcheObjet == 0 or self.positionProcheObjet == nil ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Depalcement vers objet et réduction de celui-ci
+]]--[[//----------------------------------------------------------------- 
+]]        end
+
+        if( DEC_Geometrie_Distance( self.positionProcheObjet, DEC_Agent_Position() ) > 800 ) then
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionProcheObjet, eProgressionDirect, eTypeItiMouvement, } )
+        else
+            Activate( self.activations.ACT_Obj_Pion_GEN_ReduireObstacle, 1, { self._namedParams.obj, } )
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_GEN_DepolluerZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_Deminer, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_Deminer, "ACT_Obj_Pion_GEN_ReduireObstacle", nodes.ACT_Obj_Pion_GEN_ReduireObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_DeminerZone, "BEH_Objet_Pion_GEN_Deminer", nodes.BEH_Objet_Pion_GEN_Deminer }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_DeminerZone, "ACT_Pion_GEN_AttendreRenforcementPour", nodes.ACT_Pion_GEN_AttendreRenforcementPour }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_DeminerZone, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_DepolluerZone, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_DepolluerZone, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_DepolluerZone, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_DepolluerZone, "BEH_Objet_Pion_GEN_DeminerZone", nodes.BEH_Objet_Pion_GEN_DeminerZone }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_DepolluerZone, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

@@ -69,8 +69,8 @@ public:
     //@{
     bool IsValid() const;
     
-    virtual       DEC_RolePion_Decision& GetDecision   ();
-    virtual const DEC_RolePion_Decision& GetDecision   () const;
+    virtual       DEC_Decision_ABC& GetDecision   ();
+    virtual const DEC_Decision_ABC& GetDecision   () const;
     //@}
 
     //! @name Modifiers

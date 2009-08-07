@@ -11,7 +11,7 @@
 #define __PHY_ActionTriggerActivity_h_
 
 #include "MIL.h"
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class MIL_AgentPion;
 class PHY_RoleAction_FolkInfluence;
@@ -27,7 +27,7 @@ namespace population
 */
 // Created: JCR 2007-09-12
 // =============================================================================
-class PHY_ActionTriggerActivity : public PHY_Action_ABC
+class PHY_ActionTriggerActivity : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
@@ -39,7 +39,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionTriggerActivity( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionTriggerActivity( MIL_AgentPion& pion, const std::string& activity, double influence );
     virtual ~PHY_ActionTriggerActivity();
     //@}
 
@@ -54,7 +54,6 @@ private:
     //@{
     const MIL_AgentPion&            pion_;
     PHY_RoleAction_FolkInfluence&   role_;
-    DIA_Variable_ABC&               diaReturnCode_;
     std::string                     activity_;
     double                          influence_;
     population::Object_ABC*         pObject_;

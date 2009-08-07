@@ -1,0 +1,416 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/populations/Behaviors.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// L'ESSENTIEL DE L'ADAPTATION PEUT SE FAIRE EN MODIFIANT DES PARAMETRES
+]]--[[// DANS LE FICHIER "Functions.hal"
+]]--[[// *****************************************************************************
+]]
+use_priority = no
+
+max_instances = 10
+
+max_activations = 10
+
+
+actuators = {
+deplacement = 1,
+ordre = 1,
+}
+
+
+--[[//INCLUDE ACTIONS
+]]include "Population/Populations/Actions.bms"
+
+
+--[[// INCLUDE MISSIONS
+]]include "Population/Populations/Missions/FaireMouvement.bms"
+
+include "Population/Populations/Missions/CommettreExactions.bms"
+
+include "Population/Populations/Missions/Manifester.bms"
+--[[// *****************************************************************************
+]]--[[// default
+]]--[[//
+]]--[[// Commentaires: Mise à jour de la variable VE_Courage qui autorise ou inhibe le tir
+]]--[[// la valeur est corrélée à la VE_Domination selon un mécanisme de double seuil
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "DefaultBehavior"
+{
+    activations =
+    {
+        { "BEH_Default", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Default, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Default
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.DefaultBehavior }
+node "BEH_Default"
+{
+    activations =
+    {
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        S_ChangerAttitude( S_AggraveAttitudeAttrition( GetStateVariable( "VE_Morts" ) ) )
+        UpdateStateVariable( "VE_Morts", DEC_Population_Morts() - GetStateVariable( "VE_Morts" ) )
+        --[[// =============================================================================
+]]--[[// Evolution naturelle de la VE_Domination
+]]--[[// On utilise pas de "natural evolution" car celle ci doit être une
+]]--[[// valeur constante dans DirectIA3, ce qui peut être restrictif dans le cas présent
+]]--[[// =============================================================================
+]]UpdateStateVariable( "VE_Domination", g_NaturalEvolutionDomination )
+        --[[// =============================================================================
+]]--[[// Gestion du blocage du tir avec la domination à deux seuils
+]]--[[// =============================================================================
+]]local rCourage = GetStateVariable( "VE_Courage" )
+        if( ( GetStateVariable( "VE_Domination" ) == 0 or GetStateVariable( "VE_Domination" ) == nil ) and rCourage == 1 ) then
+            do
+                UpdateStateVariable( "VE_Courage", -rCourage )
+                if( GetStimulus( "STIM_ZoneSecurisee" ) > 0 ) then
+                    DEC_RC( eRC_PopulationTemporairementControlee )
+                else
+                    DEC_RC( eRC_PopulationTemporairementRepoussee )
+                end
+
+            end
+        else
+if( ( GetStateVariable( "VE_Domination" ) == 1 and rCourage == 0 or GetStateVariable( "VE_Domination" ) == 1 and rCourage == nil ) ) then
+                do
+                    UpdateStateVariable( "VE_Courage", 1 - rCourage )
+                end
+--[[// =============================================================================
+]]--[[// Signalisation de la domination
+]]--[[// =============================================================================
+]]            end
+        end
+
+        DEC_Population_ChangeEtatDomination( GetStateVariable( "VE_Domination" ) * GetStateVariable( "VE_Courage" ) )
+        --[[// =============================================================================
+]]--[[// Reception d'un ordre de l'ANIBAS
+]]--[[// =============================================================================
+]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                        DEC_Trace( "======= Ordre --> Stationnement =====" )
+                        UpdateStateVariable( "VE_Stationner", 1 - GetStateVariable( "VE_Stationner" ) )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
+                        DEC_Trace( "======= Ordre --> Fin du Stationnement =====" )
+                        UpdateStateVariable( "VE_Stationner", 0 - GetStateVariable( "VE_Stationner" ) )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_Population_ChangerAttitude" then
+                        local ordreAtt = ordre
+                        S_ChangerAttitude( ordreAtt:GetorderConduitePopulationChangerAttitude_() )
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pop_RejoindrePoint
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pop_RejoindrePoint"
+{
+    activations =
+    {
+        { "ACT_Pop_RejoindrePoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Pop_RejoindrePoint, 1, { self._namedParams.point, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pop_Stationner
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pop_Stationner"
+{
+    activations =
+    {
+        { "ACT_Pop_Stationner", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                if( ModuleBegins() ) then
+            DEC_RC( eRC_EnStationnement )
+        end
+
+        Activate( self.activations.ACT_Pop_Stationner, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pop_RejoindreInstallation
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pop_RejoindreInstallation"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Pop_RejoindrePoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.installation = self.params[1]
+    end,
+
+    activate = function( self )
+                self.objectif = self.objectif or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_RC( eRC_AttaqueInstallation, self._namedParams.installation )
+                self.objectif = DEC_ConnaissanceObjet_PointPlusProche( self._namedParams.installation )
+            end
+        end
+
+        Activate( self.activations.BEH_Pop_RejoindrePoint, S_Force_Distance( DEC_ConnaissanceObjet_Distance( self._namedParams.installation ) ), { self.objectif, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pop_DegraderInstallations
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pop_DegraderInstallations"
+{
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Pop_DegraderInstallations", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtatDelai = self.eEtatDelai or eActionEnCours
+        if( self.eEtatDelai == eActionEnCours and GetStateVariable( "VE_Courage" ) > 0 ) then
+            do
+                --[[//un echauffouré dure g_delaiAltercations min, ce qui signifie qu'il n'y a de tir réel qu'un tick toute les 2 min
+]]Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_Pop_DegraderInstallations, g_delaiAltercations, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Pop_DegraderInstallations, 1, { self._namedParams.zone, 0, } )
+            end
+        else
+if( GetStateVariable( "VE_Courage" ) > 0 ) then
+                do
+                    --[[//tir réel représentant l'effet d'un echauffouré de 2 min
+]]Activate( self.activations.ACT_Pop_DegraderInstallations, 1, { self._namedParams.zone, 1, } )
+                    self.eEtatDelai = eActionEnCours
+                end
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pop_RalentissementPions
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pop_RalentissementPions"
+{
+    activations =
+    {
+        { "ACT_Pop_RalentissementPions", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Pop_RalentissementPions, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pop_PAPPions
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pop_PAPPions"
+{
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Pop_PAPPions", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.eEtatDelai = self.eEtatDelai or eActionEnCours
+        if( self.eEtatDelai == eActionEnCours and GetStateVariable( "VE_Courage" ) > 0 ) then
+            do
+                --[[//un echauffouré dure g_delaiAltercations min, ce qui signifie qu'il n'y a de tir réel qu'un tick toute les 2 min
+]]Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_Pop_PAPPions, g_delaiAltercations, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Pop_PAPPions, 1, { 0.01, } )
+            end
+        else
+if( GetStateVariable( "VE_Courage" ) > 0 ) then
+                do
+                    --[[//tir réel représentant l'effet d'un echauffouré de 2 min
+]]Activate( self.activations.ACT_Pop_PAPPions, 1, { S_IntensiteManifestationSurPions(), } )
+                    self.eEtatDelai = eActionEnCours
+                end
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pop_PAPPion
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pop_PAPPion"
+{
+    activations =
+    {
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Pop_PAPPion", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtatDelai = self.eEtatDelai or eActionEnCours
+        if( self.eEtatDelai == eActionEnCours and GetStateVariable( "VE_Courage" ) > 0 ) then
+            do
+                --[[//un echauffouré dure g_delaiAltercations min, ce qui signifie qu'il n'y a de tir réel qu'un tick toute les 2 min
+]]Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_Pop_PAPPion, g_delaiAltercations, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Pop_PAPPion, 1, { self._namedParams.pion, 0.01, } )
+            end
+        else
+if( GetStateVariable( "VE_Courage" ) > 0 ) then
+                do
+                    --[[//tir réel représentant l'effet d'un echauffouré de 2 min
+]]Activate( self.activations.ACT_Pop_PAPPion, 1, { self._namedParams.pion, S_IntensiteManifestationSurPions(), } )
+                    self.eEtatDelai = eActionEnCours
+                end
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pop_RepondreALaPriseAPartie
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pop_RepondreALaPriseAPartie"
+{
+    activations =
+    {
+        { "BEH_Pop_PAPPion", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local lstPions = DEC_Connaissances_PionsPrenantAPartie()
+        for _,pion in pairs( lstPions ) do
+        local _continue = true
+do
+                Activate( self.activations.BEH_Pop_PAPPion, 1, { pion, } )
+            end
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Default, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_DegraderInstallations, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_DegraderInstallations, "ACT_Pop_DegraderInstallations", nodes.ACT_Pop_DegraderInstallations }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_PAPPion, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_PAPPion, "ACT_Pop_PAPPion", nodes.ACT_Pop_PAPPion }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_PAPPions, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_PAPPions, "ACT_Pop_PAPPions", nodes.ACT_Pop_PAPPions }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_RalentissementPions, "ACT_Pop_RalentissementPions", nodes.ACT_Pop_RalentissementPions }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_RejoindreInstallation, "BEH_Pop_RejoindrePoint", nodes.BEH_Pop_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_RejoindrePoint, "ACT_Pop_RejoindrePoint", nodes.ACT_Pop_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_RepondreALaPriseAPartie, "BEH_Pop_PAPPion", nodes.BEH_Pop_PAPPion }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_Stationner, "ACT_Pop_Stationner", nodes.ACT_Pop_Stationner }
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "BEH_Default", nodes.BEH_Default }

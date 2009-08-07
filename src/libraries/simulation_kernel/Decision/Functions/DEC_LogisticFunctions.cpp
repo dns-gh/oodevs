@@ -39,7 +39,7 @@
 // Name: DEC_LogisticFunctions::PionMaintenanceEnableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceEnableSystem( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMaintenanceEnableSystem( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Maintenance >().EnableSystem();
 }
@@ -48,7 +48,7 @@ void DEC_LogisticFunctions::PionMaintenanceEnableSystem( DIA_Call_ABC& /*call*/,
 // Name: DEC_LogisticFunctions::PionMaintenanceDisableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceDisableSystem( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMaintenanceDisableSystem( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Maintenance >().DisableSystem();
 }
@@ -57,30 +57,21 @@ void DEC_LogisticFunctions::PionMaintenanceDisableSystem( DIA_Call_ABC& /*call*/
 // Name: DEC_LogisticFunctions::PionMaintenanceChangePriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceChangePriorities( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMaintenanceChangePriorities( MIL_AgentPion& callerAgent, const std::vector< const PHY_ComposanteTypePion* >& priorities )
 {
-    assert( DEC_Tools::CheckTypeMaintenancePriorities( call.GetParameter( 0 ) ) );
-
-    T_MaintenancePriorityVector* pData = call.GetParameter( 0 ).ToUserPtr( pData );
-    assert( pData );
-    callerAgent.GetRole< PHY_RolePion_Maintenance >().ChangePriorities( *pData );
+    callerAgent.GetRole< PHY_RolePion_Maintenance >().ChangePriorities( priorities );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( MIL_AgentPion& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
-    assert( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 0 ) ) );
-
-    T_ObjectVector data = call.GetParameter( 0 ).ToSelection();
-
     T_AutomateVector automates;
-    automates.reserve( data.size() );
-    for( CIT_ObjectVector it = data.begin(); it != data.end(); ++it )
-        automates.push_back( &static_cast< DEC_AutomateDecision& >( **it ).GetAutomate() );
-
+    automates.reserve( priorities.size() );
+    for( std::vector< const DEC_Decision_ABC* >::const_iterator it = priorities.begin(); it != priorities.end(); ++it )
+        automates.push_back( &(*it)->GetAutomate() );
     callerAgent.GetRole< PHY_RolePion_Maintenance >().ChangePriorities( automates );
 }
     
@@ -88,12 +79,9 @@ void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( DIA_Call_AB
 // Name: DEC_LogisticFunctions::PionMaintenanceChangeWorkRate
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceChangeWorkRate( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMaintenanceChangeWorkRate( MIL_AgentPion& callerAgent, int workRate )
 {
-    const PHY_MaintenanceWorkRate* pWorkRate = PHY_MaintenanceWorkRate::Find( (ASN1T_EnumLogMaintenanceRegimeTravail)call.GetParameter( 0 ).ToId() );
-    if( !pWorkRate )
-        assert( false );
-    else
+    if( const PHY_MaintenanceWorkRate* pWorkRate = PHY_MaintenanceWorkRate::Find( (ASN1T_EnumLogMaintenanceRegimeTravail)workRate ) )
         callerAgent.GetRole< PHY_RolePion_Maintenance >().ChangeWorkRate( *pWorkRate );
 }
 
@@ -101,45 +89,45 @@ void DEC_LogisticFunctions::PionMaintenanceChangeWorkRate( DIA_Call_ABC& call, M
 // Name: DEC_LogisticFunctions::AutomateMaintenanceEnableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMaintenanceEnableSystem( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_LogisticFunctions::AutomateMaintenanceEnableSystem( MIL_Automate& callerAutomate )
 {
-    PionMaintenanceEnableSystem( call, callerAutomate.GetPionPC() );
+    PionMaintenanceEnableSystem( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMaintenanceDisableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMaintenanceDisableSystem( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
+void DEC_LogisticFunctions::AutomateMaintenanceDisableSystem( MIL_Automate& callerAutomate )
 {
-    PionMaintenanceDisableSystem( call, callerAutomate.GetPionPC() );
+    PionMaintenanceDisableSystem( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMaintenanceChangePriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMaintenanceChangePriorities( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
+void DEC_LogisticFunctions::AutomateMaintenanceChangePriorities( MIL_Automate& callerAutomate, const std::vector< const PHY_ComposanteTypePion* >& priorities )
 {
-    PionMaintenanceChangePriorities( call, callerAutomate.GetPionPC() );
+    PionMaintenanceChangePriorities( callerAutomate.GetPionPC(), priorities );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
+void DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities( MIL_Automate& callerAutomate, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
-    PionMaintenanceChangeTacticalPriorities( call, callerAutomate.GetPionPC() );
+    PionMaintenanceChangeTacticalPriorities( callerAutomate.GetPionPC(), priorities );
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
+void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( MIL_Automate& callerAutomate, int workRate )
 {
-    PionMaintenanceChangeWorkRate( call, callerAutomate.GetPionPC() );
+    PionMaintenanceChangeWorkRate( callerAutomate.GetPionPC(), workRate );
 }
 
 // =============================================================================
@@ -150,15 +138,9 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( DIA_Call_ABC& cal
 // Name: DEC_LogisticFunctions::EvacuateWoundedHumansToTC2
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DIA_Call_ABC& call )
+void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_RolePion_Decision* pPionWounded, DEC_AutomateDecision* pDecTC2 )
 {
-    assert( DEC_Tools::CheckTypePion    ( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeAutomate( call.GetParameter( 1 ) ) );
-
-    DEC_RolePion_Decision* pPionWounded = call.GetParameter( 0 ).ToUserObject( pPionWounded );
     assert( pPionWounded );   
-
-    DEC_AutomateDecision* pDecTC2 = call.GetParameter( 1 ).ToUserObject( pDecTC2 );
     assert( pDecTC2 );
     if( !pDecTC2->GetAutomate().GetType().IsLogistic() )
         return;
@@ -171,24 +153,18 @@ void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DIA_Call_ABC& call )
 // Name: DEC_LogisticFunctions::HasWoundedHumansToEvacuate
 // Created: NLD 2005-08-08
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DIA_Call_ABC& call )
+bool DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DEC_RolePion_Decision* pPion )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
     assert( pPion );
-    call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RolePion_Humans >().HasWoundedHumansToEvacuate() );
+    return pPion->GetPion().GetRole< PHY_RolePion_Humans >().HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation
 // Created: NLD 2005-08-12
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DIA_Call_ABC& call )
+void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DEC_RolePion_Decision* pPion )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
     assert( pPion );
     pPion->GetPion().GetRole< PHY_RolePion_Humans >().ChangeEvacuationMode( PHY_RolePion_Humans::eEvacuationMode_Manual );
 }
@@ -197,11 +173,8 @@ void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DIA_Call_ABC& cal
 // Name: DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation
 // Created: NLD 2005-08-12
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DIA_Call_ABC& call )
+void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DEC_RolePion_Decision* pPion )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-    
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
     assert( pPion );
     pPion->GetPion().GetRole< PHY_RolePion_Humans >().ChangeEvacuationMode( PHY_RolePion_Humans::eEvacuationMode_Auto );
 }
@@ -210,7 +183,7 @@ void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DIA_Call_ABC& call
 // Name: DEC_LogisticFunctions::PionMedicalEnableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalEnableSystem( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalEnableSystem( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Medical >().EnableSystem();
 }
@@ -219,7 +192,7 @@ void DEC_LogisticFunctions::PionMedicalEnableSystem( DIA_Call_ABC& /*call*/, MIL
 // Name: DEC_LogisticFunctions::PionMedicalDisableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalDisableSystem( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalDisableSystem( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Medical >().DisableSystem();
 }
@@ -228,7 +201,7 @@ void DEC_LogisticFunctions::PionMedicalDisableSystem( DIA_Call_ABC& /*call*/, MI
 // Name: DEC_LogisticFunctions::PionMedicalEnableSortingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalEnableSortingFunction( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalEnableSortingFunction( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Medical >().EnableSortingFunction();
 }
@@ -237,7 +210,7 @@ void DEC_LogisticFunctions::PionMedicalEnableSortingFunction( DIA_Call_ABC& /*ca
 // Name: DEC_LogisticFunctions::PionMedicalDisableSortingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalDisableSortingFunction( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalDisableSortingFunction( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Medical >().DisableSortingFunction();
 }
@@ -246,7 +219,7 @@ void DEC_LogisticFunctions::PionMedicalDisableSortingFunction( DIA_Call_ABC& /*c
 // Name: DEC_LogisticFunctions::PionMedicalEnableHealingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalEnableHealingFunction( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalEnableHealingFunction( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Medical >().EnableHealingFunction();
 }
@@ -255,7 +228,7 @@ void DEC_LogisticFunctions::PionMedicalEnableHealingFunction( DIA_Call_ABC& /*ca
 // Name: DEC_LogisticFunctions::PionMedicalDisableHealingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalDisableHealingFunction( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalDisableHealingFunction( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Medical >().DisableHealingFunction();
 }
@@ -264,30 +237,21 @@ void DEC_LogisticFunctions::PionMedicalDisableHealingFunction( DIA_Call_ABC& /*c
 // Name: DEC_LogisticFunctions::PionMedicalChangePriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalChangePriorities( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalChangePriorities( MIL_AgentPion& callerAgent, const std::vector< const PHY_HumanWound* >& priorities )
 {
-    assert( DEC_Tools::CheckTypeSantePriorites( call.GetParameter( 0 ) ) );
-
-    T_MedicalPriorityVector* pData = call.GetParameter( 0 ).ToUserPtr( pData );
-    assert( pData );
-    callerAgent.GetRole< PHY_RolePion_Medical >().ChangePriorities( *pData );
+    callerAgent.GetRole< PHY_RolePion_Medical >().ChangePriorities( priorities );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( MIL_AgentPion& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
-    assert( DEC_Tools::CheckTypeListeAutomates( call.GetParameter( 0 ) ) );
-
-    T_ObjectVector data = call.GetParameter( 0 ).ToSelection();
-
     T_AutomateVector automates;
-    automates.reserve( data.size() );
-    for( CIT_ObjectVector it = data.begin(); it != data.end(); ++it )
-        automates.push_back( &static_cast< DEC_AutomateDecision& >( **it ).GetAutomate() );
-
+    automates.reserve( priorities.size() );
+    for( std::vector< const DEC_Decision_ABC* >::const_iterator it = priorities.begin(); it != priorities.end(); ++it )
+        automates.push_back( &(*it)->GetAutomate() );
     callerAgent.GetRole< PHY_RolePion_Medical >().ChangePriorities( automates );
 }
     
@@ -295,72 +259,72 @@ void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( DIA_Call_ABC& c
 // Name: DEC_LogisticFunctions::AutomateMedicalEnableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMedicalEnableSystem( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_LogisticFunctions::AutomateMedicalEnableSystem( MIL_Automate& callerAutomate )
 {
-    PionMedicalEnableSystem( call, callerAutomate.GetPionPC() );
+    PionMedicalEnableSystem( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalDisableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMedicalDisableSystem( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
+void DEC_LogisticFunctions::AutomateMedicalDisableSystem( MIL_Automate& callerAutomate )
 {
-    PionMedicalDisableSystem( call, callerAutomate.GetPionPC() );
+    PionMedicalDisableSystem( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction( MIL_Automate& callerAutomate )
 {
-    PionMedicalEnableSortingFunction( call, callerAutomate.GetPionPC() );
+    PionMedicalEnableSortingFunction( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction( MIL_Automate& callerAutomate )
 {
-    PionMedicalDisableSortingFunction( call, callerAutomate.GetPionPC() );
+    PionMedicalDisableSortingFunction( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction( MIL_Automate& callerAutomate )
 {
-    PionMedicalEnableHealingFunction( call, callerAutomate.GetPionPC() );
+    PionMedicalEnableHealingFunction( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction( MIL_Automate& callerAutomate )
 {
-    PionMedicalDisableHealingFunction( call, callerAutomate.GetPionPC() );
+    PionMedicalDisableHealingFunction( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalChangePriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMedicalChangePriorities( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
+void DEC_LogisticFunctions::AutomateMedicalChangePriorities( MIL_Automate& callerAutomate, const std::vector< const PHY_HumanWound* >& priorities )
 {
-    PionMedicalChangePriorities( call, callerAutomate.GetPionPC() );
+    PionMedicalChangePriorities( callerAutomate.GetPionPC(), priorities );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
+void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( MIL_Automate& callerAutomate, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
-    PionMedicalChangeTacticalPriorities( call, callerAutomate.GetPionPC() );
+    PionMedicalChangeTacticalPriorities( callerAutomate.GetPionPC(), priorities );
 }
     
 // =============================================================================
@@ -371,15 +335,11 @@ void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( DIA_Call_AB
 // Name: DEC_LogisticFunctions::ChangeDotationsValueUsingTC2
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_AgentPion& callerAgent, const PHY_DotationType* pDotationType, const MT_Float rCapacityFactor, int ammoDotationClassId )
 {
-    const PHY_DotationType*      pDotationType      = PHY_DotationType::FindDotationType( call.GetParameter( 0 ).ToId() );
-    const MT_Float               rCapacityFactor    = call.GetParameter( 1 ).ToFloat();
-    const PHY_AmmoDotationClass* pAmmoDotationClass = 0;
-    
     assert( pDotationType );
-    if( call.GetParameters().GetParameters().size() > 2 )
-        pAmmoDotationClass = PHY_AmmoDotationClass::Find( call.GetParameter( 2 ).ToId() );
+    const PHY_AmmoDotationClass* pAmmoDotationClass = PHY_AmmoDotationClass::Find( ammoDotationClassId );
+    assert( pAmmoDotationClass );
     
     callerAgent.GetRole< PHY_RolePion_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
 }
@@ -388,7 +348,7 @@ void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( DIA_Call_ABC& call, MI
 // Name: DEC_LogisticFunctions::PionSupplyEnableSystem
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionSupplyEnableSystem( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionSupplyEnableSystem( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Supply >().EnableSystem();
 }
@@ -397,7 +357,7 @@ void DEC_LogisticFunctions::PionSupplyEnableSystem( DIA_Call_ABC& /*call*/, MIL_
 // Name: DEC_LogisticFunctions::PionSupplyDisableSystem
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionSupplyDisableSystem( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionSupplyDisableSystem( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Supply >().DisableSystem();
 }
@@ -406,25 +366,25 @@ void DEC_LogisticFunctions::PionSupplyDisableSystem( DIA_Call_ABC& /*call*/, MIL
 // Name: DEC_LogisticFunctions::AutomateSupplyEnableSystem
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateSupplyEnableSystem( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_LogisticFunctions::AutomateSupplyEnableSystem( MIL_Automate& callerAutomate )
 {
-    PionSupplyEnableSystem( call, callerAutomate.GetPionPC() );
+    PionSupplyEnableSystem( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateSupplyDisableSystem
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateSupplyDisableSystem( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+void DEC_LogisticFunctions::AutomateSupplyDisableSystem( MIL_Automate& callerAutomate )
 {
-    PionSupplyDisableSystem( call, callerAutomate.GetPionPC() );
+    PionSupplyDisableSystem( callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateRequestSupply
 // Created: NLD 2005-03-03
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateRequestSupply( DIA_Call_ABC& /*call*/, MIL_Automate& callerAutomate )
+void DEC_LogisticFunctions::AutomateRequestSupply( MIL_Automate& callerAutomate )
 {
     callerAutomate.RequestDotationSupply();
 }
@@ -433,9 +393,9 @@ void DEC_LogisticFunctions::AutomateRequestSupply( DIA_Call_ABC& /*call*/, MIL_A
 // Name: DEC_LogisticFunctions::PionRequestSupply
 // Created: NLD 2005-03-03
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionRequestSupply( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionRequestSupply( MIL_AgentPion& callerAgent )
 {
-    AutomateRequestSupply( call, callerAgent.GetAutomate() );
+    AutomateRequestSupply( callerAgent.GetAutomate() );
 }
 
 // =============================================================================
@@ -446,83 +406,69 @@ void DEC_LogisticFunctions::PionRequestSupply( DIA_Call_ABC& call, MIL_AgentPion
 // Name: DEC_LogisticFunctions::ConvoyIsLoadingDone
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyIsLoadingDone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+bool DEC_LogisticFunctions::ConvoyIsLoadingDone( const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyIsLoadingDone() );   
+    return callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyIsLoadingDone();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConvoyIsUnloadingDone
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyIsUnloadingDone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+bool DEC_LogisticFunctions::ConvoyIsUnloadingDone( const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyIsUnloadingDone() );   
+    return callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyIsUnloadingDone();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConvoyGetSupplyingAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( const MIL_AgentPion& callerAgent )
 {
-    const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetSupplyingAutomate();
-    DEC_AutomateDecision* dec = pAutomate ? const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) : (DEC_AutomateDecision*)0;
-    call.GetResult().SetValue( *dec );
+    if( const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetSupplyingAutomate() )
+        return boost::shared_ptr< DEC_Decision_ABC >( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
+    return boost::shared_ptr< DEC_Decision_ABC >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConvoyGetConvoyingAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( const MIL_AgentPion& callerAgent )
 {
-    const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetConvoyingAutomate();
-    DEC_AutomateDecision* dec = pAutomate ? const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) : (DEC_AutomateDecision*)0;
-    call.GetResult().SetValue( *dec );
+    if( const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetConvoyingAutomate() )
+        return boost::shared_ptr< DEC_Decision_ABC >( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
+    return boost::shared_ptr< DEC_Decision_ABC >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConvoyGetSuppliedAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( const MIL_AgentPion& callerAgent )
 {
-    const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetSuppliedAutomate();
-    DEC_AutomateDecision* dec = pAutomate ? const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) : (DEC_AutomateDecision*)0;
-    call.GetResult().SetValue( *dec );
+    if( const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetSuppliedAutomate() )
+        return boost::shared_ptr< DEC_Decision_ABC >( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
+    return boost::shared_ptr< DEC_Decision_ABC >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConvoyEndMission
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyEndMission( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::ConvoyEndMission( MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyEndMission();
-}
-
-// =============================================================================
-// MISC
-// =============================================================================
-
-namespace
-{
-    typedef bool (PHY_ComposantePion::*T_ComposantePredicate)() const;
 }
 
 // -----------------------------------------------------------------------------
 // Name: UndoLendComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-static void UndoLendComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent, T_ComposantePredicate funcPredicate )
+void DEC_LogisticFunctions::UndoLendComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const uint nNbrToGetBack, T_ComposantePredicate funcPredicate )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pTarget = call.GetParameter( 0 ).ToUserObject( pTarget );
     assert( pTarget );
-    
-    const uint nNbrToGetBack = (uint)call.GetParameter( 1 ).ToFloat();
     const uint nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
 
     if( nNbrGotBack == 0 )
@@ -541,37 +487,38 @@ static void UndoLendComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent,
 // Name: DEC_LogisticFunctions::UndoLendCollectionComposantes
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendCollectionComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const uint nNbrToGetBack )
 {
-    UndoLendComposantes( call, callerAgent, &PHY_ComposantePion::CanCollectCasualties );
+    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, &PHY_ComposantePion::CanCollectCasualties );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::UndoLendHaulerComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendHaulerComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const uint nNbrToGetBack )
 {
-    UndoLendComposantes( call, callerAgent, &PHY_ComposantePion::CanHaul );
+    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, &PHY_ComposantePion::CanHaul );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionGetTC2
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionGetTC2( DIA_Call_ABC& call, const MIL_AgentPion& agent )
+DEC_Decision_ABC* DEC_LogisticFunctions::PionGetTC2( const MIL_AgentPion& agent )
 {
-    MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2();    
-    call.GetResult().SetValue( pTC2 ? pTC2->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
+   if (MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2() )
+       return ( &pTC2->GetDecision() );
+    return 0;  
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateGetTC2
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateGetTC2( DIA_Call_ABC& call, const MIL_Automate& agent )
+DEC_Decision_ABC* DEC_LogisticFunctions::AutomateGetTC2( const MIL_Automate& agent )
 {
-    MIL_AutomateLOG* pTC2 = agent.GetTC2();    
-    call.GetResult().SetValue( pTC2 ? pTC2->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
+    if ( MIL_AutomateLOG* pTC2 = agent.GetTC2() )
+        return ( &pTC2->GetDecision() );
+    return 0;
 }
-

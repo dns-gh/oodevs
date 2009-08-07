@@ -1,0 +1,28 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/surveiller/Surveiller - CDT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Conduite de la mission Automate ASA Surveiller
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_CDT_ASA_HAWK_Surveiller"
+{
+    activations =
+    {
+        { "BEH_Eni_ASA_HAWK_GererTirsSurveiller", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Eni_ASA_HAWK_GererTirsSurveiller, 1, { self._namedParams.mission.zone_, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ASA_HAWK_Surveiller = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ASA_HAWK_Surveiller, "BEH_Eni_ASA_HAWK_GererTirsSurveiller", nodes.BEH_Eni_ASA_HAWK_GererTirsSurveiller }

@@ -12,7 +12,6 @@
 
 #include "DEC_Agent_PathClass.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -40,10 +39,10 @@ namespace
 // Name: DEC_Path_KnowledgePopulation constructor
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, const MIL_AgentPion& pion )
+DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, bool avoidPolicy )
     : elements_       ()
     , pPathClass_     ( &pathClass )
-    , bAvoidPolicy_   ( !pion.GetType().IsTerrorist() )
+    , bAvoidPolicy_   ( avoidPolicy )
 {
     elements_.reserve( 10 );
     PopulationPathInserter pathInserter( *this );

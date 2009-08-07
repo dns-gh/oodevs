@@ -1,0 +1,617 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son vab/missions/SEmparerObjectif.bms"] = true
+
+include "bit.lua"
+
+
+--[[//=============================================================================
+]]--[[// S’emparer de : s’assurer de la possession d’un point ou d'une zone en détruisant, 
+]]--[[//				en capturant ou en chassant l’ennemi qui peut l’occuper.
+]]--[[//
+]]--[[//
+]]--[[//=============================================================================
+]]node "MIS_Pion_INF_Semparer"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_INF_GererDeboucher", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.bBondEffectue = self.bBondEffectue or false
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Agressivite
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_DETRUIRE(), } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Appuis ou soutiens
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Seize aera mission begining", } )
+                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                self.ePhaseMission = eRejoindrePosition
+                
+            --[[// 2) Progression jusqu'au point à reconnaitre
+]]elseif switch_1 == eRejoindrePosition then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                Activate( self.activations.BEH_Dep_Pion_INF_GererDeboucher, 1, {} )--[[// Gestion du déboucher
+]]
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointObjectif_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+--[[/* MIA viré pour ADA
+	persistent	E_PhaseMission	ePhase = eSeMettreEnPlace;
+	persistent	E_PhaseMission	eCurrentPhase = ePreparerMission;		
+	persistent E_EtatAction		eAction = eActionEnCours;
+	
+	if( DIA_ModuleBegins() )
+	{			
+		DEC_SetMission( myself,  mission );					
+		F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse );
+		DEC_Trace(  "Mission 'S'emparer De' : debut"  ); 
+	}
+
+	behavior BEH_Misc_Pion_DefinirTypeMission( eTypeContact_Offensif );	
+	behavior BEH_MAJ_AgressiviteMission( eReconnu, M_TIR_PH_MISSION_DETRUIRE() );
+
+    persistent E_EtatAction eEtatOrdreFinMission = eActionEnCours;    behavior BEH_Ordre_Inopine() return in eEtatOrdreFinMission;    if( eEtatOrdreFinMission == eActionHalt )    {    	 ePhase = eFinMission; eAction = eActionEnCours;     	eEtatOrdreFinMission = eActionEnCours;    }
+	switch ( ePhase )
+	{				
+		case eSeMettreEnPlace:
+		{								
+			if ( eCurrentPhase != eFinMission )
+			{
+				behavior BEH_Eni_Pion_VAB_Semparer() : strength = DIA_GetMotivation( MOT_ManoeuvrerSurEnis );
+				behavior BEH_Mission_Pion_VAB_Semparer() return in eCurrentPhase : strength = DIA_GetMotivation( MOT_Mission );
+				break;
+			}
+			else
+				ePhase = eCurrentPhase;
+		}
+		case eFinMission:
+		{
+			if( eAction == eActionEffectuee )    {        eAction=eActionEnCours;        { DEC_FinMission(); halt ( eActionEffectuee ); }     }	
+			action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_FinMission );
+			behavior BEH_Poste_Pion_INF_TomberEnGarde( true ) return in eAction;
+			break;
+		}		
+        default: {}
+	}
+	*/]]--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_INF_GererDeboucher
+]]--[[//
+]]--[[// Commentaires:ajout ada mia
+]]--[[//
+]]--[[// *****************************************************************************
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Regarder les eAvantPoint dans la liste des points interessants
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Traiter seulement les 'avantPoint'
+]]--[[// Cast
+]]--[[// cast
+]]--[[// Flaguer dans gestion des limas générique
+]]--[[// *****************************************************************************
+]]
+    end,
+
+--[[// BEH_Ordre_SePosterPourDeboucher
+]]--[[//
+]]--[[//Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Dep_Pion_INF_GererDeboucher"
+{
+    activations =
+    {
+        { "BEH_Ordre_SePosterPourDeboucher", {} },
+        { "ACT_Points_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Init
+]]--[[//-----------------------------------------------------------------------------		
+]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
+        for _,x in pairs( listePointInterressant ) do
+        local _continue = true
+do
+                local ptABC = x
+                --[[// Triche car on est avant lima...
+]]if( DEC_IsAvantPoint( ptABC ) ) then
+                    do
+                        local repAvantPt = ptABC
+                        if( DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) ) == eTypePointLima ) then
+                            do
+                                local pointLima = DEC_GetDestPoint( repAvantPt )
+                                if( DEC_GetTypeLimaPoint( pointLima ) == eTypeLima_LD ) then
+                                    do
+                                        local lima = DEC_GetLimaPoint( pointLima )
+                                        if( not DEC_GetMissionLimaFlag( lima ) ) then
+                                            --[[//=============================================================================
+]]StartActivate( self.activations.BEH_Ordre_SePosterPourDeboucher, 1, { lima, } )
+                                        end
+
+                                    end
+--[[//=============================================================================
+]]--[[//						Squelette de la mission
+]]                                end
+
+                            end
+--[[//	
+]]                        end
+
+                        Activate( self.activations.ACT_Points_Suppression, 1, { ptABC, } )
+                    end
+--[[// Objectif : On cherche a tenir la position. Si l'ennemi est en position, on
+]]--[[//			  veut au minimum le faire partir
+]]                end
+
+            end
+--[[//=============================================================================
+]]
+        end
+
+    end,
+
+}
+
+node "BEH_Ordre_SePosterPourDeboucher"
+{
+    activations =
+    {
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Dep_PasserSurLima", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.LimaLD = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                --[[// On ne se rapproche pas trop pour eviter de se faire prendre 
+]]--[[// a parti
+]]SetStateVariable( "VE_SePoster", 2 )
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                                return
+
+            end
+        end
+
+        Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LD, } )
+        if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
+            do
+                DEC_SetMissionLimaFlagHoraire( self._namedParams.LimaLD, true )
+                DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
+                                Halt()
+
+            end
+        end
+
+    end,
+
+}
+
+node "BEH_Mission_Pion_VAB_Semparer"
+{
+    activations =
+    {
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
+        { "BEH_Ordre_Pion_VAB_Semparer_Demande", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_Obs_Pion_INF_EnReconnaissance", {} },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Dep_Pion_INF_Arret", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Si la reconnaissance renvoie eActionEffectuee, on n'a pas rencontre d'enis, 
+]]self.mission = self.mission or DEC_GetMission( myself )
+        --[[//	 sinon eActionHalt
+]]self.ePhase = self.ePhase or eRejoindrePosition
+        self.eAction = self.eAction or eActionEnCours
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindrePosition then
+                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//On envoie une patrouille en reconnaissance.
+]]
+                --[[// On rejoint l'objectif pour s'en emparer
+]]if( S_EstADistanceTir_Pt( self.mission.pointObjectif_ ) ) then
+                    self.eAction = eActionEffectuee
+                end
+
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eObserver
+                                                        self.params.__returnValue = self.ePhase
+                            return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointObjectif_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                if( not DEC_Agent_AutomateEstEmbraye() and F_Pion_GeteniEnCours( myself ) ~= nil ) then
+                    Activate( self.activations.BEH_Ordre_Pion_VAB_Semparer_Demande, 1, {} )
+                end
+
+                
+            elseif switch_1 == eObserver then
+                --[[// L'objectif est libre, on peut le rejoindre ..
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
+                Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
+                    do
+                        self.ePhase = eRejoindreAssaut
+                                                self.params.__returnValue = self.ePhase
+                        return
+
+                    end
+                end
+
+                if( self.eAction == eActionHalt ) then
+                    do
+                        --[[// Normalement, on est sur la position
+]]DEC_Trace( "Patrouille accrochee" )
+                                                self.params.__returnValue = eActionHalt
+                        Halt()
+
+                    end
+                end
+
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eRejoindre
+                                                        self.params.__returnValue = self.ePhase
+                            return
+
+                        end
+
+                    end
+--[[// Une fois sur place, on fouille les lieux
+]]                end
+
+                Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 1, setmetatable( { self.mission.pointObjectif_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eRejoindreAssaut then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( F_Pion_GeteniEnCours( myself ) == nil ) then
+                    do
+                        self.eAction = eActionEnCours
+                        if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.pointObjectif_, 100 ) ) then
+                            self.ePhase = eFouiller
+                        else
+                            self.ePhase = eRejoindre
+                        end
+
+                    end
+                end
+
+                
+            elseif switch_1 == eRejoindre then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                --[[//=============================================================================
+]]--[[//=============================================================================
+]]if( not S_EstADistanceTir_Pt( self.mission.pointObjectif_ ) ) then
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//						Gestion de l'ennemi
+]]
+                end
+
+                --[[//	
+]]--[[//=============================================================================
+]]if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
+                    do
+                        self.ePhase = eRejoindreAssaut
+                                                return
+
+                    end
+                end
+
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eFouiller
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointObjectif_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            --[[//-----------------------------------------------------------------------------
+]]--[[//  Rencontre d'un eni lorsque l'on est pas dans la phase d'assaut
+]]elseif switch_1 == eFouiller then
+                Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )--[[//-----------------------------------------------------------------------------		
+]]
+                if( ( F_Pion_GeteniEnCours( myself ) ~= 0 and F_Pion_GeteniEnCours( myself ) ~= nil ) ) then
+                    do
+                        --[[// L'ennemi est trop loin de la position
+]]self.ePhase = eRejoindreAssaut
+                                                return
+
+                    end
+                end
+
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                                                        self.params.__returnValue = eFinMission
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_TEMPS_FOUILLE(), "fouille des lieux ... ", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+                self.params.__returnValue = self.ePhase
+        return
+
+    end,
+
+--[[// with ()
+]]}
+
+node "BEH_Eni_Pion_VAB_Semparer"
+{
+    activations =
+    {
+        { "ACT_RC_SurEni", {} },
+        { "ACT_MAJ_EtatSituationEni", {} },
+        { "BEH_Eni_Pion_VAB_PreparerEngagement", {} },
+        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", {} },
+        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//=============================================================================
+]]        self.mission = self.mission or DEC_GetMission( myself )
+        --[[//	On a besoin d'un ordre de conduite la part de la hierarchie sur une 
+]]self.eActionEni = self.eActionEni or eActionEnCours
+        --[[//  situation particuliere.
+]]--[[//=============================================================================
+]]if( not DEC_Connaissances_PresenceEnnemieDansCercle( self.mission.pointObjectif_, 1500 ) ) then
+            return
+        end
+
+        local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
+        for _,ksEni in pairs( lstEnisDansFuseau ) do
+        local _continue = true
+do
+                --[[// On se poster
+]]if( DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( ksEni ), self.mission.pointObjectif_ ) > 1500 ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    Activate( self.activations.ACT_RC_SurEni, 1, { eRC_EniSurObjectif, ksEni, } )
+                    Activate( self.activations.ACT_MAJ_EtatSituationEni, 1, { eEtatSituationEnnemi_EniSurObjectif, } )
+                    if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
+                        _continue = false--[[// ----------------------------------------------------------------------------
+]]
+                    end
+
+                        if _continue then
+                        --[[// On attend que les appuis soit en position
+]]--[[// ----------------------------------------------------------------------------
+]]local rForce = S_Force_ActionContre( ksEni )
+                        if( not S_UnitesAppuis_EnPosition() ) then
+                            Activate( self.activations.BEH_Eni_Pion_VAB_PreparerEngagement, 1.5 + rForce, { ksEni, } )
+                        end
+
+                        if( S_Eni_EstNiveauPerceptionGTIA( ksEni, F_Pion_GeteNiveauAction( myself ) ) ) then
+                            Activate( self.activations.BEH_Eni_Pion_VAB_ManoeuvreDetruire, 1 + rForce, { ksEni, true, } )
+                        end
+
+                        Activate( self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce, { ksEni, true, } )
+                    end
+                end
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+            end,
+
+--[[// On se deplace Jusqu'a la reco
+]]}
+
+node "BEH_Ordre_Pion_VAB_Semparer_Demande"
+{
+    activations =
+    {
+        { "ACT_RC", {} },
+        { "BEH_Ordre_SePoster_EnAttente", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.eOrdre = self.eOrdre or eActionEnCours
+        if( self.eOrdre == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdrePoursuivre, } )
+        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eOrdre = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Eni_Pion_VAB_PreparerEngagement"
+{
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "ACT_Dep_SePosterFaceA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ksEni = self.params[1]
+    end,
+
+    activate = function( self )
+        self.bUniteAppuis_OK = self.bUniteAppuis_OK or false
+        self.bUniteAppuis_OK = self.bUniteAppuis_OK or S_UnitesAppuis_EnPosition()
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Attent l'arrivee des renforts" )
+            end
+        end
+
+        Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), } )
+        Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
+        if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.ksEni, F_Pion_GeteNiveauAction( myself ) ) and DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), DEC_Agent_Position() ) <= S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.ksEni, 0.1 ) ) then
+            Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { self._namedParams.ksEni, } )
+        end
+
+        if( self.bUniteAppuis_OK ) then
+            do
+                DEC_Trace( "Renforts en position" )
+                                self.params.__returnValue = eActionEffectuee
+                return
+
+            end
+        end
+
+        do
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_INF_Semparer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_GererDeboucher, "BEH_Ordre_SePosterPourDeboucher", nodes.BEH_Ordre_SePosterPourDeboucher }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_GererDeboucher, "ACT_Points_Suppression", nodes.ACT_Points_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_PreparerEngagement, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_PreparerEngagement, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_PreparerEngagement, "ACT_Misc_Pion_Ambiance", nodes.ACT_Misc_Pion_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_PreparerEngagement, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_Semparer, "ACT_RC_SurEni", nodes.ACT_RC_SurEni }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_Semparer, "ACT_MAJ_EtatSituationEni", nodes.ACT_MAJ_EtatSituationEni }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_Semparer, "BEH_Eni_Pion_VAB_PreparerEngagement", nodes.BEH_Eni_Pion_VAB_PreparerEngagement }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_Semparer, "BEH_Eni_Pion_VAB_ManoeuvreDetruire", nodes.BEH_Eni_Pion_VAB_ManoeuvreDetruire }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_Semparer, "BEH_Dep_Pion_INF_GererDispositif_Offensif", nodes.BEH_Dep_Pion_INF_GererDispositif_Offensif }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_Semparer, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_Semparer, "BEH_Dep_Pion_INF_MiseEnPlace_Mission", nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_Semparer, "BEH_Ordre_Pion_VAB_Semparer_Demande", nodes.BEH_Ordre_Pion_VAB_Semparer_Demande }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_Semparer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_Semparer, "BEH_MOT_Pion_INF_Debarquer", nodes.BEH_MOT_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_Semparer, "BEH_Obs_Pion_INF_EnReconnaissance", nodes.BEH_Obs_Pion_INF_EnReconnaissance }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_Semparer, "ACT_Misc_Pion_Ambiance", nodes.ACT_Misc_Pion_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_Semparer, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_Semparer, "ACT_Dep_Pion_INF_Arret", nodes.ACT_Dep_Pion_INF_Arret }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_VAB_Semparer_Demande, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Pion_VAB_Semparer_Demande, "BEH_Ordre_SePoster_EnAttente", nodes.BEH_Ordre_SePoster_EnAttente }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_SePosterPourDeboucher, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_SePosterPourDeboucher, "ACT_Dep_PasserSurLima", nodes.ACT_Dep_PasserSurLima }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Semparer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Semparer, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Semparer, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Semparer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Semparer, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Semparer, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Semparer, "BEH_Dep_Pion_INF_GererDeboucher", nodes.BEH_Dep_Pion_INF_GererDeboucher }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Semparer, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Semparer, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

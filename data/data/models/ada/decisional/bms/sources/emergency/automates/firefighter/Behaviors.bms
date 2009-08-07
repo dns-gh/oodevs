@@ -1,0 +1,42 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/automates/firefighter/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+--[[// Définition des actuateurs
+]]--[[// -------------------------
+]]
+actuators = {
+etat_OrdreCoordination = 1,
+ennemi = 1,
+releve = 1,
+}
+
+
+include "Emergency/Automates/Common/Behaviors.bms"
+
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// Missions performed by firefighter units
+]]--[[// ----------------------------------------------------------------------------
+]]include "Emergency/Automates/Common/Missions/Evacuate Area/EvacuateArea - CDT.bms"
+
+include "Emergency/Automates/Common/Missions/Evacuate Area/EvacuateArea - MRT.bms"
+
+

@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/Parameters.bms"] = true
+
+function M_MODELE_Pion_TRANS_DELAI_MISEENPLACE()
+    return 45
+end
+

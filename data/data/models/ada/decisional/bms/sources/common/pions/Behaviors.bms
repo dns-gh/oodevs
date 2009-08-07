@@ -1,0 +1,78 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/Behaviors.bms"] = true
+
+--[[//actions génériques aux pions scipio
+]]include "Common/Pions/Actions.bms"
+
+
+--[[//inclusion des action et des behaviors communs aux pions et automates SCIPIO
+]]include "Common/behaviors.bms"
+
+
+--[[//behaviors génériques aux pions scipio
+]]include "Common/Pions/Behaviors/behaviors - Ambiances.bms"
+
+include "Common/Pions/Behaviors/behaviors - Dep.bms"
+
+include "Common/Pions/Behaviors/behaviors - Eni.bms"
+
+include "Common/Pions/Behaviors/behaviors - Info.bms"
+
+include "Common/Pions/Behaviors/behaviors - Lima.bms"
+
+include "Common/Pions/Behaviors/behaviors - Maj.bms"
+
+include "Common/Pions/Behaviors/behaviors - Misc.bms"
+
+include "Common/Pions/Behaviors/behaviors - Ordre.bms"
+
+include "Common/Pions/Behaviors/behaviors - Nbc.bms"
+
+include "Common/Pions/Behaviors/behaviors - Mot.bms"
+
+include "Common/Pions/Behaviors/behaviors - Objet.bms"
+
+include "Common/Pions/Behaviors/behaviors - ROE.bms"
+
+include "Common/Pions/Behaviors/behaviors - Rens.bms"
+
+include "Common/Pions/Behaviors/behaviors - Transport.bms"
+
+
+--[[//CAPACITES POPU
+]]include "Common/Pions/BehaviorsReactionPopulations.bms"
+--[[// *****************************************************************************
+]]--[[// Comportement par défaut.
+]]--[[//
+]]--[[// Commentaires: n'est pas affecté par les 'magic move'
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "DefaultBehavior"
+{
+    activations =
+    {
+        { "BEH_Info_Mos", {} },
+        { "BEH_Info_Pion_RendreCompte", {} },
+        { "BEH_Default_ReactionPopulations", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Info_Mos, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// INFO MOS
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )
+        Activate( self.activations.BEH_Default_ReactionPopulations, 1, {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.DefaultBehavior }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "BEH_Info_Mos", nodes.BEH_Info_Mos }
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "BEH_Info_Pion_RendreCompte", nodes.BEH_Info_Pion_RendreCompte }
+connections[ #connections + 1 ] = { nodes.DefaultBehavior, "BEH_Default_ReactionPopulations", nodes.BEH_Default_ReactionPopulations }

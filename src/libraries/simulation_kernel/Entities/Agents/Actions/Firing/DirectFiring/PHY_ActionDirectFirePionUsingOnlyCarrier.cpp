@@ -17,8 +17,8 @@
 // Name: PHY_ActionDirectFirePionUsingOnlyCarrier constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDirectFirePionUsingOnlyCarrier::PHY_ActionDirectFirePionUsingOnlyCarrier( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_ActionDirectFirePion_ABC( pion, diaCall, PHY_DirectFireData::eFireUsingOnlyComposantesCarrier, PHY_DirectFireData::eFireOnAllComposantes )
+PHY_ActionDirectFirePionUsingOnlyCarrier::PHY_ActionDirectFirePionUsingOnlyCarrier( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode )
+    : PHY_ActionDirectFirePion_ABC( pion, pEnemy, percentage, firingMode, -1, PHY_DirectFireData::eFireUsingOnlyComposantesCarrier, PHY_DirectFireData::eFireOnAllComposantes )
 {
 }
 

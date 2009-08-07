@@ -567,17 +567,17 @@ void TER_Localisation::Write( xml::xostream& xos ) const
 // static
 TER_Localisation::E_LocationType TER_Localisation::ConvertLocalisationType( const std::string& strType )
 {
-    if ( !::strcmpi( strType.c_str(),"cercle" ) )
+    if ( !::_strcmpi( strType.c_str(), "cercle" ) )
         return eCircle;
-    else if ( !::strcmpi( strType.c_str(), "ellipse" ) )
+    else if ( !::_strcmpi( strType.c_str(), "ellipse" ) )
         return eEllipse;
-    else if ( !::strcmpi( strType.c_str(), "ligne" ) )
+    else if ( !::_strcmpi( strType.c_str(), "ligne" ) )
         return eLine;
-    else if ( !::strcmpi( strType.c_str(), "polygone" ) )
+    else if ( !::_strcmpi( strType.c_str(), "polygone" ) )
         return ePolygon;
-    else if ( !::strcmpi( strType.c_str(), "point" ) )
+    else if ( !::_strcmpi( strType.c_str(), "point" ) )
         return ePoint;
-    else if ( !::strcmpi( strType.c_str(), "secteur" ) )
+    else if ( !::_strcmpi( strType.c_str(), "secteur" ) )
         return eSector;
     else
         throw MT_ScipioException( "TER_Localisation::ConvertLocalisationType", __FILE__, __LINE__, MT_FormatString( "Invalid location type: '%s'", strType.c_str() ) );
@@ -843,7 +843,7 @@ void TER_Localisation::Split( uint nNbrParts, T_LocalisationPtrVector& locVector
 
     else if( nNbrParts == 1 )
     {
-        TER_Localisation* pLocalisation = new TER_Localisation( *this ); //$$$ RAM
+        boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation( *this ) ); //$$$ RAM
         locVector.push_back( pLocalisation );  
     }
 
@@ -851,7 +851,7 @@ void TER_Localisation::Split( uint nNbrParts, T_LocalisationPtrVector& locVector
     {
         for( uint i = 0; i < nNbrParts; ++i )
         {
-            TER_Localisation* pLocalisation = new TER_Localisation(); //$$$ RAM
+            boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation() ); //$$$ RAM
             pLocalisation->Reset( *pointVector_.begin() );
             locVector.push_back( pLocalisation );
         }
@@ -896,7 +896,7 @@ void TER_Localisation::Split( uint nNbrParts, T_LocalisationPtrVector& locVector
 
             if( !splitPolyPoints.empty() )
             {
-                TER_Localisation* pLocalisation = new TER_Localisation(); //$$$ RAM
+                boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation() ); //$$$ RAM
                 pLocalisation->Reset( splitPolyPoints );
                 locVector.push_back( pLocalisation );  
             }

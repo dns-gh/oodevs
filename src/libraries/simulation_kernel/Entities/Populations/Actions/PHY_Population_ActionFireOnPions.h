@@ -28,7 +28,7 @@ public:
     typedef MIL_Population ActorType;
 
 public:
-             PHY_Population_ActionFireOnPions( MIL_Population& population, DIA_Call_ABC& diaCall );
+             PHY_Population_ActionFireOnPions( MIL_Population& population, float rIntensity );
     virtual ~PHY_Population_ActionFireOnPions();
 
     //! @name Operations

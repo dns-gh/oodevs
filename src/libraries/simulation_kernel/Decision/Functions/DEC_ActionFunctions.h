@@ -14,7 +14,10 @@
 
 #include "MIL.h"
 
+class DEC_Decision_ABC;
+class DEC_Knowledge_Agent;
 class MIL_AgentPion;
+class PHY_Action_ABC;
 
 // =============================================================================
 // Created: JVT 04-05-18
@@ -24,32 +27,35 @@ class DEC_ActionFunctions
 public:
     //! @name Functions
     //@{
-    template< typename ActionType > static void StartAction  ( DIA_Call_ABC& call, typename ActionType::ActorType& caller );
-    template< typename T >          static void StopAction   ( DIA_Call_ABC& call, const T&                        caller );
-    template< typename T >          static void SuspendAction( DIA_Call_ABC& call, const T&                        caller );
-    template< typename T >          static void ResumeAction ( DIA_Call_ABC& call, const T&                        caller );
+    template< typename ActionType > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller );
+    template< typename ActionType, typename T > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T arg );
+    template< typename ActionType, typename T1, typename T2 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2 );
+    template< typename ActionType, typename T1, typename T2, typename T3 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3 );
+    template< typename ActionType, typename T1, typename T2, typename T3, typename T4 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4 );
+    template< typename T >          static PHY_Action_ABC* StopAction   ( const T& caller, PHY_Action_ABC* pAction );
+    template< typename T >          static void SuspendAction( const T& caller, PHY_Action_ABC* pAction );
+    template< typename T >          static void ResumeAction ( const T& caller, PHY_Action_ABC* pAction );
 
-    static void Transport_AddPion         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
-    static void Transport_AddPions        ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
-    static void Transport_MagicLoadPion   ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
-    static void Transport_MagicLoadPions  ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
-    static void Transport_MagicUnloadPion ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );         
-    static void Transport_IsFinished      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void Transport_IsTransporting  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void Transport_Cancel          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
-    static void CanTransportPion          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void Transport_AddPion         ( MIL_AgentPion& callerAgent, DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );        
+    static void Transport_AddPions        ( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable );        
+    static void Transport_MagicLoadPion   ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
+    static void Transport_MagicLoadPions  ( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable );
+    static void Transport_MagicUnloadPion ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion );
+    static bool Transport_IsFinished      ( const MIL_AgentPion& callerAgent );
+    static bool Transport_IsTransporting  ( const MIL_AgentPion& callerAgent );
+    static void Transport_Cancel          ( MIL_AgentPion& callerAgent );
+    static bool CanTransportPion          ( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
 
-    static void Prisoners_CaptureAndLoad  ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void Prisoners_Unload          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void Prisoners_UnloadInCamp    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void Prisoners_IsLoaded        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void Prisoners_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Prisoners_CaptureAndLoad  ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
+    static void Prisoners_Unload          ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
+    static void Prisoners_UnloadInCamp    ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID );
+    static bool Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID );
 
-    static void Refugees_OrientateAndLoad( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void Refugees_Unload          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void Refugees_UnloadInCamp    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void Refugees_IsLoaded        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void Refugees_IsUnloadedInCamp( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
+    static void Refugees_Unload          ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
+    static void Refugees_UnloadInCamp    ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID );
+    static bool PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
+    static bool Refugees_IsUnloadedInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID );
     //@}
 };
 

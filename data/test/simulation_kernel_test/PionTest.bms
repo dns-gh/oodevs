@@ -1,0 +1,34 @@
+pragma "once"
+
+include "DEC_GetMission.bms"
+
+node 'BEH_Defaut'
+{
+    eventmanager_plugin_tag = "Mission",
+}
+
+node 'missionBehavior'
+{
+    activate = function( self )
+        DEC_TestBehaviorCalled( "missionBehavior called" )
+    end
+}
+
+node 'missionBehaviorWithArg'
+{
+    activate = function( self )
+        DEC_TestMissionCalled( self.params.mission )
+    end
+}
+
+local pionTest =
+{
+    eventmanager_plugin = 
+    {
+        BEH_Defaut = {},
+        missionBehavior = { "mission" },
+        missionBehaviorWithArg = { "mission" },
+    },
+}
+
+brain "name" ( pionTest )

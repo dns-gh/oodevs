@@ -26,7 +26,7 @@ class PHY_ActionDirectFirePion : public PHY_ActionDirectFirePion_ABC
 {
 
 public:
-             PHY_ActionDirectFirePion( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+             PHY_ActionDirectFirePion( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass );
     virtual ~PHY_ActionDirectFirePion();
 };
 

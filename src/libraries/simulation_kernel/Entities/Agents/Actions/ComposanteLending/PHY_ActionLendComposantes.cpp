@@ -22,18 +22,14 @@
 // Name: PHY_ActionLendComposantes constructor
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DIA_Call_ABC& call, T_ComposantePredicate predicate )
-    : PHY_Action_ABC    ( pion, call )
+PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_RolePion_Decision* pAgent, unsigned int nbrToLend, T_ComposantePredicate predicate )
+    : PHY_DecisionCallbackAction_ABC    ( pion )
     , role_             ( pion.GetRole< PHY_RolePion_Composantes >() )
-    , nNbrToLend_       ( (uint)call.GetParameter( 2 ).ToFloat() )
-    , bLoanDone_        ( false )
     , pTarget_          ( 0 )
-    , diaReturnVariable_( call.GetParameter( 0 ) )
     , predicate_        ( predicate )
+    , nNbrToLend_       ( nbrToLend )
+    , bLoanDone_        ( false )
 {
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 1 ) ) );
-
-    DEC_RolePion_Decision* pAgent = call.GetParameter( 1 ).ToUserObject( pAgent );
     assert( pAgent );
     
     pTarget_ = &pAgent->GetPion().GetRole< PHY_RolePion_Composantes >();
@@ -41,7 +37,7 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DIA_C
     nTimer_ = role_.GetLentComposantesTravelTime( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
     MIL_Report::PostEvent( pion, MIL_Report::eReport_EquipmentLoanInProgress );
     
-    diaReturnVariable_.SetValue( false );
+    Callback( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +46,7 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DIA_C
 // -----------------------------------------------------------------------------
 PHY_ActionLendComposantes::~PHY_ActionLendComposantes()
 {
-    if( diaReturnVariable_.ToBool() == false )
+    if( !bLoanDone_ )
         MIL_Report::PostEvent( role_.GetPion(), MIL_Report::eReport_EquipmentLoanCanceled );
 }
 
@@ -77,7 +73,7 @@ void PHY_ActionLendComposantes::Execute()
         }
 
         bLoanDone_ = true;
-        diaReturnVariable_.SetValue( true );
+        Callback( true );
     }
 }
 

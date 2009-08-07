@@ -95,7 +95,7 @@ void ProtectionCapacity::Instanciate( Object& object ) const
 // Name: ProtectionCapacity::ProcessAgentExiting
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ProtectionCapacity::ProcessAgentExiting( Object& object, MIL_Agent_ABC& agent )
+void ProtectionCapacity::ProcessAgentExiting( Object& /*object*/, MIL_Agent_ABC& agent )
 {
     IT_AgentContainer it = container_.find( &agent );
     if ( it != container_.end() )
@@ -113,7 +113,7 @@ void ProtectionCapacity::ProcessAgentExiting( Object& object, MIL_Agent_ABC& age
 // Name: ProtectionCapacity::ProcessAgentInside
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ProtectionCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent )
+void ProtectionCapacity::ProcessAgentInside( Object& /*object*/, MIL_Agent_ABC& agent )
 {
     CIT_AgentContainer it = container_.find( &agent );
     if ( it != container_.end() )

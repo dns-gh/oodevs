@@ -17,20 +17,19 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePopulation constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDirectFirePopulation::PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC     ( pion, diaCall)
+PHY_ActionDirectFirePopulation::PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int nID )
+    : PHY_DecisionCallbackAction_ABC     ( pion )
     , role_              ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
-    , diaReturnCode_     (       diaCall.GetParameter( 0 )         )
-    , nTargetKnowledgeID_( (uint)diaCall.GetParameter( 1 ).ToPtr  () )
+    , nTargetKnowledgeID_( nID )
     , pFireResult_       ( 0 )  
 {
-    assert( DEC_Tools::CheckTypeConnaissancePopulation( diaCall.GetParameter( 1 ) ) );
-    diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
+    Callback( role_.GetInitialReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +38,6 @@ PHY_ActionDirectFirePopulation::PHY_ActionDirectFirePopulation( MIL_AgentPion& p
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePopulation::~PHY_ActionDirectFirePopulation()
 {
-//    diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
     if( pFireResult_ )
         pFireResult_->DecRef();
 }
@@ -57,7 +55,7 @@ void PHY_ActionDirectFirePopulation::Execute()
 {
     bool bMustRefResult = ( pFireResult_ == 0 );
     int nResult = role_.FirePopulation( nTargetKnowledgeID_, pFireResult_ );
-    diaReturnCode_.SetValue( nResult );
+    Callback( nResult );
 
     if( pFireResult_ && bMustRefResult )
         pFireResult_->IncRef();

@@ -1,0 +1,87 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/motivationsreactionpopulations/Stimulus.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//  STIMULUS STIM_PopulationDangereuse
+]]--[[//
+]]--[[//  Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PopulationDangereuse"
+node "ActivationForSTIM_PopulationDangereuse"
+{
+    activate = function( self )
+        local lstPops = DEC_Connaissances_Populations()
+        local eValidite = nil
+        for _,pop in pairs( lstPops ) do
+        local _continue = true
+do
+                if( ( DEC_ConnaissancePopulation_Dangerosite( pop ) > 1 ) and ( DEC_ConnaissancePopulation_Domination( pop, eValidite ) > 0 ) ) then
+                    do
+                        SetStimulus( "STIM_PopulationDangereuse", 1 )
+                                                return
+
+                    end
+                end
+
+            end
+--[[// Par défaut
+]]
+        end
+
+        SetStimulus( "STIM_PopulationDangereuse", 0 )
+    --[[// *****************************************************************************
+]]--[[//  STIMULUS STIM_PriseAPartiParPopulation
+]]--[[//
+]]--[[//  Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartiParPopulation"
+node "ActivationForSTIM_PriseAPartiParPopulation"
+{
+    activate = function( self )
+        if( not DIA_IsListEmpty( DEC_Connaissances_PopulationsPrenantAPartie() ) ) then
+            SetStimulus( "STIM_PriseAPartiParPopulation", 1 )
+        else
+            SetStimulus( "STIM_PriseAPartiParPopulation", 0 )
+        end
+
+    --[[// *****************************************************************************
+]]--[[//  STIMULUS STIM_TenirFaceAPopulation
+]]--[[//
+]]--[[//  Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]    end
+}
+
+motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_TenirFaceAPopulation"
+node "ActivationForSTIM_TenirFaceAPopulation"
+{
+    activate = function( self )
+        --[[//tenir tant que l'on est en état
+]]if( ( DEC_Agent_EtatOps() < 0.2 ) or ( DEC_FacteurHumain_Fatigue() == eFatigue_Epuise ) ) then
+            SetStimulus( "STIM_TenirFaceAPopulation", 0 )
+        else
+            SetStimulus( "STIM_TenirFaceAPopulation", 1 )
+        end
+
+        end
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PopulationDangereuse }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PriseAPartiParPopulation }
+connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_TenirFaceAPopulation }

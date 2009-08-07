@@ -12,6 +12,7 @@
 
 #include "MIL.h"
 #include "MT/MT_Tools/MT_IdentifierManager.h"
+#include "MIL_MissionParameterFactory.h"
 
 namespace xml
 {
@@ -23,6 +24,7 @@ class DEC_KnowledgeResolver_ABC;
 class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
 class MIL_Effect_IndirectFire;
+class MIL_MissionParameter_ABC;
 
 // =============================================================================
 /** @class  MIL_Report
@@ -380,8 +382,8 @@ public:
 
     //! @name Operations
     //@{
-    template< typename T > void SendReportWithTypeAsArgument( const T& sender, E_Type nType, const DIA_Parameters& diaParameters ) const;
-    template< typename T > void Send( const T& sender, E_Type nType, const DIA_Parameters& diaParameters ) const;
+    template< typename T > void SendReportWithTypeAsArgument( const T& sender, E_Type nType, int reportId, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const;
+    template< typename T > void Send( const T& sender, E_Type nType, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& diaParameters ) const;
     //@}
 
     //! @name $$ BOF
@@ -404,9 +406,9 @@ private:
     //! @name Tools
     //@{
     template< typename T > 
-    static void PostEvent( const T& receiver, E_EngineReport nReport, DIA_Parameters& parameters );
+    static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters );
 
-    bool DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const DIA_Parameters& diaParameters, unsigned int firstParameter ) const;
+    bool DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int reportId, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const;
     //@}
 
     //! @name Types

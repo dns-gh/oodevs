@@ -1,0 +1,6 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/sgpt hm/Globals.bms"] = true
+
+include "Appui/Alat/Automates/Common/Globals.bms"
+
+

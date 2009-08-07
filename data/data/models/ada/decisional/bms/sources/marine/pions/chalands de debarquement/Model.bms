@@ -1,0 +1,33 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/pions/chalands de debarquement/Model.bms"] = true
+
+--[[//=============================================================================
+]]--[[// Modele de la section Chalands de Debarquement
+]]--[[//=============================================================================
+]]include "MacroFunctions.bms"
+
+include "Marine/Pions/Chalands de Debarquement/Globals.bms"
+include "Common/Pions/Perception.bms"
+include "Common/Pions/Motivations.bms"
+include "Marine/Pions/Chalands de Debarquement/Behaviors.bms"
+
+local actualConnections = {}
+if connections then
+    for i, entry in pairs( connections ) do
+        if entry[3] == nil then
+            entry[3] = nodes[entry[2]]
+        end
+        if entry[3] ~= nil or type( entry[2] ) ~= "string" then
+            actualConnections[#actualConnections + 1] = entry
+        end
+    end
+end
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.BEH_Defaut = {}
+local table = {
+    eventmanager_plugin = eventmanager_plugin,
+    connections = actualConnections,
+    actuators = actuators or {},
+    motivation_plugin = motivation_plugin or {},
+}
+brain "name" ( table )

@@ -1,0 +1,97 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/radint/common/missions/FaireMouvement.bms"] = true
+
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_FaireMouvement
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_FaireMouvement"
+{
+    activations =
+    {
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eEtat = self.eEtat or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+                --[[//on ajoute un point aleatoire dans un rayon de 300 mètres à 
+]]--[[//la liste des points à rejoindre
+]]local pointFinItineraire = DEC_ListePoints_GetAt( self._namedParams.mission.itineraire_, DEC_ListePoints_Size( self._namedParams.mission.itineraire_ ) - 1 )
+                local position = DEC_Geometrie_PositionAleatoireDansCercle( pointFinItineraire, 300 )
+                DEC_ListePoints_PushBack( self._namedParams.mission.itineraire_, position )
+                DEC_Trace( "** MIS_Pion_FaireMouvement **" )
+                StartActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 30, } )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Moving mission begining ", } )
+                self.ePhase = eProgresser
+                
+            --[[// Deplacement: DEUX TYPES -- > deplacement seul vers point arrivee ou suivre unite si escorter
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                StopActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
+                
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_FaireMouvement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "ACT_Dep_Pion_RENS_VolerA", nodes.ACT_Dep_Pion_RENS_VolerA }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Dep_ProgressionSur", nodes.BEH_Dep_ProgressionSur }

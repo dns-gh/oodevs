@@ -1,0 +1,23 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/automates/missions/mettreenoeuvrezonestationnement/MettreEnOeuvreZoneStationnement - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement = { "mission" }

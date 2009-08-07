@@ -1,0 +1,153 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/radint/esc horizon/missions/renseignersur/RenseignerSur - MRT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_RENS_RADINT_RenseignerSur
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_RENS_RADINT_RenseignerSur"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA", {} },
+        { "BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Obtention Stations et cougar
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Une seule normalement!
+]]self.listeStations = self.listeStations or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), Stations_Horizon )
+        --[[// Une seule normalement!
+]]self.listePionsCougar = self.listePionsCougar or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), Cougar_Horizon )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "$ MIS_RenseignerSur: debut MRT $" )
+                DEC_SetMission( myself, self._namedParams.mission )
+                                do
+                    local listePionsSubordonnes = DEC_Automate_PionsSansPC()
+                    for _,x in pairs( listePionsSubordonnes ) do
+                    local _continue = true
+                        do
+                            local pion = x
+                            F_Pion_SeteEtatEchelon( pion, eEtatEchelon_Second )
+                            F_Pion_SeteEtatSoutien( pion, eEtatSoutien_aucun )
+                        end
+
+                    end
+
+                end
+--[[// Vérification
+]]
+                if( DIA_IsListEmpty( self.listeStations ) or DIA_IsListEmpty( self.listePionsCougar ) ) then
+                    do
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Unadapted units for the mission", } )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Assignation et vérification
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eValidationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_MRT_Valide()
+                    DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eValidationMRT == eActionEffectuee ) then
+            do
+                self.eValidationMRT = eActionEnCours
+                                do
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeStations ) + #( self.listePionsCougar ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA, 1, { self.listePionsCougar, } )
+        Activate( self.activations.BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA, 1, { self.listeStations, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA
+]]--[[// 
+]]--[[// Commentaires: A mettre en commun si besoin est
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// $$$$MIA : HACK -- Attente ASN
+]]self.positionDeploiement = self.positionDeploiement or DEC_Geometrie_CreerPoint()
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[// Hack: position deploiement pour SMO = position départ pour l'instant
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Copie_Point( DEC_Automate_PionPosition( DEC_Automate_PionPC() ), self.positionDeploiement )
+        end
+
+        for _,pion in pairs( self._namedParams.listePions ) do
+        local _continue = true
+            Activate( self.activations.BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA, 1, { ePhase_MRT, pion, self.positionDeploiement, eEtatEchelon_Premier, } )
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_RENS_RADINT_RenseignerSur = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA, "BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA", nodes.BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_RENS_RADINT_RenseignerSur, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_RENS_RADINT_RenseignerSur, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_RENS_RADINT_RenseignerSur, "BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA", nodes.BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_RENS_RADINT_RenseignerSur, "BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA", nodes.BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA }

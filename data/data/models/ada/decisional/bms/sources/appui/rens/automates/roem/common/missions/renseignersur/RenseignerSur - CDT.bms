@@ -1,0 +1,25 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roem/common/missions/renseignersur/RenseignerSur - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Automate_CDT_RENS_ROEM_RenseignerSur
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Automate_CDT_RENS_ROEM_RenseignerSur"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+    end,
+
+}
+

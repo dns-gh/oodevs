@@ -1,0 +1,50 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/radint/common/missions/SuivreUnite.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// SuivreUnite
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_Suivre"
+{
+    activations =
+    {
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "BEH_Dep_Suivre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Résultat d'évènnements externes
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "** MIS Suivre **" )
+                DEC_Trace( "** Decollage **" )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Gen
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 30, } )
+        Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.mission.uniteASuivre_, M_DISTANCE_MIN(), } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Suivre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "ACT_Dep_Pion_RENS_VolerA", nodes.ACT_Dep_Pion_RENS_VolerA }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Suivre, "BEH_Dep_Suivre", nodes.BEH_Dep_Suivre }

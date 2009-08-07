@@ -1,0 +1,23 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/Functions.bms"] = true
+
+
+include "Common/Fonctions.bms"
+
+
+include "Common/Pions/Fonctions/Functions - Misc.bms"
+
+include "Common/Pions/Fonctions/Functions - Eni.bms"
+
+include "Common/Pions/Fonctions/Functions - Mot.bms"
+
+include "Common/Pions/Fonctions/Functions - Obj.bms"
+
+include "Common/Pions/Fonctions/Functions - RC.bms"
+
+include "Common/Pions/Fonctions/Functions - Tir.bms"
+
+include "Common/Pions/Fonctions/Functions - Transport.bms"
+
+include "Common/Pions/Fonctions/Functions - Pop.bms"
+

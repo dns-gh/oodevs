@@ -1,0 +1,30 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/Model.bms"] = true
+
+include "MacroFunctions.bms"
+
+include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Globals.bms"
+include "Common/Automates/Perception.bms"
+include "Appui/ArtDsa/Automates/Common/Motivations.bms"
+include "Appui/ArtDsa/Automates/Sgpt Sacp Roland Carol/Behaviors.bms"
+
+local actualConnections = {}
+if connections then
+    for i, entry in pairs( connections ) do
+        if entry[3] == nil then
+            entry[3] = nodes[entry[2]]
+        end
+        if entry[3] ~= nil or type( entry[2] ) ~= "string" then
+            actualConnections[#actualConnections + 1] = entry
+        end
+    end
+end
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.BEH_Defaut = {}
+local table = {
+    eventmanager_plugin = eventmanager_plugin,
+    connections = actualConnections,
+    actuators = actuators or {},
+    motivation_plugin = motivation_plugin or {},
+}
+brain "name" ( table )

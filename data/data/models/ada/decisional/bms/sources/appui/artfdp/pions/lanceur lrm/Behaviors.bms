@@ -1,0 +1,44 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/lanceur lrm/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+--[[// Définition des actuateurs
+]]--[[// -------------------------
+]]actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+debarquement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+tir_indirect = 1,
+controle_zone = 1,
+vitesse = 1,
+ennemi = 1,
+objectifEsquive = 1,
+etat_Ambiance = 1,
+etat_Mission = 1,
+controlePopulation = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+etat_ROE = 1,
+}
+
+
+include "Appui/ArtFdp/Pions/Common/Behaviors.bms"
+
+include "Appui/ArtFdp/Pions/Common/Missions/MettreEnOeuvre.bms"
+
+include "Appui/ArtFdp/Pions/Lanceur LRM/Missions/AssurerMiseEnOeuvre.bms"
+
+include "Appui/ArtFdp/Pions/Lanceur LRM/Missions/AssurerMiseEnOeuvreSurPosition.bms"
+

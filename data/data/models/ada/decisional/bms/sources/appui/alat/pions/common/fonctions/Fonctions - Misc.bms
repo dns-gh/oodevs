@@ -1,0 +1,57 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/fonctions/Fonctions - Misc.bms"] = true
+
+
+--[[// -------------------------------------------------------------------------
+]]--[[// temps pour rejoindre un point de ravitaillement ( plot le plus proche ou 
+]]--[[// TC2 )
+]]--[[// -------------------------------------------------------------------------
+]]--[[//pas de moyen de ravitaillement
+]]--[[// -------------------------------------------------------------------------
+]]--[[// Calcul le point d'intersection d'une liste de connaissances.
+]]--[[// ATTENTION : Cette fonction peut renvoyer un pointeur nul.
+]]--[[// -------------------------------------------------------------------------
+]]--[[// Attention, le résultat peut être nul
+]]function S_Misc_Pion_ALAT_TempsPourAllerRecompleter( )
+    local _returnValue = 0
+    local pointDeRecompletement = DEC_Geometrie_CreerPoint()
+    local TC2 = DEC_Pion_TC2()
+    local pionTC2 = nil
+    if( TC2 ~= nil ) then
+        pionTC2 = DEC_Pion_PionPCDeAutomate( TC2 )
+    end
+
+    if( DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) ) then
+        do
+            local positionPlotRavitaillement = S_Geometrie_BarycentreZone( DEC_ConnaissanceObjet_Localisation( myself.plotRavitaillementAssigne_ ) )
+            DEC_Copie_Point( positionPlotRavitaillement, pointDeRecompletement )
+        end
+    else
+do
+            if( pionTC2 ~= nil ) then
+                do
+                    DEC_Copie_Point( pionTC2:DEC_Agent_Position(), pointDeRecompletement )
+                end
+            else
+do
+                    _returnValue = 0
+                                        return _returnValue
+
+                end
+            end
+
+        end
+    end
+
+    _returnValue = DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), pointDeRecompletement ) )
+    return _returnValue
+end
+
+function S_Misc_Pion_ALAT_PointInterception( listeConnaissances )
+    local _returnValue = nil
+    local barycentreConnaissances = DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( listeConnaissances )
+    local eniAIntercepter = S_Eni_ChercheEniPlusProchePosition( barycentreConnaissances, listeConnaissances )
+    _returnValue = DEC_Agent_PositionInterception( eniAIntercepter )
+    return _returnValue
+end
+

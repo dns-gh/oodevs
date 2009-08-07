@@ -19,16 +19,6 @@
 #include "Network/NET_ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationMission::InitializeDIA
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-// static
-void MIL_PopulationMission::InitializeDIA()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

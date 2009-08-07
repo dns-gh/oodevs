@@ -1,0 +1,180 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/functions/Functions - Misc.bms"] = true
+
+include "bit.lua"
+
+--[[// -------------------------------------------------------------------------
+]]--[[// Renvoie le pion  le plus proche  (parmis la liste passée en paramètre) 
+]]--[[// du point passé en paramètre
+]]--[[// -------------------------------------------------------------------------
+]]--[[// -------------------------------------------------------------------------
+]]--[[// Renvoie le pion  le plus proche  (parmis la liste passée en paramètre) 
+]]--[[// du point passé en paramètre // Mais dans le fuseau
+]]--[[// -------------------------------------------------------------------------
+]]--[[// Init
+]]--[[// -------------------------------------------------------------------------
+]]--[[// Cette fonction permet de renvoyer une liste de pions construite de la 
+]]--[[// facon suivante
+]]--[[// 
+]]--[[//  -   pour tous les automates embrayés, on ajoute a la liste tous les pions
+]]--[[//      subordonnés
+]]--[[//
+]]--[[//  -   on ajoute ensuite la liste des pions qui ont étés selectionnés mais
+]]--[[//      qui ne sont pas subordonnés a un automate embrayé
+]]--[[//
+]]--[[//  un pion PC est un pion qui a pour PC lui meme
+]]--[[//  un pion subornonné est un pion qui a pour PC un autre pion que lui 
+]]--[[//  meme
+]]--[[// OPT MIA: SPE Alat et Marine
+]]--[[// -------------------------------------------------------------------------
+]]--[[//on met dans la liste des pions PC embrayés qui sont embrayés (avec
+]]--[[//leuts subordonnés )
+]]--[[//si x est un PC et que son automate est embrayé, alors
+]]--[[//ajout des pions de la liste unites_ qui ne sont pas deja dans 
+]]--[[//bufferPionCont
+]]--[[// ----------------------------------------------------------------------------	
+]]--[[// Renvoie Vrai si la mission de type passée en paramètre est en cours 
+]]--[[// d'execution
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------	
+]]--[[// Renvoie Vrai si la mission de type passée en paramètre est en cours 
+]]--[[// d'execution pour le pion
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------	
+]]--[[// Copie mission
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------	
+]]--[[// REnvoie la liste des PC des automates des pions passés en paramètre
+]]--[[// ----------------------------------------------------------------------------
+]]function S_Geometrie_Automate_PionPlusProchePoint( point, listePions )
+    local _returnValue = nil
+    local pionLePlusProcheBuffer = nil
+    local distanceMin = 1105199104
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local distance = DEC_Geometrie_Distance( point, DEC_Automate_PionPosition( x ) )
+            if( distance < distanceMin ) then
+                do
+                    distanceMin = distance
+                    pionLePlusProcheBuffer = x
+                end
+            end
+
+        end
+
+    end
+
+    _returnValue = pionLePlusProcheBuffer
+    return _returnValue
+end
+
+function S_Geometrie_Automate_PointPlusProchePion_DansFuseau( pion, lstPoints )
+    local _returnValue = 0
+    local ptPion = DEC_Automate_PionPosition( pion )
+    local rDistanceMin = 1105199104
+    _returnValue = DEC_ListePoints_Size( lstPoints )
+    local it = 0
+    while it < DEC_ListePoints_Size( lstPoints ) do
+        local _continue = true
+do
+            local ptBuffer = DEC_ListePoints_GetAt( lstPoints, it )
+            if( not DEC_Automate_EstPointDansFuseauPion( ptBuffer, pion ) ) then
+                _continue = false
+            end
+
+                if _continue then
+                local rDistanceTmp = DEC_Geometrie_Distance( ptBuffer, ptPion )
+                if( rDistanceTmp < rDistanceMin ) then
+                    do
+                        rDistanceMin = rDistanceTmp
+                        _returnValue = it
+                    end
+                end
+
+            end
+        end
+    it = it + 1
+    end
+
+    return _returnValue
+end
+
+function S_SelectionnePCEtSubordonnes( unites_ )
+    local _returnValue = {}
+    local bufferPionCont = {}
+    for _,x in pairs( unites_ ) do
+    local _continue = true
+do
+            local automate = DEC_GetAutomate( x )
+            if( ( x == DEC_Automate_PionPCDeAutomate( automate ) ) and automate:DEC_Automate_EstEmbraye() ) then
+                do
+                    local listePionsAvecPC = DEC_Automate_PionsDeAutomateAvecPC( automate )
+                    for _,y in pairs( listePionsAvecPC ) do
+                    local _continue = true
+                        DIA_PushBack( bufferPionCont, y )
+
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+    for _,pion in pairs( unites_ ) do
+    local _continue = true
+do
+            if( not DIA_Contains( bufferPionCont, pion ) ) then
+                DIA_PushBack( bufferPionCont, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = bufferPionCont
+    return _returnValue
+end
+
+function S_Misc_EstMissionAffectee( typeMission )
+    local _returnValue = false
+    local mission = DEC_GetMission( myself )
+    _returnValue = ( mission ~= nil ) and ( mission:GetType() == typeMission )
+    return _returnValue
+end
+
+function S_Misc_EstMissionAffectee_Pion( pion, typeMission )
+    local _returnValue = false
+    local mission = DEC_GetMission( pion )
+    _returnValue = ( mission ~= nil ) and ( mission:GetType() == typeMission )
+    return _returnValue
+end
+
+function S_Misc_Copie_MissionPion( misSrc, misDst )
+    local directionEnnemi = DEC_GetDirectionEnnemi( misSrc )
+    if( ( directionEnnemi ~= 0 and directionEnnemi ~= nil ) ) then
+        DEC_Copie_DirectionDanger( directionEnnemi, misDst )
+    end
+
+end
+
+function S_Liste_Automate_PionsPC( listePions )
+    local _returnValue = {}
+    local listeBuffer = {}
+    local pionPC = nil
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local pion = x
+            pionPC = DEC_Automate_PionPCDeAutomate( DEC_GetAutomate( pion ) )
+            DIA_PushBack( listeBuffer, pionPC )
+        end
+
+    end
+
+    _returnValue = listeBuffer
+    return _returnValue
+end
+

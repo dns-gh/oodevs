@@ -19,7 +19,7 @@
 
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
-class DIA_Variable_ABC;
+class DEC_Decision_ABC;
 class PHY_PerceptionLevel;
 class PHY_PerceptionView;
 class PHY_Perception_ABC;
@@ -114,25 +114,25 @@ public:
     void  DisableRecoAlat                ();
     void  EnableCoupDeSonde              ();
     void  DisableCoupDeSonde             ();
-    void* EnableRecoPoint                ( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DIA_Variable_ABC& result );
-    void  DisableRecoPoint               ( void* );
-    void* EnableRecoLocalisation         ( const TER_Localisation& localisation, MT_Float rRadius );
-    void* EnableRecoLocalisation         ( const TER_Localisation& localisation );
-    void* EnableControlLocalisation      ( const TER_Localisation& localisation );
-    void  DisableRecoLocalisation        ( void* );
-    void* EnableSurveillanceLocalisation ( const TER_Localisation& localisation );
-    void  DisableSurveillanceLocalisation( void* );
-    void* EnableRecoObjects              ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DIA_Variable_ABC& result );
-    void  DisableRecoObjects             ( void* );
+    int   EnableRecoPoint                ( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent );
+    void  DisableRecoPoint               ( int );
+    int   EnableRecoLocalisation         ( const TER_Localisation& localisation, MT_Float rRadius );
+    int   EnableRecoLocalisation         ( const TER_Localisation& localisation );
+    int   EnableControlLocalisation      ( const TER_Localisation& localisation );
+    void  DisableRecoLocalisation        ( int );
+    int   EnableSurveillanceLocalisation ( const TER_Localisation& localisation );
+    void  DisableSurveillanceLocalisation( int );
+    int   EnableRecoObjects              ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DEC_Decision_ABC& callerAgent );
+    void  DisableRecoObjects             ( int );
 
     // Radars
-    void* EnableRadarOnLocalisation      ( const PHY_RadarClass& radarClass, const TER_Localisation& localisation );
-    void  DisableRadarOnLocalisation     ( const PHY_RadarClass& radarClass, void* );
+    int   EnableRadarOnLocalisation      ( const PHY_RadarClass& radarClass, const TER_Localisation& localisation );
+    void  DisableRadarOnLocalisation     ( const PHY_RadarClass& radarClass, int );
     void  EnableRadar                    ( const PHY_RadarClass& radarClass );
     void  DisableRadar                   ( const PHY_RadarClass& radarClass );
 
-    void* EnableFlyingShellDetection     ( const TER_Localisation& localisation );
-    void  DisableFlyingShellDetection    ( void* );
+    int   EnableFlyingShellDetection     ( const TER_Localisation& localisation );
+    void  DisableFlyingShellDetection    ( int );
 
     // Rens
     void  EnableRecordMode ();

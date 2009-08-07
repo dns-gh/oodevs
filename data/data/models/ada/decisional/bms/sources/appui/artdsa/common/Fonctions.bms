@@ -1,0 +1,4 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/common/Fonctions.bms"] = true
+
+include "Appui/ArtDsa/Common/Fonctions/Fonctions - Misc.bms"

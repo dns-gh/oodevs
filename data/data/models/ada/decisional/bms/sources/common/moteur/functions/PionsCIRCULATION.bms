@@ -1,0 +1,10 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/functions/PionsCIRCULATION.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// globals
+]]--[[// *****************************************************************************
+]]--[[/*E_ValiditeRequete&*//*T_ConnaissanceObjet*/]]

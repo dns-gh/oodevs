@@ -1,0 +1,161 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/missions/EtablirGererLiaison.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_TRANS_EtablirGererLiaison
+]]--[[//
+]]--[[// Commentaires: Pas de fonctionnalité particulière dans la simulation 
+]]--[[// Se deploye
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_TRANS_EtablirGererLiaison"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RC_PreparationMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_Trans_InstallerDispositif", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                --[[// Distance --> déploiement 'sur place'
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.positionDeploiement_ ) < 1000 ) then
+                    do
+                        self.ePhaseMission = eDeployer
+                                                return
+
+                    end
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eProgresser
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_MODELE_Pion_TRANS_DELAI_MISEENPLACE(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_RC_PreparationMission, 1, { M_MODELE_Pion_TRANS_DELAI_MISEENPLACE(), } )
+                
+            --[[// Progression tactique
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eDeployer
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Deploiement
+]]elseif switch_1 == eDeployer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                Activate( self.activations.BEH_Pion_Trans_InstallerDispositif, 1, {} )
+                
+            --[[// Fin mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_Trans_InstallerDispositif
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_Trans_InstallerDispositif"
+{
+    activations =
+    {
+        { "ACT_Pion_trans_InstallerDisposifif", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Pion_trans_InstallerDisposifif, 1, {} )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pion_trans_InstallerDisposifif
+]]--[[//
+]]--[[// Commentaires: Juste RC
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Pion_trans_InstallerDisposifif"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_RC( eRC_SectionDeployee )
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_TRANS_EtablirGererLiaison = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Trans_InstallerDispositif, "ACT_Pion_trans_InstallerDisposifif", nodes.ACT_Pion_trans_InstallerDisposifif }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_TRANS_EtablirGererLiaison, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_TRANS_EtablirGererLiaison, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_TRANS_EtablirGererLiaison, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_TRANS_EtablirGererLiaison, "ACT_RC_PreparationMission", nodes.ACT_RC_PreparationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_TRANS_EtablirGererLiaison, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_TRANS_EtablirGererLiaison, "BEH_Pion_Trans_InstallerDispositif", nodes.BEH_Pion_Trans_InstallerDispositif }

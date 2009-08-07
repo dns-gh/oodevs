@@ -1,0 +1,171 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/rohum/common/MRT generique.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_RENS_ROHUM_AssignerMissions
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA", {} },
+        { "BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eType = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// Pions subordonnés à l'Auto
+]]local selPions = DEC_Automate_PionsSansPC()
+        self.ePhase = self.ePhase or eMRT_DeterminerEchelonsGlobals
+        self.eEtat = self.eEtat or eActionEnCours
+        self.sel_Infiltration = self.sel_Infiltration or {}
+        self.sel_Radar = self.sel_Radar or {}--[[// RASIT
+]]
+        self.sel_NonPrevu = self.sel_NonPrevu or {}--[[// suivre le SE
+]]
+        switch_1 = --[[// =============================================================================
+]]--[[// PHASE DU COMPORTEMENT
+]]--[[// 1) Vérifier les moyens, des renforts éventuels
+]]--[[// 2) Déterminer les échelons
+]]--[[// 2) Assigner certaines missions (les missions des unités de premier échelon)
+]]--[[// $$$$ MIA 2004-10-01: les missions du deuxieme échelon sont données dans la conduite
+]]--[[// $$$$ MIA 2004-10-01: car elles sont en permance évaluées durant la mission.
+]]--[[// =============================================================================                                  
+]]self.ePhase
+            if switch_1 == eMRT_DeterminerEchelonsGlobals then
+                for _,x in pairs( --[[//---------------------------------------------------------------------
+]]--[[// Assignation des grands échelons Ecl / Utile( PE + SE )/ non prevus
+]]--[[//---------------------------------------------------------------------
+]]selPions ) do
+                local _continue = true
+do
+                        local pion = x
+                        --[[// On ne traite pas les pions non opérationnels
+]]if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                            do
+                                DEC_Trace( "Attention " .. DEC_GetSzName( pion ) .. " n'est pas opérationnel" )
+                                DIA_PushFront( self.sel_NonPrevu, pion )
+                                _continue = false
+                            end
+                        end
+
+                            if _continue then
+                            switch_2 = pion:GetType()
+                                if switch_2 == "Patrouille_RBRR_Blindee"
+                                or switch_2 == "Patrouille_RBRR_Moto"
+                                or switch_2 == "Patrouille_RBRR_Nautique"
+                                or switch_2 == "Patrouille_URH" then
+                                    DIA_PushFront( self.sel_Infiltration, pion )
+                                    
+                                elseif switch_2 == "Patrouille_RBRR_RASIT" then
+                                    DIA_PushFront( self.sel_Radar, pion )
+                                    
+                                
+                                else
+                                    DIA_PushFront( self.sel_NonPrevu, pion )
+                                    
+                                                                end
+
+                        end
+                    end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Mission impossible si pas de premier echelon
+]]--[[//-----------------------------------------------------------------------------
+]]
+                end
+
+                if( DIA_IsListEmpty( self.sel_Infiltration ) and DIA_IsListEmpty( self.sel_Radar ) ) then
+                    do
+                        DEC_Trace( "$$ Pas de pions permettant d'effectuer la mission $$" )
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                self.ePhase = eMRT_AssignerMissions
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_AssignerMissions then
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                        --[[// ePhase = eMRT_MissionImpossible;
+]]DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[// Suivant le type de mission...
+]]                end
+
+                switch_2 = self._namedParams.eType
+                    if switch_2 == "T_Mission_Automate_RENS_ROHUM_RenseignerSur" then
+                        --[[//-----------------------------------------------------------------------------
+]]--[[// Renseigner Sur
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_Infiltration ) + #( self.sel_Radar ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA, 1, { self.sel_Infiltration, eEtatEchelon_Premier, } )
+                        Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA, 1, { self.sel_Radar, eEtatEchelon_Premier, } )
+                        
+                    --[[//-----------------------------------------------------------------------------
+]]--[[// SExfiltrer
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_SExfiltrer" then
+                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_Infiltration ) + #( self.sel_Radar ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { self.sel_Infiltration, eEtatEchelon_Premier, } )
+                        Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { self.sel_Radar, eEtatEchelon_Premier, } )
+                        
+                    --[[//-----------------------------------------------------------------------------
+]]--[[// Orienter/Guider
+]]--[[// Seulement pour pions infiltration
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_OrienterGuider" then
+                        --[[/*
+                    behavior BEH_Medo_Automate_ControleCreationMission( DIA_Size( sel_Infiltration ) + DIA_Size( sel_Radar ) ) return in eEtat;
+                    behavior BEH_Medo_Automate_RENS_ROHUM_AssignerGuiderA( sel_Infiltration, eEtatEchelon_Premier );
+                    */// A FAIRE
+]]
+                                        end
+--[[//---------------------------------------------------------------------
+]]
+                
+            --[[// Validation
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            
+            else
+                        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROHUM_AssignerMissions, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROHUM_AssignerMissions, "BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA", nodes.BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_RENS_ROHUM_AssignerMissions, "BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA", nodes.BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA }

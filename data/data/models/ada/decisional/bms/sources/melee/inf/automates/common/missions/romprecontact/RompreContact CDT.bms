@@ -1,0 +1,55 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/missions/romprecontact/RompreContact CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-07-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Missions/RompreContact/RompreContact CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 25/08/05 18:07 $
+]]--[[// $Revision: 8 $
+]]--[[// $Workfile: RompreContact CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+node "BEH_Conduite_Automate_INF_RompreContact"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_DesactiveSauvegarde", {} },
+        { "BEH_CoordDep_Automate_INF_Retrograde", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
+        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                --[[// Comportements non continues
+]]StartActivate( self.activations.BEH_Conduite_Automate_INF_DesactiveSauvegarde, 1, { 30, } )
+            end
+--[[// 30 min
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Coordination du front
+]]--[[//-----------------------------------------------------------------------------	
+]]        end
+
+        Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_RompreContact, "BEH_Conduite_Automate_INF_DesactiveSauvegarde", nodes.BEH_Conduite_Automate_INF_DesactiveSauvegarde }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_RompreContact, "BEH_CoordDep_Automate_INF_Retrograde", nodes.BEH_CoordDep_Automate_INF_Retrograde }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_RompreContact, "BEH_Conduite_Automate_INF_GererAppuis_INF", nodes.BEH_Conduite_Automate_INF_GererAppuis_INF }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_RompreContact, "BEH_Conduite_Automate_INF_GererAppui_Mortier", nodes.BEH_Conduite_Automate_INF_GererAppui_Mortier }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_RompreContact, "BEH_Conduite_Automate_INF_GererAppuis_ABC", nodes.BEH_Conduite_Automate_INF_GererAppuis_ABC }

@@ -102,7 +102,7 @@ void MIL_AutomateOrderManager::OnReceiveFragOrder( const ASN1T_MsgFragOrder& asn
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_order_conduite );
 
-    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, automate_.GetRole<DEC_Representations>(), automate_.GetKnowledge(), asn );
+    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, automate_.GetRole< DEC_Decision_ABC >(), automate_.GetRole<DEC_Representations>(), automate_.GetKnowledge(), asn );
     pFragOrder->Launch();
 }
 
@@ -274,13 +274,14 @@ MIL_PionMission* MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentPion&
 // Name: MIL_AutomateOrderManager::CDT_GivePionMission
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::CDT_GivePionMission( MIL_PionMission& mission )
+void MIL_AutomateOrderManager::CDT_GivePionMission( MIL_Mission_ABC& mission )
 {
     assert( automate_.IsEngaged() );
 
     int nOut = preparedMissions_.erase( &mission );
     assert( nOut == 1 );
-    mission.GetPion().GetOrderManager().ReplaceMission( &mission );
+    MIL_PionMission& pionMission = dynamic_cast< MIL_PionMission& >( mission );
+    pionMission.GetPion().GetOrderManager().ReplaceMission( &mission );
 }
     
 // -----------------------------------------------------------------------------

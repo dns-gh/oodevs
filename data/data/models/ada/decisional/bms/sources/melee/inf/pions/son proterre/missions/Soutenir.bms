@@ -1,0 +1,258 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son proterre/missions/Soutenir.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-01-26 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Grp AC Milan/Missions/Soutenir.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 7 $
+]]--[[// $Workfile: Soutenir.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_INF_Soutenir
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_INF_Soutenir"
+{
+    activations =
+    {
+        { "BEH_Mission_Pion_INF_SoutenirUneUnite", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionImpossible ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Mission_Pion_INF_SoutenirUneUnite, 1, setmetatable( { self._namedParams.mission.uniteASoutenir_, M_MODELE_PION_INF_SOUTENIR_PH(), M_MODELE_PION_INF_SOUTENIR_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_INF_SoutenirUneUnite
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Pion_INF_SoutenirUneUnite"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_INF_AgressiviteTir", {} },
+        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Dep_Pion_MILAN_Appuyer", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionAmi = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.eEtatRejoindre = self.eEtatRejoindre or eActionEnCours
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        --[[//-----------------------------------------------------------------------------
+]]--[[// ORDRE ANIBAS / Ordre fin de mission
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.eEtatOrdreFinMission = eActionEnCours
+                self.ePhaseMission = eFinMission
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Agressivite
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MAJ_Pion_INF_AgressiviteTir, 1, { self._namedParams.rPH, } )
+        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Soutenir à tout prix
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//Modifié par LLS 28/02/2007
+]]--[[//behavior BEH_Eni_Pion_INF_DesactiveSauvegarde();
+]]
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[// pas dans soutenir
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//if( F_Pion_GeteEtatDestruction( myself ) != eEtatDestruction_None )
+]]--[[//    halt( eActionEffectuee );
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Ambiance
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+        end
+
+        switch_1 = --[[//=========================================================================
+]]--[[// SQUELETTE DE LA MISSION
+]]--[[//
+]]--[[// strength = 1
+]]--[[//	
+]]--[[//=========================================================================
+]]self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[//---------------------------------------------------------------------
+]]--[[// 1) Preparation de la mission
+]]--[[// On ne s'occupe pas des fuseaux, ce sont ceux de l'unité soutenue
+]]--[[//---------------------------------------------------------------------
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "** Mission soutenir --> " .. DEC_GetSzName( self._namedParams.pionAmi ) .. " **", } )
+                self.ePhaseMission = eSuivreUnite
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// 2) Suivre l'unité, être prêt à passer en appui 
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eSuivreUnite then
+                --[[// Modulation vitesse --> rapide
+]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Deactive sauvegarde pd mission, essaye à tout prix de soutenir si l'ami, lui,
+]]--[[// doit tenir...
+]]--[[//-----------------------------------------------------------------------------
+]]local mission = DEC_GetMission( self._namedParams.pionAmi )
+                if( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Barrer" ) then
+                    Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[//Modifié par LLS 28/02/2007
+]]--[[//behavior BEH_Eni_Pion_INF_DesactiveSauvegarde();
+]]
+                end
+
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Passer en appui des que possible
+]]--[[//-----------------------------------------------------------------------------
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionAmi:DEC_Agent_Position() ) < M_MODELE_PION_INF_DISTANCE_DEBUT_APPUI() ) then
+                    do
+                        --[[//behavior BEH_Dep_Pion_INF_Appuyer( pionAmi );
+]]Activate( self.activations.BEH_Dep_Pion_MILAN_Appuyer, 1, { self._namedParams.pionAmi, } )
+                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
+                                                return
+
+                    end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Suivre unite ami en mesure de passer en appui
+]]--[[//-----------------------------------------------------------------------------   
+]]                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
+                Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, M_MODELE_PION_INF_DISTANCE_MIN_SUIVRE(), } )
+                
+            --[[//---------------------------------------------------------------------
+]]--[[// 3) Fin mission sur ordre
+]]--[[//---------------------------------------------------------------------
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            --[[//M_CheckInvalidPhase( "BEH_Mission_Pion_INF_SoutenirUneUnite", ePhaseMission )
+]]--[[//Modifié par LLS le 28/02/2007
+]]
+            else
+                        end
+
+    end,
+
+    destroy = function( self )
+            end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_MILAN_Appuyer
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Pion_MILAN_Appuyer"
+{
+    activations =
+    {
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ami = self.params[1]
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )--[[//---------------------------------------------------------------------
+]]--[[// Defaut
+]]--[[//---------------------------------------------------------------------
+]]
+        --[[//---------------------------------------------------------------------
+]]--[[// Rejoindre la position d'appui
+]]--[[//---------------------------------------------------------------------
+]]--[[// Pour RC
+]]if( self.eEtat == eActionEffectuee ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "* En appui... *", } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "* Pret a intervenir *", } )
+                                return
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppuiPour, 1.1, setmetatable( { self._namedParams.ami, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_INF_Soutenir = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_MILAN_Appuyer, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_MILAN_Appuyer, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_MILAN_Appuyer, "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour", nodes.BEH_Dep_Pion_INF_RejoindrePositionAppuiPour }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_SoutenirUneUnite, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_SoutenirUneUnite, "BEH_MAJ_Pion_INF_AgressiviteTir", nodes.BEH_MAJ_Pion_INF_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_SoutenirUneUnite, "BEH_MOT_DesactiveSauvegarde", nodes.BEH_MOT_DesactiveSauvegarde }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_SoutenirUneUnite, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_SoutenirUneUnite, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_SoutenirUneUnite, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_SoutenirUneUnite, "BEH_Dep_Pion_MILAN_Appuyer", nodes.BEH_Dep_Pion_MILAN_Appuyer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_SoutenirUneUnite, "BEH_Dep_Suivre", nodes.BEH_Dep_Suivre }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_SoutenirUneUnite, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_Soutenir, "BEH_Mission_Pion_INF_SoutenirUneUnite", nodes.BEH_Mission_Pion_INF_SoutenirUneUnite }

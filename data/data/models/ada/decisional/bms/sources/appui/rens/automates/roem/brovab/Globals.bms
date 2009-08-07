@@ -1,0 +1,43 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roem/brovab/Globals.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 02-11-08 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Rens/Automates/Roem/BROVAB/Globals.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 16:47 $
+]]--[[// $Revision: 6 $
+]]--[[// $Workfile: Globals.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Commun SCIPIO
+]]include "Common/Automates/Globals.bms"
+
+
+--[[// Commun Rens 
+]]include "Appui/Rens/Globals.bms"
+
+
+--[[// Commun automate Rens
+]]include "Appui/Rens/Automates/Common/Globals.bms"
+
+
+--[[// Cder RBRR
+]]include "Appui/Rens/Automates/Roem/Common/Globals.bms"
+
+include "Appui/Rens/Automates/Roem/BROVAB/Parameters.bms"
+
+
+
+--[[//=============================================================================
+]]--[[// Definition des signatures des callbacks C/C++
+]]--[[//=============================================================================
+]]--[[//=============================================================================
+]]--[[// Fonctions
+]]--[[//=============================================================================
+]]--[[//=============================================================================
+]]--[[// variables globales
+]]--[[//=============================================================================
+]]

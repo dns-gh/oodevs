@@ -1,0 +1,48 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/pions/pat reco/missions/ReconnaitreZone.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_NBC_ReconnaitreAxe
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_NBC_ReconnaitreZone"
+{
+    activations =
+    {
+        { "BEH_Mission_Pion_NBC_ReconnaitreZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionImpossible ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------    
+]]Activate( self.activations.BEH_Mission_Pion_NBC_ReconnaitreZone, 1, setmetatable( { self._namedParams.mission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_NBC_ReconnaitreZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_NBC_ReconnaitreZone, "BEH_Mission_Pion_NBC_ReconnaitreZone", nodes.BEH_Mission_Pion_NBC_ReconnaitreZone }

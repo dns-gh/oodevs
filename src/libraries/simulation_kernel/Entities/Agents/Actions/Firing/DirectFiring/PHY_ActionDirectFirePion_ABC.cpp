@@ -17,29 +17,27 @@
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePion_ABC constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType )
-    : PHY_Action_ABC              ( pion, diaCall )
+PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType )
+    : PHY_DecisionCallbackAction_ABC( pion )
     , role_                       ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
-    , diaReturnCode_              (       diaCall.GetParameter( 0 )         )
-    , nTargetKnowledgeID_         ( (uint)diaCall.GetParameter( 1 ).ToPtr  () )
-    , rPercentageComposantesToUse_(  std::max( 0., std::min( 1., (MT_Float)diaCall.GetParameter( 2 ).ToFloat() ) ) )
-    , nFiringMode_                ( (PHY_DirectFireData::E_FiringMode)diaCall.GetParameter( 3 ).ToId() )
+    , pEnemy_                     ( pEnemy )
+    , rPercentageComposantesToUse_( std::max( 0., std::min( 1., percentage ) ) )
+    , nFiringMode_                ( (PHY_DirectFireData::E_FiringMode)firingMode )
     , nComposanteFiringType_      ( nComposanteFiringType )
     , nComposanteFiredType_       ( nComposanteFiredType  )
     , pAmmoDotationClass_         ( 0 )
     , pFireResult_                ( 0 )  
 {
-    assert( DEC_Tools::CheckTypeConnaissanceAgent( diaCall.GetParameter( 1 ) ) );
+    if( ammoDotationClass != -1 ) // $$$$ LDC FIXME Varargs hidden here...
+        pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( ammoDotationClass );
 
-    if( diaCall.GetParameters().GetParameters().size() > 4 )
-        pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( diaCall.GetParameter( 4 ).ToId() );
-
-    diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
+    Callback( role_.GetInitialReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +46,7 @@ PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion,
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePion_ABC::~PHY_ActionDirectFirePion_ABC()
 {
-    diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
+    Callback( role_.GetFinalReturnCode() );
     if( pFireResult_ )
         pFireResult_->DecRef();
 }
@@ -65,8 +63,8 @@ PHY_ActionDirectFirePion_ABC::~PHY_ActionDirectFirePion_ABC()
 void PHY_ActionDirectFirePion_ABC::Execute()
 {
     bool bMustRefResult = ( pFireResult_ == 0 );
-    int nResult = role_.FirePion( nTargetKnowledgeID_, nFiringMode_, rPercentageComposantesToUse_, nComposanteFiringType_, nComposanteFiredType_, pFireResult_, pAmmoDotationClass_ );
-    diaReturnCode_.SetValue( nResult );
+    int nResult = role_.FirePion( pEnemy_, nFiringMode_, rPercentageComposantesToUse_, nComposanteFiringType_, nComposanteFiredType_, pFireResult_, pAmmoDotationClass_ );
+    Callback( nResult );
 
     if( pFireResult_ && bMustRefResult )
         pFireResult_->IncRef();
@@ -78,5 +76,5 @@ void PHY_ActionDirectFirePion_ABC::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionDirectFirePion_ABC::ExecuteSuspended()
 {
-    role_.FirePionSuspended( nTargetKnowledgeID_ );
+    role_.FirePionSuspended( pEnemy_ );
 }

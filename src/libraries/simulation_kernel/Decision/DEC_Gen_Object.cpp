@@ -14,7 +14,7 @@
 
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/MIL_EntityManager.h"
+#include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
 #include "MIL_AgentServer.h"
@@ -23,8 +23,8 @@
 // Name: DEC_Gen_Object constructor
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-DEC_Gen_Object::DEC_Gen_Object( const ASN1T_PlannedWork& asn )
-    : pType_             ( &MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( asn.type ) )
+DEC_Gen_Object::DEC_Gen_Object( const ASN1T_PlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
+    : pType_             ( &entityManager.FindObjectType( asn.type ) )
     , localisation_      ()
     , pObstacleType_     ( asn.type_obstacle )
     , rDensity_          ( asn.densite )
@@ -39,7 +39,7 @@ DEC_Gen_Object::DEC_Gen_Object( const ASN1T_PlannedWork& asn )
 
     if( asn.tc2 != 0 )
     {
-        pTC2_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asn.tc2 );
+        pTC2_ = entityManager.FindAutomate( asn.tc2 );
         if( !pTC2_ )
             throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
     }

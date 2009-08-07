@@ -43,14 +43,12 @@ public:
 
     //! @name Accessors
     //@{
-    const T_KnowledgeAgentVector&      GetDangerousEnemies   ();
-    const T_KnowledgeAgentDiaIDVector& GetDangerousEnemiesIDs();
+    const T_ConstKnowledgeAgentVector& GetDangerousEnemies();
     //@}
 
 private:
     const MIL_AgentPion*              pPion_;
-          T_KnowledgeAgentDiaIDVector dangerousEnemiesIDs_;
-          T_KnowledgeAgentVector      dangerousEnemies_;
+          T_ConstKnowledgeAgentVector dangerousEnemies_;
 };
 
 #endif // __DEC_Knowledge_RapForLocal_h_

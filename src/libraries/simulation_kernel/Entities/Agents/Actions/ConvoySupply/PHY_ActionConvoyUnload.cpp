@@ -18,12 +18,11 @@
 // Name: PHY_ActionConvoyUnload constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionConvoyUnload::PHY_ActionConvoyUnload( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC( pion, diaCall )
+PHY_ActionConvoyUnload::PHY_ActionConvoyUnload( MIL_AgentPion& pion )
+    : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RolePion_Supply >() )
-    , diaReturnCode_( diaCall.GetParameter( 0 ) )
 {    
-    diaReturnCode_.SetValue( false );
+    Callback( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +31,7 @@ PHY_ActionConvoyUnload::PHY_ActionConvoyUnload( MIL_AgentPion& pion, DIA_Call_AB
 // -----------------------------------------------------------------------------
 PHY_ActionConvoyUnload::~PHY_ActionConvoyUnload()
 {
-    diaReturnCode_.SetValue( true );
+    Callback( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +41,7 @@ PHY_ActionConvoyUnload::~PHY_ActionConvoyUnload()
 void PHY_ActionConvoyUnload::Execute()
 {   
     bool bResult = role_.ConvoyUnload();
-    diaReturnCode_.SetValue( bResult );
+    Callback( bResult );
 }
 
 // -----------------------------------------------------------------------------

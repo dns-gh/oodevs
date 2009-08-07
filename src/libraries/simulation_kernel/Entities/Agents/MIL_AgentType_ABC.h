@@ -43,6 +43,9 @@ public:
     virtual bool           IsTerrorist   () const;
     //@}
 
+protected:
+    MIL_AgentType_ABC();
+
 private:
     //! @name Init
     //@{

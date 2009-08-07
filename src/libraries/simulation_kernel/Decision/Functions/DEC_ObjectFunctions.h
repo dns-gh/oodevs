@@ -16,6 +16,8 @@
 
 class MIL_AgentPion;
 class MIL_Automate;
+class DEC_Gen_Object;
+class DEC_Decision_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -28,32 +30,19 @@ public:
 
     //! @name Functions
     //@{
-    template< typename T > static void MagicCreateObject ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void MagicDestroyObject( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void ActivateObject    ( DIA_Call_ABC& call, const T& caller );
-    
-    static void CanObjectTypeBeBypassed        ( DIA_Call_ABC& call );
-    static void CanObjectTypeBeMined           ( DIA_Call_ABC& call );
-    static void CanObjectTypeBeReservedObstacle( DIA_Call_ABC& call );
+    template< typename T > static void MagicCreateObject ( const T& caller, const std::string& type, const TER_Localisation* pLocalisation );
+    template< typename T > static void MagicDestroyObject( const T& caller, int knowledgeId );
+    template< typename T > static bool ActivateObject    ( const T& caller, unsigned int );
 
-    static void GetPrisonerCampPosition( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void GetRefugeeCampPosition ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
 
     // Gen object
-    static void GetGenObjectType             ( DIA_Call_ABC& call );
-    static void GetGenObjectReservedObstacle ( DIA_Call_ABC& call );
-    static void GetGenObjectLocalisation     ( DIA_Call_ABC& call );
-    static void GetGenObjectDensity          ( DIA_Call_ABC& call );
-    static void GetGenObjectPreliminaire     ( DIA_Call_ABC& call );
-    static void GetGenObjectTC2              ( DIA_Call_ABC& call );
-    static void GetGenObjectMinesActivityTime( DIA_Call_ABC& call );
+    static std::string GetGenObjectType             			( const DEC_Gen_Object* object );
+    static bool GetGenObjectReservedObstacle 					( const DEC_Gen_Object* object );
+    static boost::shared_ptr<DEC_Decision_ABC> GetGenObjectTC2	( const DEC_Gen_Object* object );
 
     // Objects
-    static void ConvertTypeObjectToString    ( DIA_Call_ABC& call );
+    static std::string ConvertTypeObjectToString    ( int id );
 
-    // Objectives
-    static void GetObjectiveLocalisation     ( DIA_Call_ABC& call );
-    static void SetObjectiveFlag             ( DIA_Call_ABC& call );
     //@}
 };
 

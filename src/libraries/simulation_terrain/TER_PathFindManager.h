@@ -57,7 +57,7 @@ public:
     //! @name Operations
     //@{
     static TER_PathFindManager& GetPathFindManager();
-    TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue );
+    TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue );
    
     template< typename Functor > void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, Functor& bestNodeFunction ) const;
 

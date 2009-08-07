@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 
-class DIA_Variable_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Army_ABC;
 class MIL_AgentPion;
@@ -31,12 +30,9 @@ class DEC_FunctionsTools
 public:
     //! @name Functions
     //@{
-    static DEC_Knowledge_Population* GetKnowledgePopulationFromDia( const DIA_Variable_ABC& diaVar, const MIL_KnowledgeGroup& caller );
-    static DEC_Knowledge_Agent*      GetKnowledgeAgentFromDia     ( const DIA_Variable_ABC& diaVar, const MIL_KnowledgeGroup& caller );
-    static DEC_Knowledge_Object*     GetKnowledgeObjectFromDia    ( const DIA_Variable_ABC& diaVar, const MIL_Army_ABC& caller );
+    static DEC_Knowledge_Object*     GetKnowledgeObjectFromDia    ( unsigned int nKnowledgeID, const MIL_Army_ABC& caller );
 
-    static MIL_AgentPion*            GetPopulationKnowledgeAgentFromDia ( const DIA_Variable_ABC& diaVar );
-    static MIL_Object_ABC*           GetPopulationKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar );
+    static MIL_Object_ABC*           GetPopulationKnowledgeObjectFromDia( unsigned int nID );
     //@}
 };
 

@@ -120,22 +120,26 @@ void DEC_PopulationKnowledge::Clean()
 // Name: DEC_PopulationKnowledge::GetPionsAttacking
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
-void DEC_PopulationKnowledge::GetPionsAttacking( T_PopulationKnowledgeAgentDiaIDVector& container ) const
+std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsAttacking( ) const
 {
-    container.clear(); container.reserve( attackers_.size() );
+	std::vector< unsigned int > container;
+	container.reserve( attackers_.size() );
     for( CIT_AgentSet it = attackers_.begin(); it != attackers_.end(); ++it )
-        container.push_back( (void*)(**it).GetID() );
+        container.push_back( (**it).GetID() );
+    return container;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::GetPionsSecuring
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------
-void DEC_PopulationKnowledge::GetPionsSecuring( T_PopulationKnowledgeAgentDiaIDVector& container ) const
+std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring( ) const
 {
-    container.clear(); container.reserve( securers_.size() );
+	std::vector< unsigned int > container;
+	container.reserve( securers_.size() );
     for( CIT_AgentSet it = securers_.begin(); it != securers_.end(); ++it )
-        container.push_back( (void*)(**it).GetID() );
+        container.push_back( (**it).GetID() );
+    return container;
 }
 
 // -----------------------------------------------------------------------------

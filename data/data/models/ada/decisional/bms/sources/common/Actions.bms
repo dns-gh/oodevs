@@ -1,0 +1,113 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/Actions.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// ACT_Warning
+]]--[[// 
+]]--[[// Commentaires: temps en minutes
+]]--[[// *****************************************************************************
+]]node "ACT_Warning"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeRC = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Warning( self._namedParams.typeRC )
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Delai
+]]--[[// 
+]]--[[// Commentaires: le premier paramètre correspond à l'id du chronometre.
+]]--[[//               il est donc possible d'avoir deux chronomètres dans un meme 
+]]--[[//               comportement avec le meme delai
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Delai"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.id = self.params[1]
+        self._namedParams.rDelai = self.params[2]
+    end,
+
+    select = function( self )
+        do
+            do
+                self.rTempsDebut = self.rTempsDebut or DEC_TempsSim()
+                if( ModuleBegins() ) then
+                    do
+                    end
+                end
+
+                do
+                end
+
+                if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
+                    do
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Info_Trace
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Info_Trace"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.message = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Trace( self._namedParams.message )
+        end
+
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_AFFICHE_EtatDecisionnel
+]]--[[// 
+]]--[[// Commentaires:POUR AFFICHAGE, Rajout  ADA
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_AFFICHE_EtatDecisionnel"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.cle = self.params[1]
+        self._namedParams.valeur = self.params[2]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_DecisionalState( self._namedParams.cle, self._namedParams.valeur )
+        end
+
+    end,
+
+}
+

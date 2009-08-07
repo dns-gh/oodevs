@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roim/common/Functions SMO.bms"] = true
+
+include "bit.lua"
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Fonctions de scripts communes aux SMO
+]]--[[//-----------------------------------------------------------------------------
+]]function S_Misc_Pion_Rens_ObtenirDronesAssignes( )
+    local _returnValue = {}
+    local selTemp = {}
+    local listePions = DEC_Pion_PionsSansPC()
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == "Drone_CL289" or pion:GetType() == "Drone_SDTI" ) then
+                DIA_PushFront( selTemp, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = selTemp
+    return _returnValue
+end
+
+function S_Misc_Pion_Rens_ObtenirDronesDisponibles( )
+    local _returnValue = {}
+    local selTemp = {}
+    local listePions = DEC_Pion_PionsSansPC()
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == "Drone_CL289" or pion:GetType() == "Drone_SDTI" ) then
+                do
+                    local pionDrone = x
+                    if( not pionDrone:GetbMiseEnOeuvre_() and not pionDrone:GetbEnExploitation_() ) then
+                        DIA_PushFront( selTemp, pion )
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+    _returnValue = selTemp
+    return _returnValue
+end
+

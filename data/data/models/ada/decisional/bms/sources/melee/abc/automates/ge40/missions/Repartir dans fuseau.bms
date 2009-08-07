@@ -1,0 +1,323 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/Repartir dans fuseau.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_RepartirDansFuseaux
+]]--[[// 
+]]--[[// Commentaires: à factoriser en passant Echelon en paramètre
+]]--[[//               ...à faire: appuis--> DLO, TC2, génie
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_GTIA_RepartirDansFuseaux"
+{
+    activations =
+    {
+        { "BEH_GTIA_RepartirPionsMeleeDansFuseaux", {} },
+        { "BEH_GTIA_RepartirPionsDansFuseaux", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listeObjectifs = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux PE : melee
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsPE = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ) )
+        local listePionsMeleePE = S_Cherche_GE_Filtre_TypeAutomate_Melee( listePionsPE )
+        Activate( self.activations.BEH_GTIA_RepartirPionsMeleeDansFuseaux, 1, { listePionsMeleePE, self._namedParams.listeObjectifs, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux SE : melee
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsSE = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ) )
+        local listePionsMeleeSE = S_Cherche_GE_Filtre_TypeAutomate_Melee( listePionsSE )
+        Activate( self.activations.BEH_GTIA_RepartirPionsMeleeDansFuseaux, 1, { listePionsMeleeSE, self._namedParams.listeObjectifs, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux Ecl:EEI/PER
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsTemp = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) ) )
+        local listePionsEcl = S_Cherche_GE_Filtre_TypeAutomate_Eclairage( listePionsTemp )
+        Activate( self.activations.BEH_GTIA_RepartirPionsDansFuseaux, 1, { listePionsEcl, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux TC2 (pions log)
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsLog = S_Cherche_GE_Filtre_TypeAutomate_Log( listePionsSE )
+        Activate( self.activations.BEH_GTIA_RepartirPionsDansFuseaux, 1, { listePionsLog, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Fuseaux Genie
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsGenie = S_Cherche_GE_Filtre_TypeAutomate_Genie( listePionsSE )
+        Activate( self.activations.BEH_GTIA_RepartirPionsDansFuseaux, 1, { listePionsGenie, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_RepartirPionsDansFuseaux
+]]--[[// 
+]]--[[// Commentaires: répartition simple
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_RepartirPionsDansFuseaux"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerFuseau", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
+            return
+        end
+
+        self.fuseaux = self.fuseaux or DEC_DecouperFuseau( #( self._namedParams.listePions ) )
+        local itFuseau = 0
+        for _,pion in pairs( self._namedParams.listePions ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( self.fuseaux, itFuseau ), } )
+                                itFuseau = itFuseau + 1
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_RepartirPionsMeleeDansFuseaux
+]]--[[// 
+]]--[[// Commentaires:ici competition ABC/INF entre terrain eni délais etc.
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_RepartirPionsMeleeDansFuseaux"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain", {} },
+        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques", {} },
+        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsMelee = self.params[1]
+        self._namedParams.listeObjectifs = self.params[2]
+    end,
+
+    activate = function( self )
+        if( DIA_IsListEmpty( self._namedParams.listePionsMelee ) ) then
+            return
+        end
+
+        self.fuseaux = self.fuseaux or DEC_DecouperFuseau( #( self._namedParams.listePionsMelee ) )
+        Activate( self.activations.BEH_GTIA_AssignerFuseauMeleeSuivantTerrain, g_rRapTerrainComp, { self._namedParams.listePionsMelee, self.fuseaux, } )
+        Activate( self.activations.BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques, g_rRapEniEmbarques, { self._namedParams.listePionsMelee, self.fuseaux, } )
+        Activate( self.activations.BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques, g_rRapEniDebarques, { self._namedParams.listePionsMelee, self.fuseaux, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerFuseauMeleeSuivantTerrain
+]]--[[// 
+]]--[[// Commentaires: R--> ABC fuseau ouvert / Inf --> fuseau compartimenté
+]]--[[//               définis comme comportement par defaut
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerFuseau", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsMelee = self.params[1]
+        self._namedParams.fuseaux = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[// Copie
+]]self.fuseauxTries = self.fuseauxTries or DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain( self._namedParams.fuseaux )
+        local listePionsABC = S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePionsMelee )
+        local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
+        local itFuseau = 0
+        for _,pion in pairs( --[[// Inf dans fuseau plus "fermés"
+]]listePionsINF ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( self.fuseauxTries, itFuseau ), } )
+                                itFuseau = itFuseau + 1
+            end
+--[[// ABC dans les fuseaux au terrain les plus "ouverts"
+]]
+        end
+
+        for _,pion in pairs( listePionsABC ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( self.fuseauxTries, itFuseau ), } )
+                                itFuseau = itFuseau + 1
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques
+]]--[[// 
+]]--[[// Commentaires: R--> ABC fuseau ouvert / Inf --> fuseau compartimenté
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerFuseau", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsMelee = self.params[1]
+        self._namedParams.fuseaux = self.params[2]
+    end,
+
+    activate = function( self )
+        local fuseauxTries = DEC_Rens_TrierFuseauxSelonPresenceEnnemisDebarques( self._namedParams.fuseaux )
+        local listePionsABC = S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePionsMelee )
+        local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
+        --[[// A VIRER 
+]]if( DIA_IsListEmpty( listePionsABC ) or DIA_IsListEmpty( listePionsINF ) ) then
+            return
+        end
+
+        local itFuseau = 0
+        for _,pion in pairs( --[[// ABC dans les fuseaux "enis embarques"
+]]listePionsABC ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( fuseauxTries, itFuseau ), } )
+                                itFuseau = itFuseau + 1
+            end
+--[[// Inf dans fuseaux "eni debarques"
+]]
+        end
+
+        for _,pion in pairs( listePionsINF ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( fuseauxTries, itFuseau ), } )
+                                itFuseau = itFuseau + 1
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques
+]]--[[// 
+]]--[[// Commentaires: R--> ABC fuseau ouvert / Inf --> fuseau compartimenté
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerFuseau", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsMelee = self.params[1]
+        self._namedParams.fuseaux = self.params[2]
+    end,
+
+    activate = function( self )
+        local fuseauxTries = DEC_Rens_TrierFuseauxSelonPresenceEnnemisEmbarques( self._namedParams.fuseaux )
+        local listePionsABC = S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePionsMelee )
+        local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
+        --[[// A VIRER 
+]]if( DIA_IsListEmpty( listePionsABC ) or DIA_IsListEmpty( listePionsINF ) ) then
+            return
+        end
+
+        local itFuseau = 0
+        for _,pion in pairs( --[[// Inf dans fuseaux "eni debarques"
+]]listePionsINF ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( fuseauxTries, itFuseau ), } )
+                                itFuseau = itFuseau + 1
+            end
+--[[// ABC dans les fuseaux "enis embarques"
+]]
+        end
+
+        for _,pion in pairs( listePionsABC ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( fuseauxTries, itFuseau ), } )
+                                itFuseau = itFuseau + 1
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerFuseau
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_GTIA_AssignerFuseau"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.fuseau = self.params[2]
+    end,
+
+    select = function( self )
+        if( DIA_GetLocalFakeActuator( self._namedParams.pion ) < GetActivity() ) then
+            do
+                DIA_SetLocalFakeActuator( self._namedParams.pion, GetActivity() )
+                F_Automat_Setfuseau( self._namedParams.pion, self._namedParams.fuseau )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques, "ACT_GTIA_AssignerFuseau", nodes.ACT_GTIA_AssignerFuseau }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques, "ACT_GTIA_AssignerFuseau", nodes.ACT_GTIA_AssignerFuseau }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerFuseauMeleeSuivantTerrain, "ACT_GTIA_AssignerFuseau", nodes.ACT_GTIA_AssignerFuseau }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirDansFuseaux, "BEH_GTIA_RepartirPionsMeleeDansFuseaux", nodes.BEH_GTIA_RepartirPionsMeleeDansFuseaux }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirDansFuseaux, "BEH_GTIA_RepartirPionsDansFuseaux", nodes.BEH_GTIA_RepartirPionsDansFuseaux }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirPionsDansFuseaux, "ACT_GTIA_AssignerFuseau", nodes.ACT_GTIA_AssignerFuseau }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirPionsMeleeDansFuseaux, "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain", nodes.BEH_GTIA_AssignerFuseauMeleeSuivantTerrain }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirPionsMeleeDansFuseaux, "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques", nodes.BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_RepartirPionsMeleeDansFuseaux, "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques", nodes.BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques }

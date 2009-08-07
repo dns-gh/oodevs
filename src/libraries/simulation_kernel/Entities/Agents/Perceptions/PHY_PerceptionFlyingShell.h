@@ -41,9 +41,9 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    void* AddLocalisation        ( const TER_Localisation& );
-    void  RemoveLocalisation     ( void* );
-    bool  HasLocalisationToHandle() const;
+    int  AddLocalisation        ( const TER_Localisation& );
+    void RemoveLocalisation     ( int );
+    bool HasLocalisationToHandle() const;
     //@}
 
     //! @name Execution
@@ -59,11 +59,14 @@ private:
     typedef T_ZoneVector::const_iterator           CIT_ZoneVector;
 
     typedef std::set< const MIL_Effect_IndirectFire* > T_FlyingShellSet;
+
+    typedef std::map< int, const TER_Localisation* > T_PerceptionIdMap;
     //@}
 
 private:
-    T_ZoneVector     zones_;
-    T_FlyingShellSet lastPerceivedFlyingShells_;
+    T_ZoneVector      zones_;
+    T_FlyingShellSet  lastPerceivedFlyingShells_;
+    T_PerceptionIdMap ids_;
 
 private:
     static MT_Float rRadius_;

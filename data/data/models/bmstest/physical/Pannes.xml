@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<breakdowns>
+  <diagnosis time="180s"/>
+  <category name="NTI1">
+    <breakdown average-repairing-time="600s" id="1" name="Panne 1" type="M" variance="180s">
+    </breakdown>
+  </category>
+</breakdowns>

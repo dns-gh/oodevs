@@ -43,8 +43,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , rCurrentSpeed_     ( 0. )
     , rWalkedDistance_   ( 0. )
     , bForcePathCheck_   ( true )
-    , bHasMoved_         ( false )  
-    , pCurrentPath_      ( 0 )
+    , bHasMoved_         ( false )
 {
 
 }
@@ -68,7 +67,7 @@ DEC_PathWalker::~DEC_PathWalker()
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const
 {
-    if( !pCurrentPath_ )
+    if( !pCurrentPath_.get() )
         return false;
     return pCurrentPath_->ComputeFutureObjectCollision( vStartPos, objectsToTest, rDistance, pObject );
 }
@@ -79,7 +78,7 @@ bool DEC_PathWalker::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::IsMovingOn( const DEC_Path_ABC& path ) const
 {
-    return pCurrentPath_ ? path == *pCurrentPath_ : false;
+    return pCurrentPath_.get() ? path == *pCurrentPath_ : false;
 }
 
 //-----------------------------------------------------------------------------
@@ -88,7 +87,7 @@ bool DEC_PathWalker::IsMovingOn( const DEC_Path_ABC& path ) const
 //-----------------------------------------------------------------------------
 MT_Vector2D DEC_PathWalker::ExtrapolatePosition( const MT_Vector2D& position, const MT_Float rSpeed, const MT_Float rTime, const bool bBoundOnPath ) const
 {
-    if( !pCurrentPath_ )
+    if( !pCurrentPath_.get() )
         return movingEntity_.GetPosition();
     return pCurrentPath_->GetFuturePosition( position, rTime * rSpeed, bBoundOnPath );
 }
@@ -141,23 +140,20 @@ void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
 // Name: DEC_PathWalker::SetCurrentPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::SetCurrentPath( DEC_PathResult& path )
+bool DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    if( pCurrentPath_ && path == *pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RolePion_Location >().HasDoneMagicMove()*/ )
+    if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RolePion_Location >().HasDoneMagicMove()*/ )
         return true;
 
-    if( pCurrentPath_ )
-        pCurrentPath_->DecRef();
-    pCurrentPath_ = &path;
-    pCurrentPath_->IncRef();
+    pCurrentPath_ = pPath;
 
-    path.InsertDecPoints(); // $$$ HIDEUX
+    pPath->InsertDecPoints(); // $$$ HIDEUX
     movingEntity_.NotifyCurrentPathChanged();
     bForcePathCheck_ = false;
 
-    assert( !path.GetResult().empty() );
-    itCurrentPathPoint_ = path.GetCurrentKeyOnPath( movingEntity_.GetPosition() );
-    if( itCurrentPathPoint_ == path.GetResult().end() )
+    assert( !pPath->GetResult().empty() );
+    itCurrentPathPoint_ = pPath->GetCurrentKeyOnPath( movingEntity_.GetPosition() );
+    if( itCurrentPathPoint_ == pPath->GetResult().end() )
         return false;
 
     if( pCurrentPath_->GetState() == DEC_PathResult::ePartial )
@@ -165,7 +161,7 @@ bool DEC_PathWalker::SetCurrentPath( DEC_PathResult& path )
 
     itNextPathPoint_ = itCurrentPathPoint_;   
     ++itNextPathPoint_;
-    InitializeEnvironment( path );
+    InitializeEnvironment( *pPath );
     return true;
 }
 
@@ -383,12 +379,12 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
 // Created: NLD 2004-09-22
 // Modified: JVT 2004-10-20
 // -----------------------------------------------------------------------------
-int DEC_PathWalker::Move( DEC_PathResult& path )
+int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
 {
     if( bHasMoved_ ) 
         return eAlreadyMoving;
 
-    DEC_PathResult::E_State nPathState = path.GetState();
+    DEC_PathResult::E_State nPathState = pPath->GetState();
     if( nPathState == DEC_Path_ABC::eInvalid || nPathState == DEC_Path_ABC::eImpossible || nPathState == DEC_Path_ABC::eCanceled )
         return eNotAllowed;
     
@@ -398,7 +394,7 @@ int DEC_PathWalker::Move( DEC_PathResult& path )
         return eRunning;
     }
     
-    if( !SetCurrentPath( path ) )
+    if( !SetCurrentPath( pPath ) )
         return eItineraireMustBeJoined;
 
     bHasMoved_ = true;
@@ -413,7 +409,7 @@ int DEC_PathWalker::Move( DEC_PathResult& path )
         return eNotAllowed;
     }
 
-    if( itNextPathPoint_ == path.GetResult().end() )
+    if( itNextPathPoint_ == pPath->GetResult().end() )
     {
         rCurrentSpeed_ = 0.;
         return eFinished;
@@ -435,7 +431,7 @@ int DEC_PathWalker::Move( DEC_PathResult& path )
     {
         const MT_Vector2D vPosBeforeMove( vNewPos_ );
         
-        if( !TryToMoveTo( path, (*itNextPathPoint_)->GetPos(), rTimeRemaining ) )
+        if( !TryToMoveTo( *pPath, (*itNextPathPoint_)->GetPos(), rTimeRemaining ) )
         {
             rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
             return eRunning;
@@ -443,11 +439,11 @@ int DEC_PathWalker::Move( DEC_PathResult& path )
 
         rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
 
-        bool bStopOnInterestingPoint = GoToNextNavPoint( path );
+        bool bStopOnInterestingPoint = GoToNextNavPoint( *pPath );
         if( bStopOnInterestingPoint )
             return eRunning;
 
-        if( itNextPathPoint_ == path.GetResult().end() )
+        if( itNextPathPoint_ == pPath->GetResult().end() )
         {
             rCurrentSpeed_ = 0;
             return eFinished;
@@ -465,11 +461,11 @@ int DEC_PathWalker::Move( DEC_PathResult& path )
 // Name: DEC_PathWalker::MoveSuspended
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void DEC_PathWalker::MoveSuspended( DEC_PathResult& path )
+void DEC_PathWalker::MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    assert( pCurrentPath_ || bForcePathCheck_ );
+    assert( pCurrentPath_.get() || bForcePathCheck_ );
 
-    if( pCurrentPath_ && *pCurrentPath_ == path ) 
+    if( pCurrentPath_.get() && pCurrentPath_ == pPath ) 
         bForcePathCheck_ = true;
 }
 
@@ -477,12 +473,11 @@ void DEC_PathWalker::MoveSuspended( DEC_PathResult& path )
 // Name: DEC_PathWalker::MoveCanceled
 // Created: NLD 2005-03-16
 // -----------------------------------------------------------------------------
-void DEC_PathWalker::MoveCanceled( DEC_PathResult& path )
+void DEC_PathWalker::MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    if( pCurrentPath_ == &path )
+    if( pCurrentPath_ == pPath )
     {
-        pCurrentPath_->DecRef();
-        pCurrentPath_ = 0;
+        pCurrentPath_.reset();
         bForcePathCheck_ = true;
     }
 }
@@ -518,7 +513,7 @@ void DEC_PathWalker::SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentType& msg
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::SerializeCurrentPath( ASN1T_Path& asn ) const
 {
-    if( !pCurrentPath_ )
+    if( !pCurrentPath_.get() )
         return false;
 
     pCurrentPath_->Serialize( asn );

@@ -1,0 +1,90 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missionsreactionpopulations/controlerpopulationsdanszone/MRT - ControlerPopulationsDansZone.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_ControlerPopulationsDansZone
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_ControlerPopulationsDansZone"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.points = self.points or DEC_Geometrie_CreerListePoints()
+        self.listePions = self.listePions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+        if( ModuleBegins() ) then
+            do
+                if( DIA_IsListEmpty( self._namedParams.mission.zones_ ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( DIA_IsListEmpty( self.listePions ) ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                    end
+                end
+
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eValidationMRT == eActionImpossible ) then
+                    do
+                        DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+                end
+
+                if( self.eValidationMRT == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[// Assigner interdire franchissement
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe, 1, { ePhase_MRT, self.listePions, self._namedParams.mission.zones_, } )
+                
+            elseif switch_1 == eMRT_MissionImpossible then
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ControlerPopulationsDansZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ControlerPopulationsDansZone, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ControlerPopulationsDansZone, "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe", nodes.BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe }

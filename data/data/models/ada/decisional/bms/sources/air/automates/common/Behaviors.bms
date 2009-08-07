@@ -1,0 +1,50 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/automates/common/Behaviors.bms"] = true
+
+--[[//génériques automates scipio
+]]include "Common/Automates/Behaviors.bms"
+
+--[[// *****************************************************************************
+]]--[[// Comportement par défaut.
+]]--[[// *****************************************************************************
+]]node "BEH_Defaut"
+{
+    activations =
+    {
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
+        { "BEH_ROE_Automate_GererOrdre", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        self.listePionsAvecPC = self.listePionsAvecPC or {}--[[// variables persistantes
+]]
+        --[[// variables locales    
+]]self.listePionsAvecPC = DEC_Automate_PionsAvecPC()
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )
+        if( DEC_Automate_EstEmbraye() ) then
+            do
+                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_RC_Automate_Situation", nodes.BEH_RC_Automate_Situation }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc_Automate_GererAlerteNiv4", nodes.BEH_Nbc_Automate_GererAlerteNiv4 }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE_Automate_GererOrdre", nodes.BEH_ROE_Automate_GererOrdre }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens_Automate_GererSilenceRadio", nodes.BEH_Rens_Automate_GererSilenceRadio }

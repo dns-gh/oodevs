@@ -34,8 +34,6 @@
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
-#include "DIA/DIA_Tool_Archive_lib.h"
-#include "DIA/DIA_SDK_Manager.h"
 #include <xeumeuleu/xml.h>
 #include "tools/InputBinaryStream.h"
 #include <boost/filesystem/operations.hpp>
@@ -57,11 +55,8 @@ namespace
 // Last modified: JVT 02-09-16
 //-----------------------------------------------------------------------------
 DEC_Workspace::DEC_Workspace( MIL_Config& config )
-    : pFuncTable_     ( 0 )
-    , pFunctionCaller_( 0 )
 {
     MT_LOG_INFO_MSG( "Initializing decision" );
-    DIA_SDK_Manager::InitializeSDK();
     modelTypes_[strUnits] = &pionModels_;
     modelTypes_[strAutomats] = &automateModels_;
     modelTypes_[strPopulation] = &populationModels_;
@@ -78,122 +73,12 @@ DEC_Workspace::DEC_Workspace( MIL_Config& config )
 //-----------------------------------------------------------------------------
 DEC_Workspace::~DEC_Workspace()
 {
-    DIA_SDK_Manager::TerminateSDK();
-
-    delete pFuncTable_;
-    delete pFunctionCaller_;
     for( CIT_ModelMap it = automateModels_.begin(); it != automateModels_.end(); ++it )
         delete it->second;
     for( CIT_ModelMap it = pionModels_.begin(); it != pionModels_.end(); ++it )
         delete it->second;
     for( CIT_ModelMap it = populationModels_.begin(); it != populationModels_.end(); ++it )
         delete it->second;
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Workspace::RegisterDIA_Functions
-// Created: AGN 03-01-30
-//-----------------------------------------------------------------------------
-// static
-void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* pFuncTable )
-{
-    // Geometry
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitListPoints                     , "DEC_Geometrie_DecouperListePoints"               );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeCoverPosition                , "DEC_Geometrie_CalculerPositionCouverture"        );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAgentsBarycenter             , "DEC_Geometrie_CalculerBarycentreAgents"          );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePosition                   , "DEC_Geometrie_PositionTranslate"                 );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePositionInDirection        , "DEC_Geometrie_PositionTranslateDir"              );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComparePositions                    , "DEC_Geometrie_PositionsEgales"                   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::Distance                            , "DEC_Geometrie_Distance"                          );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertPointToLocalisation          , "DEC_Geometrie_ConvertirPointEnLocalisation"      );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPointInsideLocalisation           , "DEC_Geometrie_EstPointDansLocalisation"          );    
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateLocalisation                  , "DEC_Geometrie_CreerLocalisation"                 );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateListPoint                     , "DEC_Geometrie_CreerListePoints"                  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreatePoint                         , "DEC_Geometrie_CreerPoint"                        );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateDirection                     , "DEC_Geometrie_CreerDirection"                    );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateOrthoDirection                , "DEC_Geometrie_CreerDirectionPerpendiculaire"     );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ReverseDirection                    , "DEC_Geometrie_InverseDirection"                  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndReverseDirection             , "DEC_Geometrie_CopieEtInverseDirection"           );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndRotateDirection              , "DEC_Geometrie_CopieEtRotateDirection"            );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeDistanceFromMiddleLine       , "DEC_Geometrie_CalculerDistanceLigneMoyenne"      );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationBarycenter       , "DEC_Geometrie_CalculerBarycentreLocalisation"    );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeMeanDirection                , "DEC_Geometrie_DirectionMoyenne"                  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointOnCircle          , "DEC_Geometrie_PositionAleatoireSurCercle"        );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointInCircle          , "DEC_Geometrie_PositionAleatoireDansCercle"       );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateCircleLocalisation            , "DEC_Geometrie_CreerLocalisationCercle"           );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPionCoordinated                   , "DEC_Geometrie_PionEstCoordonne"                  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau   , "DEC_Geometrie_PourcentageTerrainCompartimente"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau     , "DEC_Geometrie_PourcentageTerrainOuvert"          );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone     , "DEC_Geometrie_PourcentageZoneTerrainCompartimente"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone       , "DEC_Geometrie_PourcentageZoneTerrainOuvert"          );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening  , "DEC_Geometrie_TrierZonesSelonOuvertureTerrain"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening, "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertFuseauToLocalisation         , "DEC_Geometrie_ConvertirFuseauEnLocalisation"     );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::GetNextObjectiveInFuseau            , "DEC_Geometrie_ProchainObjectifDansFuseau"        );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAreaInZone                   , "DEC_Geometrie_CalculerZoneAutourPointDansFuseau" );
-
-    // Time management
-    // $$$$ AGE 2007-10-11: Un seul temps
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::GetSimTime         , "DEC_TempsSim"        );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::GetRealTime        , "DEC_TempsReel"       );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::IsNight            , "DEC_Nuit"            );
-
-    // Parameters copy
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPoint                     , "DEC_Copie_Point"                              );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyListPoint                 , "DEC_Copie_ListePoints"                        );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPointToListPoint          , "DEC_Copie_PointDansListePoints"               );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisation              , "DEC_Copie_Localisation"                       );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocationList              , "DEC_Copie_ListeLocalisations"                 );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisationToLocationList, "DEC_Copie_LocalisationDansListeLocalisations" );
-
-    // User type lists manipulation
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_GetAt   , "DEC_UserTypeList_GetAt"     );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_Contains, "DEC_UserTypeList_Contient"  );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_PushBack, "DEC_UserTypeList_PushBack"  );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_Remove  , "DEC_UserTypeList_Remove"    );
-
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_GetAt      , "DEC_ListePoints_GetAt"      );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_Size       , "DEC_ListePoints_Size"       );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_PushBack   , "DEC_ListePoints_PushBack"   );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_Remove     , "DEC_ListePoints_Remove"     );
-    // DIA Thing management
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CreateDIAThing         , "DEC_CreerDIAThing"    );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::DestroyDIAThing         , "DEC_DetruireDIAThing" );
-
-    // Logistic
-    pFuncTable->RegisterFunction( DEC_LogisticFunctions::HasWoundedHumansToEvacuate       , "DEC_NecessiteEvacuationBlesses"            );
-    pFuncTable->RegisterFunction( DEC_LogisticFunctions::EvacuateWoundedHumansToTC2       , "DEC_EvacuerBlessesVersTC2"                 );
-    pFuncTable->RegisterFunction( DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation, "DEC_InterdireEvacuationAutomatiqueBlesses" );
-    pFuncTable->RegisterFunction( DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation , "DEC_AutoriserEvacuationAutomatiqueBlesses" );
-
-    // Gen objects
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectType             , "DEC_GenObject_Type"               );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectLocalisation     , "DEC_GenObject_Localisation"       );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectDensity          , "DEC_GenObject_Densite"            );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectReservedObstacle , "DEC_GenObject_TypeObstacleManoeuvre" );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectTC2              , "DEC_GenObject_TC2"                );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectMinesActivityTime, "DEC_GenObject_DelaiActiviteMines" );
-
-    // Objectives
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetObjectiveLocalisation     , "DEC_Objectif_Localisation" );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::SetObjectiveFlag             , "DEC_Objectif_Flag"         );
-    
-    // Objects
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::ConvertTypeObjectToString    , "S_TypeObject_ToString" );
-
-    //Rep_Points
-    pFuncTable->RegisterFunction( DEC_PathFunctions::GetRepPoint     , "DEC_GetRepPoint" ); //point_
-    pFuncTable->RegisterFunction( DEC_PathFunctions::IsAvantPoint    , "DEC_IsAvantPoint" ); //cls_
-    pFuncTable->RegisterFunction( DEC_PathFunctions::IsPoint         , "DEC_IsPoint" ); //cls_
-    pFuncTable->RegisterFunction( DEC_PathFunctions::GetTypePoint    , "DEC_GetTypePoint" ); //eType_
-    pFuncTable->RegisterFunction( DEC_PathFunctions::GetDestPoint    , "DEC_GetDestPoint" ); //dest_
-    pFuncTable->RegisterFunction( DEC_PathFunctions::GetTypeLimaPoint, "DEC_GetTypeLimaPoint" ); //nTypeLima_
-    pFuncTable->RegisterFunction( DEC_PathFunctions::GetLimaPoint    , "DEC_GetLimaPoint" ); //lima_
-
-    // Debug
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::PointToString    , "DEC_PointToString"      );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::DirectionToString, "DEC_DirectionToString"  );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::PathToString     , "DEC_ItineraireToString" );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,76 +145,6 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
     xisDecisional >> xml::end();
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Workspace::InitializeDIATypes
-// Created: NLD 2005-04-11
-// -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeDIATypes( xml::xistream& xis, bool& bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
-{
-    MT_LOG_INFO_MSG( "\tReading DIA types" );
-
-    std::string    strErrors;
-    T_StringVector openedFiles;
-    std::string strScript;
-    xis >> xml::content( "DIATypes", strScript );
-
-    if( bUseOnlyDIAArchive )
-    {
-        if( !DIA_ReadScript_TypesBin( strScript, strBinaryPath + "/type.model", strErrors, openedFiles ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading type file", strErrors );
-    }
-    else
-    {
-        // Check if the script files has been modified
-        std::string strOpenedFileArchiveName = strBinaryPath + "/type.files";
-        bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
-
-        if( !DIA_ReadScript_Types( strScript, strBinaryPath + "/type.model", strErrors, openedFiles ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing types files" ) + strScript, strErrors );
-
-        // Updating opened files archive
-        MT_FlatBinaryOutputArchive openedFilesArchive;
-        openedFilesArchive << openedFiles.size();
-        for( IT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
-            openedFilesArchive << it->erase( 0, DIA_Workspace::Instance().GetWorkingDirectory().size() );
-        openedFilesArchive.WriteToFile( strOpenedFileArchiveName, true );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Workspace::InitializeDIAWorkspace
-// Created: NLD 2005-04-11
-// -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeDIAWorkspace( xml::xistream& xis, bool& bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
-{
-    MT_LOG_INFO_MSG( "\tReading DIA Workspace" );
-
-    std::string    strErrors;
-    T_StringVector openedFiles;
-    std::string strScript;
-    xis >> xml::content( "DIAWorkspace", strScript );
-    if( bUseOnlyDIAArchive )
-    {
-        if( !DIA_ReadScript_WorkspaceBin( strScript, strBinaryPath + "/workspace.model", strErrors, openedFiles ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading workspace file", strErrors );
-    }
-    else
-    {
-        std::string strOpenedFileArchiveName = strBinaryPath + "/workspace.files";
-        bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
-
-        if( !DIA_ReadScript_Workspace( strScript, strBinaryPath + "/workspace.model", strErrors, openedFiles ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing workspace file " ) + strScript, strErrors );
-
-        // Updating opened files archive
-        MT_FlatBinaryOutputArchive openedFilesArchive;
-        openedFilesArchive << openedFiles.size();
-        for( IT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
-            openedFilesArchive << it->erase( 0, DIA_Workspace::Instance().GetWorkingDirectory().size() );
-        openedFilesArchive.WriteToFile( strOpenedFileArchiveName, true );
-    }
-}
-
 //-----------------------------------------------------------------------------
 // Name: DEC_Workspace::InitializeDIA
 // Created: JVT 02-07-08
@@ -342,96 +157,18 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     xml::xifstream xis( strDecFile );
     config.AddFileToCRC( strDecFile );
     xis >> xml::start( "decisional" );
-    std::string strBinaryPath, strSourcePath;
-    xis >> xml::content( "RepertoireBinaires", strBinaryPath )
-        >> xml::content( "RepertoireSources" , strSourcePath );
-    strBinaryPath = config.BuildDecisionalChildFile( strBinaryPath );
+    std::string strSourcePath;
+    xis >> xml::content( "RepertoireSources" , strSourcePath );
     strSourcePath = config.BuildDecisionalChildFile( strSourcePath );
 
-    // Force "use binary only" if the sources directory doesn't exist
-    bool bUseOnlyDIAArchive = config.UseOnlyDIAArchive();
-    if( !bUseOnlyDIAArchive && !boost::filesystem::exists( strSourcePath ) )
-    {
-        MT_LOG_INFO_MSG( "DirectIA scripts sources directory not present - trying to load binary models" );
-        bUseOnlyDIAArchive = true;
-    }
-
-    DIA_Workspace::Instance().SetWorkingDirectory( strSourcePath );
-    MT_LOG_INFO_MSG( MT_FormatString( "DirectIA scripts sources base directory : %s", strSourcePath.c_str() ) );
-    MT_MakeDir( strBinaryPath                  );
-    MT_MakeDir( strBinaryPath + "/automats"    );
-    MT_MakeDir( strBinaryPath + "/units"       );
-    MT_MakeDir( strBinaryPath + "/populations" );
-    MT_MakeDir( strSourcePath + "/debug"       );
-    MT_MakeDir( strSourcePath + "/debug/automats"    );
-    MT_MakeDir( strSourcePath + "/debug/units"       );
-    MT_MakeDir( strSourcePath + "/debug/populations" );    
-
-    DIA_Workspace::Instance().RegisterDebugInfoGenerator( DIA_CreateDebugInfoGenerator( "/debug/workspace.ddi" ) );
-    DIA_Workspace::Instance().RegisterGarbageCollector  ( DEC_Tools::ManageDeletion );
-    DIA_SetParsingOptions( eParsingOption_Default );
- 
-    //$$$$$$$ NLD ??
-    // test if an older workspace debug file exist
-    MT_File workspaceDebugFile;
-    if( workspaceDebugFile.Open( strSourcePath + "/debug/workspace.ddi", "rb" ) )
-    {
-        workspaceDebugFile.Close();
-        DIA_Workspace::Instance().ReadDebugFile();
-    }
-    //$$$$$$$ NLD ??
-
-    bool bNeedScriptParsing = false;//!MIL_AgentServer::GetWorkspace().GetConfig().UseDIAArchive();
-
-    MT_LOG_INFO_MSG( "Initializing DIA" );
-    InitializeDIATypes    ( xis, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath );
-    InitializeDIAWorkspace( xis, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath );
-
-    DEC_Tools                ::InitializeDIA();
-    DEC_PopulationDecision   ::InitializeDIA();
-    DEC_AutomateDecision     ::InitializeDIA();
-    DEC_RolePion_Decision    ::InitializeDIA();
-    DEC_Rep_PathPoint        ::InitializeDIA();
-    DEC_Rep_PathPoint_Front  ::InitializeDIA();
-    DEC_Rep_PathPoint_Special::InitializeDIA();
-    DEC_Rep_PathPoint_Lima   ::InitializeDIA();
-    MIL_PionMission          ::InitializeDIA();
-    MIL_AutomateMission      ::InitializeDIA();
-    MIL_PopulationMission    ::InitializeDIA();
-    MIL_FragOrder            ::InitializeDIA();
     MIL_ParameterType_ABC    ::Initialize   ();
 
-
     InitializeMissions( config );
-    InitializeModels  ( config, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath );
-
-    // Finish the initialiazation of the Workspace by linking function calls
-    pFuncTable_ = new DIA_FunctionTable< DEC_Workspace >();
-    RegisterDIA_Functions( pFuncTable_ );
-    pFunctionCaller_ = new DIA_FunctionCaller< DEC_Workspace >( *this, *pFuncTable_ );
-
-    try
-    {
-        DIA_Workspace::Instance().LinkToFunctionCaller( *pFunctionCaller_ );
-    }
-    catch( DIA_Internal_Exception& e )
-    {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.GetExceptionMessage() );
-    }
-
-    try
-    {
-        DIA_Workspace::Instance().WriteDebugFile( "." ); //$$$$$$$ NLD ??
-    }
-    catch( std::exception& )
-    {
-        MT_LOG_ERROR_MSG( "Error when writing DIA debug files : DIA debugging won't work" );
-    }
+    InitializeModels  ( config, strSourcePath );
 
     // Debugger
     if( config.UseDiaDebugger() )
     {
-        DIA_Workspace::Instance().RegisterDebuger( DIA_CreateDebugServer( config.GetDiaDebuggerPort(), 10 ) );
         MT_LOG_INFO_MSG( MT_FormatString( "Starting DirectIA debug server on port %d", config.GetDiaDebuggerPort() ) );
     }
 }
@@ -466,7 +203,7 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
 // Name: DEC_Workspace::InitializeModels
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath )
+void DEC_Workspace::InitializeModels( MIL_Config& config, const std::string& strSourcePath )
 {
     xml::xifstream xis( config.GetPhysicalFile() );
 
@@ -488,19 +225,19 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
     // Pions
     MT_LOG_INFO_MSG( "Initializing unit DIA models" );
     xisModels >> xml::start( "units" )
-                >> xml::list( "unit", *this, &DEC_Workspace::ReadModel, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strUnits, MIL_PionMissionType::MissionNames() )
+                >> xml::list( "unit", *this, &DEC_Workspace::ReadModel, strSourcePath, strUnits, MIL_PionMissionType::MissionNames() )
               >> xml::end();
 
     // Automates
     MT_LOG_INFO_MSG( "Initializing automat DIA models" );
     xisModels >> xml::start( "automats" )
-                  >> xml::list( "automat", *this, &DEC_Workspace::ReadModel, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strAutomats, MIL_AutomateMissionType::MissionNames() )
+                  >> xml::list( "automat", *this, &DEC_Workspace::ReadModel, strSourcePath, strAutomats, MIL_AutomateMissionType::MissionNames() )
               >> xml::end();
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
     xisModels >> xml::start( "populations" )
-                  >> xml::list( "population", *this, &DEC_Workspace::ReadModel, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strPopulation, MIL_PopulationMissionType::MissionNames() )
+                  >> xml::list( "population", *this, &DEC_Workspace::ReadModel, strSourcePath, strPopulation, MIL_PopulationMissionType::MissionNames() )
               >> xml::end();
 
     xisModels >> xml::end(); // models
@@ -510,7 +247,7 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsin
 // Name: DEC_Workspace::ReadModel
 // Created: RDS 2008-05-21
 // -----------------------------------------------------------------------------
-void DEC_Workspace::ReadModel( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes )
+void DEC_Workspace::ReadModel( xml::xistream& xis, const std::string& strSourcePath, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes )
 {
     std::string strName;
     xis >> xml::attribute( "name", strName );
@@ -521,8 +258,7 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, bool bNeedScriptParsing, bool
     const DEC_Model_ABC*& pModel = (*pModels)[ strName ];
     if( pModel )
         xis.error( "Duplicate model name" );
-    pModel = new DEC_Model( *this, strName, xis, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strEntityType, missionTypes );
-    static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
+    pModel = new DEC_Model( strName, xis, strSourcePath, strEntityType, missionTypes );
 }
 
 //-----------------------------------------------------------------------------
@@ -532,35 +268,6 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, bool bNeedScriptParsing, bool
 float DEC_Workspace::GetTime() const
 {
     return (float)MIL_AgentServer::GetWorkspace().GetSimTime();
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Workspace::k
-// Created: AGN 03-06-16
-//-----------------------------------------------------------------------------
-// static
-bool DEC_Workspace::CheckFilesDepencies( const std::string& strArchiveFile )
-{
-    struct _stat binInfo;
-    if( _stat( strArchiveFile.c_str(), & binInfo ) == -1 )
-        return true;
-
-    tools::InputBinaryStream needFilesArchive( strArchiveFile );
-    if( ! needFilesArchive )
-        return true;
-
-    T_StringVector::size_type nSize;
-    needFilesArchive >> nSize;
-    for( uint n = 0; n < nSize; ++n )
-    {
-        std::string strOpenFileName;
-        needFilesArchive >> strOpenFileName;
-        struct _stat scriptInfo;
-        // We need to read script model if the types file have been has been modified
-        if( (_stat( ( DIA_Workspace::Instance().GetWorkingDirectory() + strOpenFileName ).c_str(), & scriptInfo ) == -1) || ( scriptInfo.st_mtime > binInfo.st_mtime ) )
-            return true;
-    }
-    return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -577,28 +284,18 @@ const DIA_TypeDef& GetDIAType( const std::string& strTypeName )
     return *pType;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Workspace::FindDIAModelFromScript
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-DIA_Model* DEC_Workspace::FindDIAModelFromScript( const std::string& strScriptName ) const
+//-----------------------------------------------------------------------------
+// Name: InitializeDIAField
+// Created: AGN 03-07-17
+//-----------------------------------------------------------------------------
+//extern
+int InitializeDIAField( const std::string& strFieldName, const DIA_TypeDef& diaType )
 {
-    for( CIT_ModelMap itModelAutomate = automateModels_.begin(); itModelAutomate != automateModels_.end(); ++itModelAutomate )
-    {
-        if( itModelAutomate->second && itModelAutomate->second->GetScriptName() == strScriptName )
-            return &itModelAutomate->second->GetDIAModel();
-    }
-    for( CIT_ModelMap itModelPion = pionModels_.begin(); itModelPion != pionModels_.end(); ++itModelPion )
-    {
-        if( itModelPion->second && itModelPion->second->GetScriptName() == strScriptName )
-            return &itModelPion->second->GetDIAModel();
-    }
-    for( CIT_ModelMap itModelPopulation = populationModels_.begin(); itModelPopulation != populationModels_.end(); ++itModelPopulation )
-    {
-        if( itModelPopulation->second && itModelPopulation->second->GetScriptName() == strScriptName )
-            return &itModelPopulation->second->GetDIAModel();
-    }
-    return 0;
+    int nResult = DIA_TypeManager::Instance().GetFieldIdx( strFieldName, diaType );
+    if( nResult == -1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Field '" ) + strFieldName + "' is not member of DirectIA type " + diaType.GetName() );
+
+    return nResult;
 }
 
 // -----------------------------------------------------------------------------

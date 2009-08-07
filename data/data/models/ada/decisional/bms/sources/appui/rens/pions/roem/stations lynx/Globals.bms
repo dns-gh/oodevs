@@ -1,0 +1,47 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/roem/stations lynx/Globals.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Rens/Pions/Roem/Stations Lynx/Globals.hal $Author: Mia $
+]]--[[// $Modtime: 20/09/05 18:28 $Revision: 
+]]--[[// $Workfile:
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+include "Appui/Rens/Pions/Common/Globals.bms"
+
+include "Appui/Rens/Pions/Roem/Stations Lynx/Parameters.bms"
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Actuateurs
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+function M_TIR_ACTUATEURS()
+    return tir
+end
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Reco Point
+]]--[[//-----------------------------------------------------------------------------
+]]function M_POLY_MODELE_PION_VITESSE_RECO_POINT()
+    return 6
+end
+
+
+
+function M_POLY_MODELE_PION_CAPACITE_RECO_POINT()
+    return 500
+end
+

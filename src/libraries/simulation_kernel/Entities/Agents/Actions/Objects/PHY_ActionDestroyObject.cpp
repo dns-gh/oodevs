@@ -14,19 +14,18 @@
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDestroyObject constructor
 // Destroyd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDestroyObject::PHY_ActionDestroyObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC( pion, diaCall )
+PHY_ActionDestroyObject::PHY_ActionDestroyObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+    : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , diaReturnCode_( diaCall.GetParameter( 0 ) )
-    , nKnowledgeID_ ( (uint)diaCall.GetParameter( 1 ).ToPtr() )
+    , nKnowledgeID_ ( nKnowledgeID )
 {    
-    assert( DEC_Tools::CheckTypeConnaissanceObjet( diaCall.GetParameter( 1 ) ) );
-    diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
+    Callback( role_.GetInitialReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +34,7 @@ PHY_ActionDestroyObject::PHY_ActionDestroyObject( MIL_AgentPion& pion, DIA_Call_
 // -----------------------------------------------------------------------------
 PHY_ActionDestroyObject::~PHY_ActionDestroyObject()
 {
-    diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
+    Callback( role_.GetFinalReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ PHY_ActionDestroyObject::~PHY_ActionDestroyObject()
 void PHY_ActionDestroyObject::Execute()
 {   
     int nReturn = role_.Destroy( nKnowledgeID_ );
-    diaReturnCode_.SetValue( nReturn );
+    Callback( nReturn );
 }
 
 // -----------------------------------------------------------------------------

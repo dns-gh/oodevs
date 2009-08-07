@@ -1,0 +1,138 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/behaviors/Behaviors - Eni.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Eni_DecrocherFaceA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Eni_DecrocherFaceA"
+{
+    instances =
+    {
+        max = 1,
+        boost = 1.01,
+    },
+
+    activations =
+    {
+        { "ACT_Tir_FumigeneVersEni", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repUnite = self.params[1]
+        self._namedParams.rDistance = self.params[2]
+        self._namedParams.rDistanceSecurite = self.params[3]
+    end,
+
+    activate = function( self )
+        self.rDistanceEffective = self.rDistanceEffective or self._namedParams.rDistance + self._namedParams.rDistanceSecurite
+        self.eEtat = self.eEtat or eActionEnCours
+        self.positionSurete = self.positionSurete or nil
+        --[[//----------------------------------------------------------------------
+]]--[[// Connaissance invalide
+]]--[[//----------------------------------------------------------------------
+]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        --[[//si je suis a une distance supérieure a rDistance, alors, ce n'est pas
+]]--[[//la peine de decrocher
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//----------------------------------------------------------------------
+]]--[[// Init comp
+]]--[[//----------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                Activate( self.activations.ACT_Tir_FumigeneVersEni, 1, { self._namedParams.repUnite, } )
+                --[[// Calcul la position    	
+]]if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
+                    self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, F_Pion_GetobjectifEsquive( myself ) )
+                else
+if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
+                        self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, myself.ptRegroupement_ )
+                    else
+                        self.positionSurete = DEC_Geometrie_CalculerPositionSurete( self._namedParams.repUnite, self.rDistanceEffective )
+                    end
+                end
+
+                --[[// Vérification
+]]if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+                    Halt()
+                end
+
+            end
+--[[//----------------------------------------------------------------------
+]]--[[// Déplacement le plus rapide possible
+]]--[[//----------------------------------------------------------------------
+]]        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionSurete, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Eni_SePosterFaceA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Eni_SePosterFaceA"
+{
+    activations =
+    {
+        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Vision / Posture
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "En poste face eni" )
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Vision / Posture / Formation
+]]--[[//-------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { self._namedParams.repEni, } )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.repEni ), } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_DecrocherFaceA, "ACT_Tir_FumigeneVersEni", nodes.ACT_Tir_FumigeneVersEni }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_DecrocherFaceA, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_DecrocherFaceA, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_SePosterFaceA, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_SePosterFaceA, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }

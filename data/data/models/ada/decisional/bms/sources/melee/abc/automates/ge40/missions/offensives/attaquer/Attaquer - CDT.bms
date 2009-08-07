@@ -1,0 +1,742 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/offensives/attaquer/Attaquer - CDT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_ABC_GTIA_Attaquer
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_ABC_GTIA_Attaquer"
+{
+    activations =
+    {
+        { "ACT_GTIA_AnalyserSituationPourAttaquer", {} },
+        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", {} },
+        { "BEH_GTIA_RendreCompte", {} },
+        { "BEH_GTIA_EchelonnerDispositif", {} },
+        { "BEH_GTIA_RepartirDansFuseaux", {} },
+        { "BEH_GTIA_GererAppuisInternes", {} },
+        { "BEH_GTIA_AssignerLesOrdresPourAttaquer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[// Analyse environnement
+]]Activate( self.activations.ACT_GTIA_AnalyserSituationPourAttaquer, 1, { self._namedParams.mission.objectifsPrioritaires_, } )
+        --[[// Init
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                                do
+                    g_bPhaseReceuil = false
+                    local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
+                    for _,x in pairs( listePionsSubordonnes ) do
+                    local _continue = true
+                        do
+                            local automat = x
+                            F_Automat_SeteEtatEchelon( automat, eEtatEchelon_None )
+                            F_Automat_SeteEtatPhaseMission( automat, eEtatPhaseMission_None )
+                        end
+
+                    end
+
+                end
+
+                                return
+
+            end
+--[[/***************TEST *******************/]]        end
+
+        if( not self._namedParams.mission.sansRearticulation_ ) then
+            --[[//// tres moche priorite
+]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourAttaquer, 10, {} )
+        end
+
+        Activate( self.activations.BEH_GTIA_RendreCompte, 1, {} )--[[/***************TEST *******************/]]--[[// CR
+]]
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, {} )--[[// Dispositif
+]]
+        Activate( self.activations.BEH_GTIA_RepartirDansFuseaux, 1, { self._namedParams.mission.objectifsPrioritaires_, } )
+        --[[// Missions
+]]--[[// priorite 1
+]]Activate( self.activations.BEH_GTIA_GererAppuisInternes, 10, {} )
+        --[[// priorite 2
+]]Activate( self.activations.BEH_GTIA_AssignerLesOrdresPourAttaquer, 1, { self._namedParams.mission.objectifsPrioritaires_, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_OrganiserLesMoyensPourAttaquer
+]]--[[// 
+]]--[[// Commentaires: Trouver les règles de décision permettant d'utiliser 
+]]--[[//               les appuis en mode décentralisé (terrain, délais, eni)
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_OrganiserLesMoyensPourAttaquer"
+{
+    activations =
+    {
+        { "BEH_GTIA_OrganiserMoyensVersPionsOp", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listePionsMeleeDetruits = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateNonOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Melee( DEC_Automate_AutomatesSubordonnes() ) ) )
+        --[[// temp proto mia
+]]Activate( self.activations.BEH_GTIA_OrganiserMoyensVersPionsOp, 1, { listePionsMeleeDetruits, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AnalyserSituationPourAttaquer
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_GTIA_AnalyserSituationPourAttaquer"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objectifsPrioritaires = self.params[1]
+    end,
+
+    select = function( self )
+        --[[// cast
+]]self.mission = self.mission or DEC_GetMission( myself )
+        g_rRapEniDebarques = DEC_Rens_PourcentageEnnemisDebarquesDansFuseau( DEC_Fuseau() )
+        g_rRapEniEmbarques = DEC_Rens_PourcentageEnnemisEmbarquesDansFuseau( DEC_Fuseau() )
+        g_rRapTerrainComp = DEC_Geometrie_PourcentageTerrainCompartimente( DEC_Fuseau() )
+        g_rRapTerrainOuvert = DEC_Geometrie_PourcentageTerrainOuvert( DEC_Fuseau() )
+        g_rEstimationRetard = DEC_Geometrie_CalculerRetardSurObjectifs( DEC_Fuseau(), S_Cherche_GE_Filtre_TypeAutomate_Melee( DEC_Automate_AutomatesSubordonnes() ), self._namedParams.objectifsPrioritaires )
+        if( self.mission.delaisCourts_ ) then
+            g_rEstimationDelais = 1
+        else
+            g_rEstimationDelais = 0
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerLesOrdresPourAttaquer
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_GTIA_AssignerLesOrdresPourAttaquer"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerLesMissions", {} },
+        { "BEH_GTIA_AssurerLaCoordination", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objectifsPrioritaires = self.params[1]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_GTIA_AssignerLesMissions, 1, { self._namedParams.objectifsPrioritaires, } )
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordination, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerLesMissions
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerLesMissions"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionsEcl", {} },
+        { "BEH_GTIA_AssignerMissionsPE", {} },
+        { "BEH_GTIA_AssignerMissionsSE", {} },
+        { "BEH_GTIA_AssignerMissionsSEAppui", {} },
+        { "BEH_GTIA_AssignerMissionsPC", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objectifsPrioritaires = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// PremierEchelon, mission Attaquer ou Semparer si objectif dans le fuseaux
+]]Activate( self.activations.BEH_GTIA_AssignerMissionsEcl, 1, { S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) ), } )
+        Activate( self.activations.BEH_GTIA_AssignerMissionsPE, 1, { S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ), self._namedParams.objectifsPrioritaires, } )
+        Activate( self.activations.BEH_GTIA_AssignerMissionsSE, 1, { S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ), } )
+        Activate( self.activations.BEH_GTIA_AssignerMissionsSEAppui, 1, { S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ), self._namedParams.objectifsPrioritaires, } )
+        --[[// Cas particulier PC
+]]Activate( self.activations.BEH_GTIA_AssignerMissionsPC, 1, { DEC_Automate_PionPC(), } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsEcl
+]]--[[// 
+]]--[[// Commentaires: Dans la mission Attaquer, Eclairer jusqu'à la LD je pense...
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsEcl"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionMeleeA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePion = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( S_Cherche_GE_Filtre_TypeAutomate_Eclairage( self._namedParams.listePion ) ) do
+        local _continue = true
+            Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pion, "T_Mission_Automate_ABC_Eclairer", } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionPE
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsPE"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+        self._namedParams.objectifs = self.params[2]
+    end,
+
+    activate = function( self )
+        self.point = self.point or DEC_Geometrie_CalculerPointDepart()
+        for _,x in pairs( --[[// Assignation missions ABC
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) ) do
+        local _continue = true
+do
+                local pion = x
+                local objectif = DEC_Geometrie_ProchainObjectifDansFuseau( F_Automat_Getfuseau( pion ), self.point, self._namedParams.objectifs )
+                if( objectif ~= nil ) then
+                    Activate( self.activations.ACT_GTIA_AssignerMission, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_ABC_Semparer", objectif, } )
+                else
+                    --[[// au moins un objectif dans la zone
+]]Activate( self.activations.ACT_GTIA_AssignerMission, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_ABC_Attaquer", nil, } )
+                end
+
+            end
+--[[// Assignation missions INF
+]]
+        end
+
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) ) do
+        local _continue = true
+do
+                local pion = x
+                local objectif = DEC_Geometrie_ProchainObjectifDansFuseau( F_Automat_Getfuseau( pion ), self.point, self._namedParams.objectifs )
+                if( objectif ~= nil ) then
+                    Activate( self.activations.ACT_GTIA_AssignerMission, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_INF_Semparer", objectif, } )
+                else
+                    --[[// au moins un objectif dans la zone
+]]Activate( self.activations.ACT_GTIA_AssignerMission, 1, { pion, F_Automat_Getfuseau( pion ), "T_Mission_Automate_INF_PrendrePreciserMaintenirContact", nil, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsSE
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsSE"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionMeleeA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePion = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( --[[// Assignation missions ABC
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePion ) ) do
+        local _continue = true
+            Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pion, "T_Mission_Automate_SoutenirEnMesureDe", } )
+
+        end
+
+        for _,pion in pairs( --[[// Assignation missions INF 
+]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePion ) ) do
+        local _continue = true
+            Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pion, "T_Mission_Automate_SoutenirEnMesureDe", } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionMeleeA
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionMeleeA"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.eTypeMission = self.params[2]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_GTIA_AssignerMission, 1, { self._namedParams.pion, F_Automat_Getfuseau( self._namedParams.pion ), self._namedParams.eTypeMission, nil, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsSEAppui
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsSEAppui"
+{
+    activations =
+    {
+        { "BEH_GTIA_AssignerMissionLogA", {} },
+        { "BEH_GTIA_AssignerMissionGenieA", {} },
+        { "BEH_GTIA_AssignerMissionART", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePion = self.params[1]
+        self._namedParams.objectifs = self.params[2]
+    end,
+
+    activate = function( self )
+        for _,pion in pairs( --[[// TC2
+]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) ) do
+        local _continue = true
+            Activate( self.activations.BEH_GTIA_AssignerMissionLogA, 1, { pion, } )
+
+        end
+
+        for _,pion in pairs( --[[// Génie
+]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.listePion ) ) do
+        local _continue = true
+            Activate( self.activations.BEH_GTIA_AssignerMissionGenieA, 1, { pion, self._namedParams.objectifs, } )
+
+        end
+
+        for _,pion in pairs( --[[// DLO
+]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.listePion ) ) do
+        local _continue = true
+            Activate( self.activations.BEH_GTIA_AssignerMissionART, 1, { pion, } )
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionsPC
+]]--[[// 
+]]--[[// Commentaires: LE PC EST UN PION pas un automate
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionsPC"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ABC_AssignerSeDeployerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionPC = self.params[1]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerSeDeployerA, 1, { ePhase_CDT, self._namedParams.pionPC, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionLogA
+]]--[[// 
+]]--[[// Commentaires: pour TC2
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionLogA"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionDeployerTC2", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionLog = self.params[1]
+    end,
+
+    activate = function( self )
+        self.positionDeploiement = self.positionDeploiement or DEC_Geometrie_PositionAleatoireSurCercle( DEC_Automate_PionPosition( DEC_Automate_PionPC() ), 500 )
+        Activate( self.activations.ACT_GTIA_AssignerMissionDeployerTC2, 1, { self._namedParams.pionLog, F_Automat_Getfuseau( self._namedParams.pionLog ), self.positionDeploiement, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionGenieA
+]]--[[// 
+]]--[[// Commentaires: Pour l'instant ouverture des axes vers les objectifs, à terme, 
+]]--[[//               réfléchir aux règles de décisions qui dictent au GTIA comment et
+]]--[[//               quand utiliser le génie. Ouverture d'itinéraires, dégagement de
+]]--[[//               zones etc..
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionGenieA"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionOuvrirItineraireA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionGen = self.params[1]
+        self._namedParams.objectifs = self.params[2]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_GTIA_AssignerMissionOuvrirItineraireA, 1, { self._namedParams.pionGen, F_Automat_Getfuseau( self._namedParams.pionGen ), self._namedParams.objectifs, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_GTIA_AssignerMissionART
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_GTIA_AssignerMissionART"
+{
+    activations =
+    {
+        { "ACT_GTIA_AssignerMissionAcquerirObjectifA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDLO = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// TEMP hack
+]]self.listeLoc = self.listeLoc or DEC_Geometrie_DecoupeFuseauEnTroncons( 50000 )
+        local listePions = S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) )
+        if( not DIA_IsListEmpty( listePions ) ) then
+            Activate( self.activations.ACT_GTIA_AssignerMissionAcquerirObjectifA, 1, { self._namedParams.pionDLO, listePions, self.listeLoc, DEC_Fuseau(), } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerMission
+]]--[[// 
+]]--[[// Commentaires: ACTUATEUR = pion
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_GTIA_AssignerMission"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.fuseau = self.params[2]
+        self._namedParams.typeMission = self.params[3]
+        self._namedParams.objectif = self.params[4]
+    end,
+
+    select = function( self )
+                if( DIA_GetLocalFakeActuator( self._namedParams.pion ) < GetActivity() ) then
+            do
+                DIA_SetLocalFakeActuator( self._namedParams.pion, GetActivity() )
+                self.bMissionAssignee = self.bMissionAssignee or false
+                --[[// fuseau pas encore assigné
+]]if( self._namedParams.fuseau ~= nil and not self.bMissionAssignee ) then
+                    do
+                        --[[// Assignation de la mission en fonction du type
+]]self.bMissionAssignee = true
+                        switch_1 = self._namedParams.typeMission
+                            if switch_1 == "T_Mission_Automate_FaireMouvement" then
+                                                            local dest = DEC_Geometrie_CalculerPointArrivee()
+                                local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                                DEC_Copie_PointDansListePoints_Mission( dest, missionPion, "itineraire_" )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                            elseif switch_1 == "T_Mission_Automate_SoutenirEnMesureDe" then
+                                                            local dest = DEC_Geometrie_CalculerPointArrivee()
+                                local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                                DEC_Copie_PointDansListePoints_Mission( dest, missionPion, "itineraire_" )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                            elseif switch_1 == "T_Mission_Automate_ABC_Eclairer" then
+                                                            local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                            elseif switch_1 == "T_Mission_Automate_ABC_Reconnaitre" then
+                                                            local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                            elseif switch_1 == "T_Mission_Automate_INF_ReconnaissanceOffensive" then
+                                                            local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                            elseif switch_1 == "T_Mission_Automate_ABC_Attaquer" then
+                                                            local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                            elseif switch_1 == "T_Mission_Automate_INF_PrendrePreciserMaintenirContact" then
+                                                            local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                            elseif switch_1 == "T_Mission_Automate_ABC_Semparer" then
+                                                            local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_AssignMissionParameter( missionPion, "objectif_", DEC_Objectif_Localisation( self._namedParams.objectif ) )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                            elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
+                                                            local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
+                                DEC_AssignMissionParameter( missionPion, "objectif_", DEC_Objectif_Localisation( self._namedParams.objectif ) )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                
+                                                        end
+
+                    end
+                end
+
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                if( ( self._namedParams.typeMission == "T_Mission_Automate_ABC_Semparer" or self._namedParams.typeMission == "T_Mission_Automate_INF_Semparer" ) and ( F_Automat_GeteEtatPhaseMission( self._namedParams.pion ) == eEtatPhaseMission_FinMission ) ) then
+            DEC_Objectif_Flag( self._namedParams.objectif, true )
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerMissionDeployerTC2
+]]--[[// 
+]]--[[// Commentaires: spé Log (TC2), pas de compétition. Deploiement pres du PC de
+]]--[[//               GTIA
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_GTIA_AssignerMissionDeployerTC2"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.fuseau = self.params[2]
+        self._namedParams.positionDeploiement = self.params[3]
+    end,
+
+    select = function( self )
+        self.bMissionAssignee = self.bMissionAssignee or false
+        if( self._namedParams.fuseau == nil or self.bMissionAssignee ) then
+            return
+        end
+
+        self.bMissionAssignee = true
+        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, "T_Mission_Automate_LOG_SeDeployer" )
+        DEC_AssignMissionParameter( missionPion, "positionDeploiement_", self._namedParams.positionDeploiement )
+        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+        DEC_DonnerMissionAutomate_Mission( missionPion )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerMissionAcquerirObjectifA
+]]--[[// 
+]]--[[// Commentaires: spé Log (DLO), pas de compétition
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_GTIA_AssignerMissionAcquerirObjectifA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDLO = self.params[1]
+        self._namedParams.pionsPE = self.params[2]
+        self._namedParams.objectifs = self.params[3]
+        self._namedParams.fuseau = self.params[4]
+    end,
+
+    select = function( self )
+        self.bMissionAssignee = self.bMissionAssignee or false
+        if( self._namedParams.fuseau == nil or self.bMissionAssignee ) then
+            return
+        end
+
+        self.bMissionAssignee = true
+        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pionDLO, "T_Mission_Automate_ASS_AcquerirObjectifsDLO" )
+        DEC_AssignMissionParameter( missionPion, "zonesAcquisition_", self._namedParams.objectifs )
+        DEC_AssignMissionParameter( missionPion, "compagniesAAppuyer_", self._namedParams.pionsPE )
+        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+        DEC_DonnerMissionAutomate_Mission( missionPion )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_GTIA_AssignerMissionOuvrirItineraireA
+]]--[[// 
+]]--[[// Commentaires: spé GEN, pas de compétition
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_GTIA_AssignerMissionOuvrirItineraireA"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionGenie = self.params[1]
+        self._namedParams.fuseau = self.params[2]
+        self._namedParams.objectifs = self.params[3]
+    end,
+
+    select = function( self )
+        self.bMissionAssignee = self.bMissionAssignee or false
+        if( self._namedParams.fuseau == nil or self.bMissionAssignee ) then
+            return
+        end
+
+        self.bMissionAssignee = true
+        local missionPion = DEC_CreerMissionAutomate( self._namedParams.pionGenie, "T_Mission_Automate_GEN_OuvrirItineraires" )
+        local listeItineraires = {}--[[// itineraires à assigner
+]]
+        for _,objectif in pairs( --[[// Itineraires vers les zones prioritaires
+]]self._namedParams.objectifs ) do
+        local _continue = true
+do
+                local ptVersZone = S_Geometrie_BarycentreZone( DEC_Objectif_Localisation( objectif ) )
+                if( ptVersZone ~= nil ) then
+                    do
+                        local itiCourant = {}
+                        DEC_Copie_PointDansListePoints( ptVersZone, itiCourant )
+                        DEC_UserTypeList_PushBack( listeItineraires, itiCourant )
+                    end
+                end
+
+            end
+--[[//Itineraire vers la destination finale
+]]
+        end
+
+        local itineraire = {}
+        local dest = DEC_Geometrie_CalculerPointArrivee()
+        --[[// au moins un itineraire
+]]DEC_Copie_PointDansListePoints( dest, itineraire )
+        DEC_UserTypeList_PushBack( listeItineraires, itineraire )
+        DEC_AssignMissionParameter( missionPion, "itineraires_", listeItineraires )
+        DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+        DEC_DonnerMissionAutomate_Mission( missionPion )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ABC_GTIA_Attaquer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissions, "BEH_GTIA_AssignerMissionsEcl", nodes.BEH_GTIA_AssignerMissionsEcl }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissions, "BEH_GTIA_AssignerMissionsPE", nodes.BEH_GTIA_AssignerMissionsPE }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissions, "BEH_GTIA_AssignerMissionsSE", nodes.BEH_GTIA_AssignerMissionsSE }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissions, "BEH_GTIA_AssignerMissionsSEAppui", nodes.BEH_GTIA_AssignerMissionsSEAppui }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesMissions, "BEH_GTIA_AssignerMissionsPC", nodes.BEH_GTIA_AssignerMissionsPC }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesOrdresPourAttaquer, "BEH_GTIA_AssignerLesMissions", nodes.BEH_GTIA_AssignerLesMissions }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerLesOrdresPourAttaquer, "BEH_GTIA_AssurerLaCoordination", nodes.BEH_GTIA_AssurerLaCoordination }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionART, "ACT_GTIA_AssignerMissionAcquerirObjectifA", nodes.ACT_GTIA_AssignerMissionAcquerirObjectifA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionGenieA, "ACT_GTIA_AssignerMissionOuvrirItineraireA", nodes.ACT_GTIA_AssignerMissionOuvrirItineraireA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionLogA, "ACT_GTIA_AssignerMissionDeployerTC2", nodes.ACT_GTIA_AssignerMissionDeployerTC2 }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionMeleeA, "ACT_GTIA_AssignerMission", nodes.ACT_GTIA_AssignerMission }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsEcl, "BEH_GTIA_AssignerMissionMeleeA", nodes.BEH_GTIA_AssignerMissionMeleeA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsPC, "ACT_Mission_Automate_ABC_AssignerSeDeployerA", nodes.ACT_Mission_Automate_ABC_AssignerSeDeployerA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsPE, "ACT_GTIA_AssignerMission", nodes.ACT_GTIA_AssignerMission }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsSE, "BEH_GTIA_AssignerMissionMeleeA", nodes.BEH_GTIA_AssignerMissionMeleeA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsSEAppui, "BEH_GTIA_AssignerMissionLogA", nodes.BEH_GTIA_AssignerMissionLogA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsSEAppui, "BEH_GTIA_AssignerMissionGenieA", nodes.BEH_GTIA_AssignerMissionGenieA }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsSEAppui, "BEH_GTIA_AssignerMissionART", nodes.BEH_GTIA_AssignerMissionART }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_OrganiserLesMoyensPourAttaquer, "BEH_GTIA_OrganiserMoyensVersPionsOp", nodes.BEH_GTIA_OrganiserMoyensVersPionsOp }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_Attaquer, "ACT_GTIA_AnalyserSituationPourAttaquer", nodes.ACT_GTIA_AnalyserSituationPourAttaquer }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_Attaquer, "BEH_GTIA_OrganiserLesMoyensPourAttaquer", nodes.BEH_GTIA_OrganiserLesMoyensPourAttaquer }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_Attaquer, "BEH_GTIA_RendreCompte", nodes.BEH_GTIA_RendreCompte }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_Attaquer, "BEH_GTIA_EchelonnerDispositif", nodes.BEH_GTIA_EchelonnerDispositif }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_Attaquer, "BEH_GTIA_RepartirDansFuseaux", nodes.BEH_GTIA_RepartirDansFuseaux }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_Attaquer, "BEH_GTIA_GererAppuisInternes", nodes.BEH_GTIA_GererAppuisInternes }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_Attaquer, "BEH_GTIA_AssignerLesOrdresPourAttaquer", nodes.BEH_GTIA_AssignerLesOrdresPourAttaquer }

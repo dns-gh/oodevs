@@ -1,0 +1,47 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/pions/sacp roland carol/Parameters.bms"] = true
+
+--[[// =============================================================================
+]]--[[// Temps de mise en station des radars
+]]--[[// =============================================================================
+]]function M_MODELE_DELAI_MISE_EN_STATION_RADAR()
+    return 10
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Ph de doctrine
+]]--[[// =============================================================================
+]]function M_DOCTRINE_PION_ASA_PH()
+    return 0.15
+end
+
+
+
+--[[// =============================================================================
+]]--[[// facteur d'élongation de l'unité déployée
+]]--[[// =============================================================================
+]]function M_POLY_DOCTRINE_ELONGATION_DEPLOIEMENT()
+    return 1.4
+end
+
+
+
+--[[// =============================================================================
+]]--[[// Vitesse Missile ROLAND - devrait être une donnée ADN
+]]--[[// =============================================================================
+]]function M_MODELE_VITESSE_MISSILE_ROLAND()
+    return 1250
+end
+
+
+
+--[[// =============================================================================
+]]--[[// si vient de s'arréter, temps pour récupérer toutes les composantes
+]]--[[// =============================================================================
+]]function M_MODELE_DELAI_AVANT_TOUTES_COMPOSANTES_DISPONIBLES()
+    return 10
+end
+
+

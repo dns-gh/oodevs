@@ -27,7 +27,6 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_RapForLocal, "DEC_Knowledge_RapForLocal" 
 DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion )
     : DEC_Knowledge_RapFor_ABC()
     , pPion_                  ( &pion )
-    , dangerousEnemiesIDs_    ()
     , dangerousEnemies_       ()
 {
 
@@ -40,7 +39,6 @@ DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion 
 DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal()
     : DEC_Knowledge_RapFor_ABC()
     , pPion_                  ( 0 )
-    , dangerousEnemiesIDs_    ()
     , dangerousEnemies_       ()
 {
 
@@ -90,10 +88,7 @@ void DEC_Knowledge_RapForLocal::Update()
     const T_KnowledgeAgentVector& enemies = pPion_->GetKnowledgeGroup().GetKnowledge().GetEnemies();
     const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup().GetKnowledge().GetFriends();
 
-    dangerousEnemiesIDs_.clear();
-    dangerousEnemies_   .clear();
-
-    T_KnowledgeAgentVector agentLocalEnemies;
+    dangerousEnemies_.clear();
     
     MT_Float rTotalFightScoreEnemy  = 0;
     MT_Float rTotalFightScoreFriend = 0;
@@ -106,23 +101,20 @@ void DEC_Knowledge_RapForLocal::Update()
         if( rDangerosity != 0. )
         {
             rTotalFightScoreEnemy += rDangerosity;
-            agentLocalEnemies.push_back( &knowledgeEnemy );
-
-            dangerousEnemiesIDs_.push_back( (void*)knowledgeEnemy.GetID() );
-            dangerousEnemies_   .push_back( &knowledgeEnemy );
+            dangerousEnemies_.push_back( &knowledgeEnemy );
         }
     }
 
     // 2 - Compute the friend fight scores against the agent local enemies
-    if( !agentLocalEnemies.empty() )
+    if( !dangerousEnemies_.empty() )
     {
         for( CIT_KnowledgeAgentVector itFriend = friends.begin(); itFriend != friends.end(); ++itFriend )
         {
             DEC_Knowledge_Agent& knowledgeFriend = **itFriend;
             MT_Float rTotalDangerosity = 0.;
-            for( CIT_KnowledgeAgentVector itAgentEnemy = agentLocalEnemies.begin(); itAgentEnemy != agentLocalEnemies.end(); ++itAgentEnemy )
+            for( CIT_ConstKnowledgeAgentVector itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
                 rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy ) * knowledgeFriend.GetOperationalState() );
-            rTotalFightScoreFriend += ( rTotalDangerosity / agentLocalEnemies.size() );
+            rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
         }
     }
     
@@ -133,18 +125,9 @@ void DEC_Knowledge_RapForLocal::Update()
 // Name: DEC_Knowledge_RapForLocal::GetDangerousEnemies
 // Created: NLD 2006-01-24
 // -----------------------------------------------------------------------------
-const T_KnowledgeAgentVector& DEC_Knowledge_RapForLocal::GetDangerousEnemies()
+const T_ConstKnowledgeAgentVector& DEC_Knowledge_RapForLocal::GetDangerousEnemies()
 {
     Update();
     return dangerousEnemies_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_RapForLocal::GetDangerousEnemiesIDs
-// Created: NLD 2006-01-24
-// -----------------------------------------------------------------------------
-const T_KnowledgeAgentDiaIDVector& DEC_Knowledge_RapForLocal::GetDangerousEnemiesIDs()
-{
-    Update();
-    return dangerousEnemiesIDs_;
-}

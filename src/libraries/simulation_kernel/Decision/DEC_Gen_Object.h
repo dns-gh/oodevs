@@ -19,6 +19,7 @@
 
 class DEC_AutomateDecision;
 class MIL_ObjectType_ABC;
+class MIL_EntityManager_ABC;
 
 //*****************************************************************************
 // Created: AGN 03-08-27
@@ -32,9 +33,9 @@ public:
     //@}
 
 public:
-     explicit DEC_Gen_Object( const ASN1T_PlannedWork& asn );
-              DEC_Gen_Object( const DEC_Gen_Object& rhs );
-    ~DEC_Gen_Object();
+             DEC_Gen_Object( const ASN1T_PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
+             DEC_Gen_Object( const DEC_Gen_Object& rhs );
+    virtual ~DEC_Gen_Object();
 
     //! @name Accessors
     //@{
@@ -42,7 +43,7 @@ public:
     const TER_Localisation&   GetLocalisation     () const;
     E_DemolitionTargetType    GetObstacleType     () const;
           MT_Float            GetDensity          () const;
-          uint                GetMinesActivityTime() const;
+          unsigned int        GetMinesActivityTime() const;
     const MIL_Automate*       GetTC2              () const;
     //@}
 

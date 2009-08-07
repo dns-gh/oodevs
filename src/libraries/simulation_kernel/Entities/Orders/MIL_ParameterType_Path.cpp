@@ -12,6 +12,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Path constructor
@@ -36,56 +37,17 @@ MIL_ParameterType_Path::~MIL_ParameterType_Path()
 // Name: MIL_ParameterType_Path::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_Path::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Path::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_path ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeListePoints( to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    if( !NET_ASN_Tools::CopyPath( *from.value.u.path, to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Path::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_Path::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeListePoints( from ) )
+    if( !from.IsOfType( *this ) )
         return false;
 
-    // Check dest
-    if( !DEC_Tools::CheckTypeListePoints( to ) )
-        return false;
-
-    NET_ASN_Tools::CopyPath( from, to );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Path::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_Path::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeListePoints( from ) )
-        return false;
-
-    to.null_value         = false;
-    to.value.t            = T_MissionParameter_value_path;
+    to.value.t      = T_MissionParameter_value_path;
     to.value.u.path = new ASN1T_Path();
+    to.null_value   = !from.ToPath( *to.value.u.path );
     
-    if( !NET_ASN_Tools::CopyPath( from, *to.value.u.path ) )
-        return false;
-
-    return true;
+    return !to.null_value || bIsOptional;
 }
 
 // -----------------------------------------------------------------------------

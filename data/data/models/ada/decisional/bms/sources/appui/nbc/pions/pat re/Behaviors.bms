@@ -1,0 +1,58 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/pions/pat re/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Nbc/Pions/Pat RE/Behaviors.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:06 $
+]]--[[// $Revision: 15 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = yes
+
+max_instances = 100
+
+max_activations = 100
+
+
+actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+debarquement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+vitesse = 1,
+ennemi = 1,
+etat_Mission = 1,
+tenueNbc = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+controlePopulation = 1,
+etat_ROE = 1,
+objectifEsquive = 1,
+}
+
+
+
+--[[// Commun pion NBC
+]]include "Appui/Nbc/Pions/Common/Behaviors.bms"
+
+
+--[[// Pat RE
+]]include "Appui/Nbc/Pions/Pat RE/Actions.bms"
+
+include "Appui/Nbc/Pions/Pat RE/Missions/Missions.bms"
+
+
+--[[// missions communes
+]]include "Appui/Nbc/Pions/Common/Missions/ReconnaitreSiteROTA.bms"
+

@@ -1,0 +1,14 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/pions/common/Fonctions.bms"] = true
+
+--[[//fonctions génériques aux pions et automates MARINE
+]]include "Marine/Common/Fonctions.bms"
+
+
+--[[//fonctions des Pions Marine
+]]include "Marine/Pions/Common/Fonctions/Fonctions - Forces.bms"
+
+include "Marine/Pions/Common/Fonctions/Fonctions - Geometrie.bms"
+
+include "Marine/Pions/Common/Fonctions/Fonctions - Listes.bms"
+

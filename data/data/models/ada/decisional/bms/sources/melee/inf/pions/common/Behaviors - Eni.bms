@@ -1,0 +1,96 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/common/Behaviors - Eni.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Common/Behaviors - Eni.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 14 $
+]]--[[// $Workfile: Behaviors - Eni.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//=============================================================================
+]]--[[// Fixe et Detruit l'enis. Demande des tirs d'appui si necessaire
+]]--[[//
+]]--[[//=============================================================================
+]]node "BEH_Eni_Pion_INF_DetruitEtFixe"
+{
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "BEH_Feu_Pion_INF_TirFixer", {} },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+        self._namedParams.bFixer = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionFixer = self.eActionFixer or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// On tir sur l'ennemi
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eAction == eActionEffectuee or DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.repEni ) ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[// Traite l'ennemi en cours
+]]--[[// --------------------------------------------------------------------
+]]Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.repEni, } )
+        --[[// Fixe l'eni si l'on est a distance de tir
+]]if( self._namedParams.bFixer and self.eActionFixer == eActionEnCours ) then
+            Activate( self.activations.BEH_Feu_Pion_INF_TirFixer, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFixer = v else rawset( t, k, v ) end end } ) )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Si le tir est inefficace, on ne tir pas (uniquement fixer)
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eAction == eActionEnPause ) then
+            do
+                self.eActionFixer = eActionEnCours
+                                self.params.__returnValue = eActionEnPause
+                return
+
+            end
+--[[// Tout le monde tir lorsque l'on est a distance de tir	
+]]        end
+
+        if( DEC_ConnaissanceAgent_PercoitUnite( self._namedParams.repEni ) ) then
+            Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, setmetatable( { self._namedParams.repEni, eFormationTir_Embarque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        end
+
+        if( S_Tir_EstAPortee_Debarque( self._namedParams.repEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
+            Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, { self._namedParams.repEni, eFormationTir, } )
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_INF_DetruitEtFixe, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_INF_DetruitEtFixe, "BEH_Feu_Pion_INF_TirFixer", nodes.BEH_Feu_Pion_INF_TirFixer }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_INF_DetruitEtFixe, "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", nodes.BEH_Feu_Pion_INF_ConduireLesFeux_Sur }

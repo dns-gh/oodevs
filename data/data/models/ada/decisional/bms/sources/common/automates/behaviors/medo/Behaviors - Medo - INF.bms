@@ -1,0 +1,1175 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/behaviors/medo/Behaviors - Medo - INF.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Common/Automates/Behaviors/Medo/Behaviors - Medo - INF.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/08/05 15:59 $
+]]--[[// $Revision: 23 $
+]]--[[// $Workfile: Behaviors - Medo - INF.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+
+--[[//=============================================================================
+]]--[[//
+]]--[[// Surete
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Appuyer
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Offensif		
+]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Semparer
+]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Reconnaitre
+]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Reduire
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Defensif
+]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Interdire
+]]--[[//		behavior BEH_Mission_Automate_INF_AssignerA_Couvrir
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[//=============================================================================
+]]
+include "Common/Automates/Actions/Medo/Actions - Medo - INF.bms"
+
+
+--[[//=============================================================================
+]]--[[// Missions de Surete
+]]--[[//=============================================================================
+]]
+--[[// ----------------------------------------------------------------------------
+]]--[[// $$$$ Les comportements BEH_Auto_MRT ou BEH_Auto_CDT font un halt apres le 
+]]--[[// 		1 ticks .. Ils ne faut donc pas les relancer ..
+]]--[[// ----------------------------------------------------------------------------
+]]
+node "BEH_Mission_Automate_INF_AssignerAppuyerA_Max"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.pAAppuyer = self.params[3]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
+    end,
+
+--[[// Assigne mission MRT
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerAppuyerA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerAppuyerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.pAAppuyer = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        do
+        end
+
+        do
+        end
+
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerAppuyerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAAppuyer, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        do
+        end
+
+    end,
+
+--[[//=============================================================================
+]]--[[// Missions Offensives
+]]--[[//=============================================================================
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Mission Semparer
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Semparer"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Semparer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.ptMission = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Semparer, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Mission Reconnaitre
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerReconnaitreA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ABC_AssignerReconnaitreA", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Reconnaitre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        switch_1 = self._namedParams.pPion:GetType()
+            if switch_1 == "Peloton_AMX"
+            or switch_1 == "Peloton_XL" then
+                Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitreA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, eEtatEchelon_Premier, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == "SectionInfanterie"
+            or switch_1 == "SectionInfanterie_MILAN"
+            or switch_1 == "SectionInfanterie_HOT"
+            or switch_1 == "SectionInfanterie_Appui"
+            or switch_1 == "GroupeInfanterie_Mortier" then
+                Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Reconnaitre, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Mission Reconnaitre Point
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ABC_AssignerReconnaitrePtA", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.ptDest = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        switch_1 = self._namedParams.pPion:GetType()
+            if switch_1 == "Peloton_AMX"
+            or switch_1 == "Peloton_XL" then
+                Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitrePtA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDest, eEtatEchelon_Premier, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == "SectionInfanterie"
+            or switch_1 == "SectionInfanterie_MILAN"
+            or switch_1 == "SectionInfanterie_HOT"
+            or switch_1 == "SectionInfanterie_Appui"
+            or switch_1 == "GroupeInfanterie_Mortier" then
+                Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDest, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+--[[//=============================================================================
+]]--[[// Mission : Reduire
+]]--[[//
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Reduire"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ABC_AssignerReduireA", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Reduire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.pionReduire = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        switch_1 = self._namedParams.pPion:GetType()
+            if switch_1 == "Peloton_AMX"
+            or switch_1 == "Peloton_XL" then
+                Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReduireA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionReduire, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == "SectionInfanterie"
+            or switch_1 == "SectionInfanterie_MILAN"
+            or switch_1 == "SectionInfanterie_HOT"
+            or switch_1 == "SectionInfanterie_Appui"
+            or switch_1 == "GroupeInfanterie_Mortier" then
+                Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Reduire, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionReduire, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+--[[//=============================================================================
+]]--[[// Mission : Prendre Preciser Maintenir Contact
+]]--[[//
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_PrendrePreciserContact"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.pionReduire = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionReduire, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// Mission : Fixer
+]]--[[//
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Fixer"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ABC_AssignerFixerA", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Fixer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.shFixer = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        switch_1 = self._namedParams.pPion:GetType()
+            if switch_1 == "Peloton_AMX"
+            or switch_1 == "Peloton_XL" then
+                Activate( self.activations.ACT_Mission_Automate_ABC_AssignerFixerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.shFixer, eEtatEchelon_Premier, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == "SectionInfanterie"
+            or switch_1 == "SectionInfanterie_MILAN"
+            or switch_1 == "SectionInfanterie_HOT"
+            or switch_1 == "SectionInfanterie_Appui"
+            or switch_1 == "GroupeInfanterie_Mortier" then
+                Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Fixer, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.shFixer, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+--[[//=============================================================================
+]]--[[// Missions Defensives
+]]--[[//=============================================================================
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Mission Interdire
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Interdire"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Interdire", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.loc = self.params[3]
+        self._namedParams.bPreparer = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Interdire, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.loc, self._namedParams.bPreparer, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Mission Defendre
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Defendre"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Defendre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.loc = self.params[3]
+        self._namedParams.bPreparer = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Defendre, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.loc, self._namedParams.bPreparer, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Mission Freiner
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Freiner"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Freiner", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.ptRgpt = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Freiner, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptRgpt, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// Mission : Couvrir
+]]--[[//
+]]--[[//	T_Pion			@pAppui :	elt a appuyer
+]]--[[//	T_Localisation	@locCouv :  position que l'on doit couvrir. On calcul une
+]]--[[//								nouvelle position par rapport a celle-ci
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Couvrir"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Couvrir", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.pAppui = self.params[3]
+        self._namedParams.ptCouv = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Couvrir, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAppui, self._namedParams.ptCouv, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// Mission : Surveiller
+]]--[[//
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_SurveillerZone"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_SurveillerZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.locZone = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_SurveillerZone, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.locZone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// Mission : Surveiller
+]]--[[//
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.ptZone = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptZone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// Mission : Controler une Zone
+]]--[[//
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Controler"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Controler", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.locZone = self.params[3]
+        self._namedParams.bPreparerTerrain = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Controler, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.locZone, self._namedParams.bPreparerTerrain, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// Mission : Controler une Zone
+]]--[[//
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Harceler"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Harceler", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.locZone = self.params[3]
+        self._namedParams.locRegroupement = self.params[4]
+        self._namedParams.natureObjectif = self.params[5]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Harceler, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.locZone, self._namedParams.locRegroupement, self._namedParams.natureObjectif, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// Mission : Barrer
+]]--[[//
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_Barrer"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Barrer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.ptBarrer = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Barrer, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptBarrer, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+node "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerA_Barrer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.ptBarrer = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Barrer, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptBarrer, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 02/02/2004 18:57
+]]--[[//
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerA_SeDeplacer"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+    end,
+
+    activate = function( self )
+        self.ptDest = self.ptDest or DEC_Geometrie_CalculerPointArriveePourPion( self._namedParams.pPion )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self.ptDest, eEtatEchelon_Premier, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//Ajouté par LLS 01/03/2007 pour mission Escorter de la PROTERRE
+]]--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_INF_AssignerEscorterA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerEscorterA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerEscorterA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.pionAEscorter = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerEscorterA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionAEscorter, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_INF_AssignerEscorterAutomateA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerEscorterAutomateA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerEscorterUnitesA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.automateAEscorter = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerEscorterUnitesA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.automateAEscorter, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_INF_AssignerSoutenirA
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_INF_AssignerSoutenirA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerSoutenirA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.pAAppuyer = self.params[3]
+        self._namedParams.eEtatEchelon = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+        switch_1 = self.eActionCreation
+            if switch_1 == eActionEnCours then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                
+            elseif switch_1 == eActionHalt
+            or switch_1 == eActionImpossible then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                return
+
+            elseif switch_1 == eActionEffectuee then
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                return
+
+                        end
+
+        Activate( self.activations.ACT_Mission_Automate_INF_AssignerSoutenirA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAAppuyer, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Barrer, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Barrer, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Barrer, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Barrer, "ACT_Mission_Automate_INF_AssignerA_Barrer", nodes.ACT_Mission_Automate_INF_AssignerA_Barrer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone, "ACT_Mission_Automate_INF_AssignerA_Barrer", nodes.ACT_Mission_Automate_INF_AssignerA_Barrer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Controler, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Controler, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Controler, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Controler, "ACT_Mission_Automate_INF_AssignerA_Controler", nodes.ACT_Mission_Automate_INF_AssignerA_Controler }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Couvrir, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Couvrir, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Couvrir, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Couvrir, "ACT_Mission_Automate_INF_AssignerA_Couvrir", nodes.ACT_Mission_Automate_INF_AssignerA_Couvrir }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Defendre, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Defendre, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Defendre, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Defendre, "ACT_Mission_Automate_INF_AssignerA_Defendre", nodes.ACT_Mission_Automate_INF_AssignerA_Defendre }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Fixer, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Fixer, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Fixer, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Fixer, "ACT_Mission_Automate_ABC_AssignerFixerA", nodes.ACT_Mission_Automate_ABC_AssignerFixerA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Fixer, "ACT_Mission_Automate_INF_AssignerA_Fixer", nodes.ACT_Mission_Automate_INF_AssignerA_Fixer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Freiner, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Freiner, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Freiner, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Freiner, "ACT_Mission_Automate_INF_AssignerA_Freiner", nodes.ACT_Mission_Automate_INF_AssignerA_Freiner }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Harceler, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Harceler, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Harceler, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Harceler, "ACT_Mission_Automate_INF_AssignerA_Harceler", nodes.ACT_Mission_Automate_INF_AssignerA_Harceler }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Interdire, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Interdire, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Interdire, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Interdire, "ACT_Mission_Automate_INF_AssignerA_Interdire", nodes.ACT_Mission_Automate_INF_AssignerA_Interdire }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_PrendrePreciserContact, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_PrendrePreciserContact, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_PrendrePreciserContact, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_PrendrePreciserContact, "ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact", nodes.ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt, "ACT_Mission_Automate_ABC_AssignerReconnaitrePtA", nodes.ACT_Mission_Automate_ABC_AssignerReconnaitrePtA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt, "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt", nodes.ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Reduire, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Reduire, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Reduire, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Reduire, "ACT_Mission_Automate_ABC_AssignerReduireA", nodes.ACT_Mission_Automate_ABC_AssignerReduireA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Reduire, "ACT_Mission_Automate_INF_AssignerA_Reduire", nodes.ACT_Mission_Automate_INF_AssignerA_Reduire }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SeDeplacer, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SeDeplacer, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SeDeplacer, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SeDeplacer, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Semparer, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Semparer, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Semparer, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_Semparer, "ACT_Mission_Automate_INF_AssignerA_Semparer", nodes.ACT_Mission_Automate_INF_AssignerA_Semparer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition, "ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition", nodes.ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerZone, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerZone, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerZone, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerZone, "ACT_Mission_Automate_INF_AssignerA_SurveillerZone", nodes.ACT_Mission_Automate_INF_AssignerA_SurveillerZone }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerAppuyerA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerAppuyerA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerAppuyerA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerAppuyerA, "ACT_Mission_Automate_INF_AssignerAppuyerA", nodes.ACT_Mission_Automate_INF_AssignerAppuyerA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerAppuyerA_Max, "BEH_Mission_Automate_INF_AssignerAppuyerA", nodes.BEH_Mission_Automate_INF_AssignerAppuyerA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerEscorterA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerEscorterA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerEscorterA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerEscorterA, "ACT_Mission_Automate_INF_AssignerEscorterA", nodes.ACT_Mission_Automate_INF_AssignerEscorterA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerEscorterAutomateA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerEscorterAutomateA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerEscorterAutomateA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerEscorterAutomateA, "ACT_Mission_Automate_INF_AssignerEscorterUnitesA", nodes.ACT_Mission_Automate_INF_AssignerEscorterUnitesA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerReconnaitreA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerReconnaitreA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerReconnaitreA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerReconnaitreA, "ACT_Mission_Automate_ABC_AssignerReconnaitreA", nodes.ACT_Mission_Automate_ABC_AssignerReconnaitreA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerReconnaitreA, "ACT_Mission_Automate_INF_AssignerA_Reconnaitre", nodes.ACT_Mission_Automate_INF_AssignerA_Reconnaitre }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerSoutenirA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerSoutenirA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerSoutenirA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_INF_AssignerSoutenirA, "ACT_Mission_Automate_INF_AssignerSoutenirA", nodes.ACT_Mission_Automate_INF_AssignerSoutenirA }

@@ -1,0 +1,203 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt satcp mistral/missions/defendre zone/Defendre Zone - MRT.bms"] = true
+
+node "MIS_Automate_MRT_ASA_MISTRAL_DefendreZone"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirLibre", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe", {} },
+        { "BEH_Mission_Automate_AssignerStationnerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionsDefendreZone = self.eEtatMissionsDefendreZone or eActionEnCours
+        self.pionPC = self.pionPC or DEC_Automate_PionPC()
+        self.barycentreZone = self.barycentreZone or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
+        self.listePoints = self.listePoints or {}
+        self.listePointsAvant = self.listePointsAvant or DEC_Geometrie_CreerListePoints()
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listeSectionMistral = self.listeSectionMistral or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, VeryShortRangeSurfaceToAirDefenseTroop )
+        self.listeSectionMistralPourMissionDefendreZone = self.listeSectionMistralPourMissionDefendreZone or {}
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( DIA_IsListEmpty( self.listeSectionMistral ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                else
+do
+                        do
+                            local compteur = 0
+                            switch_1 = self._namedParams.mission.modeDeploiement_
+                                if switch_1 == deploiementOmnidirectionnelEnCarreAutourZone then
+                                    for _,x in pairs( self.listeSectionMistral ) do
+                                    local _continue = true
+do
+                                            if( compteur ~= 4 ) then
+                                                DIA_PushBack( self.listeSectionMistralPourMissionDefendreZone, x )
+                                            else
+                                                break
+                                            end
+
+                                                                                        compteur = compteur + 1
+                                        end
+
+                                    end
+
+                                    self.listePoints = DEC_Geometrie_PosDeploiementASAOmni( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS() * 0.707 )
+                                    
+                                elseif switch_1 == deploiementOmnidirectionnelEnTriangleAutourZone then
+                                    for _,x in pairs( self.listeSectionMistral ) do
+                                    local _continue = true
+do
+                                            if( compteur ~= 3 ) then
+                                                DIA_PushBack( self.listeSectionMistralPourMissionDefendreZone, x )
+                                            else
+                                                break
+                                            end
+
+                                                                                        compteur = compteur + 1
+                                        end
+
+                                    end
+
+                                    self.listePoints = DEC_Geometrie_PosDeploiementASAOmni( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, ( M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS() / 2 ) * 1.155 )
+                                    
+                                elseif switch_1 == deploiementNasseTroisSections then
+                                    for _,x in pairs( self.listeSectionMistral ) do
+                                    local _continue = true
+do
+                                            if( compteur ~= 3 ) then
+                                                DIA_PushBack( self.listeSectionMistralPourMissionDefendreZone, x )
+                                            else
+                                                break
+                                            end
+
+                                                                                        compteur = compteur + 1
+                                        end
+
+                                    end
+
+                                    self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
+                                    
+                                elseif switch_1 == deploiementNasseQuatreSections then
+                                    for _,x in pairs( self.listeSectionMistral ) do
+                                    local _continue = true
+do
+                                            if( compteur ~= 4 ) then
+                                                DIA_PushBack( self.listeSectionMistralPourMissionDefendreZone, x )
+                                            else
+                                                break
+                                            end
+
+                                                                                        compteur = compteur + 1
+                                        end
+
+                                    end
+
+                                    self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
+                                    
+                                elseif switch_1 == deploiementDoubleRideau then
+                                    self.listeSectionMistralPourMissionDefendreZone = self.listeSectionMistral
+                                    self.listePoints = DEC_Geometrie_PosDeploiementDoubleRideau( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_ENTRE_RIDEAUX(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), self._namedParams.mission.directionEnnemi_ )
+                                    
+                                elseif switch_1 == deploiementSimpleRideau then
+                                    for _,x in pairs( self.listeSectionMistral ) do
+                                    local _continue = true
+do
+                                            if( compteur ~= 4 ) then
+                                                DIA_PushBack( self.listeSectionMistralPourMissionDefendreZone, x )
+                                            else
+                                                break
+                                            end
+
+                                                                                        compteur = compteur + 1
+                                        end
+
+                                    end
+
+                                    self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, 180, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
+                                    
+                                                                end
+
+                        end
+--[[//construction d'une liste de 4 pions parmis listeSectionMistral
+]]--[[//sqrt( 2 ) / 2 = 0.707      
+]]--[[//1.155 = 2 / sqrt( 3 )
+]]--[[//c'est un cas particulier du déploiement en nasse => nasse à 180°
+]]
+                    end
+                end
+
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                if( self.eEtatMissionsDefendreZone == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionsDefendreZone == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[//controle des creations de missions
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeSectionMistral ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsDefendreZone = v else rawset( t, k, v ) end end } ) )
+                --[[//Defendre zone à partir de position calculées
+]]if( not DIA_IsListEmpty( self.listeSectionMistralPourMissionDefendreZone ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe, 1, { ePhase_MRT, self.listeSectionMistralPourMissionDefendreZone, self.listePoints, self._namedParams.mission.zone_, eEtatDeploiement_omnidirectionnel, } )
+                end
+
+                --[[//Le pc va toujours stationner au centre de la zone défendue
+]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreZone, } )
+                
+            elseif switch_1 == eMRT_MissionImpossible then
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ASA_MISTRAL_DefendreZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_MISTRAL_DefendreZone, "BEH_ROE_Automate_TirLibre", nodes.BEH_ROE_Automate_TirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_MISTRAL_DefendreZone, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_MISTRAL_DefendreZone, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_MISTRAL_DefendreZone, "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe", nodes.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_MISTRAL_DefendreZone, "BEH_Mission_Automate_AssignerStationnerA", nodes.BEH_Mission_Automate_AssignerStationnerA }

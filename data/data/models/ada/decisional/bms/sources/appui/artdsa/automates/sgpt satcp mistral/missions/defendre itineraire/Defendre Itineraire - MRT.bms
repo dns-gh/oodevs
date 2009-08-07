@@ -1,0 +1,123 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt satcp mistral/missions/defendre itineraire/Defendre Itineraire - MRT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Mistral : defendre Itineraire
+]]--[[//
+]]--[[// Les points de deploiement sont calculés a equidistance sur une liste de points
+]]--[[// qui représentent un itineraire
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ASA_DefendreItineraire"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirLibre", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe", {} },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionsDefendreZone = self.eEtatMissionsDefendreZone or eActionEnCours
+        self.pionPC = self.pionPC or DEC_Automate_PionPC()
+        self.listePointsPourPC = self.listePointsPourPC or DEC_Geometrie_DecouperListePoints( self._namedParams.mission.itineraire_, 0 )
+        self.listePoints = self.listePoints or {}
+        self.listePointsAvant = self.listePointsAvant or DEC_Geometrie_CreerListePoints()
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listeSectionMistral = self.listeSectionMistral or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, VeryShortRangeSurfaceToAirDefenseTroop )
+        self.listePC = self.listePC or {}
+        if( ( self.listePointsPourPC == 0 or self.listePointsPourPC == nil ) or ( ( DEC_ListePoints_Size( self.listePointsPourPC ) == 0 or DEC_ListePoints_Size( self.listePointsPourPC ) == nil ) ) ) then
+            self.ePhase = eMRT_MissionImpossible
+        end
+
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( DIA_IsListEmpty( self.listeSectionMistral ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                else
+do
+                        self.listePoints = DEC_Geometrie_DecouperListePoints( self._namedParams.mission.itineraire_, #( self.listeSectionMistral ) - 1 )
+                        if( ( self.listePoints == 0 or self.listePoints == nil ) or ( ( DEC_ListePoints_Size( self.listePoints ) == 0 or DEC_ListePoints_Size( self.listePoints ) == nil ) ) ) then
+                            self.ePhase = eMRT_MissionImpossible
+                        end
+
+                    end
+                end
+
+                DIA_PushBack( self.listePC, self.pionPC )
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionsDefendreZone == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionsDefendreZone == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[//controle des creations de missions
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeSectionMistral ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsDefendreZone = v else rawset( t, k, v ) end end } ) )
+                --[[//Defendre zone à partir de position calculées
+]]if( not DIA_IsListEmpty( self.listeSectionMistral ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe, 1, { ePhase_MRT, self.listeSectionMistral, self.listePoints, eEtatDeploiement_omnidirectionnel, } )
+                end
+
+                --[[//Le pc va toujours stationner au centre de la zone défendue
+]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_MRT, self.listePC, DEC_ListePoints_GetAt( self.listePointsPourPC, 0 ), } )
+                
+            elseif switch_1 == eMRT_MissionImpossible then
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ASA_DefendreItineraire = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreItineraire, "BEH_ROE_Automate_TirLibre", nodes.BEH_ROE_Automate_TirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreItineraire, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreItineraire, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreItineraire, "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe", nodes.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ASA_DefendreItineraire, "BEH_Mission_Automate_AssignerStationnerAListe", nodes.BEH_Mission_Automate_AssignerStationnerAListe }

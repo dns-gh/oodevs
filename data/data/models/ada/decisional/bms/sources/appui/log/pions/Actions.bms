@@ -1,0 +1,322 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/log/pions/Actions.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_ActiverSante
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_ActiverSante"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            DEC_Sante_ActiverChaine()
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                DEC_Sante_DesactiverChaine()
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_ActiverMaintenance
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_ActiverMaintenance"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            DEC_Maintenance_ActiverChaine()
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                DEC_Maintenance_DesactiverChaine()
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_ActiverRavitaillement
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_ActiverRavitaillement"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            DEC_Ravitaillement_ActiverChaine()
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                DEC_Ravitaillement_DesactiverChaine()
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_Charger
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_Charger"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.supplyAction = self.supplyAction or nil
+        self.bSupplyActionReturnCode = self.bSupplyActionReturnCode or false
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_RC( eRC_Convoi_ChargementEnCours )
+                self.supplyAction = DEC_Ravitaillement_Convoi_StartCharger( self.bSupplyActionReturnCode )
+            end
+        end
+
+        if( self.bSupplyActionReturnCode ) then
+            do
+                DEC_RC( eRC_Convoi_ChargementEffectue )
+                                self.params.__returnValue = eActionEffectuee
+                return
+
+            end
+        end
+
+                self.params.__returnValue = eActionEnCours
+        return
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                self.supplyAction = DEC_StopAction( self.supplyAction )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_Decharger
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_Decharger"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.supplyAction = self.supplyAction or nil
+        self.bSupplyActionReturnCode = self.bSupplyActionReturnCode or false
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.supplyAction = DEC_Ravitaillement_Convoi_StartDecharger( self.bSupplyActionReturnCode )
+        end
+
+        if( self.bSupplyActionReturnCode ) then
+            do
+                DEC_RC( eRC_Convoi_DechargementEffectue )
+                                self.params.__returnValue = eActionEffectuee
+                return
+
+            end
+        end
+
+                self.params.__returnValue = eActionEnCours
+        return
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                self.supplyAction = DEC_StopAction( self.supplyAction )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_PreterVSRAM
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_PreterVSRAM"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionA = self.params[1]
+        self._namedParams.fAmb = self.params[2]
+    end,
+
+    select = function( self )
+                self.actionPreterVSRAM = self.actionPreterVSRAM or nil
+        self.bFinManoeuvre = self.bFinManoeuvre or false
+        if( self.bFinManoeuvre ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionPreterVSRAM = DEC_StartPreterVSRAM( self._namedParams.pionA, self._namedParams.fAmb )
+            actionCallbacks[ self.actionPreterVSRAM ] = function( arg ) self.bFinManoeuvre = arg end
+
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionPreterVSRAM )
+    end,
+
+    destroy = function( self )
+                self.actionPreterVSRAM = DEC_StopAction( self.actionPreterVSRAM )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_RecupererVSRAM
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_RecupererVSRAM"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDe = self.params[1]
+        self._namedParams.fAmb = self.params[2]
+    end,
+
+    select = function( self )
+        DEC_RecupererVSRAM( self._namedParams.pionDe, self._namedParams.fAmb )
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_PreterRemorqueurs
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_PreterRemorqueurs"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionA = self.params[1]
+        self._namedParams.fAmb = self.params[2]
+    end,
+
+    select = function( self )
+                self.actionPreterRemorqueurs = self.actionPreterRemorqueurs or nil
+        self.bFinManoeuvre = self.bFinManoeuvre or false
+        if( self.bFinManoeuvre ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( self._namedParams.pionA, self._namedParams.fAmb )
+            actionCallbacks[ self.actionPreterRemorqueurs ] = function( arg ) self.bFinManoeuvre = arg end
+
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionPreterRemorqueurs )
+    end,
+
+    destroy = function( self )
+                self.actionPreterRemorqueurs = DEC_StopAction( self.actionPreterRemorqueurs )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_RecupererRemorqueurs
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_LOG_RecupererRemorqueurs"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDe = self.params[1]
+        self._namedParams.fAmb = self.params[2]
+    end,
+
+    select = function( self )
+        DEC_RecupererRemorqueurs( self._namedParams.pionDe, self._namedParams.fAmb )
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+

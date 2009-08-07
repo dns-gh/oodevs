@@ -16,10 +16,14 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 
+class DEC_AutomateDecision;
+class DEC_Knowledge_Agent;
+class DEC_Path_ABC;
+class MIL_AgentTypePion;
 class MIL_Mission_ABC;
+class MT_Vector2D;
 class NET_ASN_MsgUnitAttributes;
 class PHY_RoePopulation;
-class DEC_AutomateDecision;
 
 enum E_FightRateState;
 enum E_RulesOfEngagementState;
@@ -46,31 +50,93 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
-
-    
-    //! @name Init
-    //@{
-    static void InitializeDIA();
-    //@}
     
     //! @name Operations
     //@{
     void Clean         ();
 
-    void StartMissionBehavior( MIL_Mission_ABC& mission );
-    void StopMissionBehavior ( MIL_Mission_ABC& mission );
+    virtual void StartMissionBehavior( MIL_Mission_ABC& mission );
+    virtual void StopMissionBehavior ( MIL_Mission_ABC& mission );
 
-    void RemoveAllReferencesOf( const DIA_TypedObject& referenced, DIA_ExecutionContext& context );
     //@}
 
     //! @name Accessors
     //@{
-          MIL_AgentPion&        GetPion         () const;
+    virtual MIL_AgentPion&        GetPion         () const;
+
           bool                  HasStateChanged () const; // Etat decisionnel
     const PHY_RoePopulation&    GetRoePopulation() const;
 
     virtual std::string           GetName         () const;
     virtual DEC_AutomateDecision* GetDecAutomate  () const;
+
+    virtual const std::string& GetDIAType() const;
+
+    virtual int GeteEtatDec() const;
+    virtual void SeteEtatDec( int value );
+    int GeteEtatDecPrudence() const;
+    void SeteEtatDecPrudence( int value );
+    virtual int GeteEtatLima() const;
+    virtual void SeteEtatLima( int value );
+    int GeteEtatNbc() const;
+    void SeteEtatNbc( int value );
+    int GeteEtatDestruction() const;
+    void SeteEtatDestruction( int value );
+    int GeteEtatFeu() const;
+    void SeteEtatFeu( int value );
+    int GeteEtatAmbiance() const;
+    void SeteEtatAmbiance( int value );
+    int GeteEtatRadio() const;
+    void SeteEtatRadio( int value );
+    int GeteEtatRadar() const;
+    void SeteEtatRadar( int value );
+    int GeteEtatDeplacement() const;
+    void SeteEtatDeplacement( int value );
+    int GeteEtatOrdreCoordination() const;
+    void SeteEtatOrdreCoordination( int value );
+    int GeteConsigneTir() const;
+    void SeteConsigneTir( int value );
+    int GeteConsigneTirPopulation() const;
+    void SeteConsigneTirPopulation( int value );
+    virtual int GeteEtatEchelon() const;
+    virtual void SeteEtatEchelon( int value );
+    int GeteEtatSoutien() const;
+    void SeteEtatSoutien( int value );
+    int GeteEtatSituationEnnemi() const;
+    void SeteEtatSituationEnnemi( int value );
+    virtual int GeteEtatPhaseMission() const;
+    virtual void SeteEtatPhaseMission( int value );
+    bool GetbOrdreInterrompreMission() const;
+    void SetbOrdreInterrompreMission( bool value );
+    virtual bool GetbOrdreDecrocher() const;
+    virtual void SetbOrdreDecrocher( bool value );
+    virtual bool GetbOrdreTenirSurLR() const;
+    virtual void SetbOrdreTenirSurLR( bool value );
+    virtual bool GetbOrdreTenir() const;
+    virtual void SetbOrdreTenir( bool value );
+    bool GetbPasserSurLC() const;
+    void SetbPasserSurLC( bool value );
+    DEC_Decision_ABC* GetpionEnEscorte() const;
+    void SetpionEnEscorte( DEC_Decision_ABC* value );
+    DEC_Path_ABC* GetitMvt() const;
+    void SetitMvt( DEC_Path_ABC* value );
+    boost::shared_ptr< MT_Vector2D > GetobjectifEsquive() const;
+    void SetobjectifEsquive( MT_Vector2D* value );
+    DEC_Knowledge_Agent* GeteniEnCours() const;
+    void SeteniEnCours( DEC_Knowledge_Agent* value );
+    std::string GetmissionPrecedente() const;
+    void SetmissionPrecedente( const std::string& value );
+    float GetrTenir() const;
+    void SetrTenir( float value );
+    int GeteTypeContact() const;
+    void SeteTypeContact( int value );
+    int GeteNiveauAction() const;
+    void SeteNiveauAction( int value );
+    bool GetbDefenseStatique_Mobile() const;
+    void SetbDefenseStatique_Mobile( bool value );
+    const std::vector< DEC_Decision_ABC* >* GetselUnitesEnAppui() const;
+    void AddToselUnitesEnAppui( DEC_Decision_ABC* pPion );
+    void RemoveFromselUnitesEnAppui( DEC_Decision_ABC* pPion );
     //@}
 
     //! @name Network
@@ -89,16 +155,37 @@ public:
     void NotifyRoePopulationChanged           ( const PHY_RoePopulation& roe );
     //@}
 
-private:
-    //! @name Tools
+protected:
+    //! @name Helpers
     //@{
     virtual void EndCleanStateAfterCrash  ();
+
+    virtual void RegisterUserFunctions( directia::Brain& brain );
+    //@}
+    
+private:
+    //! @name Helpers
+    //@{
+    virtual void RegisterSelf( directia::Brain& brain );
+    //@}
+
+    //! @name Functions called from dia
+    //@{
+    virtual bool IsNeutralized() const;
+    virtual bool IsMoving() const;
+    virtual bool IsContaminated() const;
+    virtual const MT_Vector2D* GetPosition() const;
+    virtual bool IsPC() const;
+    virtual bool IsTransported() const;
+    virtual bool IsFlying() const;
+    virtual MT_Float GetMajorOperationalState() const;
+    virtual bool IsAutomateEngaged() const;
+    virtual bool IsDead() const;
+    virtual void WearNbcProtectionSuit() const;
+    virtual void RemoveNbcProtectionSuit() const;
     //@}
 
 private:
-    DIA_FunctionCaller< MIL_AgentPion > diaFunctionCaller_;
-    DIA_Parameters                      missionBehaviorParameters_;   
-
     // Etat décisionnel
           E_ForceRatioState        nForceRatioState_;
           E_RulesOfEngagementState nRulesOfEngagementState_;
@@ -107,11 +194,44 @@ private:
           E_FireAvailability       nIndirectFireAvailability_;
     const PHY_RoePopulation*       pRoePopulation_; //$$$ à déplacer dans Role_Population ?
 
+    int eEtatDec_;
+    int eEtatDecPrudence_;
+    int eEtatLima_;
+    int eEtatNbc_;
+    int eEtatDestruction_;
+    int eEtatFeu_;
+    int eEtatAmbiance_;
+    int eEtatRadio_;
+    int eEtatRadar_;
+    int eEtatDeplacement_;
+    int eEtatOrdreCoordination_;
+    int eConsigneTir_;
+    int eConsigneTirPopulation_;
+    int eEtatEchelon_;
+    int eEtatSoutien_;
+    int eEtatSituationEnnemi_;
+    int eEtatPhaseMission_;
+    bool bOrdreInterrompreMission_;
+    bool bOrdreDecrocher_;
+    bool bOrdreTenirSurLR_;
+    bool bOrdreTenir_;
+    bool bPasserSurLC_;
+    DEC_Decision_ABC* pionEnEscorte_;
+    std::vector< DEC_Decision_ABC* > pionsEnAppui_;
+    DEC_Path_ABC* itMvt_;
+    boost::shared_ptr< MT_Vector2D > objectifEsquive_;
+    DEC_Knowledge_Agent* eniEnCours_;
+    std::string missionPrecedente_;
+    float rTenir_;
+    int eTypeContact_;
+    int eNiveauAction_;
+    bool bDefenseStatique_Mobile_;
+
     // Network
     bool bStateHasChanged_;
 
-    std::string           name_;
-    DEC_AutomateDecision* pAutomate_;
+    std::string              name_;
+    DEC_AutomateDecision*    pAutomate_;
 };
 
 #endif // __DEC_RolePion_Decision_h_

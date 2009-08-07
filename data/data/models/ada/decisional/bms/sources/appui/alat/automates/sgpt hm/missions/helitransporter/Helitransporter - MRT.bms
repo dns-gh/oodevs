@@ -1,0 +1,57 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Helitransporter - MRT.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// BEH_ALAT_Automate_Helitransporter :
+]]--[[// -----------------------------
+]]--[[//
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_Helitransporter"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listeHM = self.listeHM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, TransportHelicopterPatrol )
+        self.listePionsAHeliporter = self.listePionsAHeliporter or {}
+        if( ModuleBegins() ) then
+            do
+                if( DIA_IsListEmpty( self.listeHM ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+--[[//liste des pions que l'on va pouvoir transporter
+]]                end
+
+                self.listePionsAHeliporter = S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAHelitransporter_ )
+                self.listePionsAHeliporter = S_Cherche_Automate_PionsOperationnels( self.listePionsAHeliporter )
+                --[[// Si il n'y a aucune unité que l'on peut héliporter
+]]if( DIA_IsListEmpty( self.listePionsAHeliporter ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+            end
+        end
+
+        DEC_MRT_Valide()
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_Helitransporter = { "mission" }

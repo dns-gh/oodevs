@@ -12,6 +12,9 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
+class MIL_FragOrder;
+class DEC_PathPoint;
+
 // =============================================================================
 /** @class  DEC_Representations
     @brief  DEC_Representations
@@ -32,11 +35,14 @@ public:
 
     //! @name Operations
     //@{
-    const T_ObjectVector& GetCategory( const std::string& name );
-    void AddToCategory( const std::string& name, DIA_TypedObject* pObject );
-    void RemoveFromCategory( const std::string& name, DIA_TypedObject* pObject );
-    void DeleteRepresentation( DIA_TypedObject* pObject );
-    void RemoveAllReferencesOf( const DIA_TypedObject& referenced );
+    const std::vector< MIL_FragOrder* >& GetOrdersCategory();
+    void AddToOrdersCategory( MIL_FragOrder* pObject );
+    void RemoveFromOrdersCategory( MIL_FragOrder* pObject );
+    void DeleteOrderRepresentation( MIL_FragOrder* pObject );
+
+    const std::vector< DEC_PathPoint* >& GetPointsCategory();
+    void AddToPointsCategory( DEC_PathPoint* pObject );
+    void RemoveFromPointsCategory( DEC_PathPoint* pObject );
     //@}
 
 private:
@@ -48,14 +54,17 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, T_ObjectVector > T_Representations;
-    typedef T_Representations::iterator           IT_Representations;
+    typedef std::vector< MIL_FragOrder* >          T_OrdersRepresentationVector;
+    typedef T_OrdersRepresentationVector::iterator IT_OrdersRepresentationVector;
+    typedef std::vector< DEC_PathPoint* >          T_PointsRepresentationVector;
+    typedef T_PointsRepresentationVector::iterator IT_PointsRepresentationVector;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Representations representations_;
+    T_OrdersRepresentationVector orderRepresentations_;
+    T_PointsRepresentationVector pointRepresentations_;
     //@}
 };
 

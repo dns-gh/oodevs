@@ -1,0 +1,134 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie blindee/missions/reconnaitre zone/ReconnaitreZone - CDT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_GEN_ReconnaitreZone
+]]--[[//
+]]--[[// Commentaires: refonte 27/10/06
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_GEN_ReconnaitreZone"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "ACT_Warning", {} },
+        { "BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[//---------------------------------------------------------------------
+]]--[[// Ordre conduite
+]]--[[//---------------------------------------------------------------------
+]]
+        --[[//---------------------------------------------------------------------
+]]--[[// Vérification des moyens
+]]--[[//---------------------------------------------------------------------
+]]local listePionsGenie = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
+            do
+                Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                                return
+
+            end
+--[[//---------------------------------------------------------------------
+]]--[[// Gestion deuxieme échelon
+]]--[[//---------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[// New MIA
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        for _,x in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Gestion pions détruit
+]]--[[//-----------------------------------------------------------------------------
+]]DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                --[[// cast
+]]local pion = x
+                if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                    F_Pion_SeteEtatEchelon( pion, eEtatEchelon_Second )
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Gestion SE
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Ces listes peuvent évoluer...en fonction des destructions
+]]
+        end
+
+        local sel_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        local sel_SE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
+        if( DIA_IsListEmpty( sel_PE ) or DIA_IsListEmpty( sel_SE ) ) then
+            return
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//-----------------------------------------------------------------------------
+]]local rIterateurPionASuivre = 0
+        for _,x in pairs( sel_SE ) do
+        local _continue = true
+do
+                local pion = x
+                local pionPE = DIA_GetAt( sel_PE, rIterateurPionASuivre )
+                Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, pionPE, } )
+                                rIterateurPionASuivre = rIterateurPionASuivre + 1
+                if( rIterateurPionASuivre >= #( sel_PE ) ) then
+                    --[[// revenir au premier élément de la liste de PE
+]]rIterateurPionASuivre = 0
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_GEN_ReconnaitreZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_ReconnaitreZone, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_ReconnaitreZone, "ACT_Warning", nodes.ACT_Warning }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_GEN_ReconnaitreZone, "BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_", nodes.BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_ }

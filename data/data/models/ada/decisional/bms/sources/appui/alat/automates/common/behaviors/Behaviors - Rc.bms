@@ -1,0 +1,45 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Rc.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Gestion des ordres de conduite spécifiques aux sgpt alat
+]]--[[// -----------------------------------------------------------------------------
+]]node "BEH_RC_Automate_ALAT_Situation"
+{
+    activations =
+    {
+        { "ACT_RC_Automate", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listeUnites = DEC_Automate_PionsAvecPC()
+        for _,x in pairs( --[[// Si demande ordre de conduite d'au moins un pion
+]]--[[// -----------------------------------------------
+]]listeUnites ) do
+        local _continue = true
+do
+                if( not S_EstPatrouilleALAT( x ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    local pion = x
+                    --[[//Gestion de la demande d'ordre de consuite poursuivre
+]]if( pion:GetbDemandeOrdreConduitePoursuivre_() ) then
+                        Activate( self.activations.ACT_RC_Automate, 1, { eRC_AttenteOrdrePoursuivre, } )
+                    end
+
+                end
+            end
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_RC_Automate_ALAT_Situation, "ACT_RC_Automate", nodes.ACT_RC_Automate }

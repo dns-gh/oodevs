@@ -26,238 +26,206 @@
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau( const MIL_AgentPion& callerAgent )
 {
-    T_KnowledgeAgentDiaIDVector knowledges;
+    T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInZone
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetDetectedAgentsInZone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDetectedAgentsInZone( const MIL_AgentPion& callerAgent, const TER_Localisation* area )
 {
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    TER_Localisation* pZone = call.GetParameter( 0 ).ToUserPtr( pZone );
-    assert( pZone );
-
-    T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, *pZone );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    assert( area );
+    T_ConstKnowledgeAgentVector knowledges;
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, *area );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetAgentsAttacking
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetAgentsAttacking( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetAgentsAttacking( const MIL_AgentPion& callerAgent )
 {
-    T_KnowledgeAgentDiaIDVector attackers;
+    T_ConstKnowledgeAgentVector attackers;
     callerAgent.GetKnowledge().GetAgentsAttacking( attackers );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( attackers, DEC_Tools::GetTypeConnaissanceAgent() );
+    return attackers;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDangerousEnemies
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetDangerousEnemies( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDangerousEnemies( const MIL_AgentPion& callerAgent )
 {
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( callerAgent.GetKnowledge().GetDangerousEnemies(), DEC_Tools::GetTypeConnaissanceAgent() );
+    return callerAgent.GetKnowledge().GetDangerousEnemies();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceived
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetLivingEnemiesPerceived( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceived( const MIL_AgentPion& callerAgent )
 {
-    T_KnowledgeAgentDiaIDVector knowledges;
+    T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledge().GetLivingEnemiesPerceived( knowledges );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau( const MIL_AgentPion& callerAgent )
 {
-    T_KnowledgeAgentDiaIDVector knowledges;
+    T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledge().GetLivingEnemiesPerceivedInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetLivingEnemiesInZone
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetLivingEnemiesInZone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInZone( const MIL_AgentPion& callerAgent, TER_Localisation* pZone )
 {
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-    TER_Localisation* pZone = call.GetParameter( 0 ).ToUserPtr( pZone );
     assert( pZone );
 
-    T_KnowledgeAgentDiaIDVector knowledges;
+    T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInZone( knowledges, *pZone );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau( const MIL_AgentPion& callerAgent )
 {
-    T_KnowledgeAgentDiaIDVector knowledges;
+    T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius )
 {
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
-
-    const MT_Vector2D* pCenter = call.GetParameter( 0 ).ToUserPtr( pCenter );
     assert( pCenter );
 
-    T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInCircle( knowledges, *pCenter, call.GetParameter( 1 ).ToFloat() );
+    T_ConstKnowledgeAgentVector knowledges;
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInCircle( knowledges, *pCenter, radius );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetNearbyRefugees
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetNearbyRefugees( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyRefugees( const MIL_AgentPion& callerAgent, MT_Float radius )
 {
-    T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetRefugeesInCircle( knowledges, callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), call.GetParameter( 0 ).ToFloat() );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    T_ConstKnowledgeAgentVector knowledges;
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetRefugeesInCircle( knowledges, callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), radius );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetNearbySurrenderedAgents
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetNearbySurrenderedAgents( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbySurrenderedAgents( const MIL_AgentPion& callerAgent, MT_Float radius )
 {
-    T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetSurrenderedAgentsInCircle( knowledges, callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), call.GetParameter( 0 ).ToFloat() );
+    T_ConstKnowledgeAgentVector knowledges;
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetSurrenderedAgentsInCircle( knowledges, callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), radius );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::EnemyPresenceInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::EnemyPresenceInCircle( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+bool DEC_KnowledgeFunctions::EnemyPresenceInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* center, MT_Float radius )
 {
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
-
-    const MT_Vector2D* pCenter = call.GetParameter( 0 ).ToUserPtr( pCenter );
-    assert( pCenter );
-
-    call.GetResult().SetValue( callerAgent.GetKnowledgeGroup().GetKnowledge().EnemyPresenceInCircle( *pCenter, call.GetParameter( 1 ).ToFloat() ) );
+    assert( center );
+    return callerAgent.GetKnowledgeGroup().GetKnowledge().EnemyPresenceInCircle( *center, radius );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetRapForLocal
 // Created: NLD 2004-04-08
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetRapForLocal( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+MT_Float DEC_KnowledgeFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (float)callerAgent.GetKnowledge().GetRapForLocalValue() );
+    return callerAgent.GetKnowledge().GetRapForLocalValue();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetClosestObject
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetClosestObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+int DEC_KnowledgeFunctions::GetClosestObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types )
 {
-    MIL_ObjectFilter filter( call.GetParameters(), 0 );
-    
-    DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), filter );
-    call.GetResult().SetValue( (void*)( pKnowledge ? pKnowledge->GetID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
+    const MIL_ObjectFilter filter( types );
+    const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), filter );
+    return pKnowledge ? pKnowledge->GetID() : 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetClosestFriendObject
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetClosestFriendObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+int DEC_KnowledgeFunctions::GetClosestFriendObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types )
 {
-    MIL_ObjectFilter filter( call.GetParameters(), 0 );
-    
-    DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), filter );
-    call.GetResult().SetValue( (void*)( pKnowledge ? pKnowledge->GetID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
+    const MIL_ObjectFilter filter( types );
+    const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), filter );
+    return pKnowledge ? pKnowledge->GetID() : 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetObjectsColliding
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetObjectsColliding( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsColliding( const MIL_AgentPion& callerAgent )
 {
     T_KnowledgeObjectDiaIDVector objectsColliding;
     callerAgent.GetKnowledge().GetObjectsColliding( objectsColliding );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( objectsColliding, DEC_Tools::GetTypeConnaissanceObjet() );
+    return objectsColliding;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetPopulationsColliding
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetPopulationsColliding( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_KnowledgePopulationDiaIDVector DEC_KnowledgeFunctions::GetPopulationsColliding( const MIL_AgentPion& callerAgent )
 {
     T_KnowledgePopulationDiaIDVector populationsColliding;
     callerAgent.GetKnowledge().GetPopulationsColliding( populationsColliding );
 
-    DIA_Variable_ObjectList& diaPopulationList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaPopulationList.SetValueUserType( populationsColliding, DEC_Tools::GetTypeConnaissancePopulation() );
+    return populationsColliding;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetPopulationsAttacking
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetPopulationsAttacking( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+T_KnowledgePopulationDiaIDVector DEC_KnowledgeFunctions::GetPopulationsAttacking( const MIL_AgentPion& callerAgent )
 {
     T_KnowledgePopulationDiaIDVector attackers;
     callerAgent.GetKnowledge().GetPopulationsAttacking( attackers );
 
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( attackers, DEC_Tools::GetTypeConnaissancePopulation() );
+    return attackers;
 }
 

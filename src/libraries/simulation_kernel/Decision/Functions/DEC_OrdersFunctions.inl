@@ -23,16 +23,14 @@
 // Created: NLD 2003-12-23
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_OrdersFunctions::GetMissionLimaFlag( DIA_Call_ABC& call, const T& caller )
+bool DEC_OrdersFunctions::GetMissionLimaFlag( const T& caller, unsigned int limaID)
 {
-    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-    MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( limaID );
     if( !pLima )
     {
-        call.GetResult().SetValue( false );
-        return;
+        return false;
     }
-    call.GetResult().SetValue( pLima->IsFlagged() );
+    return pLima->IsFlagged();
 }
 
 // -----------------------------------------------------------------------------
@@ -40,21 +38,15 @@ void DEC_OrdersFunctions::GetMissionLimaFlag( DIA_Call_ABC& call, const T& calle
 // Created: NLD 2004-05-21
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_OrdersFunctions::GetLima( DIA_Call_ABC& call, const T& caller )
+unsigned int DEC_OrdersFunctions::GetLima( const T& caller, unsigned int limaId )
 {
-    const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( call.GetParameter( 0 ).ToId() );
+    const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( limaId );
     if( !pFunction )
-    {
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
-        return;
-    }
+        return 0;
     MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( *pFunction );
     if( !pLima )
-    {
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
-        return;
-    }
-    call.GetResult().SetValue( (void*)pLima->GetID(), &DEC_Tools::GetTypeLima() );
+        return 0;
+    return pLima->GetID();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,15 +54,14 @@ void DEC_OrdersFunctions::GetLima( DIA_Call_ABC& call, const T& caller )
 // Created: NLD 2007-04-30
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_OrdersFunctions::GetNextScheduledLima( DIA_Call_ABC& call, const T& caller )
+unsigned int DEC_OrdersFunctions::GetNextScheduledLima( const T& caller )
 {
     MIL_LimaOrder* pLima = caller.GetOrderManager().FindNextScheduledLima();
     if( !pLima )
     {
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
-        return;
+        return 0;
     }
-    call.GetResult().SetValue( (void*)pLima->GetID(), &DEC_Tools::GetTypeLima() );
+    return pLima->GetID() ;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,9 +69,9 @@ void DEC_OrdersFunctions::GetNextScheduledLima( DIA_Call_ABC& call, const T& cal
 // Created: NLD 2007-04-11
 // -----------------------------------------------------------------------------
 template< typename T >
-static void DEC_OrdersFunctions::GetFuseau( DIA_Call_ABC& call, const T& caller )
+static const MIL_Fuseau& DEC_OrdersFunctions::GetFuseau( const T& caller )
 {
-    call.GetResult().SetValue( (void*)&caller.GetOrderManager().GetFuseau(), &DEC_Tools::GetTypeFuseau(), 1 );
+    return caller.GetOrderManager().GetFuseau();
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +79,7 @@ static void DEC_OrdersFunctions::GetFuseau( DIA_Call_ABC& call, const T& caller 
 // Created: NLD 2005-09-13
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_OrdersFunctions::FinishMission( DIA_Call_ABC& /*call*/, T& caller )
+void DEC_OrdersFunctions::FinishMission( T& caller )
 {
     caller.GetOrderManager().ReplaceMission( 0 );
 }
@@ -98,7 +89,7 @@ void DEC_OrdersFunctions::FinishMission( DIA_Call_ABC& /*call*/, T& caller )
 // Created: NLD 2005-09-19
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_OrdersFunctions::IsNewMissionStarted( DIA_Call_ABC& call, T& caller )
+bool DEC_OrdersFunctions::IsNewMissionStarted( T& caller )
 {
-    call.GetResult().SetValue( caller.GetOrderManager().IsNewMissionStarted() );
+    return caller.GetOrderManager().IsNewMissionStarted();
 }

@@ -18,6 +18,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include <xeumeuleu/xml.h>
+#include "MIL_MissionParameterFactory.h"
 
 
 
@@ -172,18 +173,10 @@ MIL_Report::~MIL_Report()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::DoSend
-// Created: NLD 2006-12-06
+// Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const DIA_Parameters& diaParameters, unsigned int firstParameter ) const
+bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int /*reportId*/, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
 {
-    // DIA parameter 0 : Report ID
-    unsigned int nDiaParameter = diaParameters.GetParameters().size() - parameters_.size();
-    if( nDiaParameter != firstParameter )
-    {
-        MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (invalid DIA parameters)" );
-        return false;
-    }
-
     NET_ASN_MsgReport asn;
  
     asn().oid          = nSenderID;
@@ -194,11 +187,11 @@ bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolv
     asn().parametres.n = parameters_.size();
     if( !parameters_.empty() )
     {
-        asn().parametres.elem = new ASN1T_MissionParameter[ parameters_.size() ];
-        for( CIT_ParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++nDiaParameter )
+        int size = parameters_.size();
+        asn().parametres.elem = new ASN1T_MissionParameter[ size ];
+        for( int i = 0; i < size; ++i )
         {
-            const DIA_Variable_ABC& diaParameter = const_cast< DIA_Parameters& >( diaParameters ).GetParameter( nDiaParameter );
-            if( !(**it).Copy( diaParameter, asn().parametres.elem[ nDiaParameter - firstParameter ], knowledgeResolver, false /*not optional*/ ) )
+            if( !parameters_[i]->Copy( *params[ i ], asn().parametres.elem[ i ], knowledgeResolver, false /*not optional*/ ) )
                 return false; //$$$ Memory leak
         }
     }
@@ -213,3 +206,4 @@ bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolv
 
     return true;
 }
+    

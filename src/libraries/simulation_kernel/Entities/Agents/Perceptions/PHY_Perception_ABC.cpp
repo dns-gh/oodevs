@@ -135,3 +135,13 @@ void PHY_Perception_ABC::Execute( const TER_PopulationConcentration_ABC::T_Popul
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Perception_ABC::GetPerceptionId
+// Created: LDC 2009-07-21
+// -----------------------------------------------------------------------------
+int PHY_Perception_ABC::GetPerceptionId()
+{
+    static int id = 0;
+    return id++;
+}

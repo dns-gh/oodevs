@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_World.h"
@@ -27,7 +28,7 @@
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoPoint::PHY_PerceptionRecoPoint( PHY_RolePion_Perceiver& perceiver )
-    : PHY_Perception_ABC( perceiver )
+    : PHY_PerceptionWithLocation< PHY_PerceptionRecoPointReco >( perceiver )
 {
 }
 
@@ -46,29 +47,19 @@ PHY_PerceptionRecoPoint::~PHY_PerceptionRecoPoint()
 // Name: PHY_PerceptionRecoPoint::AddPoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void* PHY_PerceptionRecoPoint::AddPoint( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DIA_Variable_ABC& result )
+int PHY_PerceptionRecoPoint::AddPoint( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent )
 {
-    sReco* pNewReco = new sReco( center, rSize, rSpeed, result );
-
-    result.SetValue( false );
-    recos_.push_back( pNewReco );
-    return pNewReco;
+    PHY_PerceptionRecoPointReco* pNewReco = new PHY_PerceptionRecoPointReco( center, rSize, rSpeed, callerAgent );
+    return Add( pNewReco );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoPoint::RemovePoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoPoint::RemovePoint( void* pId )
+void PHY_PerceptionRecoPoint::RemovePoint( int id )
 {
-    sReco* pReco = static_cast< sReco* >( pId );
-
-    IT_RecoVector it = std::find( recos_.begin(), recos_.end(), pReco );
-    if ( it != recos_.end() )
-    {
-        delete pReco;
-        recos_.erase( it );
-    }
+    Remove( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,19 +70,18 @@ void PHY_PerceptionRecoPoint::Update()
 {
     for ( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
     {
-        sReco& reco = **it;
+        PHY_PerceptionRecoPointReco& reco = **it;
 
-        if ( reco.pReturn_ )
+        if ( !reco.bProcessed_ )
         {
             // Agrandissement de la zone de reconnaissance
             if ( reco.rCurrentSize_ < reco.rFinalSize_ )
                 reco.rCurrentSize_ += reco.rGrowthSpeed_;
-            if ( reco.rCurrentSize_ > reco.rFinalSize_ )
-                reco.rCurrentSize_ = reco.rFinalSize_;
-            if ( reco.rCurrentSize_ == reco.rFinalSize_ )
+            if ( reco.rCurrentSize_ >= reco.rFinalSize_ )
             {
-                reco.pReturn_->SetValue( true );
-                reco.pReturn_ = 0;
+                reco.rCurrentSize_ = reco.rFinalSize_;
+                reco.callerAgent_.CallbackPerception( (*it)->Id() );
+                reco.bProcessed_ = true;
             }
         }
     }  

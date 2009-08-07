@@ -13,8 +13,9 @@
 #define __DEC_KnowledgeFunctions_h_
 
 #include "MIL.h"
+#include "Knowledge/DEC_Knowledge_Def.h"
 
-class DIA_Call_ABC;
+class DEC_Decision_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Fuseau;
@@ -27,41 +28,40 @@ class DEC_KnowledgeFunctions
 public:
     //! @name Rapport de force
     //@{
-    static void GetRapForLocal         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static MT_Float GetRapForLocal     ( const MIL_AgentPion& callerAgent );
 
-    static void GetDetectedAgentsInFuseau        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetDetectedAgentsInZone          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetAgentsAttacking               ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetDangerousEnemies              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-//    static void GetLivingTerroristsPerceived     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetLivingEnemiesPerceived        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetLivingEnemiesPerceivedInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetLivingEnemiesInZone           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetLivingEnemiesInFuseau         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetLivingEnemiesInCircle         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetDetectedAgentsInFuseau        ( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetDetectedAgentsInZone          ( const MIL_AgentPion& callerAgent, const TER_Localisation* area );
+    static T_ConstKnowledgeAgentVector GetAgentsAttacking               ( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetDangerousEnemies              ( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceived        ( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceivedInFuseau( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesInZone           ( const MIL_AgentPion& callerAgent, TER_Localisation* pZone );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesInFuseau         ( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesInCircle         ( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius );
 
-    template< typename T > static void SortAccordingToUnloadedEnemies( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void SortAccordingToLoadedEnemies  ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SortAccordingToUnloadedEnemies( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations );
+    template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SortAccordingToLoadedEnemies  ( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations );
 
-    template< typename T > static void GetLivingEnemiesPerceivedByPion      ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceivedByPion( const T& caller, const DEC_Decision_ABC* perceiver );
 
-    static void GetNearbyRefugees                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetNearbySurrenderedAgents       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void EnemyPresenceInCircle            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    template< typename T > static void GetFriendsInZone         ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void ShareKnowledgesWith      ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void ShareKnowledgesInZoneWith( DIA_Call_ABC& call, const T& caller );
+    static T_ConstKnowledgeAgentVector GetNearbyRefugees                ( const MIL_AgentPion& callerAgent, MT_Float radius );
+    static T_ConstKnowledgeAgentVector GetNearbySurrenderedAgents       ( const MIL_AgentPion& callerAgent, MT_Float radius );
+    static bool EnemyPresenceInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* center, MT_Float radius );
+    template< typename T > static T_ConstKnowledgeAgentVector GetFriendsInZone( const T& caller, const TER_Localisation* location );
+    template< typename T > static void ShareKnowledgesWith      ( const T& caller, DEC_Decision_ABC* receiver, float minutes );
+    template< typename T > static void ShareKnowledgesInZoneWith( const T& caller, DEC_Decision_ABC* receiver, const MT_Vector2D* center, float radius );
        
-    static void GetClosestObject       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
-    static void GetClosestFriendObject ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
-    static void GetObjectsColliding    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );  
-    template< typename T > static void GetObjectsInCircle( DIA_Call_ABC& call, const T& caller );   
-    template< typename T > static void GetObjectsInZone  ( DIA_Call_ABC& call, const T& caller );   
-    template< typename T > static void GetObjectsInFuseau( DIA_Call_ABC& call, const T& caller );   
+    static int GetClosestObject      ( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types );
+    static int GetClosestFriendObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types );
+    static T_KnowledgeObjectDiaIDVector GetObjectsColliding( const MIL_AgentPion& callerAgent );
+    template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, MT_Float rRadius, const std::vector< std::string >& filters );
+    template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInZone  ( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters );
+    template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInFuseau( const T& caller, const std::string& type );
 
-    static void GetPopulationsColliding( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetPopulationsAttacking( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    template< typename T > static void GetPopulations           ( DIA_Call_ABC& call, const T& caller );
+    static T_KnowledgePopulationDiaIDVector GetPopulationsColliding( const MIL_AgentPion& callerAgent );
+    static T_KnowledgePopulationDiaIDVector GetPopulationsAttacking( const MIL_AgentPion& callerAgent );
+    template< typename T > static std::vector< unsigned int > GetPopulations( const T& caller );
     //@}
 
     //! @name Tools

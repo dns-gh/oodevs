@@ -1,0 +1,380 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/behaviors/Behaviors - Rens.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Rens_Automate_GererSilenceRadio()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Rens_Automate_GererSilenceRadio"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, 1, {} )--[[// Eventuellement d'autre comportements...
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Gestion de l'ordre de conduite
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//                MIA: ATTENTION --> La gestion des ordres a été implémenté de cette 
+]]--[[//                manière (systeme start/stop ) pour gerer le fait de rajouter
+]]--[[//                un pion en dynamique dans l'automate: celui passera en silence radio 
+]]--[[//                ou pas suivant l'état de l'automate.
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio", {} },
+        { "BEH_Ordre_Automate_ConduiteFinSilenceRadio", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
+                        DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
+                        StartActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, {} )
+                        StopActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, {} )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
+                        DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
+                        StopActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, {} )
+                        StartActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, 1, {} )
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar", {} },
+        { "BEH_Ordre_Automate_ConduiteFinSilenceRadar", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
+                        DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
+                        StartActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, 1, {} )
+                        StopActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, {} )
+                        
+                    elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
+                        DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
+                        StopActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, {} )
+                        StartActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, 1, {} )
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_ConduitePasserEnSilenceRadio()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio"
+{
+    activations =
+    {
+        { "ACT_Ordre_PasserEnSilenceRadio", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// RC
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// GGR : ajouter un RC
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Donner l'ordre aux pions si embrayé
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
+        for _,x in pairs( listePionsSubordonnes ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_Ordre_PasserEnSilenceRadio, 1, { pion, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_ConduitePasserEnSilenceRadio()
+]]--[[//
+]]--[[// Commentaires : on donne juste l'ordre au pion de se vetir de leur tenue NBC
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_ConduiteFinSilenceRadio"
+{
+    activations =
+    {
+        { "ACT_Ordre_FinSilenceRadio", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Donner l'ordre aux pions si embrayé
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
+        for _,x in pairs( listePionsSubordonnes ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_Ordre_FinSilenceRadio, 1, { pion, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_PasserEnSilenceRadio
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Ordre_PasserEnSilenceRadio"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            self._namedParams.pion:SetStateVariable( "VE_SilenceRadio", 4 )
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_FinSilenceRadio
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_FinSilenceRadio"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            self._namedParams.pion:SetStateVariable( "VE_SilenceRadio", 0 )
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_ConduitePasserEnSilenceRadar()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar"
+{
+    activations =
+    {
+        { "ACT_Ordre_PasserEnSilenceRadar", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// RC
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// GGR : ajouter un RC
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Donner l'ordre aux pions si embrayé
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
+        for _,x in pairs( listePionsSubordonnes ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_Ordre_PasserEnSilenceRadar, 1, { pion, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Automate_ConduitePasserEnSilenceRadar()
+]]--[[//
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_Automate_ConduiteFinSilenceRadar"
+{
+    activations =
+    {
+        { "ACT_Ordre_FinSilenceRadar", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Donner l'ordre aux pions si embrayé
+]]--[[//-----------------------------------------------------------------------------
+]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
+        for _,x in pairs( listePionsSubordonnes ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.ACT_Ordre_FinSilenceRadar, 1, { pion, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_FinSilenceRadar
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Ordre_FinSilenceRadar"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            self._namedParams.pion:SetStateVariable( "VE_SilenceRadar", 0 )
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_PasserEnSilenceRadar
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_PasserEnSilenceRadar"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            self._namedParams.pion:SetStateVariable( "VE_SilenceRadar", 4 )
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_ConduiteFinSilenceRadar, "ACT_Ordre_FinSilenceRadar", nodes.ACT_Ordre_FinSilenceRadar }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_ConduiteFinSilenceRadio, "ACT_Ordre_FinSilenceRadio", nodes.ACT_Ordre_FinSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, "ACT_Ordre_PasserEnSilenceRadar", nodes.ACT_Ordre_PasserEnSilenceRadar }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, "ACT_Ordre_PasserEnSilenceRadio", nodes.ACT_Ordre_PasserEnSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar, "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar", nodes.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar, "BEH_Ordre_Automate_ConduiteFinSilenceRadar", nodes.BEH_Ordre_Automate_ConduiteFinSilenceRadar }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio", nodes.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, "BEH_Ordre_Automate_ConduiteFinSilenceRadio", nodes.BEH_Ordre_Automate_ConduiteFinSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Rens_Automate_GererSilenceRadio, "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio", nodes.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio }

@@ -1,0 +1,133 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/missions/SeFaireDecontaminer.bms"] = true
+
+
+
+--[[//------------------------------------------------------------------------------
+]]--[[// MIS_Pion_SeFaireDecontaminer
+]]--[[//
+]]--[[// Commentaires: T_Point pointArrivee_;
+]]--[[//               T_ConnaissanceObjet siteDecontamination_;
+]]--[[//
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_SeFaireDecontaminer"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Pion_Nbc_DemanderDecontaminationSur", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtat = self.eEtat or eActionEnCours
+        self.positionSite = self.positionSite or S_Obj_Position( self._namedParams.mission.siteDecontamination_ )
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Copie_Point( self.positionSite, myself.pointRegroupement_ )
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                end
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                self.ePhaseMission = eSeFaireDecontaminer
+                
+            elseif switch_1 == eSeFaireDecontaminer then
+                if( not DEC_Agent_EstContamine() ) then
+                    do
+                        self.ePhaseMission = eFinDecontamination
+                                                return
+
+                    end
+--[[// Rejoindre le site
+]]--[[// -----------------
+]]                end
+
+                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionSite ) > 100 ) then
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), { self.positionSite, eProgressionDefaut, eTypeItiInfiltration, } )
+                end
+
+                --[[// Demander à se faire decontminer (se mettre en liste d'attente)
+]]--[[// -------------------------------------------------------------
+]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
+                
+            elseif switch_1 == eFinDecontamination then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointArrivee_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            DIA_Clear( myself.plotsRavitaillement_ )
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                DIA_Clear( myself.plotsRavitaillement_ )
+        F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_SeFaireDecontaminer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireDecontaminer, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireDecontaminer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireDecontaminer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireDecontaminer, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireDecontaminer, "ACT_Pion_Nbc_DemanderDecontaminationSur", nodes.ACT_Pion_Nbc_DemanderDecontaminationSur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireDecontaminer, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }

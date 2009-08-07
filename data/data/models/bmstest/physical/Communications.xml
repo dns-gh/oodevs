@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<communications>
+  <communication-breakdown reloading-time-modifier="1.5" speed-modifier="0.2"/>
+</communications>

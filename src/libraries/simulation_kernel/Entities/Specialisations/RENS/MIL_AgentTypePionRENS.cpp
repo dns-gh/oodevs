@@ -13,6 +13,9 @@
 #include "MIL_AgentTypePionRENS.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_PerceptionFunctions.h"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <directia/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionRENS constructor
@@ -21,8 +24,7 @@
 MIL_AgentTypePionRENS::MIL_AgentTypePionRENS( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePion( strName, xis )
 {
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PerceptionFunctions::EnableRecordMode , "DEC_Perception_ActiverModeEnregistrement"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PerceptionFunctions::DisableRecordMode, "DEC_Perception_DesactiverModeEnregistrement" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,4 +43,14 @@ MIL_AgentTypePionRENS::~MIL_AgentTypePionRENS()
 const MIL_AgentTypePion* MIL_AgentTypePionRENS::Create( const std::string& strName, xml::xistream& xis )
 {
     return new MIL_AgentTypePionRENS( strName, xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionRENS::RegisterFunctions
+// Created: LDC 2009-04-23
+// -----------------------------------------------------------------------------
+void MIL_AgentTypePionRENS::RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const
+{
+    brain.RegisterFunction( "DEC_Perception_ActiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::EnableRecordMode, boost::ref( agent ) ) );
+    brain.RegisterFunction( "DEC_Perception_DesactiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::DisableRecordMode, boost::ref( agent ) ) );
 }

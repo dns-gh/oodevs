@@ -1,0 +1,51 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/fairemouvement/CDT - FaireMouvement.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_FaireMouvement
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_FaireMouvement"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_CoordDep_Automate_ActiverCoordinationSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "$ MIS_Automate_CDT_FaireMouvement: debut $" )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+        end
+
+        self.eEtatODC = self.eEtatODC or eActionEnCours
+        if( self.eEtatODC == eActionHalt ) then
+            do
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                self.eEtatODC = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_CoordDep_Automate_ActiverCoordinationSur, 1, { DEC_Automate_PionsAvecPC(), 1000, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_FaireMouvement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_FaireMouvement, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_FaireMouvement, "BEH_CoordDep_Automate_ActiverCoordinationSur", nodes.BEH_CoordDep_Automate_ActiverCoordinationSur }

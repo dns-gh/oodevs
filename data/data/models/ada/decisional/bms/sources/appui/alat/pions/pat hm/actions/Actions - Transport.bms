@@ -1,0 +1,156 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// HelitransportEmbarquer
+]]--[[//
+]]--[[// Commentaires : quand on embarque, on ne peut pas se deplacer en meme temps
+]]--[[//
+]]--[[// -----------------------------------------------------------------------------
+]]node "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer"
+{
+    actuators =
+    {
+        embarquer = 1,
+        deplacement = 1,
+    },
+
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.actionEmbarquer = self.actionEmbarquer or nil
+        self.actionEnPause = self.actionEnPause or false
+        self.eEtatTransport = self.eEtatTransport or nil
+        if( ModuleBegins() ) then
+            self.actionEmbarquer = DEC_Transport_StartEmbarquer( self.eEtatTransport )
+        end
+
+        if( self.actionEnPause ) then
+            do
+                DEC_ReprendAction( self.actionEmbarquer )
+                self.actionEnPause = false
+            end
+        end
+
+        switch_1 = self.eEtatTransport
+            if switch_1 == eActionTransport_Running then
+                
+            elseif switch_1 == eActionTransport_Finished then
+                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            elseif switch_1 == eActionTransport_Impossible then
+                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                        end
+
+    end,
+
+    deselect = function( self )
+                self.actionEnPause = true
+        DEC_PauseAction( self.actionEmbarquer )
+    end,
+
+    destroy = function( self )
+                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+    end,
+
+}
+
+--[[//------------------------------------------------------------------------------
+]]--[[// HelitransportDebarquer
+]]--[[//
+]]--[[// Commentaires : quand on debarque, on ne peut pas se deplacer en meme temps
+]]--[[//------------------------------------------------------------------------------
+]]node "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer"
+{
+    actuators =
+    {
+        debarquer = 1,
+        deplacement = 1,
+    },
+
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.actionDebarquer = self.actionDebarquer or nil
+        self.actionEnPause = self.actionEnPause or false
+        self.eEtatTransport = self.eEtatTransport or nil
+        if( ModuleBegins() ) then
+            do
+                self.actionDebarquer = DEC_Transport_StartDebarquer( self.eEtatTransport )
+            end
+        end
+
+        if( self.actionEnPause ) then
+            do
+                DEC_ReprendAction( self.actionDebarquer )
+                self.actionEnPause = false
+            end
+        end
+
+        switch_1 = self.eEtatTransport
+            if switch_1 == eActionTransport_Running then
+                
+            elseif switch_1 == eActionTransport_Finished then
+                DEC_StopAction( self.actionDebarquer )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            elseif switch_1 == eActionTransport_Impossible then
+                DEC_StopAction( self.actionDebarquer )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                        end
+
+    end,
+
+    deselect = function( self )
+                self.actionEnPause = true
+        DEC_PauseAction( self.actionDebarquer )
+    end,
+
+    destroy = function( self )
+                DEC_StopAction( self.actionDebarquer )
+    end,
+
+}
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Bloquer Log IMEX
+]]--[[//
+]]--[[// Commentaires : Cette action permet de déclarer à la log que le pion spécifié
+]]--[[// ne doit plus être traiter au niveau sanitaire
+]]--[[//------------------------------------------------------------------------------
+]]node "ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            do
+                DEC_InterdireEvacuationAutomatiqueBlesses( self._namedParams.pion )
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_AutoriserEvacuationAutomatiqueBlesses( self._namedParams.pion )
+    end,
+
+    destroy = function( self )
+                DEC_AutoriserEvacuationAutomatiqueBlesses( self._namedParams.pion )
+    end,
+
+}
+

@@ -1,0 +1,8 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/common/Types.bms"] = true
+
+
+
+
+
+

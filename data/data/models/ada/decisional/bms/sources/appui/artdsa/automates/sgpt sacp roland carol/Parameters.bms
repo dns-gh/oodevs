@@ -1,0 +1,8 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/Parameters.bms"] = true
+
+function M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS()
+    return 10000
+end
+
+

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<nbc>
+  <propagation wind-speed-limit="5"/>
+  <nbc-suit max-speed-modifier="0.4" reloading-time-modifier="1.5"/>
+  <agents>
+  </agents>
+</nbc>

@@ -12,14 +12,40 @@
 #ifndef __PHY_PerceptionRecoObjects_h_
 #define __PHY_PerceptionRecoObjects_h_
 
-#include "PHY_Perception_ABC.h"
+#include "PHY_PerceptionWithLocation.h"
+#include "PHY_PerceptionLocalisation.h"
 #include "simulation_terrain/TER_Localisation.h"
+
+class DEC_Decision_ABC;
+
+class PHY_PerceptionRecoObjectsReco : public PHY_PerceptionLocalisation
+{
+public:
+    PHY_PerceptionRecoObjectsReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
+    
+    bool IsInside        ( const TER_Localisation& )                 const;
+    void GetObjectsInside( TER_Object_ABC::T_ObjectVector& ) const;
+
+    void UpdateLocalisation();
+
+private:
+    PHY_PerceptionRecoObjectsReco& operator = ( const PHY_PerceptionRecoObjectsReco& );
+    
+private:
+    const MT_Vector2D      vCenter_;
+    const TER_Localisation localisation_;
+          TER_Localisation circle_;
+    MT_Float               rCurrentSize_;
+    const MT_Float         rGrowthSpeed_;
+    DEC_Decision_ABC&      callerAgent_;
+    bool                   bMaxSizeDone_;
+};
 
 // =============================================================================
 // @class  PHY_PerceptionRecoObjects
 // Created: JVT 2004-10-21
 // =============================================================================
-class PHY_PerceptionRecoObjects : public PHY_Perception_ABC
+class PHY_PerceptionRecoObjects : public PHY_PerceptionWithLocation< PHY_PerceptionRecoObjectsReco >
 {
 
 public:
@@ -30,8 +56,8 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    void* AddLocalisation        ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DIA_Variable_ABC& result );
-    void  RemoveLocalisation     ( void* );
+    int   AddLocalisation        ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DEC_Decision_ABC& callerAgent );
+    void  RemoveLocalisation     ( int id );
 
     bool  HasLocalisationToHandle() const;
     //@}
@@ -42,39 +68,6 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
     virtual const PHY_PerceptionLevel& Compute( const MIL_Object_ABC&   object    ) const;
     //@}
-
-private:
-    //! @name Types
-    //@{
-    struct sReco
-    {
-        sReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rGrowthSpeed, DIA_Variable_ABC& result );
-        
-        bool IsInside        ( const TER_Localisation& )                 const;
-        void GetObjectsInside( TER_Object_ABC::T_ObjectVector& ) const;
-
-        void UpdateLocalisation();
-
-    private:
-        sReco& operator = ( const sReco& );
-        
-    private:
-        const MT_Vector2D      vCenter_;
-        const TER_Localisation localisation_;
-              TER_Localisation circle_;
-        MT_Float               rCurrentSize_;
-        const MT_Float         rGrowthSpeed_;
-        DIA_Variable_ABC*      pReturn_;
-        bool                   bMaxSizeDone_;
-    };    
-
-    typedef std::vector< sReco* >        T_RecoVector;
-    typedef T_RecoVector::iterator       IT_RecoVector;
-    typedef T_RecoVector::const_iterator CIT_RecoVector;
-    //@}
-
-private:
-    T_RecoVector recos_;
 };
 
 #endif // __PHY_PerceptionRecoObjects_h_

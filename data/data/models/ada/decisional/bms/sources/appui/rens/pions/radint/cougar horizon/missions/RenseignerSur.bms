@@ -1,0 +1,129 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/radint/cougar horizon/missions/RenseignerSur.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_RENS_RADINT_RenseignerSur
+]]--[[//
+]]--[[// Commentaires: //TEMP normalement  MIS_Pion_RENS_Radint_RenseignerSur
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_RENS_RADINT_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_RENS_MonterA", {} },
+        { "BEH_Obs_Pion_Rens_Radint_RenseignerDans", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.positionInitiale = self.positionInitiale or DEC_Geometrie_CreerPoint()
+        self.positionObservation = self.positionObservation or DEC_Geometrie_CreerPoint()
+        if( ( #( self._namedParams.mission.zonesDeRecherche_ ) ~= 0 and #( self._namedParams.mission.zonesDeRecherche_ ) ~= nil ) ) then
+            self.positionObservation = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self._namedParams.mission.zonesDeRecherche_, 0 ) )
+        else
+do
+                DEC_RC( eRC_MissionImpossible )
+                                Halt()
+
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        if( ModuleBegins() ) then
+            do
+                StartActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 100, } )
+                --[[// données doctrine
+]]DEC_Copie_Point( DEC_Agent_Position(), self.positionInitiale )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Intelligence gathering mission begining", } )
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eSurveiller
+                
+            --[[// Se diriger vers les ZR 
+]]elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_Info_Trace, 1, { "Vertical take off", } )
+                --[[// données doctrine
+]]Activate( self.activations.BEH_Dep_Pion_RENS_MonterA, 1.1, { 3000, } )
+                Activate( self.activations.BEH_Obs_Pion_Rens_Radint_RenseignerDans, 1, { self._namedParams.mission.zonesDeRecherche_, } )
+                
+            --[[// Fin de la mission Sur ordre ou si plus d'autonomie
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                --[[// données doctrine
+]]StopActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Obs_Pion_Rens_Radint_Renseigner
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Obs_Pion_Rens_Radint_RenseignerDans"
+{
+    activations =
+    {
+        { "ACT_Obs_Pion_RENS_ActiverRadarDans", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zonesDeRecherches = self.params[1]
+    end,
+
+    activate = function( self )
+        for _,zone in pairs( --[[//---------------------------------------------------------------------
+]]--[[// Observation ( si station => exploitation du Rens possible)
+]]--[[//---------------------------------------------------------------------
+]]self._namedParams.zonesDeRecherches ) do
+        local _continue = true
+            Activate( self.activations.ACT_Obs_Pion_RENS_ActiverRadarDans, 1, { zone, } )
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_RENS_RADINT_RenseignerSur = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_Rens_Radint_RenseignerDans, "ACT_Obs_Pion_RENS_ActiverRadarDans", nodes.ACT_Obs_Pion_RENS_ActiverRadarDans }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_RenseignerSur, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_RenseignerSur, "ACT_Dep_Pion_RENS_VolerA", nodes.ACT_Dep_Pion_RENS_VolerA }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_RenseignerSur, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_RenseignerSur, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_RenseignerSur, "BEH_Dep_Pion_RENS_MonterA", nodes.BEH_Dep_Pion_RENS_MonterA }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_RENS_RADINT_RenseignerSur, "BEH_Obs_Pion_Rens_Radint_RenseignerDans", nodes.BEH_Obs_Pion_Rens_Radint_RenseignerDans }

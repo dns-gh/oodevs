@@ -1,0 +1,20 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/missions/surveiller/Surveiller - CDT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Conduite de la mission Automate ASA Surveiller
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_CDT_ASA_Surveiller"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ASA_Surveiller = { "mission" }

@@ -1,0 +1,98 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/pions/common/missions/FaireMouvement.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// Faire mouvement
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_FaireMouvement"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_AIR_RejoindreParItineraire", {} },
+        { "BEH_Dep_Pion_AIR_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eRejoindre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                local pointFinItineraire = DEC_ListePoints_GetAt( self._namedParams.mission.itineraire_, DEC_ListePoints_Size( self._namedParams.mission.itineraire_ ) - 1 )
+                local position = DEC_Geometrie_PositionAleatoireDansCercle( pointFinItineraire, 300 )
+                DEC_ListePoints_PushBack( self._namedParams.mission.itineraire_, position )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                eFinMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                Activate( self.activations.BEH_Dep_Pion_AIR_RejoindreParItineraire, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, 0, 0, 0, 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_FaireMouvement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Dep_Pion_AIR_RejoindreParItineraire", nodes.BEH_Dep_Pion_AIR_RejoindreParItineraire }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FaireMouvement, "BEH_Dep_Pion_AIR_SePoser", nodes.BEH_Dep_Pion_AIR_SePoser }

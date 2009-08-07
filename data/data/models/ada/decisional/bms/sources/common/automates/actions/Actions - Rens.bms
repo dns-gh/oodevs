@@ -1,0 +1,67 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/actions/Actions - Rens.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// ACT_Automate_Rens_PartageConnaissancesDansZoneAvec
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Automate_Rens_PartageConnaissancesDansZoneAvec"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.automate = self.params[1]
+        self._namedParams.centreZone = self.params[2]
+        self._namedParams.rayonZone = self.params[3]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            DEC_RC( eRC_DebutLiaison )
+        end
+
+        DEC_Connaissances_PartageConnaissancesDansZoneAvec( self._namedParams.automate, self._namedParams.centreZone, self._namedParams.rayonZone )
+    end,
+
+    deselect = function( self )
+                DEC_RC( eRC_FinLiaison )
+    end,
+
+    destroy = function( self )
+                DEC_RC( eRC_FinLiaison )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Automate_Rens_PartageConnaissancesAvec
+]]--[[// 
+]]--[[// Commentaires: partage de la connaissance avec l'automate passé en paramètre
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Automate_Rens_PartageConnaissancesAvec"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.automate = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            DEC_RC( eRC_DebutLiaison )
+        end
+
+        DEC_Connaissances_PartageConnaissancesAvec( self._namedParams.automate, 0.01 )
+    end,
+
+    deselect = function( self )
+                DEC_RC( eRC_FinLiaison )
+    end,
+
+    destroy = function( self )
+                DEC_RC( eRC_FinLiaison )
+    end,
+
+}
+

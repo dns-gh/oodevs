@@ -44,8 +44,6 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , pDestConcentration_      ( 0 )
     , primaryDestination_      ()
     , alternateDestination_    ()
-    , pHeadPath_               ( 0 )
-    , pTailPath_               ( 0 )
     , bHeadMoveFinished_       ( false )
     , flowShape_               ( 2, sourceConcentration.GetPosition() )
     , direction_               ( 0., 1. )
@@ -74,7 +72,6 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , primaryDestination_      ( source.primaryDestination_   )
     , alternateDestination_    ( source.alternateDestination_ )
     , pHeadPath_               ( source.pHeadPath_ ) //$$$$ Degueu : faire une copie
-    , pTailPath_               ( 0 )
     , bHeadMoveFinished_       ( false )
     , flowShape_               ( source.flowShape_ )
     , direction_               ( 0., 1. )
@@ -106,8 +103,6 @@ MIL_PopulationFlow::MIL_PopulationFlow()
     , pDestConcentration_      ( 0 )
     , primaryDestination_      ()
     , alternateDestination_    ()
-    , pHeadPath_               ( 0 )
-    , pTailPath_               ( 0 )
     , bHeadMoveFinished_       ( false )
     , flowShape_               ()
     , direction_               ( 0., 1. )
@@ -156,23 +151,19 @@ void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
     if( pHeadPath_ )
     {
         pHeadPath_->Cancel();
-        pHeadPath_->DecRef();
-        pHeadPath_ = 0;
+        pHeadPath_.reset();
     }
     if( pTailPath_ )
     {
         pTailPath_->Cancel();
-        pTailPath_->DecRef();
-        pTailPath_= 0;
+        pTailPath_.reset();
     }
 
-    pHeadPath_ = new DEC_Population_Path( GetPopulation(), GetHeadPosition(), destination );
-    pHeadPath_->IncRef();
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pHeadPath_ );
+    pHeadPath_.reset( new DEC_Population_Path( GetPopulation(), GetHeadPosition(), destination ) );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pHeadPath_ );
 
-    pTailPath_ = new DEC_Population_Path( GetPopulation(), GetTailPosition(), destination );
-    pTailPath_->IncRef();
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pTailPath_ );
+    pTailPath_.reset( new DEC_Population_Path( GetPopulation(), GetTailPosition(), destination ) );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pTailPath_ );
 
     DetachFromDestConcentration();
 }
@@ -219,7 +210,8 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         return;
 
     assert( pHeadPath_ );
-    int nOut = PHY_MovingEntity_ABC::Move( *pHeadPath_ );
+    boost::shared_ptr< DEC_PathResult > pHeadPath = boost::dynamic_pointer_cast< DEC_PathResult >( pHeadPath_ );
+    int nOut = PHY_MovingEntity_ABC::Move( pHeadPath );
     if( nOut == DEC_PathWalker::eFinished )
         bHeadMoveFinished_ = true;
 }
@@ -374,8 +366,7 @@ bool MIL_PopulationFlow::ManageSplit()
     if( !bSplit || itSplit == flowShape_.begin() )
     {
         pTailPath_->Cancel();
-        pTailPath_->DecRef();
-        pTailPath_ = 0;
+        pTailPath_.reset();
         return false;
     }
 
@@ -391,7 +382,7 @@ bool MIL_PopulationFlow::ManageSplit()
 
     DetachFromDestConcentration();
     pHeadPath_ = pTailPath_; ///$$$ Degueu : destruction de pHeadPath ... (newFlow.pHeadPath_ = pHeadPath_)
-    pTailPath_ = 0;
+    pTailPath_.reset();
 
     const MT_Float rNbrHumans = GetLocation().GetArea() * rDensityBeforeSplit;    
     newFlow.PushHumans( PullHumans( GetNbrHumans() - rNbrHumans ) );

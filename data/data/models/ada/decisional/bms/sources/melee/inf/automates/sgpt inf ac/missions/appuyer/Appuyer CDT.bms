@@ -1,0 +1,71 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/sgpt inf ac/missions/appuyer/Appuyer CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-07-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Sgpt Inf Ac/Missions/Appuyer/Appuyer CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 13 $
+]]--[[// $Workfile: Appuyer CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "MIS_Automate_CDT_INF_Appuyer"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+        { "BEH_Conduite_Automate_INF_Appuyer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eActionMission = self.eActionMission or eActionEnCours
+        self.eActionHorsFuseau = self.eActionHorsFuseau or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[// Coordination lors de la mise en place du dispositif dans les fuseaux
+]]--[[/* MIA ADA //start behavior BEH_Conduite_Automate_GererFuseau();*/]]--[[// Conduite des pions au niveau section
+]]--[[//-----------------------------------------------------------------------------		
+]]        end
+
+        if( self.eActionMission == eActionEffectuee ) then
+            do
+                self.eActionMission = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Appuyer, 1, { self._namedParams.mission.compagnie_, } )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_INF_Appuyer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Appuyer, "BEH_Conduite_Automate_INF_Defaut", nodes.BEH_Conduite_Automate_INF_Defaut }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Appuyer, "BEH_Conduite_Automate_INF_CadreOffensif", nodes.BEH_Conduite_Automate_INF_CadreOffensif }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_INF_Appuyer, "BEH_Conduite_Automate_INF_Appuyer", nodes.BEH_Conduite_Automate_INF_Appuyer }

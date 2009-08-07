@@ -1,0 +1,96 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/serecompleter/MRT - SeRecompleter.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Common/Automates/Missions/SeRecompleter/MRT - SeRecompleter.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 19/09/05 9:45 $
+]]--[[// $Revision: 19 $
+]]--[[// $Workfile: MRT - SeRecompleter.hal $
+]]--[[// *****************************************************************************
+]]
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_SeRecompleter
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_SeRecompleter"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.mission.zoneRavitaillement_ )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "$ MIS_Automate_MRT_SeRecompleter : debut MRT $" )
+            end
+--[[//---------------------------------------------------------------------
+]]--[[// Vérif assignation mission
+]]--[[//---------------------------------------------------------------------
+]]        end
+
+        if( self.eValidationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_MRT_Valide()
+                    DEC_Trace( "eValidationMRT == eActionImpossible" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eValidationMRT == eActionEffectuee ) then
+            do
+                self.eValidationMRT = eActionEnCours
+                                do
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        for _,x in pairs( --[[//---------------------------------------------------------------------
+]]--[[// Assignation de la mission "Faire mouvement" dans la zone
+]]--[[//---------------------------------------------------------------------
+]]DEC_Automate_PionsAvecPC() ) do
+        local _continue = true
+do
+                local pion = x
+                Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, pion, self.ptZone, eEtatEchelon_Premier, } )
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_SeRecompleter = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_SeRecompleter, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_SeRecompleter, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }

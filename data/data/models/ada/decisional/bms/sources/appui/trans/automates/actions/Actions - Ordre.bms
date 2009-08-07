@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/automates/actions/Actions - Ordre.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_Interrompre 
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Automate_Interrompre"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            DEC_Trace( "Ordre Interrompre sur " .. DEC_GetSzName( self._namedParams.pion ) .. " envoye " )
+        end
+
+        F_Pion_SetbOrdreInterrompreMission( self._namedParams.pion, true )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetbOrdreInterrompreMission( self._namedParams.pion, false )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Suppression
+]]--[[//
+]]--[[// Commentaires: Supprime une representation d'un ordre de conduite
+]]--[[//				 Permet de detruire l'ordre apres l'evaluation des 
+]]--[[//				 comportements et non pas au moment ou il est traite
+]]--[[// *****************************************************************************
+]]node "ACT_Ordre_Suppression"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ordre = self.params[1]
+    end,
+
+    select = function( self )
+        DEC_RemoveFromCategory( "ordres_recus", self._namedParams.ordre )
+        DEC_DeleteRepresentation( self._namedParams.ordre )
+    end,
+
+}
+

@@ -83,7 +83,7 @@ DEC_PathFind_Manager::~DEC_PathFind_Manager()
 // Name: DEC_PathFind_Manager::StartCompute
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::StartCompute( DEC_Path_ABC& path )
+void DEC_PathFind_Manager::StartCompute( boost::shared_ptr< DEC_Path_ABC > path )
 {
 #ifdef _DEBUG
     MT_LOG_MESSAGE_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", &path ).c_str() );
@@ -134,14 +134,13 @@ uint DEC_PathFind_Manager::GetNbrRequests() const
 // Name: DEC_PathFind_Manager::AddPendingJob
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::AddPendingJob( DEC_Path_ABC& path )
+void DEC_PathFind_Manager::AddPendingJob( boost::shared_ptr< DEC_Path_ABC > pPath )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    path.IncRef();
-    if( path.GetLength() > rDistanceThreshold_ )
-        longRequests_.push_back( &path );
+    if( pPath->GetLength() > rDistanceThreshold_ )
+        longRequests_.push_back( pPath );
     else
-        shortRequests_.push_back( &path );
+        shortRequests_.push_back( pPath );
     condition_.notify_all();
 }
 
@@ -149,7 +148,7 @@ void DEC_PathFind_Manager::AddPendingJob( DEC_Path_ABC& path )
 // Name: DEC_PathFind_Manager::GetMessage
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-TER_PathFindRequest_ABC* DEC_PathFind_Manager::GetMessage()
+boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage()
 {
     unsigned int nIndex = 0;
     for( ; nIndex < pathFindThreads_.size(); ++nIndex )
@@ -186,9 +185,11 @@ namespace
     template< typename T >
     AreNotEmpty_< T > AreNotEmpty( const T& cont, const T& cont2 ) { return AreNotEmpty_< T >( cont, cont2 ); };
 
-    struct { struct {
+    struct { 
+        struct {
             static const unsigned maximumShortRequest = 5;
-    } cpp; } Config;
+        } cpp;
+    } Config;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,9 +210,9 @@ DEC_PathFind_Manager::T_Requests& DEC_PathFind_Manager::GetRequests()
 // Name: DEC_PathFind_Manager::GetMessage
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-TER_PathFindRequest_ABC* DEC_PathFind_Manager::GetMessage( unsigned int nThread )
+boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage( unsigned int nThread )
 {
-    TER_PathFindRequest_ABC* pRequest = 0;
+    boost::shared_ptr< TER_PathFindRequest_ABC > pRequest;
     boost::mutex::scoped_lock locker( mutex_ );
     if( ( nThread % 2 ) )
     {
@@ -244,23 +245,13 @@ int DEC_PathFind_Manager::GetCurrentThread() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::DeletePath
-// Created: AGE 2005-09-20
-// -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::DeletePath( DEC_Path_ABC& path )
-{
-    boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
-    destroyedRequests_.push_back( &path );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::CleanPathAfterComputation
 // Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CleanPathAfterComputation( DEC_Path_ABC& path )
+void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< TER_PathFindRequest_ABC >& pPath )
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
-    requestsToCleanAfterComputation_.push_back( &path );
+    requestsToCleanAfterComputation_.push_back( pPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,22 +264,9 @@ void DEC_PathFind_Manager::Update()
 
     while( ! requestsToCleanAfterComputation_.empty() )
     {
-        TER_PathFindRequest_ABC* pRequest = requestsToCleanAfterComputation_.back();
-
-        DEC_Path_ABC& path = static_cast< DEC_Path_ABC& >( *pRequest );
-        path.CleanAfterComputation();
+        boost::shared_ptr< TER_PathFindRequest_ABC > pRequest = requestsToCleanAfterComputation_.back();
+        pRequest->CleanAfterComputation();
         requestsToCleanAfterComputation_.pop_back();
-    }
-
-#ifdef _DEBUG
-    if( !destroyedRequests_.empty() )
-        MT_LOG_DEBUG_MSG( "Flushing " << destroyedRequests_.size() << " path requests" );
-#endif
-
-    while( ! destroyedRequests_.empty() )
-    {
-        delete destroyedRequests_.back();
-        destroyedRequests_.pop_back();
     }
 }
 

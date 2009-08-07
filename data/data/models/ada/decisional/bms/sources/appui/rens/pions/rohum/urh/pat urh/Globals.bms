@@ -1,0 +1,35 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/rohum/urh/pat urh/Globals.bms"] = true
+
+
+
+include "Appui/Rens/Pions/Common/Globals.bms"
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Actuateurs
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+function M_TIR_ACTUATEURS()
+    return tir
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Reco Point
+]]--[[//-----------------------------------------------------------------------------
+]]function M_POLY_MODELE_PION_VITESSE_RECO_POINT()
+    return 6
+end
+
+
+
+function M_POLY_MODELE_PION_CAPACITE_RECO_POINT()
+    return 500
+end
+

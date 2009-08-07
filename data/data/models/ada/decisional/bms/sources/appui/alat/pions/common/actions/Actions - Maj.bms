@@ -1,0 +1,59 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/actions/Actions - Maj.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// MAJ de l'objectif courant
+]]--[[// 
+]]--[[// Commentaires:  
+]]--[[//------------------------------------------------------------------------------
+]]node "ACT_Maj_Pions_ObjectifCourant"
+{
+    actuators =
+    {
+        objectifCourant = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objectif = self.params[1]
+    end,
+
+    select = function( self )
+                myself.objectifCourant_ = self._namedParams.objectif
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                myself.objectifCourant_ = nil
+    end,
+
+}
+
+node "Act_AbonnerPionAAppui"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            F_AddToselUnitesEnAppui( self._namedParams.pion )
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                if( DIA_Contains( F_Pion_GetselUnitesEnAppui( self._namedParams.pion ), myself ) ) then
+            F_RemoveFromselUnitesEnAppui( self._namedParams.pion )
+        end
+
+    end,
+
+}
+

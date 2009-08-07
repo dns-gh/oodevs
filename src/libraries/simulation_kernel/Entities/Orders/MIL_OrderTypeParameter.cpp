@@ -23,6 +23,7 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
     : nDIAParameter_( 0 )
     , bIsOptional_  ( xml::attribute< bool >( xis, "optional", false ) )
     , strName_      ( xml::attribute< std::string >( xis, "name" ) )
+    , strDiaName_   ( xml::attribute< std::string >( xis, "dia-name" ) )
     , pParameter_   ( MIL_ParameterType_ABC::Find( xml::attribute< std::string >( xis, "type" ) ) )
 {
     if( !pParameter_ )
@@ -34,9 +35,10 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
 MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderType, xml::xistream& xis )
-    : nDIAParameter_( DEC_Tools::InitializeDIAField( xml::attribute< std::string >( xis, "dia-name" ), orderType.GetDIAType() ) )
+    : nDIAParameter_( 0 ) // $$$$ LDC FIXME Supprimer: DEC_Tools::InitializeDIAField( xml::attribute< std::string >( xis, "dia-name" ), orderType.GetDIAType() ) )
     , bIsOptional_  ( xml::attribute< bool >( xis, "optional", false ) )
     , strName_      ( xml::attribute< std::string >( xis, "name" ) )
+    , strDiaName_   ( xml::attribute< std::string >( xis, "dia-name" ) )
     , pParameter_   ( MIL_ParameterType_ABC::Find( xml::attribute< std::string >( xis, "type" ) ) )
 {
     if( !pParameter_ )
@@ -57,37 +59,9 @@ MIL_OrderTypeParameter::~MIL_OrderTypeParameter()
 // Name: MIL_OrderTypeParameter::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_OrderTypeParameter::Copy( const ASN1T_MissionParameter& from, DIA_TypedObject& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
+bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
 {
-    assert( pParameter_ );
-    if( to.GetNumberOfFields() <= nDIAParameter_ )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    pParameter_->Copy( from, to.GetVariable( nDIAParameter_ ), knowledgeResolver, bIsOptional_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_OrderTypeParameter::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_OrderTypeParameter::Copy( const DIA_TypedObject& from, DIA_TypedObject& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
-{
-    assert( pParameter_ );
-    if( from.GetNumberOfFields() <= nDIAParameter_ || to.GetNumberOfFields() <= nDIAParameter_ )
-        return false;
-    return pParameter_->Copy( const_cast< DIA_TypedObject& >( from ).GetVariable( nDIAParameter_ ), to.GetVariable( nDIAParameter_ ), knowledgeResolver, bIsOptional_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_OrderTypeParameter::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_OrderTypeParameter::Copy( const DIA_TypedObject& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
-{
-    assert( pParameter_ );
-    if( from.GetNumberOfFields() <= nDIAParameter_ )
-        return false;
-    return pParameter_->Copy( const_cast< DIA_TypedObject& >( from ).GetVariable( nDIAParameter_ ), to, knowledgeResolver, bIsOptional_ );
+    return pParameter_->Copy( from, to, knowledgeResolver, bIsOptional_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -98,4 +72,31 @@ void MIL_OrderTypeParameter::CleanAfterSerialization( ASN1T_MissionParameter& to
 {
     assert( pParameter_ );
     pParameter_->CleanAfterSerialization( to );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderTypeParameter::GetName
+// Created: LDC 2009-04-30
+// -----------------------------------------------------------------------------
+const std::string& MIL_OrderTypeParameter::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderTypeParameter::GetDIAName
+// Created: LDC 2009-05-20
+// -----------------------------------------------------------------------------
+const std::string& MIL_OrderTypeParameter::GetDIAName() const
+{
+    return strDiaName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderTypeParameter::GetType
+// Created: LDC 2009-04-30
+// -----------------------------------------------------------------------------
+const MIL_ParameterType_ABC& MIL_OrderTypeParameter::GetType() const
+{
+    return *pParameter_;
 }

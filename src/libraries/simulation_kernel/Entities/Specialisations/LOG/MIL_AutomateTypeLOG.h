@@ -41,6 +41,11 @@ public:
     virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Automate&  parent, xml::xistream& xis ) const;
     //@}
 
+    //! @name Instanciation
+    //@{
+    virtual void RegisterFunctions( directia::Brain& brain, MIL_Automate& automat ) const;
+    //@}
+
     //! @name Main
     //@{
     static const MIL_AutomateType* Create( const std::string& strName, xml::xistream& xis );

@@ -11,11 +11,15 @@
 #define __MIL_Mission_ABC_h_
 
 #include "MIL_OrderContext.h"
+#include <boost/shared_ptr.hpp>
 
-class MIL_MissionType_ABC;
-class MIL_FragOrderType;
+class DEC_RolePion_Decision;
 class DEC_KnowledgeResolver_ABC;
+class MIL_FragOrderType;
 class MIL_KnowledgeGroup;
+class MIL_MissionParameter_ABC;
+class MIL_MissionType_ABC;
+class MIL_ParameterType_ABC;
 
 // =============================================================================
 /** @class  MIL_Mission_ABC
@@ -23,7 +27,7 @@ class MIL_KnowledgeGroup;
 */
 // Created: NLD 2006-11-14
 // =============================================================================
-class MIL_Mission_ABC : public DIA_Thing
+class MIL_Mission_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -35,21 +39,39 @@ public:
     //@{
     virtual void Start               () = 0;
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const = 0;
+
+    void UsedByDIA    ();
+    void ReleasedByDIA();
     //@}
 
     //! @name Accessors
     //@{
-    virtual const   MIL_MissionType_ABC& GetType              () const;
-    const   std::string&         GetName              () const;
-    const   MT_Vector2D&         GetDirDanger         () const;
-    const   MIL_Fuseau&          GetFuseau            () const;
-    const   T_LimaVector&        GetLimas             () const;
-            MIL_LimaOrder*       FindLima             ( uint nID );
-            MIL_LimaOrder*       FindLima             ( const MIL_LimaFunction& function );
-            MIL_LimaOrder*       FindNextScheduledLima();
-            void                 AffectFuseau         ( const MIL_Fuseau& fuseau );
-    virtual void                 AffectDirection      ( const MT_Vector2D& direction );
-            void                 Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
+    virtual const MIL_MissionType_ABC& GetType() const;
+    const std::string& GetDIAType() const;
+
+    const   std::string&   GetName              () const;
+    const   MT_Vector2D&   GetDirDanger         () const;
+    const   MIL_Fuseau&    GetFuseau            () const;
+    const   T_LimaVector&  GetLimas             () const;
+            MIL_LimaOrder* FindLima             ( uint nID );
+            MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function );
+            MIL_LimaOrder* FindNextScheduledLima();
+            void           AffectFuseau         ( const MIL_Fuseau& fuseau );
+    virtual void           AffectDirection      ( const MT_Vector2D& direction );
+            void           Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
+            void           SetParameter         ( const std::string& name, boost::shared_ptr< MIL_MissionParameter_ABC > param );
+            void           AppendToParameter    ( const std::string& name, boost::shared_ptr< TER_Localisation > pLocation );
+    //@}
+
+    //! @name Parameters Management
+    class ParameterVisitor
+    {
+    public:
+                 ParameterVisitor() {}
+        virtual ~ParameterVisitor() {}
+        virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element ) = 0;
+    };
+    virtual void Visit( ParameterVisitor& parameterVisitor ) const;
     //@}
 
 protected:
@@ -72,6 +94,8 @@ private:
     const DEC_KnowledgeResolver_ABC& knowledgeResolver_;
     const MIL_MissionType_ABC&       type_;
           MIL_OrderContext           context_;
+
+          std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
 };
 
 #endif // __MIL_Mission_ABC_h_

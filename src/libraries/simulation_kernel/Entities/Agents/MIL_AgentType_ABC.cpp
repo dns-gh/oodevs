@@ -34,6 +34,15 @@ MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, xml::xistream&
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentType_ABC constructor
+// Created: LDC 2009-04-23
+// -----------------------------------------------------------------------------
+MIL_AgentType_ABC::MIL_AgentType_ABC()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentType_ABC destructor
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------

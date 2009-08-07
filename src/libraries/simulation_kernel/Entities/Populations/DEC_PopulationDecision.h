@@ -38,18 +38,13 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
-
-    //! @name Init
-    //@{
-    static void InitializeDIA();
-    //@}
     
     //! @name Operations
     //@{
     void Clean         ();
 
-    void StartMissionBehavior( MIL_Mission_ABC& mission );
-    void StopMissionBehavior ( MIL_Mission_ABC& mission );
+    virtual void StartMissionBehavior( MIL_Mission_ABC& mission );
+    virtual void StopMissionBehavior ( MIL_Mission_ABC& mission );
     //@}
 
     //! @name Accessors
@@ -72,14 +67,21 @@ public:
     void SendFullState   ( NET_ASN_MsgPopulationUpdate& msg );
     //@}
 
-private:
-    //! @name Tools
+protected:
+    //! @name Helpers
     //@{
     virtual void      EndCleanStateAfterCrash      ();
+    
+    virtual void RegisterUserFunctions( directia::Brain& brain );
     //@}
 
 private:
-    DIA_FunctionCaller< MIL_Population > diaFunctionCaller_;
+    //! @name Helpers
+    //@{
+    virtual void RegisterSelf( directia::Brain& brain );
+    //@}
+
+private:
     DIA_Parameters                       missionBehaviorParameters_;   
 
     MT_Float                             rDominationState_;

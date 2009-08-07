@@ -1,0 +1,133 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/cie vab/missions/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Cie Vab/Missions/Behaviors.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:55 $
+]]--[[// $Revision: 12 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//=============================================================================
+]]--[[// Declaration de toutes les missions de la Compagnie d'Infanterie
+]]--[[//=============================================================================
+]]
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Appuyer/Appuyer MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Appuyer/Appuyer CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/AttaquerSouplesse/AttaquerSouplesse MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/AttaquerSouplesse/AttaquerSouplesse CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/BarrerDirection/BarrerDirection MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/BarrerDirection/BarrerDirection CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Controler/Controler MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Controler/Controler CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Couvrir/Couvrir MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Couvrir/Couvrir CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/CoupArret/CoupArret MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/CoupArret/CoupArret CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/DefendreUsure/DefendreUsure MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/DefendreUsure/DefendreUsure CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/DefendreFerme/DefendreFerme MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/DefendreFerme/DefendreFerme CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Eclairer/Eclairer MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Eclairer/Eclairer CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Fixer/Fixer MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Fixer/Fixer CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/FlancGarder/FlancGarder MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/FlancGarder/FlancGarder CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Freiner/Freiner MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Freiner/Freiner CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Harceler/Harceler MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Harceler/Harceler CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Interdire/Interdire MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Interdire/Interdire CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/PrendrePreciserMaintenirContact/PrendrePreciserMaintenirContact MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/PrendrePreciserMaintenirContact/PrendrePreciserMaintenirContact CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/SEmparer/SEmparer MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/SEmparer/SEmparer CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Surveiller/Surveiller MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Surveiller/Surveiller CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/ReconnaissanceOffenssive/ReconnaissanceOffenssive MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/ReconnaissanceOffenssive/ReconnaissanceOffenssive CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/ReleverDepasser/ReleverDepasser MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/ReleverDepasser/ReleverDepasser CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/RecueillirUnite/RecueillirUnite MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/RecueillirUnite/RecueillirUnite CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/ReduireDetruire/ReduireDetruire MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/ReduireDetruire/ReduireDetruire CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/RompreContact/RompreContact MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/RompreContact/RompreContact CDT.bms"
+
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Tenir/Tenir MRT.bms"
+
+include "Melee/Inf/Automates/Cie Vab/Missions/Tenir/Tenir CDT.bms"
+

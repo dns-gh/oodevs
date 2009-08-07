@@ -636,10 +636,10 @@ void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx, ASN1T_EnumDemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType )
 {
     assert( pObjectManager_ );
-    return pObjectManager_->CreateObject( army, diaParameters, nCurrentParamIdx, obstacleType );
+    return pObjectManager_->CreateObject( army, type, pLocalisation, obstacleType );
 }
 
 // -----------------------------------------------------------------------------
@@ -665,7 +665,7 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const MIL_O
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& /*type*/, MIL_Army_ABC& /*army*/, const TER_Localisation& /*localisation*/, const std::string& /*strOption*/, const std::string& /*strExtra*/, double /*rCompletion*/, double /*rMining*/, double /*rBypass*/ )
 {
     throw std::exception( __FUNCTION__ " not implemented" );    
     // return pObjectManager_->CreateObject( type, army, localisation, strOption, strExtra, rCompletion, rMining, rBypass );
@@ -722,6 +722,7 @@ void MIL_EntityManager::UpdateKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateDecisions()
 {
+    float duration = (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration();
     if( profilerManager_.IsProfilingEnabled() )
     {
         MT_Profiler decisionUpdateProfiler;
@@ -730,7 +731,7 @@ void MIL_EntityManager::UpdateDecisions()
         for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
         {
             decisionUpdateProfiler.Start();
-            it->second->UpdateDecision();
+            it->second->UpdateDecision( duration );
             MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *it->second, decisionUpdateProfiler.Stop() );
         }
         rAutomatesDecisionTime_ = profiler_.Stop();
@@ -739,7 +740,7 @@ void MIL_EntityManager::UpdateDecisions()
         for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
         {
             decisionUpdateProfiler.Start();
-            it->second->UpdateDecision();
+            it->second->UpdateDecision( duration );
             MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *it->second, decisionUpdateProfiler.Stop() );
         }
         rPionsDecisionTime_ = profiler_.Stop();
@@ -748,7 +749,7 @@ void MIL_EntityManager::UpdateDecisions()
         for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
         {
             decisionUpdateProfiler.Start();
-            it->second->UpdateDecision();
+            it->second->UpdateDecision( duration );
             MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *it->second, decisionUpdateProfiler.Stop() );
         }
         rPopulationsDecisionTime_ = profiler_.Stop();
@@ -757,17 +758,17 @@ void MIL_EntityManager::UpdateDecisions()
     {
         profiler_.Start();
         for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
-            it->second->UpdateDecision();
+            it->second->UpdateDecision( duration );
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
         for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
-            it->second->UpdateDecision();
+            it->second->UpdateDecision( duration );
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
         for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
-            it->second->UpdateDecision();
+            it->second->UpdateDecision( duration );
         rPopulationsDecisionTime_ = profiler_.Stop();
     }
 }

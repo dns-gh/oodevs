@@ -1,0 +1,187 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/fonctions/Fonctions - Forces.bms"] = true
+
+include "bit.lua"
+
+--[[// -------------------------------------------------------------------------
+]]--[[// plus je suis proche, plus la force est grande 
+]]--[[// [0] U ]1,2]
+]]--[[// -------------------------------------------------------------------------
+]]--[[// distance en km
+]]--[[// -------------------------------------------------------------------------
+]]--[[// renvoie 4 quand la connaissance est de type ASA    
+]]--[[// renvoie 2 quand la connaissance est de type passé en argument
+]]--[[// renvoie 1 si la connaissance n'est pas de type passé en arguement
+]]--[[// renvoie 0 si la connaissance n'est pas valdide
+]]--[[// [0] U [1] U [2] U [4]
+]]--[[// -------------------------------------------------------------------------
+]]--[[// -------------------------------------------------------------------------
+]]--[[// plus je suis proche et plus la connaissance est interressante, plis la
+]]--[[// force est grande
+]]--[[// [0] U ]1,2]
+]]--[[// -------------------------------------------------------------------------
+]]--[[//[0,1]
+]]--[[//[0] U [1] U [2] U [4]
+]]--[[//[0] U ]1,2]
+]]--[[// normalisation
+]]--[[// -------------------------------------------------------------------------
+]]--[[// plus la distance au point est faible, plus la force est grande
+]]--[[// [0] U ]1,2]
+]]--[[// -------------------------------------------------------------------------
+]]--[[//[0,1]
+]]--[[//[0] U [1] U [2] U [4]
+]]--[[//[0] U ]1,2]
+]]--[[// normalisation
+]]--[[// -------------------------------------------------------------------------
+]]--[[// plus la distance à l'ennemi est faible, plus la force est grande
+]]--[[// [0] U ]1,2]
+]]--[[// -------------------------------------------------------------------------
+]]--[[// -------------------------------------------------------------------------
+]]--[[// plus l'ennemi est susceptible de pouvoir toucher la piste à défendre,
+]]--[[// plus la force est grande 
+]]--[[// [0] U ]1,2]
+]]--[[// -------------------------------------------------------------------------
+]]--[[//distance à partir de laquelle l'ennemi peut toucher l'ami
+]]--[[//[1,2[
+]]--[[// [0] U [1] U [2] U [4]
+]]--[[// normalisation
+]]function S_Force_Pion_ALAT_Raprochement( distanceAuPoint, distanceArretAvantPoint )
+    local _returnValue = 0
+    assert( distanceAuPoint >= 0, "distanceAuPoint : distance negative" )
+    assert( distanceArretAvantPoint >= 0, "distanceArretAvantPoint : distance negative" )
+    if( distanceAuPoint - distanceArretAvantPoint <= 0 ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    local distance = ( distanceAuPoint - distanceArretAvantPoint ) / 1000
+    _returnValue = 1 + ( 1 / ( 1 + distance ) )
+    if( _returnValue == 1 ) then
+        _returnValue = 0
+    end
+
+    return _returnValue
+end
+
+function S_Force_Pion_ALAT_NatureAtlas( agent, typePrioritaire )
+    local _returnValue = 0
+    if( not DEC_ConnaissanceAgent_EstValide( agent ) ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    if( S_Eni_EstCiblePrioritaireSelonCategorieAtlas( agent, eNatureAtlas_ASA ) ) then
+        do
+            _returnValue = 4
+                        return _returnValue
+
+        end
+    end
+
+    if( S_Eni_EstCiblePrioritaireSelonCategorieAtlas( agent, typePrioritaire ) ) then
+        _returnValue = 2
+    else
+        _returnValue = 1
+    end
+
+    return _returnValue
+end
+
+function S_Force_Pion_ALAT_AllerDetruire( agent, typePrioritaire )
+    local _returnValue = 0
+    if( not DEC_ConnaissanceAgent_EstValide( agent ) ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    local forceTypeEtatOp = DEC_ConnaissanceAgent_EtatOps( agent )
+    forceTypeEtatOp = forceTypeEtatOp * S_Force_Pion_ALAT_NatureAtlas( agent, typePrioritaire )
+    local forceDistance = S_Force_Pion_ALAT_Raprochement( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( agent ) ), 0 )
+    _returnValue = ( ( forceTypeEtatOp * forceDistance ) / 8 ) + 1
+    if( _returnValue == 1 ) then
+        _returnValue = 0
+    end
+
+    return _returnValue
+end
+
+function S_Force_Pion_ALAT_Jalonner( point, agent, typePrioritaire )
+    local _returnValue = 0
+    if( not DEC_ConnaissanceAgent_EstValide( agent ) ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    local forceTypeEtatOp = DEC_ConnaissanceAgent_EtatOps( agent )
+    forceTypeEtatOp = forceTypeEtatOp * S_Force_Pion_ALAT_NatureAtlas( agent, typePrioritaire )
+    local forceDistance = S_Force_Pion_ALAT_Raprochement( DEC_Geometrie_Distance( point, DEC_ConnaissanceAgent_Position( agent ) ), 0 )
+    _returnValue = ( ( forceTypeEtatOp * forceDistance ) / 8 ) + 1
+    if( _returnValue == 1 ) then
+        _returnValue = 0
+    end
+
+    return _returnValue
+end
+
+function S_Force_Pion_ALAT_ConnaissanceProche( agent, distMin )
+    local _returnValue = 0
+    if( not DEC_ConnaissanceAgent_EstValide( agent ) ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    _returnValue = S_Force_Pion_ALAT_Raprochement( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( agent ) ), distMin )
+    return _returnValue
+end
+
+function S_Force_Pion_ALAT_Defendre( pion, agent, typePrioritaire )
+    local _returnValue = 0
+    if( not DEC_ConnaissanceAgent_EstValide( agent ) ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    local distanceEniTirMax = S_Tir_PorteeMaxPourEtreTireParAgent( agent, 0 )
+    local distanceAAmi = DEC_Geometrie_Distance( pion:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( agent ) )
+    if( ( distanceEniTirMax == 0 or distanceEniTirMax == nil ) or ( distanceAAmi >= ( 2 * distanceEniTirMax ) ) ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    local forceDistance = 0
+    if( distanceAAmi <= distanceEniTirMax ) then
+        forceDistance = 2
+    else
+        forceDistance = distanceAAmi / distanceEniTirMax
+    end
+
+    local forceType = S_Force_Pion_ALAT_NatureAtlas( agent, typePrioritaire )
+    _returnValue = ( ( forceDistance * forceType ) / 8 ) + 1
+    if( _returnValue == 1 ) then
+        _returnValue = 0
+    end
+
+    return _returnValue
+end
+

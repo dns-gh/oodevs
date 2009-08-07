@@ -1,0 +1,193 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/common/missions/Reduire.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_ABC_Reduire
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[//  // $$$$ MIA 03-04-16: ATTENTION --> Cette mission ne se base pas sur la
+]]--[[//  // $$$$ MIA 03-04-16: destruction tactique mais PHYSIQUE du pion...
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_ABC_Reduire"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Eni_Pion_ABC_ReduireEni", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Pion_ABC_GererDeboucher", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.uniteAReduire = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.pPoint = self.pPoint or nil
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Reaction face à Eni spécifique 
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( DEC_ConnaissanceAgent_EstValide( self._namedParams.uniteAReduire ) ) then
+            Activate( self.activations.BEH_Eni_Pion_ABC_ReduireEni, 1.1, { self._namedParams.uniteAReduire, self._namedParams.rPH, self._namedParams.eNiveauIdentificationEni, } )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Agressivite
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { self._namedParams.rPH, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Creer un itineraire
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                --[[// AMbiance
+]]F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                --[[// Doctrine: translater la derniere position de l'it (celle de l'eni) pour tomber en
+]]--[[// en garde au delà...( ~ 500m )
+]]local mission = DEC_GetMission( myself )
+                self.pPoint = DEC_Geometrie_PositionTranslateDir( DEC_ConnaissanceAgent_Position( self._namedParams.uniteAReduire ), DEC_GetDirectionDanger( mission ), M_MODELE_PION_ABC_DISTANCE_POSTE_APRES_REDUCTION() )
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Render ineffective eni unit mission  begining", } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Progression tactique
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                Activate( self.activations.BEH_Dep_Pion_ABC_GererDeboucher, 1, {} )--[[// Gestion du déboucher
+]]
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pPoint, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Eni_Pion_ABC_ReduireEni
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Eni_Pion_ABC_ReduireEni"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEniAReduire = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.positionFin = self.positionFin or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Informer sur la destruction de l'ennemi
+]]--[[//-----------------------------------------------------------------------------
+]]if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repEniAReduire ) ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "Eni ineffective", } )
+                                return
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( ModuleBegins() ) then
+            do
+                local mission = DEC_GetMission( myself )
+                self.positionFin = DEC_Geometrie_PositionTranslateDir( DEC_ConnaissanceAgent_Position( self._namedParams.repEniAReduire ), DEC_GetDirectionDanger( mission ), M_MODELE_PION_ABC_DISTANCE_POSTE_APRES_REDUCTION() )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Deplacement --> se diriger vers l'unite à reduire des qu'on la perçoit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            return
+        end
+
+        if( DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.repEniAReduire ) ) then
+            StartActivate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionFin, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ABC_ReduireEni, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ABC_ReduireEni, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Reduire, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Reduire, "BEH_Eni_Pion_ABC_ReduireEni", nodes.BEH_Eni_Pion_ABC_ReduireEni }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Reduire, "BEH_MAJ_Pion_ABC_AgressiviteTir", nodes.BEH_MAJ_Pion_ABC_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Reduire, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Reduire, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Reduire, "BEH_Dep_Pion_ABC_GererDeboucher", nodes.BEH_Dep_Pion_ABC_GererDeboucher }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Reduire, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Reduire, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Reduire, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

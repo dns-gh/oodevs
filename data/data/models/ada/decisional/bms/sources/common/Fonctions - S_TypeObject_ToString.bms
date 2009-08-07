@@ -1,0 +1,3 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/Fonctions - S_TypeObject_ToString.bms"] = true
+

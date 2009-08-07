@@ -1,0 +1,11 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/pions/Globals.bms"] = true
+
+include "Common/Pions/Globals.bms"
+
+include "Appui/Circulation/Pions/Parameters.bms"
+
+include "Appui/Circulation/Pions/Macros.bms"
+
+include "Common/Moteur/Functions/PionsCIRCULATION.bms"
+

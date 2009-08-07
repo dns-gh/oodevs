@@ -14,7 +14,6 @@
 #include "PHY_RoleAction_Moving.h"
 
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"

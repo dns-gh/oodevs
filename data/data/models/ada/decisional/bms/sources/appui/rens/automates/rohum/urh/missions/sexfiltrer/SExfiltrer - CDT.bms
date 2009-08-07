@@ -1,0 +1,41 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/rohum/urh/missions/sexfiltrer/SExfiltrer - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_RENS_ROHUM_SExfiltrer
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_RENS_ROHUM_SExfiltrer"
+{
+    activations =
+    {
+        { "BEH_Auto_CDT_RENS_ROHUM_SExfiltrer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        Activate( self.activations.BEH_Auto_CDT_RENS_ROHUM_SExfiltrer, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Conduite générique 
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_RENS_ROHUM_SExfiltrer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_RENS_ROHUM_SExfiltrer, "BEH_Auto_CDT_RENS_ROHUM_SExfiltrer", nodes.BEH_Auto_CDT_RENS_ROHUM_SExfiltrer }

@@ -1,0 +1,16 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/actions/Actions - Limas.bms"] = true
+
+node "ACT_Limas_Suppression"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pointLima = self.params[1]
+    end,
+
+    select = function( self )
+        DEC_RemoveFromCategory( "points_interressants", self._namedParams.pointLima )
+    end,
+
+}
+

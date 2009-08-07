@@ -14,6 +14,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_PopulationKnowledge constructor
@@ -40,55 +41,16 @@ MIL_ParameterType_PopulationKnowledge::~MIL_ParameterType_PopulationKnowledge()
 // Name: MIL_ParameterType_PopulationKnowledge::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_ParameterType_PopulationKnowledge::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
+bool MIL_ParameterType_PopulationKnowledge::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_populationKnowledge ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeConnaissancePopulation( to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    if( !NET_ASN_Tools::CopyPopulationKnowledge( from.value.u.populationKnowledge, to, knowledgeResolver ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_PopulationKnowledge::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_PopulationKnowledge::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeConnaissancePopulation( from ) )
+    if( !from.IsOfType( *this ) )
         return false;
 
-    // Check dest
-    if( !DEC_Tools::CheckTypeConnaissancePopulation( to ) )
-        return false;
-
-    NET_ASN_Tools::CopyPopulationKnowledge( from, to );
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_PopulationKnowledge::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_PopulationKnowledge::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeConnaissancePopulation( from ) )
-        return false;
-
-    to.null_value = false;
     to.value.t    = T_MissionParameter_value_populationKnowledge;
+    to.null_value = !from.ToPopulationKnowledge( to.value.u.populationKnowledge );
     
-    if( !NET_ASN_Tools::CopyPopulationKnowledge( from, to.value.u.populationKnowledge, knowledgeResolver ) )
-        return false;
-
-    return true;    
+    return !to.null_value || bIsOptional;
 }
 
 //-----------------------------------------------------------------------------

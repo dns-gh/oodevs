@@ -1,0 +1,56 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/roim/common/Globals.bms"] = true
+
+include "bit.lua"
+
+--[[//=============================================================================
+]]--[[// Definition des functions ecrites en script
+]]--[[//=============================================================================
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie le pion SMO d'un automate ROIM
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie un pion mise en oeuvre
+]]--[[//-----------------------------------------------------------------------------
+]]function S_Dispositif_Automate_RENS_ObtenirPionSMO( )
+    local _returnValue = nil
+    _returnValue = nil
+    for _,x in pairs( DEC_Automate_PionsAvecPC() ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == "Section_CL289_MiseEnOeuvre" or pion:GetType() == "Section_SDTI_MiseEnOeuvre" ) then
+                _returnValue = pion
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Dispositif_Automate_RENS_ObtenirPionDroneMiseEnOeuvre( eTypePion )
+    local _returnValue = nil
+    _returnValue = nil
+    for _,x in pairs( DEC_Automate_PionsAvecPC() ) do
+    local _continue = true
+do
+            local pion = x
+            if( pion:GetType() == eTypePion ) then
+                do
+                    local pionDrone = x
+                    if( pionDrone:GetbMiseEnOeuvre_() ) then
+                        _returnValue = pion
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+

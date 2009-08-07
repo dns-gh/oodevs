@@ -1,0 +1,291 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/grp proterre/missions/ReconnaitrePoint.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son Vab/Missions/ReconnaitrePoint.hal $
+]]--[[// $Author: Jcr $
+]]--[[// $Modtime: 22/09/05 18:30 $
+]]--[[// $Revision: 25 $
+]]--[[// $Workfile: ReconnaitrePoint.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Nom: Mission Reconnaitre un point
+]]--[[//
+]]--[[// Commentaires: 
+]]
+--[[//-----------------------------------------------------------------------------
+]]node "MIS_Pion_INF_ReconnaitrePoint"
+{
+    activations =
+    {
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Eni_Pion_VAB_RecoPoint", {} },
+        { "BEH_Mission_Pion_VAB_RecoPoint", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eReconnaitre
+        self.eCurrentPhase = self.eCurrentPhase or eRejoindre
+        self.eAction = self.eAction or eActionEnCours
+        self.pt = self.pt or self._namedParams.mission.pointAReconnaitre_
+        --[[//=============================================================================
+]]--[[// initialisation des differrents parametres
+]]--[[//=============================================================================
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+                DEC_Trace( "Debut reconnaissance du point " .. DEC_PointToString( self.pt ) )
+            end
+        end
+
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_MANOEUVRE(), } )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//=============================================================================
+]]--[[// Mission de Reconnaissance d'un Point
+]]--[[//
+]]--[[// 1) preparation
+]]--[[// 2) on rejoint point d'observaion sur objectif
+]]--[[// 3) debarquement + observation
+]]--[[// 4) base d'assaut
+]]--[[// 5) assaut
+]]--[[//=============================================================================
+]]        end
+
+        do
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                do
+                end
+
+                if( self.eCurrentPhase ~= eFinMission ) then
+                    do
+                        --[[// -> Gestion l'ennemi
+]]Activate( self.activations.BEH_Eni_Pion_VAB_RecoPoint, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
+                        Activate( self.activations.BEH_Mission_Pion_VAB_RecoPoint, GetMotivation( "MOT_Mission" ), setmetatable( { self.pt, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                                                return
+
+                    end
+                else
+                    self.ePhase = eFinMission
+                end
+
+            elseif switch_1 == eFinMission then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            DEC_Trace( "Fin reconnaissance du point " .. DEC_PointToString( self.pt ) )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+    end,
+
+}
+
+node "BEH_Mission_Pion_VAB_RecoPoint"
+{
+    activations =
+    {
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_ReconnaitrePoint", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_Obs_Pion_INF_RecoPoint", {} },
+        { "ACT_Dep_Pion_INF_Arret", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pt = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eRejoindre
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionRejoindre = self.eActionRejoindre or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                --[[// Verifie que l'on est bien dans son fuseau
+]]StartActivate( self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+            end
+        end
+
+        if( not S_Tir_EstAPortee_DebarquePt( self._namedParams.pt ) ) then
+            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        end
+
+        do
+        end
+
+        if( self.eActionRejoindre == eActionEffectuee ) then
+            do
+                self.eActionRejoindre = eActionEnCours
+                                do
+                    self.ePhase = eFouiller
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION_RECO(), self._namedParams.pt, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.pt, } )
+        switch_1 = self.ePhase
+            if switch_1 == eRejoindre then
+                --[[//Rejoint position d'observation sur objectif
+]]--[[/* M_MAX_DIST_CAPTEUR() */]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.pt, 5000 ) and DEC_Perception_PointEstVisible( self._namedParams.pt ) ) then
+                    self.ePhase = eObserver
+                end
+
+                
+            --[[//Observation de l'objectif
+]]elseif switch_1 == eObserver then
+                StartActivate( self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.pt, } )
+                Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                        self.ePhase = eRejoindreAssaut
+                    end
+                end
+
+                Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1.1, setmetatable( { self._namedParams.pt, S_Delai_INF_RecoDebarque( self._namedParams.pt ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            --[[//Rejoinds l'objectif a pied
+]]elseif switch_1 == eRejoindreAssaut then
+                if( S_Tir_EstAPortee_DebarquePt( self._namedParams.pt ) ) then
+                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
+                end
+
+                
+            --[[// Nettoyage de la position
+]]elseif switch_1 == eFouiller then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                self.params.__returnValue = eFinMission
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_DELAI_NETTOYAGE_RECO(), "fouille de la position", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+                self.params.__returnValue = self.ePhase
+        return
+
+    end,
+
+--[[//=============================================================================
+]]--[[//=============================================================================
+]]--[[//						Gestion de l'ennemi
+]]--[[//	
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Eni_Pion_VAB_RecoPoint"
+{
+    activations =
+    {
+        { "ACT_RC_SurEni", {} },
+        { "ACT_Dep_SePosterFaceA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.eAction = self.eAction or eActionEnCours
+        self.bContinue = self.bContinue or true
+        local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
+        for _,ksEni in pairs( lstEnisDansFuseau ) do
+        local _continue = true
+do
+                if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    if( S_Geometrie_EstProchePosition( self.mission.pointAReconnaitre_, DEC_ConnaissanceAgent_Position( ksEni ), 1000 ) ) then
+                        do
+                            Activate( self.activations.ACT_RC_SurEni, 1, { eRC_PointTenuParEni, ksEni, } )
+                            Activate( self.activations.ACT_Dep_SePosterFaceA, S_Force_ActionContre( ksEni ), { ksEni, } )
+                        end
+                    end
+
+                end
+            end
+
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_INF_ReconnaitrePoint = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_RecoPoint, "ACT_RC_SurEni", nodes.ACT_RC_SurEni }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_VAB_RecoPoint, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_RecoPoint, "BEH_Lima_Pion_RejoindreFuseau_EnAttente", nodes.BEH_Lima_Pion_RejoindreFuseau_EnAttente }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_RecoPoint, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_RecoPoint, "BEH_Dep_Pion_INF_MiseEnPlace_Mission", nodes.BEH_Dep_Pion_INF_MiseEnPlace_Mission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_RecoPoint, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_RecoPoint, "ACT_Obs_ReconnaitrePoint", nodes.ACT_Obs_ReconnaitrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_RecoPoint, "BEH_MOT_Pion_INF_Debarquer", nodes.BEH_MOT_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_RecoPoint, "BEH_Obs_Pion_INF_RecoPoint", nodes.BEH_Obs_Pion_INF_RecoPoint }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_VAB_RecoPoint, "ACT_Dep_Pion_INF_Arret", nodes.ACT_Dep_Pion_INF_Arret }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitrePoint, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitrePoint, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitrePoint, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitrePoint, "BEH_Eni_Pion_VAB_RecoPoint", nodes.BEH_Eni_Pion_VAB_RecoPoint }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitrePoint, "BEH_Mission_Pion_VAB_RecoPoint", nodes.BEH_Mission_Pion_VAB_RecoPoint }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitrePoint, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_INF_ReconnaitrePoint, "BEH_Poste_Pion_INF_TomberEnGarde", nodes.BEH_Poste_Pion_INF_TomberEnGarde }

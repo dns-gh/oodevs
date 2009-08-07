@@ -1,0 +1,41 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/rohum/cder rbrr/missions/guider/Guider - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_RENS_ROHUM_OrienterGuider(
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_RENS_ROHUM_OrienterGuider"
+{
+    activations =
+    {
+        { "BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Assurer la liaison quand l'ami est proche
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec, 1, { self._namedParams.mission.ami_, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_RENS_ROHUM_OrienterGuider = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_RENS_ROHUM_OrienterGuider, "BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec", nodes.BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec }

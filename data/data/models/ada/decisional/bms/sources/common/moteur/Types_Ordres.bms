@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/Types_Ordres.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JVT 2004-08-03 $
+]]--[[// $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_Ordres.hal $
+]]--[[// $Author: Nld $
+]]--[[// $Modtime: 12/04/05 11:47 $
+]]--[[// $Revision: 6 $
+]]--[[// $Workfile: Types_Ordres.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+
+
+--[[// =============================================================================
+]]--[[// MISSION PION
+]]--[[// =============================================================================
+]]
+
+--[[// =============================================================================
+]]--[[// MISSION AUTOMATE
+]]--[[// =============================================================================
+]]eTypeDeplacement_En2emeEchelon = 0
+eTypeDeplacement_EnZoneSecurisee = 1
+eTypeDeplacement_SurItineraireEquipe = 2
+
+
+
+
+--[[// =============================================================================
+]]--[[// MISSION POPULATION
+]]--[[// =============================================================================
+]]
+
+
+--[[// =============================================================================
+]]--[[// PARAMETRES DE MISSIONS SPECIFIQUES
+]]--[[// =============================================================================
+]]eSousType_Preliminaire = 0
+eSousType_DeManoeuvre = 1
+
+
+include "Common/Moteur/Types_Missions_Population.bms"
+
+include "Common/Moteur/Types_Missions_Automate.bms"
+
+include "Common/Moteur/Types_Missions_Pion.bms"
+
+include "Common/Moteur/Types_OrdresConduite.bms"
+

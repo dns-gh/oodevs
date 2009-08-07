@@ -1,0 +1,18 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/common/Globals.bms"] = true
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Init dispositif des pions
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+
+
+
+
+
+
+
+

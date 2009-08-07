@@ -1,0 +1,44 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/automates/Fonctions.bms"] = true
+
+
+--[[// ------------------------------------------------------------------------
+]]--[[// Filtre la liste des pions donnés en paramétre
+]]--[[//
+]]--[[// Extrait les PCs de la liste
+]]--[[// ------------------------------------------------------------------------
+]]--[[// Si le pion est un PC on l'ajoute
+]]--[[// Si le pion n'est pas un PC et que son automate n'est pas dans la liste
+]]function S_Misc_Pion_Circulation_SelectionnePC( selPions )
+    local _returnValue = {}
+    local selOut = {}
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local pion = x
+            assert( ( DEC_GetAutomate( pion ) ~= 0 and DEC_GetAutomate( pion ) ~= nil ), "pion.automate_ != 0" )
+            local tPion = DEC_Automate_PionPCDeAutomate( DEC_GetAutomate( pion ) )
+            if( pion == tPion ) then
+                do
+                    DIA_PushBack( selOut, pion )
+                    _continue = false
+                end
+            end
+
+                if _continue then
+                if( not DIA_Contains( selOut, tPion ) ) then
+                    do
+                        DIA_PushBack( selOut, pion )
+                        _continue = false
+                    end
+                end
+
+            end
+        end
+
+    end
+
+    _returnValue = selOut
+    return _returnValue
+end
+

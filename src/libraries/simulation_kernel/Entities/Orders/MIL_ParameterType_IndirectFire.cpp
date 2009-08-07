@@ -12,6 +12,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_IndirectFire constructor
@@ -36,46 +37,16 @@ MIL_ParameterType_IndirectFire::~MIL_ParameterType_IndirectFire()
 // Name: MIL_ParameterType_IndirectFire::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_IndirectFire::Copy( const ASN1T_MissionParameter& /*from*/, DIA_Variable_ABC& /*to*/, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_IndirectFire::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_IndirectFire::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*//*knowledgeResolver*/ ) const
+bool MIL_ParameterType_IndirectFire::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( !DEC_Tools::CheckTypeTirIndirect( from ) )
-        return false;
-
-    // Check dest
-    if( !DEC_Tools::CheckTypeTirIndirect( to ) )
-        return false;
-
-    NET_ASN_Tools::CopyIndirectFire( from, to );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_IndirectFire::Copy
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-bool MIL_ParameterType_IndirectFire::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( !DEC_Tools::CheckTypeTirIndirect( from ) )
+    if( !from.IsOfType( *this ) )
         return false;
 
     to.null_value = false;
     to.value.t    = T_MissionParameter_value_tirIndirect;
     
-    if( !NET_ASN_Tools::CopyIndirectFire( from, to.value.u.tirIndirect ) )
-        return false;
-
-    return true;
+    return from.ToIndirectFire( to.value.u.tirIndirect );
 }
 
 // -----------------------------------------------------------------------------

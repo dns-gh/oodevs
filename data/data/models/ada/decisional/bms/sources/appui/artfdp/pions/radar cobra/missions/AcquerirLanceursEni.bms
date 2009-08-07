@@ -1,0 +1,205 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/radar cobra/missions/AcquerirLanceursEni.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ASS_AcquerirLanceursEni
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ASS_AcquerirLanceursEni"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Pion_ASS_AcquerirLanceursEni_Mission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.ePhase = self.ePhase or eMettreEnOeuvre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+                DEC_Trace( "On receipt of order: 'To acquire ennemy's launchers'" )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMettreEnOeuvre then
+                Activate( self.activations.BEH_Pion_ASS_AcquerirLanceursEni_Mission, GetMotivation( "MOT_Mission" ), {} )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_ASS_AcquerirLanceursEni_Mission
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_ASS_AcquerirLanceursEni_Mission"
+{
+    activations =
+    {
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_RC", {} },
+        { "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", {} },
+        { "BEH_Obs_Pion_ASS_TirIndirect_DansZones", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionReco = self.eActionReco or eActionEnCours
+        self.ptObj_Installation = self.ptObj_Installation or S_Obj_Position( self.mission.zoneImplantation_ )
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
+                self.ePhase = eRejoindre
+                
+            --[[// Rejoindre la position du site
+]]elseif switch_1 == eRejoindre then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                        self.ePhase = eDeployer
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                --[[// On fait une reconnaissance de la position lorsque l'on arrive
+]]--[[// a proximite
+]]if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptObj_Installation, 800 ) ) then
+                    Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, setmetatable( { self.ptObj_Installation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReco = v else rawset( t, k, v ) end end } ) )
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObj_Installation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eDeployer then
+                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, 1, { self.ptObj_Installation, } )
+                Activate( self.activations.BEH_Obs_Pion_ASS_TirIndirect_DansZones, 1, { self.mission.zonesAObserver_, self.mission.menanceRoem_, } )
+                
+            --[[//  Fin de mission --> rejoindre plot munition
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Obs_Pion_ASS_TirIndirect_DansZones
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Obs_Pion_ASS_TirIndirect_DansZones"
+{
+    activations =
+    {
+        { "ACT_Obs_Pion_ASS_DelaiAllumageRadar", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.locZones = self.params[1]
+        self._namedParams.bMenaceRoem = self.params[2]
+    end,
+
+    activate = function( self )
+                self.bAllumageRadar = self.bAllumageRadar or true
+        local eNiveauInstallation = DEC_Agent_NiveauInstallation()
+        if( ModuleBegins() ) then
+            StartActivate( self.activations.ACT_Obs_Pion_ASS_DelaiAllumageRadar, 1, { 2, } )
+        end
+
+        if( eNiveauInstallation_Poste == eNiveauInstallation or eNiveauInstallation_PosteAmenage == eNiveauInstallation ) then
+            do
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DispositifInstalle, } )
+                for _,zone in pairs( self._namedParams.locZones ) do
+                local _continue = true
+                    Activate( self.activations.ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone, 1, { zone, self._namedParams.bMenaceRoem, } )
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ASS_AcquerirLanceursEni = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ASS_TirIndirect_DansZones, "ACT_Obs_Pion_ASS_DelaiAllumageRadar", nodes.ACT_Obs_Pion_ASS_DelaiAllumageRadar }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ASS_TirIndirect_DansZones, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ASS_TirIndirect_DansZones, "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone", nodes.ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AcquerirLanceursEni_Mission, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AcquerirLanceursEni_Mission, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AcquerirLanceursEni_Mission, "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", nodes.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AcquerirLanceursEni_Mission, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AcquerirLanceursEni_Mission, "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", nodes.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AcquerirLanceursEni_Mission, "BEH_Obs_Pion_ASS_TirIndirect_DansZones", nodes.BEH_Obs_Pion_ASS_TirIndirect_DansZones }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AcquerirLanceursEni, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AcquerirLanceursEni, "BEH_Pion_ASS_AcquerirLanceursEni_Mission", nodes.BEH_Pion_ASS_AcquerirLanceursEni_Mission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ASS_AcquerirLanceursEni, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

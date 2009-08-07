@@ -1,0 +1,42 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/artfdp/pions/son reco auf1/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+--[[// Définition des actuateurs
+]]--[[// -------------------------
+]]actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 2,
+debarquement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+tir_indirect = 1,
+controle_zone = 1,
+vitesse = 1,
+ennemi = 1,
+objectifEsquive = 1,
+controlePopulation = 1,
+etat_Ambiance = 1,
+etat_Mission = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+etat_ROE = 1,
+}
+
+
+include "Appui/ArtFdp/Pions/Common/Behaviors.bms"
+
+include "Appui/ArtFdp/Pions/Common/Missions/ReconnaitreZoneDeploiement.bms"
+
+include "Appui/ArtFdp/Pions/Son Reco AUF1/Missions/ReconnaitreZoneDeploiement.bms"
+

@@ -1,0 +1,42 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/pions/missions/Missions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created$
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Circulation/Pions/Missions/Missions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 19/09/05 13:17 $
+]]--[[// $Revision: 29 $
+]]--[[// $Workfile: Missions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Missions communes
+]]include "Appui/Circulation/Pions/Missions/RealiserObjetDansZone.bms"
+
+include "Appui/Circulation/Pions/Missions/Renforcer.bms"
+
+
+--[[// Aide à la mobilité sur itinéraire
+]]include "Appui/Circulation/Pions/Missions/Aide a mobilite sur itineraire/ReconnaitreItineraire.bms"
+
+include "Appui/Circulation/Pions/Missions/Aide a mobilite sur itineraire/SurveillerItineraire.bms"
+
+include "Appui/Circulation/Pions/Missions/Aide a mobilite sur itineraire/AppuyerMouvement.bms"
+
+
+--[[// Aide à la mobilité dans zone
+]]include "Appui/Circulation/Pions/Missions/Aide a mobilite dans zone/AppuyerMouvementDansZone.bms"
+
+include "Appui/Circulation/Pions/Missions/Aide a mobilite dans zone/MettreEnOeuvreZoneStationnement.bms"
+
+include "Appui/Circulation/Pions/Missions/Aide a mobilite dans zone/ReconnaitreZoneContaminee.bms"
+
+include "Appui/Circulation/Pions/Missions/Aide a mobilite dans zone/ArmerPIA.bms"
+
+include "Appui/Circulation/Pions/Missions/Aide a mobilite dans zone/BloquerZone.bms"
+
+include "Appui/Circulation/Pions/Missions/Aide a mobilite dans zone/ReconnaitreZoneDeDeploiement.bms"
+
+include "Appui/Circulation/Pions/Missions/Aide a mobilite dans zone/AppuyerFranchissementSurUnPoint.bms"

@@ -12,17 +12,18 @@
 #ifndef __PHY_ActionLendComposantes_h_
 #define __PHY_ActionLendComposantes_h_
 
-#include "Entities/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class PHY_RolePion_Composantes;
 class PHY_ComposantePion;
 class MIL_AgentPion;
+class DEC_RolePion_Decision;
 
 // =============================================================================
 // @class  PHY_ActionLendComposantes
 // Created: JVT 2005-05-12
 // =============================================================================
-class PHY_ActionLendComposantes : public PHY_Action_ABC
+class PHY_ActionLendComposantes : public PHY_DecisionCallbackAction_ABC
 {
 public:
     //! @name Types
@@ -39,7 +40,7 @@ protected:
 protected:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionLendComposantes( MIL_AgentPion&, DIA_Call_ABC& , T_ComposantePredicate predicate );
+             PHY_ActionLendComposantes( MIL_AgentPion&, DEC_RolePion_Decision* pAgent, unsigned int nbrToLend , T_ComposantePredicate predicate );
     virtual ~PHY_ActionLendComposantes();
     //@}
 
@@ -59,12 +60,11 @@ private:
 private:
     PHY_RolePion_Composantes& role_;
     
+    PHY_RolePion_Composantes* pTarget_;
+    T_ComposantePredicate     predicate_;
     const uint                nNbrToLend_;
           uint                nTimer_;
           bool                bLoanDone_;
-    PHY_RolePion_Composantes* pTarget_;
-    T_ComposantePredicate     predicate_;
-    DIA_Variable_ABC&         diaReturnVariable_;
 };
 
 #endif // __PHY_ActionLendComposantes_h_

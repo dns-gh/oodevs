@@ -1,0 +1,88 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/pions/common/fonctions/Fonctions - Forces.bms"] = true
+
+
+--[[// -------------------------------------------------------------------------    
+]]--[[// renvoie 2 quand la connaissance est de type passé en argument
+]]--[[// renvoie 1 si la connaissance n'est pas de type passé en arguement
+]]--[[// renvoie -1 si la connaissance n'est pas valdide
+]]--[[// -------------------------------------------------------------------------
+]]--[[// *************************************************************************
+]]--[[// force comprise entre [1,2] qui prend en compte la distance à un ennemi et
+]]--[[// son type prioritaire
+]]--[[// *************************************************************************
+]]--[[// normalisation
+]]--[[// *************************************************************************
+]]--[[// Cette fonction renvoie une force comprise entre [1,2] 
+]]--[[// 2 => quand la distance entre myself et la connaissance est <= distanceMin
+]]--[[// 1 => la connaissance est a une distance infinie de myself
+]]--[[//
+]]--[[//            - (a-b)/c
+]]--[[// 2 - [ 1 - e          ]
+]]--[[//
+]]--[[// a : distance de myself a la connaissance
+]]--[[// b : distance min a la connaissance pour avoir la force max
+]]--[[// c : distance significative pour l'arme
+]]--[[// *************************************************************************
+]]function S_ForceRejoindre( distanceAuPoint, distanceArretAvantPoint )
+    local _returnValue = 0
+    assert( distanceAuPoint >= 0, "distanceAuPoint : distance negative" )
+    assert( distanceArretAvantPoint >= 0, "distanceArretAvantPoint : distance negative" )
+    if( distanceAuPoint - distanceArretAvantPoint <= 0 ) then
+        do
+            _returnValue = 0
+                        return _returnValue
+
+        end
+    end
+
+    _returnValue = 1 - ( 1 / ( 1 + ( distanceAuPoint - distanceArretAvantPoint ) ) )
+    return _returnValue
+end
+
+function S_Eni_Pion_AIR_ForceType( agent, typePrioritaire )
+    local _returnValue = 0
+    local eValidite = nil
+    if( S_Eni_EstCiblePrioritaireSelonCategorieAtlas( agent, typePrioritaire ) ) then
+        do
+            _returnValue = 2
+        end
+    else
+do
+            if( S_Eni_EstCiblePrioritaireSelonCategorieAtlas( agent, eNatureAtlas_ASA ) ) then
+                _returnValue = 4
+            else
+                _returnValue = 1
+            end
+
+        end
+    end
+
+    if( eValidite == eRequeteInvalide ) then
+        _returnValue = -1
+    end
+
+    return _returnValue
+end
+
+function S_Eni_Pion_AIR_ForceDetruire( agent, typePrioritaire )
+    local _returnValue = 0
+    local forceTypeEtatOp = DEC_ConnaissanceAgent_EtatOps( agent ) * S_Eni_Pion_AIR_ForceType( agent, typePrioritaire )
+    local forceDistance = 2 - S_ForceRejoindre( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( agent ) ), 0 )
+    _returnValue = forceTypeEtatOp * forceDistance
+    _returnValue = ( ( _returnValue ) / 4 ) + 1
+    return _returnValue
+end
+
+function S_Eni_Pion_AIR_ForceDistanceDeuxPoint( a, b, distMin )
+    local _returnValue = 0
+    _returnValue = 2 - S_ForceRejoindre( DEC_Geometrie_Distance( a, b ), distMin )
+    return _returnValue
+end
+
+function S_Eni_Pion_AIR_ForceDistanceLePlusProche( eni, distMin )
+    local _returnValue = 0
+    _returnValue = S_Eni_Pion_AIR_ForceDistanceDeuxPoint( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( eni ), distMin )
+    return _returnValue
+end
+

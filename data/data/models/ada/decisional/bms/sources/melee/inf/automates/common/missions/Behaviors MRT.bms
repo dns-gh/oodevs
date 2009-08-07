@@ -1,0 +1,136 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/missions/Behaviors MRT.bms"] = true
+
+--[[// Mission MRT Generiques infanterie
+]]--[[// ----------------------------------------------------------------------------
+]]
+--[[// include "Melee\Inf\Automates\Common\Missions\RecueillirUnite\RecueillirUnite MRT.bms"
+]]--[[// include "Melee\Inf\Automates\Common\Missions\ReduireDetruire\ReduireDetruire MRT.bms"
+]]--[[// include "Melee\Inf\Automates\Common\Missions\RompreContact\RompreContact MRT.bms"
+]]
+
+include "Melee/Inf/Automates/Common/Missions/Behaviors MRT - Statique.bms"
+
+include "Melee/Inf/Automates/Common/Missions/Behaviors MRT - Manoeuvre.bms"
+
+include "Melee/Inf/Automates/Common/Missions/Behaviors MRT - Retrograde.bms"
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// PC
+]]--[[//-----------------------------------------------------------------------------    	
+]]node "BEH_Medo_Automate_INF_AssignerMission_PC"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPion_PE = self.params[1]
+        self._namedParams.selPion_SE = self.params[2]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------    	
+]]local pAppui = nil
+                if( ( #( self._namedParams.selPion_SE ) ~= 0 and #( self._namedParams.selPion_SE ) ~= nil ) ) then
+                    pAppui = DIA_GetAt( self._namedParams.selPion_SE, #( self._namedParams.selPion_SE ) - 1 )
+                else
+                    pAppui = DIA_GetAt( self._namedParams.selPion_PE, 0 )
+                end
+
+                StartActivate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
+            end
+        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 07/07/2005 16:46
+]]--[[// BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC
+]]--[[// Assigne une mission de deplacement du pc vers une position defini par la 
+]]--[[// mission
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPionsAttaque = self.params[1]
+        self._namedParams.lstPionsAppui = self.params[2]
+        self._namedParams.locRgpt = self.params[3]
+    end,
+
+    activate = function( self )
+        self.ptFin = self.ptFin or S_Geometrie_BarycentreZone( self._namedParams.locRgpt )
+        --[[// Donner la mission freiner au pion PC			
+]]if( ModuleBegins() ) then
+            StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, DEC_Automate_PionPC(), self.ptFin, eEtatEchelon_Second, } )
+        end
+
+    end,
+
+--[[// ============================================================================
+]]--[[// $Created : JCR : 07/07/2005 16:46
+]]--[[// BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC
+]]--[[// Assigne une mission de deplacement du pc vers la fin du fuseau
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPionsAttaque = self.params[1]
+        self._namedParams.lstPionsAppui = self.params[2]
+    end,
+
+    activate = function( self )
+        self.ptFin = self.ptFin or DEC_Geometrie_CalculerPointArriveePourPion( DEC_Automate_PionPC() )
+        --[[// Donner la mission freiner au pion PC
+]]if( ModuleBegins() ) then
+            StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, DEC_Automate_PionPC(), self.ptFin, eEtatEchelon_Second, } )
+        end
+
+    end,
+
+}
+
+node "BEH_Medo_Automate_INF_InitialiseSE"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.lstPionsAppui = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            S_Medo_Automate_InitialiseSE( self._namedParams.lstPionsAppui, eEtatEchelon_Second )
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerMission_PC, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }

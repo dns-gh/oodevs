@@ -1,0 +1,912 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/behaviors/Behaviors - Dep.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_ProgressionSur
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Dep_ProgressionSur"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Dep_GererProgression", {} },
+        { "BEH_Dep_SeDeplacer", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.itineraire = self.params[1]
+        self._namedParams.eTypeProgression = self.params[2]
+        self._namedParams.eTypeIti = self.params[3]
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.it = self.it or DEC_CreerItineraireListe( self._namedParams.itineraire, self._namedParams.eTypeIti )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Gestion lima etc si progression tactique
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Dep_GererProgression, 1, { self._namedParams.eTypeProgression, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Deplacement de base
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                    self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionSur" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Observation
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Obs_EtablirVisionCur, 0.5, {} )
+    end,
+
+    destroy = function( self )
+                self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionSur" )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_ProgressionVers
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// -  si la position d'arrivee a changée de plus de 1000 mètres, relancer le 
+]]--[[//   calcul d'itineraire
+]]--[[// - Gestion de la progression sur l'itineraire
+]]--[[// - Se déplace sur l'itineraire
+]]--[[// - Etablit la vision dans le sens de progression. Force 0.5 pour pouvoir en
+]]--[[//  dehors du comportement regler la vision avec une force de 1
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_ProgressionVers"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Dep_GererProgression", {} },
+        { "BEH_Dep_SeDeplacer", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pointArrivee = self.params[1]
+        self._namedParams.eTypeProgression = self.params[2]
+        self._namedParams.eTypeIti = self.params[3]
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.it = self.it or DEC_CreerItineraire( self._namedParams.pointArrivee, self._namedParams.eTypeIti )
+        self.pointARejoindre = self.pointARejoindre or DEC_Geometrie_CreerPoint()
+        if( ModuleBegins() ) then
+            DEC_Copie_Point( self._namedParams.pointArrivee, self.pointARejoindre )
+        end
+
+        --[[// si l'objectif à varié de plus de 1000 mètres, recalculer un itinéraire
+]]if( DEC_Geometrie_Distance( self._namedParams.pointArrivee, self.pointARejoindre ) >= 1000 ) then
+            Halt()
+        end
+
+        --[[//=============================================================================
+]]--[[// Gestion lima etc si progression tactique
+]]--[[//=============================================================================
+]]Activate( self.activations.BEH_Dep_GererProgression, 1, { self._namedParams.eTypeProgression, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Deplacement de base
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                    self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionVers" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Observation
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Obs_EtablirVisionCur, 0.5, {} )
+    end,
+
+    destroy = function( self )
+                self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionVers" )
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Dep_SeDeplacer
+]]--[[//
+]]--[[// Commentaires: appelé par BEH_ProgressionVers et BEH_ProgressionSur
+]]--[[//
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Dep_SeDeplacer"
+{
+    activations =
+    {
+        { "ACT_Pions_SeDesinstaller", {} },
+        { "ACT_Dep_SeDeplacer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.it = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.ACT_Pions_SeDesinstaller, 1, {} )
+        if( not DEC_Agent_EstDesinstalle() ) then
+            return
+        end
+
+        Activate( self.activations.ACT_Dep_SeDeplacer, 1, setmetatable( { self._namedParams.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_GererAvantPoint
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_GererAvantPoint"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Progression_Pion_INF_Aborder", {} },
+        { "BEH_Obs_Pion_Gen_ReconnaitrePoint", {} },
+        { "BEH_Obs_Pion_NBC_ReconnaitrePoint", {} },
+        { "BEH_Obs_Pion_ABC_ReconnaitrePoint", {} },
+        { "BEH_Obs_Pion_INF_RecoPoint_Copie", {} },
+        { "ACT_Points_Suppression", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeProgression = self.params[1]
+    end,
+
+    activate = function( self )
+        local listePointInterressant = DEC_GetCategory( "points_interressants" )
+        for _,x in pairs( listePointInterressant ) do
+        local _continue = true
+do
+                local ptABC = x
+                --[[// Traiter seulement les 'avantPoint'
+]]if( DEC_IsAvantPoint( ptABC ) ) then
+                    do
+                        --[[// Cast
+]]local repAvantPt = ptABC
+                        --[[// On traite uniquement les points avec le type specifie
+]]if( ( bit.band( self._namedParams.typeProgression, DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) ) ) ) ~= eProgressionDirect ) then
+                            do
+                                switch_1 = DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) )
+                                    if switch_1 == eTypePointCCT
+                                    or switch_1 == eTypePointBond then
+                                                                            if( meleeInfPionsCommon() ) then
+                                            do
+                                                if( GetActivity() >= 1 and F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                                    do
+                                                        Activate( self.activations.ACT_Info_Trace, 1, { "Sur avant bond", } )
+                                                        StartActivate( self.activations.BEH_Progression_Pion_INF_Aborder, 1, { DEC_GetDestPoint( repAvantPt ), } )
+                                                    end
+                                                end
+
+                                            end
+                                        end
+
+                                        
+                                    elseif switch_1 == eTypePointParticulier then
+                                        do
+                                            pointVar = DEC_GetDestPoint( repAvantPt )
+                                            if( appuiGeniePions() ) then
+if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                                    StartActivate( self.activations.BEH_Obs_Pion_Gen_ReconnaitrePoint, 1, { pointVar, } )
+                                                end
+                                            end
+
+                                            if( appuiNbcPionsCommon() ) then
+if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                                    StartActivate( self.activations.BEH_Obs_Pion_NBC_ReconnaitrePoint, 1, { pointVar, } )
+                                                end
+                                            end
+
+                                            if( meleeAbcPionsCommon() ) then
+if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                                    StartActivate( self.activations.BEH_Obs_Pion_ABC_ReconnaitrePoint, 1, { pointVar, } )
+                                                end
+                                            end
+
+                                            if( meleeInfPionsCommon() ) then
+                                                do
+                                                    if( GetActivity() >= 1 and F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                                        do
+                                                            Activate( self.activations.ACT_Info_Trace, 1, { "Sur avant point", } )
+                                                            StartActivate( self.activations.BEH_Obs_Pion_INF_RecoPoint_Copie, 1, { DEC_GetRepPoint( pointVar ), S_TempsObservationPoint_Ambiance(), } )
+                                                        end
+                                                    end
+
+                                                end
+                                            end
+
+                                        end
+
+                                        
+                                                                        end
+
+                            end
+                        end
+
+                        Activate( self.activations.ACT_Points_Suppression, 1, { repAvantPt, } )
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_GererPoint
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_GererPoint"
+{
+    activations =
+    {
+        { "BEH_Obs_Pion_NBC_SePosterSurBond", {} },
+        { "BEH_Obs_Pion_ABC_SePosterSurBond", {} },
+        { "BEH_Misc_Pion_INF_MAJ_Repli", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Poste_Pion_INF_ArretCourt", {} },
+        { "ACT_Points_Suppression", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeProgression = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Regarder les points interssants
+]]--[[//-----------------------------------------------------------------------------
+]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
+        for _,x in pairs( listePointInterressant ) do
+        local _continue = true
+do
+                local ptABC = x
+                --[[// Traiter suelement les 'points'
+]]if( DEC_IsPoint( ptABC ) ) then
+                    do
+                        --[[// Cast
+]]local repPoint = ptABC
+                        --[[// On traite uniquement les points avec le type specifie
+]]if( ( bit.band( self._namedParams.typeProgression, DEC_GetTypePoint( repPoint ) ) ) ~= eProgressionDirect ) then
+                            do
+                                if( appuiNbcPionsCommon() ) then
+                                    StartActivate( self.activations.BEH_Obs_Pion_NBC_SePosterSurBond, 1, { repPoint, } )
+                                else
+if( meleeAbcPionsCommon() ) then
+                                        StartActivate( self.activations.BEH_Obs_Pion_ABC_SePosterSurBond, 1, { repPoint, } )
+                                    else
+if( meleeInfPionsCommon() ) then
+                                            do
+                                                if( GetActivity() >= 1 ) then
+                                                    do
+                                                        Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, {} )
+                                                        Activate( self.activations.ACT_Info_Trace, 1, { "Sur point ou bond", } )
+                                                        StartActivate( self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, { repPoint:Getpoint_(), S_TempsObservationPoint_Ambiance(), } )
+                                                    end
+                                                end
+
+                                            end
+                                        end
+                                    end
+                                end
+
+                            end
+                        end
+
+                        Activate( self.activations.ACT_Points_Suppression, 1, { ptABC, } )
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// ****************************************************************************
+]]--[[// BEH_Dep_GererProgression
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "BEH_Dep_GererProgression"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Lima_GererLimas", {} },
+        { "BEH_Dep_GererPoint", {} },
+        { "BEH_Dep_GererAvantPoint", {} },
+        { "ACT_Obs_ElargirObservation", {} },
+        { "BEH_Dep_ReagirFaceAObstacle", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeProgression = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//=========================================================================
+]]--[[//             ** Comportement spécifique à la progression tactique **
+]]--[[//=========================================================================
+]]if( self._namedParams.typeProgression ~= eProgressionDirect ) then
+            do
+                --[[//---------------------------------------------------------------------
+]]--[[// Limas --> LC / LCA
+]]--[[//---------------------------------------------------------------------
+]]if( ( bit.band( self._namedParams.typeProgression, eTypePointLima ) ) ~= eProgressionDirect ) then
+                    Activate( self.activations.BEH_Lima_GererLimas, 1.5, {} )
+                end
+
+                --[[//---------------------------------------------------------------------
+]]--[[// Reco point / CCT / Bond
+]]--[[//---------------------------------------------------------------------
+]]Activate( self.activations.BEH_Dep_GererPoint, 1.1, { self._namedParams.typeProgression, } )
+                Activate( self.activations.BEH_Dep_GererAvantPoint, 1.1, { self._namedParams.typeProgression, } )
+                Activate( self.activations.ACT_Obs_ElargirObservation, 1, {} )--[[//---------------------------------------------------------------------
+]]--[[// Elargir l'observation --> simulation des coups de sondes
+]]--[[//---------------------------------------------------------------------
+]]
+            end
+--[[//---------------------------------------------------------------------
+]]--[[// Obstacles
+]]--[[//---------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, {} )
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Dep_Progresser
+]]--[[//
+]]--[[// Commentaires:
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Dep_Progresser"
+{
+    activations =
+    {
+        { "BEH_Dep_GererProgression", {} },
+        { "ACT_Pions_SeDesinstaller", {} },
+        { "ACT_Dep_SeDeplacer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.it = self.params[1]
+        self._namedParams.typeProgression = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Gestion générique du deplacement
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_GererProgression, 1, { self._namedParams.typeProgression, } )
+        Activate( self.activations.ACT_Pions_SeDesinstaller, 1, {} )
+        if( not DEC_Agent_EstDesinstalle() ) then
+            return
+        end
+
+        Activate( self.activations.ACT_Dep_SeDeplacer, 1, setmetatable( { self._namedParams.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_ReagirFaceAObstacle
+]]--[[//
+]]--[[// Commentaires: comportement tres simple, l'unite tombe en garde face
+]]--[[// à l'obstacle.
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_ReagirFaceAObstacle"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.repObjet = self.repObjet or 0
+        self.rDist = self.rDist or 0
+        self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
+        --[[// -----------------------------------------------------------------------------
+]]--[[// 1) Demander au moteur les prochains objets sur itineraire
+]]--[[// -----------------------------------------------------------------------------
+]]self.bObjetProcheSurItineraire = DEC_Itineraire_ProchainObjet( self.repObjet, self.rDist, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
+        self.repObjet = self.bObjetProcheSurItineraire.second.first
+        self.rDist = self.bObjetProcheSurItineraire.second.second
+        self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire.first
+        --[[//-----------------------------------------------------------------------------
+]]--[[// 2) On recupere la liste des representations des obstacles sur l'itineraire
+]]--[[//  de deplacement
+]]--[[// MIA ATTENTION: si on change la valeur de M_DISTANCE_REACTION_FACE_A_OBSTACLE()
+]]--[[// ---> LE GENIE NE MARCHE PLUS
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.bObjetProcheSurItineraire and DEC_ConnaissanceObjet_EstValide( self.repObjet ) and self.rDist < M_DISTANCE_REACTION_FACE_A_OBSTACLE() and not S_Obj_EstContourne( self.repObjet ) and not S_Obj_EstObstacleDeManoeuvreNonActif( self.repObjet ) ) then
+            do
+                --[[// {    if ( F_POLY_OBJET_REAGIR_FACE_A_OBSTACLE() )    {        action ACT_RC_SurObjet( eRC_EnPosteFaceAObstacle,  repObjet  );        action ACT_Dep_SePosterFaceAObstacle(  repObjet  );    }    else if ( appuiGeniePions() )    {        if( myself.mission_ != 0 && myself.mission_.__type_ == T_Mission_Pion_GEN_ReconnaitreItineraire )            action ACT_Dep_SePosterFaceAObstacle(  repObjet  );    }    else if ( meleeAbcPionsCommon() )    {        action ACT_Dep_SePosterFaceAObstacle(  repObjet  );    }    else if ( meleeInfPionsCommon() )    {        action ACT_RC_SurObjet( eRC_EnPosteFaceAObstacle,  repObjet  );	    start behavior BEH_Objet_Pion_INF_ReagirFaceAObstacle(  repObjet  );    }}
+]]                self.params.__returnValue = eActionEffectuee
+                return
+
+            end
+        else
+            self.params.__returnValue = eActionEnCours
+            return
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_SePoster
+]]--[[//
+]]--[[//Commentaires : sert pour faire un start
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_SePoster"
+{
+    activations =
+    {
+        { "ACT_Dep_SePoster", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_SePosterFaceAEni
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_SePosterFaceAEni"
+{
+    activations =
+    {
+        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// init comp
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "En poste face a l'eni" )
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Vision / Posture / Formation
+]]--[[//-------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { self._namedParams.repEni, } )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.repEni ), } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_SePosterFaceADirectionDangereuse
+]]--[[//
+]]--[[// Commentaires : // $$$$ MIA 2004-10-01:  A VIRER
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_SePosterFaceADirectionDangereuse"
+{
+    activations =
+    {
+        { "ACT_Dep_SePosterFaceADir", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+            return
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "En poste face a direction dangereuse" )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Posture / Vision
+]]--[[//-----------------------------------------------------------------------------
+]]local directionDanger = DEC_GetDirectionDanger( DEC_GetMission( myself ) )
+        Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { directionDanger, } )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { directionDanger, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Suivre
+]]--[[//
+]]--[[// - se poster à distance min
+]]--[[// - si l'unité a suivre se rapproche, ne pas tenter de la rejoindre
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Suivre"
+{
+    activations =
+    {
+        { "BEH_Dep_Progresser", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ami = self.params[1]
+        self._namedParams.rDistanceMin = self.params[2]
+    end,
+
+    activate = function( self )
+                self.itVersAmi = self.itVersAmi or nil
+        self.eComportement = self.eComportement or eCreerItineraire
+        self.eEtat = self.eEtat or eActionEnCours
+        self.eEtatObstacle = self.eEtatObstacle or eActionEnCours
+        self.recalculerItineraire = self.recalculerItineraire or false
+        switch_1 = self.eComportement
+            if switch_1 == eCreerItineraire then
+                self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
+                self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
+                self.eComportement = eRejoindre
+                self.recalculerItineraire = false
+                
+            elseif switch_1 == eRejoindre then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                        self.eComportement = eCreerItineraire
+                                                return
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                --[[// Aller au plus vite
+]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) <= self._namedParams.rDistanceMin ) then
+                    do
+                        Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
+                        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
+                        self.recalculerItineraire = true
+                    end
+                else
+do
+                        if( self.recalculerItineraire ) then
+                            do
+                                self.eComportement = eCreerItineraire
+                                                                return
+
+                            end
+                        end
+
+                    end
+                end
+
+                
+            
+            else
+                        end
+
+    end,
+
+    destroy = function( self )
+                S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Suivre
+]]--[[//
+]]--[[// Commentaires : 
+]]--[[//
+]]--[[// -reste toujours derriere l'unité à suivre (direction dangereuse)
+]]--[[// -reste à distance "distanceMin" de l'unité à suivre
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_SuivreToujoursDeriere"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.agent = self.params[1]
+        self._namedParams.distanceMin = self.params[2]
+        self._namedParams.typeProgression = self.params[3]
+        self._namedParams.ePathType = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.pointARejoindre = self.pointARejoindre or DEC_Geometrie_CreerPoint()
+        self.positionDebut = self.positionDebut or DEC_Geometrie_CreerPoint()
+        local mission = DEC_GetMission( self._namedParams.agent )
+        if( mission ~= nil ) then
+            DEC_Copie_Point( DEC_Geometrie_PositionTranslateDir( self._namedParams.agent:DEC_Agent_Position(), DEC_GetDirectionDanger( mission ), -self._namedParams.distanceMin ), self.pointARejoindre )
+        else
+            DEC_Copie_Point( self._namedParams.agent:DEC_Agent_Position(), self.pointARejoindre )
+        end
+
+        if( ModuleBegins() ) then
+            DEC_Copie_Point( self.pointARejoindre, self.positionDebut )
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        if( self.eEtat == eActionImpossible ) then
+            do
+                                do
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pointARejoindre, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Suivre_Elastique
+]]--[[//
+]]--[[// Commentaires: suivre une unite ami
+]]--[[// 		- S'arrete a distanceMin du pion suivit
+]]--[[//		- Redemarre lorsque l'on se trouve a + distance de distanceMax
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Suivre_Elastique"
+{
+    activations =
+    {
+        { "BEH_Dep_Progresser", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_ReagirFaceAObstacle", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ami = self.params[1]
+        self._namedParams.rDistanceMin = self.params[2]
+        self._namedParams.rDistanceMax = self.params[3]
+    end,
+
+    activate = function( self )
+                self.itVersAmi = self.itVersAmi or nil
+        self.eComportement = self.eComportement or eCreerItineraire
+        self.eEtat = self.eEtat or eActionEnCours
+        self.eEtatObstacle = self.eEtatObstacle or eActionEnCours
+        self.bEnAttente = self.bEnAttente or false
+        if( ModuleBegins() ) then
+            DEC_Trace( "The unit follows " .. DEC_GetSzName( self._namedParams.ami ) )
+        end
+
+        switch_1 = self.eComportement
+            if switch_1 == eCreerItineraire then
+                if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin ) ) then
+                    return
+                end
+
+                self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
+                self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
+                self.eComportement = eRejoindre
+            elseif switch_1 == eRejoindre then
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                        self.eComportement = eCreerItineraire
+                                                return
+
+                    end
+                end
+
+                if( self.bEnAttente ) then
+                    self.bEnAttente = S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMax )
+                end
+
+                Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                --[[// Aller au plus vite
+]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin - 200 ) ) then
+                    self.eEtat = eActionEffectuee
+                end
+
+                self.bEnAttente = self.bEnAttente or S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin )
+                if( self.bEnAttente ) then
+                    do
+                        Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
+                        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
+                    end
+                end
+
+                if( self.eEtatObstacle == eActionEffectuee ) then
+                    do
+                        self.eComportement = eCreerItineraire
+                        self.eEtat = eActionEffectuee
+                    end
+                end
+
+                StartActivate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatObstacle = v else rawset( t, k, v ) end end } ) )
+                
+            
+            else
+                        end
+
+    end,
+
+    destroy = function( self )
+                S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererAvantPoint, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererAvantPoint, "BEH_Progression_Pion_INF_Aborder", nodes.BEH_Progression_Pion_INF_Aborder }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererAvantPoint, "BEH_Obs_Pion_Gen_ReconnaitrePoint", nodes.BEH_Obs_Pion_Gen_ReconnaitrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererAvantPoint, "BEH_Obs_Pion_NBC_ReconnaitrePoint", nodes.BEH_Obs_Pion_NBC_ReconnaitrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererAvantPoint, "BEH_Obs_Pion_ABC_ReconnaitrePoint", nodes.BEH_Obs_Pion_ABC_ReconnaitrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererAvantPoint, "BEH_Obs_Pion_INF_RecoPoint_Copie", nodes.BEH_Obs_Pion_INF_RecoPoint_Copie }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererAvantPoint, "ACT_Points_Suppression", nodes.ACT_Points_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererPoint, "BEH_Obs_Pion_NBC_SePosterSurBond", nodes.BEH_Obs_Pion_NBC_SePosterSurBond }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererPoint, "BEH_Obs_Pion_ABC_SePosterSurBond", nodes.BEH_Obs_Pion_ABC_SePosterSurBond }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererPoint, "BEH_Misc_Pion_INF_MAJ_Repli", nodes.BEH_Misc_Pion_INF_MAJ_Repli }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererPoint, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererPoint, "BEH_Poste_Pion_INF_ArretCourt", nodes.BEH_Poste_Pion_INF_ArretCourt }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererPoint, "ACT_Points_Suppression", nodes.ACT_Points_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererProgression, "BEH_Lima_GererLimas", nodes.BEH_Lima_GererLimas }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererProgression, "BEH_Dep_GererPoint", nodes.BEH_Dep_GererPoint }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererProgression, "BEH_Dep_GererAvantPoint", nodes.BEH_Dep_GererAvantPoint }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererProgression, "ACT_Obs_ElargirObservation", nodes.ACT_Obs_ElargirObservation }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_GererProgression, "BEH_Dep_ReagirFaceAObstacle", nodes.BEH_Dep_ReagirFaceAObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Progresser, "BEH_Dep_GererProgression", nodes.BEH_Dep_GererProgression }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Progresser, "ACT_Pions_SeDesinstaller", nodes.ACT_Pions_SeDesinstaller }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Progresser, "ACT_Dep_SeDeplacer", nodes.ACT_Dep_SeDeplacer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_ProgressionSur, "BEH_Dep_GererProgression", nodes.BEH_Dep_GererProgression }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_ProgressionSur, "BEH_Dep_SeDeplacer", nodes.BEH_Dep_SeDeplacer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_ProgressionSur, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_ProgressionVers, "BEH_Dep_GererProgression", nodes.BEH_Dep_GererProgression }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_ProgressionVers, "BEH_Dep_SeDeplacer", nodes.BEH_Dep_SeDeplacer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_ProgressionVers, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_SeDeplacer, "ACT_Pions_SeDesinstaller", nodes.ACT_Pions_SeDesinstaller }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_SeDeplacer, "ACT_Dep_SeDeplacer", nodes.ACT_Dep_SeDeplacer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_SePoster, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_SePosterFaceADirectionDangereuse, "ACT_Dep_SePosterFaceADir", nodes.ACT_Dep_SePosterFaceADir }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_SePosterFaceADirectionDangereuse, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Suivre, "BEH_Dep_Progresser", nodes.BEH_Dep_Progresser }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Suivre, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Suivre, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Suivre, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_SuivreToujoursDeriere, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Suivre_Elastique, "BEH_Dep_Progresser", nodes.BEH_Dep_Progresser }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Suivre_Elastique, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Suivre_Elastique, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Suivre_Elastique, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Suivre_Elastique, "BEH_Dep_ReagirFaceAObstacle", nodes.BEH_Dep_ReagirFaceAObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_SePosterFaceAEni, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_SePosterFaceAEni, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }

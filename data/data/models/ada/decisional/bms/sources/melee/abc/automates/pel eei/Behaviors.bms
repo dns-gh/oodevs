@@ -1,0 +1,184 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/pel eei/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 04-02-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Pel EEI/Behaviors.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:07 $
+]]--[[// $Revision: 12 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 200
+
+max_activations = 200
+
+
+actuators = {
+etat_OrdreCoordination = 1,
+releve = 1,
+}
+
+
+include "Melee/Abc/Automates/Common/Behaviors.bms"
+
+
+--[[// Sgpt Ecl Blindes
+]]include "Melee/Abc/Automates/Pel EEI/Actions.bms"
+
+include "Melee/Abc/Automates/Pel EEI/Missions/Missions.bms"
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Missions génériques
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Eclairer
+]]include "Melee/Abc/Automates/Common/Missions/Eclairer/Eclairer - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Eclairer/Eclairer - CDT.bms"
+
+
+--[[// Attaquer
+]]include "Melee/Abc/Automates/Common/Missions/Attaquer/Attaquer - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Attaquer/Attaquer - CDT.bms"
+
+
+--[[// Interdire
+]]include "Melee/Abc/Automates/Common/Missions/Interdire/Interdire - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Interdire/Interdire - CDT.bms"
+
+
+--[[// Reconnaitre
+]]include "Melee/Abc/Automates/Common/Missions/ReconnaitreAxe/ReconnaitreAxe - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/ReconnaitreAxe/ReconnaitreAxe - CDT.bms"
+
+
+--[[// Reconnaitre Point
+]]include "Melee/Abc/Automates/Common/Missions/ReconnaitrePoint Surete/ReconnaitrePoint Pat - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/ReconnaitrePoint Surete/ReconnaitrePoint Pat - CDT.bms"
+
+
+--[[// Couvrir
+]]include "Melee/Abc/Automates/Common/Missions/Couvrir/Couvrir - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Couvrir/Couvrir - CDT.bms"
+
+
+--[[// Tenir
+]]include "Melee/Abc/Automates/Common/Missions/Tenir/Tenir - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Tenir/Tenir - CDT.bms"
+
+
+--[[// Reduire
+]]include "Melee/Abc/Automates/Common/Missions/Reduire/Reduire - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Reduire/Reduire - CDT.bms"
+
+
+--[[// Donner coup arret
+]]include "Melee/Abc/Automates/Common/Missions/DonnerCoupArret/DonnerCoupArret - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/DonnerCoupArret/DonnerCoupArret - CDT.bms"
+
+
+--[[// Controler secteur
+]]include "Melee/Abc/Automates/Common/Missions/ControlerZone/ControlerZone - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/ControlerZone/ControlerZone - CDT.bms"
+
+
+--[[// Renseigner sur
+]]include "Melee/Abc/Automates/Common/Missions/RenseignerSur/RenseignerSur - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/RenseignerSur/RenseignerSur - CDT.bms"
+
+
+--[[// Flanc garder
+]]include "Melee/Abc/Automates/Common/Missions/FlancGarder/FlancGarder - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/FlancGarder/FlancGarder - CDT.bms"
+
+
+--[[// SemparerZone
+]]include "Melee/Abc/Automates/Common/Missions/SemparerZone/SemparerZone - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/SemparerZone/SemparerZone - CDT.bms"
+
+
+--[[// Freiner
+]]include "Melee/Abc/Automates/Common/Missions/Freiner/Freiner - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Freiner/Freiner - CDT.bms"
+
+
+--[[// Soutenir
+]]include "Melee/Abc/Automates/Common/Missions/Soutenir/Soutenir - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Soutenir/Soutenir - CDT.bms"
+
+
+--[[// Appuyer
+]]include "Melee/Abc/Automates/Common/Missions/Appuyer/Appuyer - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Appuyer/Appuyer - CDT.bms"
+
+
+--[[// Fixer
+]]include "Melee/Abc/Automates/Common/Missions/Fixer/Fixer - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Fixer/Fixer - CDT.bms"
+
+
+--[[// Surveiller
+]]include "Melee/Abc/Automates/Common/Missions/Surveiller/Surveiller - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Surveiller/Surveiller - CDT.bms"
+
+
+--[[// Recueillir
+]]include "Melee/Abc/Automates/Common/Missions/Recueillir/Recueillir - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Recueillir/Recueillir - CDT.bms"
+
+
+--[[// Jalonner
+]]include "Melee/Abc/Automates/Common/Missions/Jalonner/Jalonner - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Jalonner/Jalonner - CDT.bms"
+
+
+--[[// ArmerPointControl
+]]include "Melee/Abc/Automates/Common/Missions/ArmerPointControl/ArmerPointControl - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/ArmerPointControl/ArmerPointControl - CDT.bms"
+
+
+--[[// OrganiserAccueilColonneRefugies
+]]--[[//include "Melee\Abc\Automates\Common\Missions\OrganiserAccueilColonneRefugies\OrganiserAccueilColonneRefugies - MRT.bms"
+]]include "Melee/Abc/Automates/Common/Missions/OrganiserAccueilColonneRefugies/OrganiserAccueilColonneRefugies - CDT.bms"
+
+
+--[[// Escorter
+]]include "Melee/Abc/Automates/Common/Missions/Escorter/Escorter - MRT.bms"
+
+include "Melee/Abc/Automates/Common/Missions/Escorter/Escorter - CDT.bms"
+
+
+--[[// MRT GEN Mis offensive
+]]include "Melee/Abc/Automates/Common/MRT generique mis defensives.bms"
+
+include "Melee/Abc/Automates/Common/MRT generique mis offensives.bms"
+
+include "Melee/Abc/Automates/Common/MRT generique mis retrogrades.bms"

@@ -1,0 +1,61 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/pions/firefighter/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 100
+
+max_activations = 100
+
+
+--[[// Définition des actuateurs
+]]--[[// -------------------------
+]]actuators = {
+installation = 1,
+etat_OrdreCoordination = 1,
+deplacement = 1,
+debarquement = 1,
+observation = 1,
+reconnaissance = 1,
+tir = 1,
+tir_indirect = 1,
+controle_zone = 1,
+vitesse = 1,
+ennemi = 1,
+objectifEsquive = 1,
+etat_Ambiance = 1,
+etat_Mission = 1,
+controlePopulation = 1,
+etat_Dec = 1,
+etat_Lima = 1,
+etat_Destruction = 1,
+etat_ROE = 1,
+}
+
+
+include "Emergency/Pions/Common/Behaviors.bms"
+
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// Missions performed by firefighter units
+]]--[[// ----------------------------------------------------------------------------
+]]include "Emergency/Pions/Common/Missions/EvacuateArea.bms"
+
+include "Emergency/Pions/Common/Missions/ExtinguishFire.bms"
+
+include "Emergency/Pions/Common/Missions/Soothe.bms"
+
+include "Emergency/Pions/Common/Missions/ProvideFirstAid.bms"
+
+

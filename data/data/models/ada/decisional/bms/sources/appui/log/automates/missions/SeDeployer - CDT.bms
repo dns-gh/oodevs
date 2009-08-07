@@ -1,0 +1,31 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/log/automates/missions/SeDeployer - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_SeDeployer
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_LOG_SeDeployer"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_LOG_OrdresInopines", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Ordre_Automate_LOG_OrdresInopines, 1, {} )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_LOG_SeDeployer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_LOG_SeDeployer, "ACT_Ordre_Automate_LOG_OrdresInopines", nodes.ACT_Ordre_Automate_LOG_OrdresInopines }

@@ -12,11 +12,11 @@
 #ifndef __DEC_PathFind_Manager_h_
 #define __DEC_PathFind_Manager_h_
 
-#include "MIL.h"
 #include "tools/thread/MessageQueue_ABC.h"
 #pragma warning( disable : 4275 )
-#include "boost/thread/mutex.hpp"
-#include "boost/thread/condition.hpp"
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/condition.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -30,7 +30,7 @@ class MIL_Config;
 // =============================================================================
 // Created: NLD 2003-08-14
 // =============================================================================
-class DEC_PathFind_Manager : private tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >
+class DEC_PathFind_Manager : private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
                            , private boost::noncopyable
 {
 
@@ -41,9 +41,8 @@ public:
     //! @name Main
     //@{
     void Update                   ();
-    void StartCompute             ( DEC_Path_ABC& path );
-    void DeletePath               ( DEC_Path_ABC& path );
-    void CleanPathAfterComputation( DEC_Path_ABC& path );
+    void StartCompute             ( boost::shared_ptr< DEC_Path_ABC > pPath );
+    void CleanPathAfterComputation( const boost::shared_ptr< TER_PathFindRequest_ABC >& pPath );
     //@}
 
     //! @name Accessors
@@ -63,15 +62,15 @@ private:
     typedef T_PathFindThreadPtrVector::iterator        IT_PathFindThreadPtrVector;
     typedef T_PathFindThreadPtrVector::const_iterator CIT_PathFindThreadPtrVector;
 
-    typedef std::deque< TER_PathFindRequest_ABC* >      T_Requests;
+    typedef std::deque< boost::shared_ptr< TER_PathFindRequest_ABC > >      T_Requests;
     //@}
 
 private:
     //! @name Tools
     //@{
-    void                             AddPendingJob( DEC_Path_ABC& path );
-    virtual TER_PathFindRequest_ABC* GetMessage   ();
-            TER_PathFindRequest_ABC* GetMessage   ( unsigned int nThread );
+    virtual boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage   ();
+            boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage   ( unsigned int nThread );
+    void        AddPendingJob( boost::shared_ptr< DEC_Path_ABC > pPath );
     T_Requests& GetRequests();
     //@}
 
@@ -88,7 +87,6 @@ private:
     T_PathFindThreadPtrVector  pathFindThreads_;
 
     boost::mutex cleanAndDestroyMutex_;
-    T_Requests   destroyedRequests_;
     T_Requests   requestsToCleanAfterComputation_;
 };
 

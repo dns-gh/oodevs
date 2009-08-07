@@ -1,0 +1,189 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/automates/cie blindee/missions/reconnaitre zone/ReconnaitreZone - MRT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_MRT_GEN_ReconnaitreZone
+]]--[[//
+]]--[[// Commentaires: Refonte 27/10/06
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_MRT_GEN_ReconnaitreZone"
+{
+    activations =
+    {
+        { "ACT_Warning", {} },
+        { "BEH_Medo_Automate_GEN_MRT_AssignerReconnaitre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        local listeSectionGenie = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), SectionGenie )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                --[[// Verif
+]]if( ( #( listeSectionGenie ) == 0 or #( listeSectionGenie ) == nil ) ) then
+                    do
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                                                Halt()
+
+                    end
+                end
+
+                S_Dispositif_Automate_Init()
+                DEC_SetMission( myself, self._namedParams.mission )
+                DEC_Trace( "------------------ To perform a reconnaissance of zone ------------------" )
+                StartActivate( self.activations.BEH_Medo_Automate_GEN_MRT_AssignerReconnaitre, 1, { listeSectionGenie, self._namedParams.mission.zone_, } )
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_GEN_MRT_AssignerReconnaitre
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Medo_Automate_GEN_MRT_AssignerReconnaitre"
+{
+    activations =
+    {
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_GEN_MRT_FaireReconnaitre", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsGenie = self.params[1]
+        self._namedParams.zone = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eValidationMRT = self.eValidationMRT or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Assignation et vérification
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eValidationMRT == eActionImpossible ) then
+            do
+                                do
+                    DEC_MRT_Valide()
+                    DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eValidationMRT == eActionEffectuee ) then
+            do
+                self.eValidationMRT = eActionEnCours
+                                do
+                    DEC_MRT_Valide()
+                                        Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self._namedParams.listePionsGenie ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_GEN_MRT_FaireReconnaitre, 1, { self._namedParams.listePionsGenie, self._namedParams.zone, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_GEN_MRT_FaireReconnaitre
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Medo_Automate_GEN_MRT_FaireReconnaitre"
+{
+    activations =
+    {
+        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePionsGenie = self.params[1]
+        self._namedParams.zone = self.params[2]
+    end,
+
+    activate = function( self )
+        self.listeZones = self.listeZones or {}
+        self.rIterateurSecteur = self.rIterateurSecteur or 0
+        self.nErrorCode = self.nErrorCode or nil
+        --[[// Sécurité mais testé dans le comportement au dessus
+]]if( ( #( self._namedParams.listePionsGenie ) == 0 or #( self._namedParams.listePionsGenie ) == nil ) ) then
+            return
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Calcule et gestion erreur
+]]--[[//-----------------------------------------------------------------------------
+]]self.listeZones = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePionsGenie ), self.nErrorCode )
+                self.nErrorCode = self.listeZones.second
+                self.listeZones = self.listeZones.first
+                if( self.nErrorCode ~= eNoError ) then
+                    do
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
+                                                self.params.__returnValue = eActionImpossible
+                        return
+
+                    end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//-----------------------------------------------------------------------------
+]]                end
+
+                for _,pion in pairs( self._namedParams.listePionsGenie ) do
+                local _continue = true
+do
+                        if( self.rIterateurSecteur == #( self.listeZones ) ) then
+                            self.rIterateurSecteur = 0
+                        end
+
+                        --[[// Récuperation du secteur courant
+]]local secteur = DEC_UserTypeList_GetAt( self.listeZones, self.rIterateurSecteur )
+                        --[[// Assignation de la mission
+]]StartActivate( self.activations.BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA, 1, { ePhase_MRT, pion, secteur, eEtatEchelon_Premier, } )
+                                                self.rIterateurSecteur = self.rIterateurSecteur + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_GEN_ReconnaitreZone = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_GEN_MRT_AssignerReconnaitre, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_GEN_MRT_AssignerReconnaitre, "BEH_Medo_Automate_GEN_MRT_FaireReconnaitre", nodes.BEH_Medo_Automate_GEN_MRT_FaireReconnaitre }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_GEN_MRT_FaireReconnaitre, "ACT_Warning", nodes.ACT_Warning }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_GEN_MRT_FaireReconnaitre, "BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA", nodes.BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_GEN_ReconnaitreZone, "ACT_Warning", nodes.ACT_Warning }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_GEN_ReconnaitreZone, "BEH_Medo_Automate_GEN_MRT_AssignerReconnaitre", nodes.BEH_Medo_Automate_GEN_MRT_AssignerReconnaitre }

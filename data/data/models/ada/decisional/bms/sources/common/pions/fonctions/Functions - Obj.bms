@@ -1,0 +1,165 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/fonctions/Functions - Obj.bms"] = true
+
+include "bit.lua"
+
+--[[// *****************************************************************************
+]]--[[// Fonctions Communes aux pions
+]]--[[// Thème : Objets
+]]--[[// *****************************************************************************
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des obstacles
+]]--[[// OPT: MIA SPE ART fdp
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'objet est contourne
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des objets non contourner
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si l'objet est prépapé
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// =============================================================================
+]]--[[// Force par rapport aux objets
+]]--[[// =============================================================================
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie une force comprise entre 1 et 2 en fonction de la distance d'un
+]]--[[// embossement
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si un embossement est à moins de rDistance
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si un embossement est à moins de rDistance
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie l'objet proche de ptRef
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie l'objet proche de ptRef barycentre de locRef
+]]--[[//-----------------------------------------------------------------------------
+]]function S_Obj_ListeObstacle( position, rDistance )
+    local _returnValue = {}
+    _returnValue = DEC_Connaissances_ObjetsDansCercle( position, rDistance, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )
+    return _returnValue
+end
+
+function S_Obj_EstContourne( objet )
+    local _returnValue = false
+    local countourne = DEC_ConnaissanceObjet_EstContourne( objet )
+    local result = ( countourne == eTristate_True )
+    _returnValue = result
+    return _returnValue
+end
+
+function S_Obj_ListeObjetsNonContournes( objets )
+    local _returnValue = {}
+    local listeObjets = {}
+    for _,objet in pairs( objets ) do
+    local _continue = true
+do
+            if( not S_Obj_EstContourne( objet ) and DEC_ConnaissanceObjet_EstValide( objet ) ) then
+                DEC_UserTypeList_PushBack( listeObjets, objet )
+            end
+
+        end
+
+    end
+
+    _returnValue = listeObjets
+    return _returnValue
+end
+
+function S_Obj_EstObstacleDeManoeuvreNonActif( objet )
+    local _returnValue = false
+    local bResult = DEC_ConnaissanceObjet_EstObstacleDeManoeuvre( objet )
+    if( not bResult ) then
+        do
+            _returnValue = false
+                        return _returnValue
+
+        end
+    end
+
+    bResult = not DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif( objet )
+    _returnValue = bResult
+    return _returnValue
+end
+
+function S_Obj_ForceDistance( repObjet )
+    local _returnValue = 0
+    local localisation = DEC_ConnaissanceObjet_Localisation( repObjet )
+    if( ( localisation == 0 or localisation == nil ) ) then
+        _returnValue = 0
+    else
+do
+            local point = S_Geometrie_BarycentreZone( localisation )
+            _returnValue = 1 + ( 1 / ( 1 + ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), point ) / 1000 ) ) )
+        end
+    end
+
+    return _returnValue
+end
+
+function S_Obj_EstEmbossementADistanceDe( positionPion, repObjet, rDistance )
+    local _returnValue = false
+    _returnValue = false
+    local positionObjet = S_Obj_Position( repObjet )
+    if( ( positionObjet == 0 or positionObjet == nil ) ) then
+        return _returnValue
+    end
+
+    if( DEC_Geometrie_Distance( positionPion, positionObjet ) < rDistance ) then
+        _returnValue = true
+    end
+
+    return _returnValue
+end
+
+function S_Obj_EstObjetADistanceDe( positionPion, repObjet, rDistance )
+    local _returnValue = false
+    _returnValue = false
+    local positionObjet = S_Obj_Position( repObjet )
+    if( ( positionObjet == 0 or positionObjet == nil ) ) then
+        return _returnValue
+    end
+
+    if( DEC_Geometrie_Distance( positionPion, positionObjet ) < rDistance ) then
+        _returnValue = true
+    end
+
+    return _returnValue
+end
+
+function S_Obj_ObtenirObjetProcheDePosition( ptRef, lstObjets, rDistMax )
+    local _returnValue = nil
+    _returnValue = nil
+    local rDist = rDistMax
+    for _,ksObj in pairs( lstObjets ) do
+    local _continue = true
+do
+            local ptObj = S_Obj_Position( ksObj )
+            local rDistObj = DEC_Geometrie_Distance( ptRef, ptObj )
+            if( rDistObj < rDist ) then
+                do
+                    _returnValue = ksObj
+                    rDist = rDistObj
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Obj_ObtenirObjetProcheDe( locRef, eTypeObject, rDistMax )
+    local _returnValue = nil
+    local ptRef = S_Geometrie_BarycentreZone( locRef )
+    local lstObjets = DEC_Connaissances_ObjetsDansCercle( ptRef, rDistMax, S_TypeObject_ToString( eTypeObject ) )
+    _returnValue = S_Obj_ObtenirObjetProcheDePosition( ptRef, lstObjets, rDistMax )
+    return _returnValue
+end
+

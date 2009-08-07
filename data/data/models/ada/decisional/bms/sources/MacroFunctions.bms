@@ -1,0 +1,639 @@
+-- Functions used that are neither DEC_, DIA_ nor S_ :
+
+include "Common/Types.bms"
+
+function BoolToString( boolVar )
+    return boolVar and "true" or "false"
+end
+
+function EnumToString( enum, enumType )
+    return enum
+end
+
+function FloatToString( float )
+    return float
+end
+
+function Floor( x )
+    return math.floor( x )
+end
+
+function Max( x, y )
+    return math.max( x, y )
+end
+
+function Min( x, y )
+    return math.min( x, y )
+end
+
+-- assert is already a basic lua function
+function assert_Mission( ... )
+    assert( ... )
+end
+
+-- Macro translations
+
+function appuiGeniePions()
+    return includedFiles[ "sources/appui/genie/pions/M_POLY.bms" ] 
+        or includedFiles[ "sources/glaise/glaise_appui/genie/pions/M_POLY.bms" ]
+end
+
+function appuiNbcPionsCommon()
+    return includedFiles[ "sources/appui/nbc/pions/common/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/nbc/pions/common/Globals.bms" ]
+end
+
+function meleeAbcPionsCommon()
+    return includedFiles[ "sources/melee/abc/pions/common/Globals.bms" ]
+        or includedFiles[ "sources/glaise/glaise_melee/abc/pions/common/Globals.bms" ] 
+        or includedFiles[ "sources/humus/humus_melee/abc/pions/common/Globals.bms" ] 
+end
+
+function populationAsymetriquesTerroristePion()
+    return includedFiles[ "sources/population/asymetriques/terroriste/pion/Globals Poly.bms" ]
+        or includedFiles[ "sources/humus/humus_population/asymetriques/terroriste/pion/Globals Poly.bms" ]
+end
+
+function populationMilicesPion()
+    return includedFiles[ "sources/population/milices/pion/Globals Poly.bms" ]
+end
+
+function alatPionsCommon()
+    return includedFiles[ "sources/appui/alat/pions/common/Parameters.bms" ] 
+        or includedFiles[ "sources/glaise/glaise_appui/alat/pions/common/Parameters.bms" ]
+end
+
+function airOrAlatLCA()
+    return includedFiles[ "sources/air/pions/common/Parameters.bms" ] 
+        or alatPionsCommon()
+end
+
+function meleeInfPionsCommon()
+    return includedFiles[ "sources/melee/inf/pions/common/Globals Poly.bms" ] 
+        or includedFiles[ "sources/glaise/glaise_melee/inf/pions/common/Globals Poly.bms" ] 
+        or includedFiles[ "sources/humus/humus_melee/inf/pions/common/Globals Poly.bms"]
+end
+
+if meleeInfPionsCommon() then
+    function M_POLY_MODELE_PION_VITESSE_RECO_POINT()
+        return S_VitesseRecoPoint_Ambiance()
+    end
+end
+
+function F_DEPLACEMENT_ACTUATEURS()
+    if includedFiles[ "sources/appui/artfdp/pions/son reco auf1/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/son reco trf1/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/groupe te/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/grp ac milan/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/grp commando/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/grp proterre/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son appui/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son milan/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son proterre/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son vab/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/artfdp/pions/son reco/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_melee/inf/pions/son inf meca/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/inf/pions/grp ac/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/inf/pions/sec cdo/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/inf/pions/sec inf/Globals.bms" ] 
+    then
+        return { deplacement = 2 }
+    end
+    if includedFiles[ "sources/appui/nbc/pions/pat dec/Globals.bms" ] 
+    or includedFiles[ "sources/appui/nbc/pions/pat re/Globals.bms" ] 
+    or includedFiles[ "sources/appui/nbc/pions/pat reco/Globals.bms" ] 
+    or includedFiles[ "sources/appui/nbc/pions/pc nbc/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/radint/gougar horizon/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/radint/pat viviane/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/radint/stations horizon/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roem/brovab/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roem/coge/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roem/elge/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roem/stations lynx/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roem/stations mrod_elodee/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roem/systeme stair/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roem/systeme start_/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/rohum/rbrr/pat recherche blindee/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/rohum/rbrr/pat recherche motorisee/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/rohum/rbrr/pat recherche nautique/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/rohum/rbrr/pat recherche rasit/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/rohum/urb/section rohum/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/rohum/urh/pat urh/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roim/drone cl289/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roim/drone drac/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roim/drone sdti/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roim/son mise en oeuvre cl289/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roim/son mise en oeuvre drac/Globals.bms" ] 
+    or includedFiles[ "sources/appui/rens/pions/roim/son mise en oeuvre sdti/Globals.bms" ] 
+    or includedFiles[ "sources/melee/abc/pions/grp rasit/Globals.bms" ] 
+    or includedFiles[ "sources/melee/abc/pions/pat el/Globals.bms" ] 
+    or includedFiles[ "sources/melee/abc/pions/pat milan/Globals.bms" ] 
+    or includedFiles[ "sources/melee/abc/pions/pc/Globals.bms" ] 
+    or includedFiles[ "sources/melee/abc/pions/pel ad/Globals.bms" ] 
+    or includedFiles[ "sources/melee/abc/pions/pel amx-erc/Globals.bms" ] 
+    or includedFiles[ "sources/melee/abc/pions/pel pir/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/nbc/pions/pat dec/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/nbc/pions/pat re/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/nbc/pions/pat reco/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/nbc/pions/pc nbc/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/rens/pions/rohum/rbrr/pat recherche blindee/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/rens/pions/rohum/rbrr/pat recherche motorisee/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/rens/pions/rohum/rbrr/pat recherche nautique/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/rens/pions/rohum/rbrr/pat recherche rasit/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/rens/pions/rohum/urh/pat urh/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_melee/abc/pions/pat el/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_melee/abc/pions/pc/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_melee/abc/pions/pel ad/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_melee/abc/pions/seccharmoyen/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/abc/pions/pat el/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/abc/pions/pc/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_rens/pions/smp/Globals.bms" ] 
+    then
+        return { deplacement = 1, tir = 1 }
+    end
+
+    return { deplacement = 1 }
+end
+
+function F_TIR_ACTUATEURS()
+    if includedFiles[ "sources/appui/artfdp/pions/eo/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/eop/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/eqp reco caesar/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/eqp reco cobra/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/eqp reco lrm/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/eqp reco sam/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/grp ratac/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/lanceur lrm/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/radar cobra/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/sam/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/sam sic/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/son auf1/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/son auf1 sic/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/son caesar sic/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/son reco auf1/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/son reco trf1/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/son trf1/Globals.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/son trf1 sic/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/artfdp/pions/ass automoteur/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/artfdp/pions/ass lrm/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/artfdp/pions/ass tractee/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/artfdp/pions/eo/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/artfdp/pions/sam/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/artfdp/pions/son reco/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_population/asymetriques/terroriste/pion/Globals.bms" ] 
+    or includedFiles[ "sources/population/milices/pion/Globals.bms" ] 
+    then
+        return { deplacement = 1, tir = 1 }
+    end
+    if includedFiles[ "sources/glaise/glaise_melee/inf/pions/grp mortier/Globals.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_melee/inf/pions/son inf meca/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/inf/pions/grp ac/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/inf/pions/grp mortier/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/inf/pions/sec cdo mortier/Globals.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/inf/pions/sec inf/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/groupe te/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/grp milan/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/grp mortier/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/grp proterre/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son appui/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son milan/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son proterre/Globals.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son vab/Globals.bms" ] 
+    then
+        return { tir = 1, tir_debarque = 1, tir_couverture = 1 }
+    end
+    if includedFiles[ "sources/melee/inf/pions/grp commando/Globals.bms" ] 
+    then
+        return { deplacement = 1, tir = 1, tir_debarque = 1, tir_couverture = 1 }
+    end
+
+    return { tir = 1 }
+end
+
+function F_POLY_PION_ALAT_RECOMPLETEMENT_BASE( porteeAction, ambianceMission, munition )
+    if( porteeAction == eCourtePortee ) then
+        DEC_ChangeValeurDotations( eDotation_Munition, 1, munition )
+        DEC_ChangeValeurDotations( eDotation_Carburant, 0.8 )
+    elseif( porteeAction == eMoyennePortee ) then
+        DEC_ChangeValeurDotations( eDotation_Munition, 0.75, munition ) 
+        DEC_ChangeValeurDotations( eDotation_Carburant, 0.85 )
+    elseif( porteeAction == eLonguePortee ) then
+        DEC_ChangeValeurDotations( eDotation_Munition, 0.5, munition )
+        DEC_ChangeValeurDotations( eDotation_Carburant, 0.9 )
+    elseif( porteeAction == eSansMunitions ) then
+        DEC_ChangeValeurDotations( eDotation_Munition, 0, munition )
+        DEC_ChangeValeurDotations( eDotation_Carburant, 1 )
+    end
+end
+
+function F_POLY_PION_ALAT_RECOMPLETEMENT( porteeAction, ambianceMission )
+    if includedFiles[ "sources/appui/alat/pions/pat hac/Parameters.bms" ] 
+        or includedFiles[ "sources/glaise/glaise_appui/alat/pions/pat hac/Parameters.bms" ] then
+        F_POLY_PION_ALAT_RECOMPLETEMENT_BASE( porteeAction, ambianceMission, munition, eMunitionClasse_Obus )
+    elseif includedFiles[ "sources/appui/alat/pions/pat hah/Parameters.bms" ] 
+        or includedFiles[ "sources/glaise/glaise_appui/alat/pions/pat hah/Parameters.bms" ] then
+        F_POLY_PION_ALAT_RECOMPLETEMENT_BASE( porteeAction, ambianceMission, munition, eMunitionClasse_MissileSol )
+    elseif includedFiles[ "sources/appui/alat/pions/pat ham/Parameters.bms" ] 
+        or includedFiles[ "sources/glaise/glaise_appui/alat/pions/pat ham/Parameters.bms" ] then
+        F_POLY_PION_ALAT_RECOMPLETEMENT_BASE( porteeAction, ambianceMission, munition, eMunitionClasse_MissileAir )
+    elseif includedFiles[ "sources/appui/alat/pions/pat hm/Parameters.bms" ] 
+        or includedFiles[ "sources/glaise/glaise_appui/alat/pions/pat hm/Parameters.bms" ] then
+        F_POLY_PION_ALAT_RECOMPLETEMENT_CARBURANT( porteeAction, 0.5, 0.67, 0.8 )
+    elseif includedFiles[ "sources/appui/alat/pions/pat tigre/Parameters.bms" ] 
+        or includedFiles[ "sources/glaise/glaise_appui/alat/pions/pat tigre/Parameters.bms" ] then
+        F_POLY_PION_ALAT_RECOMPLETEMENT_TIGRE( porteeAction, ambianceMission )
+    elseif includedFiles[ "sources/appui/alat/pions/pc/Parameters.bms" ] 
+        or includedFiles[ "sources/glaise/glaise_appui/alat/pions/pc/Parameters.bms" ] then
+        F_POLY_PION_ALAT_RECOMPLETEMENT_CARBURANT( porteeAction, 0.7, 0.85, 1 )
+    end
+end
+
+function F_POLY_PION_ALAT_RECOMPLETEMENT_TOUT( carburant, air, sol, obus )
+        DEC_ChangeValeurDotations( eDotation_Carburant, carburant )
+        DEC_ChangeValeurDotations( eDotation_Munition, air, eMunitionClasse_MissileAir )
+        DEC_ChangeValeurDotations( eDotation_Munition, sol, eMunitionClasse_MissileSol )
+        DEC_ChangeValeurDotations( eDotation_Munition, obus, eMunitionClasse_Obus )
+end
+
+function F_POLY_PION_ALAT_RECOMPLETEMENT_TIGRE( porteeAction, ambianceMission )
+    if( porteeAction == eCourtePortee ) then
+        F_POLY_PION_ALAT_RECOMPLETEMENT_TOUT( 0.7, 1, 1, 1 )
+    elseif( porteeAction == eMoyennePortee ) then
+        if( ambianceMission == eAA ) then
+            F_POLY_PION_ALAT_RECOMPLETEMENT_TOUT( 0.85, 1, 0.25, 1 )
+        elseif( ambianceMission == eAS or ambianceMission == ePolyvalent ) then
+            F_POLY_PION_ALAT_RECOMPLETEMENT_TOUT( 0.85, 0.75, 1, 0.67 )
+        end
+    elseif( porteeAction == eLonguePortee ) then
+        if( ambianceMission == eAA ) then
+            F_POLY_PION_ALAT_RECOMPLETEMENT_TOUT( 1, 1, 0, 1 )
+        elseif( ambianceMission == eAS ) then
+            F_POLY_PION_ALAT_RECOMPLETEMENT_TOUT( 1, 0.5, 1, 0.67 )
+        elseif( ambianceMission == ePolyvalent ) then
+            F_POLY_PION_ALAT_RECOMPLETEMM_POLY_PION_ALAT_RECOMPLETEMENTENT_TOUT( 1, 0.5, 0.5, 0.45 )
+        end
+    elseif( porteeAction == eSansMunitions ) then
+        F_POLY_PION_ALAT_RECOMPLETEMENT_TOUT( 1, 0, 0, 0.25 )
+    end
+end
+
+function F_POLY_PION_ALAT_RECOMPLETEMENT_CARBURANT( porteeAction, court, moyen, long )
+    if( porteeAction == eCourtePortee ) then
+        DEC_ChangeValeurDotations(eDotation_Carburant, court )
+    elseif( porteeAction == eMoyennePortee ) then
+        DEC_ChangeValeurDotations(eDotation_Carburant, moyen )
+    elseif( porteeAction == eLonguePortee ) then
+        DEC_ChangeValeurDotations(eDotation_Carburant, long )
+    elseif( porteeAction == eSansMunitions ) then
+        DEC_ChangeValeurDotations(eDotation_Carburant, 1 )
+    end
+end
+
+function F_CAPTEURS_RADAR_ACTUATEURS()
+    if includedFiles[ "sources/appui/artfdp/pions/radar cobra/Globals.bms" ] then
+        return { radar = 3 }
+    end
+    return { radar = 1 }
+end
+
+function F_CompromisTempsActionDebarquement()
+    return not includedFiles[ "sources/glaise/glaise_melee/inf/pions/pc/Globals.bms" ] 
+    and not includedFiles[ "sources/humus/humus_melee/inf/pions/pc/Globals.bms" ] 
+    and not includedFiles[ "sources/glaise/glaise_melee/inf/pions/section ac vehicule/Globals.bms" ] 
+    and not includedFiles[ "sources/melee/inf/pions/pc/Globals.bms" ] 
+    and not includedFiles[ "sources/melee/inf/pions/son hot/Globals.bms" ] 
+end
+
+-- $$$$ LDC:
+-- Ce serait mieux de remplacer par une fonction que laisser une macro et faire les if a la volee
+-- mais il faudrait intuiter quelles activations mettre en sortie du comportement...
+
+function F_POLY_LIMA_PION_SUR_LCAR()
+    return includedFiles[ "sources/melee/inf/pions/groupe te/Globals Poly.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/grp commando/Globals Poly.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/grp proterre/Globals Poly.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son proterre/Globals Poly.bms" ] 
+    or includedFiles[ "sources/melee/inf/pions/son vab/Globals Poly.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_melee/inf/pions/son inf meca/Globals Poly.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/inf/pions/sec cdo/Globals Poly.bms" ] 
+    or includedFiles[ "sources/humus/humus_melee/inf/pions/sec inf/Globals Poly.bms" ] 
+end
+
+function F_POLY_OBJET_REAGIR_FACE_A_OBSTACLE()
+    return includedFiles[ "sources/appui/appuimob/pions/Macros.bms" ] 
+    or includedFiles[ "sources/appui/artfdp/pions/common/Globals Poly.bms" ] 
+    or includedFiles[ "sources/glaise/glaise_appui/artfdp/pions/common/Globals Poly.bms" ] 
+    or includedFiles[ "sources/appui/circulation/pions/Macros.bms" ] 
+    or includedFiles[ "sources/appui/log/pions/Macros.bms" ]
+    or includedFiles[ "sources/glaise/glaise_appui/log/pions/Macros.bms" ]
+    or appuiNbcPionsCommon()
+    or includedFiles[ "sources/population/milices/pions/Globals. Polybms" ]
+end
+
+function DEC_GetMission( entity )
+    local mission = DEC_GetRawMission( entity )
+    DEC_FillMissionParameters( mission, mission )
+    return mission
+end
+
+function DIA_IsListEmpty( list )
+    return #list == 0
+end
+
+function DEC_UserTypeList_GetAt( list, index )
+    return list[index + 1]
+end
+
+local type_message = 0
+local type_rc = 1
+local type_event = 2
+local type_warning = 3
+
+include "common/moteur/Types_RC.bms"
+
+local tableRC = {}
+tableRC[ eRC_EnPosteFaceAObstacle ] = 
+    function( id, list ) return DEC_RC_ObjectKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_PreparationMission ] = 
+    function( id, list ) return DEC_RC_Float( typeMessage, id, list[0] ) end
+tableRC[ eRC_SurPIA ] = 
+    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+tableRC[ eRC_UniteRecueillie ] = 
+    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+tableRC[ eRC_PrecisionContact ] = 
+    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_EnnemiDetruit ] = 
+    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_PointTenuParEni ] = 
+    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_ProgressionVersEni ] = 
+    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_EniSurObjectif ] = 
+    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_UniteTropDistante ] = 
+    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+tableRC[ eRC_Releve ] = 
+    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+tableRC[ eRC_SurLima ] = 
+    function( id, list ) return DEC_RC_Id( typeMessage, id, list[0] ) end
+tableRC[ eRC_ReussiteRenforcement ] = 
+    function( id, list ) return DEC_RC_Pion_Automate( typeMessage, id, list[0], list[1] ) end
+tableRC[ eRC_EchecRenforcement ] = 
+    function( id, list ) return DEC_RC_Pion_Automate( typeMessage, id, list[0], list[1] ) end
+tableRC[ eRC_ObstacleEnAttenteActivation ] = 
+    function( id, list ) return DEC_RC_ObjectKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_MaterielRetourDeMaintenance ] = 
+    function( id, list ) return DEC_RC_EquipmentType( typeMessage, id, list[0] ) end
+tableRC[ eRC_MaterielRepareSurPlace ] = 
+    function( id, list ) return DEC_RC_EquipmentType( typeMessage, id, list[0] ) end
+tableRC[ eRC_AllocationConsentieBientotEpuisee ] = 
+    function( id, list ) return DEC_RC_DotationType( typeMessage, id, list[0] ) end
+tableRC[ eRC_SeuilLogistiqueDotationDepasse ] = 
+    function( id, list ) return DEC_RC_DotationType( typeMessage, id, list[0] ) end
+tableRC[ eRC_SeuilLogistiqueStockDepasse ] = 
+    function( id, list ) return DEC_RC_DotationType( typeMessage, id, list[0] ) end
+tableRC[ eRC_TransportUnitePasPrete ] = 
+    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+tableRC[ eRC_TransportUnitePrete ] = 
+    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+tableRC[ eRC_UniteDecontaminee ] = 
+    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+tableRC[ eRC_ObservationTirIndirect ] = 
+    function( id, list ) return DEC_RC_TirPion( typeMessage, id, list[0] ) end
+tableRC[ eRC_TraceID ] = 
+    function( id, list ) return DEC_RC_Float( typeMessage, id, list[0] ) end
+tableRC[ eRC_PopulationDetectee ] = 
+    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_PriseAPartieParPopulation ] = 
+    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_RiposteContrePopulation ] = 
+    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_DebutInterventionFaceAPopulation ] = 
+    function( id, list ) return DEC_RC_Id( typeMessage, id, list[0] ) end
+tableRC[ eRC_PopulationVictimeAffrontements ] = 
+    function( id, list ) return DEC_RC_Float_Float( typeMessage, id, list[0], list[1] ) end
+tableRC[ eRC_AttitudePopulation ] = 
+    function( id, list ) return DEC_RC_Id( typeMessage, id, list[0] ) end
+tableRC[ eRC_AgressionDePopulation ] = 
+    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_AgressionParPopulation ] = 
+    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_RiposteContreAgressionParPopulation ] = 
+    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+tableRC[ eRC_PopulationVictimeExplosionMines ] = 
+    function( id, list ) return DEC_RC_Float_Float( typeMessage, id, list[0], list[1] ) end
+
+DEC_RC = function( id, ... )
+    local list = {...}
+    if tableRC[id] then return tableRC[id]( type_rc, id, {...} )
+    else return DEC_RC1( type_rc, id ) end
+end
+
+DEC_Message = function( id, ... )
+    local list = {...}
+    if tableRC[id] then return tableRC[id]( type_message, id, {...} )
+    else return DEC_RC1( type_message, id ) end
+end
+
+DEC_Warning = function( id, ... )
+    local list = {...}
+    if tableRC[id] then return tableRC[id]( type_warning, id, {...} )
+    else return DEC_RC1( type_warning, id ) end
+end
+
+DIA_PushBack = function( list, item )
+    list[#list+1] = item
+end
+
+DIA_PushFront = DIA_PushBack
+
+DIA_GetAt = function( list, index )
+    return list[index+1]
+end
+
+DEC_Itineraire_ProchainObjet = function( a, b, ... ) 
+    return DEC_GetNextObjectOnPath( a, b, {...} )
+end
+
+DEC_GetCategory = function( category )
+    if category == "ordres_recus" then
+        return DEC_GetOrdersCategory()
+    elseif category == "points_interressants" then
+        return DEC_GetPointsCategory()
+    else
+        error( "Unknown category "..tostring( category ) )
+    end
+end
+
+DEC_RemoveFromCategory = function( category, object )
+    if category == "ordres_recus" then
+        return DEC_RemoveFromOrdersCategory( object )
+    elseif category == "points_interressants" then
+        return DEC_RemoveFromPointsCategory( object )
+    else
+        error( "Unknown category "..tostring( category ) )
+    end
+end
+
+actionCallbacks = {}
+actionKnowledgeCallbacks = {}
+
+CallbackAction = function( action, value )
+    if actionCallbacks[ action ] then
+        actionCallbacks[ action ]( value )
+    end
+end
+
+KnowledgeCallbackAction = function( action, value )
+    if actionKnowledgeCallbacks[ action ] then
+        actionKnowledgeCallbacks[ action ]( value )
+    end
+end
+
+RemoveAction = function( action )
+    actionCallbacks[ action ] = nil
+    actionKnowledgeCallbacks[ action ] = nil
+end
+
+function S_Misc_Copie_MissionPion_Mission( misSrc, misDst )
+    return S_Misc_Copie_MissionPion( misSrc, misDst )
+end
+
+local assignMission = {}
+local initializeAssignMissions = function()
+assignMission[ "automateAAppuyer_" ] = DEC_AssignMissionAutomatParameter
+assignMission[ "automateAEscorter_" ] = DEC_AssignMissionAutomatParameter
+assignMission[ "avecMateriel_" ] = DEC_AssignMissionBoolParameter
+assignMission[ "campPrisonniers_" ] = DEC_AssignMissionObjectKnowledgeParameter
+assignMission[ "campRefugies_" ] = DEC_AssignMissionObjectKnowledgeParameter
+assignMission[ "cible_" ] = DEC_AssignMissionPionParameter
+assignMission[ "ciblesPrioritaires_" ] = DEC_AssignMissionNatureAtlasTypeParameter
+assignMission[ "compagnie_" ] = DEC_AssignMissionAutomatParameter
+assignMission[ "compagniesAAppuyer_" ] = DEC_AssignMissionAutomatListParameter
+assignMission[ "ennemi_" ] = DEC_AssignMissionAgentKnowledgeParameter
+assignMission[ "itineraires_" ] = DEC_AssignMissionPathListParameter
+assignMission[ "modeDeploiement_" ] = DEC_AssignMissionEnumereParameter
+assignMission[ "natureObjectif_" ] = DEC_AssignMissionEnumereParameter
+assignMission[ "neutraliser_" ] = DEC_AssignMissionBoolParameter
+assignMission[ "objectif_" ] = DEC_AssignMissionLocationParameter
+assignMission[ "plotsRavitaillement_" ] = DEC_AssignMissionObjectKnowledgeListParameter
+assignMission[ "pointCible_" ] = DEC_AssignMissionPointParameter
+assignMission[ "pointDeDeploiement_" ] = DEC_AssignMissionPointParameter
+assignMission[ "pointObjectif_" ] = DEC_AssignMissionPointParameter
+assignMission[ "pontFlottant_" ] = DEC_AssignMissionObjectKnowledgeParameter
+assignMission[ "positionDeploiement_" ] = DEC_AssignMissionPointParameter
+assignMission[ "preparerTerrain_" ] = DEC_AssignMissionBoolParameter
+assignMission[ "refugies_" ] = DEC_AssignMissionAgentKnowledgeListParameter
+assignMission[ "siteDecontamination_" ] = DEC_AssignMissionObjectKnowledgeParameter
+assignMission[ "siteFranchissement_" ] = DEC_AssignMissionObjectKnowledgeParameter
+assignMission[ "siteROTA_" ] = DEC_AssignMissionObjectKnowledgeParameter
+assignMission[ "travail_" ] = DEC_AssignMissionObjectKnowledgeParameter
+assignMission[ "travaux_" ] = DEC_AssignMissionGenObjectListParameter
+assignMission[ "typePontage_" ] = DEC_AssignMissionEnumereParameter
+assignMission[ "uniteAAppuyer_" ] = DEC_AssignMissionPionParameter
+assignMission[ "uniteADetruire_" ] = DEC_AssignMissionAgentKnowledgeListParameter
+assignMission[ "uniteAEscorter_" ] = DEC_AssignMissionPionParameter
+assignMission[ "uniteAFixer_" ] = DEC_AssignMissionAgentKnowledgeParameter
+assignMission[ "uniteAReduire_" ] = DEC_AssignMissionAgentKnowledgeParameter
+assignMission[ "uniteASoutenir_" ] = DEC_AssignMissionPionParameter
+assignMission[ "uniteASuivre_" ] = DEC_AssignMissionPionParameter
+assignMission[ "unite_" ] = DEC_AssignMissionPionParameter
+assignMission[ "unitesAAppuyer_" ] = DEC_AssignMissionPionListParameter
+assignMission[ "unitesACouvrir_" ] = DEC_AssignMissionPionListParameter
+assignMission[ "unitesAEscorter_" ] = DEC_AssignMissionPionListParameter
+assignMission[ "unitesAHeliporter_" ] = DEC_AssignMissionPionListParameter
+assignMission[ "unitesAHelitransporter_" ] = DEC_AssignMissionPionListParameter
+assignMission[ "unitesATransporter_" ] = DEC_AssignMissionPionListParameter
+assignMission[ "unitesRendues_" ] = DEC_AssignMissionAgentKnowledgeListParameter
+assignMission[ "unites_" ] = DEC_AssignMissionPionListParameter
+assignMission[ "zoneAControler_" ] = DEC_AssignMissionLocationParameter
+assignMission[ "zoneRegroupement_" ] = DEC_AssignMissionLocationParameter
+assignMission[ "zone_" ] = DEC_AssignMissionLocationParameter
+assignMission[ "zonesAcquisition_" ] = DEC_AssignMissionLocationListParameter
+end
+
+function DEC_AssignMissionParameter( missionPion, parameter, value )
+    if not assignMission[ parameter ] then initializeAssignMissions() end
+    if not assignMission[ parameter ] then error( "No assignment for "..tostring( parameter )..": "..tostring( DEC_AssignMissionPionParameter ).."?" ) end
+    return assignMission[ parameter ](missionPion, parameter, value )
+end
+
+function DEC_Connaissances_ObjetsDansZone( localisation, ... )
+    return DEC_ObjectKnowledgesInZone( localisation, {...} )
+end
+
+function DEC_Geometrie_DecoupeLocalisation( localisation, nbrParts, returnCode )
+    return DEC_Geometry_SplitLocalisation( localisation, nbrParts )
+end
+
+function DEC_Geometrie_DecoupeLocalisationSurface( localisation, area, returnCode )
+    return DEC_Geometry_SplitLocalisationSurface( localisation, area )
+end
+
+function DEC_Connaissances_ObjetsDansCercle( position, radius, ... )
+    return DEC_Knowledges_ObjectsInCircle( position, radius, {...} )
+end
+
+function DEC_Copie_ListePoints( source, destination )
+    for i,j in pairs( source ) do
+        destination[i] = j
+    end
+end
+
+function DEC_Copie_PointDansListePoints ( source, destination )
+    destination[ #destination + 1 ] = source
+end
+
+function DEC_Copie_ListeLocalisations( source, destination )
+    for i,j in pairs( source ) do
+        destination[i] = j
+    end
+end
+
+function DEC_UserTypeList_Contient( list, element )
+    for _,j in pairs( list ) do
+        if j == element then return true end
+    end
+    return false
+end
+
+function DEC_UserTypeList_PushBack( list, element )
+    destination[ #list + 1 ] = element
+end
+
+DEC_ListePoints_PushBack = DEC_UserTypeList_PushBack
+
+function DEC_UserTypeList_Remove( list, element )
+    local index = nil
+    for i,j in ipairs( list ) do
+        if j == element then index = i break end
+    end
+    if index then
+        local i = index
+        while i < #list do
+            list[ i ] = list[ i + 1 ]
+            i = i + 1
+        end
+        list[ #list ] = nil
+    end
+end
+
+DEC_ListePoints_Remove = DEC_UserTypeList_Remove
+
+function DEC_DetruireDIAThing( obj ) end
+
+function DEC_CreerDIAThing( thingType )
+    local result = {}
+    result.GetType = function() return thingType end
+    local function wrapGetOrSet( table, name )
+        if string.sub( name, 1, 3 ) == "Get" then 
+            return rawget( table, string.sub( name, 4 ) )
+        elseif string.sub( name, 1, 3 ) == "Set" then
+            return rawset( table, string.sub( name, 4 ) )
+        else
+            return rawget( table, name )
+        end
+    end
+    local mt = { __index = wrapGetOrSet }
+    return setmetatable( result, mt )
+end

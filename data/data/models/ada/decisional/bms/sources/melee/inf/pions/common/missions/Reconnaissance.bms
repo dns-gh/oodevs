@@ -1,0 +1,67 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/common/missions/Reconnaissance.bms"] = true
+
+
+--[[//=============================================================================
+]]--[[//=============================================================================
+]]--[[//						Squelette de la mission
+]]--[[//	
+]]--[[//=============================================================================
+]]node "BEH_Mission_Pion_INF_RecoAxe"
+{
+    activations =
+    {
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+        { "BEH_Lima_GererLimas", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eAction = self.eAction or eActionEnCours
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        switch_1 = self.ePhase
+            if switch_1 == ePreparerMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhase = eProgresser
+            elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                        end
+
+                    end
+--[[// dispositif de deplacement
+]]                end
+
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                --[[// Progression sur l'itineraire
+]]Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Lima_GererLimas, 1.5, {} )
+                
+            elseif switch_1 == eFinMission then
+                
+                        end
+
+                self.params.__returnValue = self.ePhase
+        return
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_RecoAxe, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_RecoAxe, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_RecoAxe, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_RecoAxe, "BEH_Dep_ProgressionSur", nodes.BEH_Dep_ProgressionSur }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_INF_RecoAxe, "BEH_Lima_GererLimas", nodes.BEH_Lima_GererLimas }

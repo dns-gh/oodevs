@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 
+class DEC_Decision_ABC;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -24,36 +25,36 @@ class DEC_PerceptionFunctions
 public:
     //! @name Functions
     //@{
-    static void SetVisionModeDirection              ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void SetVisionModePoint                  ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void SetVisionModeNormal                 ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void SetStealthFactor                    ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void IsPointVisible                      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void EnableRecoAlat                      ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableRecoAlat                     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void HasNoDelayedPeceptions              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void EnableCoupDeSonde                   ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableCoupDeSonde                  ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableObjectRecognitionLocalisation ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableObjectRecognitionLocalisation( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableRecognitionLocalisation       ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableRecognitionLocalisation      ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableRecognitionPoint              ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableRecognitionPoint             ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void SetVisionModeDirection              ( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > );
+    static void SetVisionModePoint                  ( MIL_AgentPion& callerAgent, const MT_Vector2D* pPoint );
+    static void SetVisionModeNormal                 ( MIL_AgentPion& callerAgent );
+    static void SetStealthFactor                    ( MIL_AgentPion& callerAgent, float factor );
+    static bool IsPointVisible                      ( const MIL_AgentPion& callerAgent, MT_Vector2D* pPt );
+    static void EnableRecoAlat                      ( MIL_AgentPion& callerAgent, const TER_Localisation* location );
+    static void DisableRecoAlat                     ( MIL_AgentPion& callerAgent );
+    static bool HasNoDelayedPeceptions              ( const MIL_AgentPion& callerAgent );
+    static void EnableCoupDeSonde                   ( MIL_AgentPion& callerAgent );
+    static void DisableCoupDeSonde                  ( MIL_AgentPion& callerAgent );
+    static int  EnableObjectRecognitionLocalisation ( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, MT_Float rGrowthSpeed );
+    static void DisableObjectRecognitionLocalisation( MIL_AgentPion& callerAgent, int id );
+    static int  EnableRecognitionLocalisation       ( MIL_AgentPion& callerAgent, const TER_Localisation* pLocalisation );
+    static void DisableRecognitionLocalisation      ( MIL_AgentPion& callerAgent, int id );
+    static int  EnableRecognitionPoint              ( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, MT_Float rSize, MT_Float rGrowthSpeed );
+    static void DisableRecognitionPoint             ( MIL_AgentPion& callerAgent, int id );
     
-    static void EnableRadar                         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableRadar                        ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableRadarOnLocalisation           ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableRadarOnLocalisation          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void EnableRadar                         ( MIL_AgentPion& callerAgent, int nRadarClass );
+    static void DisableRadar                        ( MIL_AgentPion& callerAgent, int nRadarClass );
+    static int  EnableRadarOnLocalisation           ( MIL_AgentPion& callerAgent, int nRadarClass, const TER_Localisation* pLocalisation );
+    static void DisableRadarOnLocalisation          ( MIL_AgentPion& callerAgent, int nRadarClass, int id );
 
-    static void EnableRecordMode                    ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableRecordMode                   ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableSurveillanceLocalisation      ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableSurveillanceLocalisation     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableFlyingShellDetection          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableFlyingShellDetection         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableSensors                      ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableSensors                       ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void EnableRecordMode                    ( MIL_AgentPion& callerAgent );
+    static void DisableRecordMode                   ( MIL_AgentPion& callerAgent );
+    static int  EnableSurveillanceLocalisation      ( MIL_AgentPion& callerAgent, const TER_Localisation* pLocalisation );
+    static void DisableSurveillanceLocalisation     ( MIL_AgentPion& callerAgent, int id );
+    static int EnableFlyingShellDetection           ( MIL_AgentPion& callerAgent, const TER_Localisation* pLocalisation );
+    static void DisableFlyingShellDetection         ( MIL_AgentPion& callerAgent, int id );
+    static void DisableSensors                      ( MIL_AgentPion& callerAgent );
+    static void EnableSensors                       ( MIL_AgentPion& callerAgent );
     //@}
 };
 

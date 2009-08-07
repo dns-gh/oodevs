@@ -20,16 +20,14 @@
 // Name: PHY_Population_ActionFireOnPion constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_Population_ActionFireOnPion::PHY_Population_ActionFireOnPion( MIL_Population& population, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC( population, diaCall )
+PHY_Population_ActionFireOnPion::PHY_Population_ActionFireOnPion( MIL_Population& population, float rIntensity, unsigned int nID )
+    : PHY_Action_ABC( population )
     , population_   ( population )
     , fireResults_  ( population )
-    , rIntensity_   ( diaCall.GetParameter( 0 ).ToFloat() )
+    , rIntensity_   ( rIntensity )
     , pTarget_      ( 0 )
 {    
     assert( rIntensity_ > 0. );
-    assert( DEC_Tools::CheckTypePopulationConnaissanceAgent( diaCall.GetParameter( 1 ) ) );
-    uint nID = ( uint )diaCall.GetParameter( 1 ).ToPtr();
     pTarget_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID ); // $$$$ HLA
     assert( pTarget_ );
 }

@@ -1,0 +1,106 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/missions/defendreusure/DefendreUsure CDT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Missions/DefendreUsure/DefendreUsure CDT.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 12 $
+]]--[[// $Workfile: DefendreUsure CDT.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+node "BEH_Conduite_Automate_INF_MenerDefenseUsure"
+{
+    activations =
+    {
+        { "BEH_CoordDep_Automate_INF_Retrograde", {} },
+        { "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Coordination du front
+]]--[[//-----------------------------------------------------------------------------
+]]
+        local lstSection = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        for _,x_pe in pairs( lstSection ) do
+        local _continue = true
+do
+                local pionPE = x_pe
+                local mission = DEC_GetMission( pionPE )
+                if( ( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Interdire" ) and F_Pion_GeteEtatSituationEnnemi( pionPE ) == "eEtatSituationEnnemi_PriseContact" ) then
+                    StartActivate( self.activations.BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis, 1, { pionPE, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_INF_AppuyerCompromis", {} },
+        { "ACT_Misc_Automate_INF_Defini_PionAppuiMobile", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionEnTete = self.params[1]
+    end,
+
+    activate = function( self )
+        local lstSectionSE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Cherche appui : " .. DEC_GetSzName( self._namedParams.pionEnTete ) )
+                for _,x_pion in pairs( lstSectionSE ) do
+                local _continue = true
+                    do
+                        local pionSE = x_pion
+                        local mission = DEC_GetMission( pionSE )
+                        if( mission ~= nil and ( mission:GetType() == "T_Mission_Pion_INF_SurveillerSecteur" or mission:GetType() == "T_Mission_Pion_INF_Barrer" ) ) then
+                            do
+                                local rForceAppuyer = ( 1 / ( 1 + #( F_Pion_GetselUnitesEnAppui( self._namedParams.pionEnTete ) ) ) )
+                                local rForceAppui = rForceAppuyer * S_ForceSoutien( pionSE, self._namedParams.pionEnTete )
+                                Activate( self.activations.BEH_Conduite_Automate_INF_AppuyerCompromis, rForceAppui, { pionSE, self._namedParams.pionEnTete, } )
+                            end
+                        end
+
+                    end
+
+                end
+
+            end
+        end
+
+        for _,x_pion in pairs( lstSectionSE ) do
+        local _continue = true
+do
+                Activate( self.activations.ACT_Misc_Automate_INF_Defini_PionAppuiMobile, 1, { x_pion, } )
+            end
+
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_MenerDefenseUsure, "BEH_CoordDep_Automate_INF_Retrograde", nodes.BEH_CoordDep_Automate_INF_Retrograde }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_MenerDefenseUsure, "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis", nodes.BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis, "BEH_Conduite_Automate_INF_AppuyerCompromis", nodes.BEH_Conduite_Automate_INF_AppuyerCompromis }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis, "ACT_Misc_Automate_INF_Defini_PionAppuiMobile", nodes.ACT_Misc_Automate_INF_Defini_PionAppuiMobile }

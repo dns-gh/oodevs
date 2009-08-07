@@ -1,0 +1,105 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_Suivre
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_Suivre"
+{
+    activations =
+    {
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_CoordDep_Automate_ActiverCoordinationAmisSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        self.eEtatODC = self.eEtatODC or eActionEnCours
+        if( self.eEtatODC == eActionHalt ) then
+            do
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                self.eEtatODC = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_CoordDep_Automate_ActiverCoordinationAmisSur, 1, { S_ObtenirPionsOperationnelsPour( self._namedParams.mission.compagnie_ ), } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_CoordDep_Automate_ActiverCoordinationAmisSur
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_CoordDep_Automate_ActiverCoordinationAmisSur"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Pause", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listeUnitesAmiesACoordonner = self.params[1]
+    end,
+
+    activate = function( self )
+                self.resultatCalcul = self.resultatCalcul or nil
+        self.bPremierOrdreDonne = self.bPremierOrdreDonne or false
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( self._namedParams.listeUnitesAmiesACoordonner )
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Determiner les pions à coordonner
+]]--[[//-----------------------------------------------------------------------------
+]]local selPions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
+        for _,x in pairs( selPions ) do
+        local _continue = true
+do
+                local pion = x
+                local rDistanceLigne = DEC_Geometrie_CalculerDistanceLigneArriere( self.resultatCalcul, pion )
+                --[[// valeur à voir;
+]]local rDistanceMin = 2000
+                if( rDistanceLigne < rDistanceMin ) then
+                    Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { pion, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_Suivre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_ActiverCoordinationAmisSur, "ACT_Ordre_Automate_Pause", nodes.ACT_Ordre_Automate_Pause }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_Suivre, "BEH_Ordre_Automate_RecevoirOrdreInopine", nodes.BEH_Ordre_Automate_RecevoirOrdreInopine }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_Suivre, "BEH_CoordDep_Automate_ActiverCoordinationAmisSur", nodes.BEH_CoordDep_Automate_ActiverCoordinationAmisSur }

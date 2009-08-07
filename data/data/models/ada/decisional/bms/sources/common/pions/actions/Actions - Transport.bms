@@ -1,0 +1,161 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
+
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Transport_Pion_TransportEmbarquer
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//                Embarque les composantes des unites definies par 
+]]--[[//                DEC_Transport_AjouterPions
+]]--[[//
+]]--[[// ****************************************************************************** 
+]]node "ACT_Transport_Pion_TransportEmbarquer"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.actionEmbarquer = self.actionEmbarquer or nil
+        self.actionEnPause = self.actionEnPause or false
+        self.eEtatTransport = self.eEtatTransport or nil
+        --[[// ----------------------------------------------------------------------------- 
+]]--[[// Init
+]]--[[// -----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionEmbarquer = DEC_Transport_StartEmbarquer( self.eEtatTransport )
+        end
+
+        --[[// Reprise
+]]if( self.actionEnPause ) then
+            do
+                DEC_ReprendAction( self.actionEmbarquer )
+                self.actionEnPause = false
+            end
+--[[// ----------------------------------------------------------------------------- 
+]]--[[//  En fonction etat transport
+]]--[[// -----------------------------------------------------------------------------
+]]        end
+
+        switch_1 = self.eEtatTransport
+            if switch_1 == eActionTransport_Running then
+                do
+                end
+
+                
+            elseif switch_1 == eActionTransport_Finished then
+                do
+                end
+
+                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            elseif switch_1 == eActionTransport_Impossible then
+                do
+                end
+
+                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+                        end
+
+    end,
+
+    deselect = function( self )
+                self.actionEnPause = true
+        DEC_PauseAction( self.actionEmbarquer )
+    end,
+
+    destroy = function( self )
+                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Transport_Pion_TransportDebarquer
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//                Debarque les composantes des unites definies par 
+]]--[[//                DEC_Transport_AjouterPions
+]]--[[// ****************************************************************************** 
+]]node "ACT_Transport_Pion_TransportDebarquer"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.actionDebarquer = self.actionDebarquer or nil
+        self.actionEnPause = self.actionEnPause or false
+        self.eEtatTransport = self.eEtatTransport or nil
+        --[[// ----------------------------------------------------------------------------- 
+]]--[[// Init
+]]--[[// -----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionDebarquer = DEC_Transport_StartDebarquer( self.eEtatTransport )
+        end
+
+        --[[// reprise
+]]if( self.actionEnPause ) then
+            do
+                DEC_ReprendAction( self.actionDebarquer )
+                self.actionEnPause = false
+            end
+--[[// ----------------------------------------------------------------------------- 
+]]--[[// Suivant l'état du transport...
+]]--[[// -----------------------------------------------------------------------------
+]]        end
+
+        switch_1 = self.eEtatTransport
+            if switch_1 == eActionTransport_Running then
+                do
+                end
+
+                
+            elseif switch_1 == eActionTransport_Finished then
+                do
+                end
+
+                self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            elseif switch_1 == eActionTransport_Impossible then
+                do
+                end
+
+                self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+                
+                        end
+
+    end,
+
+    deselect = function( self )
+                self.actionEnPause = true
+        DEC_PauseAction( self.actionDebarquer )
+    end,
+
+    destroy = function( self )
+                self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
+    end,
+
+}
+

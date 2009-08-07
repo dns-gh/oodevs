@@ -1,0 +1,41 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitreaxe/ReconnaitreAxe - CDT.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Automate_CDT_NBC_ReconnaitreUnAxe
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Automate_CDT_NBC_ReconnaitreUnAxe"
+{
+    activations =
+    {
+        { "BEH_Conduite_Automate_NBC_ReconnaitreUnAxe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+        end
+
+        Activate( self.activations.BEH_Conduite_Automate_NBC_ReconnaitreUnAxe, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Conduite générique 
+]]--[[//-----------------------------------------------------------------------------
+]]
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_NBC_ReconnaitreUnAxe = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_NBC_ReconnaitreUnAxe, "BEH_Conduite_Automate_NBC_ReconnaitreUnAxe", nodes.BEH_Conduite_Automate_NBC_ReconnaitreUnAxe }

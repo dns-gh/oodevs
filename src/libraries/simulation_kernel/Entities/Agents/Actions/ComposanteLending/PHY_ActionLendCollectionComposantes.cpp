@@ -18,8 +18,8 @@
 // Name: PHY_ActionLendCollectionComposantes constructor
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-PHY_ActionLendCollectionComposantes::PHY_ActionLendCollectionComposantes( MIL_AgentPion& pion, DIA_Call_ABC& call )
-    : PHY_ActionLendComposantes( pion, call, &PHY_ComposantePion::CanCollectCasualties )
+PHY_ActionLendCollectionComposantes::PHY_ActionLendCollectionComposantes( MIL_AgentPion& pion, DEC_RolePion_Decision* pAgent, unsigned int nbrToLend )
+    : PHY_ActionLendComposantes( pion, pAgent, nbrToLend, &PHY_ComposantePion::CanCollectCasualties )
 {
 
 }

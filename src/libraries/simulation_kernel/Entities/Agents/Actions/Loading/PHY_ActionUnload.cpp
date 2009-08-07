@@ -18,12 +18,11 @@
 // Name: PHY_ActionUnload constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionUnload::PHY_ActionUnload( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC( pion, diaCall )
+PHY_ActionUnload::PHY_ActionUnload( MIL_AgentPion& pion )
+    : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Loading >() )
-    , diaReturnCode_( diaCall.GetParameter( 0 ) )
 {    
-    diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
+    Callback( role_.GetInitialReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +31,7 @@ PHY_ActionUnload::PHY_ActionUnload( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
 // -----------------------------------------------------------------------------
 PHY_ActionUnload::~PHY_ActionUnload()
 {
-    diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
+    Callback( role_.GetFinalReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +41,7 @@ PHY_ActionUnload::~PHY_ActionUnload()
 void PHY_ActionUnload::Execute()
 {   
     int nResult = role_.Unload();
-    diaReturnCode_.SetValue( nResult );   
+    Callback( nResult );   
 }
 
 // -----------------------------------------------------------------------------

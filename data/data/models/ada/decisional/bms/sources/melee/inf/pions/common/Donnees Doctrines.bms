@@ -1,0 +1,439 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/common/Donnees Doctrines.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-11-21 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Common/Donnees Doctrines.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 1/07/05 11:58 $
+]]--[[// $Revision: 12 $
+]]--[[// $Workfile: Donnees Doctrines.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// *****************************************************************************
+]]--[[// AGRESSIVITE DU PION --> dépend des missions
+]]--[[// 
+]]--[[//  PH nominal --> 0.5  --> ce qui équivaux à une distance pratique de tir 
+]]--[[//                          Cette distance varie en fonction de la posture etc. 
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[//
+]]--[[//  DEFINITION "Distance pratique de tir" (DEP ABC)
+]]--[[//
+]]--[[//  = "Distance  en deça de laquelle la probabilité d'atteinte sur la cible
+]]--[[//     principale est supérieur à 0.5." 
+]]--[[//  
+]]--[[//
+]]--[[// *****************************************************************************
+]]--[[//
+]]--[[// *--- Agressivité ( - ) ---*
+]]--[[//
+]]--[[//  Surveiller secteur
+]]--[[//  RenseignerSur
+]]--[[//  Controler Zone
+]]--[[//      Eclairer
+]]--[[//      Couvrir      // ??????? agressive non??
+]]--[[//  Reconnaitre un axe
+]]--[[//          
+]]--[[//      Réduire
+]]--[[//
+]]--[[//  *--- Fixer  ---*
+]]--[[//       Barrer
+]]--[[//      Jalonner
+]]--[[//  Soutenir / Appuyer 
+]]--[[// S'emparer d'une zone
+]]--[[// Attaquer / Contre attaquer
+]]--[[// 
+]]--[[// *--- Agressivité ( + ) ---*
+]]
+--[[// Dans la modélisation l'agressivité dépend de:
+]]--[[//  - la distance de tir (ph d'ouverture du feu)
+]]--[[//  - le niveau de reconnaissance des enis
+]]--[[//
+]]
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Armer un PIA // // $$$$ MIA 04-01-12: On n'ouvre pas le feu ds cette mission
+]]--[[//                 // $$$$ MIA 04-01-12: Utile?
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_ARMER_UN_PIA_PH()
+    return 1
+end
+
+
+
+function M_MODELE_PION_ABC_ARMER_UN_PIA_ID()
+    return eIdentifie
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Surveiller secteur
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_SURVEIILER_PH()
+    return 1
+end
+
+
+
+function M_MODELE_PION_ABC_SURVEIILER_ID()
+    return eIdentifie
+end
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Acceuil refugies
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_ACCEUIL_REFUGIES_PH()
+    return 1
+end
+
+
+
+function M_MODELE_PION_ABC_ACCEUIL_REFUGIES_ID()
+    return eIdentifie
+end
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Armer point de control
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_ARMER_POINT_CONTROL_PH()
+    return 0.8
+end
+
+
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Renseigner sur
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_RENSEIGNER_PH()
+    return 1
+end
+
+
+
+function M_MODELE_PION_ABC_RENSEIGNER_ID()
+    return eIdentifie
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Eclairer
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_ECLAIRER_PH()
+    return 1
+end
+
+
+
+function M_MODELE_PION_ABC_ECLAIRER_ID()
+    return eIdentifie
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Escorter
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_ESCORTER_PH()
+    return 0.6
+end
+
+
+
+function M_MODELE_PION_ABC_ESCORTER_ID()
+    return eReconnu
+end
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Reconnaître un axe
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_RECONNAITRE_AXE_PH()
+    return 0.7
+end
+
+
+
+function M_MODELE_PION_ABC_RECONNAITRE_AXE_ID()
+    return eIdentifie
+end
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Reconnaître un point
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_RECONNAITRE_POINT_PH()
+    return 0.6
+end
+
+
+
+function M_MODELE_PION_ABC_RECONNAITRE_POINT_ID()
+    return eIdentifie
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Controler une zone
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_CONTROLER_PH()
+    return 0.6
+end
+
+
+
+function M_MODELE_PION_ABC_CONTROLER_ID()
+    return eReconnu
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Réduire
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_REDUIRE_PH()
+    return 0.6
+end
+
+
+
+function M_MODELE_PION_ABC_REDUIRE_ID()
+    return eReconnu
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Fixer 
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_FIXER_PH()
+    return 0.6
+end
+
+
+
+function M_MODELE_PION_ABC_FIXER_ID()
+    return eReconnu
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Jalonner
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_JALONNER_PH()
+    return 0.3
+end
+
+
+
+function M_MODELE_PION_ABC_JALONNER_ID()
+    return eReconnu
+end
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Freiner
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_FREINER_PH()
+    return 0.3
+end
+
+
+
+function M_MODELE_PION_ABC_FREINER_ID()
+    return eReconnu
+end
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Soutenir
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_INF_SOUTENIR_PH()
+    return 0.3
+end
+
+
+
+function M_MODELE_PION_INF_SOUTENIR_ID()
+    return eReconnu
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Relever
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_RELEVER_PH()
+    return 0.3
+end
+
+
+
+function M_MODELE_PION_ABC_RELEVER_ID()
+    return eReconnu
+end
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Appuyer
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_APPUYER_PH()
+    return 0.3
+end
+
+
+
+function M_MODELE_PION_ABC_APPUYER_ID()
+    return eReconnu
+end
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// SemparerZone
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_SEMPARER_PH()
+    return 0.4
+end
+
+
+
+function M_MODELE_PION_ABC_SEMPARER_ID()
+    return eReconnu
+end
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Barrer
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_BARRER_PH()
+    return 0.4
+end
+
+
+
+function M_MODELE_PION_ABC_BARRER_ID()
+    return eReconnu
+end
+
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Couvrir
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_COUVRIR_PH()
+    return 0.4
+end
+
+
+
+function M_MODELE_PION_ABC_COUVRIR_ID()
+    return eReconnu
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Attaquer
+]]--[[//-----------------------------------------------------------------------------
+]]function M_MODELE_PION_ABC_ATTAQUER_PH()
+    return 0.4
+end
+
+
+
+function M_MODELE_PION_ABC_ATTAQUER_ID()
+    return eReconnu
+end
+
+
+
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// DEP ABC: "Distance pratique de tir" = Distance en deçà de laquelle 
+]]--[[// la probabilité d'atteinte de la cible principale est supérieur à 0.5
+]]--[[// -------
+]]--[[// 
+]]--[[// ICI DEFINITION DU PH "de tir efficace" --> 0.5
+]]--[[//
+]]--[[// *****************************************************************************
+]]function M_POLY_PH_TIR_ENI_EFFICACE()
+    return 0.5
+end
+
+
+
+function M_POLY_PH_RIPOSTE()
+    return 0.4
+end
+
+
+
+--[[// *****************************************************************************
+]]--[[// PH MIN POUR l'ABC --> pour distance de sécurité pour une unité
+]]--[[//
+]]--[[// *****************************************************************************
+]]function M_MODELE_PION_ABC_PH_SECURITE()
+    return 0.2
+end
+
+
+
+--[[// *****************************************************************************
+]]--[[// Modulation vitesse lorsque l'on ralenti
+]]--[[//
+]]--[[// *****************************************************************************
+]]function M_POLY_DOCTRINE_MODULATION_VITESSE_RALENTIR()
+    return 0.1
+end
+
+--[[// *****************************************************************************
+]]--[[// DISTANCE A LAQUELLE LES UNITES SE FIXENT
+]]--[[// Distance de tube --> distance tir "efficace"
+]]--[[//
+]]--[[// *****************************************************************************
+]]--[[// MIA à virer?
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Distance DANGER --> tir efficace d'un eni sur nous --> pour esquive dans 
+]]--[[// Jalonner
+]]--[[//-----------------------------------------------------------------------------
+]]function S_Misc_Pion_ABC_ObtenirDistanceDangerSur( repEni )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMaxPourEtreTireParUnite( repEni, M_MODELE_PION_ABC_PH_SECURITE() )
+    return _returnValue
+end
+

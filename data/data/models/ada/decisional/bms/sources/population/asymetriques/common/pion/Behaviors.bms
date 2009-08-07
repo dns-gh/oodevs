@@ -1,0 +1,330 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/asymetriques/common/pion/Behaviors.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Eni_Pion_ASY_CommettreExactionDans
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Eni_Pion_ASY_CommettreExactionDans"
+{
+    activations =
+    {
+        { "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone", {} },
+        { "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//choisir une population ( la plus proche )et la rejoindre, en même temps agresser toute population ennemie à portée
+]]local listePopus = DEC_Connaissances_Populations()
+        local listePopusCollision = DEC_Connaissances_CollisionsPopulations()
+        for _,pop in pairs( listePopus ) do
+        local _continue = true
+do
+                --[[//si la population est dans la zone
+]]if( DEC_ConnaissancePopulation_EstEnnemi( pop ) ~= eTristate_False and DEC_ConnaissancePopulation_EstDansZone( pop, self._namedParams.zone ) ) then
+                    do
+                        --[[//rejoindre la population
+]]Activate( self.activations.BEH_Eni_Pion_ASY_RejoindrePopulationDansZone, 1, { self._namedParams.zone, pop, } )
+                        --[[//s'en prendre aux populations à portée
+]]if( ( GetStateVariable( "VE_EmploiForceInterdit" ) == 0 or GetStateVariable( "VE_EmploiForceInterdit" ) == nil ) and DEC_UserTypeList_Contient( listePopusCollision, pop ) ) then
+                            Activate( self.activations.BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation, 1, { pop, } )
+                        end
+
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation"
+{
+    activations =
+    {
+        { "ACT_Eni_Pion_ASY_CommettreExactions", {} },
+        { "ACT_Misc_Delai", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pop = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtatDelai = self.eEtatDelai or eActionEnCours
+        if( ModuleBegins() ) then
+            DEC_RC( eRC_AgressionDePopulation, self._namedParams.pop )
+        end
+
+        --[[//utilisation d'un delai pour forcer le moteur à faire un rapport de morts et blessés
+]]if( self.eEtatDelai == eActionEnCours ) then
+            do
+                Activate( self.activations.ACT_Eni_Pion_ASY_CommettreExactions, 1, { self._namedParams.pop, } )
+                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation, 2.0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+            end
+        else
+            self.eEtatDelai = eActionEnCours
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Eni_Pion_ASY_RejoindrePopulationDansZone
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone"
+{
+    activations =
+    {
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+        self._namedParams.pop = self.params[2]
+    end,
+
+    activate = function( self )
+        self.point = self.point or nil
+        if( ModuleBegins() ) then
+            self.point = DEC_ConnaissancePopulation_PointSecurisation( self._namedParams.pop )
+        end
+
+        local dist = DEC_Geometrie_Distance( DEC_Agent_Position(), self.point )
+        local listePopusCollision = DEC_Connaissances_CollisionsPopulations()
+        --[[//verification que la population n'a pas bougée, sinon on recalcule un nouveau point
+]]if( dist < 10 and ( not DEC_UserTypeList_Contient( listePopusCollision, self._namedParams.pop ) ) ) then
+            self.point = DEC_ConnaissancePopulation_PointSecurisation( self._namedParams.pop )
+        end
+
+        Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, S_Force_DistanceFloat( dist ), { self.point, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Dep_SeDeplacer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objectif = self.params[1]
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.it = self.it or DEC_CreerItineraire( self._namedParams.objectif, eTypeItiInfiltration )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Deplacement de base
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                do
+                    self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+                self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Dep_SeDeplacer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePoint = self.params[1]
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.it = self.it or DEC_CreerItineraireListe( self._namedParams.listePoint, eTypeItiInfiltration )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Deplacement de base
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                do
+                    self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+                self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur" )
+    end,
+
+--[[////////////////////////////// PARTIE COMPORTEMENTS VIRTUELS /////////////////////////////////////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_ProgressionVers
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_ProgressionVers"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+        self._namedParams.eTypeProgression = self.params[2]
+        self._namedParams.eTypeIti = self.params[3]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_PreparationAction
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_PreparationAction"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees"
+{
+    activations =
+    {
+        { "ACT_Eni_Pion_ASY_AssassinerOfficier", {} },
+        { "ACT_Eni_Pion_ASY_DetruireComposanteMajeure", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+        self._namedParams.typeAttentat = self.params[2]
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        if( DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
+            do
+                switch_1 = self._namedParams.typeAttentat
+                    if switch_1 == etypeAttentat_assasinatOfficier then
+                                            Activate( self.activations.ACT_Eni_Pion_ASY_AssassinerOfficier, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                        
+                    elseif switch_1 == etypeAttentat_destructionComposanteMajeure then
+                                            Activate( self.activations.ACT_Eni_Pion_ASY_DetruireComposanteMajeure, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                        
+                                        end
+
+                                self.params.__returnValue = self.eAction
+                return
+
+            end
+        else
+            self.params.__returnValue = eActionImpossible
+            return
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur, "BEH_Dep_SeDeplacer", nodes.BEH_Dep_SeDeplacer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, "BEH_Dep_SeDeplacer", nodes.BEH_Dep_SeDeplacer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees, "ACT_Eni_Pion_ASY_AssassinerOfficier", nodes.ACT_Eni_Pion_ASY_AssassinerOfficier }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees, "ACT_Eni_Pion_ASY_DetruireComposanteMajeure", nodes.ACT_Eni_Pion_ASY_DetruireComposanteMajeure }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASY_CommettreExactionDans, "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone", nodes.BEH_Eni_Pion_ASY_RejoindrePopulationDansZone }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASY_CommettreExactionDans, "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation", nodes.BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation, "ACT_Eni_Pion_ASY_CommettreExactions", nodes.ACT_Eni_Pion_ASY_CommettreExactions }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ASY_RejoindrePopulationDansZone, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", nodes.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers }

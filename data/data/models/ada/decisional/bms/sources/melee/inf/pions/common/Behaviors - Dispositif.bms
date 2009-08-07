@@ -1,0 +1,414 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/common/Behaviors - Dispositif.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-03-31 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Common/Behaviors - Dispositif.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 9/09/05 14:53 $
+]]--[[// $Revision: 23 $
+]]--[[// $Workfile: Behaviors - Dispositif.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//=============================================================================
+]]--[[// 
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//	On se poste pendant qques temps suivant l'Ambiance en observant la 
+]]--[[//	direction dangereuse
+]]--[[//-----------------------------------------------------------------------------
+]]
+--[[//
+]]--[[//
+]]--[[//=============================================================================
+]]
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// On fait un arret court sur un point
+]]--[[// debarquement-arret-embarquement
+]]--[[// @pt pt sur lequel on fait l arret
+]]--[[// @delai_max delai maximum pour l arret
+]]--[[//-----------------------------------------------------------------------------
+]]node "BEH_Poste_Pion_INF_ArretCourt"
+{
+    activations =
+    {
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Dep_Pion_INF_Arret", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pt = self.params[1]
+        self._namedParams.rDelaiPoste = self.params[2]
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "debut arret court [" .. FloatToString( self._namedParams.rDelaiPoste ) .. "]" )
+                --[[// on fait un compromis entre le delai alloue et le temps
+]]--[[// de reconnaisance du point			
+]]local bDebarquement = false
+                if( F_CompromisTempsActionDebarquement() ) then
+                    do
+                        local tpsDebarquement = DEC_Agent_DureeDebarquement() + DEC_Agent_DureeEmbarquement()
+                        bDebarquement = ( tpsDebarquement < ( self._namedParams.rDelaiPoste / 3 ) )
+                    end
+                end
+
+                if( ( self._namedParams.rDelaiPoste == 0 or self._namedParams.rDelaiPoste == nil ) ) then
+                    do
+                        DEC_Trace( "assert: rDelaiPoste == 0, arret court." )
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+--[[// pas necessaire de debarquer !!
+]]                end
+
+                if( bDebarquement ) then
+                    StartActivate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                end
+
+            end
+        end
+
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.pt, } )
+        --[[// on observe
+]]if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                do
+                    DEC_Trace( "fin arret court" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { self._namedParams.rDelaiPoste, "observation", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "fin arret court (spontaneous)" )
+    end,
+
+--[[//=============================================================================
+]]--[[// BEH_Obs_Pion_INF_RecoPoint_Copie
+]]--[[// Lance le comportement RecoPoint en copiant la position
+]]--[[// @param pt point a reconnaitre
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Obs_Pion_INF_RecoPoint_Copie"
+{
+    activations =
+    {
+        { "BEH_Obs_Pion_INF_RecoPoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pt = self.params[1]
+        self._namedParams.rDelai = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.ptCopie = self.ptCopie or DEC_Geometrie_CreerPoint()
+        if( ModuleBegins() ) then
+            DEC_Copie_Point( self._namedParams.pt, self.ptCopie )
+        end
+
+        if( self.eAction ~= eActionEnCours ) then
+            self.params.__returnValue = self.eAction
+            Halt()
+        end
+
+        Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, setmetatable( { self.ptCopie, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// BEH_Obs_Pion_INF_RecoPoint
+]]--[[// Comportement de reconnaisance de point
+]]--[[// @param pt point a reconnaitre
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Obs_Pion_INF_RecoPoint"
+{
+    instances =
+    {
+        max = 1,
+        boost = 1.1,
+    },
+
+    activations =
+    {
+        { "BEH_Poste_Pion_INF_ArretCourt", {} },
+        { "ACT_RC", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_ReconnaitrePoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pt = self.params[1]
+        self._namedParams.rDelai = self.params[2]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionArret = self.eActionArret or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                if( ( self._namedParams.pt == 0 or self._namedParams.pt == nil ) ) then
+                    self.eAction = eActionEffectuee
+                end
+
+                DEC_Trace( "Reconnaissance point" )
+            end
+--[[// on fait la reconnaisance du point
+]]--[[// on attend les unites en appui avant de faire la reco
+]]--[[// si necessaire	        
+]]--[[// if ( S_UnitesAppuis_EnPosition() )
+]]        end
+
+        if( self.eActionArret == eActionEffectuee or self.eAction == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( self._namedParams.rDelai > 0 ) then
+            Activate( self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, setmetatable( { self._namedParams.pt, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionArret = v else rawset( t, k, v ) end end } ) )
+        end
+
+        Activate( self.activations.ACT_RC, 1, { eRC_ReconnaissancePoint, } )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.pt, } )
+        Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, setmetatable( { self._namedParams.pt, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu
+]]--[[// @ptReco doit imperativement etre une valeur copiee, il est detruit lorsque 
+]]--[[// le thread est detache
+]]--[[// max_instances( 1 )
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
+{
+    instances =
+    {
+        boost = 0.9--[[// Au cas ou l'on fait une nouvelle reco
+]],
+    },
+
+--[[// pour eviter les oscilations
+]]    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_RC", {} },
+        { "ACT_Obs_ReconnaitrePoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptRecoCopie = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// --------------------------------------------------------------------
+]]--[[// On s'eloigne de plus de 300m
+]]        self.rDelta = self.rDelta or 300
+        self.rDistInit = self.rDistInit or DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ptRecoCopie ) + self.rDelta
+        self.bHalt = self.bHalt or false
+        --[[// Si on s'eloigne trop du point, on arrete la reco et 
+]]--[[// on sort ( destruction du point ).
+]]if( self.bHalt ) then
+            do
+                DEC_Trace( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu : destruction pt." )
+                                return
+
+            end
+--[[// Si on s'eloigne du point, on arrete simplement la reco
+]]        end
+
+        if( ( self._namedParams.ptRecoCopie == 0 or self._namedParams.ptRecoCopie == nil ) or not S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ptRecoCopie, self.rDistInit ) ) then
+            do
+                --[[// Destruction de la copie    		
+]]DEC_Trace( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu : halt" )
+                StopEvents( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu" )
+                self.bHalt = true
+                                return
+
+            end
+        end
+
+        Activate( self.activations.ACT_Info_Trace, 1, { "Reco maintenue: " .. DEC_PointToString( self._namedParams.ptRecoCopie ), } )
+        self.bHalt = false
+        --[[// Pour avoir un poids suplementaire sur un meme pointeur (ptReco)
+]]--[[// Lorsque le points est detruit, plus de reference, donc destruction du
+]]--[[// point
+]]Activate( self.activations.ACT_RC, 1, { eRC_ReconnaissancePoint, } )
+        Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.ptRecoCopie, } )
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu: destruction ptPoint : sp end" )
+    end,
+
+--[[//=============================================================================
+]]--[[// BEH_Obs_Pion_INF_EnReconnaissance
+]]--[[//  On lance une unite en reconnaissance:
+]]--[[//		On poste la section, et on se met en position pr detecter d'eventuels
+]]--[[//		enis dans la zone
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Obs_Pion_INF_EnReconnaissance"
+{
+    activations =
+    {
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "BEH_Obs_Pion_INF_RecoPoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptMission = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eActionReco = self.eActionReco or eActionEnCours
+        --[[// Le point est detruit dans lorsque le thread se termine
+]]self.ptMissionCopie = self.ptMissionCopie or DEC_Geometrie_CreerPoint()
+        if( ModuleBegins() ) then
+            do
+                DEC_Copie_Point( self._namedParams.ptMission, self.ptMissionCopie )
+                DEC_Trace( "On part en reconnaissance." )
+                StartEvent( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu", ptMissionCopie )--[[// On doit maintenir l'observation entre les missions ... Sinon, on
+]]--[[// perd la vision d'un ennemi
+]]--[[// ptMissionCopie est detruit lorsque le thread se termine
+]]
+            end
+        end
+
+        Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
+        --[[// Pr le moment on observe .. 
+]]if( self.eActionReco == eActionEffectuee ) then
+            do
+                self.eActionReco = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        local rRecoTime = S_Delai_INF_RecoDebarque( self.ptMissionCopie )
+        Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, setmetatable( { self.ptMissionCopie, rRecoTime, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReco = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// BEH_Obs_Pion_INF_SurveillerSecteur
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Obs_Pion_INF_SurveillerSecteur"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_Obs_SurveillerZone", {} },
+        { "ACT_Obs_ObserverZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.locSecteur = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        if( self.eAction == eActionEffectuee ) then
+            Activate( self.activations.ACT_Info_Trace, 1, { "Surveillance : dispositif installe.", } )
+        end
+
+        Activate( self.activations.ACT_Obs_SurveillerZone, 1, { self._namedParams.locSecteur, } )
+        Activate( self.activations.ACT_Obs_ObserverZone, 1, setmetatable( { DEC_Agent_Position(), M_CAPACITE_SURVEILLANCE(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//=============================================================================
+]]--[[// BEH_Delai_Pion_INF_PreparerMission
+]]--[[//=============================================================================
+]]}
+
+node "BEH_Delai_Pion_INF_PreparerMission"
+{
+    activations =
+    {
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Misc_Delai", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rDelai = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        --[[// 
+]]--[[// if ( DIA_ModuleBegins() )
+]]--[[// 	DEC_RC( eRC_PreparationMission, rDelai );	
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                do
+                    SetStateVariable( "VE_PreparationMission", 0 )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Delai_Pion_INF_PreparerMission, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Delai_Pion_INF_PreparerMission, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_EnReconnaissance, "ACT_Misc_Pion_Ambiance", nodes.ACT_Misc_Pion_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_EnReconnaissance, "BEH_Obs_Pion_INF_RecoPoint", nodes.BEH_Obs_Pion_INF_RecoPoint }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_RecoPoint, "BEH_Poste_Pion_INF_ArretCourt", nodes.BEH_Poste_Pion_INF_ArretCourt }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_RecoPoint, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_RecoPoint, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_RecoPoint, "ACT_Obs_ReconnaitrePoint", nodes.ACT_Obs_ReconnaitrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_RecoPoint_Copie, "BEH_Obs_Pion_INF_RecoPoint", nodes.BEH_Obs_Pion_INF_RecoPoint }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu, "ACT_Obs_ReconnaitrePoint", nodes.ACT_Obs_ReconnaitrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_SurveillerSecteur, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_SurveillerSecteur, "ACT_Obs_SurveillerZone", nodes.ACT_Obs_SurveillerZone }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_INF_SurveillerSecteur, "ACT_Obs_ObserverZone", nodes.ACT_Obs_ObserverZone }
+connections[ #connections + 1 ] = { nodes.BEH_Poste_Pion_INF_ArretCourt, "BEH_MOT_Pion_INF_Debarquer", nodes.BEH_MOT_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Poste_Pion_INF_ArretCourt, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Poste_Pion_INF_ArretCourt, "ACT_Dep_Pion_INF_Arret", nodes.ACT_Dep_Pion_INF_Arret }

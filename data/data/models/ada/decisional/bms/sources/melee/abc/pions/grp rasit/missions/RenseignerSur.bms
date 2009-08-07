@@ -1,0 +1,233 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/grp rasit/missions/RenseignerSur.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ABC_RASIT_RenseignerSur
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ABC_RASIT_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Mission_Pion_ABC_RASIT_RenseignerSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or nil
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionImpossible ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Comportement de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Mission_Pion_ABC_RASIT_RenseignerSur, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_SURVEIILER_PH(), M_MODELE_PION_ABC_SURVEIILER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Mission_Pion_ABC_RASIT_RenseignerSur
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Mission_Pion_ABC_RASIT_RenseignerSur"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.pointARenseigner = self.pointARenseigner or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission.
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Radar detection mission begining", } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// 2) Progression tactique
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                --[[// Surveiller si à distance
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pointARenseigner ) < 15000 ) then
+                    self.ePhaseMission = eSurveiller
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.pointARenseigner, eProgressionReco, eTypeItiMouvement, } )
+                
+            --[[// Surveiller 
+]]elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                Activate( self.activations.BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe, 1, { self._namedParams.mission.zone_, } )
+                
+            --[[// Fin de la mission --> SUR ORDRE
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe
+]]--[[//
+]]--[[// Commentaires: radar dopler
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe"
+{
+    activations =
+    {
+        { "ACT_Obs_Pion_ABC_ActiverRadarDans", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Obs_Pion_ABC_ActiverRadarDans, 1, { self._namedParams.zone, } )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Obs_Pion_ABC_ActiverRadarDans
+]]--[[// 
+]]--[[// Commentaires: pour raddar dopler
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Obs_Pion_ABC_ActiverRadarDans"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    select = function( self )
+                self.actionID = self.actionID or nil
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------		        		
+]]if( ModuleBegins() ) then
+            do
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutSurveillance )
+                    else
+                        DEC_Message( eRC_DebutSurveillance )
+                    end
+
+                end
+--[[// RC debut observation Radar
+]]
+                DEC_Trace( "Activation radar dans zone" )
+                self.actionID = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, self._namedParams.zone )
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinSurveillance )
+            else
+                DEC_Message( eRC_FinSurveillance )
+            end
+
+        end
+
+        DEC_Trace( "Activation radar dans zone: fin" )
+        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Radar, self.actionID )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ABC_RASIT_RenseignerSur = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_RASIT_RenseignerSur, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_RASIT_RenseignerSur, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_RASIT_RenseignerSur, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_RASIT_RenseignerSur, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_RASIT_RenseignerSur, "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe", nodes.BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_RASIT_RenseignerSur, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe, "ACT_Obs_Pion_ABC_ActiverRadarDans", nodes.ACT_Obs_Pion_ABC_ActiverRadarDans }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ABC_RASIT_RenseignerSur, "BEH_Mission_Pion_ABC_RASIT_RenseignerSur", nodes.BEH_Mission_Pion_ABC_RASIT_RenseignerSur }

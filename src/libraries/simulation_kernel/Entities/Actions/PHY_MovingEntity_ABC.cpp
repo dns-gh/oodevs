@@ -42,27 +42,27 @@ void PHY_MovingEntity_ABC::Clean()
 // Name: PHY_MovingEntity_ABC::Move
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-int PHY_MovingEntity_ABC::Move( DEC_PathResult& path )
+int PHY_MovingEntity_ABC::Move( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    return pathWalker_.Move( path );
+    return pathWalker_.Move( pPath );
 }
     
 // -----------------------------------------------------------------------------
 // Name: PHY_MovingEntity_ABC::MoveSuspended
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_MovingEntity_ABC::MoveSuspended( DEC_PathResult& path )
+void PHY_MovingEntity_ABC::MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    pathWalker_.MoveSuspended( path );
+    pathWalker_.MoveSuspended( pPath );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MovingEntity_ABC::MoveCanceled
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_MovingEntity_ABC::MoveCanceled( DEC_PathResult& path )
+void PHY_MovingEntity_ABC::MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    pathWalker_.MoveCanceled( path );
+    pathWalker_.MoveCanceled( pPath );
 }
 
 // -----------------------------------------------------------------------------

@@ -51,6 +51,8 @@ public:
     //@}
     
 protected:
+    MIL_MissionType_ABC();
+
     //! @name Types
     //@{
     typedef std::map< uint, const MIL_MissionType_ABC* > T_MissionIDMap;
@@ -60,18 +62,17 @@ protected:
 protected:
     //! @name Helpers
     //@{
-    template<typename T> static void ReadMission( xml::xistream& xis, T_MissionIDMap& missionIDs, T_MissionIDMap* pMissionDiaIDs, T_MissionNameMap& missionNames );
+    template<typename T> static void ReadMission( xml::xistream& xis, T_MissionIDMap& missionIDs, T_MissionNameMap* pMissionDiaIDs, T_MissionNameMap& missionNames );
     bool IsMissionAvailableForModel( const DIA_Model& model, const std::string& strBehavior ) const;
     //@}
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionType_ABC::ReadMission
 // Created: ABL 2007-07-26
 // -----------------------------------------------------------------------------
 template<typename T>
-void MIL_MissionType_ABC::ReadMission( xml::xistream& xis, MIL_MissionType_ABC::T_MissionIDMap& missionIDs, MIL_MissionType_ABC::T_MissionIDMap* pMissionDiaIDs, MIL_MissionType_ABC::T_MissionNameMap& missionNames )
+void MIL_MissionType_ABC::ReadMission( xml::xistream& xis, MIL_MissionType_ABC::T_MissionIDMap& missionIDs, MIL_MissionType_ABC::T_MissionNameMap* pMissionDiaIDs, MIL_MissionType_ABC::T_MissionNameMap& missionNames )
 {
     uint nID;
     xis >> xml::attribute( "id", nID );
@@ -83,7 +84,7 @@ void MIL_MissionType_ABC::ReadMission( xml::xistream& xis, MIL_MissionType_ABC::
 
     if( pMissionDiaIDs )
     {
-        const MIL_MissionType_ABC*& pMissionDiaID = (*pMissionDiaIDs)[ pMission->GetDIAType().GetDebugId() ];
+        const MIL_MissionType_ABC*& pMissionDiaID = (*pMissionDiaIDs)[ pMission->GetDIAType() ];
         if( pMissionDiaID )
             xis.error( "Mission DIA ID already defined" );
         pMissionDiaID = pMission;

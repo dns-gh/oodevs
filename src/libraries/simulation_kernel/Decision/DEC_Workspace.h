@@ -7,8 +7,6 @@
 
 #include "MIL.h"
 
-#include "DEC_Debug.h"
-
 namespace xml
 {
     class xistream;
@@ -36,30 +34,19 @@ public:
 
     //! @name Models management
     //@{
-          DIA_Model*           FindDIAModelFromScript( const std::string& strScriptName ) const;
     const DEC_Model_ABC*       FindModelPion         ( const std::string& strModelName  ) const;  
     const DEC_Model_ABC*       FindModelAutomate     ( const std::string& strModelName  ) const;  
     const DEC_Model_ABC*       FindModelPopulation   ( const std::string& strModelName  ) const;    
     //@}
-
-    //! @name Accessors
-    //@{
-    DEC_Debug& GetDebug();
-    //@}  
     
 private:
     //! @name Init
     //@{
-    static void RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* pTable );
-    static bool CheckFilesDepencies  ( const std::string& strArchiveFile );
-
     void InitializeConfig      ( MIL_Config& config );
     void InitializeObjectNames ( MIL_Config& config );
     void InitializeMissions    ( MIL_Config& config );
     void InitializeDIA         ( MIL_Config& config );
-    void InitializeDIATypes    ( xml::xistream& xis, bool& bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );
-    void InitializeDIAWorkspace( xml::xistream& xis, bool& bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );
-    void InitializeModels      ( MIL_Config& config, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath );   
+    void InitializeModels      ( MIL_Config& config, const std::string& strSourcePath );   
     //@}
 
 private:
@@ -73,14 +60,10 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadModel( xml::xistream& xis, bool bNeedScriptParsing, bool bUseOnlyDIAArchive, const std::string& strBinaryPath, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes );
+    void ReadModel( xml::xistream& xis, const std::string& strBinaryPath, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes );
     //@}
 
 private:
-    DEC_Debug                           debug_;
-    DIA_FunctionTable< DEC_Workspace >* pFuncTable_;
-    DIA_FunctionCaller_ABC*             pFunctionCaller_;
-
     T_ModelMap                          automateModels_;
     T_ModelMap                          pionModels_;
     T_ModelMap                          populationModels_;

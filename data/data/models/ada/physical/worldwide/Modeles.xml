@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models>
   <units>
-    <unit dia-type="StrategicBomberPatrol" file="Air\Pions\Patrouille Assaut\model.hal" name="Strategic Bomber Patrol">
+    <unit dia-type="StrategicBomberPatrol" file="Air\Pions\Patrouille Assaut\model.bms" name="Strategic Bomber Patrol">
       <missions>
         <mission name="Joint Air - Air strike"/>
         <mission name="move"/>
         <mission name="follow"/>
       </missions>
     </unit>
-    <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.hal" name="Landing Craft">
+    <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.bms" name="Landing Craft">
       <missions>
         <mission name="withdraw"/>
         <mission name="park"/>
@@ -20,10 +20,10 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="MarineCP" file="Marine\Pions\PC\model.hal" name="Marine CP">
+    <unit dia-type="MarineCP" file="Marine\Pions\PC\model.bms" name="Marine CP">
       <missions/>
     </unit>
-    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.hal" name="Antitank Helicopter Patrol">
+    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" name="Antitank Helicopter Patrol">
       <missions>
         <mission name="Army Aviation - cover">
           <fragorder name="Cancel maneuver"/>
@@ -111,7 +111,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.hal" name="Transport Helicopter Patrol">
+    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" name="Transport Helicopter Patrol">
       <missions>
         <mission name="Army Aviation - helitransport">
           <fragorder name="Cancel maneuver"/>
@@ -169,7 +169,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.hal" name="Short Range Surface To Air Defense Troop">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" name="Short Range Surface To Air Defense Troop">
       <missions>
         <mission name="Air Defense Artillery - defend area"/>
         <mission name="Air Defense Artillery - defend area (from a position)"/>
@@ -185,7 +185,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.hal" name="Very Short Range Surface To Air Defense Troop">
+    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" name="Very Short Range Surface To Air Defense Troop">
       <missions>
         <mission name="move"/>
         <mission name="go through decontamination process"/>
@@ -201,7 +201,7 @@
         <mission name="Air Defense Artillery (Very Short Range) - monitor"/>
       </missions>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.hal" name="Very Short Range Surface To Air Battery CP">
+    <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.bms" name="Very Short Range Surface To Air Battery CP">
       <missions>
         <mission name="move"/>
         <mission name="go through decontamination process"/>
@@ -214,7 +214,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.hal" name="Short Range Surface To Air Defense Battery CP">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" name="Short Range Surface To Air Defense Battery CP">
       <missions>
         <mission name="move"/>
         <mission name="go through decontamination process"/>
@@ -227,7 +227,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.hal" name="Theater High Altitude Aera Defense CP">
+    <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.bms" name="Theater High Altitude Aera Defense CP">
       <missions>
         <mission name="move"/>
         <mission name="go through decontamination process"/>
@@ -240,7 +240,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.hal" name="Infantry platoon">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="Infantry platoon">
       <missions>
         <mission name="Infantry - support"/>
         <mission name="Infantry - control"/>
@@ -287,7 +287,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.hal" name="MRA infantry platoon">
+    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" name="MRA infantry platoon">
       <missions>
         <mission name="Infantry - bar"/>
         <mission name="Infantry - support"/>
@@ -307,7 +307,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.hal" name="LRA infantry platoon">
+    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" name="LRA infantry platoon">
       <missions>
         <mission name="Infantry - support"/>
         <mission name="Infantry - bar"/>
@@ -327,7 +327,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.hal" name="Mortar support troop">
+    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" name="Mortar support troop">
       <missions>
         <mission name="Infantry - support">
           <fragorder name="Fire"/>
@@ -345,7 +345,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.hal" name="Infantry company CP">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="Infantry company CP">
       <missions>
         <mission name="move"/>
         <mission name="adopt transportation posture"/>
@@ -368,7 +368,7 @@
         <mission name="Infantry - destroy"/>
       </missions>
     </unit>
-    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.hal" name="Battery CP">
+    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" name="Battery CP">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -381,7 +381,7 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </unit>
-    <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.hal" name="PC TC2">
+    <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.bms" name="PC TC2">
       <missions>
         <mission name="go through decontamination process"/>
         <mission name="withdraw"/>
@@ -394,7 +394,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.hal" name="Section Maintenance">
+    <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.bms" name="Section Maintenance">
       <missions>
         <mission name="Logistics - step up">
           <fragorder name="Change work mode"/>
@@ -415,7 +415,7 @@
         <mission name="cross"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.hal" name="Groupe Maintenance Evacuation">
+    <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.bms" name="Groupe Maintenance Evacuation">
       <missions>
         <mission name="Logistics - deploy">
           <fragorder name="Change work mode"/>
@@ -438,7 +438,7 @@
         <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
-    <unit dia-type="SectionTriage" file="Appui\Log\Pions\Model.hal" name="Section Triage Modulaire">
+    <unit dia-type="SectionTriage" file="Appui\Log\Pions\Model.bms" name="Section Triage Modulaire">
       <missions>
         <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
@@ -457,7 +457,7 @@
         <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
-    <unit dia-type="ACA" file="Appui\Log\Pions\Model.hal" name="ACA">
+    <unit dia-type="ACA" file="Appui\Log\Pions\Model.bms" name="ACA">
       <missions>
         <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
@@ -480,7 +480,7 @@
         <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
-    <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.hal" name="Health unit">
+    <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.bms" name="Health unit">
       <missions>
         <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
@@ -499,7 +499,7 @@
         <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
-    <unit dia-type="DecontaminationNBC" file="Appui\Log\Pions\Model.hal" name="Decontamination NBC">
+    <unit dia-type="DecontaminationNBC" file="Appui\Log\Pions\Model.bms" name="Decontamination NBC">
       <missions>
         <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
@@ -518,7 +518,7 @@
         <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
-    <unit dia-type="UniteSpy" file="Appui\Log\Pions\Model.hal" name="Unite PSY">
+    <unit dia-type="UniteSpy" file="Appui\Log\Pions\Model.bms" name="Unite PSY">
       <missions>
         <mission name="Logistics - step up">
           <fragorder name="Change tactical wounded treatment priorities"/>
@@ -537,7 +537,7 @@
         <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.hal" name="Groupe Ramassage">
+    <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.bms" name="Groupe Ramassage">
       <missions>
         <mission name="Logistics - deploy">
           <fragorder name="Send ambulances"/>
@@ -561,7 +561,7 @@
         <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
-    <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.hal" name="PC Log">
+    <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.bms" name="PC Log">
       <missions>
         <mission name="Logistics - deploy"/>
         <mission name="follow"/>
@@ -577,7 +577,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.hal" name="Truck convoy">
+    <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.bms" name="Truck convoy">
       <missions>
         <mission name="Logistics - convey"/>
         <mission name="follow"/>
@@ -591,7 +591,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.hal" name="Peloton Transport">
+    <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" name="Peloton Transport">
       <missions>
         <mission name="Logistics - deploy"/>
         <mission name="Logistics - step up"/>
@@ -609,7 +609,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="PionStock" file="Appui\Log\Pions\Model.hal" name="Pion stock">
+    <unit dia-type="PionStock" file="Appui\Log\Pions\Model.bms" name="Pion stock">
       <missions>
         <mission name="Logistics - deploy"/>
         <mission name="Logistics - step up"/>
@@ -622,7 +622,7 @@
         <mission name="Logistics - reinforce"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.hal" name="MLRS firing platoon">
+    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" name="MLRS firing platoon">
       <missions>
         <mission name="Field Artillery - operate">
           <fragorder name="Fire"/>
@@ -643,7 +643,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.hal" name="Firefinder radar">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.bms" name="Firefinder radar">
       <missions>
         <mission name="Field Artillery - collect enemy artillery intelligence"/>
         <mission name="move"/>
@@ -657,7 +657,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeASS_RATAC" file="Appui\ArtFdp\Pions\Grp RATAC\Model.hal" name="Artillery locating radar group">
+    <unit dia-type="GroupeASS_RATAC" file="Appui\ArtFdp\Pions\Grp RATAC\Model.bms" name="Artillery locating radar group">
       <missions>
         <mission name="Field Artillery - (Short Range Radar) - collect intelligence on objectives"/>
         <mission name="move"/>
@@ -671,7 +671,7 @@
         <mission name="cross"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.hal" name="SD">
+    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" name="SD">
       <missions>
         <mission name="Field Artillery - (Surveillance Detachment) - collect intelligence on objectives"/>
         <mission name="move"/>
@@ -685,7 +685,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EOP\Model.hal" name="LRSD">
+    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EOP\Model.bms" name="LRSD">
       <missions>
         <mission name="Field Artillery - (Long Range Surveillance Detachment) - collect intelligence on objectives"/>
         <mission name="move"/>
@@ -701,7 +701,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="Peloton Transport Blindes">
+    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" name="Peloton Transport Blindes">
       <missions>
         <mission name="move"/>
         <mission name="follow"/>
@@ -717,7 +717,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.hal" name="Patrouille Circulation">
+    <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.bms" name="Patrouille Circulation">
       <missions>
         <mission name="move"/>
         <mission name="follow"/>
@@ -740,7 +740,7 @@
         <mission name="Engineer - reinforce"/>
       </missions>
     </unit>
-    <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.hal" name="Refugee">
+    <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.bms" name="Refugee">
       <missions>
         <mission name="move"/>
         <mission name="follow"/>
@@ -751,7 +751,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="Milice" file="Population\Milices\Pion\Model.hal" name="Militia">
+    <unit dia-type="Milice" file="Population\Milices\Pion\Model.bms" name="Militia">
       <missions>
         <mission name="Militia - seize and hold position"/>
         <mission name="Militia - ambush"/>
@@ -770,14 +770,14 @@
         <mission name="Asymetric - report information"/>
       </missions>
     </unit>
-    <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.hal" name="Command post">
+    <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.bms" name="Command post">
       <missions>
         <mission name="Communication - operate"/>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
       </missions>
     </unit>
-    <unit dia-type="GroupeInfanterie_Commando" file="Melee\Inf\Pions\Grp Commando\Model.hal" name="Commando troop">
+    <unit dia-type="GroupeInfanterie_Commando" file="Melee\Inf\Pions\Grp Commando\Model.bms" name="Commando troop">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -792,7 +792,7 @@
         <mission name="Infantry - monitor"/>
       </missions>
     </unit>
-    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.hal" name="Theater High Altitude Defense Troop">
+    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" name="Theater High Altitude Defense Troop">
       <missions>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -808,7 +808,7 @@
         <mission name="Air Defense Artillery - monitor"/>
       </missions>
     </unit>
-    <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.hal" name="PC Appui Mob">
+    <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" name="PC Appui Mob">
       <missions>
         <mission name="move"/>
         <mission name="follow"/>
@@ -823,7 +823,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.hal" name="Terroriste">
+    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" name="Terroriste">
       <missions>
         <mission name="move"/>
         <mission name="Asymetric - report information"/>
@@ -834,7 +834,7 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="Scout patrol">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Scout patrol">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -862,7 +862,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.hal" name="Antitank patrol">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Antitank patrol">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -894,7 +894,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.hal" name="Armored squadron CP">
+    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" name="Armored squadron CP">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -910,7 +910,7 @@
         <mission name="Armor CP To Deploy"/>
       </missions>
     </unit>
-    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.hal" name="MBT platoon">
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="MBT platoon">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -955,7 +955,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.hal" name="Light armored platoon">
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="Light armored platoon">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -999,7 +999,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </unit>
-    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Mobility support platoon">
+    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Mobility support platoon">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1026,7 +1026,7 @@
         <mission name="Engineer - restore a route"/>
       </missions>
     </unit>
-    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Countermobility platoon">
+    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Countermobility platoon">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1054,7 +1054,7 @@
         <mission name="Engineer - restore a route"/>
       </missions>
     </unit>
-    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Bridging troop">
+    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Bridging troop">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1081,7 +1081,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.hal" name="Deployment support platoon">
+    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Deployment support platoon">
       <missions>
         <mission name="withdraw"/>
         <mission name="cross"/>
@@ -1108,7 +1108,7 @@
         <mission name="Engineer - restore a route"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.hal" name="LRS troop">
+    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.bms" name="LRS troop">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1123,12 +1123,12 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="Drone_SDTI" file="\Appui\Rens\Pions\Roim\Drone SDTI\Model.hal" name="Drone">
+    <unit dia-type="Drone_SDTI" file="\Appui\Rens\Pions\Roim\Drone SDTI\Model.bms" name="Drone">
       <missions>
         <mission name="Imagery Intelligence (real time UAV) - report information"/>
       </missions>
     </unit>
-    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="\Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.hal" name="Drones station_">
+    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="\Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.bms" name="Drones station_">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1141,7 +1141,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.hal" name="Listening station">
+    <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.bms" name="Listening station">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1154,7 +1154,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.hal" name="Jamming station">
+    <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.bms" name="Jamming station">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1167,7 +1167,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.hal" name="Radar detection station">
+    <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.bms" name="Radar detection station">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1180,7 +1180,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_RBRR_RASIT" file="\Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.hal" name="Ground radar surveillance">
+    <unit dia-type="Patrouille_RBRR_RASIT" file="\Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.bms" name="Ground radar surveillance">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1194,7 +1194,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="Equipe_NBC_Dec" file="Appui\Nbc\Pions\Pat Dec\model.hal" name="NBC decontamination troop">
+    <unit dia-type="Equipe_NBC_Dec" file="Appui\Nbc\Pions\Pat Dec\model.bms" name="NBC decontamination troop">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1209,7 +1209,7 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.hal" name="NBC reconnaissance troop">
+    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" name="NBC reconnaissance troop">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1224,7 +1224,7 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </unit>
-    <unit dia-type="Patrouille_NBC_RE" file="Appui\Nbc\Pions\Pat RE\model.hal" name="NBC ROTA troop">
+    <unit dia-type="Patrouille_NBC_RE" file="Appui\Nbc\Pions\Pat RE\model.bms" name="NBC ROTA troop">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1238,7 +1238,7 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.hal" name="Firing platoon">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.bms" name="Firing platoon">
       <missions>
         <mission name="Field Artillery - operate">
           <fragorder name="Fire"/>
@@ -1257,7 +1257,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.hal" name="Field artillery reconnaissance">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.bms" name="Field artillery reconnaissance">
       <missions>
         <mission name="Field Artillery - recon deployment area"/>
         <mission name="move"/>
@@ -1271,7 +1271,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\model.hal" name="Escort And Close Support Helicopter Patrol">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\model.bms" name="Escort And Close Support Helicopter Patrol">
       <missions>
         <mission name="Army Aviation - cover">
           <fragorder name="Cancel maneuver"/>
@@ -1359,7 +1359,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="AirDefenseHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.hal" name="Air Defence Helicopter Patrol">
+    <unit dia-type="AirDefenseHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" name="Air Defence Helicopter Patrol">
       <missions>
         <mission name="Army Aviation - cover">
           <fragorder name="Cancel maneuver"/>
@@ -1431,7 +1431,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.hal" name="General Purpose Helicopter Patrol">
+    <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" name="General Purpose Helicopter Patrol">
       <missions>
         <mission name="move">
           <fragorder name="Cancel maneuver"/>
@@ -1481,7 +1481,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="AACCP" file="Appui\Alat\Pions\Pat Hm\model.hal" name="AAC CP">
+    <unit dia-type="AACCP" file="Appui\Alat\Pions\Pat Hm\model.bms" name="AAC CP">
       <missions>
         <mission name="move">
           <fragorder name="Cancel maneuver"/>
@@ -1513,7 +1513,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="AirCP" file="Air\Pions\PC\model.hal" name="Air CP">
+    <unit dia-type="AirCP" file="Air\Pions\PC\model.bms" name="Air CP">
       <missions>
         <mission name="move">
           <fragorder name="Cancel maneuver"/>
@@ -1523,7 +1523,7 @@
         </mission>
       </missions>
     </unit>
-    <unit dia-type="HS_Police" file="Emergency\Pions\Police\Model.hal" name="HS - Police">
+    <unit dia-type="HS_Police" file="Emergency\Pions\Police\Model.bms" name="HS - Police">
       <missions>
         <mission name="Emergency - block road"/>
         <mission name="Emergency - convoy population"/>
@@ -1534,7 +1534,7 @@
         <mission name="park"/>
       </missions>
     </unit>
-    <unit dia-type="HS_Medical" file="Emergency\Pions\Medical\Model.hal" name="HS - Medical">
+    <unit dia-type="HS_Medical" file="Emergency\Pions\Medical\Model.bms" name="HS - Medical">
       <missions>
         <mission name="Emergency - organise shelter"/>
         <mission name="Emergency - provide first aid"/>
@@ -1544,7 +1544,7 @@
         <mission name="park"/>
       </missions>
     </unit>
-    <unit dia-type="HS_Firefighter" file="Emergency\Pions\Firefighter\Model.hal" name="HS - Firefighter">
+    <unit dia-type="HS_Firefighter" file="Emergency\Pions\Firefighter\Model.bms" name="HS - Firefighter">
       <missions>
         <mission name="Emergency - evacuate area"/>
         <mission name="Emergency - extinguish fire"/>
@@ -1555,7 +1555,7 @@
         <mission name="park"/>
       </missions>
     </unit>
-    <unit dia-type="HS_Safety" file="Emergency\Pions\Safety\Model.hal" name="HS - Safety">
+    <unit dia-type="HS_Safety" file="Emergency\Pions\Safety\Model.bms" name="HS - Safety">
       <missions>
         <mission name="Emergency - organise shelter"/>
         <mission name="Emergency - provide first aid"/>
@@ -1564,19 +1564,19 @@
         <mission name="park"/>
       </missions>
     </unit>
-    <unit dia-type="HS_Disturbance" file="Emergency\Pions\Disturbance\Model.hal" name="HS - Disturbance">
+    <unit dia-type="HS_Disturbance" file="Emergency\Pions\Disturbance\Model.bms" name="HS - Disturbance">
       <missions>
         <mission name="Emergency - riot"/>
       </missions>
     </unit>
   </units>
   <automats>
-    <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.hal" name="Strategic Bomber Squadron">
+    <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Strategic Bomber Squadron">
       <missions>
         <mission name="move"/>
       </missions>
     </automat>
-    <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.hal" name="Marine Squadron">
+    <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" name="Marine Squadron">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1588,7 +1588,7 @@
         </mission>
       </missions>
     </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.hal" name="Very Short Range Surface To Air Battery">
+    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" name="Very Short Range Surface To Air Battery">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1604,7 +1604,7 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.hal" name="Short Range Surface To Air Battery">
+    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" name="Short Range Surface To Air Battery">
       <missions>
         <mission name="Air Defense Artillery - defend area"/>
         <mission name="Air Defense Artillery - monitor"/>
@@ -1620,7 +1620,7 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </automat>
-    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.hal" name="Attack Helicopter Squadron">
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" name="Attack Helicopter Squadron">
       <missions>
         <mission name="Army Aviation - recon">
           <fragorder name="Cancel maneuver"/>
@@ -1701,7 +1701,7 @@
         <mission name="withdraw"/>
       </missions>
     </automat>
-    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.hal" name="Transport Helicopter Squadron">
+    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" name="Transport Helicopter Squadron">
       <missions>
         <mission name="Army Aviation - heliport">
           <fragorder name="Cancel maneuver"/>
@@ -1740,7 +1740,7 @@
         <mission name="withdraw"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.hal" name="Infantry company">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" name="Infantry company">
       <missions>
         <mission name="Infantry - support"/>
         <mission name="Infantry - attack">
@@ -1775,7 +1775,7 @@
         <mission name="Infantry - block"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.hal" name="LRA infantry company">
+    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" name="LRA infantry company">
       <missions>
         <mission name="Infantry - hold"/>
         <mission name="Infantry - cover"/>
@@ -1795,7 +1795,7 @@
         <mission name="Infantry - support (dynamic)"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieLogTC2" file="Appui\Log\Automates\Model.hal" name="TC2">
+    <automat dia-type="CompagnieLogTC2" file="Appui\Log\Automates\Model.bms" name="TC2">
       <missions>
         <mission name="Logistics - deploy">
           <fragorder name="Change work mode"/>
@@ -1811,7 +1811,7 @@
         <mission name="move"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.hal" name="Logistic CP">
+    <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.bms" name="Logistic CP">
       <missions>
         <mission name="Logistics - deploy"/>
         <mission name="go through decontamination process"/>
@@ -1819,7 +1819,7 @@
         <mission name="resupply"/>
       </missions>
     </automat>
-    <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.hal" name="Escadron Transport Blindes">
+    <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.bms" name="Escadron Transport Blindes">
       <missions>
         <mission name="resupply"/>
         <mission name="move"/>
@@ -1834,7 +1834,7 @@
         </mission>
       </missions>
     </automat>
-    <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.hal" name="Peloton Circulation">
+    <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.bms" name="Peloton Circulation">
       <missions>
         <mission name="resupply"/>
         <mission name="move"/>
@@ -1856,7 +1856,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat COBRA\Model.hal" name="Firefinder radar battery">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat COBRA\Model.bms" name="Firefinder radar battery">
       <missions>
         <mission name="Field Artillery - deploy"/>
         <mission name="move"/>
@@ -1869,7 +1869,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.hal" name="Firefinder reconnaissance battery">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.bms" name="Firefinder reconnaissance battery">
       <missions>
         <mission name="Field Artillery - recon deployment area"/>
         <mission name="move"/>
@@ -1882,7 +1882,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Section RATAC\Model.hal" name="Artillery locating radar platoon">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Section RATAC\Model.bms" name="Artillery locating radar platoon">
       <missions>
         <mission name="Field Artillery - collect intelligence on objectives"/>
         <mission name="move"/>
@@ -1896,7 +1896,7 @@
         <mission name="cross"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.hal" name="FIST">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" name="FIST">
       <missions>
         <mission name="Field Artillery - deploy"/>
         <mission name="move"/>
@@ -1910,7 +1910,7 @@
         <mission name="Field Artillery - collect intelligence for battalion"/>
       </missions>
     </automat>
-    <automat dia-type="Refugies" file="Population\Refugies\Automates\Refugie\Model.hal" name="Refugees">
+    <automat dia-type="Refugies" file="Population\Refugies\Automates\Refugie\Model.bms" name="Refugees">
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
@@ -1921,7 +1921,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.hal" name="Major units CP">
+    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="Major units CP">
       <missions>
         <mission name="Communication - command"/>
         <mission name="adopt transportation posture"/>
@@ -1929,7 +1929,7 @@
         <mission name="move"/>
       </missions>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Population\Milices\Automate\Model.hal" name="Militias">
+    <automat dia-type="T_AutomateModeleDEC" file="Population\Milices\Automate\Model.bms" name="Militias">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1943,7 +1943,7 @@
         <mission name="Asymetric - attack populations(in an area)"/>
       </missions>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.hal" name="Commando platoon">
+    <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.bms" name="Commando platoon">
       <missions>
         <mission name="move"/>
         <mission name="cross"/>
@@ -1956,7 +1956,7 @@
         <mission name="withdraw"/>
       </missions>
     </automat>
-    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.hal" name="Theater High Altitude Aera Defense Battery">
+    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" name="Theater High Altitude Aera Defense Battery">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -1971,13 +1971,13 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.hal" name="Terroristes">
+    <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" name="Terroristes">
       <missions>
         <mission name="move"/>
         <mission name="resupply"/>
       </missions>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="MBT squadron">
+    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="MBT squadron">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2015,7 +2015,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.hal" name="Light armored squadron">
+    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="Light armored squadron">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2052,7 +2052,7 @@
         <mission name="Armor - support"/>
       </missions>
     </automat>
-    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\PEL EEI\model.hal" name="Scout platoon">
+    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\PEL EEI\model.bms" name="Scout platoon">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2075,7 +2075,7 @@
         <mission name="prepare to (take up position)"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Deployment support company">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Deployment support company">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2095,7 +2095,7 @@
         <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Mobility support company">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Mobility support company">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2115,7 +2115,7 @@
         <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Countermobility company">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Countermobility company">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2135,7 +2135,7 @@
         <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.hal" name="Bridging company">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Bridging company">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2155,7 +2155,7 @@
         <mission name="Engineer - restore routes"/>
       </missions>
     </automat>
-    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.hal" name="Drone station">
+    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.bms" name="Drone station">
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
@@ -2168,7 +2168,7 @@
         <mission name="resupply"/>
       </missions>
     </automat>
-    <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.hal" name="Listening station">
+    <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.bms" name="Listening station">
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
@@ -2178,20 +2178,7 @@
         <mission name="resupply"/>
       </missions>
     </automat>
-    <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.hal" name="Jamming station">
-      <missions>
-        <mission name="adopt transportation posture"/>
-        <mission name="move"/>
-        <mission name="withdraw"/>
-        <mission name="Electronic Intelligence - report information"/>
-        <mission name="go through decontamination process"/>
-        <mission name="resupply"/>
-        <mission name="park"/>
-        <mission name="manage refugees"/>
-        <mission name="manage prisoners"/>
-      </missions>
-    </automat>
-    <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.hal" name="Radar detection station">
+    <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.bms" name="Jamming station">
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
@@ -2204,7 +2191,20 @@
         <mission name="manage prisoners"/>
       </missions>
     </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.hal" name="Ground Surveillance Radar">
+    <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.bms" name="Radar detection station">
+      <missions>
+        <mission name="adopt transportation posture"/>
+        <mission name="move"/>
+        <mission name="withdraw"/>
+        <mission name="Electronic Intelligence - report information"/>
+        <mission name="go through decontamination process"/>
+        <mission name="resupply"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+      </missions>
+    </automat>
+    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" name="Ground Surveillance Radar">
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
@@ -2217,7 +2217,7 @@
         <mission name="Human Intelligence - report information"/>
       </missions>
     </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.hal" name="LRS units">
+    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" name="LRS units">
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
@@ -2232,7 +2232,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </automat>
-    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.hal" name="NBC reconnaissance platoon">
+    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" name="NBC reconnaissance platoon">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2247,7 +2247,7 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </automat>
-    <automat dia-type="Section_NBC_Dec" file="Appui\Nbc\Automates\Son Dec\model.hal" name="NBC decontamination platoon">
+    <automat dia-type="Section_NBC_Dec" file="Appui\Nbc\Automates\Son Dec\model.bms" name="NBC decontamination platoon">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2262,7 +2262,7 @@
         <mission name="adopt transportation posture"/>
       </missions>
     </automat>
-    <automat dia-type="Section_NBC_RE" file="Appui\Nbc\Automates\Son RE\model.hal" name="NBC ROTA  platoon">
+    <automat dia-type="Section_NBC_RE" file="Appui\Nbc\Automates\Son RE\model.bms" name="NBC ROTA  platoon">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -2275,7 +2275,7 @@
         <mission name="NBC - recon ROTA sites"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.hal" name="Field battery">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" name="Field battery">
       <missions>
         <mission name="Field Artillery - deploy"/>
         <mission name="move"/>
@@ -2288,7 +2288,7 @@
         <mission name="manage prisoners"/>
       </missions>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.hal" name="Recconnaissance battery">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.bms" name="Recconnaissance battery">
       <missions>
         <mission name="Field Artillery - recon deployment area"/>
         <mission name="move"/>
@@ -2301,33 +2301,33 @@
         <mission name="manage prisoners"/>
       </missions>
     </automat>
-    <automat dia-type="HS_Police_HQ" file="Emergency\Automates\Police\Model.hal" name="HS - Police HQ">
+    <automat dia-type="HS_Police_HQ" file="Emergency\Automates\Police\Model.bms" name="HS - Police HQ">
       <missions>
         <mission name="Emergency - evacuate area"/>
         <mission name="move"/>
         <mission name="park"/>
       </missions>
     </automat>
-    <automat dia-type="HS_Firefighter_HQ" file="Emergency\Automates\Firefighter\Model.hal" name="HS - Firefighter HQ">
+    <automat dia-type="HS_Firefighter_HQ" file="Emergency\Automates\Firefighter\Model.bms" name="HS - Firefighter HQ">
       <missions>
         <mission name="Emergency - evacuate area"/>
         <mission name="move"/>
         <mission name="park"/>
       </missions>
     </automat>
-    <automat dia-type="HS_Safety_HQ" file="Emergency\Automates\Safety\Model.hal" name="HS - Safety HQ">
+    <automat dia-type="HS_Safety_HQ" file="Emergency\Automates\Safety\Model.bms" name="HS - Safety HQ">
       <missions>
         <mission name="move"/>
         <mission name="park"/>
       </missions>
     </automat>
-    <automat dia-type="HS_Medical_HQ" file="Emergency\Automates\Medical\Model.hal" name="HS - Medical HQ">
+    <automat dia-type="HS_Medical_HQ" file="Emergency\Automates\Medical\Model.bms" name="HS - Medical HQ">
       <missions>
         <mission name="move"/>
         <mission name="park"/>
       </missions>
     </automat>
-    <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.hal" name="Battalion">
+    <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.bms" name="Battalion">
       <missions>
         <mission name="Battalion - move to"/>
         <mission name="Battalion - attack"/>
@@ -2338,7 +2338,7 @@
     </automat>
   </automats>
   <populations>
-    <population dia-type="T_Population" file="Population\Populations\Model.hal" name="Population">
+    <population dia-type="T_Population" file="Population\Populations\Model.bms" name="Population">
       <missions>
         <mission name="Population - move">
           <fragorder name="Population - Change attitude"/>

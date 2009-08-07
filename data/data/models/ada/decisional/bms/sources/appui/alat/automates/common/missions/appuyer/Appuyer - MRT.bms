@@ -1,0 +1,51 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - MRT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Appuyer : 
+]]--[[//
+]]--[[// - on realise un appui direct + un detruire dans zone.
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_Appuyer"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[// variables presistantes
+]]self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, AntitankHelicopterPatrol )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, EscortAndCloseSupportHelicopterPatrol )
+        self.listePeutAppuyerOuDetruire = self.listePeutAppuyerOuDetruire or S_Liste_Concatene( self.listeHAP, self.listeHAC )
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+                --[[// -----------------------------------------------------------------
+]]--[[// 1. Vérifier les moyens, determiner les patrouilles qui vont aller 
+]]--[[// Detruire, et celle qui vont faire de l'appui direct
+]]--[[// -----------------------------------------------------------------
+]]if( DIA_IsListEmpty( self.listePeutAppuyerOuDetruire ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+            end
+        end
+
+        DEC_MRT_Valide()
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_Appuyer = { "mission" }

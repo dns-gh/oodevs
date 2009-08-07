@@ -17,21 +17,19 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConstructObject constructor
 // Constructd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC     ( pion, diaCall )
+PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation )
+    : PHY_DecisionCallbackAction_ABC     ( pion )
     , role_              ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , diaReturnCode_     ( diaCall.GetParameter( 0 ) )
-    , diaReturnKnowledge_( diaCall.GetParameter( 1 ) )
-    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), diaCall.GetParameters(), 2, EnumDemolitionTargetType::preliminary ) ) 
+    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, EnumDemolitionTargetType::preliminary ) ) 
 {    
-    assert( DEC_Tools::CheckTypeConnaissanceObjet( diaCall.GetParameter( 1 ) ) );
-    diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
+    Callback( role_.GetInitialReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +38,7 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, DIA_C
 // -----------------------------------------------------------------------------
 PHY_ActionConstructObject::~PHY_ActionConstructObject()
 {
-    diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
+    Callback( role_.GetFinalReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,8 +52,9 @@ void PHY_ActionConstructObject::Execute()
 
     DEC_Knowledge_Object* pKnowledge = 0;
     int nReturn = role_.Construct( pObject_, pKnowledge );
-    diaReturnCode_     .SetValue( nReturn );
-    diaReturnKnowledge_.SetValue( (void*)( pKnowledge ? pKnowledge->GetID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
+    Callback( nReturn ); // $$$$ LDC: Was DIA3 Parameter 0
+    CallbackKnowledge( pKnowledge ? pKnowledge->GetID() : 0 ); // $$$$ LDC: Was DIA3 Parameter 1
+    // $$$$ LDC: Could as well hardcode the fact that myself.objMisEnCours_ = pKnowledge ? pKnowledge->GetID() : 0
 }
 
 // -----------------------------------------------------------------------------

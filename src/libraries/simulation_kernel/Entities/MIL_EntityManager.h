@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "MT_Tools/MT_Profiler.h"
+#include "MIL_EntityManager_ABC.h"
 
 namespace xml
 {
@@ -70,7 +71,8 @@ class DIA_Parameters;
 // @class  MIL_EntityManager
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_EntityManager : private boost::noncopyable
+class MIL_EntityManager : public MIL_EntityManager_ABC,
+private boost::noncopyable
 {
 
 public:
@@ -99,7 +101,7 @@ public:
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
 
     void                        CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
-    MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx, ASN1T_EnumDemolitionTargetType obstacleType );    
+    MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType );    
     MIL_Object_ABC*             CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC*             CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );        
@@ -107,15 +109,15 @@ public:
 
     //! @name Accessors
     //@{
-          MIL_Army*           FindArmy      ( const std::string& strName ) const;
-          MIL_Army*           FindArmy      ( uint nID ) const;
-          MIL_Formation*      FindFormation ( uint nID ) const;
-          MIL_Automate*       FindAutomate  ( uint nID ) const;
-          MIL_Population*     FindPopulation( uint nID ) const;
-          MIL_AgentPion*      FindAgentPion ( uint nID ) const;
-          MIL_Object_ABC*     FindObject    ( uint nID ) const;
-    const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;    
-    const T_ArmyMap&          GetArmies     () const;
+                  MIL_Army*           FindArmy      ( const std::string& strName ) const;
+                  MIL_Army*           FindArmy      ( uint nID ) const;
+                  MIL_Formation*      FindFormation ( uint nID ) const;
+    virtual       MIL_Automate*       FindAutomate  ( uint nID ) const;
+                  MIL_Population*     FindPopulation( uint nID ) const;
+    virtual       MIL_AgentPion*      FindAgentPion ( uint nID ) const;
+                  MIL_Object_ABC*     FindObject    ( uint nID ) const;
+    virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;    
+            const T_ArmyMap&          GetArmies     () const;
     
           MIL_EffectManager& GetEffectManager() const;
     //@}

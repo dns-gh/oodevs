@@ -1,0 +1,696 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/common/Behaviors.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-02-20 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Common/Behaviors.hal $
+]]--[[// $Author: Jcr $
+]]--[[// $Modtime: 23/09/05 15:13 $
+]]--[[// $Revision: 45 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// Common behaviors
+]]--[[// -------------------------
+]]
+include "Common/Pions/Behaviors.bms"
+
+include "Common/Pions/Behaviors/Behaviors - Embarquement.bms"
+
+include "Melee/Common/Behaviors.bms"
+
+
+--[[// Missions
+]]include "Common/Pions/Missions/FaireMouvement.bms"
+
+include "Common/Pions/Missions/SuivreUnite.bms"
+
+include "Common/Pions/Missions/SeFaireDecontaminer.bms"
+
+include "Common/Pions/Missions/SeFaireTransporter.bms"
+
+include "Common/Pions/Missions/Franchir.bms"
+
+include "Common/Pions/Missions/Stationner.bms"
+
+include "Common/Pions/Missions/OrienterRefugies.bms"
+
+include "Common/Pions/Missions/PrendreEnComptePrisonniers.bms"
+
+--[[// Ajout ADA
+]]include "Common/Pions/Missions/SoutenirEnMesureDe.bms"
+
+--[[//missions populations
+]]include "Common/Pions/MissionsReactionPopulations.bms"
+
+
+include "Melee/Inf/Pions/Common/Missions/Decrocher.bms"
+
+
+include "Melee/Inf/Pions/Common/Actions.bms"
+
+
+--[[// Comportements lies au deplacement
+]]--[[// ------------------------------------
+]]
+include "Melee/Inf/Pions/Common/Behaviors - Dep.bms"
+
+include "Melee/Inf/Pions/Common/Behaviors - Dispositif.bms"
+
+include "Melee/Inf/Pions/Common/Behaviors - Esquive.bms"
+
+include "Melee/Inf/Pions/Common/Behaviors - Mot.bms"
+
+include "Melee/Inf/Pions/Common/Behaviors - Lima.bms"
+
+include "Melee/Inf/Pions/Common/Behaviors - Feu.bms"
+
+include "Melee/Inf/Pions/Common/Behaviors - Eni.bms"
+
+
+--[[//=============================================================================
+]]--[[//
+]]--[[// Ensemble des comportements
+]]--[[//
+]]--[[//=============================================================================
+]]--[[//
+]]--[[//	behavior BEH_Pion_INF_PriseAParti()
+]]--[[//	behavior BEH_Pion_INF_PriseAParti_Message()
+]]--[[//
+]]--[[//
+]]--[[//	behavior BEH_Pion_INF_CreerItinerairePosition( T_Position pos )	
+]]--[[//
+]]--[[//	behavior BEH_Pion_INF_BloquerDeplacement()
+]]--[[//
+]]--[[//	behavior BEH_Poste_Pion_INF_TomberEnGarde()
+]]--[[//	
+]]--[[//	behavior BEH_Pion_INF_CoupDeSonde( Rep_Point pt,float delai_max )
+]]--[[//
+]]--[[//	behavior BEH_Pion_INF_RejoindreFuseau_EnAttente()
+]]--[[//
+]]--[[//	behavior BEH_Pion_INF_Detruire( T_ConnaissanceAgent pPion )
+]]--[[//	
+]]--[[//
+]]--[[//=============================================================================
+]]
+node "BEH_Defaut"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_Mot_Pion_INF_AffecterVariablesDEtat", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Misc_Pion_INF_ModulationVitesse", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_Rens", {} },
+        { "BEH_MOT_Pion_INF_GarderSesDistances", {} },
+        { "BEH_Misc_Pion_INF_Default", {} },
+        { "BEH_MOT_Pion_InitialisePreparationMission", {} },
+        { "BEH_MOT_Pion_INF_InitialisePoste", {} },
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "BEH_Misc_Pion_INF_MAJ_Mission", {} },
+        { "BEH_Misc_Pion_INF_MAJ_Repli", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                SetStateVariable( "VE_PreparationMission", 0 )
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )--[[//ROE par defaut pour cette mission
+]]
+                F_Pion_SetrTenir( myself, 0 )
+                F_Pion_SetobjectifEsquive( myself, nil )
+                --[[// Init variables
+]]F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Second )
+                F_Pion_SeteTypeContact( myself, eTypeContact_Defaut )
+                F_Pion_SetbDefenseStatique_Mobile( myself, false )
+                myself.bFreiner_EnTete_ = true
+            end
+--[[// MAJ de l'état DEC par défaut 
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_INF_AffecterVariablesDEtat, 1, {} )--[[// MAJ de l'etat du pion en fonction de son agressivite
+]]--[[// ------------------------------------------------------------------------	
+]]--[[// behavior BEH_Mot_AffecterVariablesDEtat();
+]]
+        --[[// Si totalement detruit...
+]]if( S_Misc_EstDetruitPhysique() ) then
+            return
+        end
+
+        Activate( self.activations.BEH_Ambiance, 1, {} )--[[// Ambiance
+]]--[[// ------------------------------------------------------------------------
+]]--[[// Gestion de l'ambiance en fonction des ennemis
+]]--[[// Module la vitesse en fonction de l'ambiance
+]]
+        Activate( self.activations.BEH_Misc_Pion_INF_ModulationVitesse, 1.1, {} )
+        Activate( self.activations.BEH_ROE, 1, {} )--[[// Comportements Generiques
+]]--[[// ------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Nbc, 1, {} )
+        Activate( self.activations.BEH_Rens, 1, {} )--[[// Gestion de la guerre elec : Passer en silence radio
+]]--[[// ------------------------------------------------------------------------
+]]
+        --[[// Motivations specifiques pour l'infanterie : en parallele
+]]--[[// ------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistances, GetMotivation( "MOT_GarderSesDistances" ), {} )
+        Activate( self.activations.BEH_Misc_Pion_INF_Default, 1, {} )--[[// Default mis a jour par chaque type de modele
+]]--[[// ------------------------------------------------------------------------
+]]
+        if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.BEH_MOT_Pion_InitialisePreparationMission, 1, {} )
+                end
+
+                Activate( self.activations.BEH_MOT_Pion_INF_InitialisePoste, 1, {} )
+                local ksFoo = nil
+                Activate( self.activations.ACT_MAJ_EnnemiEnCours, 0.5, { ksFoo, } )
+            end
+        else
+do
+                --[[// Met a jour le parametre de mission precedente
+]]Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Mission, 1, { DEC_GetMission( myself ), } )
+                if( F_Pion_GeteTypeContact( myself ) == eTypeContact_Offensif ) then
+                    Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, {} )
+                end
+
+            end
+        end
+
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Tomber en garde : l unite se poste jusqu a son maximum puis s arrete
+]]--[[// poste
+]]--[[// @bDebarquement : valide que la section doit debarquer
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Poste_Pion_INF_TomberEnGarde"
+{
+    activations =
+    {
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_RC", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Dep_Pion_INF_Arret", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.bDemandeDebarquement = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionDeb = self.eActionDeb or eActionEnCours
+        self.bDebarquement = self.bDebarquement or self._namedParams.bDemandeDebarquement
+        if( ModuleBegins() ) then
+            do
+                --[[// Verifie que les HOT ne debarquent pas .. 
+]]--[[// .. Sinon attention aux surprises
+]]self.bDebarquement = self.bDebarquement and ( myself:GetType() ~= "SectionInfanterie_HOT" ) and DEC_Agent_EstEmbarque()
+            end
+--[[// if ( bDebarquement )
+]]--[[//	start action ACT_Transport_Pion_INF_Debarquer() return in eActionDeb : strength = 1.1;
+]]        end
+
+        if( self.bDebarquement ) then
+            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+        end
+
+        Activate( self.activations.ACT_RC, 1, { eRC_EnPosteFaceADirectionDangereuse, } )
+        local mission = DEC_GetMission( myself )
+        Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+        if( self.eAction == eActionEnCours ) then
+            Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_DELAI_TOMBE_EN_GARDE(), "Tombe en garde", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        else
+if( not ( self.bDebarquement and DEC_Agent_EstEmbarque() ) ) then
+                self.params.__returnValue = eActionEffectuee
+                return
+            end
+        end
+
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 03/08/2004 11:16
+]]--[[// Met a jour la mission precedente du pion
+]]--[[// MIA A VIRER?
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Misc_Pion_INF_MAJ_Mission"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.typeMission = self.params[1]
+    end,
+
+    activate = function( self )
+        if( ( ModuleBegins() and self._namedParams.typeMission ~= 0 and ModuleBegins() and self._namedParams.typeMission ~= nil ) ) then
+            F_Pion_SetmissionPrecedente( myself, self._namedParams.typeMission:GetType() )
+        end
+
+    end,
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 03/08/2004 11:16
+]]--[[// Module la vitesse ne fonction de l'ambiance du pion
+]]--[[// ----------------------------------------------------------------------------
+]]}
+
+node "BEH_Misc_Pion_INF_ModulationVitesse"
+{
+    activations =
+    {
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_RC", {} },
+        { "ACT_Info_Trace", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// Notification de l'ambiance au sein de la compagnie	
+]]if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
+            do
+                Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 0.7, } )
+                Activate( self.activations.ACT_RC, 1, { eRC_AmbianceVitesse, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Ambiance vitesse", } )
+            end
+        else
+do
+                if( DEC_Agent_EstEmbarque() ) then
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 0.4, } )
+                else
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
+                end
+
+                Activate( self.activations.ACT_Info_Trace, 1, { "Ambiance surete", } )
+                Activate( self.activations.ACT_RC, 1, { eRC_AmbianceSurete, } )
+            end
+        end
+
+    end,
+
+}
+
+node "BEH_Eni_Pion_INF_Tenir"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rTenir = self.params[1]
+    end,
+
+    activate = function( self )
+                if( ModuleBegins() ) then
+            --[[// --> Tiens lorsque le rapFor passe de 2.5 a 3.5
+]]F_Pion_SetrTenir( myself, self._namedParams.rTenir )
+        end
+
+    end,
+
+    destroy = function( self )
+                F_Pion_SetrTenir( myself, 0 )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mot_Pion_INF_AffecterVariablesDEtat
+]]--[[//
+]]--[[// Commentaire : Ce comportement est à inclure dans le BEH_Defaut du pion
+]]--[[//               Il "règle" les copmportement de sauvegarde
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mot_Pion_INF_AffecterVariablesDEtat"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//////////////// BMS OPTIM  ///////////////////
+]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
+            return
+        end
+
+        switch_1 = --[[////////////// FIN OPTIM  /////////////////////
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// En fonction du moral...
+]]--[[//-----------------------------------------------------------------------------
+]]DEC_FacteurHumain_Moral()
+            if switch_1 == eMoral_Fanatique then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Fanatique --> esquive sur PAP, pas de ralentissement
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Rien
+]]SetStateVariable( "VE_RapForPrudence", 0 )
+                SetStateVariable( "VE_RapFor", 0 )
+                
+            --[[//-----------------------------------------------------------------------------
+]]--[[// Moral bon --> esquive sur PAP et effet rapFor défavorable --> ralentissement
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eMoral_Moyen
+            or switch_1 == eMoral_Bon then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// En fonction de la mission...  --> idem moral mauvais
+]]--[[//-----------------------------------------------------------------------------
+]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+                    do
+                        SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                        SetStateVariable( "VE_RapForPrudence", 0 )
+                        
+                    end
+--[[// Si le pion fait parti d'un automate embraye --> On prend en compte 
+]]--[[// la mission de l'automate
+]]--[[//-----------------------------------------------------------------------------
+]]                end
+
+                if( DEC_Agent_AutomateEstEmbraye() ) then
+                    do
+                        if( S_Misc_EstMissionAffectee_Automate( "T_Mission_Automate_INF_Eclairer" ) or S_Misc_EstMissionAffectee_Automate( "T_Mission_Automate_INF_ReconnaissanceOffensive" ) ) then
+                            do
+                                SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                                SetStateVariable( "VE_RapForPrudence", 0 )
+                                
+                            end
+                        end
+
+                    end
+                else
+if( S_Misc_EstMissionAffectee( "T_Mission_Pion_INF_SurveillerSecteur" ) or S_Misc_EstMissionAffectee( "T_Mission_Pion_INF_ReconnaitreAxe" ) or S_Misc_EstMissionAffectee( "T_Mission_Pion_INF_Eclairer" ) or S_Misc_EstMissionAffectee( "T_Mission_Pion_INF_EscorterUnite" ) ) then
+                        do
+                            SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                            SetStateVariable( "VE_RapForPrudence", 0 )
+                            
+                        end
+--[[// sinon...
+]]                    end
+                end
+
+                SetStateVariable( "VE_RapForPrudence", ( 5 - DEC_RapportDeForceLocal() ) )
+                SetStateVariable( "VE_RapFor", 0 )
+                
+            --[[//-----------------------------------------------------------------------------
+]]--[[// Moral mauvais: --> esquive sur PAP et sur rapFor défavorable
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eMoral_Mauvais then
+                SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                SetStateVariable( "VE_RapForPrudence", 0 )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_RapFor", 0 )
+        SetStateVariable( "VE_RapForPrudence", 0 )
+    end,
+
+--[[////////////////////////////// PARTIE COMPORTEMENTS VIRTUELS /////////////////////////////////////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_ProgressionVers
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_ProgressionVers"
+{
+    activations =
+    {
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+        self._namedParams.eTypeProgression = self.params[2]
+        self._namedParams.eTypeIti = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_PreparationAction
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_PreparationAction"
+{
+    activations =
+    {
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+        if( not DEC_Agent_EstEmbarque() ) then
+            self.params.__returnValue = eActionEffectuee
+            return
+        end
+
+    end,
+
+--[[//Ajout LLS le 28/02/2007 pour mission Soutenir Section PROTERRE
+]]--[[///////////////////// MAJ VE /////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_INF_AgressiviteTir
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_INF_AgressiviteTir"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rPH = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            SetStateVariable( "VE_Agressivite_Tir", self._namedParams.rPH )
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_Agressivite_Tir", 0 )
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Deplacement sur un point d'appui par rapport a un ami utilisé par Soutenir
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.tAmi = self.params[1]
+        self._namedParams.repEni = self.params[2]
+        self._namedParams.typeProg = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eAction = self.eAction or eActionEnCours
+        self.ptAppui = self.ptAppui or S_CalculerPositionAppui( self._namedParams.tAmi, M_DISTANCE_APPUIS() )
+        if( ModuleBegins() ) then
+            do
+            end
+        end
+
+        if( self.eAction == eActionImpossible ) then
+            do
+                                do
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.eAction = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptAppui, self._namedParams.typeProg, eTypeItiAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_INF_RejoindrePositionAppuiPour
+]]--[[//
+]]--[[// Commentaires : utilisé par MIS_Soutenir 
+]]--[[// 
+]]--[[// *****************************************************************************
+]]--[[// $$$$ MIA 03-04-23: attention T_Pion!
+]]}
+
+node "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ami = self.params[1]
+    end,
+
+    activate = function( self )
+        self.positionAppui = self.positionAppui or DEC_Geometrie_CalculerPositionAppui( self._namedParams.ami, M_MODELE_PION_INF_DISTANCE_POSITION_APPUI() )
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Rejoindre la position d'appui
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.ACT_Info_Trace, 1, { "L'unite rejoint la position d'appui...", } )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionAppui, eProgressionDirect, eTypeItiAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Demande de tir d 'appui
+]]--[[//  Gere uniquement le tir d'appui sur un eni
+]]--[[//-----------------------------------------------------------------------------
+]]}
+
+node "BEH_Feu_Pion_INF_TirAppui"
+{
+    instances =
+    {
+        boost = 1.1,
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "BEH_Feu_Pion_INF_TirCouverture_Fixe", {} },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ksEni = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
+        self.eAction = self.eAction or eActionEnCours
+        self.eActionFixer = self.eActionFixer or eActionEnCours
+        self.bSpontanee = self.bSpontanee or true
+        Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
+        if( self.eAction == eActionImpossible and not self.bSpontanee ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) or self.eAction == eActionEffectuee ) then
+            self.params.__returnValue = self.eAction
+            Halt()
+        end
+
+        if( self.eActionFixer == eActionEnCours ) then
+            Activate( self.activations.BEH_Feu_Pion_INF_TirCouverture_Fixe, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFixer = v else rawset( t, k, v ) end end } ) )
+        end
+
+        Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, setmetatable( { self._namedParams.ksEni, eFormationTir_Debarque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "ACT_Maj_Pion_PasserEnTirLibre", nodes.ACT_Maj_Pion_PasserEnTirLibre }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MAJ_EtatDefaut", nodes.BEH_MAJ_EtatDefaut }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_INF_AffecterVariablesDEtat", nodes.BEH_Mot_Pion_INF_AffecterVariablesDEtat }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ambiance", nodes.BEH_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Misc_Pion_INF_ModulationVitesse", nodes.BEH_Misc_Pion_INF_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE", nodes.BEH_ROE }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc", nodes.BEH_Nbc }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens", nodes.BEH_Rens }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MOT_Pion_INF_GarderSesDistances", nodes.BEH_MOT_Pion_INF_GarderSesDistances }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Misc_Pion_INF_Default", nodes.BEH_Misc_Pion_INF_Default }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MOT_Pion_InitialisePreparationMission", nodes.BEH_MOT_Pion_InitialisePreparationMission }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MOT_Pion_INF_InitialisePoste", nodes.BEH_MOT_Pion_INF_InitialisePoste }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Misc_Pion_INF_MAJ_Mission", nodes.BEH_Misc_Pion_INF_MAJ_Mission }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Misc_Pion_INF_MAJ_Repli", nodes.BEH_Misc_Pion_INF_MAJ_Repli }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_RejoindrePositionAppui, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_RejoindrePositionAppuiPour, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_INF_RejoindrePositionAppuiPour, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_PreparationAction, "BEH_MOT_Pion_INF_Debarquer", nodes.BEH_MOT_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Mot_Pion_Embarquer", nodes.BEH_Mot_Pion_Embarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Feu_Pion_INF_TirAppui, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Feu_Pion_INF_TirAppui, "BEH_Feu_Pion_INF_TirCouverture_Fixe", nodes.BEH_Feu_Pion_INF_TirCouverture_Fixe }
+connections[ #connections + 1 ] = { nodes.BEH_Feu_Pion_INF_TirAppui, "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", nodes.BEH_Feu_Pion_INF_ConduireLesFeux_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Pion_INF_ModulationVitesse, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Pion_INF_ModulationVitesse, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Pion_INF_ModulationVitesse, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Poste_Pion_INF_TomberEnGarde, "BEH_MOT_Pion_INF_Debarquer", nodes.BEH_MOT_Pion_INF_Debarquer }
+connections[ #connections + 1 ] = { nodes.BEH_Poste_Pion_INF_TomberEnGarde, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Poste_Pion_INF_TomberEnGarde, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }
+connections[ #connections + 1 ] = { nodes.BEH_Poste_Pion_INF_TomberEnGarde, "ACT_Dep_Pion_INF_Arret", nodes.ACT_Dep_Pion_INF_Arret }

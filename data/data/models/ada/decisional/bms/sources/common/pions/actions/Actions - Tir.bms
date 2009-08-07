@@ -1,0 +1,294 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/actions/Actions - Tir.bms"] = true
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Tir_DirectSur
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************** 
+]]
+node "ACT_Tir_DirectSur"
+{
+    actuators = F_TIR_ACTUATEURS()
+,
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+        self._namedParams.pourcentageComposantes = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//handler sur l'action
+]]        self.actionTir = self.actionTir or nil
+        self.eTir = self.eTir or nil
+        --[[// ----------------------------------------------------------------------------- 
+]]--[[// Init
+]]--[[// -----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( ">> start fire" )
+                self.actionTir = DEC_StartTirDirect( self._namedParams.repEni, self._namedParams.pourcentageComposantes, eTirDirectNormal, 0 )
+                actionCallbacks[ self.actionTir ] = function( arg ) self.eTir = arg end
+
+            end
+--[[// --------------------------------------------------------------------- 
+]]--[[// Retour tir --> debug
+]]--[[// ---------------------------------------------------------------------
+]]        end
+
+        switch_1 = self.eTir
+            if switch_1 == eActionTirDirect_Impossible then
+                --[[// Debug
+]]DEC_Trace( "Impossible fire" )
+                
+            elseif switch_1 == eActionTirDirect_NoAmmo
+            or switch_1 == eActionTirDirect_NoCapacity
+            or switch_1 == eActionTirDirect_EnemyDestroyed
+            or switch_1 == eActionTirDirect_Finished then
+                self.actionTir = DEC_StopAction( self.actionTir )
+                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            elseif switch_1 == eActionTirDirect_None
+            or switch_1 == eActionTirDirect_Running then
+                F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
+                
+                        end
+
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+        self.actionTir = DEC_StopAction( self.actionTir )
+        DEC_Trace( "Stop firing" )
+                self.params.__returnValue = eActionHalt
+        Halt()
+
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+        self.actionTir = DEC_StopAction( self.actionTir )
+        DEC_Trace( "Stop firing" )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Tir_DirectSurTypeMunitions
+]]--[[// 
+]]--[[// Commentaires: Cette action permet de faire feu en utilisant seulement une 
+]]--[[//               catégorie de munitions
+]]--[[//
+]]--[[// ****************************************************************************** 
+]]node "ACT_Tir_DirectSurTypeMunition"
+{
+    actuators = F_TIR_ACTUATEURS()
+,
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+        self._namedParams.pourcentageComposantes = self.params[2]
+        self._namedParams.typeMunitions = self.params[3]
+    end,
+
+    select = function( self )
+        --[[//handler sur l'action
+]]        self.actionTir = self.actionTir or nil
+        self.eTir = self.eTir or nil
+        --[[// ----------------------------------------------------------------------------- 
+]]--[[// Init
+]]--[[// -----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionTir = DEC_StartTirDirect( self._namedParams.repEni, self._namedParams.pourcentageComposantes, eTirDirectNormal, self._namedParams.typeMunitions )
+            actionCallbacks[ self.actionTir ] = function( arg ) self.eTir = arg end
+
+        end
+
+        switch_1 = --[[// --------------------------------------------------------------------- 
+]]--[[// Retour tir --> debug
+]]--[[// ---------------------------------------------------------------------
+]]self.eTir
+            if switch_1 == eActionTirDirect_Impossible then
+                --[[// Debug
+]]DEC_Trace( "Fire impossible" )
+                
+            elseif switch_1 == eActionTirDirect_NoAmmo
+            or switch_1 == eActionTirDirect_NoCapacity
+            or switch_1 == eActionTirDirect_EnemyDestroyed
+            or switch_1 == eActionTirDirect_Finished then
+                self.actionTir = DEC_StopAction( self.actionTir )
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                
+            elseif switch_1 == eActionTirDirect_None
+            or switch_1 == eActionTirDirect_Running then
+                F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
+                
+                        end
+
+    end,
+
+    deselect = function( self )
+                self.actionTir = DEC_StopAction( self.actionTir )
+        DEC_Trace( "Stop firing" )
+                self.params.__returnValue = eActionHalt
+        Halt()
+
+    end,
+
+    destroy = function( self )
+                self.actionTir = DEC_StopAction( self.actionTir )
+        DEC_Trace( "Stop firing" )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Tir_IndirectSur
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************** 
+]]node "ACT_Tir_IndirectSur"
+{
+    actuators = F_TIR_ACTUATEURS()
+,
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+        self._namedParams.nombreIT = self.params[2]
+        self._namedParams.dotation = self.params[3]
+    end,
+
+    select = function( self )
+        --[[//handler sur l'action
+]]        self.actionTir = self.actionTir or nil
+        self.eTir = self.eTir or nil
+        --[[// ----------------------------------------------------------------------------- 
+]]--[[// Init
+]]--[[// -----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionTir = DEC_StartTirIndirectSurConnaissance( self._namedParams.dotation, self._namedParams.nombreIT, self._namedParams.repEni )
+            actionCallbacks[ self.actionTir ] = function( arg ) self.eTir = arg end
+
+        end
+
+    end,
+
+    deselect = function( self )
+                self.actionTir = DEC_StopAction( self.actionTir )
+        DEC_Trace( "Stop firing" )
+                self.params.__returnValue = eActionHalt
+        Halt()
+
+    end,
+
+    destroy = function( self )
+                self.actionTir = DEC_StopAction( self.actionTir )
+        DEC_Trace( "Stop firing" )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Tir_IndirectSurPosition
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************** 
+]]node "ACT_Tir_IndirectSurPosition"
+{
+    actuators = F_TIR_ACTUATEURS()
+,
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.position = self.params[1]
+        self._namedParams.nombreIT = self.params[2]
+        self._namedParams.dotation = self.params[3]
+    end,
+
+    select = function( self )
+        --[[//handler sur l'action
+]]        self.actionTir = self.actionTir or nil
+        self.eTir = self.eTir or nil
+        --[[// ----------------------------------------------------------------------------- 
+]]--[[// Init
+]]--[[// -----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionTir = DEC_StartTirIndirectSurPosition( self._namedParams.dotation, self._namedParams.nombreIT, self._namedParams.position )
+            actionCallbacks[ self.actionTir ] = function( arg ) self.eTir = arg end
+
+        end
+
+    end,
+
+    deselect = function( self )
+                self.actionTir = DEC_StopAction( self.actionTir )
+        DEC_Trace( "Stop firing" )
+                self.params.__returnValue = eActionHalt
+        Halt()
+
+    end,
+
+    destroy = function( self )
+                self.actionTir = DEC_StopAction( self.actionTir )
+        DEC_Trace( "Stop firing" )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// Tirer Fumigene Vers Enis
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************** 
+]]node "ACT_Tir_FumigeneVersEni"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.connaissanceEni = self.params[1]
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_Tir_LancerFumigeneSurConnaissance( self._namedParams.connaissanceEni )
+        end
+
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_Tir_ChangerConsigne
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_Tir_ChangerConsigne"
+{
+    actuators =
+    {
+        etat_ROE = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eConsigneTir = self.params[1]
+    end,
+
+    select = function( self )
+        F_Pion_SeteConsigneTir( myself, self._namedParams.eConsigneTir )
+    end,
+
+}
+

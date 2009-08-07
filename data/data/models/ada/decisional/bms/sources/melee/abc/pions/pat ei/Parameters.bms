@@ -1,0 +1,14 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/pat ei/Parameters.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-02-13 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Pat EI/Parameters.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 7 $
+]]--[[// $Workfile: Parameters.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]

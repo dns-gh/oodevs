@@ -1,0 +1,995 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/Globals.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-07-30 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Globals.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 19/09/05 9:45 $
+]]--[[// $Revision: 30 $
+]]--[[// $Workfile: Globals.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//-----------------------------------------------------------------------------
+]]--[[// fichiers à inclure
+]]--[[//-----------------------------------------------------------------------------
+]]include "Common/Automates/Globals.bms"
+
+
+include "Melee/Inf/Globals.bms"
+
+include "Melee/Inf/Parameters.bms"
+
+
+include "Melee/Inf/Automates/Common/Parameters.bms"
+
+--[[//include "Melee\Inf\Automates\Common\Globals Poly.bms"
+]]--[[// ============================================================================
+]]--[[// Coordination ligne avant et ligne arriere
+]]--[[//
+]]--[[// ============================================================================
+]]--[[//----------------------------------------------------------------
+]]--[[// Macro de gestions des appuis dans la MRT
+]]--[[//----------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// $Created : JCR : 02/02/2004 14:49
+]]--[[// Boucle parcourant l'ensemble des elements d'une liste T_ListePoints 
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// -------------------------------------------------------------------------
+]]--[[// S_ChercherPosition_Mine :
+]]--[[//        Cherche une position sur laquelle on peut miner et non genante pour
+]]--[[//        le pion
+]]--[[// -------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions qui freinent
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions détruits (tactiquement OU totalement) de l'échelon
+]]--[[// passé en paramètre
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ATTENTION le dispositif est inversé, Devant = derriere...
+]]--[[// Le pion est devant
+]]--[[//=============================================================================
+]]--[[// Macros
+]]--[[//=============================================================================
+]]--[[//=============================================================================
+]]--[[// Fonctions
+]]--[[//=============================================================================
+]]function S_Geometrie_Automate_INF_ChercherPosition_Interdire( ptMine, rDistance )
+    local _returnValue = nil
+    _returnValue = DEC_Geometrie_CalculerPositionObstacle( ptMine, S_TypeObject_ToString( eTypeObjectBouchonMines ), rDistance )
+    return _returnValue
+end
+
+function S_Medo_Automate_InitialiseSE( selPions, eEtatEchelon )
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local pion = x
+            F_Pion_SeteEtatEchelon( pion, eEtatEchelon )
+        end
+
+    end
+
+end
+
+function S_Dispositif_Automate_INF_ObtenirListePionsFreinantDe( eEtatEchelon )
+    local _returnValue = {}
+    local listeFiltre = {}
+    local listePionFreinant = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_INF_Freiner" )
+    for _,x in pairs( listePionFreinant ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon ) then
+                DIA_PushFront( listeFiltre, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = listeFiltre
+    return _returnValue
+end
+
+function S_Dispositif_Automate_INF_Freiner_PionsDevant( resultatCalcul, eEtatEchelon )
+    local _returnValue = false
+    _returnValue = false
+    local listePions = S_ObtenirTousPionsDe( eEtatEchelon )
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local pion = x
+            if( DEC_Geometrie_CalculerDistanceLigneArriere( resultatCalcul, pion ) > 200 ) then
+                _returnValue = true
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+
+--[[// Retourne un ennemi traite par la compagnie
+]]--[[// ------------------------------------------------------------------------
+]]--[[// ------------------------------------------------------------------------
+]]--[[// rNombrePions_Actifs
+]]--[[// ------------------------------------------------------------------------
+]]--[[// ------------------------------------------------------------------------
+]]--[[// Renvois la liste des pions en Appuis, succeptubles de relever ..
+]]--[[// ------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Recherche parmi une selection de pions, recherche le PE de l'autre fuseau
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//	l'unite de tete dans l'autre fuseau garde sa mission
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Recherche un pion qui serait le plus susceptible de recevoir un appui
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// S'il n'y a pas suffisamment de pion en premier echelon
+]]--[[//	On cherche l'unite qui a le moins d'appuis
+]]--[[// ----------------------------------------------------------------------------	
+]]--[[// Renvoie l'appui d'un pion appuye
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Mission Soutenir pour l'ABC
+]]--[[// Mission Soutenir pour l'ABC
+]]--[[// Mission Soutenir pour l'INF
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// On regarde dans les pions en appuis s'il yen a un qui appuis pPion
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ------------------------------------------------------------------------
+]]--[[// Renvoie le nombre de pions dans la compagnie en reduction sur ksEni
+]]--[[// ------------------------------------------------------------------------
+]]--[[// Dans le cas de l'infanterie, on regarde l'unite en cours,
+]]--[[// Sinon, l'unite de la mission
+]]--[[// ------------------------------------------------------------------------
+]]--[[// Cherche le 'meilleur' Ennemi a reduire dans la zone 
+]]--[[// ------------------------------------------------------------------------
+]]--[[// DEC_Connaissances_UnitesEnnemiesDangereusesPourPion( pionAppui );
+]]--[[// selection selEnis_DansZone = S_PionsDansZone
+]]--[[// On traite uniquement les pions dans la zone
+]]--[[// Au Max 2 intervenants sur un meme ennemi -> 0.5 + ( 1 - S_ )
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie tous les pions disponibles pour la coordination
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------    
+]]--[[// Cherche le meilleur pion a appuyer en fonction des ennemis sur une liste
+]]--[[// de pions a appuyer
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Recherche la zone d'intervention du pion appuye
+]]--[[// Si j'appui deja la pion
+]]--[[// Sinon, on est plutot attire par les pions ne possedant pas d'appui
+]]--[[// On pondere le tout par la distance au pion
+]]--[[// Si un ennemi se decouvre
+]]--[[// On a tendance a intervenir dans sa zone
+]]--[[// Plus le pion est en difficulte, plus on veut l'aider
+]]--[[// S_Force_Etat( pion.eEtat_ );
+]]--[[// Force final d'intervention
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Cherche un ennemi valide autours dans la zone d'action d'un pion
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------	
+]]--[[// Calcule le nombre de pion possedant la mission @typeMission, et @bEnTete
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// ------------------------------------------------------------------------
+]]--[[// Cherche le premier pion avec une mission particuliere et en 1er echelon
+]]--[[// ------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si au moins un des pions est en attente en bord du fuseau
+]]--[[//-----------------------------------------------------------------------------	
+]]--[[// case eEtatLima_LC:
+]]--[[// case eEtatLima_LD:
+]]--[[// ----------------------------------------------------------------------------    
+]]--[[// Cherche le premier PIA dans le fuseau du point de recueil dans une 
+]]--[[// liste de PIA.
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// 0
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si au moins un pion amis est en difficulte
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Renvoie point le plus proche de la zone parmis les pooints passés en paramètre
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//Ajouté par LLS pour mission Escorter automate, copie depuis automate ABC 01/03/2007
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de premier echelon en mode "Fixe" ou"esquive" 
+]]--[[// sur ennemi
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions succeptibles de soutenir une unite de premier 
+]]--[[// echelon 
+]]--[[// LES 2 CONDITIONS pour etre en mesure de soutenir:
+]]--[[// 1) Ne pas être détruit
+]]--[[// 2) Etre un pion de deuxieme echelon
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// seul pion suceptible de soutenir ou reprendre mission à leur compte
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions de premier echelon en mode "RAS" sur ennemi
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie le pion qui soutien l'unite passé en paramètre.
+]]--[[// Si ce pion n'a pas de soutien renvoie 0.
+]]--[[// // $$$$ MIA 03-10-13: faire plus générique et renvoyer une liste?
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie vrai si au moins un pion de premier echelon  ou Ecl est detruit
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions sans mission
+]]--[[// Pour missions rétrogrades
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la liste des pions détruits (tactiquement OU totalement) de l'échelon
+]]--[[// passé en paramètre
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//Ajouté par LLS pour mission Escorter automate, copie depuis automate ABC
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// SPE automate INF
+]]--[[//-----------------------------------------------------------------------------
+]]function S_Cherche_Automate_INF_EnnemiCompagnie( )
+    local _returnValue = nil
+    _returnValue = nil
+    local selPions = DEC_Automate_PionsSansPC()
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local pion = x
+            local ksEni_EnCours = S_Pion_EniEnCours( pion )
+            if( DEC_ConnaissanceAgent_EstValide( ksEni_EnCours ) ) then
+                do
+                    _returnValue = ksEni_EnCours
+                                        return _returnValue
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Nombre_PionsActifs( )
+    local _returnValue = 0
+    _returnValue = 0
+    local selPions = DEC_Automate_PionsSansPC()
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            switch_1 = x:GetType()
+                if switch_1 == "SectionInfanterie"
+                or switch_1 == "SectionInfanterie_HOT"
+                or switch_1 == "SectionInfanterie_MILAN"
+                or switch_1 == "Peloton_AMX"
+                or switch_1 == "Peloton_XL" then
+                                        _returnValue = _returnValue + 1
+                    
+                                end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Cherche_Automate_PionsPourReleve( )
+    local _returnValue = {}
+    local lstPionsEnSoutien = {}
+    local selPion = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), SectionInfanterie )
+    for _,x in pairs( selPion ) do
+    local _continue = true
+do
+            local pion = x
+            if( not S_Pion_EstDetruitTactique( pion ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
+                DIA_PushBack( lstPionsEnSoutien, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = lstPionsEnSoutien
+    return _returnValue
+end
+
+function S_TousPionsEnPE_Ou_Freinant( )
+    local _returnValue = {}
+    local selTemp = {}
+    local selPions = DEC_Automate_PionsSansPC()
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Premier or S_Misc_EstMissionAffectee_Pion( pion, "T_Mission_Pion_INF_Freiner" ) ) then
+                DIA_PushBack( selTemp, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = selTemp
+    return _returnValue
+end
+
+function S_Cherche_Automate_INF_PE( selPions, pPion )
+    local _returnValue = nil
+    local pionFoo = nil
+    _returnValue = pionFoo
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Premier and pion ~= pPion ) then
+                do
+                    _returnValue = pion
+                                        return _returnValue
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Cherche_Automate_INF_PionAAppuyer( sPion_PE, pPion )
+    local _returnValue = nil
+    local rMin_Appui = #( sPion_PE )
+    local pionFoo = nil
+    _returnValue = pionFoo
+    if( #( sPion_PE ) < 2 ) then
+        return _returnValue
+    end
+
+    for _,x in pairs( sPion_PE ) do
+    local _continue = true
+do
+            local pion = x
+            if( #( F_Pion_GetselUnitesEnAppui( pion ) ) < rMin_Appui ) then
+                do
+                    rMin_Appui = #( F_Pion_GetselUnitesEnAppui( pion ) )
+                    _returnValue = pion
+                                        return _returnValue
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Automate_INF_UniteMission_Appuyer( pPionAppui )
+    local _returnValue = nil
+    local pionFoo = nil
+    _returnValue = pionFoo
+    if( ( DEC_GetMission( pPionAppui ) == 0 or DEC_GetMission( pPionAppui ) == nil ) ) then
+        return _returnValue
+    end
+
+    local mission = DEC_GetMission( pPionAppui )
+    switch_1 = mission:GetType()
+        if switch_1 == "T_Mission_Pion_ABC_Soutenir" then
+            local missionABC = DEC_GetMission( pPionAppui )
+            _returnValue = missionABC.uniteASoutenir_
+            
+        elseif switch_1 == "T_Mission_Pion_ABC_Appuyer" then
+            local missionABC = DEC_GetMission( pPionAppui )
+            _returnValue = missionABC.uniteAAppuyer_
+            
+        elseif switch_1 == "T_Mission_Pion_INF_Appuyer" then
+            local missionINF = DEC_GetMission( pPionAppui )
+            _returnValue = missionINF.uniteAAppuyer_
+            
+                end
+
+    return _returnValue
+end
+
+function S_Automate_INF_EstAppuye_Par( pPion, pPionAppui )
+    local _returnValue = false
+    _returnValue = S_Automate_INF_UniteMission_Appuyer( pPionAppui ) == pPion
+    return _returnValue
+end
+
+function S_Automate_INF_EstAppuye( pPion, sPionsAppui )
+    local _returnValue = false
+    _returnValue = false
+    for _,x in pairs( sPionsAppui ) do
+    local _continue = true
+do
+            local pAppui = x
+            if( DEC_GetMission( pAppui ) ~= nil ) then
+                do
+                    _returnValue = S_Automate_INF_EstAppuye_Par( pPion, pAppui )
+                    if( _returnValue ) then
+                        return _returnValue
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_CompagnieAbimee( )
+    local _returnValue = false
+    _returnValue = false
+    local selPions = DEC_Automate_PionsSansPC()
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( S_Pion_EstDetruitTactique( pion ) ) then
+                do
+                    _returnValue = true
+                                        return _returnValue
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Misc_Automate_INF_Pions_EnReductionsSur( ksEni )
+    local _returnValue = 0
+    _returnValue = -1
+    local selPions = DEC_Automate_PionsSansPC()
+    if( not DEC_ConnaissanceAgent_EstValide( ksEni ) ) then
+        return _returnValue
+    end
+
+    _returnValue = 0
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( S_Misc_EstMissionAffectee_Pion( pion, "T_Mission_Pion_INF_Reduire" ) ) then
+                do
+                    if( ksEni == S_Pion_EniEnCours( pion ) ) then
+                                                _returnValue = _returnValue + 1
+                    end
+
+                end
+            end
+
+            if( S_Misc_EstMissionAffectee_Pion( pion, "T_Mission_Pion_ABC_Reduire" ) ) then
+                do
+                    local misABC = DEC_GetMission( pion )
+                    if( ksEni == misABC:GetuniteAReduire_() ) then
+                                                _returnValue = _returnValue + 1
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Cherche_Automate_INF_EniDangereux_DansZone( pionAppui, locZone )
+    local _returnValue = nil
+    local rMaxForce = 0
+    local lstEnisPourAppui = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( pionAppui )
+    local pionFoo = nil
+    _returnValue = pionFoo
+    for _,ksEni in pairs( lstEnisPourAppui ) do
+    local _continue = true
+do
+            if( not S_Eni_EstDansZone( ksEni, locZone ) ) then
+                _continue = false
+            end
+
+                if _continue then
+                local rForceEni_Reduction = 1.5 - S_Misc_Automate_INF_Pions_EnReductionsSur( ksEni )
+                local rForceEni = rForceEni_Reduction * 0.5 * S_Pion_ForceActionContre( pionAppui, ksEni )
+                if( rForceEni > rMaxForce ) then
+                    do
+                        rMaxForce = rForceEni
+                        _returnValue = ksEni
+                    end
+                end
+
+            end
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_ObtenirPionsOperationnels_SansPC_Coordination( )
+    local _returnValue = {}
+    local selTemp = {}
+    local selPions = S_ObtenirPionsOperationnels_SansPC()
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local pion = x
+            switch_1 = pion:GetType()
+                if switch_1 == "GroupeInfanterie_Mortier" then
+                    
+                
+                else
+                    DIA_PushBack( selTemp, pion )
+                end
+
+        end
+
+    end
+
+    _returnValue = selTemp
+    return _returnValue
+end
+
+function S_Cherche_Automate_INF_PionReception_Appui( pionAppui, lst_Pions_AAppuyer )
+    local _returnValue = nil
+    local pionAppui_Max = nil
+    local rForceAppui_Max = 0
+    for _,x in pairs( lst_Pions_AAppuyer ) do
+    local _continue = true
+do
+            local pion = x
+            if( pionAppui == x ) then
+                _continue = false
+            end
+
+                if _continue then
+                if( S_Misc_EstMissionAffectee_Pion( pion, "T_Mission_Pion_INF_Couvrir" ) ) then
+                    _continue = false
+                end
+
+                    if _continue then
+                    local locZone_Intervention = nil
+                    if( S_Misc_EstMissionAffectee_Pion( pion, "T_Mission_Pion_INF_ControlerSecteur" ) ) then
+                        do
+                            local misControler = DEC_GetMission( pion )
+                            locZone_Intervention = misControler:Getsecteur_()
+                        end
+                    end
+
+                    local rForceAppui = 1
+                    local rSelectedBoost = 1
+                    if( S_Automate_INF_EstAppuye_Par( pion, pionAppui ) ) then
+                        rSelectedBoost = 2
+                    end
+
+                    if( #( F_Pion_GetselUnitesEnAppui( pion ) ) > 1 ) then
+                        rForceAppui = 1 / #( F_Pion_GetselUnitesEnAppui( pion ) )
+                    end
+
+                    if( ( rSelectedBoost > 1 ) and ( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 1 ) ) then
+                        rForceAppui = 2.5
+                    end
+
+                    if( ( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 0 or #( F_Pion_GetselUnitesEnAppui( pion ) ) == nil ) ) then
+                        rForceAppui = 3.5
+                    end
+
+                    rForceAppui = rForceAppui * S_Pion_ForceDistancePt( pionAppui, DEC_Automate_PionPosition( pion ) )
+                    local ksEni_EnCours = S_Pion_EniEnCours( pion )
+                    if( DEC_ConnaissanceAgent_EstValide( ksEni_EnCours ) ) then
+                        do
+                            local rForceZone = 1
+                            if( S_Eni_EstDansZone( ksEni_EnCours, locZone_Intervention ) ) then
+                                rForceZone = 2.5
+                            end
+
+                            local rForceEtat = 1
+                            local rForce = rForceEtat * S_Pion_ForceActionContre( pionAppui, ksEni_EnCours )
+                            rForceAppui = rForce + rForceZone * rForceAppui
+                            DEC_Debug( "		- IntervenirSur: " .. DEC_GetSzName( pion ) .. FloatToString( rForce ) )
+                        end
+                    end
+
+                    if( ( rSelectedBoost * rForceAppui ) > rForceAppui_Max ) then
+                        do
+                            rForceAppui_Max = rSelectedBoost * rForceAppui
+                            pionAppui_Max = pion
+                        end
+                    end
+
+                end
+            end
+        end
+
+    end
+
+    _returnValue = pionAppui_Max
+    if( S_Automate_INF_EstAppuye_Par( pionAppui_Max, pionAppui ) ) then
+        _returnValue = nil
+    end
+
+    return _returnValue
+end
+
+function S_Cherche_Automate_INF_EniValide_Pour( pion )
+    local _returnValue = nil
+    local lstEnisPourPion = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( pion )
+    local ksEni = nil
+    local rEni_MaxDist = 2500
+    for _,x_eni in pairs( lstEnisPourPion ) do
+    local _continue = true
+do
+            local rEni_Dist = DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( x_eni ), DEC_Automate_PionPosition( pion ) )
+            if( rEni_Dist < rEni_MaxDist ) then
+                do
+                    rEni_MaxDist = rEni_Dist
+                    ksEni = x_eni
+                end
+            end
+
+        end
+
+    end
+
+    _returnValue = ksEni
+    return _returnValue
+end
+
+function S_Misc_Automate_INF_Compte_MissionEchelon( typeMission, eEtatEchelon )
+    local _returnValue = 0
+    _returnValue = 0
+    local selPions = DEC_Automate_PionsSansPC()
+    for _,x in pairs( selPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( S_Misc_EstMissionAffectee_Pion( pion, typeMission ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon ) then
+                                _returnValue = _returnValue + 1
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Cherche_Automate_INF_PionMission( sPions, typeMission )
+    local _returnValue = nil
+    local pionFoo = nil
+    _returnValue = pionFoo
+    for _,x in pairs( sPions ) do
+    local _continue = true
+do
+            local pion = x
+            if( S_Misc_EstMissionAffectee_Pion( pion, typeMission ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Premier ) then
+                do
+                    _returnValue = pion
+                                        return _returnValue
+
+                end
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Conduite_PionHorsFuseau( sPionsOrdre )
+    local _returnValue = false
+    _returnValue = false
+    for _,x in pairs( sPionsOrdre ) do
+    local _continue = true
+do
+            _returnValue = not DEC_Geometrie_EstPointDansFuseau( DEC_Automate_PionPosition( x ) )
+            if( _returnValue ) then
+                return _returnValue
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Conduite_PionEnAttente_OrdreCoordination( sPionsOrdre )
+    local _returnValue = false
+    _returnValue = false
+    for _,x in pairs( sPionsOrdre ) do
+    local _continue = true
+do
+            local pionOrdre = x
+            switch_1 = F_Pion_GeteEtatPhaseMission( pionOrdre )
+                if switch_1 == eEtatPhaseMission_RejointFuseau then
+                    _returnValue = true
+                                        return _returnValue
+
+                                end
+
+            switch_1 = F_Pion_GeteEtatLima( pionOrdre )
+                if switch_1 == eEtatLima_Fuseau then
+                    _returnValue = true
+                                        return _returnValue
+
+                                end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Geometrie_Automate_INF_PIA_DansFuseau( pRecueil, lstPIA, rItPIA )
+    local _returnValue = nil
+    local ptTest_Fuseau = DEC_ListePoints_GetAt( lstPIA, rItPIA )
+    if( pRecueil:DEC_Geometrie_EstPointDansFuseau( ptTest_Fuseau ) ) then
+        do
+            _returnValue = ptTest_Fuseau
+                        return _returnValue
+
+        end
+    end
+
+    local rIt_Max = DEC_ListePoints_Size( lstPIA )
+    local rIt = 0
+    rIt = 0
+    while rIt < rIt_Max do
+        local _continue = true
+do
+            ptTest_Fuseau = DEC_ListePoints_GetAt( lstPIA, rIt )
+            if( pRecueil:DEC_Geometrie_EstPointDansFuseau( ptTest_Fuseau ) ) then
+                do
+                    _returnValue = ptTest_Fuseau
+                                        return _returnValue
+
+                end
+            end
+
+        end
+    rIt = rIt + 1
+    end
+
+    _returnValue = ptTest_Fuseau
+    return _returnValue
+end
+
+function S_Dispositif_Automate_INF_PionsAmisEnDifficultes( compagnie )
+    local _returnValue = false
+    _returnValue = false
+    for _,x in pairs( DEC_Automate_PionsDeAutomateAvecPC( compagnie ) ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatDec( pion ) == eEtatDec_Sauvegarde ) then
+                _returnValue = true
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Geometrie_PointPlusProchePosition_DansFuseau( ptZone, listePoints )
+    local _returnValue = 0
+    local rDistanceMin = 524280
+    _returnValue = DEC_ListePoints_Size( listePoints )
+    local it = 0
+    while it < DEC_ListePoints_Size( listePoints ) do
+        local _continue = true
+do
+            local ptBuffer = DEC_ListePoints_GetAt( listePoints, it )
+            if( not DEC_Geometrie_EstPointDansFuseau( ptBuffer ) ) then
+                _continue = false
+            end
+
+                if _continue then
+                local rDistanceTmp = DEC_Geometrie_Distance( ptBuffer, ptZone )
+                if( rDistanceTmp < rDistanceMin ) then
+                    do
+                        rDistanceMin = rDistanceTmp
+                        _returnValue = it
+                    end
+                end
+
+            end
+        end
+    it = it + 1
+    end
+
+    return _returnValue
+end
+
+function S_Dispositif_Automate_INF_ObtenirPionsPE_EnDifficultes( )
+    local _returnValue = {}
+    local listePionsPEEnDifficulte = {}
+    local listePions = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatDec( pion ) == eEtatDec_Sauvegarde or F_Pion_GeteEtatDecPrudence( pion ) == eEtatDecPrudence_Actif ) then
+                DIA_PushFront( listePionsPEEnDifficulte, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = listePionsPEEnDifficulte
+    return _returnValue
+end
+
+function S_Dispositif_Automate_INF_ObtenirPionsSoutien( )
+    local _returnValue = {}
+    local listePion = DEC_Automate_PionsSansPC()
+    local listePionDeSoutien = {}
+    for _,x in pairs( listePion ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second and F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_None ) then
+                do
+                    switch_1 = pion:GetType()
+                        if switch_1 == "Peloton_AMX"
+                        or switch_1 == "Peloton_XL" then
+                                                    DIA_PushFront( listePionDeSoutien, pion )
+                            
+                                                end
+
+                end
+            end
+
+        end
+
+    end
+
+    _returnValue = listePionDeSoutien
+    return _returnValue
+end
+
+function S_Dispositif_Automate_INF_ObtenirPionsPE_EnRAS( )
+    local _returnValue = {}
+    local listePionsPEEnRAS = {}
+    local listePions = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatDec( pion ) == eEtatDec_RAS ) then
+                DIA_PushFront( listePionsPEEnRAS, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = listePionsPEEnRAS
+    return _returnValue
+end
+
+function S_Dispositif_Automate_INF_ObtenirPionEnSoutienDe( pionSoutenu )
+    local _returnValue = nil
+    local pionEnSoutien = nil
+    local listePions = DEC_Automate_PionsSansPC()
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local pion = x
+            local mission = DEC_GetMission( pion )
+            if( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Soutenir" ) then
+                do
+                    local missionSoutenir = DEC_GetMission( pion )
+                    if( missionSoutenir.uniteASoutenir_ == pionSoutenu ) then
+                        pionEnSoutien = pion
+                    end
+
+                end
+            end
+
+        end
+
+    end
+
+    _returnValue = pionEnSoutien
+    return _returnValue
+end
+
+function S_Dispositif_Automate_INF_EvtPionDetruit( )
+    local _returnValue = false
+    _returnValue = false
+    local listePionsPE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
+    local listePionsPEcl = S_ObtenirTousPionsDe( eEtatEchelon_Eclairage )
+    for _,x in pairs( listePionsPE ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                do
+                    _returnValue = true
+                                        return _returnValue
+
+                end
+            end
+
+        end
+
+    end
+
+    for _,x in pairs( listePionsPEcl ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                _returnValue = true
+            end
+
+        end
+
+    end
+
+    return _returnValue
+end
+
+function S_Dispositif_Automate_INF_PionsSansMission( )
+    local _returnValue = {}
+    local selTemp = {}
+    for _,x in pairs( DEC_Automate_PionsAvecPC() ) do
+    local _continue = true
+do
+            local pion = x
+            if( ( DEC_GetMission( pion ) == 0 or DEC_GetMission( pion ) == nil ) ) then
+                DIA_PushFront( selTemp, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = selTemp
+    return _returnValue
+end
+
+function S_Dispositif_Automate_INF_ObtenirPionDetruitsDe( eEtatEchelon )
+    local _returnValue = {}
+    local selTemp = {}
+    local listePions = S_ObtenirTousPionsDe( eEtatEchelon )
+    for _,x in pairs( listePions ) do
+    local _continue = true
+do
+            local pion = x
+            if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
+                DIA_PushFront( selTemp, pion )
+            end
+
+        end
+
+    end
+
+    _returnValue = selTemp
+    return _returnValue
+end
+

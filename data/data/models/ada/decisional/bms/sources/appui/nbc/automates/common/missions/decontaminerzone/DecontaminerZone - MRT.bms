@@ -1,0 +1,84 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/common/missions/decontaminerzone/DecontaminerZone - MRT.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA"
+{
+    activations =
+    {
+        { "ACT_Warning", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Mission_Automate_NBC_AssignerDecontaminerZoneA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selPions = self.params[1]
+    end,
+
+    activate = function( self )
+        local mission = DEC_GetMission( myself )
+        self.listeZone = self.listeZone or {}--[[// Détermination du secteur
+]]
+        self.nErrorCode = self.nErrorCode or nil
+        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+            return
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                self.listeZone = DEC_Geometrie_DecoupeLocalisation( mission.zone_, #( self._namedParams.selPions ), self.nErrorCode )
+                self.nErrorCode = self.listeZone.second
+                self.listeZone = self.listeZone.first
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Gestion erreur
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.nErrorCode ~= eNoError ) then
+                    do
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Impossibl to comput position in this localisation", } )
+                                                return
+
+                    end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Assignation des missions
+]]--[[//-----------------------------------------------------------------------------
+]]                end
+
+                local rIterateurZone = 0
+                for _,pion in pairs( self._namedParams.selPions ) do
+                local _continue = true
+do
+                        if( rIterateurZone == #( self.listeZone ) ) then
+                            rIterateurZone = 0
+                        end
+
+                        --[[// Récuperation du secteur courant
+]]local zone = DEC_UserTypeList_GetAt( self.listeZone, rIterateurZone )
+                        --[[// Assignation de la mission
+]]StartActivate( self.activations.BEH_Mission_Automate_NBC_AssignerDecontaminerZoneA, 1, { ePhase_MRT, pion, zone, } )
+                                                rIterateurZone = rIterateurZone + 1
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA, "ACT_Warning", nodes.ACT_Warning }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA, "BEH_Mission_Automate_NBC_AssignerDecontaminerZoneA", nodes.BEH_Mission_Automate_NBC_AssignerDecontaminerZoneA }

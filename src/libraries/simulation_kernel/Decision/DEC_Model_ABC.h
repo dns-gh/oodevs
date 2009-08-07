@@ -19,8 +19,6 @@ namespace xml
     class xistream;
 }
 
-class DIA_Model;
-class DEC_Workspace;
 class MIL_MissionType_ABC;
 class MIL_FragOrderType;
 
@@ -33,10 +31,10 @@ class DEC_Model_ABC : private boost::noncopyable
 public:
     //! @name Accessors
     //@{
-    const std::string& GetName      () const;
-    const std::string& GetScriptName() const;
-          DIA_Model&   GetDIAModel  () const;
-    const DIA_Type&    GetDIAType   () const;
+    const std::string& GetName       () const;
+    const std::string& GetScriptFile () const;
+    const std::string& GetIncludePath() const;
+    const std::string& GetDIAType    () const;
     //@}
 
     //! @name Operations
@@ -53,19 +51,17 @@ public:
 protected:
     //! @name Constructors
     //@{
-    DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, xml::xistream& xis, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
+    DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::string& strPrefix, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
     //@}
 
 private:
     //! @name Initialization tools
     //@{
-           bool NeedScriptParsing( bool bNeedParsing, const std::string& strArchiveName, const std::string& strFileName, const std::string& strOpenedFileArchiveName ) const;
     static bool FileChanged      ( const std::string& strFileName, time_t since );
     //@}
 
     //! @name Initialization
     //@{
-    void InitializeModel            ( const DEC_Workspace& decWorkspace, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strPrefix );
     void InitializeMissions         ( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
     void InitializeMissionFragOrders( xml::xistream& xis, const MIL_MissionType_ABC& missionType );
     //@}
@@ -87,9 +83,9 @@ private:
 
 private:
     const std::string     strModel_;
-    const DIA_Type*       pDIAType_;
-          DIA_Model*      pDIAModel_;
+          std::string     strDIAType_;
           std::string     strScript_;
+          std::string     strIncludePath_;
           
 		  T_MissionSet				availableMissions_ ; 		  		
 		  T_FragOrderPerMissionMap  availableFragOrdersPerMission_;

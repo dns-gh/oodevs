@@ -1,0 +1,160 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/missions/SeFaireTransporter.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_SeFaireTransporter
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_SeFaireTransporter"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Dep_Trans_SeFaireTransporter", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eEtat = self.eEtat or eActionEnCours
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[// Fin transport
+]]        end
+
+        if( DEC_Agent_EstTransporte() ) then
+            self.ePhase = eFinMission
+        end
+
+        Activate( self.activations.BEH_Dep_Trans_SeFaireTransporter, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Se faire transporter --> CR
+]]--[[//-----------------------------------------------------------------------------
+]]
+        switch_1 = --[[//=============================================================================
+]]--[[// Calcule it et progression
+]]--[[//=============================================================================
+]]self.ePhase
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhase = eProgresser
+                
+            --[[// Deplacement
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointEmbarquement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Attendre le transport
+]]elseif switch_1 == eAttendre then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+            --[[// Fin mission
+]]elseif switch_1 == eFinMission then
+                if( DEC_Agent_EstTransporte() ) then
+                    return
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Trans_SeFaireTransporter
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Trans_SeFaireTransporter"
+{
+    activations =
+    {
+        { "ACT_Dep_Trans_TransportEnCours", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_EstTransporte() ) then
+            Activate( self.activations.ACT_Dep_Trans_TransportEnCours, 1, {} )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Dep_Trans_TransportEnCours
+]]--[[//
+]]--[[// Commentaires: Juste RC
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Dep_Trans_TransportEnCours"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_TransportEnCours )
+                else
+                    DEC_Message( eRC_TransportEnCours )
+                end
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_SeFaireTransporter = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Trans_SeFaireTransporter, "ACT_Dep_Trans_TransportEnCours", nodes.ACT_Dep_Trans_TransportEnCours }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireTransporter, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireTransporter, "BEH_Dep_Trans_SeFaireTransporter", nodes.BEH_Dep_Trans_SeFaireTransporter }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireTransporter, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireTransporter, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SeFaireTransporter, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

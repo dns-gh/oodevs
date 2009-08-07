@@ -14,6 +14,7 @@
 
 #include "DEC_KnowledgeBlackBoard_ABC.h"
 #include "DEC_Knowledge_RapForLocal.h"
+#include "DEC_Knowledge_Def.h"
 
 class MIL_KnowledgeGroup;
 class DEC_BlackBoard_CanContainKnowledgeAgent;
@@ -65,15 +66,12 @@ public:
     //! @name Resolver
     //@{
     virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const;
-    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const DIA_Variable_ABC&      dia ) const;
     virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent (       uint                   nID ) const;
 
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const;
-    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const;
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject(       uint                   nID ) const;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const DIA_Variable_ABC&          dia ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const;
     //@}
 
@@ -84,19 +82,19 @@ public:
           bool                         IsKnown                     ( const MIL_Agent_ABC& agent ) const;
           DEC_Knowledge_Agent*         GetKnowledgeAgent           ( const DEC_Knowledge_AgentPerception& perception ) const;
           DEC_Knowledge_Agent*         GetKnowledgeAgentFromID     ( uint nID ) const;
-          void                         GetDetectedAgentsInZone     ( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon&      zone ) const;          
-          void                         GetDetectedAgentsInZone     ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;          
+          void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Polygon&      zone ) const;          
+          void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;          
 
     const T_KnowledgeAgentVector&      GetFriends                  () const;
-          void                         GetFriendsInZone            ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;
+          void                         GetFriendsInZone            ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
     const T_KnowledgeAgentVector&      GetEnemies                  () const;
-          void                         GetLivingEnemiesInZone      ( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon&      zone ) const;    
-          void                         GetLivingEnemiesInZone      ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;    
-          void                         GetLivingEnemiesInCircle    ( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
+          void                         GetLivingEnemiesInZone      ( T_ConstKnowledgeAgentVector& container, const TER_Polygon&      zone ) const;    
+          void                         GetLivingEnemiesInZone      ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;    
+          void                         GetLivingEnemiesInCircle    ( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
           bool                         EnemyPresenceInCircle       ( const MT_Vector2D& center, MT_Float rRadius ) const;
 
-          void                         GetRefugeesInCircle         ( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
-          void                         GetSurrenderedAgentsInCircle( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
+          void                         GetRefugeesInCircle         ( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
+          void                         GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
 
          
     // Knowledge populations
@@ -109,7 +107,7 @@ public:
 
     //! @name Tools
     //@{
-    void TranslateKnowledges( const T_KnowledgeAgentDiaIDVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_KnowledgeAgentDiaIDVector& translatedKnowledges ) const;
+    void TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const;
     //@}
 
 private:
@@ -128,13 +126,13 @@ private:
     //@{
     uint nLastCacheUpdateTick_;
 
-    T_KnowledgeAgentDiaIDVector  detectedContainer_;
+    T_KnowledgeAgentVector  detectedContainer_;
     T_KnowledgeAgentVector       friendsContainer_;
     T_KnowledgeAgentVector       enemiesContainer_;
-    T_KnowledgeAgentDiaIDVector  militiasContainer_;
-    T_KnowledgeAgentDiaIDVector  terroristsContainer_;
-    T_KnowledgeAgentDiaIDVector  refugeesContainer_;
-    T_KnowledgeAgentDiaIDVector  surrenderedAgentsContainer_;
+    T_KnowledgeAgentVector  militiasContainer_;
+    T_KnowledgeAgentVector  terroristsContainer_;
+    T_KnowledgeAgentVector  refugeesContainer_;
+    T_KnowledgeAgentVector  surrenderedAgentsContainer_;
     //@}
 };
 

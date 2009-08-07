@@ -1,0 +1,75 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/nbc/automates/son dec/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-08-29 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Nbc/Automates/Son Dec/Behaviors.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:06 $
+]]--[[// $Revision: 8 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = no
+
+max_instances = 200
+
+max_activations = 200
+
+
+actuators = {
+etat_OrdreCoordination = 1,
+releve = 1,
+}
+
+
+
+--[[// Commun pion ABC
+]]include "Appui/Nbc/Automates/Common/Behaviors.bms"
+
+
+--[[// Son dec
+]]include "Appui/Nbc/Automates/Son Dec/Actions.bms"
+
+include "Appui/Nbc/Automates/Son Dec/Missions/Missions.bms"
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Missions génériques
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Armer site de decontamination
+]]--[[//include "Appui\Nbc\Automates\Common\Missions\ArmerSiteDecontamination\ArmerSiteDecontamination - MRT.bms"
+]]include "Appui/Nbc/Automates/Common/Missions/ArmerSiteDecontamination/ArmerSiteDecontamination - CDT.bms"
+
+
+--[[// Decontaminer zone
+]]include "Appui/Nbc/Automates/Common/Missions/DecontaminerZone/DecontaminerZone - MRT.bms"
+
+include "Appui/Nbc/Automates/Common/Missions/DecontaminerZone/DecontaminerZone - CDT.bms"
+
+
+--[[// Reconnaitre 
+]]include "Appui/Nbc/Automates/Common/Missions/ReconnaitreAxe/ReconnaitreAxe - MRT.bms"
+
+include "Appui/Nbc/Automates/Common/Missions/ReconnaitreAxe/ReconnaitreAxe - CDT.bms"
+
+
+--[[// Reconnaitre zone
+]]include "Appui/Nbc/Automates/Common/Missions/ReconnaitreZone/ReconnaitreZone - MRT.bms"
+
+include "Appui/Nbc/Automates/Common/Missions/ReconnaitreZone/ReconnaitreZone - CDT.bms"
+
+
+--[[// Reconnaitre site
+]]--[[//include "Appui\Nbc\Automates\Common\Missions\ReconnaitreSitesROTA\ReconnaitreSitesROTA - MRT.bms"
+]]include "Appui/Nbc/Automates/Common/Missions/ReconnaitreSitesROTA/ReconnaitreSitesROTA - CDT.bms"
+
+
+--[[// MRT GEN Mis
+]]include "Appui/Nbc/Automates/Common/MRT generique.bms"

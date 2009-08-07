@@ -1,0 +1,182 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/populations/Motivations.bms"] = true
+
+include "Population/Populations/Etats.bms"
+
+include "Population/Populations/Stimulus.bms"
+
+
+--[[// *****************************************************************************
+]]--[[//  MOTIVATION MISSION --> ordre de mission strength = 1
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.motivations[ "MOT_Mission" ] =
+{
+    activation = {
+        STIM_Mission = 1,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 1,
+    max_decrease_rate = 1,
+    max_output_value = 1,
+}
+
+node "ActivatedByMOT_Mission"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+    end,
+
+}
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executer quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// *****************************************************************************
+]]--[[//  MOTIVATION RIPOSTE --> réaction face à une PAP, strength = 1000
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_Riposte" ] =
+{
+    activation = {
+        STIM_PriseAPartieTirDirect = 1000,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 1000,
+    max_decrease_rate = 10,
+    max_output_value = 1000,
+}
+
+node "ActivatedByMOT_Riposte"
+{
+    activations =
+    {
+        { "BEH_Pop_RepondreALaPriseAPartie", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executer quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Pop_RepondreALaPriseAPartie, GetMotivation( "MOT_Riposte" ), {} )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[//  MOTIVATION Stationner --> blocage du déplacement
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_Stationner" ] =
+{
+    activation = {
+        VE_Stationner = 100,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 100,
+    max_decrease_rate = 100,
+    max_output_value = 100,
+}
+
+node "ActivatedByMOT_Stationner"
+{
+    activations =
+    {
+        { "BEH_Pop_Stationner", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la
+]]--[[// valeur pour laquelle la motivation ne chanhera pas, le second la valeur pour
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executer quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Pop_Stationner, GetMotivation( "MOT_Stationner" ), {} )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { motivation( "MOT_Mission" ), nodes.ActivatedByMOT_Mission }
+connections[ #connections + 1 ] = { motivation( "MOT_Riposte" ), nodes.ActivatedByMOT_Riposte }
+connections[ #connections + 1 ] = { motivation( "MOT_Stationner" ), nodes.ActivatedByMOT_Stationner }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_Riposte, "BEH_Pop_RepondreALaPriseAPartie", nodes.BEH_Pop_RepondreALaPriseAPartie }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_Stationner, "BEH_Pop_Stationner", nodes.BEH_Pop_Stationner }

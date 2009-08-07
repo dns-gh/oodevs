@@ -1,0 +1,168 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/Behaviors CDT - Situation.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-05-15 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Common/Behaviors CDT - Situation.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 25/08/05 14:41 $
+]]--[[// $Revision: 11 $
+]]--[[// $Workfile: Behaviors CDT - Situation.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+
+node "BEH_Situation_Automate_INF_Defaut"
+{
+    activations =
+    {
+        { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.bFinMission = self.params[1]
+    end,
+
+    activate = function( self )
+        local sComposants = DEC_Automate_PionsSansPC()
+        for _,x in pairs( sComposants ) do
+        local _continue = true
+do
+                local x_pion = x
+                switch_1 = --[[// Situation Mission
+]]--[[// --------------------------------------------------------------------
+]]F_Pion_GeteEtatPhaseMission( x_pion )
+                    if switch_1 == eEtatPhaseMission_FinMission then
+                        if( self._namedParams.bFinMission ) then
+                            do
+                                switch_2 = F_Pion_GetmissionPrecedente( x_pion )
+                                    if switch_2 == "T_Mission_Pion_INF_Appuyer"
+                                    or switch_2 == "T_Mission_Pion_ABC_Appuyer"
+                                    or switch_2 == "T_Mission_Pion_ABC_Soutenir" then
+                                                                            
+                                    
+                                    else
+                                        StartActivate( self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
+                                    end
+
+                            end
+                        end
+
+                        
+                                        end
+
+            end
+
+        end
+
+    end,
+
+}
+
+node "BEH_Situation_Automate_INF_CadreOffensif"
+{
+    activations =
+    {
+        { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
+        { "BEH_Conduite_Automate_INF_AssignerSemparerA", {} },
+        { "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local sComposants = DEC_Automate_PionsSansPC()
+        for _,x in pairs( sComposants ) do
+        local _continue = true
+do
+                local x_pion = x
+                switch_1 = --[[// Situation Mission
+]]--[[// --------------------------------------------------------------------
+]]F_Pion_GeteEtatPhaseMission( x_pion )
+                    if switch_1 == eEtatPhaseMission_FinMission then
+                        switch_2 = F_Pion_GetmissionPrecedente( x_pion )
+                            if switch_2 == "T_Mission_Pion_INF_Reduire"
+                            or switch_2 == "T_Mission_Pion_INF_ReconnaitreAxe" then
+                                StartActivate( self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
+                                
+                            elseif switch_2 == "T_Mission_Pion_INF_Fixer" then
+                                DEC_Trace( "Fin mission : Fixer." )
+                                if( S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_Semparer" ) ) then
+                                    do
+                                        local mission = DEC_GetMission( myself )
+                                        StartActivate( self.activations.BEH_Conduite_Automate_INF_AssignerSemparerA, 1, { x_pion, mission.objectif_, } )
+                                    end
+                                end
+
+                                
+                            elseif switch_2 == "T_Mission_Pion_INF_PrendrePreciserContact" then
+                                --[[// case T_Mission_Pion_INF_Reduire:				
+]]--[[// 
+]]DEC_Trace( "Fin mission : Reduire | PPContact." )
+                                if( not S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_Semparer" ) ) then
+                                    StartActivate( self.activations.BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco, 1, { x_pion, } )
+                                end
+
+                            elseif switch_2 == "T_Mission_Pion_INF_Semparer" then
+                            --[[// Ajout ADA MIA											
+]]
+                            else
+                                F_Pion_SeteEtatEchelon( x_pion, eEtatEchelon_Second )
+                            end
+
+                        
+                                        end
+
+            end
+
+        end
+
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_AssignerSemparerA"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_INF_AssignerA_Semparer", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+        self._namedParams.locZone = self.params[2]
+    end,
+
+    activate = function( self )
+                self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
+        if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
+            self.params.__returnValue = eActionImpossible
+            Halt()
+        end
+
+        if( not ModuleBegins() ) then
+            Halt()
+        end
+
+        Activate( self.activations.BEH_Mission_Automate_INF_AssignerA_Semparer, 1, { ePhase_CDT, self._namedParams.pion, self.ptZone, } )
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_AssignerSemparerA, "BEH_Mission_Automate_INF_AssignerA_Semparer", nodes.BEH_Mission_Automate_INF_AssignerA_Semparer }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_CadreOffensif, "BEH_Situation_Automate_INF_FinDeMission_Sur", nodes.BEH_Situation_Automate_INF_FinDeMission_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_CadreOffensif, "BEH_Conduite_Automate_INF_AssignerSemparerA", nodes.BEH_Conduite_Automate_INF_AssignerSemparerA }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_CadreOffensif, "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco", nodes.BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Defaut, "BEH_Situation_Automate_INF_FinDeMission_Sur", nodes.BEH_Situation_Automate_INF_FinDeMission_Sur }

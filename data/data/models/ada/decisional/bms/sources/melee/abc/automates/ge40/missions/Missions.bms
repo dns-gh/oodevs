@@ -1,0 +1,75 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/missions/Missions.bms"] = true
+
+
+--[[// Commun
+]]include "Melee/Abc/Automates/GE40/Missions/Repartir dans fuseau.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Repartir dans zone.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Echelonner dispositif.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Reorganiser moyens.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Rendre compte.bms"
+
+
+--[[// Coordination
+]]include "Melee/Abc/Automates/GE40/Missions/Surete/Gerer appuis internes.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Offensives/Gerer appuis internes.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Offensives/Coordonner dispositif.bms"
+
+
+
+--[[/* EffectuerRaid */]]
+include "Melee/Abc/Automates/GE40/Missions/Offensives/EffectuerRaid/EffectuerRaid - MRT.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Offensives/EffectuerRaid/EffectuerRaid - CDT.bms"
+
+
+--[[/* Attaquer */]]
+include "Melee/Abc/Automates/GE40/Missions/Offensives/Attaquer/Attaquer - MRT.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Offensives/Attaquer/Attaquer - CDT.bms"
+
+
+--[[/* Reconnaître / Marche offensive */]]
+include "Melee/Abc/Automates/GE40/Missions/Offensives/MarcheEnnemi/MarcheEnnemi - MRT.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Offensives/MarcheEnnemi/MarcheEnnemi - CDT.bms"
+
+
+--[[/* Exploiter */]]
+include "Melee/Abc/Automates/GE40/Missions/Offensives/Exploiter/Exploiter - MRT.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Offensives/Exploiter/Exploiter - CDT.bms"
+
+
+--[[/* Freiner */]]
+include "Melee/Abc/Automates/GE40/Missions/Defensives/Freiner/Coordonner dispositif.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Defensives/Freiner/Freiner - MRT.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Defensives/Freiner/Freiner - CDT.bms"
+
+
+--[[/* DonnerCoupArret */]]
+include "Melee/Abc/Automates/GE40/Missions/Defensives/DonnerCoupArret/Gerer appuis internes.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Defensives/DonnerCoupArret/DonnerCoupArret - MRT.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Defensives/DonnerCoupArret/DonnerCoupArret - CDT.bms"
+
+
+--[[/* Controler */]]
+include "Melee/Abc/Automates/GE40/Missions/Surete/ControlerZone/Controler - MRT.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/Surete/ControlerZone/Controler - CDT.bms"
+
+
+--[[/* Faire mouvement */]]
+include "Melee/Abc/Automates/GE40/Missions/FaireMouvement/FaireMouvement - MRT.bms"
+
+include "Melee/Abc/Automates/GE40/Missions/FaireMouvement/FaireMouvement - CDT.bms"

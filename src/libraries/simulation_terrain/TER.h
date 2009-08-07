@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
 #include "pathfind/TerrainData.h"
+#include <boost/shared_ptr.hpp>
 
 namespace boost
 {
@@ -30,8 +31,8 @@ namespace boost
 
 
 class TER_Localisation;
-typedef std::vector< TER_Localisation* >          T_LocalisationPtrVector;
-typedef T_LocalisationPtrVector::iterator        IT_LocalisationPtrVector;
-typedef T_LocalisationPtrVector::const_iterator CIT_LocalisationPtrVector;
+typedef std::vector< boost::shared_ptr< TER_Localisation > > T_LocalisationPtrVector;
+typedef T_LocalisationPtrVector::iterator                   IT_LocalisationPtrVector;
+typedef T_LocalisationPtrVector::const_iterator            CIT_LocalisationPtrVector;
 
 #endif // __TER_h_

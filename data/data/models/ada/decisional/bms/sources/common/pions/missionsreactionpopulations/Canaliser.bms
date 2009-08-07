@@ -1,0 +1,175 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/missionsreactionpopulations/Canaliser.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_CanaliserPopulations
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_CanaliserPopulations"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Virtuel_ProgressionVers", {} },
+        { "ACT_Pion_Canaliser", {} },
+        { "BEH_Dep_Virtuel_PreparationAction", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.ePreparation = self.ePreparation or eActionEnCours
+        self.canal = self.canal or nil
+        self.localisation = self.localisation or self._namedParams.mission.zone_
+        self.objectif = self.objectif or nil
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+                self.objectif = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
+                if( ( self.objectif == 0 or self.objectif == nil ) ) then
+                    self.params.__returnValue = eActionImpossible
+                    Halt()
+                end
+
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Canalizing population mission begining", } )
+                self.ePhaseMission = eAborderObjectif
+                
+            --[[// 2) Rejoindre la localisation
+]]elseif switch_1 == eAborderObjectif then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) <= 100 ) then
+                    self.ePhaseMission = eAnimer
+                else
+                    Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, { self.objectif, eProgressionDefaut, eTypeItiMouvement, } )
+                end
+
+                
+            --[[// 2) Animer la canalisation
+]]elseif switch_1 == eAnimer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
+                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) > 100 ) then
+                    do
+                        self.ePhaseMission = eAborderObjectif
+                        
+                    end
+                end
+
+                if( self.ePreparation == eActionEffectuee ) then
+                    Activate( self.activations.ACT_Pion_Canaliser, 1, { self.localisation, } )
+                end
+
+                Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePreparation = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// 3) Fin de la mission de reconnaissance SUR ORDRE
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                                Halt()
+
+            
+            else
+                        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pion_Canaliser
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Pion_Canaliser"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.loc = self.params[1]
+    end,
+
+    select = function( self )
+                self.bPaused = self.bPaused or false
+        if( ModuleBegins() ) then
+            do
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_AnimationCanalisation )
+                    else
+                        DEC_Message( eRC_AnimationCanalisation )
+                    end
+
+                end
+
+            end
+        end
+
+        if( self.bPaused ) then
+            do
+                DEC_Trace( "animation canalisation" )
+                self.bPaused = false
+            end
+        end
+
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            DEC_Agent_CanaliserPopulation( self._namedParams.loc )
+        end
+
+    end,
+
+    deselect = function( self )
+                self.bPaused = true
+        DEC_Trace( "Pause animation canalisation" )
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Fin animation canalisation" )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_CanaliserPopulations = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_CanaliserPopulations, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_CanaliserPopulations, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_CanaliserPopulations, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_CanaliserPopulations, "BEH_Dep_Virtuel_ProgressionVers", nodes.BEH_Dep_Virtuel_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_CanaliserPopulations, "ACT_Pion_Canaliser", nodes.ACT_Pion_Canaliser }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_CanaliserPopulations, "BEH_Dep_Virtuel_PreparationAction", nodes.BEH_Dep_Virtuel_PreparationAction }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_CanaliserPopulations, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

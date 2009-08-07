@@ -1,0 +1,39 @@
+pragma "once"
+
+include "DEC_GetMission.bms"
+
+node 'BEH_Defaut' { }
+
+node 'testDEC_GetMission'
+{
+    activate = function( self )
+        DEC_TestBehaviorCalled( DEC_GetMission( myself ).parameter )
+    end
+}
+
+node 'testDEC_GetOtherMission'
+{
+    activate = function( self )
+        DEC_TestBehaviorCalled( DEC_GetMission( other ).parameter )
+    end
+}
+
+node 'mission'
+{
+    create = function( self )
+        DEC_TestBehaviorCalled( self.params.mission.parameter )
+    end
+}
+
+local MissionParamTestBrain =
+{
+    eventmanager_plugin = 
+    {
+        BEH_Defaut = {},
+        mission = { "mission" },
+        testDEC_GetMission = { "mission" }, 
+        testDEC_GetOtherMission = { "mission" }, 
+    },
+}
+
+brain "name" ( MissionParamTestBrain )

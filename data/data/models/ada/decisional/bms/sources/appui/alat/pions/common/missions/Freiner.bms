@@ -1,0 +1,259 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/pions/common/missions/Freiner.bms"] = true
+
+include "bit.lua"
+
+
+--[[//------------------------------------------------------------------------------
+]]--[[// MIS_ALAT_Freiner
+]]--[[//=================
+]]--[[//utilisation de lignes de coup d'arret sur lesquelles on fait feu
+]]--[[//A ajouter dans les parametres mission
+]]
+--[[//Pour cette mission, il est important d'orienter le fuseau avec une LDM et une 
+]]--[[//LFM pour calculer le point de fin de fuseau
+]]--[[//
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_ALAT_Freiner"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Manoeuvre_Pion_GererRecueil", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Eni_Pion_ALAT_GererUnitesDetectes", {} },
+        { "BEH_Eni_Pion_ALAT_GererEniFreiner", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eDetruire
+        self.listeLocalisationsMissionFreiner = self.listeLocalisationsMissionFreiner or {}
+        self.pointFinFuseau = self.pointFinFuseau or nil
+        self.pointDebutFuseau = self.pointDebutFuseau or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                end
+
+                --[[// decoupage du fuseau en troncons de 5 km de long
+]]--[[// -----------------------------------------------
+]]self.listeLocalisationsMissionFreiner = DEC_Geometrie_DecoupeFuseauEnTroncons( 5000 )
+                self.pointFinFuseau = DEC_Geometrie_CalculerPointArrivee()
+                self.pointDebutFuseau = DEC_Geometrie_CalculerPointDepart()
+                DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                if( self.ePhase ~= eFinMission and self.ePhase ~= eSExfiltrer ) then
+                    do
+                        self.ePhase = eSExfiltrer
+                        self.eEtat = eActionEnCours
+                    end
+                end
+
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.BEH_Manoeuvre_Pion_GererRecueil, 10, {} )
+        switch_1 = self.ePhase
+            if switch_1 == eDetruire then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnFreinage, } )
+                --[[// RECONNAISSANCES DES UNITES DETECTEES
+]]--[[// ------------------------------------
+]]Activate( self.activations.BEH_Eni_Pion_ALAT_GererUnitesDetectes, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
+                --[[// FREINER LES ENNEMIS
+]]--[[// -------------------
+]]Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniFreiner, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 4, { self.listeLocalisationsMissionFreiner, self.pointFinFuseau, self._namedParams.mission.ciblesPrioritaires_, self.pointDebutFuseau, } )
+                
+            elseif switch_1 == eSExfiltrer then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                end
+
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                if( self.eEtat == eActionImpossible ) then
+                    do
+                                                do
+                            DIA_Clear( myself.plotsRavitaillement_ )
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_Warning( eRC_MissionImpossible )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            DIA_Clear( myself.plotsRavitaillement_ )
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                DIA_Clear( myself.plotsRavitaillement_ )
+        F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Gestion des ennemis dans le cadre de la mission Freiner
+]]--[[//
+]]--[[// Commentaires : il s'agit de faire une succession de coups d'arret.
+]]--[[//
+]]--[[// Pour ce faire, on va rechercher la zone dans laquelle sera le premier echelon
+]]--[[// de l'ennemi. Cette zone sera la zone initiale de la manoeuvre.
+]]--[[// On va alors se poster sur le meilleur point de dislocation trouvé et on lance
+]]--[[// le comportement detruire dans zone.
+]]--[[//
+]]--[[// une fois que le tir a été effectué, on passe a la zone suivante.
+]]--[[//------------------------------------------------------------------------------
+]]}
+
+node "BEH_Eni_Pion_ALAT_GererEniFreiner"
+{
+    activations =
+    {
+        { "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listeLocalisations = self.params[1]
+        self._namedParams.pointFinFuseau = self.params[2]
+        self._namedParams.ciblesPrioritaires = self.params[3]
+        self._namedParams.pointAProteger = self.params[4]
+    end,
+
+    activate = function( self )
+        self.listeLocalisationsBuffer = self.listeLocalisationsBuffer or self._namedParams.listeLocalisations
+        self.pointDislocation = self.pointDislocation or DEC_Geometrie_CreerPoint()
+        self.zoneCourante = self.zoneCourante or DEC_Geometrie_CreerLocalisation()
+        self.barycentreZone = self.barycentreZone or DEC_Geometrie_CreerPoint()
+        self.orientationZone = self.orientationZone or nil
+        --[[// GESTION DE LA PAP DES ENNEMIS
+]]--[[// -------------------------------------------------------------------------
+]]local listeUnitesEnnemiesVivantesDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
+        --[[// La suite du comportement n'est evalué que si on a des ennemis reconnus 
+]]--[[// dans le fuseau
+]]--[[// -------------------------------------------------------------------------
+]]if( DIA_IsListEmpty( listeUnitesEnnemiesVivantesDansFuseau ) ) then
+            Halt()
+        end
+
+        --[[// détermination de la nouvelle zone d'intéret, de sa direction dans le 
+]]--[[// fuseau et de son barycentre
+]]if( ModuleBegins() or F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
+            do
+                local localisation = S_Geometrie_Pion_ALAT_ZoneAvantPremierEchelonEnnemi( self.listeLocalisationsBuffer )
+                if( ( localisation ~= 0 and localisation ~= nil ) ) then
+                    do
+                        DEC_Copie_Localisation( localisation, self.zoneCourante )
+                        local pointBuffer = S_Geometrie_BarycentreZone( self.zoneCourante )
+                        if( ( pointBuffer ~= 0 and pointBuffer ~= nil ) ) then
+                            do
+                                DEC_Copie_Point( pointBuffer, self.barycentreZone )
+                                self.orientationZone = DEC_Geometrie_CreerDirection( self.barycentreZone, self._namedParams.pointFinFuseau )
+                                if( ( self.orientationZone == 0 or self.orientationZone == nil ) ) then
+                                    Halt()
+                                end
+
+                            end
+                        else
+                            Halt()
+                        end
+
+                    end
+                else
+                    Halt()
+                end
+
+            end
+--[[// Calcul du point de dislocation
+]]--[[// ------------------------------
+]]        end
+
+        if( ModuleBegins() or ( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) or ( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) ) then
+            do
+                local directionPointDislocationDroit = DEC_Geometrie_CreerDirectionPerpendiculaire( self.orientationZone, false )
+                local directionPointDislocationGauche = DEC_Geometrie_CreerDirectionPerpendiculaire( self.orientationZone, true )
+                local pointDislocationDroit = DEC_Geometrie_PositionTranslateDir( self.barycentreZone, directionPointDislocationDroit, 5000 )
+                local pointDislocationGauche = DEC_Geometrie_PositionTranslateDir( self.barycentreZone, directionPointDislocationGauche, 5000 )
+                --[[// choisir la position la moins dangereuse
+]]DEC_Copie_Point( S_Geometrie_Pion_ALAT_PositionLaMoinsDangereuse( pointDislocationDroit, pointDislocationGauche, 5000 ), self.pointDislocation )
+            end
+        end
+
+        Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniDetruireDansZone, 1, { self.pointDislocation, self._namedParams.ciblesPrioritaires, self.zoneCourante, 1, 0, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ALAT_Freiner = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Eni_Pion_ALAT_GererEniFreiner, "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone", nodes.BEH_Eni_Pion_ALAT_GererEniDetruireDansZone }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "ACT_Maj_Pion_PasserEnTirLibre", nodes.ACT_Maj_Pion_PasserEnTirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "BEH_Manoeuvre_Pion_GererRecueil", nodes.BEH_Manoeuvre_Pion_GererRecueil }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "BEH_Eni_Pion_ALAT_GererUnitesDetectes", nodes.BEH_Eni_Pion_ALAT_GererUnitesDetectes }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "BEH_Eni_Pion_ALAT_GererEniFreiner", nodes.BEH_Eni_Pion_ALAT_GererEniFreiner }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "BEH_Manoeuvre_Pion_AllerStationner", nodes.BEH_Manoeuvre_Pion_AllerStationner }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_Freiner, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }

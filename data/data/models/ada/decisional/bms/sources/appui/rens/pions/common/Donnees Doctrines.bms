@@ -1,0 +1,81 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/pions/common/Donnees Doctrines.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-11-21 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/Rens/Pions/Common/Donnees Doctrines.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 1/07/05 12:59 $
+]]--[[// $Revision: 6 $
+]]--[[// $Workfile: Donnees Doctrines.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//Macros des pions alat
+]]function M_POLY_DOCTRINE_MODULATION_VITESSE_RALENTIR()
+    return 0.1
+end
+
+
+
+--[[// *****************************************************************************
+]]--[[// Ph tir efficace
+]]--[[//*****************************************************************
+]]function M_DOCTRINE_PION_Rens_PH_TIR_EFFICACE()
+    return 0.5
+end
+
+
+
+
+--[[// *****************************************************************************
+]]--[[// PH MIN POUR l'ABC --> pour distance de sécurité pour une unité
+]]--[[//
+]]--[[// *****************************************************************************
+]]function M_MODELE_PION_Rens_PH_SECURITE()
+    return 0.2
+end
+
+
+
+--[[// *****************************************************************************
+]]--[[// PH_Pour riposte
+]]--[[// *****************************************************************************
+]]function M_MODELE_PION_Rens_PH_RIPOSTE()
+    return 0.2
+end
+
+--[[// *****************************************************************************
+]]--[[// DISTANCE A LAQUELLE LES UNITES SE FIXENT
+]]--[[// Distance de tube --> distance tir "efficace"
+]]--[[//
+]]--[[// *****************************************************************************
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Distance de tube efficace sur un eni --> pour le comp d'argression
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Distance DANGER --> tir efficace d'un eni sur nous --> pour esquive
+]]--[[//-----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Distance de tube efficace d'un eni sur moi --> Fixation
+]]--[[//-----------------------------------------------------------------------------
+]]function S_Misc_Pion_Rens_ObtenirDistanceTirEfficaceSur( repEni )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMaxPourTirerSurUnite( repEni, M_DOCTRINE_PION_RENS_PH_TIR_EFFICACE() )
+    return _returnValue
+end
+
+function S_Misc_Pion_Rens_ObtenirDistanceDangerSur( repEni )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMaxPourEtreTireParUnite( repEni, M_MODELE_PION_RENS_PH_SECURITE() )
+    return _returnValue
+end
+
+function S_Misc_Pion_Rens_ObtenirDistanceTirEfficaceEni( repEni )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMaxPourEtreTireParUnite( repEni, M_DOCTRINE_PION_RENS_PH_TIR_EFFICACE() )
+    return _returnValue
+end
+

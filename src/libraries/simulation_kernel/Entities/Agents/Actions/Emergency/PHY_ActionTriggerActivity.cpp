@@ -19,13 +19,12 @@
 // Name: PHY_ActionTriggerActivity constructor
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
-PHY_ActionTriggerActivity::PHY_ActionTriggerActivity( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC      ( pion, diaCall )
+PHY_ActionTriggerActivity::PHY_ActionTriggerActivity( MIL_AgentPion& pion, const std::string& activity, double influence )
+    : PHY_DecisionCallbackAction_ABC      ( pion )
     , pion_               ( pion )
     , role_               ( pion.GetRole< PHY_RoleAction_FolkInfluence >() )
-    , diaReturnCode_      ( diaCall[ 0 ] )
-    , activity_           ( diaCall[ 1 ].ToString() )
-    , influence_          ( diaCall[ 2 ].ToFloat() )
+    , activity_           ( activity )
+    , influence_          ( influence )
 {
     const double connectivity = 1;
     const MT_Vector2D&  vPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();
@@ -33,10 +32,10 @@ PHY_ActionTriggerActivity::PHY_ActionTriggerActivity( MIL_AgentPion& pion, DIA_C
     if ( pObject_ )
     {
         pObject_->TriggerActivity( activity_, influence_ ); // population concerned
-        diaReturnCode_.SetValue( PHY_RoleAction_FolkInfluence::eRunning );
+        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eRunning ) );
     }        
     else
-        diaReturnCode_.SetValue( PHY_RoleAction_FolkInfluence::eImpossible );    
+        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eImpossible ) );    
 }
     
 // -----------------------------------------------------------------------------
@@ -59,7 +58,7 @@ void PHY_ActionTriggerActivity::Execute()
     if ( pObject_ && !pObject_->IsActivated() )
     {
         pObject_->Activate();
-        diaReturnCode_.SetValue( PHY_RoleAction_FolkInfluence::eActivated );
+        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eActivated ) );
     }
 }
     
@@ -72,6 +71,6 @@ void PHY_ActionTriggerActivity::ExecuteSuspended()
     if ( pObject_ )
     {
         pObject_->Deactivate();
-        diaReturnCode_.SetValue( PHY_RoleAction_FolkInfluence::eDeactivated );
+        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eDeactivated ) );
     }
 }

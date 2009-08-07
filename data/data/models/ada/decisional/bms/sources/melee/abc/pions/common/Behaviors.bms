@@ -1,0 +1,956 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/common/Behaviors.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 02-11-08 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Common/Behaviors.hal $
+]]--[[// $Author: Mia $
+]]--[[// $Modtime: 23/09/05 18:49 $
+]]--[[// $Revision: 47 $
+]]--[[// $Workfile: Behaviors.hal $
+]]--[[//
+]]--[[// Commentaire: il s'agit de tous les comportements génériques à l'arme blindée
+]]--[[//
+]]--[[// *****************************************************************************
+]]--[[//Commun toutes armes
+]]include "Common/Pions/Behaviors.bms"
+
+
+--[[//missions génériques
+]]include "Common/Pions/MissionsGeneriques.bms"
+
+
+--[[// Communs aux pions ABC
+]]include "Melee/Abc/Pions/Common/Actions.bms"
+
+
+
+--[[// *****************************************************************************
+]]--[[// Comportement par défaut.
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Defaut"
+{
+    activations =
+    {
+        { "BEH_Mot_Pion_ABC_AffecterVariablesDEtat", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_Rens", {} },
+        { "BEH_Pion_ABC_Default", {} },
+        { "BEH_MAJ_Pion_ABC_EniDangereux", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.nDummy = self.params[1]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Mot_Pion_ABC_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ VE
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// MAJ de l'état DEC par défaut 
+]]--[[//-----------------------------------------------------------------------------
+]]
+        --[[// Si totalement detruit...
+]]if( S_Misc_EstDetruitPhysique() ) then
+            return
+        end
+
+        Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Comp générique
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Ambiance, 1, {} )
+        Activate( self.activations.BEH_Nbc, 1, {} )
+        Activate( self.activations.BEH_Rens, 1, {} )
+        Activate( self.activations.BEH_Pion_ABC_Default, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Specifique unite de l'ABC
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_MAJ_Pion_ABC_EniDangereux, 1, {} )--[[// Ajout ADA gestion mortier
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_ABC_EniDangereux
+]]--[[//
+]]--[[//Commentaires : // Ajout ADA gestion mortier
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_ABC_EniDangereux"
+{
+    activations =
+    {
+        { "ACT_MAJ_EnnemiEnCours", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
+        for _,repEni in pairs( listeConnaissances ) do
+        local _continue = true
+            Activate( self.activations.ACT_MAJ_EnnemiEnCours, S_Force_DangerSur( repEni ), { repEni, } )
+
+        end
+
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Dep_Pion_ABC_SeCoordonnerAvec
+]]--[[// 
+]]--[[// Commentaires: utilisé par les missions de couverture
+]]--[[//
+]]--[[// 
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
+{
+    activations =
+    {
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Info_Trace", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.listePions = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "<== Coordinnation active avec amis ==>" )
+        end
+
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Aller au plus vite si mission ou un deplacement 
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Cas ou aucun ami en paramètre (ex:si tous détruits)
+]]--[[// -----------------------------------------------------------------------------
+]]if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
+            do
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Info_Trace, 1, { "No friendly units to coordinate with...", } )
+                                return
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Se coordonner par rapport au centre de gravité des pions couvert
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/* ?? */]]        end
+
+        local rDistance = DEC_Geometrie_CalculerDistanceLigneMoyenne( self._namedParams.listePions, myself )
+        if( rDistance < M_MODELE_PION_ABC_DISTANCE_LIGNE_AMI_MIN() ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "staying on position", } )
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+            end
+        end
+
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Lima_Pion_ABC_SePosterSurLCA
+]]--[[// 
+]]--[[// Commentaires: se poster sur une ligne de changement d'attitude pendant un 
+]]--[[//               deplacement.
+]]--[[//				 Toujours face à une direction dangereuse: celle de la mission
+]]--[[//               inclus un changement de dispositif --> vers dispositif de surete
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Lima_Pion_ABC_SePosterSurLCA"
+{
+    activations =
+    {
+        { "ACT_Dep_PasserSurLima", {} },
+        { "BEH_Dep_SePoster", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// init
+]]self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Terminaison
+]]--[[//-----------------------------------------------------------------------------
+]]if( DEC_Agent_NiveauInstallation() == eNiveauInstallation_PosteReflexe ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// MAJ Etat Lima
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCA, } )
+        Activate( self.activations.BEH_Dep_SePoster, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Posture
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Lima_Pion_ABC_SePosterSurLCAR
+]]--[[// 
+]]--[[// Commentaires: utilisé par freiner
+]]--[[// mettre des nouveaux context LCAR et nouveau type de RC
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
+{
+    activations =
+    {
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Dep_PasserSurLima", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            do
+                --[[// apres le premier tick on aura envie de se poster
+]]SetStateVariable( "VE_SePoster", 2 )
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                                return
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Condition de terminaison --> équivaut à "poursuivre"
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// MAJ Etat Lima
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCAR, } )
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_SePoster", 0 )
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Obs_Pion_ABC_ReconnaitrePoint
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Obs_Pion_ABC_ReconnaitrePoint"
+{
+    activations =
+    {
+        { "ACT_Obs_ReconnaitrePoint", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repPoint = self.params[1]
+    end,
+
+    activate = function( self )
+        self.point = self.point or DEC_Geometrie_CreerPoint()
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "--> Debut reconnaissnace du point" )
+                --[[// Rep_Point
+]]DEC_Copie_Point( DEC_GetRepPoint( self._namedParams.repPoint ), self.point )
+            end
+        end
+
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                    DEC_Trace( "Fin reconnaissance point" )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// reco
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, setmetatable( { self.point, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.point, } )
+    end,
+
+--[[// ******************************************************************************
+]]--[[// BEH_Obs_Pion_ABC_SePosterSurBond
+]]--[[// 
+]]--[[// Commentaires: se poster sur une limite de bond pendant un deplacement.
+]]--[[//				 Toujours face à une direction dangereuse: celle de la mission. 
+]]--[[//
+]]--[[// ******************************************************************************
+]]}
+
+node "BEH_Obs_Pion_ABC_SePosterSurBond"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_SePoster", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repPoint = self.params[1]
+    end,
+
+    activate = function( self )
+        self.point = self.point or DEC_Geometrie_CreerPoint()
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "-- Staying on observation position --", } )
+                DEC_Copie_Point( DEC_GetRepPoint( self._namedParams.repPoint ), self.point )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// En fonction de l'ambiance
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
+            do
+                if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Arret ) then
+                    self.params.__returnValue = eActionEffectuee
+                    Halt()
+                end
+
+            end
+--[[// ambiance surete ou eni
+]]        else
+do
+                if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_PosteReflexe ) then
+                    self.params.__returnValue = eActionEffectuee
+                    Halt()
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Posture 
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour
+]]--[[//
+]]--[[// Commentaires : utilisé par MIS_Soutenir et MIS_Appuyer
+]]--[[// 
+]]--[[// *****************************************************************************
+]]--[[// $$$$ MIA 03-04-23: attention T_Pion!
+]]}
+
+node "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ami = self.params[1]
+    end,
+
+    activate = function( self )
+        self.positionAppui = self.positionAppui or DEC_Geometrie_CalculerPositionAppui( self._namedParams.ami, M_MODELE_PION_ABC_DISTANCE_POSITION_APPUI() )
+        self.eEtat = self.eEtat or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Rejoindre la position d'appui
+]]--[[//-----------------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.ACT_Info_Trace, 1, { "Going on support position...", } )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionAppui, eProgressionDirect, eTypeItiAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Pion_ABC_InstallerDispositif
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pion_ABC_InstallerDispositif"
+{
+    activations =
+    {
+        { "ACT_Pion_ABC_InstallerDisposifif", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            Activate( self.activations.ACT_Pion_ABC_InstallerDisposifif, 1, {} )
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Pion_ABC_InstallerDisposifif
+]]--[[//
+]]--[[// Commentaires: Juste RC
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Pion_ABC_InstallerDisposifif"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        if( ModuleBegins() ) then
+            DEC_RC( eRC_EnPosition )
+        end
+
+    end,
+
+}
+
+--[[////////////////////////////// PARTIE MOTIV SUR ENI /////////////////////////////////////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_Feu_Pion_ABC_ConduireLesFeuxSur
+]]--[[//
+]]--[[//Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Feu_Pion_ABC_ConduireLesFeuxSur"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Tir_Pion_ABC_FaireFeuSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.repEni = self.params[1]
+        self._namedParams.pourcentageComposantes = self.params[2]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { self._namedParams.repEni, } )
+        Activate( self.activations.ACT_Tir_Pion_ABC_FaireFeuSur, 1, { self._namedParams.repEni, self._namedParams.pourcentageComposantes, } )
+    end,
+
+--[[///////////////////// MAJ VE /////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_ABC_AgressiviteTir
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_ABC_AgressiviteTir"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rPH = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            SetStateVariable( "VE_Agressivite_Tir", self._namedParams.rPH )
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_Agressivite_Tir", 0 )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_ABC_AgressiviteManoeuvre
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_ABC_AgressiviteManoeuvre"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.rValeur = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            SetStateVariable( "VE_Agressivite_Manoeuvre", self._namedParams.rValeur )
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_Agressivite_Manoeuvre", 0 )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_MAJ_Pion_ABC_EnvieTenir
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//               
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MAJ_Pion_ABC_EnvieTenir"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init / On ne s'esquive pas --> indépendant du moral
+]]--[[//-----------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            SetStateVariable( "VE_Courage", 2 )
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_Courage", 0 )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Mot_Pion_ABC_AffecterVariablesDEtat
+]]--[[//
+]]--[[// Commentaire : Ce comportement est à inclure dans le BEH_Defaut du pion
+]]--[[//               Il "règle" les comportements de sauvegarde
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mot_Pion_ABC_AffecterVariablesDEtat"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//////////////// BMS OPTIM  ///////////////////
+]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
+            return
+        end
+
+        switch_1 = --[[////////////// FIN OPTIM  /////////////////////
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// En fonction du moral...
+]]--[[//-----------------------------------------------------------------------------
+]]DEC_FacteurHumain_Moral()
+            if switch_1 == eMoral_Fanatique then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Fanatique --> esquive sur PAP, pas de ralentissement
+]]--[[//-----------------------------------------------------------------------------
+]]--[[// Rien
+]]SetStateVariable( "VE_RapForPrudence", 0 )
+                SetStateVariable( "VE_RapFor", 0 )
+                
+            --[[//-----------------------------------------------------------------------------
+]]--[[// Moral bon --> esquive sur PAP et effet rapFor défavorable --> ralentissement
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eMoral_Moyen
+            or switch_1 == eMoral_Bon then
+                --[[//-----------------------------------------------------------------------------
+]]--[[// En fonction de la mission...  --> idem moral mauvais
+]]--[[//-----------------------------------------------------------------------------
+]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
+                    do
+                        SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                        SetStateVariable( "VE_RapForPrudence", 0 )
+                        
+                    end
+--[[// Par défaut ...
+]]                end
+
+                SetStateVariable( "VE_RapForPrudence", ( 5 - DEC_RapportDeForceLocal() ) )
+                SetStateVariable( "VE_RapFor", 0 )
+                
+            --[[//-----------------------------------------------------------------------------
+]]--[[// Moral mauvais: --> esquive sur PAP et sur rapFor défavorable
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eMoral_Mauvais then
+                SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
+                SetStateVariable( "VE_RapForPrudence", 0 )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_RapForPrudence", 0 )
+        SetStateVariable( "VE_RapFor", 0 )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_ABC_GererDeboucher
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Pion_ABC_GererDeboucher"
+{
+    activations =
+    {
+        { "BEH_Ordre_SePosterPourDeboucher", {} },
+        { "ACT_Points_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Regarder les eAvantPoint dans la liste des points interessants
+]]--[[//-----------------------------------------------------------------------------
+]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
+        for _,x in pairs( listePointInterressant ) do
+        local _continue = true
+do
+                local ptABC = x
+                --[[// Traiter seulement les 'avantPoint'
+]]if( DEC_IsAvantPoint( ptABC ) ) then
+                    do
+                        --[[// Cast
+]]local repAvantPt = ptABC
+                        if( DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) ) == eTypePointLima ) then
+                            do
+                                --[[// cast
+]]local pointLima = DEC_GetDestPoint( repAvantPt )
+                                if( DEC_GetTypeLimaPoint( pointLima ) == eTypeLima_LD ) then
+                                    do
+                                        local lima = DEC_GetLimaPoint( pointLima )
+                                        --[[// Flaguer dans gestion des limas générique
+]]if( not DEC_GetMissionLimaFlag( lima ) ) then
+                                            StartActivate( self.activations.BEH_Ordre_SePosterPourDeboucher, 1, { lima, } )
+                                        end
+
+                                    end
+                                end
+
+                            end
+                        end
+
+                        Activate( self.activations.ACT_Points_Suppression, 1, { ptABC, } )
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_SePosterPourDeboucher
+]]--[[//
+]]--[[//Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_SePosterPourDeboucher"
+{
+    activations =
+    {
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Dep_PasserSurLima", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.LimaLD = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------		
+]]if( ModuleBegins() ) then
+            do
+                SetStateVariable( "VE_SePoster", 2 )
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                                return
+
+            end
+--[[// Triche car on est avant lima...
+]]        end
+
+        Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LD, } )
+        if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
+            do
+                DEC_SetMissionLimaFlagHoraire( self._namedParams.LimaLD, true )
+                DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
+                                Halt()
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Pion_ABC_GererDeboucherEclairage
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Pion_ABC_GererDeboucherEclairage"
+{
+    activations =
+    {
+        { "BEH_Ordre_LivrerLigneDeboucher", {} },
+        { "ACT_Points_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Regarder les eAvantPoint dans la liste des points interessants
+]]--[[//-----------------------------------------------------------------------------
+]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
+        for _,x in pairs( listePointInterressant ) do
+        local _continue = true
+do
+                local ptABC = x
+                --[[// Traiter seulement les 'avantPoint'
+]]if( DEC_IsAvantPoint( ptABC ) ) then
+                    do
+                        --[[// Cast
+]]local repAvantPt = ptABC
+                        if( DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) ) == eTypePointLima ) then
+                            do
+                                --[[// cast
+]]local pointLima = DEC_GetDestPoint( repAvantPt )
+                                if( DEC_GetTypeLimaPoint( pointLima ) == eTypeLima_LD ) then
+                                    do
+                                        local lima = DEC_GetLimaPoint( pointLima )
+                                        --[[// Flaguer dans gestion des limas générique
+]]if( not DEC_GetMissionLimaFlag( lima ) ) then
+                                            StartActivate( self.activations.BEH_Ordre_LivrerLigneDeboucher, 1, { lima, } )
+                                        end
+
+                                    end
+                                end
+
+                            end
+                        end
+
+                        Activate( self.activations.ACT_Points_Suppression, 1, { ptABC, } )
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_LivrerLigneDeboucher
+]]--[[//
+]]--[[//Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_LivrerLigneDeboucher"
+{
+    activations =
+    {
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Dep_PasserSurLima", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.LimaLD = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------		
+]]if( ModuleBegins() ) then
+            do
+                SetStateVariable( "VE_SePoster", 2 )
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                                return
+
+            end
+--[[// Triche car on est avant lima...
+]]        end
+
+        Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LD, } )
+        if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
+            do
+                DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
+                                Halt()
+
+            end
+        end
+
+    end,
+
+--[[////////////////////////////// FIN PARTIE MOTIV SUR ENI /////////////////////////////////////////////////////
+]]--[[////////////////////////////// PARTIE COMPORTEMENTS VIRTUELS /////////////////////////////////////////////////////
+]]--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_ProgressionVers
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_ProgressionVers"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+        self._namedParams.eTypeProgression = self.params[2]
+        self._namedParams.eTypeIti = self.params[3]
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dep_Virtuel_PreparationAction
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dep_Virtuel_PreparationAction"
+{
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.params.__returnValue = eActionEffectuee
+        return
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_ABC_AffecterVariablesDEtat", nodes.BEH_Mot_Pion_ABC_AffecterVariablesDEtat }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MAJ_EtatDefaut", nodes.BEH_MAJ_EtatDefaut }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE", nodes.BEH_ROE }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ambiance", nodes.BEH_Ambiance }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc", nodes.BEH_Nbc }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens", nodes.BEH_Rens }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Pion_ABC_Default", nodes.BEH_Pion_ABC_Default }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_MAJ_Pion_ABC_EniDangereux", nodes.BEH_MAJ_Pion_ABC_EniDangereux }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ABC_GererDeboucher, "BEH_Ordre_SePosterPourDeboucher", nodes.BEH_Ordre_SePosterPourDeboucher }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ABC_GererDeboucher, "ACT_Points_Suppression", nodes.ACT_Points_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ABC_GererDeboucherEclairage, "BEH_Ordre_LivrerLigneDeboucher", nodes.BEH_Ordre_LivrerLigneDeboucher }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ABC_GererDeboucherEclairage, "ACT_Points_Suppression", nodes.ACT_Points_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ABC_SeCoordonnerAvec, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ABC_SeCoordonnerAvec, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ABC_SeCoordonnerAvec, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Feu_Pion_ABC_ConduireLesFeuxSur, "ACT_Dep_SePosterFaceA", nodes.ACT_Dep_SePosterFaceA }
+connections[ #connections + 1 ] = { nodes.BEH_Feu_Pion_ABC_ConduireLesFeuxSur, "ACT_Tir_Pion_ABC_FaireFeuSur", nodes.ACT_Tir_Pion_ABC_FaireFeuSur }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_ABC_SePosterSurLCA, "ACT_Dep_PasserSurLima", nodes.ACT_Dep_PasserSurLima }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_ABC_SePosterSurLCA, "BEH_Dep_SePoster", nodes.BEH_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_ABC_SePosterSurLCA, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_ABC_SePosterSurLCAR, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_ABC_SePosterSurLCAR, "ACT_Dep_PasserSurLima", nodes.ACT_Dep_PasserSurLima }
+connections[ #connections + 1 ] = { nodes.BEH_MAJ_Pion_ABC_EniDangereux, "ACT_MAJ_EnnemiEnCours", nodes.ACT_MAJ_EnnemiEnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ABC_ReconnaitrePoint, "ACT_Obs_ReconnaitrePoint", nodes.ACT_Obs_ReconnaitrePoint }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ABC_ReconnaitrePoint, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ABC_SePosterSurBond, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Obs_Pion_ABC_SePosterSurBond, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_LivrerLigneDeboucher, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_LivrerLigneDeboucher, "ACT_Dep_PasserSurLima", nodes.ACT_Dep_PasserSurLima }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_SePosterPourDeboucher, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_SePosterPourDeboucher, "ACT_Dep_PasserSurLima", nodes.ACT_Dep_PasserSurLima }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ABC_InstallerDispositif, "ACT_Pion_ABC_InstallerDisposifif", nodes.ACT_Pion_ABC_InstallerDisposifif }

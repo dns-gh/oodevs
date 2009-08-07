@@ -1,0 +1,66 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/escorter/Escorter - MRT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Mission Automate Alat Escorter
+]]--[[// ------------------------------
+]]--[[//
+]]--[[//
+]]--[[// Commentaires : Dans cette mission, on répartie nos moyens de défense en un
+]]--[[// groupe d'escorte ( en avant du dispositif ) et autant de flanc gardes que 
+]]--[[// possible tout autour des elements à protéger.
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_Escorter"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirLibre", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.listePionsSgpt = self.listePionsSgpt or DEC_Automate_PionsSansPC()
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, AntitankHelicopterPatrol )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, EscortAndCloseSupportHelicopterPatrol )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, AirDefenseHelicopterPatrol )
+        self.listePatrouillesPeutFaireMissionEscorteOuCouvrir = self.listePatrouillesPeutFaireMissionEscorteOuCouvrir or S_Liste_Concatene( S_Liste_Concatene( self.listeHAP, self.listeHAC ), self.listeHAM )
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( DIA_IsListEmpty( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+--[[// ROE par défaut pour cette mission + ordre poursuivre
+]]                end
+
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+        else
+do
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+            end
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_Escorter = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Escorter, "BEH_ROE_Automate_TirLibre", nodes.BEH_ROE_Automate_TirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Escorter, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }

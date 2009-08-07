@@ -1,0 +1,4 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/radint/pat viviane/Types.bms"] = true
+
+include "DEC/Common/Types.bms"

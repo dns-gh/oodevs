@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/appuimob/pions/Globals.bms"] = true
+
+include "Common/Pions/Globals.bms"
+
+include "Appui/AppuiMob/Pions/Macros.bms"
+

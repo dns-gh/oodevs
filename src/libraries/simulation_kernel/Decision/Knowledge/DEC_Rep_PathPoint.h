@@ -21,7 +21,6 @@ class DEC_Representations;
 // Created: JDY 03-05-05
 //*****************************************************************************
 class DEC_Rep_PathPoint : public DEC_PathPoint
-                        , public DIA_TypedObject
 {
 
 public:
@@ -42,14 +41,9 @@ public:
     //@}
 
 public:
-    DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType = "Rep_Point" );
+             DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType = "Rep_Point" );
     virtual ~DEC_Rep_PathPoint();
     
-    //! @name Init
-    //@{
-    static void InitializeDIA();
-    //@}
-
     //! @name Accessors
     //@{
     E_TypePoint        GetTypePoint() const;

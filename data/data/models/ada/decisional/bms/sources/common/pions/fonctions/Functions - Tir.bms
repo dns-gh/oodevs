@@ -1,0 +1,188 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/fonctions/Functions - Tir.bms"] = true
+
+include "bit.lua"
+
+--[[// *****************************************************************************
+]]--[[// Fonctions Communes aux pions
+]]--[[// Thème : Tir
+]]--[[// *****************************************************************************
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Portee Max Pour Tirer Sur Agent avec un Ph donné
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Portee Min Pour Tirer Sur Agent avec un Ph donné
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Portee Max Pour Tirer Sur Agent avec un Ph donné et postures réelles
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Portee Min Pour Tirer Sur Agent avec un Ph donné et postures réelles
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Portee Pour Tirer Sur Agent avec un Ph donné quand je suis débarqué
+]]--[[//--------------------------------------------------------------------------	 
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Portee Pour laquelle l'ennemi peut nous tirer dessus avec un Ph donné
+]]--[[//--------------------------------------------------------------------------	 
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Renvoi vrai si l'eni est trop loin pour nous tirer dessus
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Renvoie vrai si trop proche pour toucher
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Renvoie vrai si a portée
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Renvoie vrai si eni trop loin pour toucher avec posture réelle
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Renvoie vrai si eni trop proche pour toucher avec posture réelle
+]]--[[//--------------------------------------------------------------------------
+]]--[[//--------------------------------------------------------------------------
+]]--[[// Renvoie vrai si eni à portée avec posture réelle
+]]--[[//--------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Efficacite du tir
+]]--[[// OPT: MIA A VIRER utilisation JCR (INF et milices)
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// OPT: MIA SPE INF et Art
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
+]]--[[// Efficacite du tir
+]]--[[// OPT: MIA A deplacer utilisation JCR (Mortier et ArtFDP)
+]]--[[//-------------------------------------------------------------------------
+]]function S_Tir_PorteeMaxPourTirerSurAgent( agent, phVoulu )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMaxPourTirerSurUnite( agent, phVoulu )
+    return _returnValue
+end
+
+function S_Tir_PorteeMinPourTirerSurAgent( agent, phVoulu )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMinPourTirerSurUnite( agent, phVoulu )
+    return _returnValue
+end
+
+function S_Tir_PorteeMaxPourTirerSurAgentPosturesReelles( agent, phVoulu )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( agent, phVoulu )
+    return _returnValue
+end
+
+function S_Tir_PorteeMinPourTirerSurAgentPosturesReelles( agent, phVoulu )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( agent, phVoulu )
+    return _returnValue
+end
+
+function S_Tir_PorteeMaxPourTirerDebarqueSurAgent( agent, phVoulu )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( agent, phVoulu )
+    return _returnValue
+end
+
+function S_Tir_PorteeMaxPourEtreTireParAgent( agent, phVoulu )
+    local _returnValue = 0
+    _returnValue = DEC_Tir_PorteeMaxPourEtreTireParUnite( agent, phVoulu )
+    return _returnValue
+end
+
+function S_Tir_EstTropLoinPourToucher( repEni, rPh )
+    local _returnValue = false
+    local rPorteeMax = DEC_Tir_PorteeMaxPourTirerSurUnite( repEni, rPh )
+    local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
+    _returnValue = rDistanceAEni > rPorteeMax
+    if( rPorteeMax == -1 ) then
+        _returnValue = false
+    end
+
+    return _returnValue
+end
+
+function S_Tir_EstTropProchePourToucher( repEni, rPh )
+    local _returnValue = false
+    local rPorteeMin = DEC_Tir_PorteeMinPourTirerSurUnite( repEni, rPh )
+    local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
+    _returnValue = rDistanceAEni < rPorteeMin
+    if( rPorteeMin == -1 ) then
+        _returnValue = false
+    end
+
+    return _returnValue
+end
+
+function S_Tir_EstAPortee( repEni, rPh )
+    local _returnValue = false
+    local bTropProche = S_Tir_EstTropProchePourToucher( repEni, rPh )
+    local bTropLoin = S_Tir_EstTropLoinPourToucher( repEni, rPh )
+    _returnValue = not ( bTropProche or bTropLoin )
+    return _returnValue
+end
+
+function S_Tir_EstTropLoinPourToucherPosturesReelles( repEni, rPh )
+    local _returnValue = false
+    local rPorteeMax = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( repEni, rPh )
+    local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
+    _returnValue = rDistanceAEni > rPorteeMax
+    if( rPorteeMax == -1 ) then
+        _returnValue = false
+    end
+
+    return _returnValue
+end
+
+function S_Tir_EstTropProchePourToucherPosturesReelles( repEni, rPh )
+    local _returnValue = false
+    local rPorteeMin = DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( repEni, rPh )
+    local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
+    _returnValue = rDistanceAEni < rPorteeMin
+    if( rPorteeMin == -1 ) then
+        _returnValue = false
+    end
+
+    return _returnValue
+end
+
+function S_Tir_EstAPorteePosturesReelles( repEni, rPh )
+    local _returnValue = false
+    local bTropProche = S_Tir_EstTropProchePourToucherPosturesReelles( repEni, rPh )
+    local bTropLoin = S_Tir_EstTropLoinPourToucherPosturesReelles( repEni, rPh )
+    _returnValue = not ( bTropProche or bTropLoin )
+    return _returnValue
+end
+
+function S_Tir_EfficaceSur( repEni, rEtatInitial )
+    local _returnValue = false
+    _returnValue = false
+    if( ( rEtatInitial == 0 or rEtatInitial == nil ) ) then
+        do
+            _returnValue = false
+                        return _returnValue
+
+        end
+    end
+
+    local rEfficacite = ( rEtatInitial - DEC_ConnaissanceAgent_EtatOps( repEni ) ) / rEtatInitial
+    _returnValue = ( rEfficacite < 0.5 )
+    return _returnValue
+end
+
+function S_Tir_MunitionIndirect_EstValide( eDotation )
+    local _returnValue = false
+    local rInvalide = -1
+    _returnValue = ( DEC_Tir_PorteeMaxTirIndirect( eDotation ) ~= rInvalide ) and ( DEC_Tir_PorteeMinTirIndirect( eDotation ) ~= rInvalide )
+    return _returnValue
+end
+
+function S_Tir_DistancePorteeIndirect_EstValide( dotation, ptCible )
+    local _returnValue = false
+    local rPorteeMax = DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( dotation )
+    local rPorteeMin = DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( dotation )
+    local rDist = DEC_Geometrie_Distance( DEC_Agent_Position(), ptCible )
+    _returnValue = ( rDist >= rPorteeMin ) and ( rDist < rPorteeMax )
+    return _returnValue
+end
+

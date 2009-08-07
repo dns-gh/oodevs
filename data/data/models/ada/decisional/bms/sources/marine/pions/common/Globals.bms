@@ -1,0 +1,11 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/pions/common/Globals.bms"] = true
+
+include "Common/Pions/Globals.bms"
+
+include "Marine/Pions/Common/Parameters.bms"
+
+include "Marine/Pions/Common/Macros.bms"
+
+include "Marine/Pions/Common/Fonctions.bms"
+

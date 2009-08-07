@@ -1,0 +1,159 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/alat/automates/common/missions/freiner/Freiner - MRT.bms"] = true
+
+include "bit.lua"
+
+
+node "MIS_Automate_MRT_ALAT_Freiner"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirLibre", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionsFreiner = self.eEtatMissionsFreiner or eActionEnCours
+        self.affectationFuseauOk = self.affectationFuseauOk or false
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, AntitankHelicopterPatrol )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, EscortAndCloseSupportHelicopterPatrol )
+        self.listePionsReserve = self.listePionsReserve or {}
+        self.listePatrouillesPeutFaireMissionFreiner = self.listePatrouillesPeutFaireMissionFreiner or S_Liste_Concatene( self.listeHAC, self.listeHAP )
+        self.listeFreiner = self.listeFreiner or {}
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+                local nbPionsPouvantFreiner = #( self.listePatrouillesPeutFaireMissionFreiner )
+                --[[//1 pion de reserve pour 3 qui peuvent Freiner
+]]local nbPionsReserve = nbPionsPouvantFreiner / 3
+                for _,x in pairs( --[[//construction de la liste des pions en reserve
+]]self.listePatrouillesPeutFaireMissionFreiner ) do
+                local _continue = true
+                    do
+                        if( nbPionsReserve < 1 ) then
+                            _continue = false
+                        end
+
+                            if _continue then
+                            DIA_PushBack( self.listePionsReserve, x )
+                                                        nbPionsReserve = nbPionsReserve - 1
+                        end
+                    end
+--[[//les autres vont faire la mission "Freiner"           
+]]--[[//Ceux qui peuvent faire la mission et qui ne sont pas en reserve
+]]
+                end
+
+                self.listeFreiner = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePatrouillesPeutFaireMissionFreiner, self.listePionsReserve )
+                if( DIA_IsListEmpty( self.listeFreiner ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+        end
+
+        switch_1 = self.ePhase
+            if switch_1 == eMRT_AssignerMissions then
+                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionsFreiner == eActionImpossible ) then
+                    do
+                        self.ePhase = eMRT_MissionImpossible
+                                                return
+
+                    end
+                end
+
+                if( self.eEtatMissionsFreiner == eActionEffectuee ) then
+                    do
+                        self.ePhase = eMRT_Valider
+                                                return
+
+                    end
+--[[//Affectation des fuseaux
+]]                end
+
+                if( not self.affectationFuseauOk ) then
+                    do
+                        local listeBuffer = {}
+                        for _,x in pairs( self.listeFreiner ) do
+                        local _continue = true
+                            do
+                                --[[//si x est le dernier element de la liste
+]]if( ( x == DIA_GetAt( self.listeFreiner, #( self.listeFreiner ) - 1 ) ) and ( DIA_IsListEmpty( listeBuffer ) ) ) then
+                                    do
+                                        --[[//on met deux fois le pion dans la liste
+]]--[[//il aura alors l'un des demi fuseau affecté
+]]DIA_PushBack( listeBuffer, x )
+                                        DIA_PushBack( listeBuffer, x )
+                                        DEC_MRT_AffecteFuseaux( listeBuffer )
+                                        DIA_Clear( listeBuffer )
+                                    end
+                                else
+do
+                                        DIA_PushBack( listeBuffer, x )
+                                        if( #( listeBuffer ) == 2 ) then
+                                            do
+                                                DEC_MRT_AffecteFuseaux( listeBuffer )
+                                                DIA_Clear( listeBuffer )
+                                            end
+                                        end
+
+                                    end
+                                end
+
+                            end
+
+                        end
+
+                        self.affectationFuseauOk = true
+                    end
+--[[// Freiner : controle de creation mission
+]]                end
+
+                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeFreiner ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsFreiner = v else rawset( t, k, v ) end end } ) )
+                --[[// Freiner : ordre de creation des missions
+]]if( not DIA_IsListEmpty( self.listeFreiner ) ) then
+                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe, 1, { ePhase_MRT, self.listeFreiner, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, } )
+                end
+
+                
+            elseif switch_1 == eMRT_MissionImpossible then
+                DEC_RC( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            elseif switch_1 == eMRT_Valider then
+                DEC_MRT_Valide()
+                                self.params.__returnValue = eActionEffectuee
+                Halt()
+
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_Freiner = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Freiner, "BEH_ROE_Automate_TirLibre", nodes.BEH_ROE_Automate_TirLibre }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Freiner, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Freiner, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Freiner, "BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe", nodes.BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe }

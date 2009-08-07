@@ -1,0 +1,204 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/milices/pion/missions/PrendreUnGage.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 19/09/05 10:25 $
+ * $Revision: 13 $
+ *
+ */]]--[[// Created: JCR 03-02-13
+]]--[[// *****************************************************************************
+]]--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]
+
+node "MIS_Pion_MILICE_PrendreEtTenir"
+{
+    activations =
+    {
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_Mission_Pion_Milice_PrendreEtTenir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[// --> Tiens lorsque le rapFor passe de 2.5 a 3.5
+]]        self.ePhase = self.ePhase or eReconnaitre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SetrTenir( myself, 0 )
+                DEC_Trace( "Seize and hold position" )
+            end
+        end
+
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, 0.3, } )
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                Activate( self.activations.BEH_Mission_Pion_Milice_PrendreEtTenir, GetMotivation( "MOT_Mission" ), {} )
+                --[[//-----------------------------------------------------------------------------
+]]
+            --[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/*
+				if( 	eAction == eActionEffectuee )    {        	eAction=eActionEnCours;        									{										
+										DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );										
+										DEC_RC( eRC_MissionTerminee );
+										halt(eActionEffectuee);
+									}
+								  
+    }
+				*/]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                    do
+                        DEC_FinMission()
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt()
+
+                    end
+                end
+
+                
+            
+            else
+            --[[// On cherche une position d'observation
+]]            end
+
+--[[// On tient 5 ennemis supplementaires
+]]    end,
+
+}
+
+node "BEH_Mission_Pion_Milice_PrendreEtTenir"
+{
+    activations =
+    {
+        { "BEH_Dep_Pion_Milice_PrendreEtTenir", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        self.ePhase = self.ePhase or eReconnaitre
+        self.eAction = self.eAction or eActionEnCours
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                if( self.eAction == eActionEffectuee ) then
+                    do
+                        self.eAction = eActionEnCours
+                                                do
+                            F_Pion_SetrTenir( myself, 5 )
+                            self.ePhase = eSurveiller
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_Pion_Milice_PrendreEtTenir, 1, setmetatable( { self.mission.pointAPrendre_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                
+            elseif switch_1 == eSurveiller then
+                
+                        end
+
+    end,
+
+}
+
+node "BEH_Dep_Pion_Milice_PrendreEtTenir"
+{
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptObjectif = self.params[1]
+    end,
+
+    activate = function( self )
+        --[[// On cherche une position d'observation
+]]self.ePhase = self.ePhase or eReconnaitre
+        self.eAction = self.eAction or eActionEnCours
+        --[[// Calcul de position d'observation ?
+]]self.eActionRejoindre = self.eActionRejoindre or eActionEnCours
+        if( self.eActionRejoindre == eActionImpossible ) then
+            do
+                                do
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                Halt()
+
+            end
+        end
+
+        if( self.eActionRejoindre == eActionEffectuee ) then
+            do
+                self.eActionRejoindre = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptObjectif, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
+        do
+        end
+--[[// S'il ya du monde, intimider ...				
+]]
+        switch_1 = self.ePhase
+            if switch_1 == eReconnaitre then
+                if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
+                    do
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Arrive sur position d'observation", } )
+                        self.ePhase = eSurveiller
+                    end
+                end
+
+                
+            elseif switch_1 == eSurveiller then
+                Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptObjectif, } )
+            
+            else
+                        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_MILICE_PrendreEtTenir = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_Milice_PrendreEtTenir, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_Milice_PrendreEtTenir, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_Milice_PrendreEtTenir, "ACT_Obs_EtablirVisionVersPt", nodes.ACT_Obs_EtablirVisionVersPt }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_Milice_PrendreEtTenir, "BEH_Dep_Pion_Milice_PrendreEtTenir", nodes.BEH_Dep_Pion_Milice_PrendreEtTenir }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_PrendreEtTenir, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_PrendreEtTenir, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_PrendreEtTenir, "BEH_Mission_Pion_Milice_PrendreEtTenir", nodes.BEH_Mission_Pion_Milice_PrendreEtTenir }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_PrendreEtTenir, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

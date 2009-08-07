@@ -14,19 +14,18 @@
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMineObject constructor
 // Mined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionMineObject::PHY_ActionMineObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC( pion, diaCall )
+PHY_ActionMineObject::PHY_ActionMineObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+    : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , diaReturnCode_( diaCall.GetParameter( 0 ) )
-    , nKnowledgeID_ ( (uint)diaCall.GetParameter( 1 ).ToPtr() )
-{    
-    assert( DEC_Tools::CheckTypeConnaissanceObjet( diaCall.GetParameter( 1 ) ) );
-    diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
+    , nKnowledgeID_ ( nKnowledgeID )
+{
+    Callback( role_.GetInitialReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +34,7 @@ PHY_ActionMineObject::PHY_ActionMineObject( MIL_AgentPion& pion, DIA_Call_ABC& d
 // -----------------------------------------------------------------------------
 PHY_ActionMineObject::~PHY_ActionMineObject()
 {
-    diaReturnCode_.SetValue( role_.GetFinalReturnCode() );
+    Callback( role_.GetFinalReturnCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ PHY_ActionMineObject::~PHY_ActionMineObject()
 void PHY_ActionMineObject::Execute()
 {   
     int nReturn = role_.Mine( nKnowledgeID_ );
-    diaReturnCode_.SetValue( nReturn );
+    Callback( nReturn );
 }
 
 // -----------------------------------------------------------------------------

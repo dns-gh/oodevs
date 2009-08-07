@@ -50,83 +50,60 @@ namespace
         caller.GetOrderManager().Accept( accu );
         return accu.count_ == 0 ? 0.f : float( accu.sum_ ) / float( accu.count_ );
     }
-
-    void ComputeEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller, bool embarked )
-    {
-        if( const TER_Localisation* location = call.GetParameter( 0 ).ToUserPtr( location ) )
-            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *location, embarked ) );
-    }
-
-    void ComputeFuseauEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller, bool embarked )
-    {
-        if( const MIL_Fuseau* fuseau = call.GetParameter( 0 ).ToUserPtr( fuseau ) )
-            call.GetResult().SetValue( ComputeEnemiesRatio( caller, *fuseau, embarked ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_IntelligenceFunctions::ComputeUnloadedEnemiesRatio
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::ComputeUnloadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller )
+float DEC_IntelligenceFunctions::ComputeUnloadedEnemiesRatio( const MIL_Automate& caller, const TER_Localisation* location )
 {
-    ComputeEnemiesRatio( call, caller, false );
+    assert( location );
+    return ComputeEnemiesRatio( caller, *location, false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_IntelligenceFunctions::ComputeLoadedEnemiesRatio
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::ComputeLoadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller )
+float DEC_IntelligenceFunctions::ComputeLoadedEnemiesRatio( const MIL_Automate& caller, const TER_Localisation* location )
 {
-    ComputeEnemiesRatio( call, caller, true );
+    assert( location );
+    return ComputeEnemiesRatio( caller, *location, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_IntelligenceFunctions::ComputeFuseauUnloadedEnemiesRatio
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::ComputeFuseauUnloadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller )
+float DEC_IntelligenceFunctions::ComputeFuseauUnloadedEnemiesRatio( const MIL_Automate& caller, const MIL_Fuseau* limits )
 {
-    ComputeFuseauEnemiesRatio( call, caller, false );
+    assert( limits );
+    return ComputeEnemiesRatio( caller, *limits, false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_IntelligenceFunctions::ComputeFuseauLoadedEnemiesRatio
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::ComputeFuseauLoadedEnemiesRatio( DIA_Call_ABC& call, const MIL_Automate& caller )
+float DEC_IntelligenceFunctions::ComputeFuseauLoadedEnemiesRatio( const MIL_Automate& caller, const MIL_Fuseau* limits )
 {
-    ComputeFuseauEnemiesRatio( call, caller, true );
+    assert( limits );
+    return ComputeEnemiesRatio( caller, *limits, true );
 }
 
 namespace
 {
+    template< typename T >
     struct CompareBoundariesEnemies
     {
         CompareBoundariesEnemies( const MIL_Automate& caller, bool loaded ) : pCaller_( &caller ), loaded_( loaded ) {}
-
-        bool operator()( DIA_Variable_ABC* dia1, DIA_Variable_ABC* dia2 )
+        bool operator()( boost::shared_ptr< T > lhs, boost::shared_ptr< T > rhs )
         {
-            if( DEC_Tools::CheckTypeFuseau( *dia1 ) && DEC_Tools::CheckTypeFuseau( *dia2 ) )
-            {
-                MIL_Fuseau* pFuseau1 = dia1->ToUserPtr( pFuseau1 );
-                MIL_Fuseau* pFuseau2 = dia2->ToUserPtr( pFuseau2 );
-                return ComputeEnemiesRatio( *pCaller_, *pFuseau1, loaded_ )
-                     < ComputeEnemiesRatio( *pCaller_, *pFuseau2, loaded_ );
-            }
-            else if( DEC_Tools::CheckTypeLocalisation( *dia1 ) && DEC_Tools::CheckTypeLocalisation( *dia2 ) )
-            {
-                TER_Localisation* location1 = dia1->ToUserPtr( location1 );
-                TER_Localisation* location2 = dia2->ToUserPtr( location2 );
-                return ComputeEnemiesRatio( *pCaller_, *location1, loaded_ )
-                     < ComputeEnemiesRatio( *pCaller_, *location2, loaded_ );
-            }
-            return false;
+            return ComputeEnemiesRatio( *pCaller_, *lhs, loaded_ ) < ComputeEnemiesRatio( *pCaller_, *rhs, loaded_ );
         }
-
         const MIL_Automate* pCaller_;
-        bool loaded_;
+        const bool loaded_;
     };    
 }
 
@@ -134,36 +111,33 @@ namespace
 // Name: DEC_IntelligenceFunctions::SortZonesAccordingToUnloadedEnemies
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::SortZonesAccordingToUnloadedEnemies( DIA_Call_ABC& call, const MIL_Automate& caller )
+std::vector< boost::shared_ptr< TER_Localisation > > DEC_IntelligenceFunctions::SortZonesAccordingToUnloadedEnemies( const MIL_Automate& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations )
 {
-    assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
-    call.GetResult() = call.GetParameter( 0 );   
-    T_ObjectVariableVector& boundariesList = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( boundariesList.begin(), boundariesList.end(), CompareBoundariesEnemies( caller, false ) );
+    std::vector< boost::shared_ptr< TER_Localisation > > result( locations );
+    std::sort( result.begin(), result.end(), CompareBoundariesEnemies< TER_Localisation >( caller, false ) );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_IntelligenceFunctions::SortAccordingToUnloadedEnemies
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::SortAccordingToUnloadedEnemies( DIA_Call_ABC& call, const MIL_Automate& caller )
+std::vector< boost::shared_ptr< MIL_Fuseau > > DEC_IntelligenceFunctions::SortAccordingToUnloadedEnemies( const MIL_Automate& caller, const std::vector< boost::shared_ptr< MIL_Fuseau > >& limits )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) );
-    call.GetResult() = call.GetParameter( 0 );   
-    T_ObjectVariableVector& boundariesList = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( boundariesList.begin(), boundariesList.end(), CompareBoundariesEnemies( caller, false ) );
+    std::vector< boost::shared_ptr< MIL_Fuseau > > result( limits );
+    std::sort( result.begin(), result.end(), CompareBoundariesEnemies< MIL_Fuseau >( caller, false ) );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_IntelligenceFunctions::SortAccordingToLoadedEnemies
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::SortAccordingToLoadedEnemies( DIA_Call_ABC& call, const MIL_Automate& caller )
+std::vector< boost::shared_ptr< MIL_Fuseau > > DEC_IntelligenceFunctions::SortAccordingToLoadedEnemies( const MIL_Automate& caller, const std::vector< boost::shared_ptr< MIL_Fuseau > >& limits )
 {
-    assert( DEC_Tools::CheckTypeListeFuseaux( call.GetParameter( 0 ) ) || DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
-    call.GetResult() = call.GetParameter( 0 );
-    T_ObjectVariableVector& boundariesList = const_cast< T_ObjectVariableVector& >( static_cast< DIA_Variable_ObjectList& >( call.GetResult() ).GetContainer() );
-    std::sort( boundariesList.begin(), boundariesList.end(), CompareBoundariesEnemies( caller, true ) );
+    std::vector< boost::shared_ptr< MIL_Fuseau > > result( limits );
+    std::sort( result.begin(), result.end(), CompareBoundariesEnemies< MIL_Fuseau >( caller, true ) );
+    return result;
 }
 
 namespace
@@ -253,32 +227,18 @@ namespace
 // Name: DEC_IntelligenceFunctions::IsFriendOnFlank
 // Created: SBO 2007-12-06
 // -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::IsFriendOnFlank( DIA_Call_ABC& call, const MIL_Automate& caller )
+bool DEC_IntelligenceFunctions::IsFriendOnFlank( const MIL_Automate& caller, const MIL_Fuseau* limits )
 {
-    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 0 ) ) );
-    const MIL_Fuseau* zone = call.GetParameter( 0 ).ToUserPtr( zone );
-    call.GetResult().SetValue( zone && ::IsOnFlank( *zone, caller, boost::bind( &MIL_IntelligenceOrder::IsFriend, _1 ) ) );
+    return limits && IsOnFlank( *limits, caller, boost::bind( &MIL_IntelligenceOrder::IsFriend, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_IntelligenceFunctions::ComputeCoverDirection
 // Created: SBO 2007-12-06
 // -----------------------------------------------------------------------------
-void DEC_IntelligenceFunctions::ComputeCoverDirection( DIA_Call_ABC& call, const MIL_Automate& caller )
+boost::shared_ptr< MT_Vector2D > DEC_IntelligenceFunctions::ComputeCoverDirection( const MIL_Automate& caller, const MT_Vector2D* origin, const MIL_Fuseau* limits )
 {
-    assert( DEC_Tools::CheckTypePoint ( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypeFuseau( call.GetParameter( 1 ) ) );
-    const MT_Vector2D* origin = call.GetParameter( 0 ).ToUserPtr( origin );
-    const MIL_Fuseau*  zone   = call.GetParameter( 1 ).ToUserPtr( zone );
-    if( zone && origin )
-    {
-        MT_Vector2D* result = new MT_Vector2D( ComputeClosestDirection( *origin, *zone, caller, boost::bind( &MIL_IntelligenceOrder::IsEnemy, _1 ) ) ); // $$$$ SBO 2007-12-07: RAM
-        call.GetResult().SetValue( (void*)result, &DEC_Tools::GetTypeDirection(), 1 );
-    }
-    else
-    {
-        // $$$$ SBO 2008-01-11: should not happen as a zone parameter is supposed to be provided
-        MT_Vector2D* result = new MT_Vector2D( caller.GetOrderManager().GetDirDanger() ); // $$$$ SBO 2008-01-11: RAM
-        call.GetResult().SetValue( (void*)result, &DEC_Tools::GetTypeDirection(), 1 );
-    }
+    if( limits && origin )
+        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ComputeClosestDirection( *origin, *limits, caller, boost::bind( &MIL_IntelligenceOrder::IsEnemy, _1 ) ) ) );
+    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( caller.GetOrderManager().GetDirDanger() ) );
 }

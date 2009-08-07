@@ -1,0 +1,69 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/missionsreactionpopulations/Securiser.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_SecuriserZoneContrePopulations
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_SecuriserZoneContrePopulations"
+{
+    activations =
+    {
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Pop_Pion_BloquerPopulation", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.objectif = self.objectif or self._namedParams.mission.point_
+        self.eEtatAction = self.eEtatAction or eActionEnCours
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, 0.5, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Pion detruit
+]]--[[//-----------------------------------------------------------------------------
+]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( not DEC_Geometrie_EstPointDansFuseau( self.objectif ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                Halt()
+
+                    end
+                end
+
+            end
+        end
+
+        if( self.eEtatAction == eActionHalt ) then
+            do
+                                Halt()
+
+            end
+        end
+
+        Activate( self.activations.BEH_Pop_Pion_BloquerPopulation, 1, setmetatable( { self.objectif, 500, 525, 0, "SecuriserZoneContrePopulations", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatAction = v else rawset( t, k, v ) end end } ) )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_SecuriserZoneContrePopulations = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SecuriserZoneContrePopulations, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_SecuriserZoneContrePopulations, "BEH_Pop_Pion_BloquerPopulation", nodes.BEH_Pop_Pion_BloquerPopulation }

@@ -14,6 +14,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_MissionParameter_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Enumeration constructor
@@ -40,55 +41,17 @@ MIL_ParameterType_Enumeration::~MIL_ParameterType_Enumeration()
 // Name: MIL_ParameterType_Enumeration::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_ParameterType_Enumeration::Copy( const ASN1T_MissionParameter& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Enumeration::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
-    if( from.null_value || from.value.t != T_MissionParameter_value_enumeration ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    // Check dest
-    if( to.Type() != eId ) 
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-
-    if( !NET_ASN_Tools::CopyEnumeration( from.value.u.enumeration, to ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Enumeration::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_Enumeration::Copy( const DIA_Variable_ABC& from, DIA_Variable_ABC& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( from.Type() != eId )
-        return false;
-
-    // Check dest
-    if( to.Type() != eId )
-        return false;
-
-    if( !NET_ASN_Tools::CopyEnumeration( from, to ) )
-        return false;
-    
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Enumeration::Copy
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-bool MIL_ParameterType_Enumeration::Copy( const DIA_Variable_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
-{
-    // Check source
-    if( from.Type() != eId )
+    int id;
+    if( !from.ToId( id ) )
         return false;
 
     to.null_value = false;
     to.value.t    = T_MissionParameter_value_enumeration;
     
-    if( !NET_ASN_Tools::CopyEnumeration( from, to.value.u.enumeration ) )
-        return false;
+    to.value.u.enumeration = id;
 
     return true;    
 }

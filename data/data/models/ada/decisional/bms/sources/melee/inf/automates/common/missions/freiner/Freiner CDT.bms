@@ -1,0 +1,353 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/automates/common/missions/freiner/Freiner CDT.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_Automate_INF_Freiner
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Conduite_Automate_INF_Freiner"
+{
+    activations =
+    {
+        { "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_", {} },
+        { "BEH_CoordDep_Automate_INF_CoordinationRetrograde_", {} },
+        { "BEH_Conduite_INF_Automate_Freiner_GererLesLC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Mission
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_CoordDep_Automate_INF_CoordinationRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+]]--[[// Coordination
+]]--[[//-----------------------------------------------------------------------------
+]]
+        Activate( self.activations.BEH_Conduite_INF_Automate_Freiner_GererLesLC, 1, {} )--[[/// TEMP ajout ADA
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Conduite_INF_Automate_Freiner_GererLesLC
+]]--[[//
+]]--[[// Commentaires: TEMP //// RAJOUT ADA
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Conduite_INF_Automate_Freiner_GererLesLC"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_PasserSurLC", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local selPionsFr = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_INF_Freiner" )
+        if( DEC_AutomateSuperieur_EstEmbraye() and F_Automat_GeteEtatEchelon( myself ) == eEtatEchelon_Second ) then
+for _,pion in pairs( selPionsFr ) do
+            local _continue = true
+                Activate( self.activations.ACT_Ordre_Automate_PasserSurLC, 1, { pion, } )
+
+            end
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_"
+{
+    activations =
+    {
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.positionArrivee = self.positionArrivee or DEC_Geometrie_CalculerPointArrivee()
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Mission aux pions sans missions --> Faire mouvement vers la fin du fuseau 
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                for _,pion in pairs( S_Dispositif_Automate_INF_PionsSansMission() ) do
+                local _continue = true
+                    do
+                        local pionDEC = pion
+                        Activate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionArrivee, F_Pion_GeteEtatEchelon( pionDEC ), } )
+                    end
+
+                end
+
+                                return
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Mission Mortier et ACMP
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        local listePionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
+        if( DIA_IsListEmpty( listePionsPE ) ) then
+            return
+        end
+
+        local listePionsSE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
+        local rIterateur = 0
+        for _,pion in pairs( listePionsSE ) do
+        local _continue = true
+do
+                local pionDEC = pion
+                if( pionDEC:GetType() == "GroupeInfanterie_Mortier" or pionDEC:GetType() == "SectionInfanterie_HOT" or pionDEC:GetType() == "SectionInfanterie_MILAN" ) then
+                    do
+                        if( rIterateur == #( listePionsPE ) ) then
+                            rIterateur = 0
+                        end
+
+                        Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, pionDEC, DIA_GetAt( listePionsPE, rIterateur ), F_Pion_GeteEtatEchelon( pionDEC ), } )
+                                                rIterateur = rIterateur + 1
+                    end
+                end
+
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_CoordDep_Automate_INF_CoordonnerFreinage
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_CoordDep_Automate_INF_CoordinationRetrograde_"
+{
+    activations =
+    {
+        { "BEH_CoordDep_Automate_INF_CoordonnerJalonnement", {} },
+        { "BEH_CoordDep_Automate_INF_CoordonnerMouvement", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_CoordDep_Automate_INF_CoordonnerJalonnement, 1, {} )--[[// définie dans mission jalonner
+]]
+        Activate( self.activations.BEH_CoordDep_Automate_INF_CoordonnerMouvement, 1, {} )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_CoordDep_Automate_INF_CoordonnerJalonnement
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_CoordDep_Automate_INF_CoordonnerJalonnement"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_INF_Decrocher", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.pionEnQueue = self.pionEnQueue or nil
+        self.resultatCalcul = self.resultatCalcul or nil
+        --[[// Persistent car les pions on tj la mission jalonner meme si detruit
+]]self.selPionsJal = self.selPionsJal or S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_INF_Freiner" )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( self.selPionsJal )
+        end
+
+        if( #( self.selPionsJal ) == 1 ) then
+            return
+        end
+
+        for _,x in pairs( --[[//-----------------------------------------------------------------------------
+]]--[[// Coordination
+]]--[[//-----------------------------------------------------------------------------
+]]self.selPionsJal ) do
+        local _continue = true
+do
+                local pion = x
+                if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion ) > 500 ) then
+                    Activate( self.activations.ACT_Ordre_Automate_INF_Decrocher, 1, { pion, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_CoordDep_Automate_INF_CoordonnerMouvement
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_CoordDep_Automate_INF_CoordonnerMouvement"
+{
+    activations =
+    {
+        { "ACT_Ordre_Automate_Pause", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                self.resultatCalcul = self.resultatCalcul or nil
+        local listePionACoordonner = S_ObtenirPionsOperationnels()
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( listePionACoordonner )
+        end
+
+        --[[//---------------------------------------------------------------------
+]]--[[// Récuper les unités qui on la mission decrocher
+]]--[[//---------------------------------------------------------------------
+]]local listePionEnMvt = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_Decrocher" )
+        for _,pion in pairs( listePionEnMvt ) do
+        local _continue = true
+do
+                --[[// VALEUR A DEFINIR
+]]if( DEC_Geometrie_CalculerDistanceLigneArriere( self.resultatCalcul, pion ) < -2000 ) then
+                    Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { pion, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Geometrie_StopCalculLignesAvantEtArriere( self.resultatCalcul )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// ACT_Ordre_Automate_INF_Decrocher 
+]]--[[// 
+]]--[[// Commentaires: POUR ABC, MISSION JALONNER --> TEMP
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Ordre_Automate_INF_Decrocher"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SetbOrdreDecrocher( self._namedParams.pion, true )
+--[[// l'équivalent à l'ordre "POURSUIVRE"
+]]    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SetbOrdreDecrocher( self._namedParams.pion, false )
+    end,
+
+}
+
+node "BEH_Conduite_Automate_INF_AppuyerCompromis"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pPion = self.params[1]
+        self._namedParams.pAAppuyer = self.params[2]
+    end,
+
+    activate = function( self )
+        if( ModuleBegins() ) then
+            do
+                switch_1 = self._namedParams.pPion:GetType()
+                    if switch_1 == "Peloton_AMX"
+                    or switch_1 == "Peloton_XL" then
+                                            StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
+                        
+                    elseif switch_1 == "SectionInfanterie"
+                    or switch_1 == "SectionInfanterie_MILAN"
+                    or switch_1 == "SectionInfanterie_HOT"
+                    or switch_1 == "SectionInfanterie_Appui"
+                    or switch_1 == "GroupeInfanterie_Mortier" then
+                                            StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
+                        
+                                        end
+
+            end
+        end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_AppuyerCompromis, "BEH_Mission_Automate_ABC_AssignerSoutenirA", nodes.BEH_Mission_Automate_ABC_AssignerSoutenirA }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_AppuyerCompromis, "BEH_Mission_Automate_INF_AssignerAppuyerA", nodes.BEH_Mission_Automate_INF_AssignerAppuyerA }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Freiner, "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_", nodes.BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Freiner, "BEH_CoordDep_Automate_INF_CoordinationRetrograde_", nodes.BEH_CoordDep_Automate_INF_CoordinationRetrograde_ }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Freiner, "BEH_Conduite_INF_Automate_Freiner_GererLesLC", nodes.BEH_Conduite_INF_Automate_Freiner_GererLesLC }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_INF_Automate_Freiner_GererLesLC, "ACT_Ordre_Automate_PasserSurLC", nodes.ACT_Ordre_Automate_PasserSurLC }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_CoordinationRetrograde_, "BEH_CoordDep_Automate_INF_CoordonnerJalonnement", nodes.BEH_CoordDep_Automate_INF_CoordonnerJalonnement }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_CoordinationRetrograde_, "BEH_CoordDep_Automate_INF_CoordonnerMouvement", nodes.BEH_CoordDep_Automate_INF_CoordonnerMouvement }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_CoordonnerJalonnement, "ACT_Ordre_Automate_INF_Decrocher", nodes.ACT_Ordre_Automate_INF_Decrocher }
+connections[ #connections + 1 ] = { nodes.BEH_CoordDep_Automate_INF_CoordonnerMouvement, "ACT_Ordre_Automate_Pause", nodes.ACT_Ordre_Automate_Pause }
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_, "BEH_Mission_Automate_INF_AssignerAppuyerA", nodes.BEH_Mission_Automate_INF_AssignerAppuyerA }

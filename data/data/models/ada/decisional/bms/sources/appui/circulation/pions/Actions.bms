@@ -1,0 +1,239 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
+
+--[[// ****************************************************************************
+]]--[[// ACT_Misc_Pion_LOG_EquiperItineraire
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]node "ACT_Misc_Pion_LOG_EquiperItineraire"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.Iti = self.params[1]
+    end,
+
+    select = function( self )
+        --[[//-----------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Itinéraire équipé" )
+                local eValid = DEC_Circulation_EquiperItineraireLogistique( self._namedParams.Iti )
+                if( eValid == eRequeteValide ) then
+                    self.params.__returnValue = eActionEffectuee
+                    return
+                end
+
+                                self.params.__returnValue = eActionImpossible
+                return
+
+            end
+        end
+
+    end,
+
+}
+
+--[[// ****************************************************************************
+]]--[[// ACT_Obj_Pion_LOG_RealiserTravaux
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]node "ACT_Obj_Pion_LOG_RealiserTravaux"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.loc = self.params[1]
+        self._namedParams.eTypeObjet = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
+        self.bSuspendu = self.bSuspendu or false
+        self.act = self.act or nil
+        --[[//-----------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                self.act = DEC_StartCreerObjet( myself.objMisEnCours_, S_TypeObject_ToString( eTypeObjet ), self._namedParams.loc )
+                actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
+                actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
+
+                DEC_RC( eRC_DebutTravaux )
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Retour sur le déroulement de l'action
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        switch_1 = self.eActionObjet
+            if switch_1 == eActionObjetEnCours then
+                
+            elseif switch_1 == eActionObjetTerminee then
+                DEC_RC( eRC_FinTravaux )
+                                self.params.__returnValue = eActionEffectuee
+                return
+
+                
+            elseif switch_1 == eActionObjetManqueDotation then
+                self.bDummy = self.bDummy or true
+                                return
+
+                
+            elseif switch_1 == eActionObjetPasDeCapacite then
+                                self.params.__returnValue = eActionImpossible
+                return
+
+            elseif switch_1 == eActionObjetImpossible then
+                                self.params.__returnValue = eActionImpossible
+                return
+
+                
+                        end
+
+        if( self.bSuspendu ) then
+            do
+                self.bSuspendu = false
+                DEC_ReprendAction( self.act )
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.act )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                self.act = DEC_StopAction( self.act )
+    end,
+
+}
+
+--[[// ******************************************************************************
+]]--[[// ACT_LOG_FaireMesure
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ******************************************************************************
+]]node "ACT_LOG_FaireMesure"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "***** Starting analyse *****" )
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutMesure )
+                    else
+                        DEC_Message( eRC_DebutMesure )
+                    end
+
+                end
+
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinMesure )
+            else
+                DEC_Message( eRC_FinMesure )
+            end
+
+        end
+
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_Circu_PreterRemorqueurs
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_Circu_PreterRemorqueurs"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionA = self.params[1]
+        self._namedParams.fAmb = self.params[2]
+    end,
+
+    select = function( self )
+                self.actionPreterRemorqueurs = self.actionPreterRemorqueurs or nil
+        self.bFinManoeuvre = self.bFinManoeuvre or false
+        if( self.bFinManoeuvre ) then
+            self.params.__returnValue = eActionEffectuee
+            Halt()
+        end
+
+        --[[//------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( self._namedParams.pionA, self._namedParams.fAmb )
+            actionCallbacks[ self.actionPreterRemorqueurs ] = function( arg ) self.bFinManoeuvre = arg end
+
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionPreterRemorqueurs )
+    end,
+
+    destroy = function( self )
+                self.actionPreterRemorqueurs = DEC_StopAction( self.actionPreterRemorqueurs )
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Misc_Pion_Circu_RecupererRemorqueurs
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Misc_Pion_Circu_RecupererRemorqueurs"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pionDe = self.params[1]
+        self._namedParams.fAmb = self.params[2]
+    end,
+
+    select = function( self )
+        DEC_RecupererRemorqueurs( self._namedParams.pionDe, self._namedParams.fAmb )
+                self.params.__returnValue = eActionEffectuee
+        Halt()
+
+    end,
+
+}
+

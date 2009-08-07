@@ -15,8 +15,14 @@
 #include "MIL.h"
 #include "MT_Tools/MT_Random.h"
 
+class DEC_Decision_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
+class MIL_Mission_ABC;
+class MIL_PionMission;
+class MIL_AutomateMission;
+class MIL_Fuseau;
+class MT_Vector2D;
 
 // =============================================================================
 // Created: NLD 2004-07-08
@@ -25,32 +31,32 @@ class DEC_OrdersFunctions
 {
 public:
     // Mission
-    template< typename T > static void FinishMission      ( DIA_Call_ABC& call, T& caller );
-    template< typename T > static void IsNewMissionStarted( DIA_Call_ABC& call, T& caller );
+    template< typename T > static void FinishMission      ( T& caller );
+    template< typename T > static bool IsNewMissionStarted( T& caller );
 
 
     // Limas
-    template< typename T > static void GetLima                           ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetNextScheduledLima              ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetFuseau                         ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetMissionLimaFlag                ( DIA_Call_ABC& call, const T& caller );
-                           static void PionSetMissionLimaFlag            ( DIA_Call_ABC& call,       MIL_AgentPion& caller );
-                           static void PionSetMissionLimaScheduleFlag    ( DIA_Call_ABC& call,       MIL_AgentPion& caller );
-                           static void AutomateSetMissionLimaFlag        ( DIA_Call_ABC& call,       MIL_Automate& caller );
-                           static void AutomateSetMissionLimaScheduleFlag( DIA_Call_ABC& call,       MIL_Automate& caller );
+    template< typename T > static unsigned int GetLima                   ( const T& caller, unsigned int limaId );
+    template< typename T > static unsigned int GetNextScheduledLima      ( const T& caller );
+    template< typename T > static const MIL_Fuseau& GetFuseau            ( const T& caller );
+    template< typename T > static bool GetMissionLimaFlag                ( const T& caller, unsigned int limaId );
+                           static void PionSetMissionLimaFlag            ( MIL_AgentPion& caller, unsigned int limaId, bool flag );
+                           static void PionSetMissionLimaScheduleFlag    ( MIL_AgentPion& caller, unsigned int limaId, bool flag  );
+                           static void AutomateSetMissionLimaFlag        ( MIL_Automate& caller, unsigned int limaId, bool flag  );
+                           static void AutomateSetMissionLimaScheduleFlag( MIL_Automate& caller, unsigned int limaId, bool flag  );
 
     // Automate
-    static void MRT_CreatePionMission  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void MRT_Validate           ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void MRT_AffectFuseaux      ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );   
-    static void CDT_CreatePionMission  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void CDT_GivePionMission    ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static MIL_Mission_ABC* MRT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
+    static void             MRT_Validate           ( MIL_Automate& callerAutomate );
+    static void             MRT_AffectFuseaux      ( MIL_Automate& callerAutomate, std::vector< DEC_Decision_ABC* > pions );   
+    static MIL_Mission_ABC* CDT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
+    static void             CDT_GivePionMission    ( MIL_Automate& callerAutomate, MIL_Mission_ABC* pMission );
 
-    static void CreateAutomateMission           ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void AssignFuseauToAutomateMission   ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void AssignDirectionToAutomateMission( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void GiveAutomateMission             ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void SplitFuseau                     ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static MIL_Mission_ABC* CreateAutomateMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission  );
+    static void AssignFuseauToAutomateMission   ( MIL_Fuseau* pFuseau, MIL_AutomateMission* pMission );
+    static void AssignDirectionToAutomateMission( MT_Vector2D* pDirection, MIL_AutomateMission* pMission);
+    static void GiveAutomateMission             ( MIL_AutomateMission* pMission, MIL_Automate& callerAutomate );
+    static std::list<MIL_Fuseau*> SplitFuseau   ( MIL_Automate& callerAutomate, unsigned int nbrSubFuseaux );
 
 private:
     //! @name Tools

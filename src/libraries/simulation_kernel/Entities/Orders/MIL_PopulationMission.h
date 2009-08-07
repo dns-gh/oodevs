@@ -30,11 +30,6 @@ public:
     virtual ~MIL_PopulationMission();
     //@}
 
-    //! @name DIA
-    //@{
-    static void InitializeDIA();
-    //@}
-
     //! @name Operations
     //@{
     virtual void Start               ();

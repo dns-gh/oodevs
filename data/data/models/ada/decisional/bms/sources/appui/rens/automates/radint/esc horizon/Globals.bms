@@ -1,0 +1,15 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/rens/automates/radint/esc horizon/Globals.bms"] = true
+
+
+--[[// Commun SCIPIO
+]]include "Common/Automates/Globals.bms"
+
+
+--[[// Commun Rens 
+]]include "Appui/Rens/Globals.bms"
+
+
+--[[// Commun automate Rens
+]]include "Appui/Rens/Automates/Common/Globals.bms"
+

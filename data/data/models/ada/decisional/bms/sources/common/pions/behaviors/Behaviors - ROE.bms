@@ -1,0 +1,166 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/behaviors/Behaviors - ROE.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE()
+]]--[[//
+]]--[[// Commentaires :
+]]--[[// 
+]]--[[// *****************************************************************************
+]]node "BEH_ROE"
+{
+    activations =
+    {
+        { "BEH_ROE_Recevoir_OrdreInopine", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_ROE_Recevoir_OrdreInopine, 1, {} )--[[// pour anibas 
+]]
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE_Recevoir_OrdreInopine
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]--[[// MIA effectivement sert seulement en debrayé
+]]}
+
+node "BEH_ROE_Recevoir_OrdreInopine"
+{
+    activations =
+    {
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "ACT_Maj_Pion_PasserEnTirInterdit", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Reception d'un ordre du superieur
+]]--[[//-----------------------------------------------------------------------------
+]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus ) do
+        local _continue = true
+do
+                local repOrdre = x
+                switch_1 = repOrdre:GetType()
+                    if switch_1 == "Rep_OrderConduite_ChangerReglesEngagement" then
+                        local ordreROE = repOrdre
+                        switch_2 = ordreROE:GetorderConduiteChangerReglesEngagement_()
+                            if switch_2 == eEtatROE_TirLibre then
+                                --[[// TIR LIBRE
+]]DEC_Trace( " === Frag Order --> ROE FREE FIRE" )
+                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                                
+                            --[[// TIR SUR RIPOSTE
+]]elseif switch_2 == eEtatROE_TirSurRiposte then
+                                DEC_Trace( " === Frag Order --> ROE RETURN OF FIRE" )
+                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                                
+                            --[[// TIR INTERDIT
+]]elseif switch_2 == eEtatROE_TirInterdit then
+                                DEC_Trace( " === Frag Order --> ROE FORBIDDEN FIRE" )
+                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, {} )
+                                
+                                                        end
+
+                        
+                                        end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+            end
+
+        end
+
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE_GererTirInterdit
+]]--[[//
+]]--[[// Commentaires : appelé par la BEH_MOT_PasserEnTirSurOrdre issu de la 
+]]--[[//				  de la motivation du même nom
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ROE_GererTirInterdit"
+{
+    activations =
+    {
+        { "ACT_Tir_ChangerConsigne", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Tir_ChangerConsigne, 1, { eEtatROE_TirInterdit, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE_GererROETirRestreint
+]]--[[//
+]]--[[// Commentaires : appelé par la BEH_MOT_PasserEnTirRestreint issu de la 
+]]--[[//				  de la motivation du même nom
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ROE_GererTirRestreint"
+{
+    activations =
+    {
+        { "ACT_Tir_ChangerConsigne", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Tir_ChangerConsigne, 1, { eEtatROE_TirSurRiposte, } )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_ROE_GererROETirLibre
+]]--[[//
+]]--[[// Commentaires : appelé par la BEH_MOT_PasserEnTirLibre issu de la 
+]]--[[//				  de la motivation du même nom
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ROE_GererTirLibre"
+{
+    activations =
+    {
+        { "ACT_Tir_ChangerConsigne", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.ACT_Tir_ChangerConsigne, 1, { eEtatROE_TirLibre, } )
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_ROE, "BEH_ROE_Recevoir_OrdreInopine", nodes.BEH_ROE_Recevoir_OrdreInopine }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_GererTirInterdit, "ACT_Tir_ChangerConsigne", nodes.ACT_Tir_ChangerConsigne }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_GererTirLibre, "ACT_Tir_ChangerConsigne", nodes.ACT_Tir_ChangerConsigne }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_GererTirRestreint, "ACT_Tir_ChangerConsigne", nodes.ACT_Tir_ChangerConsigne }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Maj_Pion_PasserEnTirLibre", nodes.ACT_Maj_Pion_PasserEnTirLibre }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Maj_Pion_PasserEnTirInterdit", nodes.ACT_Maj_Pion_PasserEnTirInterdit }
+connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

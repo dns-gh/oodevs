@@ -1,0 +1,130 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/trans/pions/actions/Actions - Maj.bms"] = true
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_EtatPhaseMission
+]]--[[// 
+]]--[[// Commentaires: Mets a jour la situation du pion en fonction de sa phase de mission
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_MAJ_EtatPhaseMission"
+{
+    actuators =
+    {
+        etat_Mission = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatPhaseMission = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatPhaseMission( myself, self._namedParams.eEtatPhaseMission )
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatPhaseMission( myself, eEtatPhaseMission_None )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_EtatDestruction
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_MAJ_EtatDestruction"
+{
+    actuators =
+    {
+        etat_Destruction = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatDestruction = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatDestruction( myself, self._namedParams.eEtatDestruction )
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatDestruction( myself, eEtatDestruction_None )
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatDestruction( myself, eEtatDestruction_None )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_EtatDec
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_MAJ_EtatDec"
+{
+    actuators =
+    {
+        etat_Dec = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatDec = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatDec( myself, self._namedParams.eEtatDec )
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatDec( myself, eEtatDec_Continu )
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatDec( myself, eEtatDec_Continu )
+    end,
+
+}
+
+--[[// ****************************************************************************** 
+]]--[[// ACT_MAJ_EtatOrdreCoordination
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ****************************************************************************** 
+]]node "ACT_MAJ_EtatOrdreCoordination"
+{
+    actuators =
+    {
+        etat_OrdreCoordination = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtatOrdreCoordination = self.params[1]
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatOrdreCoordination( myself, self._namedParams.eEtatOrdreCoordination )
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatOrdreCoordination( myself, eEtatOrdreCoordination_aucun )
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatOrdreCoordination( myself, eEtatOrdreCoordination_aucun )
+    end,
+
+}
+

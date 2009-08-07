@@ -12,7 +12,7 @@
 #include <xeumeuleu/xml.h>
 
 MIL_MissionType_ABC::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
-MIL_MissionType_ABC::T_MissionIDMap   MIL_AutomateMissionType::missionDiaIDs_;
+MIL_MissionType_ABC::T_MissionNameMap MIL_AutomateMissionType::missionDiaIDs_;
 MIL_MissionType_ABC::T_MissionNameMap MIL_AutomateMissionType::missionNames_;
 
 struct MIL_AutomateMissionType::LoadingWrapper
@@ -87,9 +87,9 @@ const MIL_MissionType_ABC* MIL_AutomateMissionType::Find( uint nID )
 // Name: MIL_AutomateMissionType::FindFromDiaID
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-const MIL_MissionType_ABC* MIL_AutomateMissionType::FindFromDiaID( uint nID )
+const MIL_MissionType_ABC* MIL_AutomateMissionType::FindFromDiaID( const std::string& nID )
 {
-    CIT_MissionIDMap it = missionDiaIDs_.find( nID );
+    CIT_MissionNameMap it = missionDiaIDs_.find( nID );
     if( it == missionDiaIDs_.end() )
         return 0;
     return it->second;

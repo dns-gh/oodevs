@@ -1,0 +1,306 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Ameliorer mobilite.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_GEN_AmeliorerMobilite
+]]--[[//
+]]--[[// Commentaires: Refonte 27/10/2006
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_GEN_AmeliorerMobilite"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Objet_Pion_GEN_RealiserZoneMobilite", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.genObs = self.genObs or DEC_CreerDIAThing( "T_GenObstacle_Local" )
+        self.ptObst = self.ptObst or nil
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "------------- To enhance mobility -----------------" )
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                --[[// Propriétés de l'objet à construire
+]]self.genObs:Settype_obstacle_( eTypeObjectZoneMobiliteAmelioree )
+                self.genObs:Setloc_obstacle_( self._namedParams.mission.zone_ )
+                --[[// Calcule de la position
+]]self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.mission.zone_ )
+                if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt()
+
+                    end
+                end
+
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Squelette de mission
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        switch_1 = self.ePhaseMission
+            if switch_1 == ePreparerMission then
+                --[[// Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                self.ePhaseMission = eProgresser
+                
+            --[[// Rejoindre la zone
+]]elseif switch_1 == eProgresser then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eDeminerObstacle
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObst, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Depolluer
+]]elseif switch_1 == eDeminerObstacle then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                if( self.eEtat == eActionEffectuee ) then
+                    do
+                        self.eEtat = eActionEnCours
+                                                do
+                            self.ePhaseMission = eFinMission
+                                                        return
+
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_Objet_Pion_GEN_RealiserZoneMobilite, 1, setmetatable( { self.genObs, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                
+            --[[// Fin de la mission
+]]elseif switch_1 == eFinMission then
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                
+                        end
+
+    end,
+
+    destroy = function( self )
+                DEC_DetruireDIAThing( self.genObs )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Objet_Pion_GEN_RealiserZoneMobilite
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "ACT_RC", {} },
+        { "ACT_Obj_Pion_GEN_RealiserZoneMobilite", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.genObs = self.params[1]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        if( self.eEtat == eActionEffectuee ) then
+            do
+                self.eEtat = eActionEnCours
+                                do
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Organisation chantier, verification renfort, brechage et 
+]]--[[// desorganisation chantier
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( self._namedParams.genObs:Gettype_obstacle_() ) ) ) then
+            do
+                Activate( self.activations.ACT_RC, 1, { eRC_AttenteRenforcement, } )
+                                return
+
+            end
+--[[// SINON OK pour construire l'objet
+]]--[[//-----------------------------------------------------------------
+]]--[[// En fonction du type d'objet...
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.ACT_Obj_Pion_GEN_RealiserZoneMobilite, 1, setmetatable( { self._namedParams.genObs:Getloc_obstacle_(), self._namedParams.genObs:Gettype_obstacle_(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+    end,
+
+--[[// ****************************************************************************
+]]--[[// ACT_Obj_Pion_GEN_RealiserZoneMobilite
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]}
+
+node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
+{
+    actuators =
+    {
+        obstacle = 1,
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.loc = self.params[1]
+        self._namedParams.eTypeObjet = self.params[2]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
+        self.bSuspendu = self.bSuspendu or false
+        self.bInit = self.bInit or true
+        self.act = self.act or nil
+        --[[//-----------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_OrganisationChantier )
+                else
+                    DEC_Message( eRC_OrganisationChantier )
+                end
+
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// Début travaux
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            do
+                self.act = DEC_StartCreerObjet( myself.objMisEnCours_, S_TypeObject_ToString( eTypeObjet ), self._namedParams.loc )
+                actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
+                actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
+
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_DebutTravaux )
+                    else
+                        DEC_Message( eRC_DebutTravaux )
+                    end
+
+                end
+
+                self.bInit = false
+            end
+--[[//-----------------------------------------------------------------
+]]--[[// RC éventuels
+]]--[[//-----------------------------------------------------------------
+]]        end
+
+        switch_1 = self.eActionObjet
+            if switch_1 == eActionObjetTerminee then
+                DEC_Trace( "  end of works " )
+                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_FinTravaux )
+                    else
+                        DEC_Message( eRC_FinTravaux )
+                    end
+
+                end
+
+                                self.params.__returnValue = eActionEffectuee
+                return
+
+                
+            elseif switch_1 == eActionObjetManqueDotation
+            or switch_1 == eActionObjetPasDeCapacite
+            or switch_1 == eActionObjetImpossible then
+                DEC_Trace( "  impossible works " )
+                                self.params.__returnValue = eActionEffectuee
+                return
+
+                
+                        end
+--[[//-----------------------------------------------------------------
+]]--[[// Reprise si suspendu
+]]--[[//-----------------------------------------------------------------
+]]
+        if( self.bSuspendu and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+            do
+                DEC_ReprendAction( self.act )
+                self.bSuspendu = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.act )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                self.act = DEC_StopAction( self.act )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_GEN_AmeliorerMobilite = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_RealiserZoneMobilite, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Objet_Pion_GEN_RealiserZoneMobilite, "ACT_Obj_Pion_GEN_RealiserZoneMobilite", nodes.ACT_Obj_Pion_GEN_RealiserZoneMobilite }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_AmeliorerMobilite, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_AmeliorerMobilite, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_AmeliorerMobilite, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_AmeliorerMobilite, "BEH_Objet_Pion_GEN_RealiserZoneMobilite", nodes.BEH_Objet_Pion_GEN_RealiserZoneMobilite }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_GEN_AmeliorerMobilite, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }

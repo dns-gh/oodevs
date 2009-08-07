@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
-#include "Entities/Actions/PHY_Actor.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 
 namespace xml
@@ -47,7 +46,6 @@ class DEC_KnowledgeBlackBoard_Automate;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_Automate : public MIL_Entity_ABC
-                   , public PHY_Actor
 {
 
 public:
@@ -119,7 +117,7 @@ public:
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
 
-            void UpdateDecision  ();
+            void UpdateDecision  ( float duration );
             void UpdateKnowledges();
             void CleanKnowledges ();
     virtual void UpdateNetwork   () const;
@@ -192,6 +190,11 @@ public:
     //@}
 
 protected:
+    //! @name Constructor
+    //@{
+    MIL_Automate( const MIL_AutomateType& type );
+    //@}
+
     //! @name Tools
     //@{
     virtual void             SendLogisticLinks() const;
