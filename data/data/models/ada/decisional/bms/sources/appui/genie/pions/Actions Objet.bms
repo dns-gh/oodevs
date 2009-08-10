@@ -160,7 +160,7 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 {
     actuators =
     {
-        self._namedParams.obstacle = 1,
+        obstacle = 1,
         deplacement = 1,
     },
 

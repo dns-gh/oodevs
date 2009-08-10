@@ -347,7 +347,7 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
 {
     actuators =
     {
-        self._namedParams.hauteur = 1,
+        hauteur = 1,
     },
 
     create = function( self )

@@ -8,7 +8,7 @@ includedFiles["sources/air/pions/common/actions/Actions - Dep.bms"] = true
 {
     actuators =
     {
-        self._namedParams.hauteur = 1,
+        hauteur = 1,
     },
 
     create = function( self )
