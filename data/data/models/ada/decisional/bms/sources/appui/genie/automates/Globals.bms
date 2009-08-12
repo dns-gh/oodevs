@@ -16,13 +16,13 @@ include "bit.lua"
 ]]--[[//=============================================================================
 ]]--[[// Variable temporaire en attendant une fonction DEC permettant de faire un
 ]]--[[// quicksort.
-]]local g_selObstacles = {}
+]]g_selObstacles = {}
 --[[// Selection de T_ConnaissanceObjet_local étant impossible de passer en référance
 ]]--[[// ce type de structure.
-]]local g_selConnaissanceObs = {}
+]]g_selConnaissanceObs = {}
 
 --[[// Liste des obstacles à réaliser
-]]local g_selObs_ARealiser = {}
+]]g_selObs_ARealiser = {}
 --[[//=============================================================================
 ]]--[[// Definition des fonctions script
 ]]--[[//=============================================================================

@@ -609,7 +609,7 @@ void DEC_CommunicationFunctions::F_Pion_SetmissionPrecedente( DEC_Decision_ABC* 
 // return pPion->etrTenir-----------------------------------();
 float DEC_CommunicationFunctions::F_Pion_GetrTenir( DEC_Decision_ABC* pPion )
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    return dynamic_cast< DEC_RolePion_Decision* >( pPion )->GetrTenir();
 }
     
 // -----------------------------------------------------------------------------

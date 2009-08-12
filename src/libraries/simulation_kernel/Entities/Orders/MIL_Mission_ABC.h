@@ -13,11 +13,11 @@
 #include "MIL_OrderContext.h"
 #include <boost/shared_ptr.hpp>
 
-class DEC_RolePion_Decision;
 class DEC_KnowledgeResolver_ABC;
 class MIL_FragOrderType;
 class MIL_KnowledgeGroup;
 class MIL_MissionParameter_ABC;
+class MIL_MissionParameterVisitor_ABC;
 class MIL_MissionType_ABC;
 class MIL_ParameterType_ABC;
 
@@ -64,14 +64,7 @@ public:
     //@}
 
     //! @name Parameters Management
-    class ParameterVisitor
-    {
-    public:
-                 ParameterVisitor() {}
-        virtual ~ParameterVisitor() {}
-        virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element ) = 0;
-    };
-    virtual void Visit( ParameterVisitor& parameterVisitor ) const;
+    virtual void Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor ) const;
     //@}
 
 protected:

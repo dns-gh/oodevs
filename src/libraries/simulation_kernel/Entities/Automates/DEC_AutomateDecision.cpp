@@ -313,7 +313,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_RC_Pion_Automate",
         boost::function< void ( int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_PopulationKnowledge",
-        boost::function< void ( int, int, DEC_Knowledge_Population* ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_TirPion",
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
 
@@ -461,7 +461,6 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void( DEC_PathPoint* )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetAutomate() ), _1 ) ) );
         
     // Former szName_, mission_, automate_:
-    brain.RegisterFunction( "DEC_FillMissionParameters", &DEC_MiscFunctions::FillMissionParameters );
     brain.RegisterFunction( "DEC_GetRawMission", 
         boost::function< MIL_Mission_ABC*( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetMission, _1 ) ) );
     brain.RegisterFunction( "DEC_SetMission",

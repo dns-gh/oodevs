@@ -199,7 +199,7 @@ do
         if( ModuleBegins() ) then
             do
                 --[[//DEC_Trace(  "debut exactions"  );
-]]self.actionExaction = DEC__StartTirSurPopulation( self.eActionTir, self._namedParams.pop )
+]]self.actionExaction = DEC__StartTirSurPopulation( self._namedParams.pop )
             end
 --[[//if( eActionTir == eActionTirDirect_Running )
 ]]--[[//{

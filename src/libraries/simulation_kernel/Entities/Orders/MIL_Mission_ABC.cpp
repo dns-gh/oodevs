@@ -12,6 +12,7 @@
 #include "MIL_MissionType_ABC.h"
 #include "MIL_MissionParameterFactory.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "MIL_MissionParameterVisitor_ABC.h"
 
 namespace
 {
@@ -153,7 +154,7 @@ void MIL_Mission_ABC::ReleasedByDIA()
 // Name: MIL_Mission_ABC::Visit
 // Created: LDC 2009-04-30
 // -----------------------------------------------------------------------------
-void MIL_Mission_ABC::Visit( MIL_Mission_ABC::ParameterVisitor& parameterVisitor ) const
+void MIL_Mission_ABC::Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor ) const
 {
     unsigned int parametersNumber = parameters_.size();
     for (unsigned int i = 0; i < parametersNumber; ++i )

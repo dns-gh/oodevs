@@ -4,6 +4,7 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "StubMIL_MissionParameter_ABC.h"
+#include "MIL_MissionParameterVisitor_ABC.h"
 
 class StubMIL_Mission_ABC 
     : public MIL_Mission_ABC
@@ -20,7 +21,7 @@ public:
         return false;
     }
 
-    virtual void Visit( MIL_Mission_ABC::ParameterVisitor& parameterVisitor ) const
+    virtual void Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor ) const
     {
         const MIL_ParameterType_ABC* pType = MIL_ParameterType_ABC::Find( "string" );
         if( !pType )

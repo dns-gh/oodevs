@@ -11,10 +11,10 @@
 #include "MIL_FragOrder.h"
 #include "MIL_FragOrderType.h"
 #include "MIL_OrderContext.h"
+#include "MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterFactory.h"
 #include "MIL_ParameterType_MedicalPriorities.h"
 #include "MIL_ParameterType_MaintenancePriorities.h"
-#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -24,10 +24,9 @@
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& decision, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn )
     : type_           ( type )
     , representations_( engine )
-    , decision_       ( decision )
 {
     MIL_MissionParameterFactory::Copy( asn.parametres, parameters_, knowledgeResolver );
 }
@@ -36,11 +35,10 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& d
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& decision, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs )
     : type_           ( type )
     , representations_( engine )
     , parameters_     ( rhs.parameters_ )
-    , decision_       ( decision )
 {
     // NOTHING
 }
@@ -103,22 +101,96 @@ void MIL_FragOrder::Register( directia::Brain& brain )
     brain.RegisterFunction( "GetsiteFranchissementVariante_", &MIL_FragOrder::GetSiteFranchissementVariante );
 }
 
+namespace
+{
+    int GetIntegerParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
+    {
+        unsigned int parametersNumber = parameters.size();
+        for (unsigned int i = 0; i < parametersNumber; ++i )
+        {
+            if( type.GetParameterName( i ) == name )
+            {
+                int result = 0;         
+                if( parameters[i]->ToId( result ) )
+                    return result;
+            }
+        }
+        throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
+    }
+
+    std::vector< DEC_Decision_ABC* > GetAutomatListParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
+    {
+        unsigned int parametersNumber = parameters.size();
+        for (unsigned int i = 0; i < parametersNumber; ++i )
+        {
+            if( type.GetParameterName( i ) == name )
+            {
+                std::vector< DEC_Decision_ABC* > result;         
+                if( parameters[i]->ToAutomatList( result ) )
+                    return result;
+            }
+        }
+        throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
+    }
+
+    DEC_Decision_ABC* GetAgentParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
+    {
+        unsigned int parametersNumber = parameters.size();
+        for (unsigned int i = 0; i < parametersNumber; ++i )
+        {
+            if( type.GetParameterName( i ) == name )
+            {
+                DEC_Decision_ABC* result = 0;
+                if( parameters[i]->ToAgent( result ) )
+                    return result;
+            }
+        }
+        throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
+    }
+
+    boost::shared_ptr< MT_Vector2D > GetPointParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
+    {
+        unsigned int parametersNumber = parameters.size();
+        for (unsigned int i = 0; i < parametersNumber; ++i )
+        {
+            if( type.GetParameterName( i ) == name )
+            {
+                boost::shared_ptr< MT_Vector2D > result;
+                if( parameters[i]->ToPoint( result ) )
+                    return result;
+            }
+        }
+        throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::GetAmbianceMission
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetAmbianceMission() const
 {
-    return decision_.GetVariable<int>( "ambianceMission_" );
+    static const std::string parameterName( "ambianceMission_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::GetMunitions
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< PHY_DotationCategory > MIL_FragOrder::GetMunitions() const
+const PHY_DotationCategory* MIL_FragOrder::GetMunitions() const
 {
-    return decision_.GetVariable< boost::shared_ptr< PHY_DotationCategory > >( "munitions_" );
+    unsigned int parametersNumber = parameters_.size();
+    for (unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == "munitions_" )
+        {
+            const PHY_DotationCategory* result;
+            if( parameters_[i]->ToDotationType( result ) )
+                return result;
+        }
+    }
+    throw std::runtime_error( "Unknown parameter munitions_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +199,8 @@ boost::shared_ptr< PHY_DotationCategory > MIL_FragOrder::GetMunitions() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetNbIT() const
 {
-    return decision_.GetVariable< int >( "nbIT_" );
+    static const std::string parameterName( "nbIT_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +209,8 @@ int MIL_FragOrder::GetNbIT() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetNbrAmbulances() const
 {
-    return decision_.GetVariable< int >( "nbrAmbulances_" );
+    static const std::string parameterName( "nbrAmbulances_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +219,8 @@ int MIL_FragOrder::GetNbrAmbulances() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetNbrRemorqueurs() const
 {
-    return decision_.GetVariable< int >( "nbrRemorqueurs_" );
+    static const std::string parameterName( "nbrRemorqueurs_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +229,8 @@ int MIL_FragOrder::GetNbrRemorqueurs() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduiteAutomateActiverObstacle() const
 {
-    return decision_.GetVariable< int >( "orderConduiteAutomateActiverObstacle_" );
+    static const std::string parameterName( "orderConduiteAutomateActiverObstacle_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +239,8 @@ int MIL_FragOrder::GetOrderConduiteAutomateActiverObstacle() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduiteChangerAmbiance() const
 {
-    return decision_.GetVariable< int >( "orderConduiteChangerAmbiance_" );
+    static const std::string parameterName( "orderConduiteChangerAmbiance_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +249,8 @@ int MIL_FragOrder::GetOrderConduiteChangerAmbiance() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetOrderConduiteChangerPositionDebarquement() const
 {
-    return decision_.GetVariable< boost::shared_ptr< MT_Vector2D > >( "orderConduiteChangerPositionDebarquement_" );
+    static const std::string parameterName( "orderConduiteChangerPositionDebarquement_" );
+    return GetPointParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +259,8 @@ boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetOrderConduiteChangerPositionD
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduiteChangerReglesEngagementPopulation() const
 {
-    return decision_.GetVariable< int >( "orderConduiteChangerReglesEngagementPopulation_" );
+    static const std::string parameterName( "orderConduiteChangerReglesEngagementPopulation_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,25 +269,47 @@ int MIL_FragOrder::GetOrderConduiteChangerReglesEngagementPopulation() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduiteChangerReglesEngagement() const
 {
-    return decision_.GetVariable< int >( "orderConduiteChangerReglesEngagement_" );
+    static const std::string parameterName( "orderConduiteChangerReglesEngagement_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-MIL_ParameterType_MedicalPriorities* MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses() const
+T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses() const
 {
-    return decision_.GetVariable< MIL_ParameterType_MedicalPriorities* >( "orderConduiteModifierPrioritesBlesses_" );
+    unsigned int parametersNumber = parameters_.size();
+    for (unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == "orderConduiteModifierPrioritesBlesses_" )
+        {
+            T_MedicalPriorityVector result;
+            if( parameters_[i]->ToMedicalPriorities( result ) )
+                return result;
+        }
+    }
+    throw std::runtime_error( "Unknown parameter orderConduiteModifierPrioritesBlesses_" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-MIL_ParameterType_MaintenancePriorities* MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations() const
+T_MaintenancePriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations() const
 {
-    return decision_.GetVariable< MIL_ParameterType_MaintenancePriorities* >( "orderConduiteModifierPrioritesReparations_" );
+    unsigned int parametersNumber = parameters_.size();
+    for (unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == "orderConduiteModifierPrioritesReparations_" )
+        {
+            T_MaintenancePriorityVector result;
+            if( parameters_[i]->ToMaintenancePriorities( result ) )
+                return result;
+        }
+    }
+    throw std::runtime_error( "Unknown parameter orderConduiteModifierPrioritesReparations_" );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +318,8 @@ MIL_ParameterType_MaintenancePriorities* MIL_FragOrder::GetOrderConduiteModifier
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesBlesses() const
 {
-    return decision_.GetVariable< std::vector< DEC_Decision_ABC* > >( "orderConduiteModifierPrioritesTactiquesBlesses_" );
+    static const std::string parameterName( "orderConduiteModifierPrioritesTactiquesBlesses_" );
+    return GetAutomatListParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +328,8 @@ std::vector< DEC_Decision_ABC* > MIL_FragOrder::GetOrderConduiteModifierPriorite
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesReparations() const
 {
-    return decision_.GetVariable< std::vector< DEC_Decision_ABC* > >( "orderConduiteModifierPrioritesTactiquesReparations_" );
+    static const std::string parameterName( "orderConduiteModifierPrioritesTactiquesReparations_" );
+    return GetAutomatListParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +338,8 @@ std::vector< DEC_Decision_ABC* > MIL_FragOrder::GetOrderConduiteModifierPriorite
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduiteModifierRegimeTravailMaintenance() const
 {
-    return decision_.GetVariable< int >( "orderConduiteModifierRegimeTravailMaintenance_" );
+    static const std::string parameterName( "orderConduiteModifierRegimeTravailMaintenance_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +348,8 @@ int MIL_FragOrder::GetOrderConduiteModifierRegimeTravailMaintenance() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduitePopulationChangerAttitude() const
 {
-    return decision_.GetVariable< int >( "orderConduitePopulationChangerAttitude_" );
+    static const std::string parameterName( "orderConduitePopulationChangerAttitude_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +358,8 @@ int MIL_FragOrder::GetOrderConduitePopulationChangerAttitude() const
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* MIL_FragOrder::GetPionARenforcer() const
 {
-    return decision_.GetVariable< DEC_Decision_ABC* >( "pionARenforcer_" );
+    static const std::string parameterName( "pionARenforcer_" );
+    return GetAgentParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,7 +368,8 @@ DEC_Decision_ABC* MIL_FragOrder::GetPionARenforcer() const
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* MIL_FragOrder::GetPionRenforce() const
 {
-    return decision_.GetVariable< DEC_Decision_ABC* >( "pionRenforce_" );
+    static const std::string parameterName( "pionRenforce_" );
+    return GetAgentParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -271,7 +378,8 @@ DEC_Decision_ABC* MIL_FragOrder::GetPionRenforce() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetPointCible() const
 {
-    return decision_.GetVariable< boost::shared_ptr< MT_Vector2D > >( "pointCible_" );
+    static const std::string parameterName( "pointCible_" );
+    return GetPointParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,7 +388,8 @@ boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetPointCible() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetPorteeAction() const
 {
-    return decision_.GetVariable< int >( "porteeAction_" );
+    static const std::string parameterName( "porteeAction_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -289,7 +398,8 @@ int MIL_FragOrder::GetPorteeAction() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetSiteFranchissementOriginal() const
 {
-    return decision_.GetVariable< int >( "siteFranchissementOriginal_" );
+    static const std::string parameterName( "siteFranchissementOriginal_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -298,6 +408,7 @@ int MIL_FragOrder::GetSiteFranchissementOriginal() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetSiteFranchissementVariante() const
 {
-    return decision_.GetVariable< int >( "siteFranchissementVariante_" );
+    static const std::string parameterName( "siteFranchissementVariante_" );
+    return GetIntegerParameter( parameterName, parameters_, type_ );
 }
 

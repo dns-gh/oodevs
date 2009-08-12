@@ -17,6 +17,7 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameter_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
+#include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include <boost/bind.hpp>
 
@@ -132,8 +133,9 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "GetType", &DEC_AutomateDecision::GetDIAType );
     brain.RegisterFunction( "GetType", &DEC_PathPoint::GetDIAType );
 
-    // Mission parameter assignment
-    brain.RegisterFunction( "DEC_AssignMissionPionParameter", &MIL_MissionParameterFactory::SetPawnParameter );
+    // Mission parameters
+    brain.RegisterFunction( "DEC_AssignMissionPionParameter", &MIL_MissionParameterFactory::SetPawnParameter );    
+    brain.RegisterFunction( "DEC_FillMissionParameters",      &DEC_MiscFunctions::FillMissionParameters );
     
     // Debug
     brain.RegisterFunction( "DEC_PointToString",      &DEC_DIAFunctions::PointToString );
@@ -409,7 +411,7 @@ void InitFunctions()
 }
 
 
-class RegisterMissionParameterVisitor : public MIL_Mission_ABC::ParameterVisitor
+class RegisterMissionParameterVisitor : public MIL_MissionParameterVisitor_ABC
 {
 public:
     RegisterMissionParameterVisitor( const directia::ScriptRef& refMission ) 

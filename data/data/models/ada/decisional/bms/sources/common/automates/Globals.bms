@@ -8,12 +8,12 @@ include "bit.lua"
 ]]--[[// Variables Globales des automates
 ]]--[[//=============================================================================
 ]]--[[// Pour RC de l'automate
-]]local g_bOrdreAnibas = false
+]]g_bOrdreAnibas = false
 
 --[[// Desactiver la sauvegarde
-]]local g_bDesactiveSauvegarde = false
+]]g_bDesactiveSauvegarde = false
 
-local g_RC_Id_ = 0
+g_RC_Id_ = 0
 
 --[[// Macros
 ]]include "Common/Macros.bms"

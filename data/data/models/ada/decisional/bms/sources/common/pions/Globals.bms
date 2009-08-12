@@ -13,15 +13,15 @@ includedFiles["sources/common/pions/Globals.bms"] = true
 ]]--[[// *****************************************************************************
 ]]
 --[[// Tir inefficace
-]]local g_bTirInefficace = false
+]]g_bTirInefficace = false
 
-local g_bEnPositionAppui = false
+g_bEnPositionAppui = false
 
 --[[// Desactiver la sauvegarde
-]]local g_bDesactiveSauvegarde = false
+]]g_bDesactiveSauvegarde = false
 
-local g_DistanceEsquivePopulation = 200
-local g_CurrentDistanceEsquivePopulation = 225
+g_DistanceEsquivePopulation = 200
+g_CurrentDistanceEsquivePopulation = 225
 
 --[[// Fonctions DECs
 ]]include "Common/Moteur/Functions/Pions.bms"

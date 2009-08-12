@@ -143,7 +143,6 @@ namespace DEC_DecisionImpl
 // -----------------------------------------------------------------------------
 void DEC_MiscFunctions::FillMissionParameters( const directia::ScriptRef& refMission, MIL_Mission_ABC* pMission )
 {
-    //$$$$ LDC: FIXME 
     if( pMission )
         DEC_DecisionImpl::RegisterMissionParameters( refMission, *pMission );
 }

@@ -151,9 +151,12 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void (PHY_Action_ABC*) >( boost::bind( &DEC_ActionFunctions::SuspendAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ReprendAction",
         boost::function< void (PHY_Action_ABC*) >( boost::bind( &DEC_ActionFunctions::ResumeAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC__StartDeplacement", &DEC_ActionFunctions::StartAction< PHY_Population_ActionMove, MT_Vector2D* > );
-    brain.RegisterFunction( "DEC__StartTirSurPions", &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPions, float > );
-    brain.RegisterFunction( "DEC__StartTirSurPion",  &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int  > );
+    brain.RegisterFunction( "DEC__StartDeplacement",
+        boost::function< PHY_Action_ABC*( MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionMove, MT_Vector2D* >, boost::ref( GetPopulation() ), _1 ) ) );
+    brain.RegisterFunction( "DEC__StartTirSurPions",
+        boost::function< PHY_Action_ABC*( float ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPions, float >, boost::ref( GetPopulation() ), _1 ) ) );
+    brain.RegisterFunction( "DEC__StartTirSurPion",
+        boost::function< PHY_Action_ABC*( float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int >, boost::ref( GetPopulation() ), _1, _2 ) ) );
 
     // Knowledge agents
     brain.RegisterFunction( "DEC_ConnaissanceAgent_RoePopulation",
@@ -210,8 +213,6 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void ( int, int, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion_Automate",
         boost::function< void ( int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3, _4 ) ) );
-    brain.RegisterFunction( "DEC_RC_PopulationKnowledge",
-        boost::function< void ( int, int, DEC_Knowledge_Population* ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_TirPion",
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
 
@@ -243,7 +244,6 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
     
     // Former szName_, mission_, automate_:
     brain.RegisterFunction( "DEC_GetSzName",             &DEC_PopulationFunctions::GetSzName       );
-    brain.RegisterFunction( "DEC_FillMissionParameters", &DEC_MiscFunctions::FillMissionParameters );
     brain.RegisterFunction( "DEC_GetRawMission",         &DEC_PopulationFunctions::GetMission            );
     brain.RegisterFunction( "DEC_SetMission",
         boost::function< void ( DEC_Decision_ABC*, MIL_Mission_ABC* ) >( boost::bind( &DEC_PopulationFunctions::SetMission, _1, _2 ) ) );

@@ -384,7 +384,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: MIL_MissionParameterFactory::Copy
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::Copy( const ASN1T_MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters, const DEC_KnowledgeResolver_ABC& resolver )
+void MIL_MissionParameterFactory::Copy( const ASN1T_MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver )
 {
     parameters.clear();
     int size = asn.n;

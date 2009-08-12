@@ -13,13 +13,13 @@ include "Melee/Abc/Automates/GE40/Parameters.bms"
 
 
 --[[// GLOBAL -- pour optim
-]]local g_rRapEniDebarques = 0
-local g_rRapEniEmbarques = 0
-local g_rRapTerrainComp = 0
-local g_rRapTerrainOuvert = 0
-local g_rEstimationRetard = 0
-local g_rEstimationDelais = 0
-local g_bPhaseReceuil = false
+]]g_rRapEniDebarques = 0
+g_rRapEniEmbarques = 0
+g_rRapTerrainComp = 0
+g_rRapTerrainOuvert = 0
+g_rEstimationRetard = 0
+g_rEstimationDelais = 0
+g_bPhaseReceuil = false
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Macros
 ]]--[[//-----------------------------------------------------------------------------

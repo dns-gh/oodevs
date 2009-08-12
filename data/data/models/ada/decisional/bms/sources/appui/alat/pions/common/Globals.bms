@@ -11,8 +11,8 @@ include "Appui/Alat/Pions/Common/Fonctions.bms"
 include "Appui/Alat/Common/Globals.bms"
 
 
-local g_bCoupsArret = false
+g_bCoupsArret = false
 
-local g_bRecalculItineraire = false
+g_bRecalculItineraire = false
 
-local g_bEnRecueil = false
+g_bEnRecueil = false

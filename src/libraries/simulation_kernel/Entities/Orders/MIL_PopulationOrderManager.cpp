@@ -68,7 +68,7 @@ void MIL_PopulationOrderManager::OnReceiveFragOrder( const ASN1T_MsgFragOrder& a
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_order_conduite );
 
-    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, population_.GetRole< DEC_Decision_ABC >(), population_.GetRole<DEC_Representations>(), population_.GetKnowledge(), asn );
+    MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, population_.GetRole<DEC_Representations>(), population_.GetKnowledge(), asn );
     pFragOrder->Launch();
 }
 

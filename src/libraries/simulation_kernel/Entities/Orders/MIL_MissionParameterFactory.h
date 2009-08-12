@@ -60,7 +60,7 @@ public:
     static void SetPawnParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Decision_ABC* pion );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePawn( DEC_Decision_ABC* pion );
 
-    static void Copy( const ASN1T_MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters, const DEC_KnowledgeResolver_ABC& resolver );
+    static void Copy( const ASN1T_MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
     //@}
 };
 

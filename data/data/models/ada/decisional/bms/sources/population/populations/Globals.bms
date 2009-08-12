@@ -19,8 +19,8 @@ include "Population/Populations/Functions.bms"
 --[[// On ne signale la PAP qu'une seule fois
 ]]--[[// Lorsque VE_Courage change de valeur ce global est reinitialisé
 ]]--[[// un peu comme les pions TTA qui ne signale la PAP qu'une fois par mission
-]]local g_PAPSignalee = false
+]]g_PAPSignalee = false
 
 --[[// Temps en min entre deux altercations (les effets sont accumulés par saccades de violence)
 ]]--[[// cette valuer sert donc de modérateur global à l'intensité des effets
-]]local g_delaiAltercations = 2
+]]g_delaiAltercations = 2

@@ -353,75 +353,75 @@ include "common/moteur/Types_RC.bms"
 
 local tableRC = {}
 tableRC[ eRC_EnPosteFaceAObstacle ] = 
-    function( id, list ) return DEC_RC_ObjectKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_ObjectKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_PreparationMission ] = 
-    function( id, list ) return DEC_RC_Float( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Float( typeMessage, id, list[1] ) end
 tableRC[ eRC_SurPIA ] = 
-    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Pion( typeMessage, id, list[1] ) end
 tableRC[ eRC_UniteRecueillie ] = 
-    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Pion( typeMessage, id, list[1] ) end
 tableRC[ eRC_PrecisionContact ] = 
-    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_EnnemiDetruit ] = 
-    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_PointTenuParEni ] = 
-    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_ProgressionVersEni ] = 
-    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_EniSurObjectif ] = 
-    function( id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_AgentKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_UniteTropDistante ] = 
-    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Pion( typeMessage, id, list[1] ) end
 tableRC[ eRC_Releve ] = 
-    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Pion( typeMessage, id, list[1] ) end
 tableRC[ eRC_SurLima ] = 
-    function( id, list ) return DEC_RC_Id( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Id( typeMessage, id, list[1] ) end
 tableRC[ eRC_ReussiteRenforcement ] = 
-    function( id, list ) return DEC_RC_Pion_Automate( typeMessage, id, list[0], list[1] ) end
+    function( typeMessage, id, list ) return DEC_RC_Pion_Automate( typeMessage, id, list[1], list[2] ) end
 tableRC[ eRC_EchecRenforcement ] = 
-    function( id, list ) return DEC_RC_Pion_Automate( typeMessage, id, list[0], list[1] ) end
+    function( typeMessage, id, list ) return DEC_RC_Pion_Automate( typeMessage, id, list[1], list[2] ) end
 tableRC[ eRC_ObstacleEnAttenteActivation ] = 
-    function( id, list ) return DEC_RC_ObjectKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_ObjectKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_MaterielRetourDeMaintenance ] = 
-    function( id, list ) return DEC_RC_EquipmentType( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_EquipmentType( typeMessage, id, list[1] ) end
 tableRC[ eRC_MaterielRepareSurPlace ] = 
-    function( id, list ) return DEC_RC_EquipmentType( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_EquipmentType( typeMessage, id, list[1] ) end
 tableRC[ eRC_AllocationConsentieBientotEpuisee ] = 
-    function( id, list ) return DEC_RC_DotationType( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_DotationType( typeMessage, id, list[1] ) end
 tableRC[ eRC_SeuilLogistiqueDotationDepasse ] = 
-    function( id, list ) return DEC_RC_DotationType( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_DotationType( typeMessage, id, list[1] ) end
 tableRC[ eRC_SeuilLogistiqueStockDepasse ] = 
-    function( id, list ) return DEC_RC_DotationType( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_DotationType( typeMessage, id, list[1] ) end
 tableRC[ eRC_TransportUnitePasPrete ] = 
-    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Pion( typeMessage, id, list[1] ) end
 tableRC[ eRC_TransportUnitePrete ] = 
-    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Pion( typeMessage, id, list[1] ) end
 tableRC[ eRC_UniteDecontaminee ] = 
-    function( id, list ) return DEC_RC_Pion( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Pion( typeMessage, id, list[1] ) end
 tableRC[ eRC_ObservationTirIndirect ] = 
-    function( id, list ) return DEC_RC_TirPion( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_TirPion( typeMessage, id, list[1] ) end
 tableRC[ eRC_TraceID ] = 
-    function( id, list ) return DEC_RC_Float( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Float( typeMessage, id, list[1] ) end
 tableRC[ eRC_PopulationDetectee ] = 
-    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_PriseAPartieParPopulation ] = 
-    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_RiposteContrePopulation ] = 
-    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_DebutInterventionFaceAPopulation ] = 
-    function( id, list ) return DEC_RC_Id( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Id( typeMessage, id, list[1] ) end
 tableRC[ eRC_PopulationVictimeAffrontements ] = 
-    function( id, list ) return DEC_RC_Float_Float( typeMessage, id, list[0], list[1] ) end
+    function( typeMessage, id, list ) return DEC_RC_Float_Float( typeMessage, id, list[1], list[2] ) end
 tableRC[ eRC_AttitudePopulation ] = 
-    function( id, list ) return DEC_RC_Id( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_Id( typeMessage, id, list[1] ) end
 tableRC[ eRC_AgressionDePopulation ] = 
-    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_AgressionParPopulation ] = 
-    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_RiposteContreAgressionParPopulation ] = 
-    function( id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[0] ) end
+    function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_PopulationVictimeExplosionMines ] = 
-    function( id, list ) return DEC_RC_Float_Float( typeMessage, id, list[0], list[1] ) end
+    function( typeMessage, id, list ) return DEC_RC_Float_Float( typeMessage, id, list[1], list[2] ) end
 
 DEC_RC = function( id, ... )
     local list = {...}

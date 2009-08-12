@@ -195,13 +195,14 @@ void DEC_MiscFunctions::ReportPionAutomate( T& caller, int type, int reportId, D
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_MiscFunctions::ReportPopulationKnowledge( T& caller, int type, int reportId, DEC_Knowledge_Population* populationKnowledge )
+void DEC_MiscFunctions::ReportPopulationKnowledge( T& caller, int type, int reportId, int populationKnowledge )
 {
     const MIL_Report* pReport = MIL_Report::Find( reportId );
     if( pReport )
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( populationKnowledge ) );
+        DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(populationKnowledge);
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( pKnowledge ) );
         params.push_back( missionParam );
         pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
     }

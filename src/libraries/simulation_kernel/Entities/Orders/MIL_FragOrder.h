@@ -18,7 +18,9 @@ class MIL_MissionParameter_ABC;
 class MIL_ParameterType_MedicalPriorities;
 class MIL_ParameterType_MaintenancePriorities;
 class MT_Vector2D;
+class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
+class PHY_HumanWound;
 
 namespace directia
 {
@@ -31,13 +33,13 @@ namespace directia
 */
 // Created: NLD 2006-11-14
 // =============================================================================
-class MIL_FragOrder : public DIA_TypedObject
+class MIL_FragOrder
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& decision, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn );
-             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Decision_ABC& decision, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs );
+             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn );
+             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs );
     virtual ~MIL_FragOrder();
     //@}
 
@@ -51,7 +53,7 @@ public:
     //@{
     std::string GetDIAType() const;
     int GetAmbianceMission() const;
-    boost::shared_ptr< PHY_DotationCategory > GetMunitions() const;
+    const PHY_DotationCategory* GetMunitions() const;
     int GetNbIT() const;
     int GetNbrAmbulances() const;
     int GetNbrRemorqueurs() const;
@@ -60,8 +62,8 @@ public:
     boost::shared_ptr< MT_Vector2D > GetOrderConduiteChangerPositionDebarquement() const;
     int GetOrderConduiteChangerReglesEngagementPopulation() const;
     int GetOrderConduiteChangerReglesEngagement() const;
-    MIL_ParameterType_MedicalPriorities* GetOrderConduiteModifierPrioritesBlesses() const;
-    MIL_ParameterType_MaintenancePriorities* GetOrderConduiteModifierPrioritesReparations() const;
+    std::vector< const PHY_HumanWound* > GetOrderConduiteModifierPrioritesBlesses() const;
+    std::vector< const PHY_ComposanteTypePion* > GetOrderConduiteModifierPrioritesReparations() const;
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesBlesses() const;
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesReparations() const;
     int GetOrderConduiteModifierRegimeTravailMaintenance() const;
@@ -78,7 +80,6 @@ private:
     const MIL_FragOrderType&   type_;
           DEC_Representations& representations_;
           std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
-          DEC_Decision_ABC& decision_;
 };
 
 #endif // __MIL_FragOrder_h_
