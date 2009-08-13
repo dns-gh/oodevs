@@ -169,8 +169,8 @@ uint PHY_RolePion_Composantes::GetLentComposantesTravelTime( PHY_RolePion_Compos
     uint nNbrDone = 0;
     uint nTime    = 0;
 
-    const MT_Vector2D& srcPos  =          GetRole< PHY_RolePion_Location >().GetPosition();
-    const MT_Vector2D& destPos = borrower.GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& srcPos  =          pPion_->GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& destPos = borrower.GetPion().GetRole< PHY_RolePion_Location >().GetPosition();   //@@Hmm...
 
     for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {

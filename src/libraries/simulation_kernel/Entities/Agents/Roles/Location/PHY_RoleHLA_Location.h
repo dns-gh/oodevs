@@ -32,7 +32,7 @@ class PHY_RoleHLA_Location : public PHY_RoleInterface_Location
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleHLA_Location( MT_RoleContainer& role, MIL_AgentHLA& pion );
+             PHY_RoleHLA_Location( MIL_AgentHLA& pion );
     virtual ~PHY_RoleHLA_Location();
     //@}
 

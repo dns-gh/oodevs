@@ -38,9 +38,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Location, "PHY_RolePion_Location" )
 // Name: PHY_RolePion_Location constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Location::PHY_RolePion_Location( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Location( role     )
-    , pPion_                    ( &pion    )
+PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
+    : pPion_                    ( &pion    )
     , vDirection_               (  0.,  0. )
     , vPosition_                ( -1., -1. )    //$$$ Devrait être 'NULL'
     , rHeight_                  ( -1.      )
@@ -59,8 +58,7 @@ PHY_RolePion_Location::PHY_RolePion_Location( MT_RoleContainer& role, MIL_AgentP
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RolePion_Location::PHY_RolePion_Location()
-    : PHY_RoleInterface_Location(   )
-    , pPion_                    ( 0 )
+    : pPion_                    ( 0 )
     , vDirection_               (  0.,  0. )
     , vPosition_                ( -1., -1. )    //$$$ Devrait être 'NULL'
     , rHeight_                  ( 0.       )
@@ -80,6 +78,7 @@ PHY_RolePion_Location::PHY_RolePion_Location()
 // -----------------------------------------------------------------------------
 PHY_RolePion_Location::~PHY_RolePion_Location()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -92,8 +91,7 @@ PHY_RolePion_Location::~PHY_RolePion_Location()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
-         >> pPion_
+    file >> pPion_
          >> vDirection_
          >> vPosition_
          >> bHasDoneMagicMove_
@@ -108,8 +106,7 @@ void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
-         << pPion_
+    file << pPion_
          << vDirection_
          << vPosition_
          << bHasDoneMagicMove_
@@ -208,12 +205,13 @@ void PHY_RolePion_Location::SetCurrentSpeed( MT_Float rSpeed )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Fly( MT_Float rHeight )
 {
+    assert( pPion_ );
     if( rHeight == 0. )
-        GetRole< PHY_RolePion_Posture >().UnsetPostureMovement();
+        pPion_->GetRole< PHY_RolePion_Posture >().UnsetPostureMovement();
     else
     {
         bHasMove_ = true;
-        GetRole< PHY_RolePion_Posture >().SetPostureMovement();
+        pPion_->GetRole< PHY_RolePion_Posture >().SetPostureMovement();
     }
 
     if( rHeight == rHeight_ )
@@ -241,16 +239,17 @@ void PHY_RolePion_Location::Fly( MT_Float rHeight )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed )
 {
+    assert( pPion_ );
     SetCurrentSpeed( rNewSpeed     );
     SetPosition    ( vNewPosition  );
     SetDirection   ( vNewDirection );
 
     if( rCurrentSpeed_ == 0. )
-        GetRole< PHY_RolePion_Posture >().UnsetPostureMovement();
+        pPion_->GetRole< PHY_RolePion_Posture >().UnsetPostureMovement();
     else
     {
         bHasMove_ = true;
-        GetRole< PHY_RolePion_Posture >().SetPostureMovement();
+        pPion_->GetRole< PHY_RolePion_Posture >().SetPostureMovement();
     }
 }
 
@@ -300,8 +299,9 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
-    if( GetRole< PHY_RolePion_Reinforcement >().IsReinforcing() || 
-        GetRole< PHY_RolePion_Transported   >().IsTransported() )
+    assert( pPion_ );
+    if(    pPion_->GetRole< PHY_RolePion_Reinforcement >().IsReinforcing()
+        || pPion_->GetRole< PHY_RolePion_Transported   >().IsTransported() )
         return;
 
     Hide();
@@ -351,7 +351,7 @@ void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
     assert( pPion_ );
     
     object.NotifyAgentMovingInside( *pPion_ );
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
     for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyMovingInsideObject( object );
 }
@@ -365,7 +365,7 @@ void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
     assert( pPion_ );
     
     object.NotifyAgentMovingOutside( *pPion_ );
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
     for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyMovingOutsideObject( object );
 }
@@ -379,7 +379,7 @@ void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
     assert( pPion_ );
     
     object.NotifyAgentPutInside( *pPion_ );
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
     for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyPutInsideObject( object );
 }
@@ -393,7 +393,7 @@ void PHY_RolePion_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
     assert( pPion_ );
     
     object.NotifyAgentPutOutside( *pPion_ );
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
     for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyPutOutsideObject( object );
 }

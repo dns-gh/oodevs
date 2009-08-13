@@ -22,9 +22,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Reinforcement, "PHY_RolePion_Reinforcement
 // Name: PHY_RolePion_Reinforcement constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Reinforcement( role )
-    , pPion_                         ( &pion )
+PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MIL_AgentPion& pion )
+    : pPion_                         ( &pion )
     , bHasChanged_                   ( true )
     , reinforcements_                ()
     , pPionReinforced_               ( 0 )
@@ -37,8 +36,7 @@ PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MT_RoleContainer& role, 
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement()
-    : PHY_RoleInterface_Reinforcement()
-    , pPion_                         ( 0 )
+    : pPion_                         ( 0 )
     , pPionReinforced_               ( 0 )
     , reinforcements_                ()
     , bHasChanged_                   ( true )
@@ -62,8 +60,7 @@ PHY_RolePion_Reinforcement::~PHY_RolePion_Reinforcement()
 template< typename Archive >
 void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Reinforcement >( *this )
-         & pPion_;
+    file & pPion_;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +70,7 @@ void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
 bool PHY_RolePion_Reinforcement::CanReinforce() const
 {
     assert( pPion_ );
-    return !pPion_->IsDead() && !GetRole< PHY_RolePion_Transported >().IsTransported();
+    return !pPion_->IsDead() && !pPion_->GetRole< PHY_RolePion_Transported >().IsTransported();
 }
     
 // -----------------------------------------------------------------------------
@@ -83,7 +80,7 @@ bool PHY_RolePion_Reinforcement::CanReinforce() const
 bool PHY_RolePion_Reinforcement::CanBeReinforced() const
 {
     assert( pPion_ );
-    return !pPion_->IsDead() && !GetRole< PHY_RolePion_Transported >().IsTransported();
+    return !pPion_->IsDead() && !pPion_->GetRole< PHY_RolePion_Transported >().IsTransported();
 }
 
 // -----------------------------------------------------------------------------
@@ -150,13 +147,14 @@ void PHY_RolePion_Reinforcement::CancelReinforcement()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Update( bool bIsDead )
 {
+    assert( pPion_ );
     if( !pPionReinforced_ )
         return;
 
     if( bIsDead )
         CancelReinforcement();
     else
-        GetRole< PHY_RolePion_Location >().Follow( *pPionReinforced_ );
+        pPion_->GetRole< PHY_RolePion_Location >().Follow( *pPionReinforced_ );
 }
 
 // -----------------------------------------------------------------------------

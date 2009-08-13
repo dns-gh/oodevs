@@ -230,7 +230,7 @@ void PHY_RawVisionData::GetVisionObjectsInSurface( const T& localisation, uint& 
             }
         }
 
-    nEmptySurface  *= ( rCellSize_ * rCellSize_ );
-    nForestSurface *= ( rCellSize_ * rCellSize_ );
-    nUrbanSurface  *= ( rCellSize_ * rCellSize_ );
+    nEmptySurface  *= ( uint) ( rCellSize_ * rCellSize_ );
+    nForestSurface *= ( uint) ( rCellSize_ * rCellSize_ );
+    nUrbanSurface  *= ( uint) ( rCellSize_ * rCellSize_ );
 }

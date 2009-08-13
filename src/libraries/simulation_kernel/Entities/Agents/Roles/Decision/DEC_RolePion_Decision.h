@@ -39,7 +39,7 @@ class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
 {
 
 public:
-             DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit DEC_RolePion_Decision( MIL_AgentPion& pion );
              DEC_RolePion_Decision();
     virtual ~DEC_RolePion_Decision();
 

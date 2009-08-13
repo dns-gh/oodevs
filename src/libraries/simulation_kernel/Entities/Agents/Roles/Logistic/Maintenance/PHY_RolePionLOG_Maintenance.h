@@ -33,7 +33,7 @@ class PHY_RolePionLOG_Maintenance : public PHY_RolePion_Maintenance
 {
 
 public:
-             PHY_RolePionLOG_Maintenance( MT_RoleContainer& role, MIL_AgentPionLOG_ABC& pion );
+             PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion );
              PHY_RolePionLOG_Maintenance();
     virtual ~PHY_RolePionLOG_Maintenance();
 

@@ -309,7 +309,7 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataIdentification_.Update( perception.GetIdentificationData() );
 
     UpdatePerceptionSources( perception );
-    nTimeExtrapolationEnd_ = nTimeLastUpdate_ + pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime();
+    nTimeExtrapolationEnd_ = nTimeLastUpdate_ + ( uint ) pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime();
 }   
 
 // -----------------------------------------------------------------------------

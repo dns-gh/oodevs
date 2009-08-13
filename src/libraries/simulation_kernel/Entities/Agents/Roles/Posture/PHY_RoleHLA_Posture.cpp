@@ -21,9 +21,8 @@ using namespace hla;
 // Name: PHY_RoleHLA_Posture constructor
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Posture::PHY_RoleHLA_Posture( MT_RoleContainer& role, const MIL_Agent_ABC& pion )
-    : PHY_RoleInterface_Posture( role )
-    , pPosture_( & PHY_Posture::mouvement_ )
+PHY_RoleHLA_Posture::PHY_RoleHLA_Posture( const MIL_Agent_ABC& pion )
+    : pPosture_( & PHY_Posture::mouvement_ )
     , pion_( pion )
     , bIsStealth_( false )
     , bTransported_( false )

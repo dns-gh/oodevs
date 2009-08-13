@@ -83,7 +83,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_RolePion_Decision, "DEC_RolePion_Decision" )
 // Name: DEC_RolePion_Decision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& /*role*/, MIL_AgentPion& pion )
+DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion )
     : DEC_Decision              ( pion )
     , nForceRatioState_         ( eForceRatioStateNone         )
     , nRulesOfEngagementState_  ( eRoeStateNone                )
@@ -205,8 +205,7 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< MT_Role_ABC >( *this )
-         >> pEntity_ 
+    file >> pEntity_ 
          >> nForceRatioState_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
@@ -257,8 +256,7 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
     unsigned roe  = pRoePopulation_->GetID(),
              type = pEntity_->GetType().GetID();
     
-    file << boost::serialization::base_object< MT_Role_ABC >( *this )
-         << pEntity_
+    file << pEntity_
          << nForceRatioState_
          << nRulesOfEngagementState_
          << nCloseCombatState_
@@ -280,8 +278,9 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::EndCleanStateAfterCrash()
 {
+    assert( pEntity_ );
     pEntity_->CancelAllActions();
-    GetRole< PHY_RolePion_Perceiver >().DisableAllPerceptions();
+    GetPion().GetRole< PHY_RolePion_Perceiver >().DisableAllPerceptions();
 }
 
 // -----------------------------------------------------------------------------

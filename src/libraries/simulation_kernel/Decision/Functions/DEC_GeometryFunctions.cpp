@@ -577,8 +577,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     if( positionCount <= 0 )
         return result;
     const MT_Float semiAngle = angle * MT_PI / 360.; // ( / 360. = * 0.5 / 180., car demi-angle );
-    initialDistance = MIL_Tools::ConvertMeterToSim( initialDistance );
-    spacing         = MIL_Tools::ConvertMeterToSim( spacing );
+    initialDistance = ( float ) MIL_Tools::ConvertMeterToSim( initialDistance );
+    spacing         = ( float ) MIL_Tools::ConvertMeterToSim( spacing );
     MT_Vector2D vCenter = *center + initialDistance * *direction;
 
     const MT_Vector2D vSupport1( direction->Rotated(  semiAngle ) * spacing );
@@ -615,9 +615,9 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     if( positionCount <= 0 )
         return result;
 
-    initialDistance = MIL_Tools::ConvertMeterToSim( initialDistance );
-    lineSpacing     = MIL_Tools::ConvertMeterToSim( lineSpacing );
-    pointSpacing    = MIL_Tools::ConvertMeterToSim( pointSpacing );
+    initialDistance = ( float ) MIL_Tools::ConvertMeterToSim( initialDistance );
+    lineSpacing     = ( float ) MIL_Tools::ConvertMeterToSim( lineSpacing );
+    pointSpacing    = ( float ) MIL_Tools::ConvertMeterToSim( pointSpacing );
     MT_Vector2D vDirection = *direction;
 
     MT_Vector2D vSupport1( vDirection.Rotated90() );
@@ -920,7 +920,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( co
 // Created: JVT 2005-01-17
 // Modified: RPD 2009-08-05
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter( const MIL_AgentPion& caller, const std::vector< const DEC_Knowledge_Agent* > vKnowledges )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter( const MIL_AgentPion& /*caller*/, const std::vector< const DEC_Knowledge_Agent* > vKnowledges )
 {
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 0. ) );
 
@@ -988,7 +988,7 @@ DEC_Decision_ABC* DEC_GeometryFunctions::ComputeBackestAgent( const std::vector<
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( const std::vector< DEC_Decision_ABC* >& pions, MT_Vector2D* pDirection, float distance )
 {
-    boost::shared_ptr< MT_Vector2D > result;;
+    boost::shared_ptr< MT_Vector2D > result;
 
     if( pions.empty() )
     {
@@ -1096,7 +1096,7 @@ bool DEC_GeometryFunctions::GetInterceptionPoint( const MT_Vector2D& vToIntercep
 // Name: DEC_GeometryFunctions::GetInterceptionPosition
 // Created: JVT 2005-02-17
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition( const MIL_AgentPion& caller, DEC_Knowledge_Agent* pKnowledge, MT_Vector2D* pInterceptingPosition, MT_Float rSpeed )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition( const MIL_AgentPion& /*caller*/, DEC_Knowledge_Agent* pKnowledge, MT_Vector2D* pInterceptingPosition, MT_Float rSpeed )
 {
     assert( pInterceptingPosition );
     boost::shared_ptr< MT_Vector2D > point;
@@ -1377,7 +1377,7 @@ float DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule( const MIL_Fuseau* 
         nSchedule = pLima->GetSchedule();
     }
 
-    return (float)ComputeDelayFromSchedule( pFuseau, automates, rDistanceFromScheduled, nSchedule );
+    return ComputeDelayFromSchedule( pFuseau, automates, ( float ) rDistanceFromScheduled, nSchedule );
 }
 
 // -----------------------------------------------------------------------------

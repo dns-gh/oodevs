@@ -16,20 +16,9 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Maintenance, "PHY_RolePion_Maintenance" )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Maintenance constructor
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-PHY_RolePion_Maintenance::PHY_RolePion_Maintenance( MT_RoleContainer& role )
-    : PHY_RoleInterface_Maintenance( role )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Maintenance constructor
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Maintenance::PHY_RolePion_Maintenance()
-    : PHY_RoleInterface_Maintenance()
 {
     // NOTHING
 }
@@ -48,9 +37,9 @@ PHY_RolePion_Maintenance::~PHY_RolePion_Maintenance()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePion_Maintenance::serialize( Archive& file, const uint )
+void PHY_RolePion_Maintenance::serialize( Archive& /*file*/, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this );
+    //NOTHING
 }
 
 

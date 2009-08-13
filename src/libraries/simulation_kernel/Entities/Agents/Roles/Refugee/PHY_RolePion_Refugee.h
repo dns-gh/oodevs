@@ -25,7 +25,7 @@ class PHY_RolePion_Refugee : public PHY_RoleInterface_Refugee
 {
 
 public:
-             PHY_RolePion_Refugee( MT_RoleContainer& role, MIL_AgentPion& pion );
+             PHY_RolePion_Refugee( MIL_AgentPion& pion );
              PHY_RolePion_Refugee();
     virtual ~PHY_RolePion_Refugee();
 

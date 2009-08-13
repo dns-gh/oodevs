@@ -77,9 +77,8 @@ void PHY_RoleAction_Transport::sTransportData::serialize( Archive& file, const u
 // Name: PHY_RoleAction_Transport constructor
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Transport::PHY_RoleAction_Transport( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : MT_Role_ABC               ( role )
-    , pTransporter_             ( &pion )
+PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion )
+    : pTransporter_             ( &pion )
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
     , rWeightTransported_       ( 0. )
@@ -93,8 +92,7 @@ PHY_RoleAction_Transport::PHY_RoleAction_Transport( MT_RoleContainer& role, MIL_
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Transport::PHY_RoleAction_Transport()
-    : MT_Role_ABC               ()
-    , pTransporter_             ( 0 )
+    : pTransporter_             ( 0 )
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
     , rWeightTransported_       ( 0. )
@@ -124,8 +122,7 @@ PHY_RoleAction_Transport::~PHY_RoleAction_Transport()
 template< typename Archive >
 void PHY_RoleAction_Transport::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< MT_Role_ABC >( *this )
-         & const_cast< MIL_AgentPion*& >( pTransporter_ )
+    file & const_cast< MIL_AgentPion*& >( pTransporter_ )
          & rWeightTransported_
          & transportedPions_;
 }

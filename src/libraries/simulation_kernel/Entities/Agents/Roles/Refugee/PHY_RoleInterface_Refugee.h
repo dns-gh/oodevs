@@ -12,7 +12,7 @@
 #ifndef __PHY_RoleInterface_Refugee_h_
 #define __PHY_RoleInterface_Refugee_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 
 class MIL_AgentPion;
 class MIL_Object_ABC;
@@ -21,7 +21,7 @@ class MIL_Object_ABC;
 // @class  PHY_RoleInterface_Refugee
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleInterface_Refugee : public MT_Role_ABC
+class PHY_RoleInterface_Refugee : public tools::Role_ABC
                                 , private boost::noncopyable
 {
 
@@ -29,14 +29,8 @@ public:
     typedef PHY_RoleInterface_Refugee RoleInterface;
 
 public:
-    explicit PHY_RoleInterface_Refugee( MT_RoleContainer& role );
              PHY_RoleInterface_Refugee();
     virtual ~PHY_RoleInterface_Refugee();
-
-    //! @name Checkpoints
-    //@{
-    template< typename Archive > void serialize( Archive&, const uint );
-    //@}
     
     //! @name Accessors
     //@{
@@ -51,15 +45,5 @@ public:
     virtual bool Release  ( const MIL_Object_ABC& camp ) = 0;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Refugee::serialize
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_RoleInterface_Refugee::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
-}
 
 #endif // __PHY_RoleInterface_Refugee_h_

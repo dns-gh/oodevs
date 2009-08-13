@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Medical.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Medical, "PHY_RolePion_Medical" )
@@ -19,8 +20,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Medical, "PHY_RolePion_Medical" )
 // Name: PHY_RolePion_Medical constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Medical::PHY_RolePion_Medical( MT_RoleContainer& role )
-    : PHY_RoleInterface_Medical( role )
+PHY_RolePion_Medical::PHY_RolePion_Medical( MIL_AgentPion& pion )
+    : pPion_( &pion )
 {
     // NOTHING
 }
@@ -30,7 +31,7 @@ PHY_RolePion_Medical::PHY_RolePion_Medical( MT_RoleContainer& role )
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Medical::PHY_RolePion_Medical()
-    : PHY_RoleInterface_Medical()
+    : pPion_( 0 )
 {
     // NOTHING
 }
@@ -49,9 +50,9 @@ PHY_RolePion_Medical::~PHY_RolePion_Medical()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void PHY_RolePion_Medical::serialize( Archive& file, const uint )
+void PHY_RolePion_Medical::serialize( Archive& /*file*/, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Medical >( *this );
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +88,7 @@ void PHY_RolePion_Medical::Clean()
 // -----------------------------------------------------------------------------
 const MT_Vector2D& PHY_RolePion_Medical::GetPosition() const
 {
-    return GetRole< PHY_RolePion_Location >().GetPosition();
+    return pPion_->GetRole< PHY_RolePion_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------

@@ -14,20 +14,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Transported constructor
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Transported::PHY_RoleInterface_Transported( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Transported constructor
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Transported::PHY_RoleInterface_Transported()
-    : MT_Role_ABC()
 {
     // NOTHING
 }

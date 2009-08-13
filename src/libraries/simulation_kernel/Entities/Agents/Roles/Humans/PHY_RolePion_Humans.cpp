@@ -64,9 +64,8 @@ void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_Humans constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Humans::PHY_RolePion_Humans( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Humans( role )
-    , pPion_                  ( &pion )
+PHY_RolePion_Humans::PHY_RolePion_Humans( MIL_AgentPion& pion )
+    : pPion_                  ( &pion )
     , humansData_             ( PHY_HumanRank::GetHumanRanks().size(), T_HumanData() )
     , nNbrHumansDataChanged_  ( humansData_.size() )
     , nNbrUsableHumans_       ( 0 )
@@ -84,8 +83,7 @@ PHY_RolePion_Humans::PHY_RolePion_Humans( MT_RoleContainer& role, MIL_AgentPion&
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RolePion_Humans::PHY_RolePion_Humans()
-    : PHY_RoleInterface_Humans()
-    , pPion_                  ()
+    : pPion_                  ()
     , humansData_             ()
     , nNbrUsableHumans_       ( 0 )
     , nNbrHumansDataChanged_  ( 0 )
@@ -116,8 +114,7 @@ PHY_RolePion_Humans::~PHY_RolePion_Humans()
 template< typename Archive >
 void PHY_RolePion_Humans::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Humans >( *this )
-         & pPion_
+    file & pPion_
          & humansData_
          & nNbrUsableHumans_
          & nNbrHumans_ 
@@ -158,13 +155,14 @@ void PHY_RolePion_Humans::WriteODB( xml::xostream& /*xos*/ ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNewNbrFullyAliveHumans )
 {
+    assert( pPion_ );
     const T_HumanData& humanData = humansData_[ rank.GetID() ];
     nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, humanData.nNbrTotal_ );
 
     if( nNewNbrFullyAliveHumans > humanData.nNbrOperational_ )
-        GetRole< PHY_RolePion_Composantes >().HealHumans( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
+        pPion_->GetRole< PHY_RolePion_Composantes >().HealHumans( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
     else if( nNewNbrFullyAliveHumans < humanData.nNbrOperational_ )
-        GetRole< PHY_RolePion_Composantes >().WoundHumans( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
+        pPion_->GetRole< PHY_RolePion_Composantes >().WoundHumans( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +171,8 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::HealAllHumans()
 {
-    GetRole< PHY_RolePion_Composantes >().HealAllHumans();
+    assert( pPion_ );
+    pPion_->GetRole< PHY_RolePion_Composantes >().HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -379,7 +378,8 @@ void PHY_RolePion_Humans::NotifyHumanChanged( PHY_Human& human, const PHY_Human&
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
-    GetRole< PHY_RolePion_Composantes >().EvacuateWoundedHumans( destinationTC2 );
+    assert( pPion_ );
+    pPion_->GetRole< PHY_RolePion_Composantes >().EvacuateWoundedHumans( destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -388,7 +388,8 @@ void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 {
-    return GetRole< PHY_RolePion_Composantes >().HasWoundedHumansToEvacuate();
+    assert( pPion_ );
+    return pPion_->GetRole< PHY_RolePion_Composantes >().HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------

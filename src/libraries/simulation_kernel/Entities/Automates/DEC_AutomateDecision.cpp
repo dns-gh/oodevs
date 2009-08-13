@@ -44,8 +44,8 @@
 // Name: DEC_AutomateDecision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-DEC_AutomateDecision::DEC_AutomateDecision( MT_RoleContainer& /*container*/, MIL_Automate& automate )
-    : DEC_Decision             ( automate              )
+DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
+    : DEC_Decision             ( automate )
     , nRulesOfEngagementState_ ( eRoeStateNone         )
     , nCloseCombatState_       ( eCloseCombatStateNone )
     , nOperationalState_       ( eOpStateOperational   )
@@ -118,8 +118,7 @@ DEC_AutomateDecision::~DEC_AutomateDecision()
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< MT_Role_ABC >( *this )
-         >> pEntity_
+    file >> pEntity_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
          >> nOperationalState_;
@@ -154,8 +153,7 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) co
 {
     assert( pEntity_ );
     unsigned id = pEntity_->GetType().GetID();
-    file << boost::serialization::base_object< MT_Role_ABC >( *this )
-         << pEntity_
+    file << pEntity_
          << nRulesOfEngagementState_
          << nCloseCombatState_
          << nOperationalState_

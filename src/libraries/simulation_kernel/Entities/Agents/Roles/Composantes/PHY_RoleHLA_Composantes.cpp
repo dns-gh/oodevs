@@ -22,6 +22,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Roles/hla/HLA_RoleInterface.h"
+#include "Entities/MIL_Entity_ABC.h"
 
 #include "Hla/HLA_Serialization.h"
 #include "Hla/HLA_DirectFire.h"
@@ -37,8 +38,8 @@ using namespace hla;
 // Name: PHY_RoleHLA_Composantes constructor
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Composantes::PHY_RoleHLA_Composantes( MT_RoleContainer& role, HLA_InteractionManager_ABC& interactionManager )
-    : PHY_RoleInterface_Composantes( role )
+PHY_RoleHLA_Composantes::PHY_RoleHLA_Composantes( MIL_Entity_ABC& entity, HLA_InteractionManager_ABC& interactionManager )
+    : entity_( entity )
     , interactionManager_( interactionManager )
     , bNeutralized_( false )
 {
@@ -268,7 +269,7 @@ void PHY_RoleHLA_Composantes::ChangeStatus( const std::vector< std::string >& st
 // -----------------------------------------------------------------------------
 void PHY_RoleHLA_Composantes::Neutralize()
 {
-    interactionManager_.Send( HLA_Neutralization( GetRole< HLA_RoleInterface >() ) );
+    interactionManager_.Send( HLA_Neutralization( entity_.GetRole< HLA_RoleInterface >() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +278,7 @@ void PHY_RoleHLA_Composantes::Neutralize()
 // -----------------------------------------------------------------------------
 void PHY_RoleHLA_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/ )
 {
-    interactionManager_.Send( HLA_DirectFire( GetRole< HLA_RoleInterface >(), compTarget, dotationCategory ) );
+    interactionManager_.Send( HLA_DirectFire( entity_.GetRole< HLA_RoleInterface >(), compTarget, dotationCategory ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -286,7 +287,7 @@ void PHY_RoleHLA_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, c
 // -----------------------------------------------------------------------------
 void PHY_RoleHLA_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/ )
 {
-    interactionManager_.Send( HLA_IndirectFire( GetRole< HLA_RoleInterface >(), dotationCategory ) );
+    interactionManager_.Send( HLA_IndirectFire( entity_.GetRole< HLA_RoleInterface >(), dotationCategory ) );
 }
 
 // -----------------------------------------------------------------------------

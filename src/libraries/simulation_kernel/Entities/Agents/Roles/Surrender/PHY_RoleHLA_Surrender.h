@@ -22,7 +22,7 @@ class PHY_RoleHLA_Surrender : public PHY_RoleInterface_Surrender
 {
 
 public:
-    explicit PHY_RoleHLA_Surrender( MT_RoleContainer& role );
+             PHY_RoleHLA_Surrender();
     virtual ~PHY_RoleHLA_Surrender();
 
     //! @name Main

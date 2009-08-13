@@ -35,9 +35,9 @@ MIL_Entity_ABC::MIL_Entity_ABC( const std::string& name )
 // Created: RDS 2008-05-05
 // -----------------------------------------------------------------------------
 MIL_Entity_ABC::MIL_Entity_ABC( const std::string& name, xml::xistream& xis )
-    : strName_( name )
+    : strName_( xml::attribute< std::string >( xis, "name", "" ) )
 {
-    xis >> xml::optional() >> xml::attribute( "name", strName_ );
+     // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -24,6 +24,7 @@
 
 class PHY_ComposanteHLA;
 class HLA_InteractionManager_ABC;
+class MIL_Entity_ABC;
 
 namespace hla {
     class AttributeIdentifier;    
@@ -41,7 +42,7 @@ class PHY_RoleHLA_Composantes : public PHY_RoleInterface_Composantes
 public:
     //! @name Constructors/Destructor
     //@{
-            PHY_RoleHLA_Composantes( MT_RoleContainer& role, HLA_InteractionManager_ABC& interactionManager );
+            PHY_RoleHLA_Composantes( MIL_Entity_ABC& entity, HLA_InteractionManager_ABC& interactionManager );
     virtual ~PHY_RoleHLA_Composantes();
     //@}
 
@@ -94,6 +95,7 @@ private:
 private:
     //! @name Member data
     //@{
+    MIL_Entity_ABC& entity_;
     T_Composantes               composantes_;
     HLA_InteractionManager_ABC& interactionManager_;
     bool                        bNeutralized_;

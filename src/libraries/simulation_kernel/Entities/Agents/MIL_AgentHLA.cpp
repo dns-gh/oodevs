@@ -44,10 +44,10 @@ MIL_AgentHLA::MIL_AgentHLA( uint nID, const ObjectIdentifier& objectId, HLA_Inte
     , bPc_( false )
 {
     RegisterRole< HLA_RoleDistantPion        >( *this, objectId );
-    RegisterRole< PHY_RoleHLA_Dotations      >();
+    RegisterRole< PHY_RoleHLA_Dotations      >( *this );
     RegisterRole< PHY_RoleHLA_Location       >( *this );
     RegisterRole< PHY_RoleHLA_Posture        >( *this );
-    RegisterRole< PHY_RoleHLA_Composantes    >( interactionManager );
+    RegisterRole< PHY_RoleHLA_Composantes    >( *this, interactionManager );
     RegisterRole< PHY_RoleHLA_NBC            >();
     RegisterRole< PHY_RoleHLA_Communications >();
     RegisterRole< PHY_RoleHLA_Perceiver      >();

@@ -14,20 +14,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Surrender constructor
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Surrender::PHY_RoleInterface_Surrender( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Surrender constructor
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Surrender::PHY_RoleInterface_Surrender()
-    : MT_Role_ABC()
 {
     // NOTHING
 }

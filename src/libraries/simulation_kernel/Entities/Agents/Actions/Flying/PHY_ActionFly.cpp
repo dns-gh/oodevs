@@ -12,15 +12,15 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionFly.h"
 #include "PHY_RoleAction_InterfaceFlying.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/MIL_Entity_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionFly constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionFly::PHY_ActionFly( MIL_AgentPion& pion )
-    : PHY_Action_ABC( pion )
-    , role_         ( pion.GetRole< PHY_RoleAction_InterfaceFlying >() )
+PHY_ActionFly::PHY_ActionFly( MIL_Entity_ABC& entity )
+    : PHY_Action_ABC( entity )
+    , role_         ( entity.GetRole< PHY_RoleAction_InterfaceFlying >() )
 {
     // NOTHING
 }

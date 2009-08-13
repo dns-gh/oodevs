@@ -62,7 +62,7 @@ public:
     //@}
 
 public:
-             PHY_RolePion_Composantes( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit PHY_RolePion_Composantes( MIL_AgentPion& pion );
              PHY_RolePion_Composantes();
     virtual ~PHY_RolePion_Composantes();
 

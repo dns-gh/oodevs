@@ -20,9 +20,8 @@
 // -----------------------------------------------------------------------------
 template <class T>
 DEC_Decision<T>::DEC_Decision( T& entity)
-: DEC_Decision_ABC( entity )
-, pEntity_        ( &entity )
-, pMission_       ( 0 )
+: pEntity_( &entity )
+, pMission_( 0 )
 {
 }
 

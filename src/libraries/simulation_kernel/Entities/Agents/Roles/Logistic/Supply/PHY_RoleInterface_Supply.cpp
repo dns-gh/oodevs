@@ -16,20 +16,9 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleInterface_Supply, "PHY_RoleInterface_Supply" )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply constructor
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Supply::PHY_RoleInterface_Supply( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply constructor
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Supply::PHY_RoleInterface_Supply()
-    : MT_Role_ABC()
 {
     // NOTHING
 }

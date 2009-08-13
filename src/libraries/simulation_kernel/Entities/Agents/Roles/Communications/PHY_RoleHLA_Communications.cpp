@@ -14,9 +14,8 @@
 // Name: PHY_RoleHLA_Communications constructor
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Communications::PHY_RoleHLA_Communications( MT_RoleContainer& roleContainer )
-    : PHY_RoleInterface_Communications( roleContainer )
-    , bJammed_( false ) 
+PHY_RoleHLA_Communications::PHY_RoleHLA_Communications()
+    : bJammed_( false ) 
 {
     //NOTHING
 }

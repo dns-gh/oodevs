@@ -63,7 +63,7 @@ void MIL_ObjectInteraction::save( MIL_CheckPointOutArchive& file, const uint ) c
 // Name: MIL_ObjectInteraction::Initialize
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::Initialize( const TER_Localisation& location )
+void MIL_ObjectInteraction::Initialize( const TER_Localisation& /*location*/ )
 {
     // NOTHING
 }

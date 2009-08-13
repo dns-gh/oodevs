@@ -238,7 +238,7 @@ void PathListFunction( const directia::ScriptRef& refMission, const std::string&
     if( element.ToPathList( value ) && !value.empty() )
         refMission.RegisterObject( name, value );
 }
-void DirectionFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void DirectionFunction( const directia::ScriptRef& /*refMission*/, const std::string& /*name*/, MIL_MissionParameter_ABC& /*element*/ )
 {
     // $$$$ LDC: FIXME The only existing Direction argument is dangerDirection_ which is never used by the brains.
 }

@@ -16,7 +16,7 @@
 #include "Entities/Effects/MIL_Effect_Fly.h"
 
 class PHY_ActionFly;
-class MIL_AgentPion;
+class MIL_Entity_ABC;
 
 // =============================================================================
 // @class  PHY_RoleAction_Flying
@@ -26,7 +26,7 @@ class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
 {
 
 public:
-             PHY_RoleAction_Flying( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit PHY_RoleAction_Flying( MIL_Entity_ABC& entity );
              PHY_RoleAction_Flying();
     virtual ~PHY_RoleAction_Flying();
 
@@ -64,7 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion* pPion_;
+    MIL_Entity_ABC* pEntity_;
     MIL_Effect_Fly effectFly_;
     PHY_ActionFly* pActionFly_;
     bool           bForceLanding_;

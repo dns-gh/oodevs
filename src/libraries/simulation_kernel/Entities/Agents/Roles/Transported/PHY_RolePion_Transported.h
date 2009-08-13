@@ -26,7 +26,7 @@ class PHY_RolePion_Transported : public PHY_RoleInterface_Transported
 {
 
 public:
-             PHY_RolePion_Transported( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit PHY_RolePion_Transported( MIL_AgentPion& pion );
              PHY_RolePion_Transported();
     virtual ~PHY_RolePion_Transported();
 

@@ -14,9 +14,8 @@
 // Name: PHY_RoleHLA_NBC constructor
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_NBC::PHY_RoleHLA_NBC( MT_RoleContainer& role )
-    : PHY_RoleInterface_NBC( role )
-    , bContaminated_( false )
+PHY_RoleHLA_NBC::PHY_RoleHLA_NBC()
+    : bContaminated_( false )
 {
     //NOTHING
 }

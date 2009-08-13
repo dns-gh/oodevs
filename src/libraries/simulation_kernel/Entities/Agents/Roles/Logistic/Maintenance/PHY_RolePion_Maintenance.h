@@ -28,7 +28,6 @@ class PHY_RolePion_Maintenance : public PHY_RoleInterface_Maintenance
 {
 
 public:
-    explicit PHY_RolePion_Maintenance( MT_RoleContainer& role );
              PHY_RolePion_Maintenance();
     virtual ~PHY_RolePion_Maintenance();
 

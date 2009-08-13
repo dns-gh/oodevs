@@ -12,24 +12,11 @@
 #include "simulation_kernel_pch.h"
 #include "NET_RoleInterface_Dotations.h"
 
-BOOST_CLASS_EXPORT_GUID( NET_RoleInterface_Dotations, "NET_RoleInterface_Dotations" )
-
-// -----------------------------------------------------------------------------
-// Name: NET_RoleInterface_Dotations constructor
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-NET_RoleInterface_Dotations::NET_RoleInterface_Dotations( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-{
-    // NOTHING
-}
-
 // -----------------------------------------------------------------------------
 // Name: NET_RoleInterface_Dotations constructor
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 NET_RoleInterface_Dotations::NET_RoleInterface_Dotations()
-    : MT_Role_ABC()
 {
     // NOTHING
 }

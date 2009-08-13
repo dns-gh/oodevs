@@ -93,6 +93,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::ReserveConsumptions()
     if( workingComposantes_.empty() )
         return;
 
+    assert( pPion_ );
     const PHY_ConsumptionType* pConsumptionMode = 0;
     for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
     {
@@ -112,6 +113,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::RollbackConsumptionsReservatio
 {
     if( bConsumptionReserved_ )
     {
+        assert( pPion_ );
         bConsumptionReserved_ = false;
         pPion_->GetRole< PHY_RolePion_Dotations >().RollbackConsumptionMode();
     }
@@ -123,7 +125,8 @@ void PHY_RoleAction_Objects_DataComputerPionData::RollbackConsumptionsReservatio
 // -----------------------------------------------------------------------------
 uint PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_DotationCategory& category ) const
 {
-    return (uint)pPion_->GetRole< PHY_RolePion_Dotations >().GetDotationValue( category );;    
+    assert( pPion_ );
+    return ( uint ) pPion_->GetRole< PHY_RolePion_Dotations >().GetDotationValue( category ); 
 }
 
 // -----------------------------------------------------------------------------

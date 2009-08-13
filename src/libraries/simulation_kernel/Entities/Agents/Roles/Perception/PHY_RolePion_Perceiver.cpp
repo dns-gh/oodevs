@@ -60,9 +60,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Perceiver, "PHY_RolePion_Perceiver" )
 // Name: PHY_RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Perceiver  ( role )
-    , pPion_                       ( &pion )
+PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion )
+    : pPion_                       ( &pion )
     , rMaxAgentPerceptionDistance_ ( 0. )
     , rMaxObjectPerceptionDistance_( 0. )
     , bPeriphericalVisionEnabled_  ( false )
@@ -92,8 +91,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MT_RoleContainer& role, MIL_Agen
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
-    : PHY_RoleInterface_Perceiver  ()
-    , pPion_                       ()
+    : pPion_                       ()
     , rMaxAgentPerceptionDistance_ ( 0. )
     , rMaxObjectPerceptionDistance_( 0. )
     , bPeriphericalVisionEnabled_  ( false )
@@ -207,8 +205,7 @@ namespace boost
 template< typename Archive >
 void PHY_RolePion_Perceiver::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this )
-         & pPion_
+    file & pPion_
          & bPeriphericalVisionEnabled_
          & nNextPeriphericalVisionStep_
          & surfacesAgent_
@@ -582,9 +579,10 @@ void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
+    assert( pPion_ );
     return    rMaxAgentPerceptionDistance_ 
-            * GetRole< PHY_RolePion_Posture      >().GetElongationFactor() 
-            * GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();;
+            * pPion_->GetRole< PHY_RolePion_Posture      >().GetElongationFactor() 
+            * pPion_->GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
 }
 
 // -----------------------------------------------------------------------------
@@ -594,9 +592,10 @@ MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 inline
 MT_Float PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
 {
+    assert( pPion_ );
     return   rMaxObjectPerceptionDistance_             
-           * GetRole< PHY_RolePion_Posture      >().GetElongationFactor() 
-           * GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();;
+           * pPion_->GetRole< PHY_RolePion_Posture      >().GetElongationFactor() 
+           * pPion_->GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
 }
 
 // -----------------------------------------------------------------------------
@@ -606,7 +605,9 @@ MT_Float PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
 bool PHY_RolePion_Perceiver::CanPerceive() const
 {
     assert( pPion_ );
-    return !pPion_->IsDead() && !GetRole< PHY_RolePion_Transported >().IsTransported() && !GetRole< PHY_RolePion_Surrender >().IsSurrendered();
+    return !pPion_->IsDead() 
+        && !pPion_->GetRole< PHY_RolePion_Transported >().IsTransported() 
+        && !pPion_->GetRole< PHY_RolePion_Surrender >().IsSurrendered();
 }
 
 // =============================================================================
@@ -763,14 +764,15 @@ private:
 inline
 void PHY_RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const
 {
+    assert( pPion_ );
     if( nSensorMode_ == eNormal )
-        vMainPerceptionDirection = GetRole< PHY_RolePion_Location >().GetDirection();
+        vMainPerceptionDirection = pPion_->GetRole< PHY_RolePion_Location >().GetDirection();
     else if( nSensorMode_ == eDirection )
         vMainPerceptionDirection = vSensorInfo_;
     else if( nSensorMode_ == ePoint )
     {
-        const MT_Vector2D& vDirection = GetRole< PHY_RolePion_Location >().GetDirection();
-        const MT_Vector2D& vPosition  = GetRole< PHY_RolePion_Location >().GetPosition ();
+        const MT_Vector2D& vDirection = pPion_->GetRole< PHY_RolePion_Location >().GetDirection();
+        const MT_Vector2D& vPosition  = pPion_->GetRole< PHY_RolePion_Location >().GetPosition ();
         if( vSensorInfo_ != vPosition )
             vMainPerceptionDirection = ( vSensorInfo_ - vPosition ).Normalize();
         else
@@ -784,13 +786,14 @@ void PHY_RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainP
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::PreparePerceptionData()
 {
-    PHY_RolePion_Location&    roleLocation    = GetRole< PHY_RolePion_Location    >();
-    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    assert( pPion_ );
+    PHY_RolePion_Location&    roleLocation    = pPion_->GetRole< PHY_RolePion_Location    >();
+    PHY_RolePion_Composantes& roleComposantes = pPion_->GetRole< PHY_RolePion_Composantes >();
     if(    !roleLocation.HasLocationChanged() 
         && !roleComposantes.HasChanged()
-        && !GetRole< PHY_RoleAction_Loading   >().HasChanged() 
-        && !GetRole< PHY_RolePion_Transported >().HasChanged() 
-        && !GetRole< PHY_RolePion_Surrender   >().HasChanged()
+        && !pPion_->GetRole< PHY_RoleAction_Loading   >().HasChanged() 
+        && !pPion_->GetRole< PHY_RolePion_Transported >().HasChanged() 
+        && !pPion_->GetRole< PHY_RolePion_Surrender   >().HasChanged()
         && !HasChanged() )
         return;
 
@@ -815,11 +818,12 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::PrepareRadarData()
 {
-    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    assert( pPion_ );
+    PHY_RolePion_Composantes& roleComposantes = pPion_->GetRole< PHY_RolePion_Composantes >();
     if(    !roleComposantes.HasChanged()
-        && !GetRole< PHY_RoleAction_Loading   >().HasChanged() 
-        && !GetRole< PHY_RolePion_Transported >().HasChanged() 
-        && !GetRole< PHY_RolePion_Surrender   >().HasChanged() )
+        && !pPion_->GetRole< PHY_RoleAction_Loading   >().HasChanged() 
+        && !pPion_->GetRole< PHY_RolePion_Transported >().HasChanged() 
+        && !pPion_->GetRole< PHY_RolePion_Surrender   >().HasChanged() )
         return;
 
     radars_.clear();
@@ -901,27 +905,28 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::ExecutePerceptions() 
 {
+    assert( pPion_ );
     if( CanPerceive() )
     {
         CIT_PerceptionVector itPerception;
 
         TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableAgents );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableAgents );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableAgents );
         
         TER_Object_ABC::T_ObjectVector perceivableObjects;
-        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
 
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations;
-        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableConcentrations );
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableConcentrations );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableConcentrations );
 
         TER_PopulationFlow_ABC::T_PopulationFlowVector perceivableFlows;
-        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableFlows );
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableFlows );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableFlows );
     }
@@ -1216,9 +1221,10 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendDebugState() const
 {
+    assert( pPion_ );
     NET_ASN_MsgUnitVisionCones asn;
     asn().oid = pPion_->GetID();
-    asn().elongation = GetRole< PHY_RolePion_Posture >().GetElongationFactor();
+    asn().elongation = pPion_->GetRole< PHY_RolePion_Posture >().GetElongationFactor();
     asn().cones.n = surfacesAgent_.size();
     asn().cones.elem = asn().cones.n ? new ASN1T_VisionCone[ asn().cones.n ] : 0;
     unsigned i = 0;

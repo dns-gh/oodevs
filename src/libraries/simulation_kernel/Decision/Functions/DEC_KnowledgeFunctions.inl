@@ -105,7 +105,7 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInFuseau( const T
 {
     std::vector< std::string > types;
     types.push_back( type );
-    MIL_ObjectFilter filter( types );;
+    MIL_ObjectFilter filter( types );
     
     T_KnowledgeObjectDiaIDVector results;
     caller.GetArmy().GetKnowledge().GetObjectsInZone( results, filter, caller.GetOrderManager().GetFuseau() );

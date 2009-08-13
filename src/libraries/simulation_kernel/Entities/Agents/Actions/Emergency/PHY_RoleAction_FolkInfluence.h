@@ -11,7 +11,7 @@
 #define __PHY_RoleAction_FolkInfluence_h_
 
 #include "MIL.h"
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 
 namespace population
 {
@@ -27,7 +27,7 @@ class MIL_AgentPion;
 */
 // Created: JCR 2007-09-12
 // =============================================================================
-class PHY_RoleAction_FolkInfluence : public MT_Role_ABC
+class PHY_RoleAction_FolkInfluence : public tools::Role_ABC
                                    , private boost::noncopyable
 {
 
@@ -40,7 +40,6 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_RoleAction_FolkInfluence( MT_RoleContainer& role );
              PHY_RoleAction_FolkInfluence();
     virtual ~PHY_RoleAction_FolkInfluence();
     //@}

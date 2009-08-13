@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Population.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_PopulationCollision.h"
 #include "Network/NET_ASN_Messages.h"
@@ -22,9 +22,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Population, "PHY_RolePion_Population" )
 // Name: PHY_RolePion_Population constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Population          ( role )
-    , pPion_                                ( &pion )
+PHY_RolePion_Population::PHY_RolePion_Population( MIL_Agent_ABC& pion )
+    : pPion_                                ( &pion )
     , bHasChanged_                          ( true )
 {
     // NOTHING
@@ -35,8 +34,7 @@ PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_Ag
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Population::PHY_RolePion_Population()
-    : PHY_RoleInterface_Population          ()
-    , pPion_                                ( 0 )
+    : pPion_                                ( 0 )
     , bHasChanged_                          ( true )
 {
     // NOTHING
@@ -58,8 +56,7 @@ PHY_RolePion_Population::~PHY_RolePion_Population()
 template< typename Archive >
 void PHY_RolePion_Population::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Population >( *this )
-         & pPion_;
+    file & pPion_;
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +107,8 @@ MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) 
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Population::GetCollidingPopulationDensity() const
 {
+    assert( pPion_ );
+
     T_KnowledgePopulationCollisionVector populationsColliding;
     pPion_->GetKnowledge().GetPopulationsColliding( populationsColliding );
     MT_Float rPopulationDensity = 0.;
@@ -118,29 +117,6 @@ MT_Float PHY_RolePion_Population::GetCollidingPopulationDensity() const
 
     return rPopulationDensity;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population::SendFullState
-// Created: NLD 2004-09-08
-// -----------------------------------------------------------------------------
-//void PHY_RolePion_Population::SendFullState( NET_ASN_MsgUnitAttributes& /*msg*/ ) const
-//{
-//    // NOTHING
-//}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population::SendChangedState
-// Created: NLD 2004-09-08
-// -----------------------------------------------------------------------------
-//void PHY_RolePion_Population::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
-//{
-//    if( bHasChanged_ )
-//        SendFullState( msg );
-//}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::Update

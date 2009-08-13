@@ -83,7 +83,7 @@ void MIL_AgentPionLOGConvoy::save( MIL_CheckPointOutArchive& file, const uint ) 
 // Name: MIL_AgentPionLOGConvoy::WriteODB
 // Created: NLD 2006-06-05
 // -----------------------------------------------------------------------------
-void MIL_AgentPionLOGConvoy::WriteODB( xml::xostream& xos ) const
+void MIL_AgentPionLOGConvoy::WriteODB( xml::xostream& /*xos*/ ) const
 {
     // NOTHING : don't serialize Convoys
 }

@@ -169,7 +169,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierLoading()
     assert( pCarrier_ );
     
     SetState( eCarrierLoading );
-    nTimer_ = pCarrier_->GetType().GetHaulerLoadingTime();
+    nTimer_ = ( int ) pCarrier_->GetType().GetHaulerLoadingTime();
     pComposanteState_->NotifyHandledByMaintenance();
 }
 
@@ -196,7 +196,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
     assert( pCarrier_ );
     
     SetState( eCarrierUnloading );
-    nTimer_ = pCarrier_->GetType().GetHaulerUnloadingTime();
+    nTimer_ = ( int ) pCarrier_->GetType().GetHaulerUnloadingTime();
 }
 
 // -----------------------------------------------------------------------------

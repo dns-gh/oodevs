@@ -26,7 +26,7 @@ class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender
 {
 
 public:
-             PHY_RolePion_Surrender( MT_RoleContainer& role, MIL_AgentPion& pion );
+             PHY_RolePion_Surrender( MIL_AgentPion& pion );
              PHY_RolePion_Surrender();
     virtual ~PHY_RolePion_Surrender();
 

@@ -129,7 +129,7 @@ void ProtectionCapacity::ProcessAgentInside( Object& /*object*/, MIL_Agent_ABC& 
 // Name: ProtectionCapacity::ProcessAgentEntering
 // Created: JCR 2008-08-19
 // -----------------------------------------------------------------------------
-void ProtectionCapacity::ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent )
+void ProtectionCapacity::ProcessAgentEntering( Object& /*object*/, MIL_Agent_ABC& agent )
 {
     CIT_AgentContainer it = container_.find( &agent );
     if ( it == container_.end() && container_.size() < size_max_ )

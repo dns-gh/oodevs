@@ -22,9 +22,8 @@ using namespace hla;
 // Name: HLA_RoleLocalPion constructor
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------
-HLA_RoleLocalPion::HLA_RoleLocalPion( MT_RoleContainer& roleContainer, MIL_AgentPion& pion )
-    : HLA_RoleInterface( roleContainer )
-    , pion_( pion )
+HLA_RoleLocalPion::HLA_RoleLocalPion( MIL_AgentPion& pion )
+    : HLA_RoleInterface( pion )
     , pObjectId_( 0 )
 {
     //NOTHING
@@ -45,11 +44,12 @@ HLA_RoleLocalPion::~HLA_RoleLocalPion()
 // -----------------------------------------------------------------------------
 void HLA_RoleLocalPion::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const
 {
+    assert( pAgent_ );
     HLA_UpdateFunctor updateFunctor( functor, bUpdateAll );
-    pion_.Serialize( updateFunctor );
-    GetRole< PHY_RolePion_Composantes >().Serialize( updateFunctor );
-    GetRole< PHY_RolePion_Location    >().Serialize( updateFunctor );
-    GetRole< PHY_RolePion_Posture     >().Serialize( updateFunctor );
+    dynamic_cast< MIL_AgentPion* > ( pAgent_ )->Serialize( updateFunctor );
+    pAgent_->GetRole< PHY_RolePion_Composantes >().Serialize( updateFunctor );
+    pAgent_->GetRole< PHY_RolePion_Location    >().Serialize( updateFunctor );
+    pAgent_->GetRole< PHY_RolePion_Posture     >().Serialize( updateFunctor );
 }
 
 // -----------------------------------------------------------------------------

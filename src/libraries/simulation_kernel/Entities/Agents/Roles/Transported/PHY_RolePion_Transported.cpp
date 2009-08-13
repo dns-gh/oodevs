@@ -25,9 +25,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Transported, "PHY_RolePion_Transported" )
 // Name: PHY_RolePion_Transported constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Transported::PHY_RolePion_Transported( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Transported( role )
-    , pPion_                       ( &pion )
+PHY_RolePion_Transported::PHY_RolePion_Transported( MIL_AgentPion& pion )
+    : pPion_                       ( &pion )
     , bHasChanged_                 ( true )
     , pTransporter_                ( 0 )
     , vLoadingPosition_            ()
@@ -41,8 +40,7 @@ PHY_RolePion_Transported::PHY_RolePion_Transported( MT_RoleContainer& role, MIL_
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RolePion_Transported::PHY_RolePion_Transported()
-    : PHY_RoleInterface_Transported()
-    , pPion_                       ( 0 )
+    : pPion_                       ( 0 )
     , bHasChanged_                 ( true )
     , pTransporter_                ( 0 )
     , vLoadingPosition_            ()
@@ -66,8 +64,7 @@ PHY_RolePion_Transported::~PHY_RolePion_Transported()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
-         >> pPion_ 
+    file >> pPion_ 
          >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
          >> vLoadingPosition_
          >> vHumanTransporterPosition_;
@@ -82,8 +79,7 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
-         << pPion_
+    file << pPion_
          << pTransporter_
          << vLoadingPosition_
          << vHumanTransporterPosition_;
@@ -135,10 +131,10 @@ void PHY_RolePion_Transported::GetTransportWeight( bool bTransportOnlyLoadable, 
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter )
 {
+    assert( pPion_ );
     if( pTransporter_ != &transporter )
         return false;
-
-    GetRole< PHY_RolePion_Location >().Show( vLoadingPosition_ );
+    pPion_->GetRole< PHY_RolePion_Location >().Show( vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
     vLoadingPosition_.Reset();  
@@ -151,21 +147,21 @@ bool PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
+    assert( pPion_ );
     if( pTransporter_ && pTransporter_ == &transporter)
         return true;
     if( pTransporter_ )
         return false;
 
-    assert( !pTransporter_ );
     pTransporter_ = &transporter;
 
-    GetRole< PHY_RolePion_Reinforcement >().CancelReinforcement();     
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+    pPion_->GetRole< PHY_RolePion_Reinforcement >().CancelReinforcement();     
+    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
     while( !reinforcements.empty() )
         (**reinforcements.begin()).GetRole< PHY_RolePion_Reinforcement >().CancelReinforcement();
     
-    GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
-    GetRole< PHY_RolePion_Location  >().Hide               ();   
+    pPion_->GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
+    pPion_->GetRole< PHY_RolePion_Location  >().Hide               ();   
     vLoadingPosition_= transporter.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )
         vHumanTransporterPosition_ = vLoadingPosition_;
@@ -179,12 +175,13 @@ bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
+    assert( pPion_ );
     if( pTransporter_ != &transporter )
         return false;
 
     assert( pTransporter_ );
-    GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
-    GetRole< PHY_RolePion_Location  >().Show( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    pPion_->GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
+    pPion_->GetRole< PHY_RolePion_Location  >().Show( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pTransporter_ = 0;
     bHasChanged_  = true;
     vLoadingPosition_.Reset();
@@ -199,9 +196,10 @@ bool PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::DisableHumanTransporters( const MT_Vector2D& vPos )
 {
+    assert( pPion_ );
     if ( vHumanTransporterPosition_.IsZero() )
     {
-        GetRole< PHY_RoleAction_Loading >().ForceUnloadedState();
+        pPion_->GetRole< PHY_RoleAction_Loading >().ForceUnloadedState();
         vHumanTransporterPosition_ = vPos;
         bHasChanged_ = true;
     }
@@ -242,8 +240,9 @@ namespace
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Transported::HasHumanTransportersReady() const
 {
+    assert( pPion_ );
     sTransporterComposantePresent func;
-    GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
     
     return vHumanTransporterPosition_.IsZero() && func.bComposantePresent_;
 }
@@ -254,9 +253,10 @@ bool PHY_RolePion_Transported::HasHumanTransportersReady() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
 {
+    assert( pPion_ );
     if( !pTransporter_ )
         return;
-    GetRole< PHY_RolePion_Location >().Follow( *pTransporter_ );
+    pPion_->GetRole< PHY_RolePion_Location >().Follow( *pTransporter_ );
 }
 
 // -----------------------------------------------------------------------------

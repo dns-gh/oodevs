@@ -41,7 +41,7 @@ MIL_ParameterType_AgentKnowledgeList::~MIL_ParameterType_AgentKnowledgeList()
 // Name: MIL_ParameterType_AgentKnowledgeList::Copy
 // Created: NLD 2006-11-AgentList
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_AgentKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_AgentKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )

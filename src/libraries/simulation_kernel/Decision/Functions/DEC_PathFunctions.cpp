@@ -90,7 +90,7 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const M
 // Name: DEC_PathFunctions::GetNextObjectOnPath
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-std::pair< bool, std::pair< int, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_AgentPion& callerAgent, int oId, float oDistance, const std::vector< std::string >& params )
+std::pair< bool, std::pair< int, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_AgentPion& callerAgent, int /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
 {
     MIL_ObjectFilter filter( params );
     

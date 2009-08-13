@@ -32,7 +32,7 @@ public:
     //@}
 
 public:
-             PHY_RolePion_Reinforcement( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit PHY_RolePion_Reinforcement( MIL_AgentPion& pion );
              PHY_RolePion_Reinforcement();
     virtual ~PHY_RolePion_Reinforcement();
 

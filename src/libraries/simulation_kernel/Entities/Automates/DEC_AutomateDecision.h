@@ -34,7 +34,7 @@ class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
 {
 
 public:
-             DEC_AutomateDecision( MT_RoleContainer& container, MIL_Automate& automate );
+    explicit DEC_AutomateDecision( MIL_Automate& automate );
              DEC_AutomateDecision();
     virtual ~DEC_AutomateDecision();
 

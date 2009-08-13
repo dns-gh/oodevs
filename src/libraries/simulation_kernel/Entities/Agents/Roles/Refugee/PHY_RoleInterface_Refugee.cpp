@@ -14,20 +14,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Refugee constructor
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Refugee::PHY_RoleInterface_Refugee( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Refugee constructor
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Refugee::PHY_RoleInterface_Refugee()
-    : MT_Role_ABC()
 {
     // NOTHING
 }

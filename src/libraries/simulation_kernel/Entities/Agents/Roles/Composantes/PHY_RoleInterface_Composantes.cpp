@@ -10,25 +10,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleInterface_Composantes.h"
- 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Composantes constructor
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Composantes::PHY_RoleInterface_Composantes( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Composantes constructor
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Composantes::PHY_RoleInterface_Composantes()
-    : MT_Role_ABC()
 {
     // NOTHING
 }

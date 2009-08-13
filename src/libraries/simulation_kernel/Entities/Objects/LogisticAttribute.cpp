@@ -102,7 +102,7 @@ void LogisticAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+/*caller*/void LogisticAttribute::SendUpdate( ASN1T_ObjectAttributes& /*asn*/ ) const
 {
     // NOTHING
 }

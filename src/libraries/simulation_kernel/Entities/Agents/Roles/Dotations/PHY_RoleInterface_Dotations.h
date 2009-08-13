@@ -12,7 +12,7 @@
 #ifndef __PHY_RoleInterface_Dotations_h_
 #define __PHY_RoleInterface_Dotations_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 
 class PHY_ConsumptionType;
 class PHY_DotationCategory;
@@ -21,7 +21,7 @@ class PHY_DotationCategory;
 // @class  PHY_RoleInterface_Dotations
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleInterface_Dotations : public MT_Role_ABC
+class PHY_RoleInterface_Dotations : public tools::Role_ABC
                                   , private boost::noncopyable
 {
 
@@ -32,13 +32,10 @@ public:
     //@}
     
 public:
-    explicit PHY_RoleInterface_Dotations( MT_RoleContainer& roleContainer );
+    //! @name Constructor/Destructor
+    //@{
              PHY_RoleInterface_Dotations();
     virtual ~PHY_RoleInterface_Dotations();
-
-    //! @name CheckPoints
-    //@{
-    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
     //! @name Operations
@@ -47,15 +44,5 @@ public:
     virtual       bool                 HasDotation       ( const PHY_DotationCategory& category ) const = 0;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Dotations::serialize
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-template< typename Archive > 
-void PHY_RoleInterface_Dotations::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
-}
 
 #endif // __PHY_RoleInterface_Dotations_h_

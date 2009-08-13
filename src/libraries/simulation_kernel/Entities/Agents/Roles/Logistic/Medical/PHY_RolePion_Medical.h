@@ -28,8 +28,8 @@ class PHY_RolePion_Medical : public PHY_RoleInterface_Medical
 {
 
 public:
-             PHY_RolePion_Medical( MT_RoleContainer& role );
-             PHY_RolePion_Medical();
+            PHY_RolePion_Medical();
+            PHY_RolePion_Medical( MIL_AgentPion& );
     virtual ~PHY_RolePion_Medical();
 
     //! @name CheckPoints
@@ -83,6 +83,9 @@ public:
     virtual void SendChangedState() const;
     virtual void SendFullState   () const;
     //@}
+
+private:
+    MIL_AgentPion* pPion_;
 };
 
 #endif // __PHY_RolePion_Medical_h_

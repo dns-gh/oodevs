@@ -10,13 +10,14 @@
 #include "simulation_kernel_pch.h"
 #include "HLA_RoleInterface.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleHLA_Composantes.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
 // -----------------------------------------------------------------------------
 // Name: HLA_RoleInterface constructor
 // Created: AGE 2004-11-05
 // -----------------------------------------------------------------------------
-HLA_RoleInterface::HLA_RoleInterface( MT_RoleContainer& roleContainer )
-    : MT_Role_ABC( roleContainer )
+HLA_RoleInterface::HLA_RoleInterface( MIL_Agent_ABC& agent )
+    : pAgent_( &agent )
 {
     //NOTHING
 }
@@ -36,5 +37,6 @@ HLA_RoleInterface::~HLA_RoleInterface()
 // -----------------------------------------------------------------------------
 void HLA_RoleInterface::Destroy()
 {
-     GetRole< PHY_RoleHLA_Composantes >().Destroy();
+    assert( pAgent_ );
+    pAgent_->GetRole< PHY_RoleHLA_Composantes >().Destroy();
 }

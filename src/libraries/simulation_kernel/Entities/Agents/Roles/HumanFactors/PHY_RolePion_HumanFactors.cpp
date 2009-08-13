@@ -17,32 +17,15 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_HumanFactors, "PHY_RolePion_HumanFactors" )
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors( MT_RoleContainer& role )
-    : PHY_RoleInterface_HumanFactors( role )
-    , bHasChanged_                  ( true )
+PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors()
+    : bHasChanged_                  ( true )
     , pMorale_                      ( &PHY_Morale    ::bon_     )
     , pExperience_                  ( &PHY_Experience::veteran_ )
     , pTiredness_                   ( &PHY_Tiredness ::normal_  )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_HumanFactors constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors()
-    : PHY_RoleInterface_HumanFactors()
-    , bHasChanged_                  ( true )
-    , pMorale_                      ( 0 )
-    , pExperience_                  ( 0 )
-    , pTiredness_                   ( 0 )
 {
     // NOTHING
 }
@@ -65,8 +48,6 @@ void PHY_RolePion_HumanFactors::load( MIL_CheckPointInArchive& file, const uint 
     assert( !pMorale_ );
     assert( !pExperience_ );
     assert( !pTiredness_ );
-    
-    file >> boost::serialization::base_object< PHY_RoleInterface_HumanFactors >( *this );
     
     uint nID;
     file >> nID;
@@ -94,8 +75,7 @@ void PHY_RolePion_HumanFactors::save( MIL_CheckPointOutArchive& file, const uint
     unsigned morale     = pMorale_->GetID(),
              experience = pExperience_->GetID(),
              tiredness  = pTiredness_->GetID();
-    file << boost::serialization::base_object< PHY_RoleInterface_HumanFactors >( *this )
-         << morale
+    file << morale
          << experience
          << tiredness;
 }

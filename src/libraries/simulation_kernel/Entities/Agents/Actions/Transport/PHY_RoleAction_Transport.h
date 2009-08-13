@@ -12,7 +12,7 @@
 #ifndef __PHY_RoleAction_Transport_h_
 #define __PHY_RoleAction_Transport_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_Agent_ABC;
@@ -24,7 +24,7 @@ class MIL_ToxicEffectManipulator;
 // @class  PHY_RoleAction_Transport
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_Transport : public MT_Role_ABC
+class PHY_RoleAction_Transport : public tools::Role_ABC
                                , private boost::noncopyable
 {
 
@@ -55,7 +55,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_Transport( MT_RoleContainer& role, MIL_AgentPion& pion );
+             PHY_RoleAction_Transport( MIL_AgentPion& pion );
              PHY_RoleAction_Transport();
     virtual ~PHY_RoleAction_Transport();
 

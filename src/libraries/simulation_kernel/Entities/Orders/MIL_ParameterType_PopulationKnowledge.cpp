@@ -41,7 +41,7 @@ MIL_ParameterType_PopulationKnowledge::~MIL_ParameterType_PopulationKnowledge()
 // Name: MIL_ParameterType_PopulationKnowledge::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_PopulationKnowledge::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
+bool MIL_ParameterType_PopulationKnowledge::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )

@@ -38,9 +38,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
 // Name: PHY_RolePion_Dotations constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Dotations::PHY_RolePion_Dotations( MT_RoleContainer& roleContainer, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Dotations( roleContainer )
-    , pPion_                     ( &pion )
+PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
+    : pPion_                     ( &pion )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
     , reservedConsumptions_      ()
@@ -55,8 +54,7 @@ PHY_RolePion_Dotations::PHY_RolePion_Dotations( MT_RoleContainer& roleContainer,
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 PHY_RolePion_Dotations::PHY_RolePion_Dotations()
-    : PHY_RoleInterface_Dotations()
-    , pPion_                     ( 0 )
+    : pPion_                     ( 0 )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
     , reservedConsumptions_      ()
@@ -120,8 +118,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
-         >> pPion_
+    file >> pPion_
          >> pDotations_;
          
     uint nID;
@@ -142,8 +139,7 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const uint ) 
 {
     unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (uint)-1 ) ,
              previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (uint)-1 );
-    file << boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
-         << pPion_
+    file << pPion_
          << pDotations_
          << current
          << previous
@@ -246,6 +242,7 @@ public:
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& consumptionMode )
 {
+    assert( pPion_ );
     if( pCurrentConsumptionMode_ && consumptionMode < *pCurrentConsumptionMode_  )
         return true;
 
@@ -253,7 +250,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
-    GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
 
     if( func.bReservationOK_ )
     {
@@ -267,7 +264,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
-        GetRole< PHY_RolePion_Composantes >().Apply( funcRollback );
+        pPion_->GetRole< PHY_RolePion_Composantes >().Apply( funcRollback );
         assert( funcRollback.bReservationOK_ );
     }
     return false;
@@ -340,7 +337,7 @@ MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_Consumption
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }
 
@@ -394,12 +391,13 @@ void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dot
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::Update( bool bIsDead )
 {
+    assert( pPion_ );
     if( bIsDead )
         return;
 
     assert( pDotations_ );
     if( !pCurrentConsumptionMode_ )
-        SetConsumptionMode( GetRole< PHY_RolePion_Posture >().GetCurrentPosture().GetConsumptionMode() );
+        SetConsumptionMode( pPion_->GetRole< PHY_RolePion_Posture >().GetCurrentPosture().GetConsumptionMode() );
     pDotations_->ConsumeConsumptionReservations();
     pPreviousConsumptionMode_ = pCurrentConsumptionMode_;
     pCurrentConsumptionMode_  = 0;

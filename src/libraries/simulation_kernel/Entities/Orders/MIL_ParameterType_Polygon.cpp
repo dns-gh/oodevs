@@ -37,7 +37,7 @@ MIL_ParameterType_Polygon::~MIL_ParameterType_Polygon()
 // Name: MIL_ParameterType_Polygon::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_Polygon::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const
+bool MIL_ParameterType_Polygon::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )

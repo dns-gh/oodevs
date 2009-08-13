@@ -21,9 +21,8 @@ using namespace hla;
 // Name: PHY_RoleHLA_Location constructor
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Location::PHY_RoleHLA_Location( MT_RoleContainer& role, MIL_AgentHLA& pion )
-    : PHY_RoleInterface_Location( role )
-    , pion_         ( pion )
+PHY_RoleHLA_Location::PHY_RoleHLA_Location( MIL_AgentHLA& pion )
+    : pion_         ( pion )
     , vDirection_   ()
     , vPosition_    ()
     , rHeight_      ( 0 )

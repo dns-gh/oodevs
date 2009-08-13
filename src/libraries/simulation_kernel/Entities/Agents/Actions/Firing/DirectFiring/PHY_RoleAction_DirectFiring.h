@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "PHY_DirectFireData.h"
 
@@ -31,7 +31,7 @@ class MIL_Object_ABC;
 // @class  PHY_RoleAction_DirectFiring
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_DirectFiring : public MT_Role_ABC
+class PHY_RoleAction_DirectFiring : public tools::Role_ABC
                                   , private boost::noncopyable
 {
 
@@ -42,7 +42,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_DirectFiring( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit PHY_RoleAction_DirectFiring( MIL_AgentPion& pion );
              PHY_RoleAction_DirectFiring();
     virtual ~PHY_RoleAction_DirectFiring();
 

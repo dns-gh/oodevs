@@ -32,7 +32,7 @@ class PHY_RoleHLA_Posture : public PHY_RoleInterface_Posture
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleHLA_Posture( MT_RoleContainer& role, const MIL_Agent_ABC& pion );
+             PHY_RoleHLA_Posture( const MIL_Agent_ABC& pion );
     virtual ~PHY_RoleHLA_Posture();
     //@}
 

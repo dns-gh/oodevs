@@ -44,9 +44,8 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 // Name: PHY_RolePion_Communications constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Communications::PHY_RolePion_Communications( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Communications( role )
-    , pPion_                          ( &pion )
+PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_AgentPion& pion )
+    : pPion_                          ( &pion )
     , bHasChanged_                    ( true )
     , bBlackoutActivated_             ( false )
 {
@@ -58,8 +57,7 @@ PHY_RolePion_Communications::PHY_RolePion_Communications( MT_RoleContainer& role
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Communications::PHY_RolePion_Communications()
-    : PHY_RoleInterface_Communications()
-    , pPion_                          ( 0 )
+    : pPion_                          ( 0 )
 {
     // NOTHING
 }
@@ -118,8 +116,7 @@ template< typename Archive >
 inline
 void PHY_RolePion_Communications::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Communications >( *this )
-         & pPion_
+    file & pPion_
          & jammers_
          & bBlackoutActivated_
          & bHasChanged_;

@@ -1,34 +1,36 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_RoleContainer.h $
+// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/RoleContainer.h $
 // $Author: Jvt $
 // $Modtime: 5/04/05 11:36 $
 // $Revision: 3 $
-// $Workfile: MT_RoleContainer.h $
+// $Workfile: RoleContainer.h $
 //
 // *****************************************************************************
 
-#ifndef __MT_RoleContainer_h_
-#define __MT_RoleContainer_h_
+#ifndef __RoleContainer_h_
+#define __RoleContainer_h_
 
 #include "MT_Tools_Types.h"
 #include <boost/shared_ptr.hpp>
 #include "tools/Extendable.h"
 #include "tools/InterfaceContainer.h"
 
-class MT_Role_ABC; // FIXME(warning C4150) AHC : A remplacer par #include "MT_Role_ABC.h" quand MT_Role_ABC::GetRole sera supprime
+namespace tools
+{
+    class Role_ABC;
 
 // =============================================================================
-// @class  MT_RoleContainer
+// @class  RoleContainer
 // Created: JVT/NLD 2004-08-03
 // =============================================================================
-class MT_RoleContainer : public tools::Extendable<MT_Role_ABC>,
-						 public tools::InterfaceContainer<MT_Role_ABC>
+class RoleContainer : public tools::Extendable<Role_ABC>,
+						 public tools::InterfaceContainer<Role_ABC>
 {
 public:
-             MT_RoleContainer();
-    virtual ~MT_RoleContainer();
+             RoleContainer();
+    virtual ~RoleContainer();
     
     //! @name CheckPoints
     //@{
@@ -58,6 +60,9 @@ protected:
     template< typename Role > typename Role::RoleInterface& RegisterRole( Role* r);
 };
 
-#include "MT_RoleContainer.inl"
 
-#endif // __MT_RoleContainer_h_
+#include "RoleContainer.inl"
+
+}
+
+#endif // __RoleContainer_h_

@@ -10,7 +10,7 @@
 #ifndef __MIL_Entity_ABC_h_
 #define __MIL_Entity_ABC_h_
 
-#include "MT_Tools/MT_RoleContainer.h"
+#include "MT_Tools/RoleContainer.h"
 #include "Entities/Actions/PHY_Actor.h"
 
 namespace xml
@@ -25,7 +25,7 @@ namespace xml
 */
 // Created: RDS 2008-04-25
 // =============================================================================
-class MIL_Entity_ABC : public MT_RoleContainer
+class MIL_Entity_ABC : public tools::RoleContainer
                      , public PHY_Actor // $$$$ LDC: That should be a role.
 {
 public:
@@ -75,7 +75,7 @@ private:
 template< typename Archive > 
 void MIL_Entity_ABC::serialize( Archive& archive, const uint )
 {
-    archive & boost::serialization::base_object< MT_RoleContainer >( *this )
+    archive & boost::serialization::base_object< tools::RoleContainer >( *this )
             & strName_ ; 
 }
 

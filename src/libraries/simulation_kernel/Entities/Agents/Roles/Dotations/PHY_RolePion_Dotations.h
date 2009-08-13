@@ -41,7 +41,7 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
 {
 
 public:
-             PHY_RolePion_Dotations( MT_RoleContainer& roleContainer, MIL_AgentPion& pion );
+    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion );
              PHY_RolePion_Dotations();
     virtual ~PHY_RolePion_Dotations();
 

@@ -31,9 +31,8 @@ static const MT_Float rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
 // Name: PHY_RolePion_Posture constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Posture::PHY_RolePion_Posture( MT_RoleContainer& role, const MIL_AgentPion& pion )
-    : PHY_RoleInterface_Posture            ( role )
-    , pPion_                               ( &pion )
+PHY_RolePion_Posture::PHY_RolePion_Posture( const MIL_AgentPion& pion )
+    : pPion_                               ( &pion )
     , pCurrentPosture_                     ( &PHY_Posture::arret_ )
     , pLastPosture_                        ( &PHY_Posture::arret_ )
     , rPostureCompletionPercentage_        ( 1. )
@@ -60,8 +59,7 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MT_RoleContainer& role, const MIL_Ag
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Posture::PHY_RolePion_Posture()
-    : PHY_RoleInterface_Posture            (  )
-    , pPion_                               ( 0 )
+    : pPion_                               ( 0 )
     , pCurrentPosture_                     ( 0 )
     , pLastPosture_                        ( 0 )
     , rPostureCompletionPercentage_        ( 1. )
@@ -98,8 +96,7 @@ PHY_RolePion_Posture::~PHY_RolePion_Posture()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< PHY_RoleInterface_Posture >( *this )
-         >> const_cast< MIL_AgentPion*& >( pPion_ );
+    file >> const_cast< MIL_AgentPion*& >( pPion_ );
     
     uint nID;
     file >> nID;
@@ -128,8 +125,7 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) co
 {
     unsigned current = pCurrentPosture_->GetID(),
              last    = pLastPosture_->GetID();
-    file << boost::serialization::base_object< PHY_RoleInterface_Posture >( *this )
-         << pPion_
+    file << pPion_
          << current
          << last
          << rPostureCompletionPercentage_
@@ -154,7 +150,7 @@ MT_Float PHY_RolePion_Posture::GetPostureTime() const
     assert( pPion_ );
     assert( rTimingFactor_ > 0. );
     
-    return GetRole< PHY_RolePion_HumanFactors >().ModifyPostureTime( pPion_->GetType().GetUnitType().GetPostureTime( *pCurrentPosture_ ) ) / rTimingFactor_;
+    return pPion_->GetRole< PHY_RolePion_HumanFactors >().ModifyPostureTime( pPion_->GetType().GetUnitType().GetPostureTime( *pCurrentPosture_ ) ) / rTimingFactor_;
 }
 
 // -----------------------------------------------------------------------------
@@ -243,7 +239,7 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SetPostureMovement()
 {
-    if( !GetRole< PHY_RoleAction_Loading >().IsLoaded() ) //$$$ bDummy pour l'infanterie ... a virer le jour ou le débarquement n'existera plus (1 pion INF => 2 pions)
+    if( !pPion_->GetRole< PHY_RoleAction_Loading >().IsLoaded() ) //$$$ bDummy pour l'infanterie ... a virer le jour ou le débarquement n'existera plus (1 pion INF => 2 pions)
         ChangePosture( PHY_Posture::posteReflexe_ );
     else if( bDiscreteModeEnabled_ )
         ChangePosture( PHY_Posture::mouvementDiscret_ );

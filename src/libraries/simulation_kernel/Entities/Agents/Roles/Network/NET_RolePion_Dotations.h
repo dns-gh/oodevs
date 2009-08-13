@@ -30,7 +30,7 @@ class NET_RolePion_Dotations : public NET_RoleInterface_Dotations
 {
 
 public:
-             NET_RolePion_Dotations( MT_RoleContainer& role, const MIL_AgentPion& pion );
+    explicit NET_RolePion_Dotations( MIL_AgentPion& pion );
              NET_RolePion_Dotations();
     virtual ~NET_RolePion_Dotations();
 
@@ -53,7 +53,7 @@ private:
     //@}
 
 private:
-    const MIL_AgentPion* pPion_;
+    MIL_AgentPion* pPion_;
     mutable bool         bLastStateDead_;
     mutable bool         bLastStateNeutralized_;
 };

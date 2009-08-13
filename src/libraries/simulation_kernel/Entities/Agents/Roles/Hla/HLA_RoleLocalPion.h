@@ -31,7 +31,7 @@ class HLA_RoleLocalPion : public HLA_RoleInterface
 public:
     //! @name Constructors/Destructor
     //@{
-             HLA_RoleLocalPion( MT_RoleContainer& roleContainer, MIL_AgentPion& pion );
+    explicit HLA_RoleLocalPion( MIL_AgentPion& pion );
     virtual ~HLA_RoleLocalPion();
     //@}
 
@@ -54,7 +54,6 @@ public:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&          pion_;
     hla::ObjectIdentifier*  pObjectId_;
     //@}
 };

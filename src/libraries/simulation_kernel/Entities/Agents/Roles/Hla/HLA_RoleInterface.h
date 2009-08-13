@@ -10,7 +10,7 @@
 #ifndef __HLA_RoleInterface_h_
 #define __HLA_RoleInterface_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 
 namespace hla {
     class AttributeIdentifier;    
@@ -19,13 +19,15 @@ namespace hla {
     class UpdateFunctor_ABC;
 }
 
+class MIL_Agent_ABC;
+
 // =============================================================================
 /** @class  HLA_RoleInterface
     @brief  HLA role interface
 */
 // Created: AGE 2004-11-05
 // =============================================================================
-class HLA_RoleInterface : public MT_Role_ABC
+class HLA_RoleInterface : public tools::Role_ABC
 {
 
 public:
@@ -37,7 +39,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             HLA_RoleInterface( MT_RoleContainer& roleContainer );
+    explicit HLA_RoleInterface( MIL_Agent_ABC& agent );
     virtual ~HLA_RoleInterface();
     //@}
 
@@ -59,6 +61,12 @@ private:
     //@{
     HLA_RoleInterface( const HLA_RoleInterface& );            //!< Copy constructor
     HLA_RoleInterface& operator=( const HLA_RoleInterface& ); //!< Assignement operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    MIL_Agent_ABC* pAgent_;
     //@}
 };
 

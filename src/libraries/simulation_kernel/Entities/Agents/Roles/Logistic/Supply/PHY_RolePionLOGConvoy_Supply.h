@@ -25,7 +25,7 @@ class PHY_RolePionLOGConvoy_Supply : public PHY_RolePion_Supply
 {
 
 public:
-             PHY_RolePionLOGConvoy_Supply( MT_RoleContainer& role, const MIL_AgentPion& pion );
+             PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion );
              PHY_RolePionLOGConvoy_Supply();
     virtual ~PHY_RolePionLOGConvoy_Supply();
 
@@ -63,7 +63,7 @@ public:
     //@}
 
 private:
-    const MIL_AgentPion*   pPion_;
+    MIL_AgentPion*   pPion_;
           PHY_StockConvoy* pConvoy_;
 };
 

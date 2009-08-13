@@ -22,7 +22,7 @@ class PHY_RoleHLA_Refugee : public PHY_RoleInterface_Refugee
 {
 
 public:
-    explicit PHY_RoleHLA_Refugee( MT_RoleContainer& role );
+             PHY_RoleHLA_Refugee();
     virtual ~PHY_RoleHLA_Refugee();
 
     //! @name Accessors

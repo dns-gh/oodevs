@@ -64,8 +64,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
         xis.error( "Unknown attitude" );
 
     pKnowledge_ = new DEC_PopulationKnowledge();
-    RegisterRole( new DEC_PopulationDecision( *this  ) ); 
-    RegisterRole( new DEC_Representations( *this ) );
+    RegisterRole( new DEC_PopulationDecision() ); 
+    RegisterRole( new DEC_Representations() );
 
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
@@ -180,7 +180,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
         DEC_PopulationDecision* pRole;
         file >> pRole;
         RegisterRole( pRole );
-        RegisterRole( new DEC_Representations( *this ) );
+        RegisterRole( new DEC_Representations() );
     }
 }
 
@@ -923,7 +923,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
 {
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( asn.attitude );
     if( !pAttitude )
-        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );;
+        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );
 
     // concentration
     if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_concentration )
@@ -934,7 +934,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
                 ( **it ).SetAttitude( *pAttitude );
                 return;
             }
-        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );;
+        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );
     }
     // flow
     else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_flux )
@@ -945,7 +945,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
                 ( **it ).SetAttitude( *pAttitude );
                 return;
             }
-        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );;
+        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );
     }
     // global
     else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_global )

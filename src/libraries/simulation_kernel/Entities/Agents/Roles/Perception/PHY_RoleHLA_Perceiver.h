@@ -23,7 +23,7 @@ class PHY_RoleHLA_Perceiver : public PHY_RoleInterface_Perceiver
 {
 
 public:
-    explicit PHY_RoleHLA_Perceiver( MT_RoleContainer& role );
+             PHY_RoleHLA_Perceiver();
     virtual ~PHY_RoleHLA_Perceiver();
 
     //! @name Operations

@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
 
@@ -23,8 +24,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
 // Name: PHY_RoleAction_Loading constructor
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Loading::PHY_RoleAction_Loading( MT_RoleContainer& role )
-    : MT_Role_ABC             ( role )
+PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion )
+    : pPion_                  ( &pion )
     , bIsLoaded_              ( false )
     , nState_                 ( eNothing )
     , nEndTimeStep_           ( 0 )
@@ -39,7 +40,7 @@ PHY_RoleAction_Loading::PHY_RoleAction_Loading( MT_RoleContainer& role )
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Loading::PHY_RoleAction_Loading()
-    : MT_Role_ABC     ()
+    : pPion_          ( 0 )
     , bIsLoaded_      ( false )
     , nState_         ( eNothing )
     , nEndTimeStep_   ( 0 )
@@ -65,8 +66,7 @@ PHY_RoleAction_Loading::~PHY_RoleAction_Loading()
 template< typename Archive > 
 void PHY_RoleAction_Loading::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< MT_Role_ABC >( *this )
-         & nState_
+    file & nState_
          & bIsLoaded_
          & nEndTimeStep_
          & bHasBeenUpdated_;
@@ -133,8 +133,9 @@ namespace
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 {
+    assert( pPion_ );
     sLoadingUnloadingTimesFunctor func;
-    GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
     if( func.rNbrHumansLoadedPerTimeStep_ == 0. )
         return std::numeric_limits< MT_Float >::max();
     return func.nNbrHumans_ / func.rNbrHumansLoadedPerTimeStep_;
@@ -146,8 +147,9 @@ MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Loading::ComputeUnloadingTime() const
 {
+    assert( pPion_ );
     sLoadingUnloadingTimesFunctor func;
-    GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
     if( func.rNbrHumansUnloadedPerTimeStep_ == 0. )
         return std::numeric_limits< MT_Float >::max();
     return func.nNbrHumans_ / func.rNbrHumansUnloadedPerTimeStep_;
@@ -253,8 +255,9 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::CheckConsistency()
 {
+    assert( pPion_ );
     sLoadedStateConsistency func;
-    GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
 
     if( bIsLoaded_ )
     {

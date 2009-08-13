@@ -29,7 +29,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
 {
 
 public:
-             PHY_RolePion_Posture( MT_RoleContainer& role, const MIL_AgentPion& pion );
+             PHY_RolePion_Posture( const MIL_AgentPion& pion );
              PHY_RolePion_Posture();
     virtual ~PHY_RolePion_Posture();
 

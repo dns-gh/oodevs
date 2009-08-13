@@ -36,7 +36,7 @@ public:
     static void Initialize( xml::xistream& xis );
     //@}
 
-             PHY_RolePion_Communications( MT_RoleContainer& role, MIL_AgentPion& pion );
+             PHY_RolePion_Communications( MIL_AgentPion& pion );
              PHY_RolePion_Communications();
     virtual ~PHY_RolePion_Communications();
 

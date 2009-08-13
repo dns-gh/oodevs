@@ -10,7 +10,7 @@
 #ifndef __DEC_Representations_h_
 #define __DEC_Representations_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 
 class MIL_FragOrder;
 class DEC_PathPoint;
@@ -21,7 +21,7 @@ class DEC_PathPoint;
 */
 // Created: LDC 2009-04-03
 // =============================================================================
-class DEC_Representations : public MT_Role_ABC
+class DEC_Representations : public tools::Role_ABC
 {
 public:
     typedef DEC_Representations RoleInterface;
@@ -29,7 +29,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Representations( MT_RoleContainer& roleContainer );
+             DEC_Representations();
     virtual ~DEC_Representations();
     //@}
 

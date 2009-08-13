@@ -14,16 +14,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Perceiver constructor
-// Created: NLD 2005-02-23
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Perceiver::PHY_RoleInterface_Perceiver( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Perceiver constructor
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Perceiver::PHY_RoleInterface_Perceiver()

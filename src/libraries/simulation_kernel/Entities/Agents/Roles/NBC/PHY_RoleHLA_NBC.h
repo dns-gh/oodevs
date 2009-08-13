@@ -24,7 +24,7 @@ class PHY_RoleHLA_NBC : public PHY_RoleInterface_NBC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_RoleHLA_NBC( MT_RoleContainer& role );
+             PHY_RoleHLA_NBC();
     virtual ~PHY_RoleHLA_NBC();
     //@}
 

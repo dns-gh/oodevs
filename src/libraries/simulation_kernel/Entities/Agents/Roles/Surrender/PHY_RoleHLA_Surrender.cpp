@@ -17,9 +17,8 @@
 // Name: PHY_RoleHLA_Surrender constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Surrender::PHY_RoleHLA_Surrender( MT_RoleContainer& role )
-    : PHY_RoleInterface_Surrender( role )
-    , bPrisoner_                 ( false )
+PHY_RoleHLA_Surrender::PHY_RoleHLA_Surrender()
+    : bPrisoner_                 ( false )
 {
     // NOTHING
 }

@@ -21,7 +21,7 @@ BOOST_CLASS_EXPORT_GUID( DecontaminationCapacity, "DecontaminationCapacity" )
 // Name: DecontaminationCapacity constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-DecontaminationCapacity::DecontaminationCapacity( xml::xistream& xis )
+DecontaminationCapacity::DecontaminationCapacity( xml::xistream& /*xis*/ )
 {
     // NOTHING
 }
@@ -39,7 +39,7 @@ DecontaminationCapacity::DecontaminationCapacity()
 // Name: DecontaminationCapacity constructor
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-DecontaminationCapacity::DecontaminationCapacity( const DecontaminationCapacity& rhs )    
+DecontaminationCapacity::DecontaminationCapacity( const DecontaminationCapacity& /*rhs*/ )    
 {
     // NOTHING
 }
@@ -86,7 +86,7 @@ void DecontaminationCapacity::Instanciate( Object& object ) const
 // Name: DecontaminationCapacity::Update
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void DecontaminationCapacity::Update( Object& object, uint time )
+void DecontaminationCapacity::Update( Object& object, uint /*time*/ )
 {
     if ( decontaminationQueue_.size() == 0 || object.IsMarkedForDestruction() || object.GetAttribute< ConstructionAttribute >().GetState() < 1. )
         return;

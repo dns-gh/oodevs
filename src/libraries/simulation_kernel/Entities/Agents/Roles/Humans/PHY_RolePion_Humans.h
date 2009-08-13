@@ -40,7 +40,7 @@ public:
     //@}
 
 public:
-             PHY_RolePion_Humans( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit PHY_RolePion_Humans( MIL_AgentPion& pion );
              PHY_RolePion_Humans();
     virtual ~PHY_RolePion_Humans();
 

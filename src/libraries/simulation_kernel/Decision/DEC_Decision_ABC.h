@@ -10,7 +10,7 @@
 #ifndef __DEC_Decision_ABC_h_
 #define __DEC_Decision_ABC_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 #include <directia/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -19,7 +19,6 @@ class DEC_AutomateDecision;
 class DEC_Knowledge_Agent;
 class MIL_AgentPion;
 class MIL_Automate;
-class MIL_Entity_ABC;
 class MIL_Mission_ABC;
 class PHY_Action_ABC;
 
@@ -34,7 +33,7 @@ namespace directia
 */
 // Created: RDS 2008-04-30
 // =============================================================================
-class DEC_Decision_ABC : public MT_Role_ABC
+class DEC_Decision_ABC : public tools::Role_ABC
 {
 
 public:
@@ -46,7 +45,6 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Decision_ABC( MIL_Entity_ABC& entity );
              DEC_Decision_ABC();
     virtual ~DEC_Decision_ABC();
     //@}

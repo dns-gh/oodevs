@@ -25,9 +25,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_NBC, "PHY_RolePion_NBC" )
 // Name: PHY_RolePion_NBC constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_NBC::PHY_RolePion_NBC( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_NBC       ( role )
-    , pPion_                      ( &pion )
+PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
+    : pPion_                      ( &pion )
     , bNbcProtectionSuitWorn_     ( false )
     , nbcAgentTypesContaminating_ ()
     , rContaminationState_        ( 0. )
@@ -104,8 +103,7 @@ namespace boost
 template< typename Archive >
 void PHY_RolePion_NBC::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
-         & pPion_
+    file & pPion_
          & nbcAgentTypesContaminating_
          & bNbcProtectionSuitWorn_
          & rContaminationState_;
@@ -120,7 +118,7 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
     if( bNbcProtectionSuitWorn_ )
         return;
 
-    GetRole< PHY_RolePion_Composantes >().ApplyPoisonous( contamination );
+    pPion_->GetRole< PHY_RolePion_Composantes >().ApplyPoisonous( contamination );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,9 +130,9 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
 	if( contamination.GetQuantity() < 1e-15 ) // TODO
 		return;
     
-    GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( contamination );
+    pPion_->GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( contamination );
     if( ! bNbcProtectionSuitWorn_ )
-        GetRole< PHY_RolePion_Composantes >().ApplyContamination( contamination );
+        pPion_->GetRole< PHY_RolePion_Composantes >().ApplyContamination( contamination );
 
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     

@@ -27,7 +27,7 @@ class PHY_RolePion_NBC : public PHY_RoleInterface_NBC
 {
 
 public:
-             PHY_RolePion_NBC( MT_RoleContainer& role, MIL_AgentPion& pion );
+             PHY_RolePion_NBC( MIL_AgentPion& pion );
              PHY_RolePion_NBC();
     virtual ~PHY_RolePion_NBC();
 

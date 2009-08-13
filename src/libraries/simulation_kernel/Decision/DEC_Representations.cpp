@@ -16,8 +16,7 @@
 // Name: DEC_Representations constructor
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-DEC_Representations::DEC_Representations( MT_RoleContainer& roleContainer )
-: MT_Role_ABC( roleContainer )
+DEC_Representations::DEC_Representations()
 {
     // NOTHING
 }

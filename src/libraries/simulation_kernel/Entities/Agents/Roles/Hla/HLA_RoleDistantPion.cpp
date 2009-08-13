@@ -20,9 +20,9 @@ using namespace hla;
 // Name: HLA_RoleDistantPion constructor
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------
-HLA_RoleDistantPion::HLA_RoleDistantPion( MT_RoleContainer& roleContainer, MIL_AgentHLA& pion, const ObjectIdentifier& objectId )
-    : HLA_RoleInterface( roleContainer )
-    , pion_( pion )
+HLA_RoleDistantPion::HLA_RoleDistantPion( MIL_AgentHLA& pion, const ObjectIdentifier& objectId )
+    : HLA_RoleInterface( pion)
+    , pion_ ( pion )
     , objectId_( objectId )
 {
     //NOTHING
@@ -53,9 +53,9 @@ void HLA_RoleDistantPion::Serialize( UpdateFunctor_ABC&, bool ) const
 void HLA_RoleDistantPion::Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer )
 {
     pion_.Deserialize( attributeID, deserializer );
-    GetRole< PHY_RoleHLA_Location    >().Deserialize( attributeID, deserializer );
-    GetRole< PHY_RoleHLA_Composantes >().Deserialize( attributeID, deserializer );
-    GetRole< PHY_RoleHLA_Posture     >().Deserialize( attributeID, deserializer );
+    pion_.GetRole< PHY_RoleHLA_Location    >().Deserialize( attributeID, deserializer );
+    pion_.GetRole< PHY_RoleHLA_Composantes >().Deserialize( attributeID, deserializer );
+    pion_.GetRole< PHY_RoleHLA_Posture     >().Deserialize( attributeID, deserializer );
 }
 
 // -----------------------------------------------------------------------------

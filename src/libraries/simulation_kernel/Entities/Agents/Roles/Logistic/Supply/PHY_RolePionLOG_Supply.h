@@ -32,7 +32,7 @@ class PHY_RolePionLOG_Supply : public PHY_RolePion_Supply
 {
 
 public:
-             PHY_RolePionLOG_Supply( MT_RoleContainer& role, MIL_AgentPionLOG_ABC& pion );
+             PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion );
              PHY_RolePionLOG_Supply();
     virtual ~PHY_RolePionLOG_Supply();
 

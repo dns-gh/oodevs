@@ -17,20 +17,9 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Supply, "PHY_RolePion_Supply" )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Supply constructor
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-PHY_RolePion_Supply::PHY_RolePion_Supply( MT_RoleContainer& role )
-    : PHY_RoleInterface_Supply( role )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Supply constructor
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Supply::PHY_RolePion_Supply()
-    : PHY_RoleInterface_Supply()
 {
     // NOTHING
 }
@@ -48,7 +37,7 @@ PHY_RolePion_Supply::~PHY_RolePion_Supply()
 // Name: PHY_RolePion_Supply::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Supply::WriteODB( xml::xostream& xos ) const
+void PHY_RolePion_Supply::WriteODB( xml::xostream& /*xos*/ ) const
 {
     // NOTHING
 }
@@ -129,7 +118,7 @@ void PHY_RolePion_Supply::RemoveStockReservation( const PHY_DotationCategory& /*
 // Name: PHY_RolePion_Supply::ReadOverloading
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Supply::ReadOverloading( xml::xistream& xis )
+void PHY_RolePion_Supply::ReadOverloading( xml::xistream& /*xis*/ )
 {
     // NOTHING
 }

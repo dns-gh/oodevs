@@ -298,7 +298,7 @@ bool DEC_AutomateFunctions::CanPionRelievePion( const MIL_Automate& callerAutoma
 boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePointBeforeLimaForPion( int phaseLine, float distanceBefore, const DEC_Decision_ABC* pion )
 {
     assert( pion );
-    return DEC_GeometryFunctions::ComputePointBeforeLima< MIL_AgentPion >( pion->GetPion(), distanceBefore, phaseLine );
+    return DEC_GeometryFunctions::ComputePointBeforeLima< MIL_AgentPion >( pion->GetPion(), phaseLine, distanceBefore );
 }
 
 // -----------------------------------------------------------------------------

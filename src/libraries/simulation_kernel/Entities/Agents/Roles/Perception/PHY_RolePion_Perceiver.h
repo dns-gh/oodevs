@@ -67,7 +67,7 @@ public:
     //@}
 
 public:
-             PHY_RolePion_Perceiver( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit PHY_RolePion_Perceiver( MIL_AgentPion& pion );
              PHY_RolePion_Perceiver();
     virtual ~PHY_RolePion_Perceiver();
 

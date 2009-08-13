@@ -12,15 +12,16 @@
 #ifndef __PHY_RoleAction_Loading_h_
 #define __PHY_RoleAction_Loading_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 
+class MIL_Agent_ABC;
 class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RoleAction_Loading
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_Loading : public MT_Role_ABC
+class PHY_RoleAction_Loading : public tools::Role_ABC
                              , private boost::noncopyable
 {
 
@@ -31,7 +32,7 @@ public:
     //@}
 
 public:
-    explicit PHY_RoleAction_Loading( MT_RoleContainer& role );
+    explicit PHY_RoleAction_Loading( MIL_Agent_ABC& pion );
              PHY_RoleAction_Loading();
     virtual ~PHY_RoleAction_Loading();
 
@@ -108,6 +109,7 @@ private:
 private:
     //! @name Member data
     //@{
+    MIL_Agent_ABC* pPion_;
     E_State nState_;
     bool    bIsLoaded_;
     uint    nEndTimeStep_; // Load or unload

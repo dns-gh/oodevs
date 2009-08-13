@@ -195,7 +195,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_InterfaceFlying* pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RoleAction_FolkInfluence  * pRole; file >> pRole; RegisterRole( pRole ); }
-    RegisterRole( new DEC_Representations( *this ) );
+    RegisterRole( new DEC_Representations() );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,6 +277,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     assert( pKnowledgeBlackBoard_ );
 
     RegisterRole< NET_RolePion_Dotations         >( *this );
+
     RegisterRole< PHY_RolePion_Reinforcement     >( *this );
     RegisterRole< PHY_RolePion_Posture           >( *this );
     RegisterRole< PHY_RolePion_Location          >( *this );
@@ -286,6 +287,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     RegisterRole< PHY_RolePion_Perceiver         >( *this );
     RegisterRole< PHY_RolePion_NBC               >( *this );
     RegisterRole< PHY_RolePion_Communications    >( *this );
+
     RegisterRole< PHY_RolePion_HumanFactors      >();
     RegisterRole< PHY_RolePion_Transported       >( *this );
     RegisterRole< PHY_RolePion_Maintenance       >();
@@ -308,6 +310,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
         RegisterRole< PHY_RoleAction_Flying >( *this );
     else
         RegisterRole< PHY_RoleAction_InterfaceFlying >();
+
 
     pAutomate_->RegisterPion( *this );
 
@@ -710,7 +713,7 @@ void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChan
     {
         const PHY_Experience* pExperience = PHY_Experience::Find( asn.experience );
         if( !pExperience )
-            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );;
+            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     }
 
@@ -718,7 +721,7 @@ void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChan
     {
         const PHY_Morale* pMoral = PHY_Morale::Find( asn.moral );
         if( !pMoral )
-            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );;
+            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
 
@@ -726,7 +729,7 @@ void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChan
     {
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( asn.fatigue );
         if( !pTiredness )
-            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );;
+            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
     }
 }

@@ -18,9 +18,8 @@
 // Name: PHY_RoleHLA_Refugee constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Refugee::PHY_RoleHLA_Refugee( MT_RoleContainer& role )
-    : PHY_RoleInterface_Refugee( role )
-    , bManaged_                ( false )
+PHY_RoleHLA_Refugee::PHY_RoleHLA_Refugee()
+    : bManaged_                ( false )
 {
     // NOTHING
 }

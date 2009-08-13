@@ -15,20 +15,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Communications constructor
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Communications::PHY_RoleInterface_Communications( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Communications constructor
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Communications::PHY_RoleInterface_Communications()
-    : MT_Role_ABC()
 {
     // NOTHING
 }

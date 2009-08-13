@@ -11,6 +11,7 @@
 #define __PHY_RoleHLA_Dotations_h_
 
 #include "PHY_RoleInterface_Dotations.h"
+class MIL_Entity_ABC;
 
 // =============================================================================
 /** @class  PHY_RoleHLA_Dotations
@@ -24,7 +25,7 @@ class PHY_RoleHLA_Dotations : public PHY_RoleInterface_Dotations
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleHLA_Dotations( MT_RoleContainer& roleContainer );
+             PHY_RoleHLA_Dotations( MIL_Entity_ABC& entity );
     virtual ~PHY_RoleHLA_Dotations();
     //@}
 
@@ -32,6 +33,12 @@ public:
     //@{
     virtual const PHY_ConsumptionType& GetConsumptionMode() const;
     virtual       bool                 HasDotation       ( const PHY_DotationCategory& category ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    MIL_Entity_ABC& entity_;
     //@}
 };
 

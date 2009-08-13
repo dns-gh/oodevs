@@ -11,13 +11,14 @@
 #include "PHY_RoleHLA_Dotations.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/MIL_Entity_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Dotations constructor
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Dotations::PHY_RoleHLA_Dotations( MT_RoleContainer& roleContainer )
-    : PHY_RoleInterface_Dotations( roleContainer )
+PHY_RoleHLA_Dotations::PHY_RoleHLA_Dotations( MIL_Entity_ABC& entity )
+: entity_( entity )
 {
     //NOTHING
 }
@@ -37,7 +38,7 @@ PHY_RoleHLA_Dotations::~PHY_RoleHLA_Dotations()
 // -----------------------------------------------------------------------------
 const PHY_ConsumptionType& PHY_RoleHLA_Dotations::GetConsumptionMode() const
 {
-    return GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetConsumptionMode();
+    return entity_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetConsumptionMode();
 }
 
 // -----------------------------------------------------------------------------

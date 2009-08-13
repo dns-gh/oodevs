@@ -12,7 +12,7 @@
 #ifndef __PHY_RoleInterface_Location_h_
 #define __PHY_RoleInterface_Location_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 
 class MIL_Agent_ABC;
@@ -25,7 +25,7 @@ class MIL_PopulationConcentration;
 // @class  PHY_RoleInterface_Location
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleInterface_Location : public MT_Role_ABC
+class PHY_RoleInterface_Location : public tools::Role_ABC
                                  , public TER_Agent_ABC
                                  , private boost::noncopyable
 {
@@ -34,15 +34,9 @@ public:
     typedef PHY_RoleInterface_Location RoleInterface;
 
 public:
-    explicit PHY_RoleInterface_Location( MT_RoleContainer& role );
              PHY_RoleInterface_Location();
     virtual ~PHY_RoleInterface_Location();
 
-    //! @name CheckPoints
-    //@{
-    template< typename Archive > void serialize( Archive&, const uint );
-    //@}
-    
     //! @name Operations
     //@{
     virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population ) = 0;
@@ -66,15 +60,5 @@ public:
     virtual bool               HasDoneMagicMove() const = 0;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Location::serialize
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_RoleInterface_Location::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
-}
 
 #endif // __PHY_RoleInterface_Location_h_

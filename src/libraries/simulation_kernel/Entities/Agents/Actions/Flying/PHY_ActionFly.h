@@ -14,7 +14,7 @@
 
 #include "Entities/Actions/PHY_Action_ABC.h"
 
-class MIL_AgentPion;
+class MIL_Entity_ABC;
 class PHY_RoleAction_InterfaceFlying;
 
 // =============================================================================
@@ -25,10 +25,10 @@ class PHY_ActionFly : public PHY_Action_ABC
 {
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_Entity_ABC ActorType;        
 
 public:
-    explicit PHY_ActionFly( MIL_AgentPion& pion );
+    explicit PHY_ActionFly( MIL_Entity_ABC& entity );
     virtual ~PHY_ActionFly();
 
     //! @name Operations

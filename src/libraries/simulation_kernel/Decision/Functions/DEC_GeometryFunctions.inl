@@ -340,5 +340,5 @@ float DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( const T& cal
         nSchedule = pNextLima->GetSchedule();
     }
     
-    return ComputeDelayFromSchedule( pFuseau, automates, rDistanceFromScheduled, nSchedule );
+    return ComputeDelayFromSchedule( pFuseau, automates, ( float ) rDistanceFromScheduled, nSchedule );
 }

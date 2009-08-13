@@ -12,7 +12,7 @@
 #ifndef __PHY_RoleAction_Moving_h_
 #define __PHY_RoleAction_Moving_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 
 class PHY_RolePion_Location;
@@ -24,7 +24,7 @@ class MIL_Object_ABC;
 // @class  PHY_RoleAction_Moving
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_Moving : public MT_Role_ABC
+class PHY_RoleAction_Moving : public tools::Role_ABC
                             , public PHY_MovingEntity_ABC
                             , private boost::noncopyable
 {
@@ -36,7 +36,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_Moving( MT_RoleContainer& role, MIL_AgentPion& pion );
+             PHY_RoleAction_Moving( MIL_AgentPion& pion );
              PHY_RoleAction_Moving();
     virtual ~PHY_RoleAction_Moving();
 

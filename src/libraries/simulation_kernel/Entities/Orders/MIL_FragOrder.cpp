@@ -35,7 +35,7 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, const MIL_FragOrder& rhs )
     : type_           ( type )
     , representations_( engine )
     , parameters_     ( rhs.parameters_ )

@@ -15,7 +15,7 @@
 #include "PHY_RoleInterface_Population.h"
 
 class NET_ASN_MsgUnitAttributes;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // @class  PHY_RolePion_Population
@@ -25,7 +25,7 @@ class PHY_RolePion_Population : public PHY_RoleInterface_Population
 {
 
 public:
-             PHY_RolePion_Population( MT_RoleContainer& role, MIL_AgentPion& pion );
+             PHY_RolePion_Population( MIL_Agent_ABC& pion );
              PHY_RolePion_Population();
     virtual ~PHY_RolePion_Population();
 
@@ -58,7 +58,7 @@ public:
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
+    MIL_Agent_ABC* pPion_;
     bool           bHasChanged_;
 };
 

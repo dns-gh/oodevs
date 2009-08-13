@@ -33,7 +33,6 @@ class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
 {
 
 public:
-             PHY_RolePion_HumanFactors( MT_RoleContainer& role );
              PHY_RolePion_HumanFactors();
     virtual ~PHY_RolePion_HumanFactors();
 

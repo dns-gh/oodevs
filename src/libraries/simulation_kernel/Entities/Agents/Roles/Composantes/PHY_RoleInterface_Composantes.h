@@ -12,7 +12,7 @@
 #ifndef __PHY_RoleInterface_Composantes_h_
 #define __PHY_RoleInterface_Composantes_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 
 class PHY_Composante_ABC;
@@ -28,7 +28,7 @@ class MIL_PopulationAttitude;
 // @class  PHY_RoleInterface_Composantes
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleInterface_Composantes : public MT_Role_ABC
+class PHY_RoleInterface_Composantes : public tools::Role_ABC
                                     , private boost::noncopyable
 {
 
@@ -43,15 +43,9 @@ public:
     //@}
 
 public:
-    explicit PHY_RoleInterface_Composantes( MT_RoleContainer& role );
              PHY_RoleInterface_Composantes();
     virtual ~PHY_RoleInterface_Composantes();
 
-    //! @name Checkpoints
-    //@{
-    template< typename Archive > void serialize( Archive&, const uint );
-    //@}
-    
     //! @name Operations
     //@{
     virtual const PHY_Volume*          GetSignificantVolume       ( const PHY_SensorTypeAgent& sensorType ) const = 0;
@@ -73,15 +67,5 @@ public:
     virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Composantes::serialize
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_RoleInterface_Composantes::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
-}
 
 #endif // __PHY_RoleInterface_Composantes_h_

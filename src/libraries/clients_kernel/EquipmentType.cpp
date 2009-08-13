@@ -24,7 +24,7 @@ EquipmentType::EquipmentType( xml::xistream& xis, const Resolver_ABC< WeaponSyst
         >> xml::attribute( "id", id_ )
         >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &EquipmentType::ReadWeaponSystem, weapons )
-        >> xml::end();;
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

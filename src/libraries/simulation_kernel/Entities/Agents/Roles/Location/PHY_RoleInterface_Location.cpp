@@ -14,22 +14,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Location constructor
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Location::PHY_RoleInterface_Location( MT_RoleContainer& role )
-    : MT_Role_ABC  ( role )
-    , TER_Agent_ABC()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Location constructor
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Location::PHY_RoleInterface_Location()
-    : MT_Role_ABC  ()
-    , TER_Agent_ABC()
 {
     // NOTHING
 }

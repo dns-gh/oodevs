@@ -14,20 +14,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Dotations constructor
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Dotations::PHY_RoleInterface_Dotations( MT_RoleContainer& roleContainer )
-    : MT_Role_ABC( roleContainer )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Dotations constructor
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Dotations::PHY_RoleInterface_Dotations()
-    : MT_Role_ABC()
 {
     // NOTHING
 }

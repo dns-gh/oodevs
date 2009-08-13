@@ -296,7 +296,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
         DEC_AutomateDecision* pRole;
         file >> pRole;
         RegisterRole( pRole );
-        RegisterRole( new DEC_Representations( *this ) );
+        RegisterRole( new DEC_Representations() );
     }
 }
 
@@ -347,8 +347,8 @@ void MIL_Automate::Initialize( xml::xistream& xis )
         xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
       
-    RegisterRole( new DEC_AutomateDecision( *this, *this ) ) ;  //$$$ BULLSHIT : strName_ must be initialized ...
-    RegisterRole( new DEC_Representations( *this ) );
+    RegisterRole( new DEC_AutomateDecision( *this ) ) ;
+    RegisterRole( new DEC_Representations() );
     
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
         >> xml::list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate );
@@ -466,7 +466,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
 // Name: MIL_Automate::ReadOverloading
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void MIL_Automate::ReadOverloading( xml::xistream& xis )
+void MIL_Automate::ReadOverloading( xml::xistream& /*refMission*/ )
 {
     // NOTHING
 }
@@ -529,7 +529,7 @@ void MIL_Automate::UpdateDecision( float duration )
     {
         orderManager_.Update();
     }
-    catch( std::runtime_error& e )
+    catch( std::runtime_error& /*e*/ )
     {
         orderManager_.ReplaceMission();
         MT_LOG_ERROR_MSG( "Entity " << GetID() << "('" << GetName() << "') : Mission impossible" );

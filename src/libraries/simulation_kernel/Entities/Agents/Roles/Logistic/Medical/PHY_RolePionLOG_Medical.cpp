@@ -36,9 +36,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Medical, "PHY_RolePionLOG_Medical" )
 // Name: PHY_RolePionLOG_Medical constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MT_RoleContainer& role, MIL_AgentPionLOG_ABC& pion )
-    : PHY_RolePion_Medical    ( role )
-    , pPion_                  ( &pion )
+PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
+    : pPion_                  ( &pion )
     , bHasChanged_            ( true )
     , bSystemEnabled_         ( false )
     , bSortingFunctionEnabled_( false )
@@ -243,8 +242,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< PHY_RolePion_Medical >( *this )
-         >> pPion_
+    file >> pPion_
          >> bSystemEnabled_
          >> bSortingFunctionEnabled_
          >> bHealingFunctionEnabled_
@@ -275,8 +273,7 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< PHY_RolePion_Medical >( *this )
-         << pPion_
+    file << pPion_
          << bSystemEnabled_
          << bSortingFunctionEnabled_
          << bHealingFunctionEnabled_
@@ -328,8 +325,9 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
             return &ambulance;
     }
 
+    assert( pPion_ );
     PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanEvacuateCasualty, consign.GetHumanState().GetHuman() );
-    PHY_ComposantePion* pCompAmbulance = GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    PHY_ComposantePion* pCompAmbulance = pPion_->GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
     if( !pCompAmbulance )
         return 0;
 
@@ -353,8 +351,9 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
             return &ambulance;
     }
 
+    assert( pPion_ );
     PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
-    PHY_ComposantePion* pCompAmbulance = GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    PHY_ComposantePion* pCompAmbulance = pPion_->GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
     if( !pCompAmbulance )
         return 0;
 
@@ -371,8 +370,9 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing() const
 {
+    assert( pPion_ );
     PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanDiagnoseHumans );
-    return GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    return pPion_->GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -381,8 +381,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing() c
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForSorting() const
 {
+    assert( pPion_ );
     PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanSortHumans );
-    return GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    return pPion_->GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -391,8 +392,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForSorting() cons
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const PHY_Human& human ) const
 {
+    assert( pPion_ );
     PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanHealHuman, human );
-    return GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    return pPion_->GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -401,8 +403,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const PHY_Human& human ) const
 {
+    assert( pPion_ );
     PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
-    return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    return pPion_->GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,8 +414,9 @@ bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const PHY_Human& hum
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const PHY_Human& human ) const
 {
+    assert( pPion_ );
     PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanCollectCasualty, human );
-    return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    return pPion_->GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -421,8 +425,9 @@ bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const PHY_Human& hum
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::HasUsableDoctorForSorting() const
 {
+    assert( pPion_ );
     PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanSortHumans );        
-    return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    return pPion_->GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -434,8 +439,9 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const PHY_Human& human,
     if( !bBypassPriorities && human.IsWounded() && std::find( priorities_.begin(), priorities_.end(), &human.GetWound() ) == priorities_.end() )
         return false;
 
+    assert( pPion_ );
     PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );        
-    return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    return pPion_->GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -585,9 +591,10 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const PHY_Human&
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return std::numeric_limits< int >::min();
 
+    assert( pPion_ );
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanEvacuateCasualty, &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    pPion_->GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
 
     uint nNbrAvailableAllowedToWork = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -619,9 +626,10 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
     if( !bSystemEnabled_ || !HasUsableCollectionAmbulance( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
 
+    assert( pPion_ );
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, &PHY_ComposanteTypePion::CanCollectCasualty, humanState.GetHuman() );
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );   
+    pPion_->GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );   
 
     uint nNbrAvailableAllowedToWork = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -652,8 +660,9 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCo
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
 
+    assert( pPion_ );
     PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanSortHumans, &PHY_ComposanteTypePion::CanSortHumans );
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    pPion_->GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
 
     uint nNbrDoctorsAvailable = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -689,9 +698,10 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
     if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
 
+    assert( pPion_ );
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanHealHuman, &PHY_ComposanteTypePion::CanHealHuman, humanState.GetHuman() );
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    pPion_->GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
 
     uint nNbrAllowedToWork = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -772,8 +782,9 @@ void PHY_RolePionLOG_Medical::Clean()
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const
 {
+    assert( pPion_ );
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    pPion_->GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
 
     uint nNbrTotal                  = 0;
     uint nNbrAvailableAllowedToWork = 0;
@@ -895,17 +906,17 @@ void PHY_RolePionLOG_Medical::SendFullState() const
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate1 );
+    pPion_->GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate1 );
     SendComposanteUse( composanteUse, asn().disponibilites_ambulances_releve );
 
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanCollectCasualties, &PHY_ComposanteTypePion::CanCollectCasualties );
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate2 );
+    pPion_->GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate2 );
     SendComposanteUse( composanteUse, asn().disponibilites_ambulances_ramassage );
 
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate3( &PHY_ComposantePion::CanDiagnoseHumans, &PHY_ComposanteTypePion::CanDiagnoseHumans );
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate3 );
+    pPion_->GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate3 );
     SendComposanteUse( composanteUse, asn().disponibilites_medecins );
 
     asn.Send();
@@ -928,7 +939,8 @@ void PHY_RolePionLOG_Medical::SendFullState() const
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::SendChangedState() const
 {
-    if( bHasChanged_ || GetRole< PHY_RolePion_Composantes >().HasChanged() )
+    assert( pPion_ );
+    if( bHasChanged_ || pPion_->GetRole< PHY_RolePion_Composantes >().HasChanged() )
         SendFullState();
 }
 

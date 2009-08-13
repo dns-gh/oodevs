@@ -16,9 +16,8 @@
 // Name: PHY_RoleHLA_Perceiver constructor
 // Created: NLD 2005-02-23
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Perceiver::PHY_RoleHLA_Perceiver( MT_RoleContainer& role )
-    : PHY_RoleInterface_Perceiver( role )
-    , bIsUsingActiveRadar_       ( false )
+PHY_RoleHLA_Perceiver::PHY_RoleHLA_Perceiver()
+    : bIsUsingActiveRadar_       ( false )
 {
     // NOTHING
 }

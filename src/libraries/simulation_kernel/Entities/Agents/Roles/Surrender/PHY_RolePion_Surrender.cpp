@@ -26,9 +26,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
 // Name: PHY_RolePion_Surrender constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Surrender::PHY_RolePion_Surrender( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Surrender( role )
-    , pPion_                     ( &pion )
+PHY_RolePion_Surrender::PHY_RolePion_Surrender( MIL_AgentPion& pion )
+    : pPion_                     ( &pion )
     , bPrisoner_                 ( false )
     , pPrison_                   ( 0 )
     , bHasChanged_               ( true )
@@ -41,8 +40,7 @@ PHY_RolePion_Surrender::PHY_RolePion_Surrender( MT_RoleContainer& role, MIL_Agen
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RolePion_Surrender::PHY_RolePion_Surrender()
-    : PHY_RoleInterface_Surrender()
-    , pPion_                     ()
+    : pPion_                     ()
     , bPrisoner_                 ( false )
     , pPrison_                   ( 0 )
     , bHasChanged_               ( true )
@@ -70,8 +68,7 @@ PHY_RolePion_Surrender::~PHY_RolePion_Surrender()
 template< typename Archive >
 void PHY_RolePion_Surrender::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this )
-         & pPion_
+    file & pPion_
          & bPrisoner_
          & const_cast< MIL_Object_ABC*& >( pPrison_ );
 }
@@ -126,8 +123,8 @@ bool PHY_RolePion_Surrender::Capture( const MIL_AgentPion& pionTakingPrisoner )
     pPrison_     = 0;
     bPrisoner_   = true;
     bHasChanged_ = true;
-    GetRole< PHY_RolePion_Dotations   >().NotifyCaptured();
-    GetRole< PHY_RolePion_Composantes >().NotifyCaptured();
+    pPion_->GetRole< PHY_RolePion_Dotations   >().NotifyCaptured();
+    pPion_->GetRole< PHY_RolePion_Composantes >().NotifyCaptured();
     return pPion_->GetAutomate().NotifyCaptured( pionTakingPrisoner );
 }
 
@@ -143,8 +140,8 @@ bool PHY_RolePion_Surrender::Release()
     pPrison_     = 0;
     bPrisoner_   = false;
     bHasChanged_ = true;
-    GetRole< PHY_RolePion_Dotations   >().NotifyReleased();
-    GetRole< PHY_RolePion_Composantes >().NotifyReleased();
+    pPion_->GetRole< PHY_RolePion_Dotations   >().NotifyReleased();
+    pPion_->GetRole< PHY_RolePion_Composantes >().NotifyReleased();
     return pPion_->GetAutomate().NotifyReleased();
 }
     

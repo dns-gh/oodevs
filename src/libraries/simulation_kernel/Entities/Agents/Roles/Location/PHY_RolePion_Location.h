@@ -28,7 +28,7 @@ class PHY_RolePion_Location : public PHY_RoleInterface_Location
 {
 
 public:
-             PHY_RolePion_Location( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit PHY_RolePion_Location( MIL_AgentPion& pion );
              PHY_RolePion_Location();
     virtual ~PHY_RolePion_Location();
 

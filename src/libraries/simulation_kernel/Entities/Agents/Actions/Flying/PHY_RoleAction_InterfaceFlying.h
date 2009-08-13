@@ -12,13 +12,13 @@
 #ifndef __PHY_RoleAction_InterfaceFlying_h_
 #define __PHY_RoleAction_InterfaceFlying_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 
 // =============================================================================
 // @class  PHY_RoleAction_InterfaceFlying
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_InterfaceFlying : public MT_Role_ABC
+class PHY_RoleAction_InterfaceFlying : public tools::Role_ABC
                                      , private boost::noncopyable
 {
 
@@ -30,12 +30,11 @@ public:
 
 public:
              PHY_RoleAction_InterfaceFlying();
-    explicit PHY_RoleAction_InterfaceFlying( MT_RoleContainer& role );
     virtual ~PHY_RoleAction_InterfaceFlying();
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const uint );    //@@TODO: this class is actually seen as concrete -> clean MIL_AgentPion.cpp...
     //@}
 
     //! @name Operations
@@ -58,14 +57,5 @@ public:
     //@}
 };
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_InterfaceFlying::serialize
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-template< typename Archive > 
-void PHY_RoleAction_InterfaceFlying::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MT_Role_ABC >( *this );
-}
 
 #endif // __PHY_RoleAction_InterfaceFlying_h_

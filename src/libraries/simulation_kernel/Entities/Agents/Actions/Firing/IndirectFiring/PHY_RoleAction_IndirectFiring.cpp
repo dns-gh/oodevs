@@ -28,9 +28,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_IndirectFiring, "PHY_RoleAction_Indirect
 // Name: PHY_RoleAction_IndirectFiring constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : MT_Role_ABC( role )
-    , pPion_     ( &pion )
+PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MIL_AgentPion& pion )
+    : pPion_     ( &pion )
 {
     // NOTHING
 }
@@ -40,8 +39,7 @@ PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MT_RoleContainer& 
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring()
-    : MT_Role_ABC()
-    , pPion_     ( 0 )
+    : pPion_     ( 0 )
 {
     // NOTHING
 }
@@ -62,8 +60,7 @@ PHY_RoleAction_IndirectFiring::~PHY_RoleAction_IndirectFiring()
 template< typename Archive > 
 void PHY_RoleAction_IndirectFiring::serialize( Archive& archive , const uint )
 {
-    archive & boost::serialization::base_object< MT_Role_ABC >( *this )
-            & pPion_;
+    archive & pPion_;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +82,7 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
     assert( pPion_ );
     
     PHY_IndirectFireData firerWeapons( *pPion_, *pEffect );
-    GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
+    pPion_->GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
     if( !firerWeapons.HasWeaponsReady() )
     {
         if( firerWeapons.HasWeaponsNotReady() )
@@ -135,7 +132,7 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
     assert( pPion_ );
     
     PHY_SmokeData smokeData( *pPion_, PHY_IndirectFireDotationClass::fumigene_, nNbrAmmo );
-    GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( smokeData );
+    pPion_->GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( smokeData );
     
     PHY_Weapon* pWeapon = smokeData.GetWeapon();
     if( !pWeapon )
@@ -157,8 +154,8 @@ const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirec
     const MT_Float rRange = pPion_->GetRole< PHY_RolePion_Location >().GetPosition().Distance( vTargetPosition );
     
     PHY_MunitionForIndirectFireData fireData( *pPion_, indirectWeaponCategory, rRange );
-    GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( fireData );
-
+    pPion_->GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( fireData );
+    
     return fireData.GetChoosenMunition();
 }
 

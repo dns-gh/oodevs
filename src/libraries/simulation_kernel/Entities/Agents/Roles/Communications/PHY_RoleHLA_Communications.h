@@ -24,7 +24,7 @@ class PHY_RoleHLA_Communications : public PHY_RoleInterface_Communications
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_RoleHLA_Communications( MT_RoleContainer& roleContainer );
+             PHY_RoleHLA_Communications();
     virtual ~PHY_RoleHLA_Communications();
     //@}
 

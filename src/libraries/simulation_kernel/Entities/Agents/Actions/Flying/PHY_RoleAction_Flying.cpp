@@ -13,7 +13,7 @@
 #include "PHY_RoleAction_Flying.h"
 #include "MIL_AgentServer.h"
 #include "PHY_ActionFly.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
@@ -26,9 +26,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Flying, "PHY_RoleAction_Flying" )
 // Name: PHY_RoleAction_Flying constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Flying::PHY_RoleAction_Flying( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleAction_InterfaceFlying( role )
-    , pPion_                        ( &pion )
+PHY_RoleAction_Flying::PHY_RoleAction_Flying( MIL_Entity_ABC& entity_ )
+    : pEntity_                        ( &entity_ )
     , effectFly_                    ( *this )
     , pActionFly_                   ( 0 )
     , bForceLanding_                ( false )
@@ -42,7 +41,7 @@ PHY_RoleAction_Flying::PHY_RoleAction_Flying( MT_RoleContainer& role, MIL_AgentP
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Flying::PHY_RoleAction_Flying()
     : PHY_RoleAction_InterfaceFlying()
-    , pPion_                        ()
+    , pEntity_                        ()
     , effectFly_                    ( *this )
     , pActionFly_                   ( 0 )
     , bForceLanding_                ( false )
@@ -66,8 +65,7 @@ PHY_RoleAction_Flying::~PHY_RoleAction_Flying()
 template< typename Archive > 
 void PHY_RoleAction_Flying::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleAction_InterfaceFlying >( *this )
-         & pPion_;
+    file & pEntity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,8 +77,8 @@ bool PHY_RoleAction_Flying::TakeOff()
     if( pActionFly_ )
         return false;
 
-    assert( pPion_ );
-    pActionFly_ = new PHY_ActionFly( *pPion_ );
+    assert( pEntity_ );
+    pActionFly_ = new PHY_ActionFly( *pEntity_ );
     return true;
 }
 
@@ -93,7 +91,8 @@ bool PHY_RoleAction_Flying::Land()
     if( !pActionFly_ ) 
         return false;
 
-    GetRole< PHY_RolePion_Location >().Fly( 0. );
+    assert( pEntity_ );
+    pEntity_->GetRole< PHY_RolePion_Location >().Fly( 0. );
     delete pActionFly_;
     pActionFly_ = 0;
     return true;
@@ -120,7 +119,8 @@ void PHY_RoleAction_Flying::SetFlyingHeight( MT_Float rHeight )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Flying::Fly()
 {
-    bForceLanding_ = !GetRole< PHY_RolePion_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ );
+    assert( pEntity_ );
+    bForceLanding_ = !pEntity_->GetRole< PHY_RolePion_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ );
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( effectFly_ );
 }
 
@@ -137,7 +137,7 @@ void PHY_RoleAction_Flying::Apply( MT_Float rHeight )
         bForceLanding_ = false;
     }
     else
-        GetRole< PHY_RolePion_Location  >().Fly( rHeight );
+        pEntity_->GetRole< PHY_RolePion_Location  >().Fly( rHeight );
 }
 
 // -----------------------------------------------------------------------------

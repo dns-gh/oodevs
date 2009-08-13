@@ -105,7 +105,7 @@ float DEC_FireFunctions::GetMaxRangeToIndirectFire( const MIL_AgentPion& callerA
 {
     float rRange ( -1.f );
     if( pDotationCategory )
-        rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, true );
+        rRange = ( float ) callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, true );
       if( rRange >= 0 )
           rRange = MIL_Tools::ConvertSimToMeter( rRange );
     return rRange;

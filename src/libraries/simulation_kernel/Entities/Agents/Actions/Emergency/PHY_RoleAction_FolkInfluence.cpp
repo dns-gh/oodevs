@@ -19,17 +19,6 @@
 // Name: PHY_RoleAction_FolkInfluence constructor
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
-PHY_RoleAction_FolkInfluence::PHY_RoleAction_FolkInfluence( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-    , pManager_  ( MIL_AgentServer::GetWorkspace().GetFolkManager().GetObjectManager() )
-{
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_FolkInfluence constructor
-// Created: JCR 2007-09-12
-// -----------------------------------------------------------------------------
 PHY_RoleAction_FolkInfluence::PHY_RoleAction_FolkInfluence()
     : pManager_  ( MIL_AgentServer::GetWorkspace().GetFolkManager().GetObjectManager() )
 {

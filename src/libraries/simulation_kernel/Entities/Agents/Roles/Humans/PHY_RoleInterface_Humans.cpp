@@ -12,24 +12,11 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleInterface_Humans.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleInterface_Humans, "PHY_RoleInterface_Humans" )
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Humans constructor
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-PHY_RoleInterface_Humans::PHY_RoleInterface_Humans( MT_RoleContainer& role )
-    : MT_Role_ABC( role )
-{
-    // NOTHING
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Humans constructor
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Humans::PHY_RoleInterface_Humans()
-    : MT_Role_ABC()
 {
     // NOTHING
 }

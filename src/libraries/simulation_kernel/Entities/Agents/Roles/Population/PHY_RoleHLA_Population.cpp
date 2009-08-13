@@ -14,9 +14,8 @@
 // Name: PHY_RoleHLA_Population constructor
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Population::PHY_RoleHLA_Population( MT_RoleContainer& role )
-    : PHY_RoleInterface_Population( role )
-    , bInvulnerable_              ( false )
+PHY_RoleHLA_Population::PHY_RoleHLA_Population()
+    : bInvulnerable_              ( false )
 {
     //NOTHING
 }

@@ -44,9 +44,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Objects, "PHY_RoleAction_Objects" )
 // Name: PHY_RoleAction_Objects constructor
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects::PHY_RoleAction_Objects( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : MT_Role_ABC( role )
-    , pPion_     ( &pion )
+PHY_RoleAction_Objects::PHY_RoleAction_Objects( MIL_AgentPion& pion )
+    : pPion_     ( &pion )
 {
 }
 
@@ -55,8 +54,7 @@ PHY_RoleAction_Objects::PHY_RoleAction_Objects( MT_RoleContainer& role, MIL_Agen
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Objects::PHY_RoleAction_Objects()
-    : MT_Role_ABC()
-    , pPion_     ( 0 )
+    : pPion_     ( 0 )
 {
 }
 
@@ -79,8 +77,7 @@ PHY_RoleAction_Objects::~PHY_RoleAction_Objects()
 template< typename Archive >
 void PHY_RoleAction_Objects::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< MT_Role_ABC >( *this )
-         & pPion_;
+    file & pPion_;
 }
 
 // =============================================================================

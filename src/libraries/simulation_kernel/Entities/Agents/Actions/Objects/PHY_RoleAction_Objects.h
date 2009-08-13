@@ -12,7 +12,7 @@
 #ifndef __PHY_RoleAction_Objects_h_
 #define __PHY_RoleAction_Objects_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class DEC_Knowledge_Object;
@@ -27,7 +27,7 @@ class PHY_RoleAction_Objects_CapabilityComputer;
 // @class  PHY_RoleAction_Objects
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_Objects : public MT_Role_ABC
+class PHY_RoleAction_Objects : public tools::Role_ABC
                              , private boost::noncopyable
 {
 
@@ -38,7 +38,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_Objects( MT_RoleContainer& role, MIL_AgentPion& pion );
+             PHY_RoleAction_Objects( MIL_AgentPion& pion );
              PHY_RoleAction_Objects();
     virtual ~PHY_RoleAction_Objects();
 

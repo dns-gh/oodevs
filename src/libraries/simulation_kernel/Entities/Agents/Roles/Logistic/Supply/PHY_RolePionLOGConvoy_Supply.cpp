@@ -23,9 +23,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOGConvoy_Supply, "PHY_RolePionLOGConvoy_Su
 // Name: PHY_RolePionLOGConvoy_Supply constructor
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MT_RoleContainer& role, const MIL_AgentPion& pion )
-    : PHY_RolePion_Supply( role )
-    , pPion_             ( &pion )
+PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion )
+    : pPion_             ( &pion )
     , pConvoy_           ( 0 )
 {
     // NOTHING
@@ -59,8 +58,7 @@ PHY_RolePionLOGConvoy_Supply::~PHY_RolePionLOGConvoy_Supply()
 template< typename Archive >
 void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RolePion_Supply >( *this )
-         & const_cast< MIL_AgentPion*& >( pPion_ )
+    file & const_cast< MIL_AgentPion*& >( pPion_ )
          & pConvoy_;
 }
 
@@ -73,7 +71,7 @@ void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
     assert( pPion_ );
     
     if( bIsDead )
-        GetRole< PHY_RolePion_Location >().Follow( pPion_->GetAutomate().GetPionPC() );
+        pPion_->GetRole< PHY_RolePion_Location >().Follow( pPion_->GetAutomate().GetPionPC() );
 }
     
 // -----------------------------------------------------------------------------

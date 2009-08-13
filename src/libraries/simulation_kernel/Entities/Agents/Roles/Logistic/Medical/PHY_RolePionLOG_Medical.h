@@ -36,7 +36,7 @@ class PHY_RolePionLOG_Medical : public PHY_RolePion_Medical
 {
 
 public:
-             PHY_RolePionLOG_Medical( MT_RoleContainer& role, MIL_AgentPionLOG_ABC& pion );
+             PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion );
              PHY_RolePionLOG_Medical();
     virtual ~PHY_RolePionLOG_Medical();
 

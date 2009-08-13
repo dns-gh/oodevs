@@ -21,7 +21,7 @@ class PHY_RoleHLA_Population : public PHY_RoleInterface_Population
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_RoleHLA_Population( MT_RoleContainer& role );
+             PHY_RoleHLA_Population();
     virtual ~PHY_RoleHLA_Population();
     //@}
     

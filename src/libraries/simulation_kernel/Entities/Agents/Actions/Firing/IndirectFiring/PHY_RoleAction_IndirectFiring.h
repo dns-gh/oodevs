@@ -12,7 +12,7 @@
 #ifndef __PHY_RoleAction_IndirectFiring_h_
 #define __PHY_RoleAction_IndirectFiring_h_
 
-#include "MT_Tools/MT_Role_ABC.h"
+#include "MT_Tools/Role_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 
 class PHY_RoleInterface_FireTarget;
@@ -23,7 +23,7 @@ class MIL_Effect_IndirectFire;
 // @class  PHY_RoleAction_IndirectFiring
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_IndirectFiring : public MT_Role_ABC
+class PHY_RoleAction_IndirectFiring : public tools::Role_ABC
                                     , private boost::noncopyable
 {
 
@@ -34,7 +34,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_IndirectFiring( MT_RoleContainer& role, MIL_AgentPion& pion );
+    explicit PHY_RoleAction_IndirectFiring( MIL_AgentPion& pion );
              PHY_RoleAction_IndirectFiring();
     virtual ~PHY_RoleAction_IndirectFiring();
 
