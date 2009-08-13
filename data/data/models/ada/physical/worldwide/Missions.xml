@@ -119,10 +119,18 @@
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_DefendreZoneAPartirPosition" dia-type="T_Mission_Pion_ASA_DefendreZoneAPartirPosition" id="23" name="Air Defense Artillery - defend area (from a position)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the position and deploys. If an enemy is detected in the area to defend, Unit will automatically try to neutralize it.]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="pointDeDeploiement_" name="Deployment point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_Surveiller" dia-type="T_Mission_Pion_ASA_Surveiller" id="24" name="Air Defense Artillery - monitor">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position to monitor and faces the danger direction. It will open fire only to self-protect.]]></usage>
+      </descriptions>
       <parameter dia-name="pointDeDeploiement_" name="Deployment point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_DefendreUnites" dia-type="T_Mission_Pion_ASA_DefendreUnites" id="25" name="Air Defense Artillery - defend units">
@@ -379,21 +387,45 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_OuvrirItineraire" dia-type="T_Mission_Pion_GEN_OuvrirItineraire" id="66" name="Engineer - open a route">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves along the specified route and try to bypass, or else remove any detected obstacle. If Unit cannot remove a obstacle, it will wait for reinforcements.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_RetablirItineraire" dia-type="T_Mission_Pion_GEN_RetablirItineraire" id="67" name="Engineer - restore a route">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves along the specified route and try to remove any detected obstacle. If Unit cannot remove a obstacle, it will wait for reinforcements.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReconnaitreItineraire" dia-type="T_Mission_Pion_GEN_ReconnaitreItineraire" id="68" name="Engineer - recon a route">
+      <descriptions>
+        <doctrine><![CDATA[Engineer reconnaissance focuses on the requirements to clear obstacles or improve routes, fords, bridges, and so forth, to assist in the uninterrupted movement of the main body force.]]></doctrine>
+        <usage><![CDATA[Unit moves along the specified route and tries to detect any present obstacle. If an obstacle is detected, Unit will try to avoid it.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReconnaitreZone" dia-type="T_Mission_Pion_GEN_ReconnaitreZone" id="69" name="Engineer - recon an area">
+      <descriptions>
+        <doctrine><![CDATA[Engineer reconnaissance focuses on the requirements to clear obstacles or improve routes, fords, bridges, and so forth, to assist in the uninterrupted movement of the main body force.]]></doctrine>
+        <usage><![CDATA[Unit moves to the specified area and tries to detect any present obstacle.]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Location"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReconnaitreSiteFranchissement" dia-type="T_Mission_Pion_GEN_ReconnaitreSiteFranchissement" id="70" name="Engineer - recon a crossing site">
+      <descriptions>
+        <doctrine><![CDATA[Engineer reconnaissance focuses on the requirements to clear obstacles or improve routes, fords, bridges, and so forth, to assist in the uninterrupted movement of the main body force.]]></doctrine>
+        <usage><![CDATA[Unit moves to the specified site and tries to reconnoiter it.]]></usage>
+      </descriptions>
       <parameter dia-name="siteFranchissement_" name="Crossing site" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_EquiperExploiterSiteFranchissement" dia-type="T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement" id="71" name="Engineer - support a crossing site">
+      <descriptions>
+        <doctrine><![CDATA[An operation required before ground combat power can be projected and sustained across a water obstacle. It is a centrally planned and controlled offensive operation that requires the allocation of external crossing means and a force dedicated to the security of the bridgehead.]]></doctrine>
+        <usage><![CDATA[Unit moves to the crossing site and operates it: Unit builds a pontoon bridge, then moves to the meeting point. This mission is available only if the site is reconnoitered first.]]></usage>
+      </descriptions>
       <parameter dia-name="siteFranchissement_" name="Crossing site" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="typePontage_" name="Bridging mode" optional="false" type="Enumeration">
@@ -410,19 +442,39 @@ overwhelming force.]]></doctrine>
       </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_DegagerObstacles" dia-type="T_Mission_Pion_GEN_DegagerObstacles" id="73" name="Engineer - breach">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task where any means available are employed to break through or secure a passage through an enemy defense, obstacle, minefield, or fortification.]]></doctrine>
+        <usage><![CDATA[Unit moves to the obstacle, and removes it.]]></usage>
+      </descriptions>
       <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ContournerObstacles" dia-type="T_Mission_Pion_GEN_ContournerObstacles" id="74" name="Engineer - bypass">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task that involves maneuvering around an obstacle, position, or enemy force to maintain the momentum of advance. Bypassed obstacles and enemy forces are reported to higher headquarters.]]></doctrine>
+        <usage><![CDATA[Unit moves to the obstacle and bypasses it. If the obstacle cannot be bypassed, Unit will try to remove it.]]></usage>
+      </descriptions>
       <parameter dia-name="obstacles_" name="Obstacles" optional="false" type="ObjectKnowledgeList"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_DepolluerZone" dia-type="T_Mission_Pion_GEN_DepolluerZone" id="75" name="Engineer - breach (an area)">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task where any means available are employed to break through or secure a passage through an area.]]></doctrine>
+        <usage><![CDATA[Unit moves to the area and remove any known obstacle.]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Location"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_Renforcer" dia-type="T_Mission_Pion_GEN_Renforcer" id="76" name="Engineer - reinforce">
+      <descriptions>
+        <doctrine><![CDATA[A mission in which one unit augments the capability of another similar-type unit.]]></doctrine>
+        <usage><![CDATA[Reinforcing Unit moves to its target, and will support it in its future actions.]]></usage>
+      </descriptions>
       <parameter dia-name="lieuRenforcement_" name="Reinforcement position" optional="false" type="Point"/>
       <parameter dia-name="unite_" name="Unit" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_RealiserTravauxProtection" dia-type="T_Mission_Pion_GEN_RealiserTravauxProtection" id="77" name="Engineer - perform work">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit performs the specified works, in the given order.]]></usage>
+      </descriptions>
       <parameter dia-name="travaux_" name="Work" optional="false" type="GenObjectList"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_RealiserTravauxContreMobilite" dia-type="T_Mission_Pion_GEN_RealiserTravauxContreMobilite" id="78" name="Engineer - perform counter-mobility work">
@@ -435,65 +487,129 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="travaux_" name="Work" optional="false" type="GenObjectList"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReprendreTravaux" dia-type="T_Mission_Pion_GEN_ReprendreTravaux" id="81" name="Engineer - resume work">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the working site and tries to resume the work.]]></usage>
+      </descriptions>
       <parameter dia-name="travail_" name="Work" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_AmeliorerMobilite" dia-type="T_Mission_Pion_GEN_AmeliorerMobilite" id="82" name="Engineer - enhance mobility">
+      <descriptions>
+        <doctrine><![CDATA[The development of terrain to enhance friendly mobility.]]></doctrine>
+        <usage><![CDATA[Unit moves to the area to improve, and build a "mobility enhanced area"]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ActiverObstacle" dia-type="T_Mission_Pion_GEN_ActiverObstacle" id="83" name="Engineer - activate obstacle">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the obstacle to activate, activates it and improves it if possible.]]></usage>
+      </descriptions>
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_ReconnaitreAxe" dia-type="T_Mission_Pion_INF_ReconnaitreAxe" id="84" name="Infantry - recon in force (an axis)">
+      <descriptions>
+        <doctrine><![CDATA[Route reconnaissance is a form of reconnaissance that focuses along a specific line of communication, such as a road, railway, or cross-country mobility corridor.]]></doctrine>
+        <usage><![CDATA[Unit moves along the route to recon. If an enemy is detected, Unit will engage it.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Couvrir" dia-type="T_Mission_Pion_INF_Couvrir" id="85" name="Infantry - cover">
+      <descriptions>
+        <doctrine><![CDATA[The action by land, air, or sea forces to protect by offense, defense, or threat of either or both.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position, installs and cover its allies by barring any enemy that could prevent the covered allies from fulfilling their missions.]]></usage>
+      </descriptions>
       <parameter dia-name="pointCouverture_" name="Cover position" optional="false" type="Point"/>
       <parameter dia-name="cible_" name="Target" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Reduire" dia-type="T_Mission_Pion_INF_Reduire" id="86" name="Infantry - destroy">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task to physically render an enemy force combat-ineffective unless it is reconstituted.]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targeted enemy and opens fire to totally destroy it. Once the enemy unit destroyed, Unit will monitor the area.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteAReduire_" name="Unit to destroy" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Appuyer" dia-type="T_Mission_Pion_INF_Appuyer" id="87" name="Infantry - support">
+      <descriptions>
+        <doctrine><![CDATA[The action of a force that aids, protects, complements or sustains another force in accordance with a directive requiring such action.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to support, takes a support position that allows it to help this unit with fire, resources or movement and follows it. If necessary, Unit will open fire.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteAAppuyer_" name="Unit to support" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Fixer" dia-type="T_Mission_Pion_INF_Fixer" id="88" name="Infantry - fix">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task where a unit prevents the enemy from moving any part of his force from a specific location for a specific period of time.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the enemy unit to fix and will open fire to prevent it from moving.]]></usage>
+      </descriptions>
       <parameter dia-name="ennemi_" name="Enemy" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_ControlerSecteur" dia-type="T_Mission_Pion_INF_ControlerSecteur" id="89" name="Infantry - control">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task in which a force moves onto an objective, key terrain, or other manmade or natural terrain area and controls that entire area. The commander maintains physical influence over a specified area to prevent its use by an enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the area to control and monitors the area. If possible, Unit lays mines on the main access to the area, and then controls the area, ie. detects and reduces any enemy present in the area. A unit controlling an area as a tactical advantage over its enemy units in this area.]]></usage>
+      </descriptions>
       <parameter dia-name="secteur_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_SurveillerSecteur" dia-type="T_Mission_Pion_INF_SurveillerSecteur" id="90" name="Infantry - monitor">
+      <descriptions>
+        <doctrine><![CDATA[An element of assessment: continuous observation of the common operational picture to identify indicators of opportunities for success, threats to the force, and gaps in information.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position to monitor and faces the danger direction. It will open-fire only to self-protect.]]></usage>
+      </descriptions>
       <parameter dia-name="positionInstallation_" name="Deployment area" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Barrer" dia-type="T_Mission_Pion_INF_Barrer" id="91" name="Infantry - bar">
       <parameter dia-name="positionABarrer_" name="Position to bar" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_ReconnaitrePoint" dia-type="T_Mission_Pion_INF_ReconnaitrePoint" id="92" name="Infantry - recon in force">
+      <descriptions>
+        <doctrine><![CDATA[An offensive operation designed to discover and/or test the enemy's strength or to obtain other information.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the point to recon. If an enemy is detected, Unit will engage it.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="pointAReconnaitre_" name="Position to recon" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Eclairer" dia-type="T_Mission_Pion_INF_Eclairer" id="93" name="Infantry - recon">
+      <descriptions>
+        <doctrine><![CDATA[A mission undertaken to obtain, by visual observation or other detection methods, information about the activities and resources of an enemy or potential enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves along the route to scout. Unit will engage enemy units only as retaliation.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Interdire" dia-type="T_Mission_Pion_INF_Interdire" id="94" name="Infantry - interdict">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task which is oriented on the enemy to prevent, hinder, or delay the use of an area or route by enemy forces.]]></doctrine>
+        <usage><![CDATA[Unit moves to a position that allow to open-fire on the position to deny, enhances it with obstacles and will hold it at all costs, even if the force ratio is unfavorable.]]></usage>
+      </descriptions>
       <parameter dia-name="pointAInterdire_" name="Position to deny" optional="false" type="Point"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Semparer" dia-type="T_Mission_Pion_INF_Semparer" id="95" name="Infantry - seize">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task that involves taking possession of a designated area using overwhelming force.]]></doctrine>
+        <usage><![CDATA[Unit moves towards an observation point relevant for its objective. If an enemy unit is in the area to seize, Unit will reduce it, else Unit will take position in the area and hold it.]]></usage>
+      </descriptions>
       <parameter dia-name="pointObjectif_" name="Objective" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_PrendrePreciserContact" dia-type="T_Mission_Pion_INF_PrendrePreciserContact" id="96" name="Infantry - movement to contact">
+      <descriptions>
+        <doctrine><![CDATA[A form of the offense designed to develop the situation and to establish or regain contact.]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targeted enemy and engages it if the force ratio is favorable.]]></usage>
+      </descriptions>
       <parameter dia-name="ennemi_" name="Enemy" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Defendre" dia-type="T_Mission_Pion_INF_Defendre" id="97" name="Infantry - hold">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task to occupy and hold a terrain feature to ensure that it is free of enemy occupation or use.]]></doctrine>
+        <usage><![CDATA[Unit moves to the position to hold, enhances it with obstacles and will hold it at all costs, even if the force ratio is unfavorable.]]></usage>
+      </descriptions>
       <parameter dia-name="pointADefendre_" name="Point to defend" optional="false" type="Point"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_DetruireEmbuscade" dia-type="T_Mission_Pion_INF_DetruireEmbuscade" id="98" name="Infantry - ambush">
       <descriptions>
-        <doctrine><![CDATA[TBC]]></doctrine>
-        <usage><![CDATA[Tinu moves to the ambush position, enhances it with obstacles and takes a firing position. When the targeted enemy is engaged in the obstacle, Tinu will open fire and take contact, then withdraw to the meeting point.]]></usage>
+        <doctrine><![CDATA[A surprise attack by fire from concealed positions on a moving or temporarily halted enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves to the ambush position, enhances it with obstacles and takes a firing position. When the targeted enemy is engaged in the obstacle, Unit will open fire and take contact, then withdraw to the meeting point.]]></usage>
       </descriptions>
       <parameter dia-name="positionEmbuscade_" name="Ambush position" optional="false" type="Point"/>
       <parameter dia-name="positionRegroupement_" name="Meeting point" optional="false" type="Point"/>
@@ -544,16 +660,32 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ennemi_" name="Enemy" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Freiner" dia-type="T_Mission_Pion_INF_Freiner" id="100" name="Infantry - delay">
+      <descriptions>
+        <doctrine><![CDATA[A form of defensive operation that involves organized movement away from the enemy, in which a force under pressure trades space for time by slowing the enemy?s momentum and inflicting maximum damage on the enemy without, in principle, becoming decisively engaged.]]></doctrine>
+        <usage><![CDATA[Unit will stay in a tactical stand-by, facing its danger direction, waiting for enemy units. When an enemy unit is detected, Unit engages it to stop its movement, then screens it before engaging it again, and repeat the screen/engage cycle.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_FlancGarder" dia-type="T_Mission_Pion_INF_FlancGarder" id="101" name="Infantry - flank-guard">
+      <descriptions>
+        <doctrine><![CDATA[A security element operating to the flank of a moving or stationary force to protect it from enemy ground observation, direct fire, and surprise attack.]]></doctrine>
+        <usage><![CDATA[Unit moves along a route as it coordinates with its allies. If an enemy unit is detected, if the force ratio is favorable, Unit will bar it, else Unit will delay it.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="uniteAFlancgarder_" name="Unit a flancgarder" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_OrganiserUnCheckPoint" dia-type="T_Mission_Pion_INF_OrganiserUnCheckPoint" id="102" name="Infantry - operate a checkpoint">
+      <descriptions>
+        <doctrine><![CDATA[A checkpoint is a predetermined point on the ground used to control movement, tactical maneuver and orientation.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position of the checkpoint, builds (if not already done) and operates it.]]></usage>
+      </descriptions>
       <parameter dia-name="pointInstallation_" name="Deployment point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Harceler" dia-type="T_Mission_Pion_INF_Harceler" id="103" name="Infantry - harass">
+      <descriptions>
+        <doctrine><![CDATA[Tactical task designed to disturb the rest of the enemy troops, to curtail movement, and, by threat of losses, to lower morale.]]></doctrine>
+        <usage><![CDATA[Unit moves to the meeting point, then infiltrates the area to harass. At night,Unit will attack, preferably the specified type of target. Only one attack can occur per day and per unit.]]></usage>
+      </descriptions>
       <parameter dia-name="secteur_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="natureObjectif_" name="Destruction type" optional="false" type="Enumeration">
@@ -563,6 +695,10 @@ overwhelming force.]]></doctrine>
       </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_DetruireParCoupDeMain" dia-type="T_Mission_Pion_INF_DetruireParCoupDeMain" id="104" name="Infantry - destroy (intervene)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the meeting point and parks. Once parked, Unit fulfills its intervention, then goes back to the meeting point. ]]></usage>
+      </descriptions>
       <parameter dia-name="pointObjectif_" name="Objective" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="heureDestruction_" name="Timing" optional="false" type="Datetime"/>
@@ -573,15 +709,31 @@ overwhelming force.]]></doctrine>
       </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_EscorterUnite" dia-type="T_Mission_Pion_INF_EscorterUnite" id="105" name="Infantry - escort">
+      <descriptions>
+        <doctrine><![CDATA[A combatant unit(s) assigned to accompany and protect another force or convoy.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to escort and follows it. Unit will engage any detected enemy unit. If the unit to follow has a move mission, this unit will stop and wait for Tinu. When close to it, Unit will take its objective and move towards this objective, followed by the unit to escort.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteAEscorter_" name="Unit to escort" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_EscorterUnites" dia-type="T_Mission_Pion_INF_EscorterUnites" id="106" name="Infantry - escort Units">
+      <descriptions>
+        <doctrine><![CDATA[A combatant unit(s) assigned to accompany and protect another force or convoy.]]></doctrine>
+        <usage><![CDATA[Instead of one unit, Unit will escort all sub-units of the selected company-level automat.]]></usage>
+      </descriptions>
       <parameter dia-name="automateAEscorter_" name="Units to escort" optional="false" type="Automate"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_RenseignerSur" dia-type="T_Mission_Pion_INF_RenseignerSur" id="107" name="Infantry - report information">
+      <descriptions>
+        <doctrine><![CDATA[A plan for collecting information and knowledge about an adversary obtained through observation, investigation, analysis or understanding from all available sources to meet intelligence requirements and for transforming those requirements into orders and requests to appropriate agencies.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position to observe, stops when it has a good perception of this position and monitor the danger direction.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Soutenir" dia-type="T_Mission_Pion_INF_Soutenir" id="108" name="Infantry - support (dynamic)">
+      <descriptions>
+        <doctrine><![CDATA[The action of a force that aids, protects, complements, or sustains another force in accordance with a directive requiring such action.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to dynamically support and follows it. If this unit is engaged, Unit will engage the enemy to change the force ratio and/or reduce it.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteASoutenir_" name="Unit to support" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Securiser" dia-type="T_Mission_Pion_INF_Securiser" id="109" name="Infantry - secure">
@@ -595,6 +747,10 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="aggresseur_" name="Assaillant" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_AppuyerSurPosition" dia-type="T_Mission_Pion_INF_AppuyerSurPosition" id="112" name="Infantry - support (from a position)">
+      <descriptions>
+        <doctrine><![CDATA[The action of a force that aids, protects, complements, or sustains another force in accordance with a directive requiring such action.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to support, takes the position and will engage any unit that engages the supported units.]]></usage>
+      </descriptions>
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
       <parameter dia-name="unitesAAppuyer_" name="Units to support" optional="false" type="AgentList"/>
     </mission>
@@ -661,50 +817,106 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_FaireMouvement" dia-type="T_Mission_Pion_FaireMouvement" id="133" name="move">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves along the route, then  lays in a tactical stand-by.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Suivre" dia-type="T_Mission_Pion_Suivre" id="134" name="follow">
+      <descriptions>
+        <doctrine><![CDATA[A term used to broadly define the order of movement of committed or uncommitted combat, combat support, and combat service support forces in a given combat operation. The term is a tactical task in which maneuver control measures must be used.]]></doctrine>
+        <usage><![CDATA[Unit moves close to the unit to follow, and follows it.]]></usage>
+      </descriptions>
       <parameter dia-name="uniteASuivre_" name="Unit to follow" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Transporter" dia-type="T_Mission_Pion_Transporter" id="135" name="transport">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit infiltrates to the embarking point and waits that all units to embark are ready (they must have the "adopt transportation posture" mission and be close to the embarking point). Unit embarks units, moves to the disembarking point and disembark them. Unit will redo this process as long as all units are not transported.]]></usage>
+      </descriptions>
       <parameter dia-name="unitesATransporter_" name="Units to transport" optional="false" type="AgentList"/>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_SeFaireDecontaminer" dia-type="T_Mission_Pion_SeFaireDecontaminer" id="136" name="go through decontamination process">
+      <descriptions>
+        <doctrine><![CDATA[The reduction of the contamination hazard by removal or neutralization of hazardous levels of nuclear, biolodougical, and chemical (NBC) contamination on personnel and materiel. The three levels of decontamination are immediate, operational, and thorough.]]></doctrine>
+        <usage><![CDATA[Unit moves to the decontamination site and enters the decontamination process. When the site is available (units can "queue up"), the process begins, then Unit moves to the meeting point.]]></usage>
+      </descriptions>
       <parameter dia-name="pointArrivee_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="siteDecontamination_" name="Decontamination site" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Franchir" dia-type="T_Mission_Pion_Franchir" id="137" name="cross">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the crossing site, crosses it and moves to the meeting point, then lays in a tactical stand-by.]]></usage>
+      </descriptions>
       <parameter dia-name="pontFlottant_" name="Bridge" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="pointArrivee_" name="Meeting point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Decrocher" dia-type="T_Mission_Pion_Decrocher" id="138" name="withdraw">
+      <descriptions>
+        <doctrine><![CDATA[A planned operation in which a force in contact disengages from an enemy force.]]></doctrine>
+        <usage><![CDATA[Unit moves as fast as possible to the meeting point, then lays in a tactical stand-by.]]></usage>
+      </descriptions>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Stationner" dia-type="T_Mission_Pion_Stationner" id="139" name="park">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position where to park, then  lays in a tactical stand-by.]]></usage>
+      </descriptions>
       <parameter dia-name="pointAttente_" name="Position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter" id="140" name="adopt transportation posture">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the embarking point and faces the danger direction, waiting for transport.]]></usage>
+      </descriptions>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_InterdireFranchissementPopulations" dia-type="T_Mission_Pion_InterdireFranchissementPopulations" id="141" name="deny population crossing">
+      <descriptions>
+        <doctrine><![CDATA[An operation designed to prevent or hinder population crossing.]]></doctrine>
+        <usage><![CDATA[Unit moves to the point to block, creates the roadblock and animates it. Blocked populations can force the roadblock if their force ratio is favorable.]]></usage>
+      </descriptions>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_FiltrerPopulations" dia-type="T_Mission_Pion_FiltrerPopulations" id="142" name="filtrate populations">
+      <descriptions>
+        <doctrine><![CDATA[Military police are set up to provide information and prevent illegal actions or actions that aid the enemy; this includes inspection of vehicles and cargo.]]></doctrine>
+        <usage><![CDATA[Unit moves to the filtration point, creates a checkpoint and animates it. Unit can thus detect infiltrated units that try to cross the checkpoint, and will automatically attack them. Population crossing a checkpoint are slown down.]]></usage>
+      </descriptions>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_RenseignerSurPopulations" dia-type="T_Mission_Pion_RenseignerSurPopulations" id="143" name="report information on populations">
+      <descriptions>
+        <doctrine><![CDATA[A plan for collecting information and knowledge about a population obtained through observation, investigation, analysis, or understanding, from all available sources to meet intelligence requirements and for transforming those requirements into orders and requests to appropriate agencies.]]></doctrine>
+        <usage><![CDATA[When a unit is close to a population, this unit has knowledge of the population characterictics. With this mission, units can gather intelligence at distance. Unit moves to the observation position, and monitor any close population.]]></usage>
+      </descriptions>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_CanaliserPopulations" dia-type="T_Mission_Pion_CanaliserPopulations" id="144" name="canalize populations">
+      <descriptions>
+        <doctrine><![CDATA[To restrict operations to a narrow zone by use of existing or reinforcing obstacles or by fire or bombing. (Army) A tactical task used to restrict operations to a narrow zone by the use of obstacles, fires, or unit maneuvering or positioning.]]></doctrine>
+        <usage><![CDATA[Unit moves to the channeling area and animates it. Thus, populations will preferably use the specified area than other routes. This mission is used to impose a detour to a population without using roadblocks. ]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Location"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ControlerPopulationsDansZone" dia-type="T_Mission_Pion_ControlerPopulationsDansZone" id="145" name="control populations (in an area)">
+      <descriptions>
+        <doctrine><![CDATA[To maintain physical influence by occupation or range of weapon systems over the activities or access in a defined area.]]></doctrine>
+        <usage><![CDATA[Unit moves to the most dangereous population in the specified area and will act upon this population to decrease its domination. The efficacity of their action depends on their rule of engagement and the attitude of the population. If multiple units control the area at the same time, their effect will add up. This mission is used to inhibit violent acts of the populations of an area.]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_SecuriserZoneContrePopulations" dia-type="T_Mission_Pion_SecuriserZoneContrePopulations" id="146" name="secure area (against populations assault)">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task to gain possession of a position or terrain feature, with or without force, and to deploy in a manner which prevents its destruction or loss to enemy action. The attacking force may or may not have to physically occupy the area.]]></doctrine>
+        <usage><![CDATA[Unit moves to the point to protect, creates and animates a securized zone. Populations will be blocked, and infiltrated units will be detected and attacked. Blocked populations can force the roadblock if their force ratio is favorable.]]></usage>
+      </descriptions>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Generique" dia-type="T_Mission_Pion_Generique" id="147" name="generic mission">
@@ -772,18 +984,38 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_NBC_AnimerUnPlotDeDecontamination" dia-type="T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination" id="152" name="NBC - operate a decontamination site">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[To be efficient, a decontamination site has to be operated. Unit moves to the site and operates it. If the site does not exist, Unit will create it and operates it.]]></usage>
+      </descriptions>
       <parameter dia-name="positionSiteDecontamination_" name="decontamination site position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_NBC_ReconnaitreItineraire" dia-type="T_Mission_Pion_NBC_ReconnaitreItineraire" id="153" name="NBC - recon a route">
+      <descriptions>
+        <doctrine><![CDATA[A mission undertaken to obtain information (of military significance) about unknown NBC contamination pertaining to routes, areas, and zones. This information confirms or denies the presence or absence of NBC attacks or NBC hazards through the use of detection and identification equipment or visual observation, or by the collection of samples in any specified location or region by using NBC detection, identification, and sampling equipment.]]></doctrine>
+        <usage><![CDATA[Unit moves along the route, recons any NBC area and take measures (danger level, contaminated agents). ]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_NBC_ReconnaitreZone" dia-type="T_Mission_Pion_NBC_ReconnaitreZone" id="154" name="NBC - recon an area">
+      <descriptions>
+        <doctrine><![CDATA[A mission undertaken to obtain information (of military significance) about unknown NBC contamination pertaining to routes, areas, and zones. This information confirms or denies the presence or absence of NBC attacks or NBC hazards through the use of detection and identification equipment or visual observation, or by the collection of samples in any specified location or region by using NBC detection, identification, and sampling equipment.]]></doctrine>
+        <usage><![CDATA[Unit moves to the area to recon and take measures (danger level, contaminated agents). ]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_NBC_DecontaminerZone" dia-type="T_Mission_Pion_NBC_DecontaminerZone" id="155" name="NBC - decontaminate an area">
+      <descriptions>
+        <doctrine><![CDATA[The reduction of the contamination hazard by removal or neutralization of hazardous levels of Nuclear, Biological and Chemical (NBC) contamination on personnel and materiel. The three levels of decontamination are immediate, operational, and thorough.]]></doctrine>
+        <usage><![CDATA[Unit moves to the area to decontaminate and recons it. If a contamination is detected, Unit will try to decontaminate it.]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_NBC_ReconnaitreUnSiteROTA" dia-type="T_Mission_Pion_NBC_ReconnaitreUnSiteROTA" id="156" name="NBC - recon a ROTA site">
+      <descriptions>
+        <doctrine><![CDATA[A mission undertaken to obtain information (of military significance) about unknown NBC contamination pertaining to routes, areas, and zones. This information confirms or denies the presence or absence of NBC attacks or NBC hazards through the use of detection and identification equipment or visual observation, or by the collection of samples in any specified location or region by using NBC detection, identification, and sampling equipment.]]></doctrine>
+        <usage><![CDATA[Unit moves to the site to recon and take measures (danger level, contaminated agents). ]]></usage>
+      </descriptions>
       <parameter dia-name="siteROTA_" name="ROTA site" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROHUM_RenseignerSur" id="157" name="Human Intelligence - report information">
@@ -825,14 +1057,26 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_SInfiltrer" dia-type="T_Mission_Pion_ASY_SInfiltrer" id="169" name="Asymetric - infiltrate">
+      <descriptions>
+        <doctrine><![CDATA[A choice of maneuver that entails movement through or into an area occupied by an enemy or a friendly force by small groups or individuals at extended or irregular intervals in which contact with the enemy is avoided.]]></doctrine>
+        <usage><![CDATA[Unit stealthily moves to its targeted building or population, preferably using roads with populations. An infiltrated unit can hardly be detected without a checkpoint.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatContrePopulation" dia-type="T_Mission_Pion_ASY_CommettreAttentatContrePopulation" id="170" name="Asymetric - carry out a bombing (against population)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the target, carries out the attack and moves to the meeting point.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="populationCible_" name="Population Target" optional="false" type="PopulationKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatContreForcesArmees" dia-type="T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees" id="171" name="Asymetric - carry out an attack (against armed forces)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the target, carries out the attack and moves to the meeting point.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="typeAttentatForcesArmees_" name="Terrorist attack type" optional="false" type="Enumeration">
@@ -842,21 +1086,41 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="uniteCible_" name="Unit Target" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatContreInstallation" dia-type="T_Mission_Pion_ASY_CommettreAttentatContreInstallation" id="172" name="Asymetric - destroy (against critical infrastructure)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the target, carries out the attack and moves to the meeting point.]]></usage>
+      </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="installationCible_" name="Critical infrastructure Target" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone" dia-type="T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone" id="173" name="Asymetric - attack population (in an area)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the area and attacks any present population.]]></usage>
+      </descriptions>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_Renseigner" dia-type="T_Mission_Pion_ASY_Renseigner" id="174" name="Asymetric - report information">
+      <descriptions>
+        <doctrine><![CDATA[A plan for collecting information and knowledge about an adversary obtained through observation, investigation, analysis, or understanding, from all available sources to meet intelligence requirements and for transforming those requirements into orders and requests to appropriate agencies.]]></doctrine>
+        <usage><![CDATA[Unit reports immediatly and until the next simulation step all its knowledge to the specified automat. This mission corresponds to a transmission of informations possessed by Unit to distant units from another knowledge group or party.]]></usage>
+      </descriptions>
       <parameter dia-name="destinataire_" name="Beneficiary" optional="false" type="Automate"/>
     </mission>
     <mission dia-behavior="MIS_Pion_PrendreEnComptePrisonniers" dia-type="T_Mission_Pion_PrendreEnComptePrisonniers" id="175" name="manage prisoners">
+      <descriptions>
+        <doctrine><![CDATA[A combatant unit(s) assigned to accompany and protect prisoners.]]></doctrine>
+        <usage><![CDATA[Unit moves to the prisoners to manage and escort them to the prisoners camp. Prisoners will automatically follow Unit. Unit's movement and detection capacities are decreased when escorting units.]]></usage>
+      </descriptions>
       <parameter dia-name="unitesRendues_" name="Surrendered units" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="campPrisonniers_" name="Prisonners camp" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_OrienterRefugies" dia-type="T_Mission_Pion_OrienterRefugies" id="176" name="manage refugees">
+      <descriptions>
+        <doctrine><![CDATA[A combatant unit(s) assigned to accompany and protect refugees.]]></doctrine>
+        <usage><![CDATA[Unit moves to the refugees to manage and escort them to the refugess camp. Prisoners will automatically follow Unit. Unit's movement and detection capacities are decreased when escorting units.]]></usage>
+      </descriptions>
       <parameter dia-name="refugies_" name="Refugees" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="campRefugies_" name="Refugees camp" optional="false" type="ObjectKnowledge"/>
     </mission>
@@ -1086,7 +1350,11 @@ overwhelming force.]]></doctrine>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Appuyer" dia-type="T_Mission_Automate_ABC_Appuyer" id="220" mrt-dia-behavior="MIS_Automate_MRT_ABC_Appuyer" name="Armor - support">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Attaquer" dia-type="T_Mission_Automate_ABC_Attaquer" id="221" mrt-dia-behavior="MIS_Automate_MRT_ABC_Attaquer" name="Armor - attack"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Attaquer" dia-type="T_Mission_Automate_ABC_Attaquer" id="221" mrt-dia-behavior="MIS_Automate_MRT_ABC_Attaquer" name="Armor - attack">
+      <descriptions>
+        <usage><![CDATA[If a Line of Departure (LD) is specified, Units will first move to this phase line, wait for the fragmentary order to cross the line, and then attack.]]></usage>
+      </descriptions>
+    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_ContreAttaquer" dia-type="T_Mission_Automate_ABC_ContreAttaquer" id="222" mrt-dia-behavior="MIS_Automate_MRT_ABC_ContreAttaquer" name="Armor - counter-attack"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Controler" dia-type="T_Mission_Automate_ABC_Controler" id="223" mrt-dia-behavior="MIS_Automate_MRT_ABC_Controler" name="Armor - control">
       <parameter dia-name="zoneAControler_" name="Area to control" optional="false" type="Polygon"/>
@@ -1096,13 +1364,28 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_DonnerCoupArret" dia-type="T_Mission_Automate_ABC_DonnerCoupArret" id="225" mrt-dia-behavior="MIS_Automate_MRT_ABC_DonnerCoupArret" name="Armor - block">
+      <descriptions>
+        <usage><![CDATA[Units move to positions close to the Blocking Line (BL) and bar ennemies from taking them. When the force ratio becomes defavorable, Units move to the meeting point.]]></usage>
+      </descriptions>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Eclairer" dia-type="T_Mission_Automate_ABC_Eclairer" id="226" mrt-dia-behavior="MIS_Automate_MRT_ABC_Eclairer" name="Armor - recon"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_EffectuerRaid" dia-type="T_Mission_Automate_ABC_EffectuerRaid" id="227" mrt-dia-behavior="MIS_Automate_MRT_ABC_EffectuerRaid" name="Armor - carry out a raid"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Interdire" dia-type="T_Mission_Automate_ABC_Interdire" id="228" mrt-dia-behavior="MIS_Automate_MRT_ABC_Interdire" name="Armor - interdict"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Jalonner" dia-type="T_Mission_Automate_ABC_Jalonner" id="229" mrt-dia-behavior="MIS_Automate_MRT_ABC_Jalonner" name="Armor - screen"/>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_PrendrePreciserContact" dia-type="T_Mission_Automate_ABC_PrendrePreciserContact" id="230" mrt-dia-behavior="MIS_Automate_MRT_ABC_PrendrePreciserContact" name="Armor - movement to contact"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Interdire" dia-type="T_Mission_Automate_ABC_Interdire" id="228" mrt-dia-behavior="MIS_Automate_MRT_ABC_Interdire" name="Armor - interdict">
+      <descriptions>
+        <usage><![CDATA[Units interdict near the specified Denial Line (DL)]]></usage>
+      </descriptions>
+    </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Jalonner" dia-type="T_Mission_Automate_ABC_Jalonner" id="229" mrt-dia-behavior="MIS_Automate_MRT_ABC_Jalonner" name="Armor - screen">
+      <descriptions>
+        <usage><![CDATA[While screening, Units try to keep a coherent formation to prevent any enemy infiltration. Yet, the screen concerns "big" enemy units only, thus some small units, like scout units, can breach the screen. In addition, Units will withdraw if they cross a Recognition and Reception Line (RRL) or a Handover Line (HL).]]></usage>
+      </descriptions>
+    </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_PrendrePreciserContact" dia-type="T_Mission_Automate_ABC_PrendrePreciserContact" id="230" mrt-dia-behavior="MIS_Automate_MRT_ABC_PrendrePreciserContact" name="Armor - movement to contact">
+      <descriptions>
+        <usage><![CDATA[Units move to cover the area between the boundary limits and engage the enemy if the force ratio is favorable.]]></usage>
+      </descriptions>
+    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Reconnaitre" dia-type="T_Mission_Automate_ABC_Reconnaitre" id="231" mrt-dia-behavior="MIS_Automate_MRT_ABC_Reconnaitre" name="Armor - recon in force"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_ReconnaitrePoint" dia-type="T_Mission_Automate_ABC_ReconnaitrePoint" id="232" mrt-dia-behavior="MIS_Automate_MRT_ABC_ReconnaitrePoint" name="Armor - recon in force (a position)">
       <parameter dia-name="pointAReconnaitre_" name="Position to recon" optional="false" type="Polygon"/>
@@ -1117,6 +1400,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="objectif_" name="Objective" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Tenir" dia-type="T_Mission_Automate_ABC_Tenir" id="236" mrt-dia-behavior="MIS_Automate_MRT_ABC_Tenir" name="Armor - hold">
+      <descriptions>
+        <usage><![CDATA[Units are organized in lines to cover the area to hold and bar their position.]]></usage>
+      </descriptions>
       <parameter dia-name="positionInstallation_" name="Deployment area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Soutenir" dia-type="T_Mission_Automate_ABC_Soutenir" id="237" mrt-dia-behavior="MIS_Automate_MRT_ABC_Soutenir" name="Armor - support (dynamic)">
@@ -1134,12 +1420,19 @@ overwhelming force.]]></doctrine>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Fixer" dia-type="T_Mission_Automate_ABC_Fixer" id="241" mrt-dia-behavior="MIS_Automate_MRT_ABC_Fixer" name="Armor - fix">
       <parameter dia-name="ennemis_" name="Ennemies" optional="false" type="AgentKnowledgeList"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Freiner" dia-type="T_Mission_Automate_ABC_Freiner" id="242" mrt-dia-behavior="MIS_Automate_MRT_ABC_Freiner" name="Armor - delay"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Freiner" dia-type="T_Mission_Automate_ABC_Freiner" id="242" mrt-dia-behavior="MIS_Automate_MRT_ABC_Freiner" name="Armor - delay">
+      <descriptions>
+        <usage><![CDATA[If Blocking Lines (BL) are specified, Units will use these lines in their cycles. In addition, Units will withdraw if they cross a Recognition and Reception Line (RRL) or a Handover Line (HL).]]></usage>
+      </descriptions>
+    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_SurveillerItineraire" dia-type="T_Mission_Automate_ABC_SurveillerItineraire" id="243" mrt-dia-behavior="MIS_Automate_MRT_ABC_SurveillerItineraire" name="Armor - monitor (a route)">
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_RenseignerSurUnAxe" dia-type="T_Mission_Automate_ABC_RenseignerSurUnAxe" id="244" mrt-dia-behavior="MIS_Automate_MRT_ABC_RenseignerSurUnAxe" name="Armor - report information on an axis"/>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_RecueillirUnite" dia-type="T_Mission_Automate_ABC_RecueillirUnite" id="245" mrt-dia-behavior="MIS_Automate_MRT_ABC_RecueillirUnite" name="Armor - assist units in their rearward maneuvers">
+      <descriptions>
+        <usage><![CDATA[Units bar near the specified Handover Line (HL) with their combat units, and arm the Recognition and Reception Line (RRL) with the other units. During the reception, assisting units will move to the meeting point while combat units will deny the HL and RRL.]]></usage>
+      </descriptions>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_EscorterUnite" dia-type="T_Mission_Automate_ABC_EscorterUnite" id="246" mrt-dia-behavior="MIS_Automate_MRT_ABC_EscorterUnite" name="Armor - escort">
@@ -1211,6 +1504,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="itineraires_" name="Routes" optional="false" type="PathList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_GEN_FaireFranchir" dia-type="T_Mission_Automate_GEN_FaireFranchir" id="264" mrt-dia-behavior="MIS_Automate_MRT_GEN_FaireFranchir" name="Engineer - support a crossing site">
+      <descriptions>
+        <usage><![CDATA[Units are dispatched to each crossing site that can be operated.]]></usage>
+      </descriptions>
       <parameter dia-name="sitesDeFranchissement_" name="Crossing sites" optional="false" type="ObjectKnowledgeList"/>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
@@ -1223,6 +1519,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Location"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerSouplesse" dia-type="T_Mission_Automate_INF_AttaquerSouplesse" id="267" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerSouplesse" name="Infantry - attack">
+      <descriptions>
+        <usage><![CDATA[Units will recon their route until the Line of Departure (LD). After crossing this line, Units will seize their different objectives.]]></usage>
+      </descriptions>
       <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Appuyer" dia-type="T_Mission_Automate_INF_Appuyer" id="268" mrt-dia-behavior="MIS_Automate_MRT_INF_Appuyer" name="Infantry - support">
@@ -1237,6 +1536,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="objectifs_" name="Objectives" optional="false" type="PointList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_DonnerCoupArret" dia-type="T_Mission_Automate_INF_DonnerCoupArret" id="271" mrt-dia-behavior="MIS_Automate_MRT_INF_DonnerCoupArret" name="Infantry - block">
+      <descriptions>
+        <usage><![CDATA[Depending on their capacities, Units will either bar or defend positions near the Blocking Line (BL). If anti-armor units are present, they are deployed near the first blocking point. If the force ratio changes or enemy units are destroyed, Units will to the meeting point.]]></usage>
+      </descriptions>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
@@ -1244,12 +1546,19 @@ overwhelming force.]]></doctrine>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_FlancGarder" dia-type="T_Mission_Automate_INF_FlancGarder" id="273" mrt-dia-behavior="MIS_Automate_MRT_INF_FlancGarder" name="Infantry - flank-guard">
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automate"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Freiner" dia-type="T_Mission_Automate_INF_Freiner" id="274" mrt-dia-behavior="MIS_Automate_MRT_INF_Freiner" name="Infantry - delay"/>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Freiner" dia-type="T_Mission_Automate_INF_Freiner" id="274" mrt-dia-behavior="MIS_Automate_MRT_INF_Freiner" name="Infantry - delay">
+      <descriptions>
+        <usage><![CDATA[Depending on their capacities, Units will either bar or defend positions near the Blocking Line (BL). If the force ratio changes, Units will go to the meeting point.]]></usage>
+      </descriptions>
+    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Harceler" dia-type="T_Mission_Automate_INF_Harceler" id="275" mrt-dia-behavior="MIS_Automate_MRT_INF_Harceler" name="Infantry - harass">
       <parameter dia-name="zoneSurveillance_" name="Surveillance area" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Interdire" dia-type="T_Mission_Automate_INF_Interdire" id="276" mrt-dia-behavior="MIS_Automate_MRT_INF_Interdire" name="Infantry - interdict">
+      <descriptions>
+        <usage><![CDATA[Units interdict the specified positions or the specified area, after a reconnaissance.]]></usage>
+      </descriptions>
       <parameter dia-name="pointsAInterdire_" name="Positions to deny" optional="false" type="PointList"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
@@ -1262,6 +1571,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pias_" name="Checkpoints" optional="false" type="PointList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Reduire" dia-type="T_Mission_Automate_INF_Reduire" id="281" mrt-dia-behavior="MIS_Automate_MRT_INF_Reduire" name="Infantry - destroy">
+      <descriptions>
+        <usage><![CDATA[Depending on the intensity of the resistance, Units will alternatively take contact, cover, fix and reduce enemy units.]]></usage>
+      </descriptions>
       <parameter dia-name="pointsResistance_" name="Resistance Positions" optional="false" type="PointList"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Relever" dia-type="T_Mission_Automate_INF_Relever" id="282" mrt-dia-behavior="MIS_Automate_MRT_INF_Relever" name="Infantry - relieve">
@@ -1275,6 +1587,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Semparer" dia-type="T_Mission_Automate_INF_Semparer" id="285" mrt-dia-behavior="MIS_Automate_MRT_INF_Semparer" name="Infantry - seize">
+      <descriptions>
+        <usage><![CDATA[Depending on the intensity of the resistance, Units will alternatively take contact, cover, fix and reduce enemy units, until all enemy units have left the area to seize.]]></usage>
+      </descriptions>
       <parameter dia-name="objectif_" name="Objective" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Fixer" dia-type="T_Mission_Automate_INF_Fixer" id="286" mrt-dia-behavior="MIS_Automate_MRT_INF_Fixer" name="Infantry - fix">
@@ -1292,6 +1607,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_INF_Tenir" dia-type="T_Mission_Automate_INF_Tenir" id="290" mrt-dia-behavior="MIS_Automate_MRT_INF_Tenir" name="Infantry - hold">
+      <descriptions>
+        <usage><![CDATA[Depending on their capacities, Units will either bar or defend their position, with optional obstacle erections. Supporting units can intervene at any moment.]]></usage>
+      </descriptions>
       <parameter dia-name="position_" name="Position" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
@@ -1376,6 +1694,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Bool"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SeRecompleter" dia-type="T_Mission_Automate_SeRecompleter" id="316" mrt-dia-behavior="MIS_Automate_MRT_SeRecompleter" name="resupply">
+      <descriptions>
+        <usage><![CDATA[Units move to the replenishment area. A replenish request is sent to the supporting TC2.]]></usage>
+      </descriptions>
       <parameter dia-name="zoneRavitaillement_" name="Replenishment area" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_InterdireFranchissementPopulations" dia-type="T_Mission_Automate_InterdireFranchissementPopulations" id="317" mrt-dia-behavior="MIS_Automate_MRT_InterdireFranchissementPopulations" name="deny population crossing">
