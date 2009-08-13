@@ -157,14 +157,14 @@ LRESULT SIM_App::MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 // -----------------------------------------------------------------------------
 void SIM_App::RunDispatcher()
 {
-    pDispatcher_ = new SIM_Dispatcher( winArguments_.Argc(), const_cast< char** >( winArguments_.Argv() ) ); 
     try
     {
-        pDispatcher_->Run(); 
+        pDispatcher_ = new SIM_Dispatcher( winArguments_.Argc(), const_cast< char** >( winArguments_.Argv() ) );
+        pDispatcher_->Run();
     }
-    catch (std::exception& exception) 
+    catch( std::exception& e )
     {
-       MT_FormatString( "The dispatcher has crashed ( '%s' )", exception.what() );    
+        MT_LOG_ERROR_MSG( "The dispatcher has crashed: " << e.what() << "." );
     }
     Stop();
 }

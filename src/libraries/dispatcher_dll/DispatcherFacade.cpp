@@ -38,20 +38,28 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv )
     config_->Parse( argc, argv );
     MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ) );
 
-    dispatcher_.reset( new dispatcher::Dispatcher( *config_ ) );
-    dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );
-    dispatcher_->RegisterPluginFactory( *new dis::DisPluginFactory() );
-    dispatcher_->RegisterPluginFactory( *new tic::TicPluginFactory() );
-    dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
+    try
+    {
+        dispatcher_.reset( new dispatcher::Dispatcher( *config_ ) );
+        dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );
+        dispatcher_->RegisterPluginFactory( *new dis::DisPluginFactory() );
+        dispatcher_->RegisterPluginFactory( *new tic::TicPluginFactory() );
+        dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
 #ifdef CROSSBOW_PLUGIN
-    dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
-    dispatcher_->RegisterPluginFactory( *new gearth::GearthPluginFactory() );
+        dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
+        dispatcher_->RegisterPluginFactory( *new gearth::GearthPluginFactory() );
 #endif
 #ifdef XMLIA_PLUGIN
-    dispatcher_->RegisterPluginFactory( *new xmlia::XmliaPluginFactory() );
+        dispatcher_->RegisterPluginFactory( *new xmlia::XmliaPluginFactory() );
 #endif
 
-    dispatcher_->CreatePlugins();
+        dispatcher_->CreatePlugins();
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Initializing: " << e.what() );
+        throw;
+    }
 }
 
 // -----------------------------------------------------------------------------
