@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
     ASN1T_Automat asnIn = 0;
     MockMIL_EntityManager_ABC entityManager;
     FixtureAutomate fixture;
-    fixture.pAutomat_->RegisterRole< DEC_AutomateDecision >( *fixture.pAutomat_ );
+    //fixture.pAutomat_->RegisterRole< DEC_AutomateDecision >( *fixture.pAutomat_ );
     entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );
     MIL_AutomatParameter param( asnIn, entityManager );
     ASN1T_Automat asnOut;
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatListParameter_ToASN )
     asnIn.elem[0] = 0;
     MockMIL_EntityManager_ABC entityManager;
     FixtureAutomate fixture;
-    fixture.pAutomat_->RegisterRole< DEC_AutomateDecision >( *fixture.pAutomat_ );
+    //fixture.pAutomat_->RegisterRole< DEC_AutomateDecision >( *fixture.pAutomat_ );
     entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );
     MIL_AutomatListParameter param( asnIn, entityManager );
     delete[] asnIn.elem;

@@ -14,14 +14,17 @@
 
 #include "MT_Tools_Types.h"
 #include <boost/shared_ptr.hpp>
+#include "tools/Extendable.h"
+#include "tools/InterfaceContainer.h"
 
-class MT_Role_ABC;
+class MT_Role_ABC; // FIXME(warning C4150) AHC : A remplacer par #include "MT_Role_ABC.h" quand MT_Role_ABC::GetRole sera supprime
 
 // =============================================================================
 // @class  MT_RoleContainer
 // Created: JVT/NLD 2004-08-03
 // =============================================================================
-class MT_RoleContainer
+class MT_RoleContainer : public tools::Extendable<MT_Role_ABC>,
+						 public tools::InterfaceContainer<MT_Role_ABC>
 {
 public:
              MT_RoleContainer();
@@ -42,35 +45,18 @@ public:
 
     //! @name Role accessors
     //@{
-    template< typename Role >       typename Role& GetRole();
-    template< typename Role > const typename Role& GetRole() const;
+    template< typename Role >       typename Role& GetRole()
+    {
+    	return static_cast< Role& >( Get<Role::RoleInterface>() );
+    }
+    template< typename Role > const typename Role& GetRole() const
+    {
+      	return static_cast< const Role& >( Get<Role::RoleInterface>() );
+    }
     //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< boost::shared_ptr< MT_Role_ABC > > T_RoleVector;
-    //@}
-
 protected:
-    //! @name Role registration
-    //@{
-    template< typename Role > void RegisterRole( Role* );
-    //@}
-
-private:
-    //! @name Role initialization
-    //@{
-    template< typename Role > unsigned int EnsureSize();
-    template< typename Role > unsigned int GetIdx() const;
-    //@}
-
-private:
-    T_RoleVector roles_;
-
-    static uint nCurrentIdx_;
+    template< typename Role > typename Role::RoleInterface& RegisterRole( Role* r);
 };
-
 
 #include "MT_RoleContainer.inl"
 

@@ -38,8 +38,8 @@ protected:
     template< typename Role >       typename Role/*::RoleInterface*/& GetRole()        { assert( pRoleContainer_ ); return pRoleContainer_->GetRole< Role >(); }
     template< typename Role > const typename Role/*::RoleInterface*/& GetRole() const  { assert( pRoleContainer_ ); return pRoleContainer_->GetRole< Role >(); }
 
-    template< typename Role >       typename Role::RoleInterface& GetRoleInterface()        { assert( pRoleContainer_ ); return pRoleContainer_->GetRoleInterface< Role >(); }
-    template< typename Role > const typename Role::RoleInterface& GetRoleInterface() const  { assert( pRoleContainer_ ); return pRoleContainer_->GetRoleInterface< Role >(); }
+    //template< typename Role >       typename Role::RoleInterface& GetRoleInterface()        { assert( pRoleContainer_ ); return pRoleContainer_->GetRoleInterface< Role >(); }
+    //template< typename Role > const typename Role::RoleInterface& GetRoleInterface() const  { assert( pRoleContainer_ ); return pRoleContainer_->GetRoleInterface< Role >(); }
     //@}
 
 private:

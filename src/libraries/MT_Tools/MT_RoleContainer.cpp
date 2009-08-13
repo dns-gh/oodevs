@@ -13,14 +13,11 @@
 
 #include "MT_RoleContainer.h"
 
-uint MT_RoleContainer::nCurrentIdx_ = 0;
-
 //-----------------------------------------------------------------------------
 // Name: MT_RoleContainer::MT_RoleContainer
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
 MT_RoleContainer::MT_RoleContainer()
-    : roles_()
 {
 }
 
