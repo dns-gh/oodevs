@@ -6,7 +6,7 @@
           <debug decisional="true" pathfind="true" diadebugger="false" diadebuggerport="15000" networklogger="true" networkloggerport="20000"/>
           <decisional useonlybinaries="false"/>
           <dispatcher embedded="true"/>
-          <network port="10010" threaded="true"/>
+          <network port="10000" threaded="true"/>
           <orbat checkcomposition="true"/>
           <profiling enabled="false"/>
           <time step="10" factor="10"/>
@@ -14,7 +14,7 @@
           <hla enabled="false" federation="MyFederation" federate="CSword power"/>          
       </simulation>
       <dispatcher>
-          <network client="localhost:10010" server="10011"/>
+          <network client="localhost:10000" server="10001"/>
           <plugins>
               <plugin name="recorder" enabled="false">
                   <parameter name="directory" value="records"/>
