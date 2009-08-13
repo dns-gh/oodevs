@@ -254,8 +254,8 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input )
         >> xml::optional() >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
         >> xml::optional() >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
         >> xml::optional() >> xml::start( "descriptions" )
-            >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end()
-            >> xml::start( "usage" ) >> usageDesc >> xml::end()
+            >> xml::optional() >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end()
+            >> xml::optional() >> xml::start( "usage" ) >> usageDesc >> xml::end()
         >> xml::end()
         >> xml::list( "parameter", *this, &ADN_Missions_Data::Mission::ReadParameter );
     doctrineDescription_ = doctrineDesc;
