@@ -57,5 +57,14 @@ public:
     //@}
 };
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_InterfaceFlying::serialize
+// Created: RPD 2009-08-13
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void PHY_RoleAction_InterfaceFlying::serialize( Archive& archive , const uint )
+{
+    //NOTHING
+}
 
 #endif // __PHY_RoleAction_InterfaceFlying_h_

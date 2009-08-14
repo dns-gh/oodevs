@@ -12,6 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_InterfaceFlying.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_InterfaceFlying, "PHY_RoleAction_InterfaceFlying" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_InterfaceFlying constructor
 // Created: JVT 2005-03-30
@@ -28,16 +30,6 @@ PHY_RoleAction_InterfaceFlying::PHY_RoleAction_InterfaceFlying()
 PHY_RoleAction_InterfaceFlying::~PHY_RoleAction_InterfaceFlying()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_InterfaceFlying::serialize
-// Created: RPD 2009-08-13
-// -----------------------------------------------------------------------------
-template< typename Archive > 
-void PHY_RoleAction_InterfaceFlying::serialize( Archive& archive , const uint )
-{
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
