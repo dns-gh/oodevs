@@ -16,10 +16,10 @@
 #include <boost/shared_ptr.hpp>
 #include "tools/Extendable.h"
 #include "tools/InterfaceContainer.h"
+#include "MT_Tools/Role_ABC.h"
 
 namespace tools
 {
-    class Role_ABC;
 
 // =============================================================================
 // @class  RoleContainer
