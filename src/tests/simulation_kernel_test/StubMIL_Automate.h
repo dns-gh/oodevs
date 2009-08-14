@@ -9,7 +9,7 @@ class StubMIL_Automate : public MIL_Automate
 public:
     StubMIL_Automate( MIL_AutomateType& type ) : MIL_Automate( type ) 
     {
-        RegisterRole( new DEC_AutomateDecision( *this, *this ) ) ;
+        RegisterRole( new DEC_AutomateDecision( *this ) ) ;
     }
 };
 

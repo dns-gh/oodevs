@@ -10,7 +10,6 @@
 #ifndef __MockRoleImplantable_h_
 #define __MockRoleImplantable_h_
 
-#include "MT_Tools/MT_RoleContainer.h"
 #include "simulation_kernel/Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 //#include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
 
@@ -28,9 +27,8 @@ public:
     
     //! @name Constructors/Destructor
     //@{
-    MockRoleInterface_Posture( MT_RoleContainer& container ) 
+    MockRoleInterface_Posture( )
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockRoleImplantable" ) )
-        , PHY_RoleInterface_Posture( container )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetLastPostureShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetCurrentPostureShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetPostureCompletionPercentage )

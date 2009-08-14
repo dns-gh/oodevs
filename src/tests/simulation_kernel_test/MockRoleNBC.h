@@ -10,7 +10,6 @@
 #ifndef __MockRoleNBC_h_
 #define __MockRoleNBC_h_
 
-#include "MT_Tools/MT_RoleContainer.h"
 #include "simulation_kernel/Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 
 // =============================================================================
@@ -27,9 +26,9 @@ public:
     
     //! @name Constructors/Destructor
     //@{
-    MockRoleNBC( MT_RoleContainer& container ) 
+    MockRoleNBC( )
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockRoleNBC" ) )
-        , PHY_RoleInterface_NBC( container )
+        , PHY_RoleInterface_NBC( )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsContaminated )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Poison )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Contaminate )

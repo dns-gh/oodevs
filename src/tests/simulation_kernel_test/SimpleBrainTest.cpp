@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_RolePion_Decision )
 BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 {
     FixturePion fixture;
-    DEC_RolePion_Decision decision( *fixture.pPion_, *fixture.pPion_ );
+    DEC_RolePion_Decision decision( *fixture.pPion_);
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 BOOST_AUTO_TEST_CASE( InstantiateDEC_AutomateDecision )
 {
     FixtureAutomate fixture;
-    DEC_AutomateDecision decision( *fixture.pAutomat_, *fixture.pAutomat_ );
+    DEC_AutomateDecision decision( *fixture.pAutomat_);
 }
 
 // -----------------------------------------------------------------------------

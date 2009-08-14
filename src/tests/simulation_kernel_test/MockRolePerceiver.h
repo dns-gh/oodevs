@@ -25,9 +25,9 @@ class MockRolePerceiver : public mockpp::ChainableMockObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MockRolePerceiver( MT_RoleContainer& container )
+    explicit MockRolePerceiver( )
                  : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockRolePerceiver" ) )
-                 , PHY_RolePion_Perceiver( container, *(MIL_AgentPion*)0 )
+                 , PHY_RolePion_Perceiver( *(MIL_AgentPion*)0 )
                  , NotifyExternalPerception_mocker( "NotifyExternalPerception", this )
              {}
     virtual ~MockRolePerceiver() {}

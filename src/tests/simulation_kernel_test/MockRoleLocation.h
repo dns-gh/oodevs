@@ -10,7 +10,6 @@
 #ifndef __MockRoleLocation_h_
 #define __MockRoleLocation_h_
 
-#include "MT_Tools/MT_RoleContainer.h"
 #include "simulation_kernel/Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 // =============================================================================
@@ -27,9 +26,8 @@ public:
     
     //! @name Constructors/Destructor
     //@{
-    MockRoleLocation( MT_RoleContainer& container ) 
+    MockRoleLocation( )
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockRoleLocation" ) )
-        , PHY_RoleInterface_Location( container )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetHeight )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetAltitude )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetCurrentSpeed )
