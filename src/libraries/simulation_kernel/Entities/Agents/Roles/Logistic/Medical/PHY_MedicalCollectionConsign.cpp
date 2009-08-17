@@ -12,10 +12,12 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_MedicalCollectionConsign.h"
-#include "PHY_RolePion_Medical.h"
+#include "PHY_RoleInterface_Medical.h"
 #include "PHY_MedicalHumanState.h"
 #include "PHY_MedicalCollectionAmbulance.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Specialisations/log/MIL_AgentPionLOG_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MedicalCollectionConsign, "PHY_MedicalCollectionConsign" )
 
@@ -69,7 +71,7 @@ void PHY_MedicalCollectionConsign::EnterStateWaitingForCollection()
 {
     assert( pHumanState_ );
     assert( !pCollectionAmbulance_ );
-    pHumanState_->SetHumanPosition( GetPionMedical().GetPosition() );
+    pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     nTimer_ = 0;
     SetState( eWaitingForCollection );
 }
@@ -165,7 +167,7 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionUnloading()
 // Name: PHY_MedicalCollectionConsign::TransferToSortingArea
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-void PHY_MedicalCollectionConsign::TransferToSortingArea( PHY_RolePion_Medical& sortingArea )
+void PHY_MedicalCollectionConsign::TransferToSortingArea( PHY_RoleInterface_Medical& sortingArea )
 {
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );

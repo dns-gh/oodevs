@@ -126,7 +126,7 @@ bool PHY_SupplyRequest_ABC< T >::AffectAutomate( MIL_AutomateLOG& supplyingAutom
         return true;
     }
 
-    PHY_RolePion_Supply* pStockPion = supplyingAutomate.SupplyGetStockPion( GetDotationCategory(), rTotalRequestedValue_ );
+    PHY_RoleInterface_Supply* pStockPion = supplyingAutomate.SupplyGetStockPion( GetDotationCategory(), rTotalRequestedValue_ );
     if( !pStockPion )
         return false;
 

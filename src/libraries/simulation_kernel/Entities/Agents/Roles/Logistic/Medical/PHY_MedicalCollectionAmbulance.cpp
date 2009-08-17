@@ -15,7 +15,8 @@
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MedicalCollectionAmbulance, "PHY_MedicalCollectionAmbulance" )
 
@@ -205,7 +206,7 @@ bool PHY_MedicalCollectionAmbulance::DoSearchForSortingArea()
     if( !pMedicalSuperior )
         return true;
 
-    pSortingArea_ = pMedicalSuperior->MedicalReserveForSorting( *this );
+    pSortingArea_ = static_cast< PHY_RolePionLOG_Medical* >( pMedicalSuperior->MedicalReserveForSorting( *this ) );//@TODO delete static cast and use interface in this class
     return pSortingArea_ != 0;
 }
 
@@ -238,7 +239,7 @@ void PHY_MedicalCollectionAmbulance::EnterStateGoingTo()
     assert( pMedical_ );
     
     nState_ = eGoingTo;
-    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pMedical_->GetPosition(), pSortingArea_->GetPosition() );
+    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition(), pSortingArea_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition() );
     for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateCollectionGoingTo();
 }
@@ -290,7 +291,7 @@ void PHY_MedicalCollectionAmbulance::EnterStateGoingFrom()
     assert( consigns_.empty() );
 
     nState_ = eGoingFrom;
-    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pSortingArea_->GetPosition(), pMedical_->GetPosition() );
+    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pSortingArea_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition(), pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition() );
     pSortingArea_->CancelReservationForSorting( *this );
     pSortingArea_ = 0;
 }

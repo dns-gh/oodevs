@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "PHY_RolePion_Maintenance.h"
+#include "PHY_RoleInterface_Maintenance.h"
 
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
@@ -29,7 +29,7 @@ class MIL_AutomateLOG;
 // @class  PHY_RolePionLOG_Maintenance
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePionLOG_Maintenance : public PHY_RolePion_Maintenance
+class PHY_RolePionLOG_Maintenance : public PHY_RoleInterface_Maintenance
 {
 
 public:

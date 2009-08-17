@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "PHY_RolePion_Medical.h"
+#include "PHY_RoleInterface_Medical.h"
 
 class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
@@ -32,7 +32,7 @@ class PHY_ComposanteUsePredicate;
 // @class  PHY_RolePionLOG_Medical
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePionLOG_Medical : public PHY_RolePion_Medical
+class PHY_RolePionLOG_Medical : public PHY_RoleInterface_Medical
 {
 
 public:

@@ -13,6 +13,8 @@
 #include "MIL_AgentTypePionLOGMaintenance.h"
 #include "MIL_AgentPionLOGMaintenance.h"
 
+#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePionLOG_Maintenance.h"
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMaintenance constructor
 // Created: NLD 2004-09-14
@@ -36,18 +38,29 @@ MIL_AgentTypePionLOGMaintenance::~MIL_AgentTypePionLOGMaintenance()
 // Name: MIL_AgentTypePionLOGMaintenance::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePionLOGMaintenance::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMaintenance::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
 {
-    return *new MIL_AgentPionLOGMaintenance( *this, nID, automate, xis );
+    return new MIL_AgentPionLOGMaintenance( *this, nID, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMaintenance::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePionLOGMaintenance::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMaintenance::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
 {
-    return *new MIL_AgentPionLOGMaintenance( *this, nID, automate, vPosition );
+    return new MIL_AgentPionLOGMaintenance( *this, nID, automate, vPosition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionLOGMaintenance::RegisterRoles
+// Created: MGD 2009-08-13
+// @TODO REPLACE BY XML in AgentFactory
+// -----------------------------------------------------------------------------
+void MIL_AgentTypePionLOGMaintenance::RegisterRoles( MIL_AgentPion& pion ) const
+{
+    MIL_AgentTypePion::RegisterRoles( pion );
+    pion.RegisterRole< PHY_RolePionLOG_Maintenance >( static_cast< MIL_AgentPionLOG_ABC& >( pion ) );//@TODO remove cast when AgentPionLOG will be deleted
 }
 
 // -----------------------------------------------------------------------------

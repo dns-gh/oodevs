@@ -55,6 +55,14 @@ public:
     {
       	return static_cast< const Role& >( Get<Role::RoleInterface>() );
     }
+    template< typename Role >       typename Role* RetrieveRole()
+    {
+        return static_cast< Role* >( Retrieve<Role::RoleInterface>() );
+    }
+    template< typename Role >       typename const Role* RetrieveRole() const
+    {
+        return static_cast< const Role* >( Retrieve<Role::RoleInterface>() );
+    }
     //@}
 protected:
     template< typename Role > typename Role::RoleInterface& RegisterRole( Role* r);

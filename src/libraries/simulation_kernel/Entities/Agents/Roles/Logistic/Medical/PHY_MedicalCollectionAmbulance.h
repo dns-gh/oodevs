@@ -15,7 +15,6 @@
 class PHY_ComposantePion;
 class PHY_MedicalCollectionConsign;
 class PHY_RolePionLOG_Medical;
-class PHY_RolePion_Medical;
 
 // =============================================================================
 // @class  PHY_MedicalCollectionAmbulance
@@ -91,7 +90,7 @@ private:
     int                      nTimer_;
     bool                     bEmergencyAmbulance_;
     MT_Float                 rNbrHumanHandled_;
-    PHY_RolePion_Medical*    pSortingArea_;
+    PHY_RolePionLOG_Medical* pSortingArea_;
 };
 
 #endif // __PHY_MedicalCollectionAmbulance_h_

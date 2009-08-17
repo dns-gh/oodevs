@@ -35,8 +35,7 @@ PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion 
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply()
-    : PHY_RolePion_Supply()
-    , pPion_             ( 0 )
+    : pPion_             ( 0 )
     , pConvoy_           ( 0 )
 {
     // NOTHING

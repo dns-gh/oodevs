@@ -12,13 +12,14 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_MedicalHealingConsign.h"
-#include "PHY_RolePion_Medical.h"
+#include "PHY_RoleInterface_Medical.h"
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MedicalHealingConsign, "PHY_MedicalHealingConsign" )
 
@@ -187,7 +188,7 @@ void PHY_MedicalHealingConsign::EnterStateWaitingForCollection()
 {
     assert( pHumanState_ );
     assert( !pDoctor_ );
-    pHumanState_->SetHumanPosition( GetPionMedical().GetPosition() );
+    pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     nTimer_ = 0;
     SetState( eWaitingForCollection );
 }

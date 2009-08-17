@@ -32,6 +32,34 @@
 #include "Entities/Specialisations/LOG/Supply/MIL_AgentTypePionLOGSupply.h"
 #include "Entities/Specialisations/LOG/Convoy/MIL_AgentTypePionLOGConvoy.h"
 
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"    
+#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
+#include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
+#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
+#include "Entities/Agents/Roles/Refugee/PHY_RolePion_Refugee.h"
+#include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
+
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Flying/PHY_RoleAction_Flying.h"
+#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
+#include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
+#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
+#include "Entities/Agents/Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
+
+#include "Decision/DEC_Representations.h"
+
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
  
 #include "MIL_AgentServer.h"
@@ -272,18 +300,56 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
 // Name: MIL_AgentTypePion::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
 {
-    return *new MIL_AgentPion( *this, nID, automate, xis );
+    return new MIL_AgentPion( *this, nID, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
+MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
 {
-    return *new MIL_AgentPion( *this, nID, automate, vPosition );
+    return new MIL_AgentPion( *this, nID, automate, vPosition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::RegisterRoles
+// Created: MGD 2009-08-13
+// @TODO REPLACE BY XML in factory
+// -----------------------------------------------------------------------------
+void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
+{
+    pion.RegisterRole< NET_RolePion_Dotations         >( pion );
+    pion.RegisterRole< PHY_RolePion_Reinforcement     >( pion );
+    pion.RegisterRole< PHY_RolePion_Posture           >( pion );
+    pion.RegisterRole< PHY_RolePion_Location          >( pion );
+    pion.RegisterRole< PHY_RolePion_Dotations         >( pion );
+    pion.RegisterRole< PHY_RolePion_Humans            >( pion );
+    pion.RegisterRole< PHY_RolePion_Composantes       >( pion );
+    pion.RegisterRole< PHY_RolePion_Perceiver         >( pion );
+    pion.RegisterRole< PHY_RolePion_NBC               >( pion );
+    pion.RegisterRole< PHY_RolePion_Communications    >( pion );
+    pion.RegisterRole< PHY_RolePion_HumanFactors      >();
+    pion.RegisterRole< PHY_RolePion_Transported       >( pion );
+    pion.RegisterRole< PHY_RolePion_Surrender         >( pion );
+    pion.RegisterRole< PHY_RolePion_Refugee           >( pion );
+    pion.RegisterRole< PHY_RolePion_Population        >( pion );
+    pion.RegisterRole< PHY_RoleAction_Loading         >();
+    pion.RegisterRole< PHY_RoleAction_Transport       >( pion );
+    pion.RegisterRole< PHY_RoleAction_Moving          >( pion );
+    pion.RegisterRole< PHY_RoleAction_Objects         >( pion );
+    pion.RegisterRole< PHY_RoleAction_DirectFiring    >( pion );
+    pion.RegisterRole< PHY_RoleAction_IndirectFiring  >( pion );
+    pion.RegisterRole< DEC_RolePion_Decision          >( pion );
+    pion.RegisterRole< PHY_RoleAction_FolkInfluence   >();
+    pion.RegisterRole< DEC_Representations            >();
+
+    if( pion.CanFly() )
+        pion.RegisterRole< PHY_RoleAction_Flying >( pion );
+    else
+        pion.RegisterRole< PHY_RoleAction_InterfaceFlying >();
 }
 
 // -----------------------------------------------------------------------------

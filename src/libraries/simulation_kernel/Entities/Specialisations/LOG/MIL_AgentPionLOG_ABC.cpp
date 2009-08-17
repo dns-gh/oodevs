@@ -14,9 +14,9 @@
 #include "MIL_AutomateLOG.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePion_Maintenance.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePion_Medical.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
+#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOG_ABC, "MIL_AgentPionLOG_ABC" )
@@ -81,9 +81,15 @@ void MIL_AgentPionLOG_ABC::serialize( Archive& file, const uint )
 void MIL_AgentPionLOG_ABC::UpdateLogistic()
 {
     const bool bIsDead = IsDead();
-    GetRole< PHY_RolePion_Maintenance >().UpdateLogistic( bIsDead );
-    GetRole< PHY_RolePion_Medical     >().UpdateLogistic( bIsDead );
-    GetRole< PHY_RolePion_Supply      >().UpdateLogistic( bIsDead );
+    PHY_RoleInterface_Maintenance* roleMaintenance = RetrieveRole< PHY_RoleInterface_Maintenance >();
+    if( roleMaintenance )
+        roleMaintenance->UpdateLogistic( bIsDead );
+    PHY_RoleInterface_Medical* roleMedical = RetrieveRole< PHY_RoleInterface_Medical >();
+    if( roleMedical )
+        roleMedical->UpdateLogistic( bIsDead );
+    PHY_RoleInterface_Supply* roleSupply = RetrieveRole< PHY_RoleInterface_Supply >();
+    if( roleSupply )
+        roleSupply->UpdateLogistic( bIsDead );
 }
 
 // -----------------------------------------------------------------------------

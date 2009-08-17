@@ -12,7 +12,7 @@
 #ifndef __PHY_SupplyRequest_ABC_h_
 #define __PHY_SupplyRequest_ABC_h_
 
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 class PHY_DotationCategory;
@@ -79,7 +79,7 @@ protected:
 
 protected:
     T_RequestVector      requests_;    
-    PHY_RolePion_Supply* pStockPion_;
+    PHY_RoleInterface_Supply* pStockPion_;
     MT_Float             rTotalRequestedValue_;   
     MIL_AutomateLOG*     pSupplyingAutomate_;
     MT_Float             rTotalReservedValue_;   

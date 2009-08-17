@@ -21,8 +21,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMedical, "MIL_AgentPionLOGMedical" )
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
     : MIL_AgentPionLOG_ABC( type, nID, automate, xis )
-{
-    RegisterRole< PHY_RolePionLOG_Medical >( *this );  
+{ 
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +31,6 @@ MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type,
 MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
     : MIL_AgentPionLOG_ABC( type, nID, automate, vPosition )
 {
-    RegisterRole< PHY_RolePionLOG_Medical >( *this );
 }
 
 // -----------------------------------------------------------------------------

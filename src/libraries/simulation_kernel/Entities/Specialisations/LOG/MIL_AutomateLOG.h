@@ -25,9 +25,9 @@ class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
 class PHY_Human;
 class PHY_MedicalCollectionAmbulance;
-class PHY_RolePion_Medical;
+class PHY_RoleInterface_Medical;
 class PHY_Dotation;
-class PHY_RolePion_Supply;
+class PHY_RoleInterface_Supply;
 class PHY_DotationCategory;
 class PHY_DotationType;
 class PHY_SupplyDotationState;
@@ -96,7 +96,7 @@ public:
     PHY_MedicalHumanState* MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, PHY_Human& human ); // Imex
     PHY_MedicalHumanState* MedicalHandleHumanForEvacuation        ( MIL_AgentPion& pion, PHY_Human& human ); // Releve
     bool                   MedicalHandleHumanForCollection        ( PHY_MedicalHumanState& humanState );     // Ramassage    
-    PHY_RolePion_Medical*  MedicalReserveForSorting               ( PHY_MedicalCollectionAmbulance& ambulance );
+    PHY_RoleInterface_Medical*  MedicalReserveForSorting          ( PHY_MedicalCollectionAmbulance& ambulance );
     bool                   MedicalHandleHumanForHealing           ( PHY_MedicalHumanState& humanState );
     bool                   MedicalCanCollectionAmbulanceGo        ( const PHY_MedicalCollectionAmbulance& ambulance ) const;    
     //@}
@@ -105,7 +105,7 @@ public:
     //@{
     void                     SupplyHandleRequest                ( PHY_SupplyDotationState& supplyDotationState );
     void                     SupplyHandleRequest                ( PHY_SupplyStockState&    supplyStockState    );
-    PHY_RolePion_Supply*     SupplyGetStockPion                 ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
+    PHY_RoleInterface_Supply* SupplyGetStockPion                ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
     bool                     SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
     MT_Float                 SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
     bool                     SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, MT_Float rReturnedValue  ) const;

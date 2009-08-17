@@ -29,9 +29,9 @@
 #include "Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Roles/Refugee/PHY_RolePion_Refugee.h"
 #include "Roles/Population/PHY_RolePion_Population.h"
-#include "Roles/Logistic/Maintenance/PHY_RolePion_Maintenance.h"
-#include "Roles/Logistic/Medical/PHY_RolePion_Medical.h"
-#include "Roles/Logistic/Supply/PHY_RolePion_Supply.h"
+#include "Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
+#include "Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
+#include "Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
 
 #include "Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Actions/Objects/PHY_RoleAction_Objects.h"
@@ -94,12 +94,11 @@ namespace
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
     : MIL_Agent_ABC            ( type.GetName(), xis, nID )
     , pType_                   ( &type )
-    , bIsPC_                   ( false )
+    , bIsPC_                   ( xml::attribute< bool >( xis, "command-post", false ) )
     , pAutomate_               ( &automate )
     , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
 {
-    Initialize( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +113,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
     , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
 {
-    Initialize( vPosition );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,9 +178,9 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { PHY_RolePion_Communications   * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_HumanFactors     * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Transported      * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Maintenance      * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Medical          * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Supply           * pRole; file >> pRole; RegisterRole( pRole ); } 
+    //{ PHY_RoleInterface_Maintenance * pRole; file >> pRole; RegisterRole( pRole ); } //@TODO refactor with new save
+    //{ PHY_RoleInterface_Medical     * pRole; file >> pRole; RegisterRole( pRole ); } 
+    //{ PHY_RoleInterface_Supply      * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Surrender        * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Refugee          * pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RolePion_Population       * pRole; file >> pRole; RegisterRole( pRole ); }
@@ -226,9 +224,9 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     SaveRole< PHY_RolePion_Communications    >( *this, file );
     SaveRole< PHY_RolePion_HumanFactors      >( *this, file );
     SaveRole< PHY_RolePion_Transported       >( *this, file );
-    SaveRole< PHY_RolePion_Maintenance       >( *this, file );
-    SaveRole< PHY_RolePion_Medical           >( *this, file );
-    SaveRole< PHY_RolePion_Supply            >( *this, file );
+    //SaveRole< PHY_RolePion_Maintenance       >( *this, file );//@TODO refactor with new save
+    //SaveRole< PHY_RolePion_Medical           >( *this, file );
+    //SaveRole< PHY_RolePion_Supply            >( *this, file );
     SaveRole< PHY_RolePion_Surrender         >( *this, file );
     SaveRole< PHY_RolePion_Refugee           >( *this, file );
     SaveRole< PHY_RolePion_Population        >( *this, file );
@@ -263,78 +261,13 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
     GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipements
     GetRole< PHY_RolePion_Humans      >().WriteODB( xos ); // Personnels
     GetRole< PHY_RolePion_Dotations   >().WriteODB( xos ); // Dotations
-    GetRole< PHY_RolePion_Supply      >().WriteODB( xos ); // Stocks
+    
+    const PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();//@TODO verify
+    if( role )
+        role->WriteODB( xos ); // Stocks
        
     xos << xml::end();// unit
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::Initialize
-// Created: NLD 2004-09-16
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
-{
-    assert( pKnowledgeBlackBoard_ );
-
-    RegisterRole< NET_RolePion_Dotations         >( *this );
-
-    RegisterRole< PHY_RolePion_Reinforcement     >( *this );
-    RegisterRole< PHY_RolePion_Posture           >( *this );
-    RegisterRole< PHY_RolePion_Location          >( *this );
-    RegisterRole< PHY_RolePion_Dotations         >( *this );
-    RegisterRole< PHY_RolePion_Humans            >( *this );
-    RegisterRole< PHY_RolePion_Composantes       >( *this );
-    RegisterRole< PHY_RolePion_Perceiver         >( *this );
-    RegisterRole< PHY_RolePion_NBC               >( *this );
-    RegisterRole< PHY_RolePion_Communications    >( *this );
-
-    RegisterRole< PHY_RolePion_HumanFactors      >();
-    RegisterRole< PHY_RolePion_Transported       >( *this );
-    RegisterRole< PHY_RolePion_Maintenance       >();
-    RegisterRole< PHY_RolePion_Medical           >();
-    RegisterRole< PHY_RolePion_Supply            >();
-    RegisterRole< PHY_RolePion_Surrender         >( *this );
-    RegisterRole< PHY_RolePion_Refugee           >( *this );
-    RegisterRole< PHY_RolePion_Population        >( *this );
-    RegisterRole< PHY_RoleAction_Loading         >();
-    RegisterRole< PHY_RoleAction_Transport       >( *this );
-    RegisterRole< PHY_RoleAction_Moving          >( *this );
-    RegisterRole< PHY_RoleAction_Objects         >( *this );
-    RegisterRole< PHY_RoleAction_DirectFiring    >( *this );
-    RegisterRole< PHY_RoleAction_IndirectFiring  >( *this );
-    RegisterRole< DEC_RolePion_Decision          >( *this );
-    RegisterRole< PHY_RoleAction_FolkInfluence   >();
-    RegisterRole< DEC_Representations            >();
-
-    if( CanFly() )
-        RegisterRole< PHY_RoleAction_Flying >( *this );
-    else
-        RegisterRole< PHY_RoleAction_InterfaceFlying >();
-
-
-    pAutomate_->RegisterPion( *this );
-
-    GetRole< PHY_RolePion_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );
-    GetRole< PHY_RolePion_Location >().Fly ( 0. );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::Initialize
-// Created: NLD 2004-09-16
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::Initialize( xml::xistream& xis )
-{
-    xis >> xml::optional() >> xml::attribute( "command-post", bIsPC_ ); 
-
-    // Position - $$$ DEGEU
-    std::string strPosition;
-    xis >> xml::attribute( "position", strPosition );
-    MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
-
-    Initialize( vPosTmp );
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::ReadOverloading
 // Created: NLD 2005-01-26
@@ -345,7 +278,10 @@ void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
     GetRole< PHY_RolePion_Composantes  >().ReadOverloading( xis ); // Composantes + humans
     GetRole< PHY_RolePion_Dotations    >().ReadOverloading( xis );
     GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis ); 
-    GetRole< PHY_RolePion_Supply       >().ReadOverloading( xis );
+    
+    PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+        role->ReadOverloading( xis ); // Stocks
 }
 
 // -----------------------------------------------------------------------------
@@ -435,9 +371,6 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< PHY_RolePion_Communications    >().Update( bIsDead );
     GetRole< PHY_RolePion_HumanFactors      >().Update( bIsDead );
     GetRole< PHY_RolePion_Transported       >().Update( bIsDead );
-    GetRole< PHY_RolePion_Maintenance       >().Update( bIsDead );
-    GetRole< PHY_RolePion_Medical           >().Update( bIsDead );
-    GetRole< PHY_RolePion_Supply            >().Update( bIsDead );
     GetRole< PHY_RolePion_Surrender         >().Update( bIsDead );
     GetRole< PHY_RolePion_Refugee           >().Update( bIsDead );    
     GetRole< PHY_RolePion_Population        >().Update( bIsDead );    
@@ -450,6 +383,16 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< PHY_RoleAction_DirectFiring    >().Update( bIsDead );
     GetRole< PHY_RoleAction_IndirectFiring  >().Update( bIsDead );
     GetRole< PHY_RoleAction_FolkInfluence   >().Update( bIsDead );
+
+    PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO add update to new role interface
+    if( role )
+        role->Update( bIsDead );
+    PHY_RoleInterface_Medical* role2 = RetrieveRole< PHY_RoleInterface_Medical >();
+    if( role2 )
+        role2->Update( bIsDead );
+    PHY_RoleInterface_Supply* role3 = RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role3 )
+        role3->Update( bIsDead );
 }
 
 // -----------------------------------------------------------------------------
@@ -499,9 +442,6 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RolePion_Refugee           >().Clean();
     GetRole< PHY_RolePion_Population        >().Clean();
     GetRole< PHY_RolePion_Transported       >().Clean();
-    GetRole< PHY_RolePion_Maintenance       >().Clean();
-    GetRole< PHY_RolePion_Medical           >().Clean();
-    GetRole< PHY_RolePion_Supply            >().Clean();
     GetRole< PHY_RoleAction_Loading         >().Clean();
     GetRole< PHY_RoleAction_Transport       >().Clean();    
     GetRole< PHY_RoleAction_Objects         >().Clean();
@@ -511,6 +451,16 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RoleAction_IndirectFiring  >().Clean();
     GetRole< DEC_RolePion_Decision          >().Clean();
     GetRole< PHY_RoleAction_FolkInfluence   >().Clean();
+
+    PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO Add an interface for role with clean, update
+    if( role )
+        role->Clean();
+    PHY_RoleInterface_Medical* role2 = RetrieveRole< PHY_RoleInterface_Medical >();
+    if( role2 )
+        role2->Clean();
+    PHY_RoleInterface_Supply* role3 = RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role3 )
+        role3->Clean();
 }
 
 // =============================================================================
@@ -750,7 +700,10 @@ void MIL_AgentPion::OnReceiveMsgResupplyHumans()
 void MIL_AgentPion::OnReceiveMsgResupplyResources()
 {
     GetRole< PHY_RolePion_Dotations >().ResupplyDotations();
-    GetRole< PHY_RolePion_Supply    >().ResupplyStocks   ();
+
+    PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+        role->ResupplyStocks();
 }
 
 // -----------------------------------------------------------------------------
@@ -770,7 +723,9 @@ void MIL_AgentPion::OnReceiveMsgResupplyAll()
 {
     GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
     GetRole< PHY_RolePion_Dotations   >().ResupplyDotations   ();
-    GetRole< PHY_RolePion_Supply      >().ResupplyStocks      ();
+    PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+        role->ResupplyStocks();
     GetRole< PHY_RolePion_Humans      >().HealAllHumans       ();
     GetRole< PHY_RolePion_NBC         >().Decontaminate       ();
 }
@@ -831,13 +786,16 @@ void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionPartialRecover
 
     if( asn.m.stocksPresent )
     {
-        PHY_RolePion_Supply& roleSupply = GetRole< PHY_RolePion_Supply >();
-        for( uint i = 0; i < asn.stocks.n; ++i )
+        PHY_RoleInterface_Supply* roleSupply = RetrieveRole< PHY_RoleInterface_Supply >();
+        if( roleSupply )
         {
-            const ASN1T_StockRecovery& asnStock = asn.stocks.elem[ i ];
-            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id );
-            if( pDotationCategory )
-                roleSupply.ResupplyStocks( *pDotationCategory, asnStock.quantite_disponible );
+            for( uint i = 0; i < asn.stocks.n; ++i )
+            {
+                const ASN1T_StockRecovery& asnStock = asn.stocks.elem[ i ];
+                const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id );
+                if( pDotationCategory )
+                    roleSupply->ResupplyStocks( *pDotationCategory, asnStock.quantite_disponible );
+            }
         }
     }
 }

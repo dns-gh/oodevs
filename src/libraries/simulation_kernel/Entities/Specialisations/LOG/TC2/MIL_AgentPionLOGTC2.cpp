@@ -23,10 +23,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGTC2, "MIL_AgentPionLOGTC2" )
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
     : MIL_AgentPionLOG_ABC( type, nID, automate, xis )
-{
-    RegisterRole< PHY_RolePionLOG_Maintenance >( *this );
-    RegisterRole< PHY_RolePionLOG_Medical     >( *this );  
-    RegisterRole< PHY_RolePionLOG_Supply      >( *this );  
+{ 
 }
 
 // -----------------------------------------------------------------------------
@@ -36,9 +33,6 @@ MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, uint nI
 MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
     : MIL_AgentPionLOG_ABC( type, nID, automate, vPosition )
 {
-    RegisterRole< PHY_RolePionLOG_Maintenance >( *this );  
-    RegisterRole< PHY_RolePionLOG_Medical     >( *this );  
-    RegisterRole< PHY_RolePionLOG_Supply      >( *this );  
 }
 
 // -----------------------------------------------------------------------------

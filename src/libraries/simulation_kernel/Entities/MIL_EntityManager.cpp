@@ -57,6 +57,9 @@
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
 
+#include "AgentFactory.h"
+#include "Tools/MIL_IDManager.h"
+
 #include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_NbcAgentType.h"
 #include "Objects/MIL_MedicalTreatmentType.h"
@@ -68,7 +71,6 @@
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
 #include "Tools/MIL_ProfilerMgr.h"
-#include "Tools/MIL_IDManager.h"
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
 #include "Network/NET_ASN_Messages.h"
@@ -161,6 +163,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rActionsTime_                 ( 0. )
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
+    , idManager_                    ( new MIL_IDManager() )
+    , agentFactory_                 ( new AgentFactory( *idManager_ ) )
 {
     if( !singleton_ )
         singleton_ = this;
@@ -552,16 +556,13 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
 {
-    MIL_AgentPion*& pPion = pions_[ nID ];
-    if( pPion )
-        xis.error( "Pawn using this id already exists" );
-
-    pPion = &type.InstanciatePion( nID, automate, xis );
-    pPion->ReadOverloading( xis );
+    MIL_AgentPion* pPion = agentFactory_->Create( type, automate, xis );
+    Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
 
     if( hla_ )
         hla_->Register( *pPion );
     // $$$ Network
+
     return *pPion;
 }
 
@@ -571,17 +572,16 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, uin
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
-    MIL_AgentPion& pion = type.InstanciatePion( MIL_IDManager::GetFreeId(), automate, vPosition );
-    assert( pions_[ pion.GetID() ] == 0 );
-    pions_[ pion.GetID() ] = &pion;
+    MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
+    Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
 
     if( hla_ )
-        hla_->Register( pion );
+        hla_->Register( *pPion );
 
-    pion.SendCreation ();
-    pion.SendFullState();
-    pion.SendKnowledge();
-    return pion;
+    pPion->SendCreation ();
+    pPion->SendFullState();
+    pPion->SendKnowledge();
+    return *pPion;
 }
 
 // -----------------------------------------------------------------------------
@@ -1444,10 +1444,7 @@ MIL_Automate* MIL_EntityManager::FindAutomate( uint nID ) const
 // -----------------------------------------------------------------------------
 MIL_AgentPion* MIL_EntityManager::FindAgentPion( uint nID ) const
 {
-    CIT_PionMap itPion = pions_.find( nID );
-    if( itPion != pions_.end() )
-        return itPion->second;
-    return 0;
+    return Resolver< MIL_AgentPion >::Find( nID );
 }
 
 // -----------------------------------------------------------------------------

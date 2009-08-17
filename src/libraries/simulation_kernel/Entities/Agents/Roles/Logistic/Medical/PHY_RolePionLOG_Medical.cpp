@@ -63,8 +63,7 @@ PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical()
-    : PHY_RolePion_Medical    ()
-    , pPion_                  ( 0 )
+: pPion_                  ( 0 )
     , bHasChanged_            ( true )
     , bSystemEnabled_         ( false )
     , bSortingFunctionEnabled_( false )

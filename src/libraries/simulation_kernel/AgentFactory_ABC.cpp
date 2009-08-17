@@ -8,26 +8,23 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "MIL_IDManager.h"
+#include "AgentFactory_ABC.h"
 
-unsigned long MIL_IDManager::last_ = 1; 
 
 // -----------------------------------------------------------------------------
-// Name: MIL_IDManager::Constructor
+// Name: AgentFactory_ABC constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-MIL_IDManager::MIL_IDManager(){}
-// -----------------------------------------------------------------------------
-// Name: MIL_IDManager::Destructor
-// Created: MGD 2009-08-13
-// -----------------------------------------------------------------------------
-MIL_IDManager::~MIL_IDManager(){}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_IDManager::GetFreeId
-// Created: SBO 2009-05-26
-// -----------------------------------------------------------------------------
-unsigned long MIL_IDManager::GetFreeId()
+AgentFactory_ABC::AgentFactory_ABC()
 {
-    return last_++;
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory_ABC destructor
+// Created: MGD 2009-08-13
+// -----------------------------------------------------------------------------
+AgentFactory_ABC::~AgentFactory_ABC()
+{
+    // NOTHING
 }

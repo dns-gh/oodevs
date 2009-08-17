@@ -23,9 +23,9 @@
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePion_Maintenance.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePion_Medical.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
+#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RolePion_Refugee.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
@@ -216,9 +216,16 @@ void NET_RolePion_Dotations::SendChangedState() const
     pPion_->GetRole< PHY_RoleAction_Moving    >().SendChangedState        (); // Itineraire
     pPion_->GetRole< PHY_RolePion_Composantes >().SendLogisticChangedState(); // Consignes logistiques maintenance
     pPion_->GetRole< PHY_RolePion_Humans      >().SendLogisticChangedState(); // Consignes logistiques santé
-    pPion_->GetRole< PHY_RolePion_Maintenance >().SendChangedState        ();
-    pPion_->GetRole< PHY_RolePion_Medical     >().SendChangedState        ();
-    pPion_->GetRole< PHY_RolePion_Supply      >().SendChangedState        ();
+    
+    PHY_RoleInterface_Maintenance* roleMaintenance = pPion_->Retrieve< PHY_RoleInterface_Maintenance >();
+    if( roleMaintenance )
+        roleMaintenance->SendChangedState();
+    PHY_RoleInterface_Medical* roleMedical = pPion_->Retrieve< PHY_RoleInterface_Medical >();
+    if( roleMedical )
+        roleMedical->SendChangedState();
+    PHY_RoleInterface_Supply* roleSupply = pPion_->Retrieve< PHY_RoleInterface_Supply >();
+    if( roleSupply )
+        roleSupply->SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +265,13 @@ void NET_RolePion_Dotations::SendFullState() const
     pPion_->GetRole< PHY_RoleAction_Moving    >().SendFullState        (); // Itineraire
     pPion_->GetRole< PHY_RolePion_Composantes >().SendLogisticFullState(); // Consignes logistiques maintenance
     pPion_->GetRole< PHY_RolePion_Humans      >().SendLogisticFullState(); // Consignes logistiques santé
-    pPion_->GetRole< PHY_RolePion_Maintenance >().SendFullState        ();
-    pPion_->GetRole< PHY_RolePion_Medical     >().SendFullState        ();
-    pPion_->GetRole< PHY_RolePion_Supply      >().SendFullState        ();
+    PHY_RoleInterface_Maintenance* roleMaintenance = pPion_->Retrieve< PHY_RoleInterface_Maintenance >();
+    if( roleMaintenance )
+        roleMaintenance->SendFullState();
+    PHY_RoleInterface_Medical* roleMedical = pPion_->Retrieve< PHY_RoleInterface_Medical >();
+    if( roleMedical )
+        roleMedical->SendFullState();
+    PHY_RoleInterface_Supply* roleSupply = pPion_->Retrieve< PHY_RoleInterface_Supply >();
+    if( roleSupply )
+        roleSupply->SendFullState();
 }

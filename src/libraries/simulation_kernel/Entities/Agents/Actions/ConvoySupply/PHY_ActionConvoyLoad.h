@@ -15,7 +15,7 @@
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class MIL_AgentPion;
-class PHY_RolePion_Supply;
+class PHY_RoleInterface_Supply;
 
 // =============================================================================
 // @class  PHY_ActionConvoyLoad
@@ -40,7 +40,7 @@ public:
 private:
     //! @name Member data
     //@{
-    PHY_RolePion_Supply& role_;
+    PHY_RoleInterface_Supply& role_;
     //@}
 };
 

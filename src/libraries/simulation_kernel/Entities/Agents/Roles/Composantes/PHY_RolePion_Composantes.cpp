@@ -24,7 +24,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
@@ -737,7 +737,10 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
         pPion_->GetRole< PHY_RolePion_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
 
     pPion_->GetRole< PHY_RoleAction_Transport >().NotifyComposanteChanged( composante );
-    pPion_->GetRole< PHY_RolePion_Supply      >().NotifyComposanteChanged( composante );
+
+    PHY_RoleInterface_Supply* role = pPion_->Retrieve< PHY_RoleInterface_Supply >();
+    if( role )
+        role->NotifyComposanteChanged( composante );
 
     pPion_->GetRole< PHY_RoleAction_Loading   >().CheckConsistency();
     pPion_->GetRole< PHY_RoleAction_Transport >().CheckConsistency();

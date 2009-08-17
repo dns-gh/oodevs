@@ -12,8 +12,13 @@
 #ifndef __PHY_RoleInterface_Maintenance_h_
 #define __PHY_RoleInterface_Maintenance_h_
 
+#include "MIL.h" //@TODO Replace by log include
 #include "MT_Tools/Role_ABC.h"
 
+class PHY_MaintenanceComposanteState;
+class PHY_ComposantePion;
+class MIL_AgentPion;
+class PHY_MaintenanceWorkRate;
 // =============================================================================
 // @class  PHY_RoleInterface_Maintenance
 // Created: JVT 2004-08-03
@@ -31,6 +36,36 @@ public:
 public:
              PHY_RoleInterface_Maintenance();
     virtual ~PHY_RoleInterface_Maintenance();
+
+    //! @name Operations
+    //@{
+    virtual void Update        ( bool bIsDead ) = 0;
+    virtual void UpdateLogistic( bool bIsDead ) = 0;
+    virtual void Clean         () = 0;
+    //@}
+
+    //! @name Main
+    //@{
+    virtual void EnableSystem () = 0;
+    virtual void DisableSystem() = 0;
+
+    virtual void ChangePriorities( const T_MaintenancePriorityVector& priorities ) = 0;
+    virtual void ChangePriorities( const T_AutomateVector&            priorities ) = 0;
+    virtual void ChangeWorkRate  ( const PHY_MaintenanceWorkRate&     workRate   ) = 0;
+
+    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_AgentPion& pion, PHY_ComposantePion& composante ) = 0;
+    virtual bool                            HandleComposanteForTransport    ( PHY_MaintenanceComposanteState& composanteState ) = 0;
+    virtual int                             GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) = 0;
+
+    virtual bool                            HandleComposanteForRepair    ( PHY_MaintenanceComposanteState& composanteState ) = 0;
+    virtual int                             GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState ) = 0;
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState() const = 0;
+    virtual void SendFullState   () const = 0;
+    //@}
 };
 
 #endif // __PHY_RoleInterface_Maintenance_h_

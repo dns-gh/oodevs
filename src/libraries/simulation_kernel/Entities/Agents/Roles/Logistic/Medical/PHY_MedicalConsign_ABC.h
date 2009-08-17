@@ -12,7 +12,6 @@
 #ifndef __PHY_MedicalConsign_ABC_h_
 #define __PHY_MedicalConsign_ABC_h_
 
-class PHY_RolePion_Medical;
 class PHY_RolePionLOG_Medical;
 class PHY_ComposantePion;
 class PHY_MedicalHumanState;

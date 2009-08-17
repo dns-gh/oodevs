@@ -13,7 +13,7 @@
 #include "PHY_SupplyStockRequestContainer.h"
 #include "PHY_SupplyStockState.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
@@ -32,7 +32,14 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
 {
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
     for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-        (**itPion).GetRole< PHY_RolePion_Supply >().FillSupplyRequest( *this );    
+    {
+        PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
+        if( stockPion )
+        {
+            stockPion->FillSupplyRequest( *this );    
+        }
+    }
+        
 }
 
 // -----------------------------------------------------------------------------
@@ -64,16 +71,28 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
         T_PionStockVector pionStocks;
         for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
         {
-            PHY_DotationStock* pStock = (**itPion).GetRole< PHY_RolePion_Supply >().GetStock( *pDotationCategory );
-            if( pStock )
-                pionStocks.push_back( std::make_pair( pStock, 0. ) );
+            PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
+            if( stockPion )
+            {
+                PHY_DotationStock* pStock = stockPion->GetStock( *pDotationCategory );
+                if( pStock )
+                    pionStocks.push_back( std::make_pair( pStock, 0. ) );
+            }
+
         }
 
         if( pionStocks.empty() )
         {
             PHY_DotationStock* pNewStock = 0;
             for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end() && !pNewStock; ++itPion )
-                pNewStock = (**itPion).GetRole< PHY_RolePion_Supply >().AddStock( *pDotationCategory );
+            {
+                PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
+                if( stockPion )
+                {
+                    pNewStock = stockPion->AddStock( *pDotationCategory );
+                }
+            }
+                
             
             if( !pNewStock )
                 continue;

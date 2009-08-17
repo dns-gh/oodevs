@@ -12,7 +12,7 @@
 #ifndef __PHY_RolePionLOG_Supply_h_
 #define __PHY_RolePionLOG_Supply_h_
 
-#include "PHY_RolePion_Supply.h"
+#include "PHY_RoleInterface_Supply.h"
 
 namespace xml
 {
@@ -28,7 +28,7 @@ class PHY_ComposantePion;
 // @class  PHY_RolePionLOG_Supply
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePionLOG_Supply : public PHY_RolePion_Supply
+class PHY_RolePionLOG_Supply : public PHY_RoleInterface_Supply
 {
 
 public:

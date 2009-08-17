@@ -44,8 +44,7 @@ PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion )
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply()
-    : PHY_RolePion_Supply()
-    , pPion_             ()
+    : pPion_             ()
     , bSystemEnabled_    ( false )
     , bHasChanged_       ( true )
     , pStocks_           ( 0 )
@@ -84,8 +83,6 @@ void PHY_RolePionLOG_Supply::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::WriteODB( xml::xostream& xos ) const
 {
-    PHY_RolePion_Supply::WriteODB( xos );
-
     assert( pStocks_ );
     pStocks_->WriteODB( xos );
 }

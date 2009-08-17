@@ -13,6 +13,8 @@
 #include "MIL_AgentTypePionLOGMedical.h"
 #include "MIL_AgentPionLOGMedical.h"
 
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMedical constructor
 // Created: NLD 2004-09-14
@@ -36,19 +38,31 @@ MIL_AgentTypePionLOGMedical::~MIL_AgentTypePionLOGMedical()
 // Name: MIL_AgentTypePionLOGMedical::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
 {
-    return *new MIL_AgentPionLOGMedical( *this, nID, automate, xis );
+    return new MIL_AgentPionLOGMedical( *this, nID, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMedical::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
 {
-    return *new MIL_AgentPionLOGMedical( *this, nID, automate, vPosition );
+    return new MIL_AgentPionLOGMedical( *this, nID, automate, vPosition );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionLOGMedical::RegisterRoles
+// Created: MGD 2009-08-13
+// @TODO REPLACE BY XML in AgentFactory
+// -----------------------------------------------------------------------------
+void MIL_AgentTypePionLOGMedical::RegisterRoles( MIL_AgentPion& pion ) const
+{
+    MIL_AgentTypePion::RegisterRoles( pion );
+    pion.RegisterRole< PHY_RolePionLOG_Medical >( static_cast< MIL_AgentPionLOG_ABC& >( pion ) );//@TODO remove cast when AgentPionLOG will be deleted   
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionINF::Create

@@ -12,7 +12,7 @@
 #ifndef __PHY_RolePionLOGConvoy_Supply_h_
 #define __PHY_RolePionLOGConvoy_Supply_h_
 
-#include "PHY_RolePion_Supply.h"
+#include "PHY_RoleInterface_Supply.h"
 
 class MIL_AgentPion;
 class PHY_StockConvoy;
@@ -21,7 +21,7 @@ class PHY_StockConvoy;
 // @class  PHY_RolePionLOGConvoy_Supply
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePionLOGConvoy_Supply : public PHY_RolePion_Supply
+class PHY_RolePionLOGConvoy_Supply : public PHY_RoleInterface_Supply
 {
 
 public:

@@ -15,6 +15,8 @@
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Specialisations/log/MIL_AgentPionLOG_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MedicalEvacuationAmbulance, "PHY_MedicalEvacuationAmbulance" )
 
@@ -133,7 +135,7 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingTo()
     vHumansBarycenter /= consigns_.size();
 
     nState_ = eGoingTo;
-    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pMedical_->GetPosition(), vHumansBarycenter );
+    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pMedical_->GetPion().GetRole< PHY_RolePion_Location>().GetPosition(), vHumansBarycenter );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +190,7 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingFrom()
     vHumansBarycenter /= consigns_.size();
 
     nState_ = eGoingFrom;
-    nTimer_ = pCompAmbulance_->ApproximateTravelTime( vHumansBarycenter, pMedical_->GetPosition() );
+    nTimer_ = pCompAmbulance_->ApproximateTravelTime( vHumansBarycenter, pMedical_->GetPion().GetRole< PHY_RolePion_Location>().GetPosition() );
 }
     
 // -----------------------------------------------------------------------------

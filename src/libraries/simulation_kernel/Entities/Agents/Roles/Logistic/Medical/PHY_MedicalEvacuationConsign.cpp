@@ -12,13 +12,14 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_MedicalEvacuationConsign.h"
-#include "PHY_RolePion_Medical.h"
+#include "PHY_RoleInterface_Medical.h"
 #include "PHY_MedicalHumanState.h"
 #include "PHY_MedicalEvacuationAmbulance.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MedicalEvacuationConsign, "PHY_MedicalEvacuationConsign" )
 
@@ -197,7 +198,7 @@ void PHY_MedicalEvacuationConsign::ChooseStateAfterEvacuation()
     assert( pHumanState_ );
     assert( !pDoctor_ );
 
-    pHumanState_->SetHumanPosition( GetPionMedical().GetPosition() );
+    pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pEvacuationAmbulance_ = 0;
 
     nTimer_ = 0;

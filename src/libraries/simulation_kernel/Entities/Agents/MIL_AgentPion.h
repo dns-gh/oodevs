@@ -138,8 +138,6 @@ protected:
 private:
     //! @name Operations
     //@{
-    void Initialize         ( xml::xistream& xml );
-    void Initialize         ( const MT_Vector2D& vPosition );
     void UpdatePhysicalState();
     //@}
 

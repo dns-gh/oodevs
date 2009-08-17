@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Conveyor.h"
 #include "PHY_SupplyStockConsign.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -52,7 +52,7 @@ PHY_Conveyor::PHY_Conveyor( PHY_ComposantePion& conveyorComp, MIL_AgentPion& con
 
     pConveyorComp_->GetStockTransporterCapacity( rWeightCapacity_, rVolumeCapacity_ );
     assert( rWeightCapacity_ > 0. && rVolumeCapacity_ > 0. );
-    pConveyorPion_->GetRole< PHY_RolePion_Supply >().StartUsingForLogistic( *pConveyorComp_ );
+    pConveyorPion_->GetRole< PHY_RoleInterface_Supply >().StartUsingForLogistic( *pConveyorComp_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ PHY_Conveyor::PHY_Conveyor( PHY_ComposantePion& conveyorComp, MIL_AgentPion& con
 PHY_Conveyor::~PHY_Conveyor()
 {
     assert( !pLentTo_ );
-    pConveyorPion_->GetRole< PHY_RolePion_Supply >().StopUsingForLogistic( *pConveyorComp_ );
+    pConveyorPion_->GetRole< PHY_RoleInterface_Supply >().StopUsingForLogistic( *pConveyorComp_ );
 }
 
 namespace boost
@@ -167,7 +167,7 @@ void PHY_Conveyor::LendTo( MIL_AgentPion& pion )
 {
     assert( !pLentTo_ );
     pLentTo_ = &pion;
-    pConveyorPion_->GetRole< PHY_RolePion_Supply      >().StopUsingForLogistic( *pConveyorComp_ );
+    pConveyorPion_->GetRole< PHY_RoleInterface_Supply      >().StopUsingForLogistic( *pConveyorComp_ );
     pConveyorPion_->GetRole< PHY_RolePion_Composantes >().LendComposante      ( pLentTo_->GetRole< PHY_RolePion_Composantes >(), *pConveyorComp_ );
 }
 
@@ -179,7 +179,7 @@ void PHY_Conveyor::UndoLend()
 {
     assert( pLentTo_ );
     pConveyorPion_->GetRole< PHY_RolePion_Composantes >().RetrieveLentComposante( pLentTo_->GetRole< PHY_RolePion_Composantes >(), *pConveyorComp_ );
-    pConveyorPion_->GetRole< PHY_RolePion_Supply      >().StartUsingForLogistic ( *pConveyorComp_ );
+    pConveyorPion_->GetRole< PHY_RoleInterface_Supply      >().StartUsingForLogistic ( *pConveyorComp_ );
     pLentTo_ = 0;
 }
 

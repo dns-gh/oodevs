@@ -16,6 +16,8 @@
 #include "MT_Tools/MT_Profiler.h"
 #include "MIL_EntityManager_ABC.h"
 
+#include "clients_kernel/Resolver.h"
+
 namespace xml
 {
     class xostream;
@@ -46,6 +48,8 @@ class MIL_Config;
 class MIL_ProfilerMgr;
 class MIL_Time_ABC;
 class MIL_Intelligence;
+class AgentFactory_ABC;
+class MIL_IDManager;
 
 class HLA_Federate;
 
@@ -72,7 +76,8 @@ class DIA_Parameters;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_EntityManager : public MIL_EntityManager_ABC,
-private boost::noncopyable
+                          public kernel::Resolver< MIL_AgentPion >,
+                          private boost::noncopyable
 {
 
 public:
@@ -241,6 +246,11 @@ private:
 
 
     T_PopulationMap populations_;
+
+    // ID Manager
+    std::auto_ptr< MIL_IDManager > idManager_;
+    // Factories
+    std::auto_ptr< AgentFactory_ABC >  agentFactory_;
 
     // Profiling
     MT_Profiler   profiler_;

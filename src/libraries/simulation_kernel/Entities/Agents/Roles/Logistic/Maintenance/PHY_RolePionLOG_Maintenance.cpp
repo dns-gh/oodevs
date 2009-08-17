@@ -52,8 +52,7 @@ PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& 
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance()
-    : PHY_RolePion_Maintenance()
-    , pPion_                  ( 0 )
+: pPion_                  ( 0 )
     , bHasChanged_            ( true )
     , bSystemEnabled_         ( false )
     , priorities_             ()

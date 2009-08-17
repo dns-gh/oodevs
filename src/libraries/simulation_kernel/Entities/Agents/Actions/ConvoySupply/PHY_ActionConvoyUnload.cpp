@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionConvoyUnload.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConvoyUnload constructor
@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 PHY_ActionConvoyUnload::PHY_ActionConvoyUnload( MIL_AgentPion& pion )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , role_         ( pion.GetRole< PHY_RolePion_Supply >() )
+    , role_         ( pion.GetRole< PHY_RoleInterface_Supply >() )
 {    
     Callback( false );
 }

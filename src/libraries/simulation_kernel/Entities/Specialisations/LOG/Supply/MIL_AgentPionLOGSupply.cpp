@@ -22,7 +22,6 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGSupply, "MIL_AgentPionLOGSupply" )
 MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
     : MIL_AgentPionLOG_ABC( type, nID, automate, xis )
 {
-    RegisterRole< PHY_RolePionLOG_Supply >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +31,6 @@ MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, u
 MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
     : MIL_AgentPionLOG_ABC( type, nID, automate, vPosition )
 {
-    RegisterRole< PHY_RolePionLOG_Supply >( *this );
 }
 
 // -----------------------------------------------------------------------------

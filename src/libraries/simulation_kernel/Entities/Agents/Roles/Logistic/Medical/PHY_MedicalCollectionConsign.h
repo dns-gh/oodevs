@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "PHY_MedicalConsign_ABC.h"
 
+class PHY_RoleInterface_Medical;
 class PHY_RolePionLOG_Medical;
 class PHY_MedicalHumanState;
 
@@ -60,7 +61,7 @@ private:
     void EnterStateSearchingForSortingArea        ();
     void EnterStateCollectionGoingTo              ();
     void EnterStateCollectionUnloading            ();
-    void TransferToSortingArea                    ( PHY_RolePion_Medical& sortingArea );
+    void TransferToSortingArea                    ( PHY_RoleInterface_Medical& sortingArea );
     void NotifyOutOfMedicalSystem                 ();
     //@}
 
