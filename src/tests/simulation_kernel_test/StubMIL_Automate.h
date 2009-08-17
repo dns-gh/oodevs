@@ -7,10 +7,11 @@
 class StubMIL_Automate : public MIL_Automate
 {
 public:
-    StubMIL_Automate( MIL_AutomateType& type ) : MIL_Automate( type ) 
+    explicit StubMIL_Automate( MIL_AutomateType& type ) : MIL_Automate( type ) 
     {
         RegisterRole( new DEC_AutomateDecision( *this ) ) ;
     }
+    virtual ~StubMIL_Automate() {}
 };
 
 #endif

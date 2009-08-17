@@ -51,7 +51,7 @@ namespace
 {
     MIL_Object_ABC* CreateObject( const MIL_ObjectType_ABC& type, MockArmy& army, MIL_ObjectLoader& loader )
     {
-        MIL_Object_ABC* pObject =0;
+        MIL_Object_ABC* pObject = 0;
         MockBuilder builder;
         builder.GetType_mocker.expects( mockpp::once() ) .will( returnValue( &type ) );
         MOCKPP_CHAINER_FOR( MockBuilder, Build )         ( &builder ).expects( mockpp::once() );
@@ -173,8 +173,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC )
     CheckCapacity< ContaminationCapacity >( *pObject );
 
     // The following lines are used to force the Instanciation of attributes
-    BOOST_CHECK_NO_THROW( ( static_cast< Object* >( pObject )->GetAttribute< MockToxicAttribute, ToxicAttribute_ABC >() ) );
-    BOOST_CHECK_NO_THROW( ( static_cast< Object* >( pObject )->GetAttribute< NBCAttribute >() ) );
+    BOOST_CHECK_NO_THROW( ( static_cast< Object& >( *pObject ).GetAttribute< MockToxicAttribute, ToxicAttribute_ABC >() ) );
+    BOOST_CHECK_NO_THROW( ( static_cast< Object& >( *pObject ).GetAttribute< NBCAttribute >() ) );
 
     MT_Vector2D position;
     MockAgent agent;
@@ -281,7 +281,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped )
     MockAgent agent;
     
     // Force creation of attribute SupplyRouteAttribute...
-    BOOST_CHECK_NO_THROW( ( static_cast< Object* >( pObject )->GetAttribute< SupplyRouteAttribute >() ) );
+    BOOST_CHECK_NO_THROW( ( static_cast< Object& >( *pObject ).GetAttribute< SupplyRouteAttribute >() ) );
     BOOST_CHECK_EQUAL( pObject->GetAttribute< SupplyRouteAttribute >().IsEquipped(), pObject->CanInteractWith( agent ) );
 
     army.verify();
@@ -393,11 +393,11 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
 
     MIL_Object_ABC* object = CreateObject( type, army, loader );
     CheckCapacity< DetectionCapacity >( *object );
-    BOOST_CHECK_NO_THROW( static_cast< Object* >( object )->GetAttribute< AnimatorAttribute >() );
+    BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >() );
 
     MockAgent animator;
     animator.RegisterRole< MockRolePerceiver >();
-    static_cast< Object* >( object )->GetAttribute< AnimatorAttribute >().AddAnimator( animator );
+    static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >().AddAnimator( animator );
 
     MockAgent intruder;
     BOOST_CHECK_NO_THROW( object->ProcessAgentEntering( intruder ) );
@@ -440,10 +440,9 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Mine )
     MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
 
     MIL_Object_ABC* object = CreateObject( type, army, loader );
-    BOOST_CHECK_NO_THROW( static_cast< Object* >( object )->GetAttribute< ObstacleAttribute >() );
-    BOOST_CHECK_NO_THROW( static_cast< Object* >( object )->GetAttribute< TimeLimitedAttribute >() );
-    BOOST_CHECK_NO_THROW( static_cast< Object* >( object )->GetAttribute< MineAttribute >() );
+    BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< ObstacleAttribute >() );
+    BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< TimeLimitedAttribute >() );
+    BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< MineAttribute >() );
 
     army.verify();
 }
-

@@ -25,8 +25,13 @@ class Role_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Role_ABC();
-    virtual ~Role_ABC();
+             Role_ABC() {}
+    virtual ~Role_ABC() {}
+    //@}
+
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint ) {}
     //@}
 };
 

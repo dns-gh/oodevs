@@ -16,8 +16,8 @@
 template< typename Role >
 typename Role::RoleInterface& RoleContainer::RegisterRole( Role* pRole )
 {
-	Attach(static_cast< Role::RoleInterface& >( *pRole ));
-	this->InterfaceContainer<Role_ABC>::Register ( *pRole) ;
+	Attach( static_cast< Role::RoleInterface& >( *pRole ) );
+	InterfaceContainer<Role_ABC>::Register( *pRole ) ;
 	return static_cast< Role::RoleInterface& >( *pRole );
 }
 
@@ -62,11 +62,22 @@ typename Role::RoleInterface& RoleContainer::RegisterRole( P1& param1, P2& param
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleContainer::serialize
-// Created: JVT 2005-04-05
+// Name: template< class Archive > void RoleContainer::load
+// Created: SBO 2009-08-14
 // -----------------------------------------------------------------------------
-template< typename Archive >
-inline
-void RoleContainer::serialize( Archive&, const uint )
+template< class Archive >
+void RoleContainer::load( Archive& archive, const unsigned int /*version*/ )
 {
+    std::vector< Role_ABC* > container;
+    archive >> container;
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< class Archive > void RoleContainer::save
+// Created: SBO 2009-08-14
+// -----------------------------------------------------------------------------
+template< class Archive >
+void RoleContainer::save( Archive& archive, const unsigned int /*version*/ ) const
+{
+    archive << extensions_.Container();
 }

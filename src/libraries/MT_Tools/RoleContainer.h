@@ -12,11 +12,10 @@
 #ifndef __RoleContainer_h_
 #define __RoleContainer_h_
 
-#include "MT_Tools_Types.h"
-#include <boost/shared_ptr.hpp>
+#include "MT_Tools/Role_ABC.h"
 #include "tools/Extendable.h"
 #include "tools/InterfaceContainer.h"
-#include "MT_Tools/Role_ABC.h"
+#include <boost/serialization/split_member.hpp>
 
 namespace tools
 {
@@ -25,16 +24,18 @@ namespace tools
 // @class  RoleContainer
 // Created: JVT/NLD 2004-08-03
 // =============================================================================
-class RoleContainer : public tools::Extendable<Role_ABC>,
-						 public tools::InterfaceContainer<Role_ABC>
+class RoleContainer : public tools::Extendable< Role_ABC >
+                    , public tools::InterfaceContainer<Role_ABC>
 {
 public:
-             RoleContainer();
-    virtual ~RoleContainer();
+             RoleContainer() {}
+    virtual ~RoleContainer() {}
     
-    //! @name CheckPoints
+    //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< class Archive > void load( Archive& archive, const unsigned int version );
+    template< class Archive > void save( Archive& archive, const unsigned int version ) const;
     //@}
 
     //! @name Role registration
@@ -64,7 +65,6 @@ public:
         return static_cast< const Role* >( Retrieve<Role::RoleInterface>() );
     }
     //@}
-protected:
     template< typename Role > typename Role::RoleInterface& RegisterRole( Role* r);
 };
 
