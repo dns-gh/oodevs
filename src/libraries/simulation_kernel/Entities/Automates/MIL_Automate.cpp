@@ -364,11 +364,9 @@ void MIL_Automate::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
 {
-    uint        id;
     std::string strType;
     bool isPc = false;
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "type", strType )
+    xis >> xml::attribute( "type", strType )
         >> xml::optional() >> xml::attribute( "command-post", isPc );
 
     if( isPc && pPionPC_ )
@@ -378,7 +376,7 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
     if( !pType )
         xis.error( "Unknown pawn type" );
 
-    MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, id, *this, xis ); // Auto-registration
+    MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, xis ); // Auto-registration
     if( isPc )
         pPionPC_ = &pion;
 }
@@ -389,16 +387,6 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
 {
-    uint        id;
-    std::string strType;
-
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "type", strType );
-
-    const MIL_AutomateType* pAutomateType = MIL_AutomateType::FindAutomateType( strType );
-    if( !pAutomateType )
-        xis.error( "Unknown automat type" );
-
     MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( xis, *this ); // Auto-registration
 }
     

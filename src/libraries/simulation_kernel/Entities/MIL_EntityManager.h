@@ -49,6 +49,7 @@ class MIL_ProfilerMgr;
 class MIL_Time_ABC;
 class MIL_Intelligence;
 class AgentFactory_ABC;
+class AutomateFactory_ABC;
 class MIL_IDManager;
 
 class HLA_Federate;
@@ -77,6 +78,7 @@ class DIA_Parameters;
 // =============================================================================
 class MIL_EntityManager : public MIL_EntityManager_ABC,
                           public kernel::Resolver< MIL_AgentPion >,
+                          public kernel::Resolver< MIL_Automate >,
                           private boost::noncopyable
 {
 
@@ -102,7 +104,7 @@ public:
     void CreateAutomat     ( xml::xistream& xis, MIL_Formation& formation );
     void CreatePopulation  ( xml::xistream& xis, MIL_Army& army );
     void CreateIntelligence( xml::xistream& xis, MIL_Formation& formation );
-    MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, uint nID, MIL_Automate&  automate , xml::xistream& xis );
+    MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
 
     void                        CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
@@ -185,12 +187,6 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< uint, MIL_AgentPion* > T_PionMap;
-    typedef T_PionMap::const_iterator        CIT_PionMap;
-
-    typedef std::map< uint, MIL_Automate* > T_AutomateMap;
-    typedef T_AutomateMap::const_iterator   CIT_AutomateMap;
-
     typedef std::map< uint, MIL_Formation* > T_FormationMap;
     typedef T_FormationMap::const_iterator   CIT_FormationMap;
 
@@ -240,8 +236,6 @@ private:
 
     T_ArmyMap         armies_;
     T_FormationMap    formations_;
-    T_PionMap         pions_;
-    T_AutomateMap     automates_;
     T_IntelligenceMap intelligences_;
 
 
@@ -251,6 +245,7 @@ private:
     std::auto_ptr< MIL_IDManager > idManager_;
     // Factories
     std::auto_ptr< AgentFactory_ABC >  agentFactory_;
+    std::auto_ptr< AutomateFactory_ABC > automateFactory_;
 
     // Profiling
     MT_Profiler   profiler_;

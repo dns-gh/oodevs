@@ -58,6 +58,7 @@
 #include "Automates/MIL_Automate.h"
 
 #include "AgentFactory.h"
+#include "AutomateFactory.h"
 #include "Tools/MIL_IDManager.h"
 
 #include "Objects/MIL_FireClass.h"
@@ -165,6 +166,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rStatesTime_                  ( 0. )
     , idManager_                    ( new MIL_IDManager() )
     , agentFactory_                 ( new AgentFactory( *idManager_ ) )
+    , automateFactory_              ( new AutomateFactory( *idManager_ ) )
 {
     if( !singleton_ )
         singleton_ = this;
@@ -188,6 +190,8 @@ MIL_EntityManager::MIL_EntityManager()
     , rActionsTime_                 ( 0. )
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
+    , agentFactory_                 ( new AgentFactory( *idManager_ ) )
+    , automateFactory_              ( new AutomateFactory( *idManager_ ) )
 {
     if( !singleton_ )
         singleton_ = this;
@@ -317,11 +321,8 @@ void MIL_EntityManager::InitializeWeapons( xml::xistream& xis, MIL_Config& confi
 MIL_EntityManager::~MIL_EntityManager()
 {
     // ODB - $$$ Virer ça ... utiliser des factories
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        delete itPion->second;
-
-    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        delete itAutomate->second;
+    Resolver< MIL_AgentPion >::DeleteAll();
+    Resolver< MIL_Automate >::DeleteAll();
 
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         delete itPopulation->second;
@@ -398,8 +399,8 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     InitializeArmies   ( xis );
     InitializeDiplomacy( xis );
 
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , Resolver< MIL_Automate >::Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , Resolver< MIL_AgentPion >::Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
     
     xis >> xml::end();
@@ -407,9 +408,9 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     // Check automate composition
     if( config.CheckAutomateComposition() )
     {
-        for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
+        for( kernel::Iterator< const MIL_Automate& > it = Resolver< MIL_Automate >::CreateIterator(); it.HasMoreElements(); )
         {
-            const MIL_Automate& automate = *it->second;
+            const MIL_Automate& automate = it.NextElement();
             if( !automate.CheckComposition() )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "The effective composition of the automate '%d' ('%s') is not consistent with the composition described in the type '%s'", automate.GetID(), automate.GetName().c_str(), automate.GetType().GetName().c_str() ) );
         }
@@ -418,10 +419,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     // Disengage automata for frozen mode
     if( config.IsFrozenMode() )
     {
-        for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
-        {
-            it->second->Disengage();
-        }
+        Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::Disengage, _1 ) );
     }
     UpdateStates();
 }
@@ -514,13 +512,8 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& format
     if( !pType )
         xis.error( "Unknown automat type" );
 
-    MIL_Automate*& pAutomate = automates_[ id ];
-    if( pAutomate )
-        xis.error( "Automat using this id already exists" );
-    pAutomate = (MIL_Automate*)0xdead;  // $$$$ NLD 2007-04-04: N'importe quoi
-    
-    pAutomate = &pType->InstanciateAutomate( id, formation, xis );
-    pAutomate->ReadOverloading( xis );
+    MIL_Automate* pAutomate = automateFactory_->Create( *pType, formation, xis );
+    Resolver< MIL_Automate >::Register( pAutomate->GetID(), *pAutomate );
     // $$$ Network
 }
 
@@ -540,13 +533,8 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
     if( !pType )
         xis.error( "Unknown automat type" );
             
-    MIL_Automate*& pAutomate = automates_[ id ];
-    if( pAutomate )
-        xis.error( "Automat using this id already exists" );
-    pAutomate = (MIL_Automate*)0xdead; // $$$$ NLD 2007-04-04: N'importe quoi
-    
-    pAutomate = &pType->InstanciateAutomate( id, parent, xis );
-    pAutomate->ReadOverloading( xis );
+    MIL_Automate* pAutomate = automateFactory_->Create( *pType, parent, xis );
+    Resolver< MIL_Automate >::Register( pAutomate->GetID(), *pAutomate );
     // $$$ Network
 }
 
@@ -554,7 +542,7 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
 // Name: MIL_EntityManager::CreatePion
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, xis );
     Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
@@ -716,6 +704,22 @@ void MIL_EntityManager::UpdateKnowledges()
     rKnowledgesTime_ = profiler_.Stop();
 }
 
+namespace
+{
+    void UpdateAutomate( MT_Profiler& profiler, float duration, MIL_Automate& automate )
+    {
+        profiler.Start();
+        automate.UpdateDecision( duration );
+        MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( automate, profiler.Stop() );
+    }
+    void UpdatePion( MT_Profiler& profiler, float duration, MIL_AgentPion& pion )
+    {
+        profiler.Start();
+        pion.UpdateDecision( duration );
+        MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( pion, profiler.Stop() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::UpdateDecisions
 // Created: NLD 2004-08-19
@@ -728,21 +732,12 @@ void MIL_EntityManager::UpdateDecisions()
         MT_Profiler decisionUpdateProfiler;
 
         profiler_.Start();
-        for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
-        {
-            decisionUpdateProfiler.Start();
-            it->second->UpdateDecision( duration );
-            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *it->second, decisionUpdateProfiler.Stop() );
-        }
+        Resolver< MIL_Automate >::Apply( boost::bind( &UpdateAutomate, boost::ref(decisionUpdateProfiler), duration, _1 ) );
+
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
-        {
-            decisionUpdateProfiler.Start();
-            it->second->UpdateDecision( duration );
-            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *it->second, decisionUpdateProfiler.Stop() );
-        }
+        Resolver< MIL_AgentPion >::Apply( boost::bind( &UpdatePion, boost::ref(decisionUpdateProfiler), duration, _1 ) );
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -757,13 +752,11 @@ void MIL_EntityManager::UpdateDecisions()
     else
     {
         profiler_.Start();
-        for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
-            it->second->UpdateDecision( duration );
+        Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateDecision, _1, duration ) );
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
-            it->second->UpdateDecision( duration );
+        Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -781,11 +774,8 @@ void MIL_EntityManager::UpdateActions()
 {
     profiler_.Start();
 
-    for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
-        it->second->UpdateActions();
-
-    for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
-        it->second->UpdateActions();
+    Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
+    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
 
     for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
         it->second->UpdateActions();
@@ -816,17 +806,13 @@ void MIL_EntityManager::UpdateStates()
     profiler_.Start();
 
     // !! Automate avant Pions (?? => LOG ??)
-    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        itAutomate->second->UpdateState();
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->UpdateState();
+    Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
+    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         itPopulation->second->UpdateState();
 
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->UpdateNetwork();
-    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        itAutomate->second->UpdateNetwork();
+    Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
+    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         itPopulation->second->UpdateNetwork();
 
@@ -849,8 +835,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
     while( nRandomBreakdownsNextTimeStep_ <= nCurrentTimeStep )
         nRandomBreakdownsNextTimeStep_ += ( 3600 * 24 / time_.GetTickDuration() );
 
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->PreprocessRandomBreakdowns( nRandomBreakdownsNextTimeStep_ );
+    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::PreprocessRandomBreakdowns, _1, nRandomBreakdownsNextTimeStep_ ) );
     MT_LOG_INFO_MSG( "Breakdowns preprocessed" );
 }
 
@@ -877,11 +862,8 @@ void MIL_EntityManager::Update()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Clean()
 {
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->Clean();
-
-    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        itAutomate->second->Clean();
+    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
+    Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
 
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         itPopulation->second->Clean();
@@ -1341,8 +1323,8 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> armies_
          >> formations_
-         >> pions_
-         >> automates_
+         //>> pions_ //TODO ADD Resolver serialization
+         //>> automates_ //TODO ADD Resolver serialization
          >> populations_
          >> pObjectManager_
          >> rKnowledgesTime_
@@ -1354,8 +1336,8 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
          >> rStatesTime_
          >> nRandomBreakdownsNextTimeStep_;
 
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , Resolver< MIL_Automate >::Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , Resolver< MIL_AgentPion >::Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
 }
 
@@ -1368,8 +1350,8 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
     file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          << armies_
          << formations_
-         << pions_
-         << automates_
+         //<< pions_ //TODO ADD Resolver serialization
+         //<< automates_ //TODO ADD Resolver serialization
          << populations_
          << pObjectManager_
          << rKnowledgesTime_
@@ -1432,10 +1414,7 @@ MIL_Army* MIL_EntityManager::FindArmy( uint nID ) const
 // -----------------------------------------------------------------------------
 MIL_Automate* MIL_EntityManager::FindAutomate( uint nID ) const
 {
-    CIT_AutomateMap it = automates_.find( nID );
-    if( it == automates_.end() )
-        return 0;
-    return it->second;
+    return Resolver< MIL_Automate >::Find( nID );
 }
 
 // -----------------------------------------------------------------------------
