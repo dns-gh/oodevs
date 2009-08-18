@@ -64,7 +64,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
         xis.error( "Unknown attitude" );
 
     pKnowledge_ = new DEC_PopulationKnowledge();
-    RegisterRole( new DEC_PopulationDecision() ); 
+    RegisterRole( new DEC_PopulationDecision(*this) ); 
     RegisterRole( new DEC_Representations() );
 
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
