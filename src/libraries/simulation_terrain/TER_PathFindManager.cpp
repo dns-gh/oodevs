@@ -93,3 +93,12 @@ TerrainData& TER_PathFindManager::DefaultTerrainData()
     static TerrainData data;
     return data;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathFindManager::DefaultTerrainData
+// Created: RPD 2009-08-18
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindNodesWithinCircle( const MT_Vector2D& center, float rRadius )
+{
+    return threads_.back()->FindNodesWithinCircle( center, rRadius );
+}

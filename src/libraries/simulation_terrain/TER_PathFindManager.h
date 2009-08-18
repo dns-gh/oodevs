@@ -63,6 +63,8 @@ public:
 
     void AddDynamicData   ( TER_DynamicData& data );
     void RemoveDynamicData( TER_DynamicData& data );
+
+    std::vector< boost::shared_ptr< MT_Vector2D > > FindNodesWithinCircle( const MT_Vector2D& center, float rRadius );     //TODO: clean this when we have true Terrain Request Manager...
     //@}
 
 private:
