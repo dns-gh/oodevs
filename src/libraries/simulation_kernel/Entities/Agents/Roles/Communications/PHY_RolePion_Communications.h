@@ -58,14 +58,14 @@ public:
     virtual void Jam           ( const MIL_Object_ABC& jammer );
     virtual void Unjam         ( const MIL_Object_ABC& jammer );
 
-            void ActivateBlackout  ();
-            void DeactivateBlackout();
+    virtual void ActivateBlackout  ();
+    virtual void DeactivateBlackout();
     //@}
 
     //! @name Operations
     //@{
-    MT_Float ModifySpeed            ( MT_Float rSpeed    ) const;
-    MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
+    virtual MT_Float ModifySpeed            ( MT_Float rSpeed    ) const;
+    virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
     //@}
 
     //! @name Network

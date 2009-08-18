@@ -148,7 +148,7 @@ inline
 MT_Float PHY_Weapon::ModifyReloadingDuration( const MIL_AgentPion& firer, MT_Float rDuration ) const
 {
     rDuration = firer.GetRole< PHY_RolePion_NBC            >().ModifyReloadingDuration( rDuration );
-    rDuration = firer.GetRole< PHY_RolePion_Communications >().ModifyReloadingDuration( rDuration );
+    rDuration = firer.GetRole< PHY_RoleInterface_Communications >().ModifyReloadingDuration( rDuration );
     rDuration = firer.GetRole< PHY_RolePion_HumanFactors   >().ModifyReloadingDuration( rDuration );
     rDuration = firer.GetRole< PHY_RolePion_Population     >().ModifyReloadingDuration( rDuration );
     return rDuration;

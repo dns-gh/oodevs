@@ -20,7 +20,7 @@
 #include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
-#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
+#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
@@ -113,7 +113,7 @@ MT_Float PHY_RoleAction_Moving::ApplyMaxSpeedModificators( MT_Float rSpeed ) con
 MT_Float PHY_RoleAction_Moving::ApplySpeedModificators( MT_Float rSpeed ) const
 {
     assert( pPion_ );
-    rSpeed = pPion_->GetRole< PHY_RolePion_Communications >().ModifySpeed( rSpeed );
+    rSpeed = pPion_->GetRole< PHY_RoleInterface_Communications >().ModifySpeed( rSpeed );
     PHY_RoleInterface_Supply* role = pPion_->RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         rSpeed = role->ModifySpeed( rSpeed );

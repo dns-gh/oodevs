@@ -101,7 +101,7 @@ void DEC_AgentFunctions::SelfDecontaminate( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::ActivateBlackout( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_Communications >().ActivateBlackout();
+    callerAgent.GetRole< PHY_RoleInterface_Communications >().ActivateBlackout();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void DEC_AgentFunctions::ActivateBlackout( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::DeactivateBlackout( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_Communications >().DeactivateBlackout();
+    callerAgent.GetRole< PHY_RoleInterface_Communications >().DeactivateBlackout();
 }
 
 // -----------------------------------------------------------------------------

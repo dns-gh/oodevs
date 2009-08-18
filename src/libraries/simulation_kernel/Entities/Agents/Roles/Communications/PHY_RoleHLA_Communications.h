@@ -33,6 +33,11 @@ public:
     virtual bool CanCommunicate() const;
     virtual void Jam           ( const MIL_Object_ABC& jammer );
     virtual void Unjam         ( const MIL_Object_ABC& jammer );
+    virtual void ActivateBlackout  ();
+    virtual void DeactivateBlackout();
+
+    virtual MT_Float ModifySpeed            ( MT_Float rSpeed    ) const;
+    virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
     //@}
 
     //! @name Modifiers

@@ -57,6 +57,43 @@ void PHY_RoleHLA_Communications::Unjam( const MIL_Object_ABC& /*jammer*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Communications::ActivateBlackout
+// Created: AHC 2009-08-18
+// -----------------------------------------------------------------------------
+void PHY_RoleHLA_Communications::ActivateBlackout( )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Communications::DeactivateBlackout
+// Created: AHC 2009-08-18
+// -----------------------------------------------------------------------------
+void PHY_RoleHLA_Communications::DeactivateBlackout( )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Communications::ModifySpeed
+// Created: AHC 2009-08-18
+// -----------------------------------------------------------------------------
+MT_Float PHY_RoleHLA_Communications::ModifySpeed            ( MT_Float rSpeed    ) const
+{
+	return rSpeed;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Communications::ModifyReloadingDuration
+// Created: AHC 2009-08-18
+// -----------------------------------------------------------------------------
+MT_Float PHY_RoleHLA_Communications::ModifyReloadingDuration( MT_Float rDuration ) const
+{
+	return rDuration;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Communications::ChangeStatus
 // Created: AGE 2004-12-02
 // -----------------------------------------------------------------------------
