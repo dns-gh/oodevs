@@ -22,7 +22,7 @@
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Orders/MIL_LimaOrder.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -60,7 +60,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     
     pathPoints_.reserve( 1 + points.size() );
-    pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
+    pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     std::copy( points.begin(), points.end(), std::back_inserter( pathPoints_ ) );
     Initialize( pathPoints_ );
 }
@@ -91,7 +91,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, std::vector< bo
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     
     pathPoints_.reserve( 1 + points.size() );
-    pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
+    pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
         pathPoints_.push_back( **it );
     Initialize( pathPoints_ );
@@ -123,7 +123,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
 
     pathPoints_.reserve( 2 );
-    pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
+    pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pathPoints_.push_back( vPosEnd );
     Initialize( pathPoints_ );
 }
@@ -542,7 +542,7 @@ void DEC_Agent_Path::InsertDecPoints()
     bDecPointsInserted_ = true;
 
     // Points avants
-    if( queryMaker_.GetRole< PHY_RolePion_Location >().GetHeight() == 0 )
+    if( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetHeight() == 0 )
         InsertPointAvants();
 
     // Limas

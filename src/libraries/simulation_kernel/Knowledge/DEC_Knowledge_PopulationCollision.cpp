@@ -15,7 +15,7 @@
 #include "DEC_Knowledge_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -185,7 +185,7 @@ MT_Float DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity() const
 const MT_Vector2D& DEC_Knowledge_PopulationCollision::GetPosition() const
 {
     assert( pAgentColliding_ );
-    return pAgentColliding_->GetRole< PHY_RolePion_Location >().GetPosition(); //$$$
+    return pAgentColliding_->GetRole< PHY_RoleInterface_Location >().GetPosition(); //$$$
 }
 
 // -----------------------------------------------------------------------------

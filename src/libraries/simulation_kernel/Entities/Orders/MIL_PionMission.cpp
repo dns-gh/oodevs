@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PionMission.h"
 #include "MIL_AutomateMission.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -23,7 +23,7 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn )
-    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres, pion.GetRole< PHY_RolePion_Location >().GetPosition() )
+    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres, pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {

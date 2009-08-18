@@ -14,7 +14,7 @@
 #include "DEC_FrontAndBackLinesComputer.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_Fuseau.h"
@@ -91,7 +91,7 @@ void DEC_FrontAndBackLinesComputer::Compute()
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
     {
         if( !(**it).IsDead() )
-            projectedPointSet.insert( fuseauGlobalDirLine.ClosestPointOnLine( (**it).GetRole< PHY_RolePion_Location >().GetPosition() ) );
+            projectedPointSet.insert( fuseauGlobalDirLine.ClosestPointOnLine( (**it).GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
     }
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
     {

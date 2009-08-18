@@ -17,7 +17,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_WeaponDataType_IndirectFire.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
@@ -34,7 +34,7 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, ui
     , firer_                   ( firer )
     , rInterventionTypeToFire_ ( rInterventionTypeToFire )
     , indirectDotationCategory_( indirectDotationCategory )
-    , vSourcePosition_         ( firer.GetRole< PHY_RolePion_Location >().GetPosition() )
+    , vSourcePosition_         ( firer.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , vTargetPosition_         ( -1., -1. )
     , nTargetKnowledgeID_      ( nTargetKnowledgeID )
     , nNbrAmmoFired_           ( 0 )
@@ -56,7 +56,7 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, co
     , firer_                   ( firer )
     , rInterventionTypeToFire_ ( rInterventionTypeToFire )
     , indirectDotationCategory_( indirectDotationCategory )
-    , vSourcePosition_         ( firer.GetRole< PHY_RolePion_Location >().GetPosition() )
+    , vSourcePosition_         ( firer.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , vTargetPosition_         ( vTargetPosition )
     , nTargetKnowledgeID_      ( 0 )
     , nNbrAmmoFired_           ( 0 )

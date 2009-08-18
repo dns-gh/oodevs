@@ -442,7 +442,6 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RolePion_Refugee           >().Clean();
     GetRole< PHY_RolePion_Population        >().Clean();
     GetRole< PHY_RolePion_Transported       >().Clean();
-    GetRole< PHY_RoleAction_Loading         >().Clean();
     GetRole< PHY_RoleAction_Transport       >().Clean();    
     GetRole< PHY_RoleAction_Objects         >().Clean();
     GetRole< PHY_RoleAction_Moving          >().Clean();

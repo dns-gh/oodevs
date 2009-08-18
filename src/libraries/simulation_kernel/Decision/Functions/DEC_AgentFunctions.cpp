@@ -15,7 +15,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -212,7 +212,7 @@ MT_Float DEC_AgentFunctions::GetMajorOperationalState( const MIL_AgentPion& call
 // -----------------------------------------------------------------------------
 const MT_Vector2D* DEC_AgentFunctions::GetPosition( const MIL_AgentPion& callerAgent )
 {
-    return &callerAgent.GetRole< PHY_RolePion_Location >().GetPosition();
+    return &callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ const MT_Vector2D* DEC_AgentFunctions::GetPosition( const MIL_AgentPion& callerA
 // -----------------------------------------------------------------------------
 const MT_Vector2D* DEC_AgentFunctions::GetDirection( const MIL_AgentPion& callerAgent )
 {
-    return &callerAgent.GetRole< PHY_RolePion_Location >().GetDirection();
+    return &callerAgent.GetRole< PHY_RoleInterface_Location >().GetDirection();
 }
 
 // -----------------------------------------------------------------------------
@@ -337,7 +337,7 @@ MT_Float DEC_AgentFunctions::GetUnloadingTime( const MIL_AgentPion& callerAgent 
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::DisableHumanTransportersNow( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_Transported >().DisableHumanTransporters( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition() );
+    callerAgent.GetRole< PHY_RolePion_Transported >().DisableHumanTransporters( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
@@ -561,7 +561,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const
     {
         result.reset( new MT_Vector2D() );
         DEC_GeometryFunctions::GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(), 
-                callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), 
+                callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
                 callerAgent.GetRole< PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement(), *result );
     }
     return result;

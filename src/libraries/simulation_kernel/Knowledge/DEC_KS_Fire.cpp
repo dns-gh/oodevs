@@ -17,7 +17,7 @@
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_KS_Fire, "DEC_KS_Fire" )
@@ -72,7 +72,7 @@ void DEC_KS_Fire::Talk()
         MIL_AgentPion& attacker = **itAttacker;
 
         // On ne gére la connaissance que lorsque le tireur est à distance inférieure de la distance max de détection
-        if( agentInteracting.GetRole< PHY_RolePion_Perceiver >().GetMaxAgentPerceptionDistance() <= agentInteracting.GetRole< PHY_RolePion_Location >().GetPosition().Distance( attacker.GetRole< PHY_RolePion_Location >().GetPosition() ) )
+        if( agentInteracting.GetRole< PHY_RolePion_Perceiver >().GetMaxAgentPerceptionDistance() <= agentInteracting.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( attacker.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
             continue;
 
         DEC_Knowledge_AgentPerception* pKnowledge = pBlackBoard_->GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( attacker );

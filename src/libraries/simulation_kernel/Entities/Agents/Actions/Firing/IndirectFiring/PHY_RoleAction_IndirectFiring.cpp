@@ -17,7 +17,7 @@
 #include "Entities/Actions/PHY_FireResults_Default.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
@@ -139,7 +139,7 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
         return eNoCapacity;
 
     PHY_FireResults_Default fireResult; //$$$ POURRI
-    pWeapon->ThrowSmoke( *pPion_, pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), vTargetPosition, nNbrAmmo, fireResult );
+    pWeapon->ThrowSmoke( *pPion_, pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition(), vTargetPosition, nNbrAmmo, fireResult );
     return eFinished;
 }
 
@@ -151,7 +151,7 @@ const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirec
 {
     assert( pPion_ );
 
-    const MT_Float rRange = pPion_->GetRole< PHY_RolePion_Location >().GetPosition().Distance( vTargetPosition );
+    const MT_Float rRange = pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( vTargetPosition );
     
     PHY_MunitionForIndirectFireData fireData( *pPion_, indirectWeaponCategory, rRange );
     pPion_->GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( fireData );

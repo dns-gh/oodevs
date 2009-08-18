@@ -21,6 +21,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RolePion_Refugee.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationState.h"
@@ -881,7 +882,7 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
     {
         if( !(**itPion).IsDead() )
         {
-            barycenter += (**itPion).GetRole< PHY_RolePion_Location >().GetPosition();
+            barycenter += (**itPion).GetRole< PHY_RoleInterface_Location >().GetPosition();
             ++nTmp ;
         }
     }
@@ -1027,9 +1028,9 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& 
         MT_Vector2D vPosTmp;
         MIL_Tools::ConvertCoordMosToSim( *asnMsg.action.u.move_to, vPosTmp );
 
-        const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RolePion_Location >().GetPosition() );
+        const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-            (**itPion).OnReceiveMsgMagicMove( (**itPion).GetRole< PHY_RolePion_Location >().GetPosition() + vTranslation );
+            (**itPion).OnReceiveMsgMagicMove( (**itPion).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
 
         GetRole< DEC_AutomateDecision >().Reset();
         orderManager_.ReplaceMission();

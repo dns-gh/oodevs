@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateMission.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
@@ -24,7 +24,7 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres, automate.GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres, automate.GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )

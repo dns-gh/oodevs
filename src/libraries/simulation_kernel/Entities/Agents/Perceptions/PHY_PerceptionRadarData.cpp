@@ -126,7 +126,7 @@ void PHY_PerceptionRadarData::Acquire( PHY_RolePion_Perceiver& perceiver, const 
     if( bAcquireOnPerceiverPosition )
     {
         targets.clear();
-        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), pRadarType_->GetRadius(), targets );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), pRadarType_->GetRadius(), targets );
         AcquireTargets( perceiver, targets );
     }
 

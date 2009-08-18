@@ -1394,7 +1394,7 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
     MT_Float rDangerosity = 0.;
 
     // Fight score
-    const PHY_RolePion_Location& myLocation = pPion_->GetRole< PHY_RolePion_Location >();
+    const PHY_RoleInterface_Location& myLocation = pPion_->GetRole< PHY_RoleInterface_Location >();
     const MT_Vector3D sourcePosition( myLocation.GetPosition().rX_, myLocation.GetPosition().rY_, myLocation.GetAltitude() );
     const MT_Vector3D targetPosition( target.GetPosition().rX_, target.GetPosition().rY_, target.GetAltitude() );
     const MT_Float    rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );

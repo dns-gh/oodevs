@@ -20,7 +20,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Composantes/PHY_ComposantePredicates.h"
@@ -365,7 +365,7 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
 const MT_Vector2D& PHY_RolePionLOG_Maintenance::GetPosition() const
 {
     assert (pPion_ );
-    return pPion_->GetRole< PHY_RolePion_Location >().GetPosition();
+    return pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------

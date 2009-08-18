@@ -6,7 +6,7 @@
 #include "PHY_Perception_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 
 // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ PHY_Perception_ABC::~PHY_Perception_ABC()
 // -----------------------------------------------------------------------------
 const MT_Vector2D& PHY_Perception_ABC::GetPerceiverPosition() const
 {
-    return perceiver_.GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
+    return perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ const MT_Vector2D& PHY_Perception_ABC::GetPerceiverPosition() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D& PHY_Perception_ABC::GetPerceiverDirection() const
 {
-    return perceiver_.GetPion().GetRole< PHY_RolePion_Location >().GetDirection();
+    return perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetDirection();
 }
 
 // -----------------------------------------------------------------------------

@@ -14,7 +14,7 @@
 #include "PHY_MaintenanceConsign_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Network/NET_ASN_Messages.h"
@@ -32,7 +32,7 @@ PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_AgentPion& p
     , pPion_              ( &pion )
     , pComposante_        ( &composante )
     , pConsign_           ( 0 )
-    , vComposantePosition_( pion.GetRole< PHY_RolePion_Location >().GetPosition() )
+    , vComposantePosition_( pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , bHasChanged_        ( true )
     , bDiagnosed_         ( false )
 {
@@ -109,7 +109,7 @@ void PHY_MaintenanceComposanteState::save( MIL_CheckPointOutArchive& file, const
 const MT_Vector2D& PHY_MaintenanceComposanteState::GetPionPosition() const
 {
     assert( pPion_ );
-    return pPion_->GetRole< PHY_RolePion_Location >().GetPosition();
+    return pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------

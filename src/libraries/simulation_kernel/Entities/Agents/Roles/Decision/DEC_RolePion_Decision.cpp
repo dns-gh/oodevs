@@ -16,6 +16,7 @@
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_FragOrder.h"
@@ -1583,7 +1584,7 @@ bool DEC_RolePion_Decision::IsNeutralized() const
 // -----------------------------------------------------------------------------
 bool DEC_RolePion_Decision::IsMoving() const
 {
-    return( GetPion().GetRole< PHY_RolePion_Location >().GetCurrentSpeed() != 0. );
+    return( GetPion().GetRole< PHY_RoleInterface_Location >().GetCurrentSpeed() != 0. );
 }
 
 // -----------------------------------------------------------------------------

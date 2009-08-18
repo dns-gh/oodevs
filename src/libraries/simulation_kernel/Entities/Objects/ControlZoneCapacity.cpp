@@ -13,7 +13,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
@@ -95,7 +95,7 @@ namespace
 // -----------------------------------------------------------------------------
 ControlZoneCapacity::ControlZoneCapacity( const MIL_Agent_ABC& controller )
     : controller_ ( &controller )
-    , vFirerPosition_ ( &controller.GetRole< PHY_RolePion_Location >().GetPosition() )
+    , vFirerPosition_ ( &controller.GetRole< PHY_RoleInterface_Location >().GetPosition() )
 {
     StaticLoader loader( vFirePercentages_ );
     loader.LoadFirePercentages();
@@ -144,7 +144,7 @@ void ControlZoneCapacity::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     file & const_cast< MIL_Agent_ABC*& >( controller_ );
     if ( controller_ )
-        vFirerPosition_ = &controller_->GetRole< PHY_RolePion_Location >().GetPosition();
+        vFirerPosition_ = &controller_->GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------

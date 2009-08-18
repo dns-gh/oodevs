@@ -11,7 +11,7 @@
 
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Tools/MIL_Tools.h"
@@ -30,7 +30,7 @@
 inline
 const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_AgentPion& pion )
 {
-    return pion.GetRole< PHY_RolePion_Location >().GetPosition();
+    return pion.GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------

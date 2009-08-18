@@ -17,7 +17,7 @@
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/MIL_Army.h"
@@ -99,7 +99,7 @@ std::pair< bool, std::pair< int, float > > DEC_PathFunctions::GetNextObjectOnPat
     const DEC_Knowledge_Object* pObjectColliding   = 0;
           MT_Float              rDistanceCollision = 0.;
 
-    const PHY_RolePion_Location& roleLocation = callerAgent.GetRole< PHY_RolePion_Location >();
+    const PHY_RoleInterface_Location& roleLocation = callerAgent.GetRole< PHY_RoleInterface_Location >();
     const MT_Float               rHeight      = roleLocation.GetHeight  ();
     const MT_Vector2D&           position     = roleLocation.GetPosition();
 

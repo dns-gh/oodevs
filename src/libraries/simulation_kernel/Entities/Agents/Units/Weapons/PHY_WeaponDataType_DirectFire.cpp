@@ -21,7 +21,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -246,7 +246,7 @@ MT_Float PHY_WeaponDataType_DirectFire::GetDangerosity( const MIL_AgentPion& fir
     const PHY_Volume&     targetVolume      = targetComposanteType.GetVolume    (); 
     const PHY_Protection& targetProtection  = targetComposanteType.GetProtection();
 
-    const PHY_RolePion_Location& firerLocation = firer.GetRole< PHY_RolePion_Location >();
+    const PHY_RoleInterface_Location& firerLocation = firer.GetRole< PHY_RoleInterface_Location >();
     const MT_Vector3D vFirerPosition( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_, firerLocation.GetAltitude() );
     
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
@@ -277,7 +277,7 @@ MT_Float PHY_WeaponDataType_DirectFire::GetDangerosity( const PHY_ComposanteType
 // -----------------------------------------------------------------------------
 void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const
 {
-    const PHY_RolePion_Location& firerLocation = firer.GetRole< PHY_RolePion_Location >();
+    const PHY_RoleInterface_Location& firerLocation = firer.GetRole< PHY_RoleInterface_Location >();
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
 
     if( bUsePH )

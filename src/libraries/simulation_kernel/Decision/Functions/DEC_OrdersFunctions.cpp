@@ -15,7 +15,7 @@
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
@@ -73,7 +73,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::
         for( itFuseau = subFuseaux.begin(); itFuseau != subFuseaux.end(); ++itFuseau )
         {
             MIL_Fuseau& fuseau = **itFuseau;
-            if( fuseau.IsInside( pion.GetRole< PHY_RolePion_Location >().GetPosition() ) )
+            if( fuseau.IsInside( pion.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
             {
                 callerAutomate.GetOrderManager().MRT_SetFuseauForPion( pion, fuseau );
                 break;

@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgePopulationFunctions.h"
 
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Army.h"
@@ -87,7 +87,7 @@ boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::ClosestPoint( c
     	return boost::shared_ptr<MT_Vector2D>();
     else
     {
-        MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller.GetRole< PHY_RolePion_Location >().GetPosition() ) ); //$$$ RAM
+        MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller.GetRole< PHY_RoleInterface_Location >().GetPosition() ) ); //$$$ RAM
 
         return boost::shared_ptr<MT_Vector2D>(pResult);
     }

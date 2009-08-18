@@ -11,7 +11,7 @@
 #include "PHY_ActionInfluenceInArea.h"
 #include "PHY_RoleAction_FolkInfluence.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 #include "folk/Object_ABC.h"
 
@@ -27,7 +27,7 @@ PHY_ActionInfluenceInArea::PHY_ActionInfluenceInArea( MIL_AgentPion& pion, const
     , influence_          ( influence )
 {    
     // Register( GetRole().InfluenceActivityInArea( diaCall[ 1 ).ToString(), diaCall[ 2 ].ToFloat(), pLocalisation ) );
-    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if ( pLocalisation )
         pObject_ = role_.InfluenceActivityInArea( vPos, activity_, influence_, *pLocalisation );
     if ( !pObject_ )

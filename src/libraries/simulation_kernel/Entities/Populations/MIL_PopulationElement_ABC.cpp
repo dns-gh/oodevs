@@ -23,7 +23,6 @@
 #include "MIL_PopulationType.h"
 #include "Entities/Populations/Actions/PHY_FireResults_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
@@ -243,7 +242,7 @@ MT_Float MIL_PopulationElement_ABC::GetPionReloadingTimeFactor() const
 MT_Vector2D MIL_PopulationElement_ABC::GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const
 {
     MT_Vector2D result;
-    GetLocation().ComputeNearestPoint( securingAgent.GetRole< PHY_RolePion_Location >().GetPosition(), result );
+    GetLocation().ComputeNearestPoint( securingAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), result );
     return result;
 }
 

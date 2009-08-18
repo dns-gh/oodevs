@@ -11,7 +11,7 @@
 #include "PHY_ActionTriggerActivityInArea.h"
 #include "PHY_RoleAction_FolkInfluence.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 #include "folk/Object_ABC.h"
 
@@ -26,7 +26,7 @@ PHY_ActionTriggerActivityInArea::PHY_ActionTriggerActivityInArea( MIL_AgentPion&
     , activity_           ( activity )
     , influence_          ( influence )
 { 
-    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if ( pLocalisation )
         pObject_ = role_.InfluenceActivityInArea( vPos, activity_, influence_, *pLocalisation );
     if ( pObject_ )

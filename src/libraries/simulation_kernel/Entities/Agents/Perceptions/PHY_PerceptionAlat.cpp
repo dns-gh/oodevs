@@ -6,7 +6,7 @@
 #include "PHY_PerceptionAlat.h"
 #include "PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -40,7 +40,7 @@ PHY_PerceptionAlat::~PHY_PerceptionAlat()
 // -----------------------------------------------------------------------------
 void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
-    const PHY_RolePion_Location& perceiverRoleLocation = perceiver_.GetPion().GetRole< PHY_RolePion_Location >(); 
+    const PHY_RoleInterface_Location& perceiverRoleLocation = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
     const MT_Float               rDetectionSemiHeight  = perceiver_.GetMaxAgentPerceptionDistance() / 2.;
     const PHY_RawVisionData&     rawVisionData         = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
 

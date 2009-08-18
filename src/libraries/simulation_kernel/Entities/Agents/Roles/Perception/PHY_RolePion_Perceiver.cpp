@@ -689,12 +689,15 @@ struct sPerceptionDataComposantes : private boost::noncopyable
 {
 
 public:
-    sPerceptionDataComposantes( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject, const PHY_RolePion_Location& roleLocation, const MT_Vector2D& vMainPerceptionDirection, MT_Float rDirectionRotation, MT_Float& rMaxAgentPerceptionDistance, MT_Float& rMaxObjectPerceptionDistance )
+    sPerceptionDataComposantes( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
+    		const MT_Vector2D& position, const MT_Vector2D& direction, const MT_Vector2D& vMainPerceptionDirection, MT_Float rDirectionRotation,
+    		MT_Float& rMaxAgentPerceptionDistance, MT_Float& rMaxObjectPerceptionDistance )
         : surfacesAgent_               ( surfacesAgent  )
         , surfacesObject_              ( surfacesObject )
-        , roleLocation_                ( roleLocation )
+        , position_             	   ( position )
+		, direction_                   ( direction )
         , vMainPerceptionDirection_    ( vMainPerceptionDirection )
-        , nRotationIdx_                ( vMainPerceptionDirection != roleLocation_.GetDirection() ? -1 : 0 ) // détection lockée
+        , nRotationIdx_                ( vMainPerceptionDirection != direction ? -1 : 0 ) // détection lockée
         , rRotationAngle_              ( rDirectionRotation )
         , rMaxAgentPerceptionDistance_ ( rMaxAgentPerceptionDistance )
         , rMaxObjectPerceptionDistance_( rMaxObjectPerceptionDistance )
@@ -709,19 +712,20 @@ public:
         MT_Vector2D vComposantePerceptionDirection( vMainPerceptionDirection_ );
 
         if ( nRotationIdx_ == 0  )
-            vComposantePerceptionDirection = roleLocation_.GetDirection();
+            vComposantePerceptionDirection = direction_;
         else if ( nRotationIdx_ > 0 )
             vComposantePerceptionDirection.Rotate( ( ( 2 * ( nRotationIdx_ & 0x1 ) - 1 ) * ( ( nRotationIdx_ + 1 ) >> 1 ) ) * rRotationAngle_ );
         ++nRotationIdx_;
 
-        sPerceptionDataSensors dataFunctor( surfacesAgent_, surfacesObject_, roleLocation_.GetPosition(), vComposantePerceptionDirection, rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
+        sPerceptionDataSensors dataFunctor( surfacesAgent_, surfacesObject_, position_, vComposantePerceptionDirection, rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
         composante.ApplyOnSensors( dataFunctor );
     }
 
 private:
     PHY_RolePion_Perceiver::T_SurfaceAgentMap&  surfacesAgent_;
     PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject_;
-    const PHY_RolePion_Location&                roleLocation_;
+    const MT_Vector2D& 							position_;
+    const MT_Vector2D& 							direction_;
     const MT_Vector2D&                          vMainPerceptionDirection_;
     MT_Float&                                   rMaxAgentPerceptionDistance_;
     MT_Float&                                   rMaxObjectPerceptionDistance_;
@@ -766,13 +770,13 @@ void PHY_RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainP
 {
     assert( pPion_ );
     if( nSensorMode_ == eNormal )
-        vMainPerceptionDirection = pPion_->GetRole< PHY_RolePion_Location >().GetDirection();
+        vMainPerceptionDirection = pPion_->GetRole< PHY_RoleInterface_Location >().GetDirection();
     else if( nSensorMode_ == eDirection )
         vMainPerceptionDirection = vSensorInfo_;
     else if( nSensorMode_ == ePoint )
     {
-        const MT_Vector2D& vDirection = pPion_->GetRole< PHY_RolePion_Location >().GetDirection();
-        const MT_Vector2D& vPosition  = pPion_->GetRole< PHY_RolePion_Location >().GetPosition ();
+        const MT_Vector2D& vDirection = pPion_->GetRole< PHY_RoleInterface_Location >().GetDirection();
+        const MT_Vector2D& vPosition  = pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition ();
         if( vSensorInfo_ != vPosition )
             vMainPerceptionDirection = ( vSensorInfo_ - vPosition ).Normalize();
         else
@@ -808,7 +812,7 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     sPerceptionRotation rotation;
     roleComposantes.Apply( rotation );
 
-    sPerceptionDataComposantes dataFunctor( surfacesAgent_, surfacesObject_, roleLocation, vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
+    sPerceptionDataComposantes dataFunctor( surfacesAgent_, surfacesObject_, roleLocation.GetPosition(), roleLocation.GetDirection() , vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
     roleComposantes.Apply( dataFunctor );
 }
 
@@ -911,22 +915,22 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         CIT_PerceptionVector itPerception;
 
         TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableAgents );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableAgents );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableAgents );
         
         TER_Object_ABC::T_ObjectVector perceivableObjects;
-        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( pPion_->GetRole< PHY_RoleInterface_Location>().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
 
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations;
-        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableConcentrations );
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableConcentrations );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableConcentrations );
 
         TER_PopulationFlow_ABC::T_PopulationFlowVector perceivableFlows;
-        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableFlows );
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableFlows );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableFlows );
     }

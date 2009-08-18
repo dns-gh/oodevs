@@ -31,6 +31,7 @@
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Random.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 #define PRECISION 0.0000001
 
@@ -50,7 +51,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAgentsBarycenter(
         DEC_Decision_ABC* pKnow = *it;
         assert( pKnow );
 
-        *pResult += pKnow->GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
+        *pResult += pKnow->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     }
 
     if( selection.size() != 0 )
@@ -386,7 +387,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( 
 {
     assert( pAgentToSupport != 0 );
 
-    const MT_Vector2D& vUnitToSupportPos = pAgentToSupport->GetPion().GetRole< PHY_RolePion_Location >().GetPosition ();
+    const MT_Vector2D& vUnitToSupportPos = pAgentToSupport->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition ();
     const MIL_Fuseau& fuseau             = callerAgent.GetOrderManager().GetFuseau();
 
     MT_Vector2D  vDirLooked;
@@ -466,7 +467,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
         // Position de l'ennemi
         const MT_Vector2D& vEnemyPos  = pKnowledgeEnemy->GetPosition();
 
-        MT_Vector2D vDirEniToAmi = ( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition() - vEnemyPos).Normalize();
+        MT_Vector2D vDirEniToAmi = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnemyPos).Normalize();
         if( vDirEniToAmi.IsZero() )
             vDirEniToAmi = -callerAgent.GetOrderManager().GetDirDanger();
 
@@ -508,7 +509,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
 
         const MT_Vector2D& vEnnemiPos  = pKnowledgeEnnemy->GetPosition();
 
-        MT_Vector2D vDirEniToAmi       = ( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition() - vEnnemiPos).Normalize();
+        MT_Vector2D vDirEniToAmi       = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnnemiPos).Normalize();
         MT_Vector2D vDirEniToObjective = ( *pObjective - vEnnemiPos ).Normalize();
 
         MT_Vector2D vSafetyPos;
@@ -535,7 +536,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint( const MIL_AgentPion& callerAgent )
 {
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
-    callerAgent.GetOrderManager().GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), *pResult );
+    callerAgent.GetOrderManager().GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), *pResult );
     return pResult;
 }
 
@@ -687,10 +688,10 @@ float DEC_GeometryFunctions::ComputeDistanceFromMiddleLine( const std::vector< D
     // Barycenter of the pions given
     MT_Vector2D vBarycenter;
     for( std::vector< DEC_Decision_ABC*>::const_iterator itPion = selPions.begin(); itPion != selPions.end(); ++itPion )
-        vBarycenter += (*itPion)->GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
+        vBarycenter += (*itPion)->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     vBarycenter /= selPions.size();
 
-    const MT_Vector2D& vReferencePionPosition = pReferencePion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& vReferencePionPosition = pReferencePion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
 
     //
     const MIL_Fuseau& fuseau = pReferencePion->GetPion().GetOrderManager().GetFuseau();
@@ -753,7 +754,7 @@ float DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DEC_FrontAndBackLines
 
     MT_Float rDist = 0;
     assert( pPion );
-    rDist = pComputer->ComputeDistanceFromFrontLine( pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition() );
+    rDist = pComputer->ComputeDistanceFromFrontLine( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
 
     return( MIL_Tools::ConvertSimToMeter( rDist ) );
 }
@@ -785,7 +786,7 @@ float DEC_GeometryFunctions::ComputeDistanceFromBackLine( DEC_FrontAndBackLinesC
 
     MT_Float rDist = 0;
     assert( pPion );
-    rDist = pComputer->ComputeDistanceFromBackLine( pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition() );
+    rDist = pComputer->ComputeDistanceFromBackLine( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
 
     return MIL_Tools::ConvertSimToMeter( rDist );
 }
@@ -1000,13 +1001,13 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
     // calcul de la première ligne de support ( perpendiculaire à la direction passant par le pion le plus avancé )
     const DEC_Decision_ABC* pFrontestPion = GetFrontestPion( pions, pDirection );
     assert( pFrontestPion );
-    const MT_Vector2D& vFrontestPionPosition = pFrontestPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& vFrontestPionPosition = pFrontestPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Droite support1( vFrontestPionPosition, vFrontestPionPosition + pDirection->Rotated90() );
 
     // calcul de la seconde ligne de support ( dans la direction passant par le barycentre des pions )
     MT_Vector2D vOrigin;
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = pions.begin(); it != pions.end(); ++it )
-        vOrigin += ( *it )->GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
+        vOrigin += ( *it )->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     vOrigin /= (MT_Float)pions.size();
     const MT_Droite support2( vOrigin, vOrigin + *pDirection );
 
@@ -1130,7 +1131,7 @@ namespace
     {
         for( std::vector< DEC_Decision_ABC* >::const_iterator itC = coordinatedPions.begin(); itC != coordinatedPions.end(); ++itC )
         {
-            const MT_Vector2D& vPosTmp = (**itC).GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
+            const MT_Vector2D& vPosTmp = (**itC).GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
             if( vPosToTest.Distance( vPosTmp ) <= rMinDist )
                 return true;
         }
@@ -1151,7 +1152,7 @@ std::vector< DEC_Decision_ABC* > DEC_GeometryFunctions::ListUncoordinatedPawns( 
         bDummy = false;
         for( std::vector< DEC_Decision_ABC* >::iterator itNC = notCoordinatedPions.begin(); itNC != notCoordinatedPions.end(); )
         {
-            const MT_Vector2D& vPosToTest = (**itNC).GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
+            const MT_Vector2D& vPosToTest = (**itNC).GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
             if( ::IsPionCoordinated( vPosToTest, coordinatedPions, rMinDist ) )
             {
                 bDummy = true;

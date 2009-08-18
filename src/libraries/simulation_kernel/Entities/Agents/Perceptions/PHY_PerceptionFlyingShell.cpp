@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
@@ -97,7 +97,7 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     const MIL_EffectManager::T_FlyingShellSet& flyingShells = MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().GetFlyingShells();
-    const MT_Vector2D&                         source       = perceiver_.GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D&                         source       = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
 
     T_FlyingShellSet perceivedFlyingShells;
     for( MIL_EffectManager::CIT_FlyingShellSet itFlyingShell = flyingShells.begin(); itFlyingShell != flyingShells.end(); ++itFlyingShell )

@@ -15,7 +15,7 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
 #include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -162,7 +162,7 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
 const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_AgentPion& source, const MIL_Object_ABC& target, MT_Float /*rSensorHeight*/ ) const
 {   
     const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
-    const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
     if( rDistanceMaxModificator == 0. || !target.Intersect2DWithCircle( vSourcePos, rDD_ * rDistanceMaxModificator ) )
         return PHY_PerceptionLevel::notSeen_;
@@ -176,7 +176,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MI
 const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_AgentPion& source, const DEC_Knowledge_Object& target, MT_Float /*rSensorHeight*/ ) const
 {
     const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
-    const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
     if( rDistanceMaxModificator == 0. || !target.GetLocalisation().Intersect2DWithCircle( vSourcePos, rDD_ * rDistanceMaxModificator ) )
         return PHY_PerceptionLevel::notSeen_;

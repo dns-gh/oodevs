@@ -16,7 +16,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Orders/MIL_Fuseau.h"
@@ -136,7 +136,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( co
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyRefugees( const MIL_AgentPion& callerAgent, MT_Float radius )
 {
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetRefugeesInCircle( knowledges, callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), radius );
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetRefugeesInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
     return knowledges;
 }
 
@@ -147,7 +147,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyRefugees( const MIL
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbySurrenderedAgents( const MIL_AgentPion& callerAgent, MT_Float radius )
 {
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetSurrenderedAgentsInCircle( knowledges, callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), radius );
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetSurrenderedAgentsInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
 
     return knowledges;
 }
@@ -178,7 +178,7 @@ MT_Float DEC_KnowledgeFunctions::GetRapForLocal( const MIL_AgentPion& callerAgen
 int DEC_KnowledgeFunctions::GetClosestObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types )
 {
     const MIL_ObjectFilter filter( types );
-    const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), filter );
+    const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
     return pKnowledge ? pKnowledge->GetID() : 0;
 }
 
@@ -189,7 +189,7 @@ int DEC_KnowledgeFunctions::GetClosestObject( const MIL_AgentPion& callerAgent, 
 int DEC_KnowledgeFunctions::GetClosestFriendObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types )
 {
     const MIL_ObjectFilter filter( types );
-    const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), filter );
+    const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
     return pKnowledge ? pKnowledge->GetID() : 0;
 }
 

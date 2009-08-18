@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( PHY_StockConvoy, "PHY_StockConvoy" )
@@ -103,7 +104,7 @@ bool PHY_StockConvoy::Form()
     assert( !pPionConvoy_ );
     assert( pConsign_ );
     
-    pPionConvoy_ = &pConsign_->GetConvoyingAutomate().CreatePion( *pConvoyAgentType_, pConsign_->GetConvoyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() );
+    pPionConvoy_ = &pConsign_->GetConvoyingAutomate().CreatePion( *pConvoyAgentType_, pConsign_->GetConvoyingAutomate().GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pPionConvoy_->GetRole< PHY_RoleInterface_Supply >().AssignConvoy( *this );
     for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
         it->second->LendTo( *pPionConvoy_ );

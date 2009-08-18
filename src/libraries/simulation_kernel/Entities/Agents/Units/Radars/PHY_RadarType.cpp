@@ -13,7 +13,7 @@
 #include "PHY_RadarType.h"
 #include "PHY_RadarClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
@@ -299,7 +299,7 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
 // -----------------------------------------------------------------------------
 bool PHY_RadarType::CanAcquire( const MIL_AgentPion& perceiver, const MIL_Agent_ABC& target ) const
 {
-    const PHY_RolePion_Location&      roleLocationPerceiver = perceiver.GetRole< PHY_RolePion_Location      >();
+    const PHY_RoleInterface_Location&      roleLocationPerceiver = perceiver.GetRole< PHY_RoleInterface_Location      >();
     const PHY_RoleInterface_Location& roleLocationTarget    = target   .GetRole< PHY_RoleInterface_Location >();
 
     if( roleLocationPerceiver.GetPosition().Distance( roleLocationTarget.GetPosition() ) > rRadius_ )

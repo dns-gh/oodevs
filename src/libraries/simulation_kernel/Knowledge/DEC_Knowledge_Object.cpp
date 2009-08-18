@@ -25,7 +25,7 @@
 
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 
 #include "Entities/MIL_Army.h"
@@ -675,7 +675,7 @@ bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
 bool DEC_Knowledge_Object::CanCollideWith( const MIL_Agent_ABC& agent ) const
 {
     return ( !IsReservedObstacle() || IsReservedObstacleActivated() ) && !IsBypassed() 
-         && agent.GetRole< PHY_RolePion_Location >().GetHeight() <= GetMaxInteractionHeight();                    
+         && agent.GetRole< PHY_RoleInterface_Location >().GetHeight() <= GetMaxInteractionHeight();
 }
 
 // -----------------------------------------------------------------------------

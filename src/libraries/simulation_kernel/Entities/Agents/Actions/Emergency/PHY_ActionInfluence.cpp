@@ -11,7 +11,7 @@
 #include "PHY_ActionInfluence.h"
 #include "PHY_RoleAction_FolkInfluence.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 #include "folk/Object_ABC.h"
 
@@ -27,7 +27,7 @@ PHY_ActionInfluence::PHY_ActionInfluence( MIL_AgentPion& pion, const std::string
     , influence_          ( influence )
     , pObject_            ( 0 )
 {       
-    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D&  vPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     pObject_ = role_.InfluenceActivity( vPos, activity_, influence_, 0 );
     if ( !pObject_ )
         Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eImpossible ) );

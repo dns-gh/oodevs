@@ -14,7 +14,7 @@
 #include "DEC_Knowledge_AgentPerception.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -621,7 +621,7 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_AgentPion& target ) cons
     MT_Float rDangerosity = 0.;   
 
     // Fight score
-    const PHY_RolePion_Location& targetLocation = target.GetRole< PHY_RolePion_Location >();
+    const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
     const MT_Vector3D vTargetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
     const MT_Vector3D vDataPosition  ( dataDetection_.GetPosition().rX_, dataDetection_.GetPosition().rY_, dataDetection_.GetAltitude() );
     const MT_Float    rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );

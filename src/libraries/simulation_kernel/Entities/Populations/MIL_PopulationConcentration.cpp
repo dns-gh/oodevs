@@ -16,7 +16,6 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
@@ -219,7 +218,7 @@ void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow 
 // -----------------------------------------------------------------------------
 MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const
 {
-    const MT_Vector2D& agentPosition = agent.GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& agentPosition = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MT_Vector2D evadeDirection = ( agentPosition - position_ ).Normalize().Rotate( rSeed );
 
     if( evadeDirection.IsZero() )

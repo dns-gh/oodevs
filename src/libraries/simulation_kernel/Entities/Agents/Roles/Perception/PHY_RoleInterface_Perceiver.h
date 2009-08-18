@@ -14,6 +14,11 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+//namespace simulation
+//{
+//namespace perception
+//{
+
 // =============================================================================
 // @class  PHY_RoleInterface_Perceiver
 // Created: JVT 2004-08-03
@@ -39,4 +44,6 @@ public:
     //@}
 };
 
+//} // namespace perception
+//} // namespace simulation
 #endif // __PHY_RoleInterface_Perceiver_h_

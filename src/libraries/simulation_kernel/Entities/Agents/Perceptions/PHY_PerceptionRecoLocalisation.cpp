@@ -13,7 +13,7 @@
 #include "PHY_PerceptionRecoLocalisation.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -53,7 +53,7 @@ bool PHY_PerceptionRecoLocalisationReco::IsInside( const PHY_RolePion_Perceiver&
     if ( bShouldUseRadius_ )
     {
         const MT_Float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
-        if ( perceiver.GetPion().GetRole< PHY_RolePion_Location >().GetPosition().SquareDistance( vPoint ) > rRadius * rRadius )
+        if ( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition().SquareDistance( vPoint ) > rRadius * rRadius )
             return false;
     }
     return localisation_.IsInside( vPoint );    
@@ -69,7 +69,7 @@ void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RolePion_Per
     if( bShouldUseRadius_ )
     {
         const MT_Float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
-        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), rRadius, result );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), rRadius, result );
         
         for ( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
             if ( localisation_.IsInside( (*it)->GetPosition() ) )

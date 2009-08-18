@@ -14,7 +14,7 @@
 #include "PHY_MedicalConsign_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
@@ -33,7 +33,7 @@ PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& hu
     , pPion_                 ( &pion )
     , pHuman_                ( &human )
     , pConsign_              ( 0 )
-    , vHumanPosition_        ( pion.GetRole< PHY_RolePion_Location >().GetPosition() )
+    , vHumanPosition_        ( pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , bHasChanged_           ( true )
     , bHumanStateHasChanged_ ( false )
     , bDiagnosed_            ( false )
@@ -141,7 +141,7 @@ const MIL_Automate& PHY_MedicalHumanState::GetAutomate() const
 const MT_Vector2D& PHY_MedicalHumanState::GetPionPosition() const
 {
     assert( pPion_ );
-    return pPion_->GetRole< PHY_RolePion_Location >().GetPosition();
+    return pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------

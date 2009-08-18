@@ -18,7 +18,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
@@ -258,7 +258,7 @@ bool DEC_AutomateFunctions::IsPointInPionFuseau( const MIL_Automate& callerAutom
 boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetPionPosition( const DEC_Decision_ABC* pion )
 {
     assert( pion );
-    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( pion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition() ) );
+    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( pion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
 }
 
 // -----------------------------------------------------------------------------
