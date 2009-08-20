@@ -339,7 +339,7 @@
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher,library.simulation_kernel">
         <build-app name="simulation_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,,directia-${platform}-mt-4_5
+                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5
                          gdal_i,gdal_ogr,geodata
                          population-${platform}-mt@{suffix}
                          dispatcher-${platform}-mt@{suffix}
@@ -485,7 +485,8 @@
 
     <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.xmlia_plugin">
         <build-test name="plugins" depends="terrain,boost,xerces"
-            libs="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}
+            libs="directia-${platform}-mt-4_5
+                  lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}
                   lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}
                   lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}
                   lib${ant.project.name}_xmlia_plugin-${platform}-mt@{suffix}
