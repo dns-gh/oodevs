@@ -25,7 +25,7 @@ struct FixturePion
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );
         std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-        pModel_.reset( new DEC_Model( "test", xis, "../../data/test/simulation_kernel_test/", "prefix", missionTypes ) );
+        pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes ) );
         pType_.reset( new StubMIL_AgentTypePion( *pModel_ ) );
         pTypeAutomat_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_ ) );
@@ -49,7 +49,7 @@ struct FixtureAutomate
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );
         std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-        pModel_.reset( new DEC_Model( "test", xis, "../../data/test/simulation_kernel_test/", "prefix", missionTypes ) );
+        pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes ) );
         pType_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pType_ ) );
     }

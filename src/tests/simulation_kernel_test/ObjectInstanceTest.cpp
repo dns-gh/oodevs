@@ -55,11 +55,11 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
     MockArmy army;
     MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
 
-    MIL_Object_ABC* pObject = 0;    
+    MIL_Object_ABC* pObject = 0;
     {
         MockBuilder builder;
         builder.GetType_mocker.expects( mockpp::once() ) .will( returnValue( &type ) );
-        MOCKPP_CHAINER_FOR( MockBuilder, Build )         ( &builder ).expects( mockpp::once() );
+        MOCKPP_CHAINER_FOR( MockBuilder, Build )( &builder ).expects( mockpp::once() );
         BOOST_CHECK_NO_THROW(
             pObject = loader.CreateObject( builder, army );
         );
