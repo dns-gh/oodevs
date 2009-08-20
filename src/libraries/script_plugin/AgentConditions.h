@@ -61,6 +61,7 @@ private:
 
     //! @name Helpers
     //@{
+    boost::shared_ptr< Condition_ABC > AgentCreated();
     boost::shared_ptr< Condition_ABC > AgentEnters( const dispatcher::Zone& zone );
     boost::shared_ptr< Condition_ABC > KnowledgeEnters( const dispatcher::Zone& zone );
     boost::shared_ptr< Condition_ABC > OperationalStateChanged();

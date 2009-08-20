@@ -1,113 +1,208 @@
--- Actions
+-- *****************************************************************************
+--
+-- This file is part of a MASA library or program.
+-- Refer to the included end-user license agreement for restrictions.
+--
+-- Copyright (c) 2009 Mathématiques Appliquées SA (MASA)
+--
+-- *****************************************************************************
+
+--------------------------------------------------------------------------------
+--
+-- Orders
+--
+-- Provides tools for creating missions and fragmentary orders
+--
+--------------------------------------------------------------------------------
 
 dofile "resources/scripts/xml.lua"
 
-orders =
-{
-    _BuildParameter = function( v )
-        return
-        {
-            tag = "parameter",
-            attributes = { name = v.name, type = v.type, value = v.value },
-            children = v[1]
-        }
-    end,
+--------------------------------------------------------------------------------
+-- Location
+--------------------------------------------------------------------------------
+Location = {}
+Location.__index = Location
 
-    _AppendParameters = function( t, result )
-        for _, v in ipairs( t or {} ) do
-            result[ #result + 1 ] = orders._BuildParameter( v )
-        end
-    end,
+function Location.create( type )
+	local new = {}
+	setmetatable( new, Location )
+	new.type = type
+	new.points = {}
+	return new
+end
 
-    _DefaultParameters = function( t )
-        local parameters =
-        {
-            { name = "direction dangereuse", type = "Direction", value = t.direction or 360 },
-            { name = "Limas",                type = "PhaseLineList" },
-            { name = "Limit 1",              type = "Limit", t.limit1 or {} },
-            { name = "Limit 2",              type = "Limit", t.limit2 or {} },
-            { name = "Renseignements",       type = "IntelligenceList" },
-        }
-        local result = {}
-        orders._AppendParameters( parameters, result )
-        return result
-    end,
+function Location:AddPoint( coordinates )
+	local point = coordinates
+	if #coordinates == 2 then
+		point = coord:ToUtm( coordinates )
+	end
+	self.points[#self.points + 1] = point
+end
 
-    _ToXml = function( t )
-        local parameters = t.mission and orders._DefaultParameters( t ) or {}
-        orders._AppendParameters( t.parameters, parameters )
-        return xml.Serialize(
-            {
-                tag = "action",
-                attributes = { id = t.mission or t.fragorder, name = "", target = t.target, type = t.mission and "mission" or "fragorder" },
-                children = parameters
-            }
-        )
-    end,
+function Location:ToXml()
+	local points = {}
+	for _, v in ipairs( self.points or {} ) do
+		points[ #points + 1 ] = { tag = "point", attributes = { coordinates = v } }
+	end
+	return
+	{
+		tag = "location",
+		attributes = { type = self.type },
+		children = points
+	}
+end
 
-    Issue = function( t )
-        actions:IssueXmlOrder( orders._ToXml( t ) )
-    end,
+--------------------------------------------------------------------------------
+-- Point
+--------------------------------------------------------------------------------
+Point = {}
+Point.__index = Point
 
-    _ParameterLocation = function( points, type )
-        local result = {}
-        for _, v in ipairs( points or {} ) do
-            result[ #result + 1 ] = { tag = "point", attributes = { coordinates = coord:ToUtm( v ) } }
-        end
-        return
-        {
-            tag = "location",
-            attributes = { type = type },
-            children = result
-        }
-    end,
+function Point.create( coordinates )
+	local new = Location.create( "point" )
+	new:AddPoint( coordinates )
+	return new
+end
 
-    ParameterLocationPoint = function( point )
-        return orders._ParameterLocation( { point }, "point" )
-    end,
+--------------------------------------------------------------------------------
+-- Polygon
+--------------------------------------------------------------------------------
+Polygon = {}
+Polygon.__index = Polygon
 
-    ParameterLocationPolygon = function( points )
-        return orders._ParameterLocation( points, "polygon" )
-    end,
+function Polygon.create()
+	return Location.create( "polygon" )
+end
 
-    ParameterLocationLine = function( points )
-        return orders._ParameterLocation( points, "line" )
-    end,
+--------------------------------------------------------------------------------
+-- Line
+--------------------------------------------------------------------------------
+Line = {}
+Line.__index = Line
 
-    ParameterLocationPointList = function( points )
-        return orders._ParameterLocation( points, "pointlist" )
-    end,
+function Line.create()
+	return Location.create( "line" )
+end
 
-    missions =
-    {
+--------------------------------------------------------------------------------
+-- PointList
+--------------------------------------------------------------------------------
+PointList = {}
+PointList.__index = PointList
 
-    },
+function PointList.create()
+	return Location.create( "pointlist" )
+end
 
-    fragOrders =
-    {
-        ["Pion Appliquer feux"] = 358,
-    },
+--------------------------------------------------------------------------------
+-- Path
+--------------------------------------------------------------------------------
+Path = {}
+Path.__index = Path
 
-    dotations =
-    {
-        ["Obus 155 OE CCR F1"] = 22,
-        ["Ogre"]            = 23,
-        ["Obus 122 OE"]     = 51,
-        ["Obus 122 OE MPA"] = 52,
-        ["Obus 122 ACED"]   = 53,
-    }
+function Path.create( name )
+	local new = {}
+	setmetatable( new, Path )
+	new.name = name
+	new.type = "Path"
+	new.children = {}
+	return new
+end
 
+function Path:AddPoint( name, coordinates )
+	self.children[#self.children + 1] = { name = name, type = "pathpoint", children = { Point.create( coordinates ) } }
+	return self
+end
 
--- Exemple d'utilisation
--- orders.Issue(
---                 {
---                     mission = 46,           -- fragorder = tirer.id
---                     target = myUnit:GetIdentifier(),
---                     direction = 42, -- optionnel
---                     parameters =
---                     {
---                         { name = "Position installation", type = "Point", { orders.ParameterLocationPoint( myUnit:GetCoordinates() ) } },
---                     }
---                 }
---             )
+--------------------------------------------------------------------------------
+-- Order
+--------------------------------------------------------------------------------
+Order = {}
+Order.__index = Order
+
+-- Constructor
+function Order.create( target, id, type )
+	local new = {}
+	setmetatable( new, Order )
+	new.id = id
+	new.target = target
+	new.type = type
+	new.parameters = {}
+	return new
+end
+
+-- Definition of parameter
+function Order:With( t )
+	for i, v in ipairs( self.parameters or {} ) do
+		if v.name == t.name then
+			self.parameters[i] = { name = t.name, type = t.type, value = t.value, children = t.children or {} }
+			return self
+		end
+	end
+	self.parameters[#self.parameters + 1] = { name = t.name, type = t.type, value = t.value, children = t.children or {} }
+	return self
+end
+
+-- Xml serialization
+function Order:ToXml()
+	return xml.Serialize(
+		{
+			tag = "action",
+			attributes = { id = self.id, name = "", target = self.target, type = self.type },
+			children = Order._MakeXmlParameters( self.parameters )
+		}
+	)
+end
+
+-- Parameter serialization tools
+function Order._MakeXmlParameter( parameter )
+return {
+	tag = "parameter",
+	attributes = { name = parameter.name, type = parameter.type, value = parameter.value },
+	children = Order._MakeXmlParameters( parameter.children )
 }
+end
+
+function Order._MakeXmlParameters( parameters )
+	local result = {}
+	for _, v in ipairs( parameters or {} ) do
+		if v.ToXml ~= nil then
+			result[#result + 1] = v:ToXml()
+		else
+			result[#result + 1] = Order._MakeXmlParameter( v )
+		end
+	end
+	return result
+end
+
+-- Order execution
+function Order:Issue()
+	actions:IssueXmlOrder( self:ToXml() )
+end
+
+--------------------------------------------------------------------------------
+-- Mission
+-- Order with default parameters
+--------------------------------------------------------------------------------
+Mission = {}
+Mission.__index = Mission
+
+function Mission.create( target, id )
+	local new = Order.create( target, id, "mission" )
+		:With( { name = "Danger direction", type = "Direction", value = 360 } )
+		:With( { name = "Phase lines",      type = "PhaseLineList" } )
+		:With( { name = "Boundary limit 1", type = "Limit" } )
+		:With( { name = "Boundary limit 2", type = "Limit" } )
+		:With( { name = "Intelligences",    type = "IntelligenceList" } )
+	return new
+end
+
+--------------------------------------------------------------------------------
+-- FragOrder
+--------------------------------------------------------------------------------
+FragOrder = {}
+FragOrder.__index = FragOrder
+
+function FragOrder.create( target, id )
+	return Order.create( target, id, "fragorder" )
+end

@@ -41,6 +41,7 @@ namespace script
 
     namespace events
     {
+        DECLARE_AGENT_EVENT( AgentCreated );
         DECLARE_AGENT_EVENT( AgentMoved );
         DECLARE_AGENT_EVENT( OperationalStateChanged );
         DECLARE_AGENT_EVENT( MissionStarted );

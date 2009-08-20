@@ -46,6 +46,7 @@ events =
 
     agents =
     {
+         AgentCreated            = function( self ) return condition( agent ) end,
          AgentEnters             = function( self, zone ) return condition( agent ) end,
          OperationalStateChanged = function( self ) return condition( agent ) end,
          MissionStarted          = function( self ) return condition( agent ) end,

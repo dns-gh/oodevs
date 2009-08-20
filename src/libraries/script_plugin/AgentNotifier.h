@@ -36,6 +36,7 @@ namespace script
 // Created: AGE 2008-06-13
 // =============================================================================
 class AgentNotifier : public kernel::Extension_ABC
+                    , public kernel::Updatable_ABC< ASN1T_MsgUnitCreation >
                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                     , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
 {
@@ -56,6 +57,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void DoUpdate( const ASN1T_MsgUnitCreation&   message );
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     virtual void DoUpdate( const ASN1T_MsgUnitOrder&      message );
     //@}

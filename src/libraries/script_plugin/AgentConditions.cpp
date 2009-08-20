@@ -48,6 +48,7 @@ AgentConditions::~AgentConditions()
 void AgentConditions::RegisterIn( directia::Brain& brain )
 {
     brain.RegisterObject( "events.agents", this );
+    brain.RegisterFunction( "AgentCreated",            &AgentConditions::AgentCreated );
     brain.RegisterFunction( "AgentEnters",             &AgentConditions::AgentEnters );
     brain.RegisterFunction( "KnowledgeEnters",         &AgentConditions::KnowledgeEnters );
     brain.RegisterFunction( "OperationalStateChanged", &AgentConditions::OperationalStateChanged );
@@ -93,6 +94,15 @@ namespace
         geometry::Rectangle2f box_;
         const kernel::CoordinateConverter_ABC& converter_;
     };
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::AgentCreated
+// Created: SBO 2009-08-19
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Condition_ABC > AgentConditions::AgentCreated()
+{
+    return boost::shared_ptr< Condition_ABC >( new SimpleEntityCondition< events::AgentCreated >( controller_ ) );
 }
 
 // -----------------------------------------------------------------------------
