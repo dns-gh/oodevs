@@ -215,12 +215,12 @@ void TER_PathFinderThread::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter,
 }
 
 // -----------------------------------------------------------------------------
-// Name: FindNodesWithinCircle::FindNodesWithinCircle
+// Name: TER_PathFinderThread::FindCrossroadsWithinCircle
 // Created: RPD 2009-08-18
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindNodesWithinCircle( const MT_Vector2D& vCenter, float rRadius )
+std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindCrossroadsWithinCircle( const MT_Vector2D& vCenter, float rRadius )
 {
-    std::vector< pathfind::Node< TerrainData >* > result = pPathfinder_->FindNodesWithinCircle( MakePoint( vCenter ), float( rRadius ) );
+    std::vector< pathfind::Node< TerrainData >* > result = pPathfinder_->FindCrossroadsWithinCircle( MakePoint( vCenter ), float( rRadius ) );
 
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     for( std::vector< pathfind::Node< TerrainData >* >::const_iterator it = result.begin(); it != result.end(); ++it )
