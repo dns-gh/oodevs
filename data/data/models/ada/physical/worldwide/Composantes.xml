@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<elements>
+<elements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Equipments.xsd">
   <element codeEMAT6="Strategic Bomber" codeEMAT8="Strategic Bomber" codeLFRIL="Strategic Bomber" codeNNO="Strategic Bomber" comment="" id="1" name="Strategic Bomber" protection="Aircraft" size="Heavy" weight="1000">
     <speeds max="700">
       <speed terrain="inconnu" value="600"/>

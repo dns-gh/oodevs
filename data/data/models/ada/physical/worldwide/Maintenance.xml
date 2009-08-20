@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<maintenance>
+<maintenance xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Maintenance.xsd">
   <working-schemes>
     <working-scheme type="Regime1" working-time="8"/>
     <working-scheme time-before-warning="48h" type="Regime2" working-time="16"/>

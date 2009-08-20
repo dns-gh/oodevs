@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<communications xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<communication-breakdown speed-modifier="0.2" reloading-time-modifier="1.5"/>
-</communications>

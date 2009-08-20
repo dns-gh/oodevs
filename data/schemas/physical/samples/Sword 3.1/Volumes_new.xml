@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<volumes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<volume name="Gros"/>
-	<volume name="Moyen"/>
-	<volume name="Petit"/>
-	<volume name="Personnel"/>
-</volumes>

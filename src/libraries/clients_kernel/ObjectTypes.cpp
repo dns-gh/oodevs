@@ -9,16 +9,16 @@
 
 #include "clients_kernel_pch.h"
 #include "ObjectTypes.h"
-#include "ObjectType.h"
+#include "BreakdownType.h"
 #include "DotationType.h"
 #include "EquipmentType.h"
-#include "NBCAgent.h"
+#include "FileLoader.h"
 #include "FireClass.h"
 #include "MedicalTreatmentType.h"
-#include "BreakdownType.h"
+#include "NBCAgent.h"
+#include "ObjectType.h"
 #include "WeaponSystemType.h"
-#include "tools.h"
-#include "tools/ExerciseConfig.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -42,20 +42,6 @@ ObjectTypes::ObjectTypes( const tools::ExerciseConfig& config )
     Load( config );
 }
 
-namespace
-{
-    struct FileReader
-    {
-        FileReader( xml::xistream& xis ) : xis_( &xis ) {}
-        const FileReader& Read( const std::string& tag, std::string& file ) const
-        {
-            *xis_ >> start( tag ) >> attribute( "file", file ) >> end();
-            return *this;
-        }
-        xml::xistream* xis_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ObjectTypes::Load
 // Created: AGE 2006-04-28
@@ -63,28 +49,15 @@ namespace
 void ObjectTypes::Load( const tools::ExerciseConfig& config )
 {
     Purge();
-
-    xml::xifstream scipio( config.GetPhysicalFile() );
-    std::string dotations, weaponsystems, equipments, nbc, fire, pannes, objects, medicaltreatment;
-    scipio >> start( "physical" );
-    FileReader( scipio )
-        .Read( "dotations", dotations )
-        .Read( "components", equipments )
-        .Read( "weapon-systems", weaponsystems )
-        .Read( "nbc", nbc )
-        .Read( "fire", fire )
-        .Read( "medical-treatment", medicaltreatment )
-        .Read( "breakdowns", pannes )
-        .Read( "objects", objects );
-   
-    ReadObjectTypes( config.BuildPhysicalChildFile( objects ) );
-    ReadDotations( config.BuildPhysicalChildFile( dotations ) );
-    ReadWeaponSystems( config.BuildPhysicalChildFile( weaponsystems ) );
-    ReadEquipments( config.BuildPhysicalChildFile( equipments ) );
-    ReadNBC( config.BuildPhysicalChildFile( nbc ) );
-    ReadFire( config.BuildPhysicalChildFile( fire ) );
-    ReadMedicalTreatment( config.BuildPhysicalChildFile( medicaltreatment ) );
-    ReadBreakdowns( config.BuildPhysicalChildFile( pannes ) );
+    FileLoader( config )
+        .Load( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ) )
+        .Load( "dotations", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) )
+        .Load( "weapon-systems", boost::bind( &ObjectTypes::ReadWeaponSystems, this, _1 ) )
+        .Load( "components", boost::bind( &ObjectTypes::ReadEquipments, this, _1 ) )
+        .Load( "nbc", boost::bind( &ObjectTypes::ReadNBC, this, _1 ) )
+        .Load( "fire", boost::bind( &ObjectTypes::ReadFire, this, _1 ) )
+        .Load( "medical-treatment", boost::bind( &ObjectTypes::ReadMedicalTreatment, this, _1 ) )
+        .Load( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,11 +89,9 @@ ObjectTypes::~ObjectTypes()
 // Name: ObjectTypes::ReadObjectTypes
 // Created: AGE 2006-10-17
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadObjectTypes( const std::string& objects )
+void ObjectTypes::ReadObjectTypes( xml::xistream& xis )
 {
-    xifstream xis( objects );
-    xis >> start( "objects" )        
-            >> list ( "object", *this, &ObjectTypes::ReadObjectType );
+    xis >> start( "objects" ) >> list ( "object", *this, &ObjectTypes::ReadObjectType );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,11 +108,9 @@ void ObjectTypes::ReadObjectType( xml::xistream& xis )
 // Name: ObjectTypes::ReadDotations
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadDotations( const std::string& dotations )
+void ObjectTypes::ReadDotations( xml::xistream& xis )
 {
-    xifstream xis( dotations );
-    xis >> start( "dotations" )
-        >> list( "dotation", *this, &ObjectTypes::ReadDotation );
+    xis >> start( "dotations" ) >> list( "dotation", *this, &ObjectTypes::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,11 +127,9 @@ void ObjectTypes::ReadDotation( xml::xistream& xis )
 // Name: ObjectTypes::ReadWeaponSystems
 // Created: SBO 2008-08-06
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadWeaponSystems( const std::string& file )
+void ObjectTypes::ReadWeaponSystems( xml::xistream& xis )
 {
-    xifstream xis( file );
-    xis >> start( "weapons" )
-            >> list( "weapon-system", *this, &ObjectTypes::ReadWeaponSystem );
+    xis >> start( "weapons" ) >> list( "weapon-system", *this, &ObjectTypes::ReadWeaponSystem );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,11 +146,9 @@ void ObjectTypes::ReadWeaponSystem( xml::xistream& xis )
 // Name: ObjectTypes::ReadEquipments
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadEquipments( const std::string& equipments )
+void ObjectTypes::ReadEquipments( xml::xistream& xis )
 {
-    xifstream xis( equipments );
-    xis >> start( "elements" )
-        >> list( "element", *this, &ObjectTypes::ReadEquipment );
+    xis >> start( "elements" ) >> list( "element", *this, &ObjectTypes::ReadEquipment );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,12 +165,9 @@ void ObjectTypes::ReadEquipment( xml::xistream& xis )
 // Name: ObjectTypes::ReadNBC
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadNBC( const std::string& nbc )
+void ObjectTypes::ReadNBC( xml::xistream& xis )
 {
-    xifstream xis( nbc );
-    xis >> start( "nbc" )
-            >> start( "agents" )
-                >> list( "agent", *this, &ObjectTypes::ReadNBCAgent );
+    xis >> start( "nbc" ) >> start( "agents" ) >> list( "agent", *this, &ObjectTypes::ReadNBCAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,11 +184,9 @@ void ObjectTypes::ReadNBCAgent( xml::xistream& xis )
 // Name: ObjectTypes::ReadFire
 // Created: RFT 2006-04-04
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadFire( const std::string& fire )
+void ObjectTypes::ReadFire( xml::xistream& xis )
 {
-    xifstream xis( fire );
-    xis >> start( "fire-classes" )
-            >> list( "class", *this, &ObjectTypes::ReadFireClass );
+    xis >> start( "fire-classes" ) >> list( "class", *this, &ObjectTypes::ReadFireClass );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,11 +203,9 @@ void ObjectTypes::ReadFireClass( xml::xistream& xis )
 // Name: ObjectTypes::ReadMedicalTreatment
 // Created: RFT 2006-04-04
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadMedicalTreatment( const std::string& medicaltreatment )
+void ObjectTypes::ReadMedicalTreatment( xml::xistream& xis )
 {
-    xifstream xis( medicaltreatment );
-    xis >> start( "medical-treatments" )
-            >> list( "medical-treatment", *this, &ObjectTypes::ReadMedicalTreatmentType );
+    xis >> start( "medical-treatments" ) >> list( "medical-treatment", *this, &ObjectTypes::ReadMedicalTreatmentType );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,11 +221,9 @@ void ObjectTypes::ReadMedicalTreatmentType( xml::xistream& xis )
 // Name: ObjectTypes::ReadBreakdowns
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadBreakdowns( const std::string& breakdowns )
+void ObjectTypes::ReadBreakdowns( xml::xistream& xis )
 {
-    xifstream xis( breakdowns );
-    xis >> start( "breakdowns" )
-        >> list( "category", *this, &ObjectTypes::ReadBreakdownCategory );
+    xis >> start( "breakdowns" ) >> list( "category", *this, &ObjectTypes::ReadBreakdownCategory );
 }
 
 // -----------------------------------------------------------------------------

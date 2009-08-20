@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<automats>
+<automats xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Automats.xsd">
   <automat decisional-model="Firefinder reconnaissance battery" id="109" name="Firefinder reconnaissance battery" type="Automate ASS">
     <unit command-post="true" max-occurs="3" min-occurs="3" type="Firefinder reconnaissance platoon"/>
   </automat>

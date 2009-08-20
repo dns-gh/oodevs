@@ -17,6 +17,7 @@ namespace tools
 {
     class ExerciseConfig;
 }
+
 namespace kernel
 {
     class AgentType;
@@ -83,14 +84,14 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadComponents( const std::string& components );
-    void ReadSensors( const std::string& sensors );
-    void ReadAgents( const std::string& agents );
-    void ReadAutomats( const std::string& automats );
-    void ReadOrderTypes( const std::string& missions );
-    void ReadModels( const std::string& models );
-    void ReadPopulations( const std::string& populations );
-    void ReadKnowledgeGroups( const std::string& groups );
+    void ReadComponents( xml::xistream& xis );
+    void ReadSensors( xml::xistream& xis );
+    void ReadAgents( xml::xistream& xis );
+    void ReadAutomats( xml::xistream& xis );
+    void ReadOrderTypes( xml::xistream& xis );
+    void ReadModels( xml::xistream& xis );
+    void ReadPopulations( xml::xistream& xis );
+    void ReadKnowledgeGroups( xml::xistream& xis );
 
     void ReadAgentType( xml::xistream& xis );
     void ReadAutomatType( xml::xistream& xis );

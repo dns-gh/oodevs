@@ -70,21 +70,21 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadObjectTypes( const std::string& objects );
+    void ReadObjectTypes( xml::xistream& xis );
     void ReadObjectType( xml::xistream& xis );
-    void ReadDotations( const std::string& dotations );
+    void ReadDotations( xml::xistream& xis );
     void ReadDotation( xml::xistream& xis );
-    void ReadWeaponSystems( const std::string& file );
+    void ReadWeaponSystems( xml::xistream& xis );
     void ReadWeaponSystem( xml::xistream& xis );
-    void ReadEquipments( const std::string& equipments );
+    void ReadEquipments( xml::xistream& xis );
     void ReadEquipment( xml::xistream& xis );
-    void ReadNBC( const std::string& nbc );
+    void ReadNBC( xml::xistream& xis );
     void ReadNBCAgent( xml::xistream& xis );
-    void ReadFire( const std::string& fire );
+    void ReadFire( xml::xistream& xis );
     void ReadFireClass( xml::xistream& xis );
-    void ReadMedicalTreatment( const std::string& medicaltreatment );
+    void ReadMedicalTreatment( xml::xistream& xis );
     void ReadMedicalTreatmentType( xml::xistream& xis );
-    void ReadBreakdowns( const std::string& breakdowns );
+    void ReadBreakdowns( xml::xistream& xis );
     void ReadBreakdownCategory( xml::xistream& xis );
     void ReadBreakdown( xml::xistream& xis );
     //@}
