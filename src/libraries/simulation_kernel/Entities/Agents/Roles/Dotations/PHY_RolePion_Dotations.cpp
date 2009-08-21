@@ -34,6 +34,20 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
+{
+	archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+	archive >> pion;
+	::new( role )PHY_RolePion_Dotations( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations constructor
 // Created: NLD 2004-08-13
@@ -47,19 +61,6 @@ PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
 {
     pDotations_ = new PHY_DotationGroupContainer( *this );
     pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Dotations constructor
-// Created: JVT 2005-04-01
-// -----------------------------------------------------------------------------
-PHY_RolePion_Dotations::PHY_RolePion_Dotations()
-    : pPion_                     ( 0 )
-    , pCurrentConsumptionMode_   ( 0 )
-    , pPreviousConsumptionMode_  ( 0 )
-    , reservedConsumptions_      ()
-    , pDotations_                ( 0 )
-{
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +119,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pPion_
-         >> pDotations_;
+    file >> pDotations_;
          
     uint nID;
     file >> nID;
@@ -139,8 +139,7 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const uint ) 
 {
     unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (uint)-1 ) ,
              previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (uint)-1 );
-    file << pPion_
-         << pDotations_
+    file << pDotations_
          << current
          << previous
          << reservedConsumptions_;

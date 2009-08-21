@@ -15,15 +15,6 @@
 // Name: MIL_Entity_ABC constructor
 // Created: RDS 2008-05-09
 // -----------------------------------------------------------------------------
-MIL_Entity_ABC::MIL_Entity_ABC()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Entity_ABC constructor
-// Created: RDS 2008-05-09
-// -----------------------------------------------------------------------------
 MIL_Entity_ABC::MIL_Entity_ABC( const std::string& name )
     : strName_( name )
 {

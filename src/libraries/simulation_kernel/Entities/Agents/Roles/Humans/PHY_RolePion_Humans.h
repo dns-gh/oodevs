@@ -41,7 +41,6 @@ public:
 
 public:
     explicit PHY_RolePion_Humans( MIL_AgentPion& pion );
-             PHY_RolePion_Humans();
     virtual ~PHY_RolePion_Humans();
 
     //! @name CheckPoints
@@ -145,6 +144,9 @@ private:
     T_MedicalHumanStateSet medicalHumanStates_;
     uint                   nTickRcMedicalQuerySent_;
     E_EvacuationMode       nEvacuationMode_;
+
+	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ );
+	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ );
 };
 
 #endif // __PHY_RolePion_Humans_h_

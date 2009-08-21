@@ -36,8 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
-     MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position );
-     MIL_PopulationConcentration();
+     MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nID = 0);
     ~MIL_PopulationConcentration();
     //@}
 
@@ -126,6 +125,10 @@ private:
 
     const MIL_Object_ABC* pSplittingObject_;
     MT_Float                  rPullingFlowsDensity_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );
+
 };
 
 #endif // __MIL_PopulationConcentration_h_

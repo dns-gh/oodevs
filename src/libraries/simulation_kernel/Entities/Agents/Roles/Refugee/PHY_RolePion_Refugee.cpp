@@ -18,6 +18,20 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Refugee, "PHY_RolePion_Refugee" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Refugee* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Refugee* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Refugee( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee constructor
 // Created: NLD 2004-09-07
@@ -31,18 +45,6 @@ PHY_RolePion_Refugee::PHY_RolePion_Refugee( MIL_AgentPion& pion )
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Refugee constructor
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-PHY_RolePion_Refugee::PHY_RolePion_Refugee()
-    : pPion_                   ( 0 )
-    , bManaged_                ( false )
-    , pCamp_                   ( 0 )
-    , bHasChanged_             ( true )    
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee destructor
@@ -60,8 +62,7 @@ PHY_RolePion_Refugee::~PHY_RolePion_Refugee()
 template< typename Archive >
 void PHY_RolePion_Refugee::serialize( Archive& file, const uint )
 {
-    file & pPion_
-         & bManaged_
+    file & bManaged_
          & const_cast< MIL_Object_ABC*& >( pCamp_ );
 }
 

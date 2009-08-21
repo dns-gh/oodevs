@@ -22,25 +22,26 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Surrender( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Surrender::PHY_RolePion_Surrender( MIL_AgentPion& pion )
     : pPion_                     ( &pion )
-    , bPrisoner_                 ( false )
-    , pPrison_                   ( 0 )
-    , bHasChanged_               ( true )
-{
-    // NOTHING
-}
-  
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender constructor
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-PHY_RolePion_Surrender::PHY_RolePion_Surrender()
-    : pPion_                     ()
     , bPrisoner_                 ( false )
     , pPrison_                   ( 0 )
     , bHasChanged_               ( true )
@@ -68,8 +69,7 @@ PHY_RolePion_Surrender::~PHY_RolePion_Surrender()
 template< typename Archive >
 void PHY_RolePion_Surrender::serialize( Archive& file, const uint )
 {
-    file & pPion_
-         & bPrisoner_
+    file & bPrisoner_
          & const_cast< MIL_Object_ABC*& >( pPrison_ );
 }
 

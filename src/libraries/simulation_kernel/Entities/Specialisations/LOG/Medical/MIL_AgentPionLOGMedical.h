@@ -29,8 +29,7 @@ class MIL_AgentPionLOGMedical : public MIL_AgentPionLOG_ABC
 
 public:
              MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
-             MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
-             MIL_AgentPionLOGMedical();
+             MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate );
     virtual ~MIL_AgentPionLOGMedical();
     
     //! @name CheckPoints
@@ -40,6 +39,9 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
+private:
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AgentPionLOGMedical* pion, const unsigned int /*version*/ );
+  	template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AgentPionLOGMedical* pion, const unsigned int /*version*/ );
 };
 
 #endif // __MIL_AgentPionLOGMedical_h_

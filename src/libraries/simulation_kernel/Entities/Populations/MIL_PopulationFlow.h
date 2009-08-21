@@ -34,7 +34,6 @@ public:
     //@{
      MIL_PopulationFlow( MIL_Population& population, const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint );
      MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration );
-     MIL_PopulationFlow();
     ~MIL_PopulationFlow();
     //@}
 
@@ -82,6 +81,9 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
+
+protected:
+    MIL_PopulationFlow( MIL_Population& population, unsigned int nID);
 
 private:
     //! @name Copy/Assignement
@@ -166,6 +168,10 @@ private:
 
     // Split
     const MIL_Object_ABC* pSplittingObject_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_PopulationFlow* flow, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_PopulationFlow* flow, const unsigned int /*version*/ );
+
 };
 
 #endif // __MIL_PopulationFlow_h_

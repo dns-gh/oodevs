@@ -38,24 +38,26 @@
 
 BOOST_CLASS_EXPORT_GUID( NET_RolePion_Dotations, "NET_RolePion_Dotations" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const NET_RolePion_Dotations* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, NET_RolePion_Dotations* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )NET_RolePion_Dotations( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: NET_RolePion_Dotations constructor
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
 NET_RolePion_Dotations::NET_RolePion_Dotations( MIL_AgentPion& pion )
     : pPion_                     ( &pion )
-    , bLastStateDead_            ( false )
-    , bLastStateNeutralized_     ( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-NET_RolePion_Dotations::NET_RolePion_Dotations()
-    : pPion_                     ( 0 )
     , bLastStateDead_            ( false )
     , bLastStateNeutralized_     ( false )
 {
@@ -78,8 +80,7 @@ NET_RolePion_Dotations::~NET_RolePion_Dotations()
 template< typename Archive >
 void NET_RolePion_Dotations::serialize( Archive& file, const uint )
 {
-    file & const_cast< MIL_AgentPion*& >( pPion_ )
-         & bLastStateDead_
+    file & bLastStateDead_
          & bLastStateNeutralized_;
 }
 

@@ -23,6 +23,20 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Humans, "PHY_RolePion_Humans" )
 
+template< typename Archive >
+inline void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ )
+{
+	archive << role->pPion_;
+}
+
+template< typename Archive >
+inline void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+	archive >> pion;
+	::new( role )PHY_RolePion_Humans( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::T_HumanData::T_HumanData
 // Created: NLD 2005-01-07
@@ -77,24 +91,6 @@ PHY_RolePion_Humans::PHY_RolePion_Humans( MIL_AgentPion& pion )
 {
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans constructor
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-PHY_RolePion_Humans::PHY_RolePion_Humans()
-    : pPion_                  ()
-    , humansData_             ()
-    , nNbrUsableHumans_       ( 0 )
-    , nNbrHumansDataChanged_  ( 0 )
-    , nNbrHumans_             ( 0 )
-    , humansToUpdate_         ()
-    , medicalHumanStates_     ()
-    , nTickRcMedicalQuerySent_( 0 )
-    , nEvacuationMode_        ( eEvacuationMode_Auto )
-{
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans destructor
 // Created: NLD 2004-08-16
@@ -114,8 +110,7 @@ PHY_RolePion_Humans::~PHY_RolePion_Humans()
 template< typename Archive >
 void PHY_RolePion_Humans::serialize( Archive& file, const uint )
 {
-    file & pPion_
-         & humansData_
+    file & humansData_
          & nNbrUsableHumans_
          & nNbrHumans_ 
          & humansToUpdate_

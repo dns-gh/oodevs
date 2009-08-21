@@ -26,8 +26,7 @@ class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender
 {
 
 public:
-             PHY_RolePion_Surrender( MIL_AgentPion& pion );
-             PHY_RolePion_Surrender();
+    explicit PHY_RolePion_Surrender( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Surrender();
 
     //! @name CheckPoints
@@ -70,6 +69,10 @@ private:
           bool                 bPrisoner_;
     const MIL_Object_ABC*      pPrison_;
           bool                 bHasChanged_;
+
+      	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
+      	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePion_Surrender_h_

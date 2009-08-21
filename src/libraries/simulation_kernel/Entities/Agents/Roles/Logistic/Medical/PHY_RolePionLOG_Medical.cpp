@@ -32,6 +32,20 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Medical, "PHY_RolePionLOG_Medical" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPionLOG_ABC* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePionLOG_Medical( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical constructor
 // Created: NLD 2004-09-07
@@ -56,25 +70,6 @@ PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
     priorities_.push_back( & PHY_HumanWound::woundedU3_  );
     priorities_.push_back( & PHY_HumanWound::notWounded_ );
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MedicalConsignList() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Medical constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical()
-: pPion_                  ( 0 )
-    , bHasChanged_            ( true )
-    , bSystemEnabled_         ( false )
-    , bSortingFunctionEnabled_( false )
-    , bHealingFunctionEnabled_( false )
-    , priorities_             ()
-    , tacticalPriorities_     ()
-    , consigns_               ()
-    , evacuationAmbulances_   ()
-    , collectionAmbulances_   ()
-    , reservations_           ()
-{
 }
 
 // -----------------------------------------------------------------------------
@@ -241,8 +236,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pPion_
-         >> bSystemEnabled_
+    file >> bSystemEnabled_
          >> bSortingFunctionEnabled_
          >> bHealingFunctionEnabled_
          >> priorities_
@@ -272,8 +266,7 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << pPion_
-         << bSystemEnabled_
+    file << bSystemEnabled_
          << bSortingFunctionEnabled_
          << bHealingFunctionEnabled_
          << priorities_

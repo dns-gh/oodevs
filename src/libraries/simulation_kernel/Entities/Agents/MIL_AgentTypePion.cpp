@@ -309,9 +309,9 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& autom
 // Name: MIL_AgentTypePion::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
+MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate ) const
 {
-    return new MIL_AgentPion( *this, nID, automate, vPosition );
+    return new MIL_AgentPion( *this, nID, automate );
 }
 
 // -----------------------------------------------------------------------------

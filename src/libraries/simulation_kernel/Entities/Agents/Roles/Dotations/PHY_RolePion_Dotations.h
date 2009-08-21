@@ -42,7 +42,6 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
 
 public:
     explicit PHY_RolePion_Dotations( MIL_AgentPion& pion );
-             PHY_RolePion_Dotations();
     virtual ~PHY_RolePion_Dotations();
 
     //! @name CheckPoints
@@ -124,6 +123,9 @@ private:
     const PHY_ConsumptionType*  pCurrentConsumptionMode_;
     const PHY_ConsumptionType*  pPreviousConsumptionMode_;
           T_DotationReservedMap reservedConsumptions_;
+
+	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
+	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
 };
 
 #endif // __PHY_RolePion_Dotations_h_

@@ -68,7 +68,6 @@ public:
 public:
              MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, xml::xistream& xis );
              MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate&  parent   , xml::xistream& xis);
-             MIL_Automate();
     virtual ~MIL_Automate();
 
     //! @name CheckPoints
@@ -192,7 +191,7 @@ public:
 protected:
     //! @name Constructor
     //@{
-    MIL_Automate( const MIL_AutomateType& type );
+    MIL_Automate( const MIL_AutomateType& type, unsigned int nID=0 );
     //@}
 
     //! @name Tools
@@ -248,6 +247,10 @@ private:
 
     // Surrendered / prisoner
     const MIL_Army*             pArmySurrenderedTo_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
+  	template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );
+
 };
 
 #include "MIL_Automate.inl"

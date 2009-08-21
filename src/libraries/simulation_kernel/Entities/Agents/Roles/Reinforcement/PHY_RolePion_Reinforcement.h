@@ -33,7 +33,6 @@ public:
 
 public:
     explicit PHY_RolePion_Reinforcement( MIL_AgentPion& pion );
-             PHY_RolePion_Reinforcement();
     virtual ~PHY_RolePion_Reinforcement();
 
     //! @name Checkpoints
@@ -82,6 +81,9 @@ private:
     MIL_AgentPion* pPionReinforced_;
     T_PionSet      reinforcements_;
     bool           bHasChanged_;
+
+	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
+	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
 };
 
 #endif // __PHY_RolePion_Reinforcement_h_

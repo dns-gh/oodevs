@@ -45,7 +45,6 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, xml::xistream& xis );
-     MIL_Population();
     ~MIL_Population();
     //@}
 
@@ -225,6 +224,9 @@ private:
 
           // Misc
           bool                       bHasDoneMagicMove_;
+
+          template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );
+          template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Population* population, const unsigned int /*version*/ );
 };
 
 #endif // __MIL_Population_h_

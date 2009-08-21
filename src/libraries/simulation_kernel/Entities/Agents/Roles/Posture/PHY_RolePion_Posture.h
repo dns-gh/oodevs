@@ -29,8 +29,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
 {
 
 public:
-             PHY_RolePion_Posture( const MIL_AgentPion& pion );
-             PHY_RolePion_Posture();
+    explicit  PHY_RolePion_Posture( const MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Posture();
 
     //! @name CheckPoints
@@ -135,6 +134,10 @@ private:
 
 private:
     static MT_Random  random_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePion_Posture_h_

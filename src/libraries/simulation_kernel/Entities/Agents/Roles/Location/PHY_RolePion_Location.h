@@ -29,7 +29,6 @@ class PHY_RolePion_Location : public PHY_RoleInterface_Location
 
 public:
     explicit PHY_RolePion_Location( MIL_AgentPion& pion );
-             PHY_RolePion_Location();
     virtual ~PHY_RolePion_Location();
 
     //! @name CheckPoints
@@ -109,6 +108,10 @@ private:
     bool bDirectionHasChanged_;
     bool bCurrentSpeedHasChanged_;
     bool bHeightHasChanged_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePion_Location_h_

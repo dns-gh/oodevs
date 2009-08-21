@@ -19,6 +19,20 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOGConvoy_Supply, "PHY_RolePionLOGConvoy_Supply" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePionLOGConvoy_Supply( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply constructor
 // Created: NLD 2005-02-09
@@ -30,16 +44,6 @@ PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion 
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply()
-    : pPion_             ( 0 )
-    , pConvoy_           ( 0 )
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply destructor
@@ -57,8 +61,7 @@ PHY_RolePionLOGConvoy_Supply::~PHY_RolePionLOGConvoy_Supply()
 template< typename Archive >
 void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const uint )
 {
-    file & const_cast< MIL_AgentPion*& >( pPion_ )
-         & pConvoy_;
+    file & pConvoy_;
 }
 
 // -----------------------------------------------------------------------------

@@ -32,8 +32,7 @@ class PHY_RolePionLOG_Supply : public PHY_RoleInterface_Supply
 {
 
 public:
-             PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion );
-             PHY_RolePionLOG_Supply();
+    explicit PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion );
     virtual ~PHY_RolePionLOG_Supply();
 
     //! @name CheckPoints
@@ -99,6 +98,10 @@ private:
     bool                        bSystemEnabled_;
     bool                        bHasChanged_;
     PHY_DotationStockContainer* pStocks_; 
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ );
+  	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePionLOG_Supply_h_

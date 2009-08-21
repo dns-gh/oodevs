@@ -31,6 +31,23 @@
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationFlow, "MIL_PopulationFlow" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_PopulationFlow* flow, const unsigned int /*version*/ )
+{
+	MIL_Population* const pPopulation = &flow->GetPopulation();
+	unsigned int nID = flow->GetID();
+	archive << pPopulation << nID;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_PopulationFlow* concentration, const unsigned int /*version*/ )
+{
+	MIL_Population* pPopulation;
+	unsigned int nID;
+    archive >> pPopulation >> nID;
+    ::new( concentration )MIL_PopulationFlow( *pPopulation, nID);
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow constructor
 // Created: NLD 2005-09-28
@@ -94,10 +111,10 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
 // Name: MIL_PopulationFlow constructor
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-MIL_PopulationFlow::MIL_PopulationFlow()
+MIL_PopulationFlow::MIL_PopulationFlow(MIL_Population& population, unsigned int nID)
     : PHY_MovingEntity_ABC     ()
     , TER_PopulationFlow_ABC   ()
-    , MIL_PopulationElement_ABC()
+    , MIL_PopulationElement_ABC(population, nID)
     , pSourceConcentration_    ( 0 )
     , pDestConcentration_      ( 0 )
     , primaryDestination_      ()
@@ -107,13 +124,15 @@ MIL_PopulationFlow::MIL_PopulationFlow()
     , direction_               ( 0., 1. )
     , rSpeed_                  ( 0. )
     , bPathUpdated_            ( true )
-    , bFlowShapeUpdated_       ( true ) 
+    , bFlowShapeUpdated_       ( true )
     , bDirectionUpdated_       ( true )
     , bSpeedUpdated_           ( true )
     , pSplittingObject_        ( 0 )
 {
     // NOTHING
 }
+
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow destructor

@@ -62,7 +62,6 @@ public:
 
 public:
     explicit PHY_RolePion_Composantes( MIL_AgentPion& pion );
-             PHY_RolePion_Composantes();
     virtual ~PHY_RolePion_Composantes();
 
     //! @name CheckPoints
@@ -321,6 +320,10 @@ public:
     static MT_Float rOpStateWeightMajorComposante_;
     static MT_Float rMaxDangerosityDegradationByNeutralizedState_;
     static MT_Float rMaxDangerosityDegradationByOpState_;
+
+private:
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Composantes* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Composantes* role, const unsigned int /*version*/ );
 };
 
 #include "PHY_RolePion_Composantes.inl"

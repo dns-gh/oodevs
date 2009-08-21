@@ -19,7 +19,6 @@
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOG_ABC, "MIL_AgentPionLOG_ABC" )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOG_ABC constructor
@@ -37,22 +36,11 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint 
 // Name: MIL_AgentPionLOG_ABC constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
-    : MIL_AgentPion   ( type, nID, automate, vPosition )
+MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate)
+    : MIL_AgentPion   ( type, nID, automate )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     assert( automate.GetType().IsLogistic() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOG_ABC constructor
-// Created: JVT 2005-03-24
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC()
-    : MIL_AgentPion   ()
-    , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -62,16 +50,6 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC()
 MIL_AgentPionLOG_ABC::~MIL_AgentPionLOG_ABC()
 {
     delete pLogisticAction_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOG_ABC::serialize
-// Created: JVT 2005-04-14
-// -----------------------------------------------------------------------------
-template < typename Archive >
-void MIL_AgentPionLOG_ABC::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< MIL_AgentPion >( *this );
 }
 
 // -----------------------------------------------------------------------------

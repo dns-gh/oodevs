@@ -36,8 +36,7 @@ public:
     static void Initialize( xml::xistream& xis );
     //@}
 
-             PHY_RolePion_Communications( MIL_AgentPion& pion );
-             PHY_RolePion_Communications();
+    explicit PHY_RolePion_Communications( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Communications();
 
     //! @name CheckPoints
@@ -90,6 +89,9 @@ private:
 private:
     static MT_Float rCoefSpeedModificator_;
     static MT_Float rCoefReloadingTimeModificator_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ );
 };
 
 #endif // __PHY_RolePion_Communications_h_

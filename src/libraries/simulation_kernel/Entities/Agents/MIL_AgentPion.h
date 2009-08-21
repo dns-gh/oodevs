@@ -42,8 +42,7 @@ class MIL_AgentPion : public MIL_Agent_ABC
 
 public:
              MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );    // Pion dans ODB
-             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ); // Creation dynamique (convois, ...)
-             MIL_AgentPion();
+             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate ); // Creation dynamique (convois, ...)
     virtual ~MIL_AgentPion();
 
     //! @name CheckPoints
@@ -164,6 +163,9 @@ private:
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
 
     MIL_PionOrderManager&    orderManager_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int /*version*/ );
+  	template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int /*version*/ );
 };
 
 #endif // __MIL_AgentPion_h_

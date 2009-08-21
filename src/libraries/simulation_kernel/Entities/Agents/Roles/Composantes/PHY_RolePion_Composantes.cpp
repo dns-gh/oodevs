@@ -109,30 +109,6 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_AgentPion& pion )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes constructor
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-PHY_RolePion_Composantes::PHY_RolePion_Composantes()
-    : pPion_                       ()
-    , composantes_                 ()
-    , lentComposantes_             ()
-    , borrowedComposantes_         ()
-    , bLoansChanged_               ( false )
-    , composanteTypes_             ()
-    , nNbrComposanteChanged_       ( 0 )
-    , nNbrUsableComposantes_       ( 0 )
-    , rOperationalState_           ( 0. )
-    , rMajorOperationalState_      ( 0. )
-    , bOperationalStateChanged_    ( false )
-    , pMajorComposante_            ( 0 )
-    , nNeutralizationEndTimeStep_  ( 0 )
-    , maintenanceComposanteStates_ ()
-    , nTickRcMaintenanceQuerySent_ ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes destructor
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
@@ -222,8 +198,7 @@ namespace boost
 template< typename Archive >
 void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
 {
-    file & pPion_
-         & composantes_
+    file & composantes_
          & lentComposantes_
          & borrowedComposantes_
          & composanteTypes_

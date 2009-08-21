@@ -33,8 +33,7 @@ class MIL_AgentPionLOG_ABC : public MIL_AgentPion
 
 public:
              MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
-             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
-             MIL_AgentPionLOG_ABC();
+             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate );
     virtual ~MIL_AgentPionLOG_ABC();
 
     //! @name CheckPoints
@@ -56,5 +55,24 @@ public:
 private:
     PHY_ActionLogistic< MIL_AgentPionLOG_ABC >* pLogisticAction_;
 };
+
+// BOOST_SERIALIZATION_ASSUME_ABSTRACT should be used for this
+// but it seems to be buggy : inherits boost::is_abstract<T> instead of boost::true_type
+namespace boost {
+namespace serialization {
+    template<>
+    struct is_abstract<const MIL_AgentPionLOG_ABC> : boost::true_type { } ;
+} // namespace serialization
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPionLOG_ABC::serialize
+// Created: JVT 2005-04-14
+// -----------------------------------------------------------------------------
+template < typename Archive >
+inline void MIL_AgentPionLOG_ABC::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< MIL_AgentPion >( *this );
+}
 
 #endif // __MIL_AgentPionLOG_ABC_h_

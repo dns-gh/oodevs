@@ -18,6 +18,20 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Reinforcement, "PHY_RolePion_Reinforcement" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Reinforcement( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement constructor
 // Created: NLD 2004-09-07
@@ -27,19 +41,6 @@ PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MIL_AgentPion& pion )
     , bHasChanged_                   ( true )
     , reinforcements_                ()
     , pPionReinforced_               ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Reinforcement constructor
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement()
-    : pPion_                         ( 0 )
-    , pPionReinforced_               ( 0 )
-    , reinforcements_                ()
-    , bHasChanged_                   ( true )
 {
     // NOTHING
 }
@@ -60,7 +61,6 @@ PHY_RolePion_Reinforcement::~PHY_RolePion_Reinforcement()
 template< typename Archive >
 void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
 {
-    file & pPion_;
 }
 
 // -----------------------------------------------------------------------------

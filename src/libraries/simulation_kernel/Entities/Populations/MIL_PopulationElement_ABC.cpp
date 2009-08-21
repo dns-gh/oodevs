@@ -53,23 +53,6 @@ MIL_PopulationElement_ABC::MIL_PopulationElement_ABC( MIL_Population& population
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC constructor
-// Created: SBO 2005-10-18
-// -----------------------------------------------------------------------------
-MIL_PopulationElement_ABC::MIL_PopulationElement_ABC()
-    : pPopulation_     ( 0 )
-    , nID_             ( 0 )
-    , rNbrAliveHumans_ ( 0 )
-    , rNbrDeadHumans_  ( 0 )
-    , rDensity_        ( 0. )
-    , pAttitude_       ( 0 )
-    , bAttitudeUpdated_( true )
-    , bHumansUpdated_  ( true )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC destructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
@@ -252,9 +235,7 @@ MT_Vector2D MIL_PopulationElement_ABC::GetSecuringPoint( const MIL_Agent_ABC& se
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pPopulation_
-         >> const_cast< uint& >( nID_ )
-         >> rNbrAliveHumans_
+    file >> rNbrAliveHumans_
          >> rNbrDeadHumans_
          >> rDensity_
          >> collidingAgents_;
@@ -272,9 +253,7 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const uint 
 void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     unsigned attitude = pAttitude_->GetID();
-    file << pPopulation_
-         << nID_
-         << rNbrAliveHumans_
+    file << rNbrAliveHumans_
          << rNbrDeadHumans_
          << rDensity_
          << collidingAgents_

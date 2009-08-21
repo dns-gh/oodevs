@@ -61,6 +61,24 @@ namespace
 
 BOOST_CLASS_EXPORT_GUID( MIL_Automate, "MIL_Automate" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_Automate* automat, const unsigned int /*version*/ )
+{
+    assert( automat->pType_ );
+	unsigned int type = automat->pType_->GetID();
+	archive << type;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigned int /*version*/ )
+{
+	unsigned int type;
+    archive >> type;
+    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( type );
+    assert( pType );
+    ::new( automat )MIL_Automate( *pType );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
@@ -125,42 +143,12 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate constructor
-// Created: JVT 2005-03-15
-// -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate()
-    : MIL_Entity_ABC                     ( "" ) 
-    , pType_                             ( 0 )
-    , nID_                               ( 0 )
-    , pParentFormation_                  ( 0 )
-    , pParentAutomate_                   ( 0 )
-    , bEngaged_                          ( true )
-    , pKnowledgeGroup_                   ( 0 )
-    , orderManager_                      ( *this )
-    , pPionPC_                           ( 0 )
-    , pions_                             ()
-    , recycledPions_                     ()
-    , automates_                         ()
-    , bAutomateModeChanged_              ( true )
-    , pTC2_                              ( 0 )
-    , pNominalTC2_                       ( 0 )
-    , bDotationSupplyNeeded_             ( false )
-    , bDotationSupplyExplicitlyRequested_( false )
-    , dotationSupplyStates_              ()
-    , nTickRcDotationSupplyQuerySent_    ( 0 )
-    , pKnowledgeBlackBoard_              ( 0 )
-    , pArmySurrenderedTo_                ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate constructor
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID)
     : MIL_Entity_ABC                     ( "" ) 
     , pType_                             ( &type )
-    , nID_                               ( 0 )
+    , nID_                               ( nID )
     , pParentFormation_                  ( 0 )
     , pParentAutomate_                   ( 0 )
     , bEngaged_                          ( true )
@@ -272,11 +260,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> pTC2_
          >> pNominalTC2_;
 
-    uint nTypeID;
-    file >> nTypeID;
-    pType_ = MIL_AutomateType::FindAutomateType( nTypeID );
-    assert( pType_ );
-
     file >> const_cast< uint& >( nID_ )
          >> pParentFormation_
          >> pParentAutomate_
@@ -307,12 +290,9 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( pType_ );
-    unsigned type = pType_->GetID();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this ) 
          << pTC2_
          << pNominalTC2_
-         << type
          << const_cast< uint& >( nID_ )
          << pParentFormation_
          << pParentAutomate_

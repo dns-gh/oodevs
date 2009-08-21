@@ -56,42 +56,26 @@ const uint PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Perceiver, "PHY_RolePion_Perceiver" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Perceiver( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion )
     : pPion_                       ( &pion )
-    , rMaxAgentPerceptionDistance_ ( 0. )
-    , rMaxObjectPerceptionDistance_( 0. )
-    , bPeriphericalVisionEnabled_  ( false )
-    , bRecordModeEnabled_          ( false )
-    , vSensorInfo_                 ( )
-    , nSensorMode_                 ( eNormal )
-    , bHasChanged_                 ( true )
-    , bRadarStateHasChanged_       ( true )
-    , pPerceptionCoupDeSonde_      ( 0 )
-    , pPerceptionRecoPoint_        ( 0 )
-    , pPerceptionRecoLocalisation_ ( 0 )
-    , pPerceptionRadar_            ( 0 )
-    , pPerceptionAlat_             ( 0 )
-    , pPerceptionSurveillance_     ( 0 )
-    , pPerceptionRecoObjects_      ( 0 )
-    , pPerceptionFlyingShell_      ( 0 )
-{
-    static uint nNbr = 0;
-    nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
-
-    pPerceptionView_ = new PHY_PerceptionView( *this );
-    activePerceptions_.push_back( pPerceptionView_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver constructor
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
-    : pPion_                       ()
     , rMaxAgentPerceptionDistance_ ( 0. )
     , rMaxObjectPerceptionDistance_( 0. )
     , bPeriphericalVisionEnabled_  ( false )
@@ -205,8 +189,7 @@ namespace boost
 template< typename Archive >
 void PHY_RolePion_Perceiver::serialize( Archive& file, const uint )
 {
-    file & pPion_
-         & bPeriphericalVisionEnabled_
+    file & bPeriphericalVisionEnabled_
          & nNextPeriphericalVisionStep_
          & surfacesAgent_
          & surfacesObject_
@@ -1038,11 +1021,11 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
 // Name: PHY_RolePion_Perceiver::GetArmy
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const MIL_Army_ABC& PHY_RolePion_Perceiver::GetArmy() const
+/*const MIL_Army_ABC& PHY_RolePion_Perceiver::GetArmy() const
 {
     assert( pPion_ );
     return pPion_->GetArmy();
-}
+}*/
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::GetKnowledgeGroup

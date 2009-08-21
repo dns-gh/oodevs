@@ -33,8 +33,7 @@ class PHY_RolePionLOG_Maintenance : public PHY_RoleInterface_Maintenance
 {
 
 public:
-             PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion );
-             PHY_RolePionLOG_Maintenance();
+    explicit PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion );
     virtual ~PHY_RolePionLOG_Maintenance();
 
     //! @name CheckPoints
@@ -123,6 +122,10 @@ private:
           T_MaintenancePriorityVector priorities_;
           T_AutomateVector            tacticalPriorities_;
           T_MaintenanceConsigns       consigns_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePionLOG_Maintenance_h_

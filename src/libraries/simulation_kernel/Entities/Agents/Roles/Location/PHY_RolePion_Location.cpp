@@ -34,6 +34,20 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Location, "PHY_RolePion_Location" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ )
+{
+	archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+	archive >> pion;
+	::new( role )PHY_RolePion_Location( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location constructor
 // Created: NLD 2004-09-07
@@ -44,25 +58,6 @@ PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
     , vPosition_                ( -1., -1. )    //$$$ Devrait être 'NULL'
     , rHeight_                  ( -1.      )
     , rCurrentSpeed_            ( -1.      )
-    , bHasDoneMagicMove_        ( false    )
-    , bHasMove_                 ( false    )
-    , bPositionHasChanged_      ( true     )
-    , bDirectionHasChanged_     ( true     )
-    , bCurrentSpeedHasChanged_  ( true     )
-    , bHeightHasChanged_        ( true     )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Location constructor
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-PHY_RolePion_Location::PHY_RolePion_Location()
-    : pPion_                    ( 0 )
-    , vDirection_               (  0.,  0. )
-    , vPosition_                ( -1., -1. )    //$$$ Devrait être 'NULL'
-    , rHeight_                  ( 0.       )
-    , rCurrentSpeed_            ( 0.       )
     , bHasDoneMagicMove_        ( false    )
     , bHasMove_                 ( false    )
     , bPositionHasChanged_      ( true     )
@@ -91,8 +86,7 @@ PHY_RolePion_Location::~PHY_RolePion_Location()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pPion_
-         >> vDirection_
+    file >> vDirection_
          >> vPosition_
          >> bHasDoneMagicMove_
          >> bHasMove_;
@@ -106,8 +100,7 @@ void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << pPion_
-         << vDirection_
+    file << vDirection_
          << vPosition_
          << bHasDoneMagicMove_
          << bHasMove_;

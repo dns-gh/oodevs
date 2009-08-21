@@ -70,7 +70,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 // -----------------------------------------------------------------------------
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
-    MIL_AgentPion* pPion = type.InstanciatePion( idManager_.GetFreeId(), automate, vPosition );
+    MIL_AgentPion* pPion = type.InstanciatePion( idManager_.GetFreeId(), automate );
     type.RegisterRoles( *pPion );
 
     Initialize( *pPion, automate, vPosition );

@@ -31,7 +31,6 @@ class MIL_Entity_ABC : public tools::RoleContainer
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Entity_ABC();
     explicit MIL_Entity_ABC( const std::string& name );
              MIL_Entity_ABC( const std::string& name, xml::xistream& xis );
     virtual ~MIL_Entity_ABC();
@@ -67,6 +66,15 @@ private:
     //@}
 
 };
+
+// BOOST_SERIALIZATION_ASSUME_ABSTRACT should be used for this
+// but it seems to be buggy : inherits boost::is_abstract<T> instead of boost::true_type
+namespace boost {
+namespace serialization {
+    template<>
+    struct is_abstract<const MIL_Entity_ABC> : boost::true_type { } ;
+} // namespace serialization
+}
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void MIL_Entity_ABC::serialize

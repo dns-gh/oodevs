@@ -25,8 +25,7 @@ class PHY_RolePionLOGConvoy_Supply : public PHY_RoleInterface_Supply
 {
 
 public:
-             PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion );
-             PHY_RolePionLOGConvoy_Supply();
+    explicit PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion );
     virtual ~PHY_RolePionLOGConvoy_Supply();
 
     //! @name CheckPoints
@@ -64,7 +63,11 @@ public:
 
 private:
     MIL_AgentPion*   pPion_;
-          PHY_StockConvoy* pConvoy_;
+    PHY_StockConvoy* pConvoy_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ );
+  	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePionLOGConvoy_Supply_h_

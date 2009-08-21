@@ -21,6 +21,20 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_NBC, "PHY_RolePion_NBC" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ )
+{
+	archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+	archive >> pion;
+	::new( role )PHY_RolePion_NBC( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC constructor
 // Created: NLD 2004-09-07
@@ -32,16 +46,6 @@ PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
     , rContaminationState_        ( 0. )
     , rContaminationQuantity_     ( 0. )
     , bHasChanged_                ( true )
-{
-    // NOTHING
-}
- 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_NBC constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RolePion_NBC::PHY_RolePion_NBC()
-    : bHasChanged_( true )
 {
     // NOTHING
 }
@@ -103,8 +107,7 @@ namespace boost
 template< typename Archive >
 void PHY_RolePion_NBC::serialize( Archive& file, const uint )
 {
-    file & pPion_
-         & nbcAgentTypesContaminating_
+    file & nbcAgentTypesContaminating_
          & bNbcProtectionSuitWorn_
          & rContaminationState_;
 }

@@ -56,7 +56,7 @@ public:
     //! @name Instanciation
     //@{
     virtual MIL_AgentPion* InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const;
-    virtual MIL_AgentPion* InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const; 
+    virtual MIL_AgentPion* InstanciatePion( uint nID, MIL_Automate& automate ) const;
     virtual void RegisterRoles( MIL_AgentPion& pion ) const;
     //@}
 

@@ -21,6 +21,21 @@ MT_Float PHY_RolePion_Communications::rCoefReloadingTimeModificator_ = 0.;
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Communications, "PHY_RolePion_Communications" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ )
+{
+	archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+	archive >> pion;
+	::new( role )PHY_RolePion_Communications( *pion );
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::Initialize
 // Created: NLD 2004-11-08
@@ -48,16 +63,6 @@ PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_AgentPion& pion )
     : pPion_                          ( &pion )
     , bHasChanged_                    ( true )
     , bBlackoutActivated_             ( false )
-{
-    // NOTHING
-}
- 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Communications constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RolePion_Communications::PHY_RolePion_Communications()
-    : pPion_                          ( 0 )
 {
     // NOTHING
 }
@@ -116,8 +121,7 @@ template< typename Archive >
 inline
 void PHY_RolePion_Communications::serialize( Archive& file, const uint )
 {
-    file & pPion_
-         & jammers_
+    file & jammers_
          & bBlackoutActivated_
          & bHasChanged_;
 }

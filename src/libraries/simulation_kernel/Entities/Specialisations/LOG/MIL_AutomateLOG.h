@@ -56,7 +56,6 @@ public:
 public:
              MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& parent, xml::xistream& xis );
              MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Automate&  parent, xml::xistream& xis );
-             MIL_AutomateLOG();
     virtual ~MIL_AutomateLOG();
 
     //! @name CheckPoints
@@ -129,6 +128,9 @@ public:
     virtual void OnReceiveMsgLogSupplyPushFlow    ( const ASN1T_MsgLogSupplyPushFlow&   msg );
     //@}
 
+protected:
+    MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID);
+
 private:
     //! @name Types
     //@{
@@ -181,6 +183,10 @@ private:
     uint                  nTickRcStockSupplyQuerySent_;
 
     PHY_ActionLogistic< MIL_AutomateLOG >* pLogisticAction_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateLOG* pion, const unsigned int /*version*/ );
+  	template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AutomateLOG* pion, const unsigned int /*version*/ );
+
 };
 
 #endif // __MIL_AutomateLOG_h_

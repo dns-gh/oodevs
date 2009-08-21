@@ -68,7 +68,6 @@ public:
 
 public:
     explicit PHY_RolePion_Perceiver( MIL_AgentPion& pion );
-             PHY_RolePion_Perceiver();
     virtual ~PHY_RolePion_Perceiver();
 
     //! @name CheckPoints
@@ -150,7 +149,7 @@ public:
 
     //! @name Tools
     //@{
-    const MIL_Army_ABC&       GetArmy                      () const;
+    //const MIL_Army_ABC&       GetArmy                      () const;
     const MIL_KnowledgeGroup& GetKnowledgeGroup            () const;
     const MIL_AgentPion&      GetPion                      () const;
           MT_Float            GetMaxAgentPerceptionDistance() const;
@@ -231,6 +230,9 @@ private:
 
 private:
     static const uint nNbrStepsBetweenPeriphericalVision_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ );
 };
 
 #endif // __PHY_RolePion_Perceiver_h_

@@ -69,6 +69,7 @@
 #include "Hla/HLA_UpdateFunctor.h"
 
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
 
 #include <xeumeuleu/xml.h>
 
@@ -86,6 +87,26 @@ namespace
     }
 }
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID = pion->GetType().GetID();
+    unsigned int nID = pion->GetID();
+	archive << nTypeID
+			<< nID
+			<< pion->pAutomate_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID, nID;
+	MIL_Automate* pAutomate = 0;
+    archive >> nTypeID >> nID >> pAutomate;
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
+    assert( pType );
+    ::new( pion )MIL_AgentPion( *pType, nID, *pAutomate );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
@@ -105,7 +126,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 // Name: MIL_AgentPion constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate )
     : MIL_Agent_ABC            ( type.GetName(), nID )
     , pType_                   ( &type )
     , bIsPC_                   ( false )
@@ -117,23 +138,10 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
-// Created: JVT 2005-03-15
-// -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion()
-    : MIL_Agent_ABC        ()
-    , pType_               ( 0 )
-    , bIsPC_               ()
-    , pKnowledgeBlackBoard_( 0 )
-    , orderManager_        ( *new MIL_PionOrderManager( *this ) )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion constructor
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate )
-    : MIL_Agent_ABC        ()
+    : MIL_Agent_ABC        ( "", 0)
     , pType_               ( &type )
     , bIsPC_               ()
     , pAutomate_           ( &automate )
@@ -153,13 +161,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
 {
-    uint nTypeID;
-    
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
-
-    file >> nTypeID;
-    pType_ = MIL_AgentTypePion::Find( nTypeID );
-    assert( pType_ );
     
     file >> const_cast< bool& >( bIsPC_ )
          >> pAutomate_
@@ -205,9 +207,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     assert( pType_ );
 
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    unsigned type = pType_->GetID();
-    file << type
-        << bIsPC_
+    file << bIsPC_
         << pAutomate_
         // << actions_ // actions non sauvegardées
         << pKnowledgeBlackBoard_;

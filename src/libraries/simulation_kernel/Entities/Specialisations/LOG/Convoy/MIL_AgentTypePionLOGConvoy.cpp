@@ -47,9 +47,9 @@ MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automa
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const
+MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate ) const
 {
-    return new MIL_AgentPionLOGConvoy( *this, nID, automate, vPosition );
+    return new MIL_AgentPionLOGConvoy( *this, nID, automate );
 }
 
 // -----------------------------------------------------------------------------

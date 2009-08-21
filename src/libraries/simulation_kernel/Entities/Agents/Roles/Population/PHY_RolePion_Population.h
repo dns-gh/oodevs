@@ -25,8 +25,7 @@ class PHY_RolePion_Population : public PHY_RoleInterface_Population
 {
 
 public:
-             PHY_RolePion_Population( MIL_Agent_ABC& pion );
-             PHY_RolePion_Population();
+    explicit PHY_RolePion_Population( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Population();
 
     //! @name CheckPoints
@@ -60,6 +59,10 @@ public:
 private:
     MIL_Agent_ABC* pPion_;
     bool           bHasChanged_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Population* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Population* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePion_Population_h_

@@ -39,6 +39,23 @@ namespace
     }
 }
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID = population->GetType().GetID();
+	archive << nTypeID;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_Population* population, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID;
+    archive >> nTypeID;
+    const MIL_PopulationType* pType = MIL_PopulationType::Find( nTypeID );
+    assert( pType );
+    ::new( population )MIL_Population( *pType);
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
@@ -78,9 +95,9 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Ar
 // Name: MIL_Population constructor
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population()
-    : MIL_Entity_ABC          ( "" )
-    , pType_                  ( 0 )
+MIL_Population::MIL_Population(const MIL_PopulationType& type )
+    : MIL_Entity_ABC          ( type.GetName() )
+    , pType_                  ( &type )
     , nID_                    ( 0 )
     , pArmy_                  ( 0 )
     , pDefaultAttitude_       ( 0 )
@@ -91,21 +108,7 @@ MIL_Population::MIL_Population()
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Population constructor
-// Created: LDC 2009-04-24
-// -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( const MIL_PopulationType& type )
-    : pType_                  ( &type )
-    , nID_                    ( 0 )
-    , pArmy_                  ( 0 )
-    , pKnowledge_             ( new DEC_PopulationKnowledge() )
-    , orderManager_           ( *this )
-{
-    // NOTHING
+    pKnowledge_ = new DEC_PopulationKnowledge();
 }
 
 // =============================================================================
@@ -154,11 +157,6 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this ); 
 
-    uint nTypeID;
-    file >> nTypeID;
-    pType_ = MIL_PopulationType::Find( nTypeID );
-    assert( pType_ );
-
     file >> const_cast< uint& >( nID_ )
          >> const_cast< MIL_Army*& >( pArmy_ ); 
 
@@ -192,10 +190,8 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     
-    unsigned type     = pType_->GetID(),
-             attitude = pDefaultAttitude_->GetID();
-    file << type
-         << nID_
+    unsigned attitude = pDefaultAttitude_->GetID();
+    file << nID_
          << pArmy_
          << attitude
          << rPeopleCount_

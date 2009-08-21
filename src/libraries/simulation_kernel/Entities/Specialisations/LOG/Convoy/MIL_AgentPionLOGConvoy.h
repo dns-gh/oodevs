@@ -30,8 +30,7 @@ class MIL_AgentPionLOGConvoy : public MIL_AgentPionLOG_ABC
 
 public:
              MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
-             MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
-             MIL_AgentPionLOGConvoy();
+             MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate );
     virtual ~MIL_AgentPionLOGConvoy();
     
     //! @name CheckPoints
@@ -43,6 +42,10 @@ public:
 
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
+private:
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AgentPionLOGConvoy* pion, const unsigned int /*version*/ );
+  	template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AgentPionLOGConvoy* pion, const unsigned int /*version*/ );
+
 };
 
 #endif // __MIL_AgentPionLOGConvoy_h_

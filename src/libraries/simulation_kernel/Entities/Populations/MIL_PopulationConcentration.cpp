@@ -28,6 +28,22 @@
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentration" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ )
+{
+	MIL_Population* const pPopulation = &concentration->GetPopulation();
+	archive << pPopulation << concentration->position_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_PopulationConcentration* concentration, const unsigned int /*version*/ )
+{
+	MIL_Population* pPopulation;
+	MT_Vector2D position;
+    archive >> pPopulation >> position;
+    ::new( concentration )MIL_PopulationConcentration( *pPopulation, position);
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration constructor
 // Created: NLD 2005-09-28
@@ -62,8 +78,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // Name: MIL_PopulationConcentration constructor
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
-MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position )
-    : MIL_PopulationElement_ABC      (  population, MIL_IDManager::GetFreeId() )
+MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nID )
+    : MIL_PopulationElement_ABC      (  population, nID==0 ? MIL_IDManager::GetFreeId() :  nID )
     , TER_PopulationConcentration_ABC()
     , position_                      ( position )
     , location_                      ()
@@ -75,23 +91,6 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     UpdateLocation();
     UpdateDensity ();
     SendCreation  ();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration constructor
-// Created: SBO 2005-10-18
-// -----------------------------------------------------------------------------
-MIL_PopulationConcentration::MIL_PopulationConcentration()
-    : MIL_PopulationElement_ABC      ()
-    , TER_PopulationConcentration_ABC()
-    , position_                      ()
-    , location_                      ()
-    , pPullingFlow_                  ( 0 )
-    , pushingFlows_                  ()
-    , rPullingFlowsDensity_          ( 0. )
-    , pSplittingObject_              ( 0 )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

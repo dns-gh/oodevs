@@ -15,6 +15,28 @@
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMaintenance, "MIL_AgentPionLOGMaintenance" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_AgentPionLOGMaintenance* pion, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID = pion->GetType().GetID();
+    unsigned int nID = pion->GetID() ;
+	const MIL_Automate* const pAutomate = &pion->GetAutomate();
+	archive << nTypeID 
+            << nID 
+            << pAutomate;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_AgentPionLOGMaintenance* pion, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID, nID;
+	MIL_Automate* pAutomate = 0;
+    archive >> nTypeID >> nID >> pAutomate;
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
+    assert( pType );
+    ::new( pion )MIL_AgentPionLOGMaintenance( *pType, nID, *pAutomate );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMaintenance constructor
 // Created: NLD 2004-10-04
@@ -28,17 +50,8 @@ MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePio
 // Name: MIL_AgentPionLOGMaintenance constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, vPosition )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGMaintenance constructor
-// Created: JVT 2005-03-24
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance()
-    : MIL_AgentPionLOG_ABC()
+MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate )
+    : MIL_AgentPionLOG_ABC( type, nID, automate )
 {
 }
 

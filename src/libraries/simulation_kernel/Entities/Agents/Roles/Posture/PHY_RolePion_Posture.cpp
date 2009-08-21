@@ -27,6 +27,20 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Posture, "PHY_RolePion_Posture" )
 
 static const MT_Float rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Posture( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture constructor
 // Created: NLD 2004-09-07
@@ -55,33 +69,6 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( const MIL_AgentPion& pion )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RolePion_Posture::PHY_RolePion_Posture()
-    : pPion_                               ( 0 )
-    , pCurrentPosture_                     ( 0 )
-    , pLastPosture_                        ( 0 )
-    , rPostureCompletionPercentage_        ( 1. )
-    , bDiscreteModeEnabled_                ( false )
-    , bPostureHasChanged_                  ( true  )
-    , bPercentageCrossed50_                ( false )
-    , bStealthFactorHasChanged_            ( true  )
-    , bPercentageHasChanged_               ( true  )
-    , rLastPostureCompletionPercentageSent_( 0. )
-    , bIsStealth_                          ( false )
-    , rTimingFactor_                       ( 1. )
-    , rStealthFactor_                      ( 1. ) // Non furtif
-    , rElongationFactor_                   ( 1. )
-    , rInstallationState_                  ( 0. )
-    , rLastInstallationStateSent_          ( 0. )
-    , bInstallationSetUpInProgress_        ( false )
-    , bInstallationStateHasChanged_        ( true )
-{
-    // NOTHING
-}
-  
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture destructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -96,8 +83,6 @@ PHY_RolePion_Posture::~PHY_RolePion_Posture()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> const_cast< MIL_AgentPion*& >( pPion_ );
-    
     uint nID;
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
@@ -125,8 +110,7 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) co
 {
     unsigned current = pCurrentPosture_->GetID(),
              last    = pLastPosture_->GetID();
-    file << pPion_
-         << current
+    file << current
          << last
          << rPostureCompletionPercentage_
          << rElongationFactor_

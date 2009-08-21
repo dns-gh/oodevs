@@ -28,7 +28,6 @@ class PHY_RolePion_NBC : public PHY_RoleInterface_NBC
 
 public:
              PHY_RolePion_NBC( MIL_AgentPion& pion );
-             PHY_RolePion_NBC();
     virtual ~PHY_RolePion_NBC();
 
     //! @name CheckPoints
@@ -82,6 +81,10 @@ private:
     MT_Float            rContaminationState_;
     MT_Float            rContaminationQuantity_;
     bool                bHasChanged_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePion_NBC_h_

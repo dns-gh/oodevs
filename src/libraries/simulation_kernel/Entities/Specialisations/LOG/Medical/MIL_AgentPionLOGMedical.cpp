@@ -15,6 +15,28 @@
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMedical, "MIL_AgentPionLOGMedical" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_AgentPionLOGMedical* pion, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID = pion->GetType().GetID();
+    unsigned int nID = pion->GetID() ;
+	const MIL_Automate* const pAutomate = &pion->GetAutomate();
+	archive << nTypeID 
+            << nID 
+            << pAutomate;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_AgentPionLOGMedical* pion, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID, nID;
+	MIL_Automate* pAutomate = 0;
+    archive >> nTypeID >> nID >> pAutomate;
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
+    assert( pType );
+    ::new( pion )MIL_AgentPionLOGMedical( *pType, nID, *pAutomate );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMedical constructor
 // Created: NLD 2004-10-04
@@ -28,20 +50,11 @@ MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type,
 // Name: MIL_AgentPionLOGMedical constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, vPosition )
+MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate)
+    : MIL_AgentPionLOG_ABC( type, nID, automate )
 {
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGMedical constructor
-// Created: JVT 2005-03-24
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical()
-    : MIL_AgentPionLOG_ABC()
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMedical destructor

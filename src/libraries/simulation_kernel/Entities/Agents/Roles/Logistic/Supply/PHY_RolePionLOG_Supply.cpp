@@ -26,6 +26,20 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Supply, "PHY_RolePionLOG_Supply" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPionLOG_ABC* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePionLOG_Supply( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply constructor
 // Created: NLD 2005-01-21
@@ -37,19 +51,6 @@ PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion )
     , pStocks_           ( 0 )
 {
     pStocks_ = new PHY_DotationStockContainer( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Supply constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply()
-    : pPion_             ()
-    , bSystemEnabled_    ( false )
-    , bHasChanged_       ( true )
-    , pStocks_           ( 0 )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,8 +73,7 @@ PHY_RolePionLOG_Supply::~PHY_RolePionLOG_Supply()
 template< typename Archive >
 void PHY_RolePionLOG_Supply::serialize( Archive& file, const uint )
 {
-    file & pPion_
-         & bSystemEnabled_
+    file & bSystemEnabled_
          & pStocks_;
 }
 

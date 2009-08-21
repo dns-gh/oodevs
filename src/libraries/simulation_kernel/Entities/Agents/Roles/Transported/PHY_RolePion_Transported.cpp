@@ -21,26 +21,26 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Transported, "PHY_RolePion_Transported" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Transported* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Transported( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Transported::PHY_RolePion_Transported( MIL_AgentPion& pion )
     : pPion_                       ( &pion )
-    , bHasChanged_                 ( true )
-    , pTransporter_                ( 0 )
-    , vLoadingPosition_            ()
-    , vHumanTransporterPosition_   ()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Transported constructor
-// Created: JVT 2005-03-31
-// -----------------------------------------------------------------------------
-PHY_RolePion_Transported::PHY_RolePion_Transported()
-    : pPion_                       ( 0 )
     , bHasChanged_                 ( true )
     , pTransporter_                ( 0 )
     , vLoadingPosition_            ()
@@ -64,8 +64,7 @@ PHY_RolePion_Transported::~PHY_RolePion_Transported()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pPion_ 
-         >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
+    file >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
          >> vLoadingPosition_
          >> vHumanTransporterPosition_;
          
@@ -79,8 +78,7 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << pPion_
-         << pTransporter_
+    file << pTransporter_
          << vLoadingPosition_
          << vHumanTransporterPosition_;
 }

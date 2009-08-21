@@ -30,6 +30,22 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Maintenance, "PHY_RolePionLOG_Maintenance" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ )
+{
+	MIL_AgentPionLOG_ABC* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePionLOG_Maintenance( *pion );
+}
+
+
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance constructor
 // Created: NLD 2004-09-07
@@ -47,21 +63,6 @@ PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& 
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MaintenanceConsignList() ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Maintenance constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance()
-: pPion_                  ( 0 )
-    , bHasChanged_            ( true )
-    , bSystemEnabled_         ( false )
-    , priorities_             ()
-    , tacticalPriorities_     ()
-    , consigns_               ()
-    , pWorkRate_              ( 0 )
-    , nWorkRateWarningRCTick_ ( 0 )
-{
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance destructor
@@ -156,8 +157,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pPion_
-         >> bSystemEnabled_
+    file >> bSystemEnabled_
          >> priorities_
          >> tacticalPriorities_;
          
@@ -188,8 +188,7 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const ui
 {
     ASN1T_EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
 
-    file << pPion_
-         << bSystemEnabled_
+    file << bSystemEnabled_
          << priorities_
          << tacticalPriorities_
          << workRate

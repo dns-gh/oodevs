@@ -41,9 +41,11 @@
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::PionMaintenanceEnableSystem( MIL_AgentPion& callerAgent )
 {
+	callerAgent.Execute(boost::function<void(PHY_RoleInterface_Maintenance&)>(boost::bind(&PHY_RoleInterface_Maintenance::EnableSystem,_1)));
+	/*
     PHY_RoleInterface_Maintenance* role = callerAgent.RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO Maybe use Get and assert this DEC functions are just register on good PionLog
     if( role )
-        role->EnableSystem();
+        role->EnableSystem();*/
 }
 
 // -----------------------------------------------------------------------------

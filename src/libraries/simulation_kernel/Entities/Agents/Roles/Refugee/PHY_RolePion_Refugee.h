@@ -25,8 +25,7 @@ class PHY_RolePion_Refugee : public PHY_RoleInterface_Refugee
 {
 
 public:
-             PHY_RolePion_Refugee( MIL_AgentPion& pion );
-             PHY_RolePion_Refugee();
+    explicit PHY_RolePion_Refugee( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Refugee();
 
     //! @name CheckPoints
@@ -68,6 +67,10 @@ private:
           bool              bManaged_;
     const MIL_Object_ABC*   pCamp_;
           bool              bHasChanged_;
+
+	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
+	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePion_Refugee_h_

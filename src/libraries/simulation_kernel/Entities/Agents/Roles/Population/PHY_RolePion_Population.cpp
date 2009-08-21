@@ -18,23 +18,27 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Population, "PHY_RolePion_Population" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Population* role, const unsigned int /*version*/ )
+{
+    archive << role->pPion_;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Population* role, const unsigned int /*version*/ )
+{
+	MIL_Agent_ABC* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Population( *pion );
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Population::PHY_RolePion_Population( MIL_Agent_ABC& pion )
     : pPion_                                ( &pion )
-    , bHasChanged_                          ( true )
-{
-    // NOTHING
-}
- 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RolePion_Population::PHY_RolePion_Population()
-    : pPion_                                ( 0 )
     , bHasChanged_                          ( true )
 {
     // NOTHING
@@ -56,7 +60,6 @@ PHY_RolePion_Population::~PHY_RolePion_Population()
 template< typename Archive >
 void PHY_RolePion_Population::serialize( Archive& file, const uint )
 {
-    file & pPion_;
 }
 
 // -----------------------------------------------------------------------------

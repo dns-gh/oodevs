@@ -27,7 +27,6 @@ class PHY_RolePion_Transported : public PHY_RoleInterface_Transported
 
 public:
     explicit PHY_RolePion_Transported( MIL_AgentPion& pion );
-             PHY_RolePion_Transported();
     virtual ~PHY_RolePion_Transported();
 
     //! @name CheckPoints
@@ -75,6 +74,10 @@ private:
 
     MT_Vector2D  vLoadingPosition_; 
     MT_Vector2D  vHumanTransporterPosition_; // position des 'VABs' quand seuls les humains sont héliportés
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Transported* role, const unsigned int /*version*/ );
+  	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, const unsigned int /*version*/ );
+
 };
 
 #endif // __PHY_RolePion_Transported_h_
