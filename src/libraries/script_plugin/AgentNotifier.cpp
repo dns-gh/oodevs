@@ -39,7 +39,7 @@ AgentNotifier::~AgentNotifier()
 // Name: AgentNotifier::DoUpdate
 // Created: SBO 2009-08-19
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const ASN1T_MsgUnitCreation& message )
+void AgentNotifier::DoUpdate( const ASN1T_MsgUnitCreation& /*message*/ )
 {
     controller_.Update( AgentCreated( agent_ ) );
 }

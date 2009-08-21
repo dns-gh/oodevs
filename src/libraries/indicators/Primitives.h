@@ -11,6 +11,7 @@
 #define __Primitives_h_
 
 #include "clients_kernel/Resolver.h"
+#include <qstring.h>
 
 namespace xml
 {

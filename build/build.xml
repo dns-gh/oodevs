@@ -245,7 +245,7 @@
         </copy>
     </target>
     
-    <target name="library.score_plugin" description="build score_plugin static library" depends="library.dispatcher,library.3a">
+    <target name="library.score_plugin" description="build score_plugin static library" depends="library.dispatcher,library.3a,library.indicators">
         <build-lib name="score_plugin" pattern="lib${ant.project.name}_score_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>

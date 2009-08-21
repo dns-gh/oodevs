@@ -26,17 +26,17 @@ plugin =
 
 coord =
 {
-    ToUtm = function( self, position ) return strPosition end
+    ToUtm = function( self, position ) return strPosition end,
+    UtmPosition = function( self, strUtm ) return position end
 }
 
 sim =
 {
     Pause            = function( self ) end,
     Resume           = function( self ) end,
-    ChangeTimeFactor = function( self, nFactor ) end
-    CreateUnit       = function( self, position, nType, nAutomat ) end
-    Engage           = function( self, nAutomat, bEngage ) end
-    Trace            = function( strMessage ) end
+    ChangeTimeFactor = function( self, nFactor ) end,
+    CreateUnit       = function( self, position, nType, nAutomat ) end,
+    Engage           = function( self, nAutomat, bEngage ) end,
 }
 
 events =
@@ -164,6 +164,12 @@ orders =
     ParameterLocationPointList = function( zone ) return tXml end,
 }
 
+Indicator = {} -- class
+Indicator.create  = function( name, formula ) return newIndicator end -- Constructor
+Indicator:With    = function( self, name, type, value ) return self end -- Add variable
+Indicator:Compute = function( self ) end -- Start computation
+
+Trace            = function( strMessage ) end
 Command          = function( tParameters, strCommand ) end
 Message          = function( tParameters ) end
 Display          = function( tParameters ) end

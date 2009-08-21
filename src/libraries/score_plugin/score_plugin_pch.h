@@ -10,5 +10,7 @@
 #ifndef __score_plugin_pch_h_
 #define __score_plugin_pch_h_
 
+#include <memory>
+#include <string>
 
 #endif // __score_plugin_pch_h_

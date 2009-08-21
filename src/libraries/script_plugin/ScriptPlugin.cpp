@@ -199,6 +199,7 @@ void ScriptPlugin::RegisterIn( directia::Brain& brain )
     brain.RegisterFunction( "Later", &ScriptPlugin::Later );
     brain.RegisterObject( "coord", this );
     brain.RegisterFunction( "ToUtm", &ScriptPlugin::ToUtm );
+    brain.RegisterFunction( "UtmPosition", &ScriptPlugin::UtmPosition );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,6 +227,15 @@ void ScriptPlugin::Later( const directia::ScriptRef& function )
 std::string ScriptPlugin::ToUtm( const dispatcher::Position& position )
 {
     return converter_->ConvertToMgrs( dispatcher::ToPoint( position ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScriptPlugin::FromUtm
+// Created: SBO 2009-08-21
+// -----------------------------------------------------------------------------
+dispatcher::Position ScriptPlugin::UtmPosition( const std::string& utm )
+{
+    return dispatcher::ToPosition( converter_->ConvertToXY( utm ) );
 }
 
 // -----------------------------------------------------------------------------

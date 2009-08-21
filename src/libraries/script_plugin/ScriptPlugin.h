@@ -91,6 +91,7 @@ private:
     void Reset();
     void Later( const directia::ScriptRef& function );
     std::string ToUtm( const dispatcher::Position& position );
+    dispatcher::Position UtmPosition( const std::string& utm );
 
     void ApplyPendings();
     //@}

@@ -12,6 +12,7 @@
 
 #include "Resolver_ABC.h"
 #include "Iterator.h"
+#include <map>
 #include <stdexcept>
 #include <sstream>
 

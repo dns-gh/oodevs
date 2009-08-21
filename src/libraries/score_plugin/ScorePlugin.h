@@ -12,9 +12,6 @@
 
 #include "dispatcher/Plugin_ABC.h"
 #include "game_asn/Aar.h"
-#include <vector>
-#include <map>
-#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -29,16 +26,15 @@ namespace tools
 
 namespace dispatcher
 {
+    class CompositeRegistrable;
     class LinkResolver_ABC;
 }
-
-class Task;
 
 namespace plugins
 {
 namespace score
 {
-    class Score;
+    class ScoresModel;
 
 // =============================================================================
 /** @class  ScorePlugin
@@ -52,7 +48,7 @@ class ScorePlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config );
+             ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config, dispatcher::CompositeRegistrable& registrables );
     virtual ~ScorePlugin();
     //@}
 
@@ -80,18 +76,11 @@ private:
     void OnReceive( const std::string&, const ASN1T_MsgsClientToAar& message );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< std::string, Score* > T_Scores;
-    //@}
-
 private:
     //! @name Member data
     //@{
     dispatcher::LinkResolver_ABC& resolver_;
-    dispatcher::ClientPublisher_ABC& clients_;
-    T_Scores scores_;
-    std::vector< boost::shared_ptr< Task > > tasks_;
+    std::auto_ptr< ScoresModel > scores_;
     //@}
 };
 

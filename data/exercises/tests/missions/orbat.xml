@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<orbat>
+  <sides>
+    <side id="1" name="red" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="2" level="x" name="Formation [2]"/>
+      </tactical>
+      <communication>
+        <knowledge-group id="3" name="Knowledge group [3]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+    <side id="4" name="blue" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="5" level="x" name="Formation [5]">
+          <automat engaged="false" id="7" knowledge-group="6" name="MBT squadron [7]" type="MBT squadron">
+            <unit command-post="true" id="8" name="Armored squadron CP" position="30TYT1197228229" type="Armored squadron CP"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="6" name="Knowledge group [6]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+  </sides>
+  <diplomacies>
+    <side id="1">
+      <relationship diplomacy="enemy" side="4"/>
+    </side>
+    <side id="4">
+      <relationship diplomacy="enemy" side="1"/>
+    </side>
+  </diplomacies>
+</orbat>
