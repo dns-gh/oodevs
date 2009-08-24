@@ -364,6 +364,7 @@
                    libs="HLA,libFedTime,tools,masasn,directia-${platform}-mt-4_5
                          dispatcher-${platform}-mt@{suffix}
                          lib${ant.project.name}_tools-${platform}-mt
+                         lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
                          lib${ant.project.name}_3a-${platform}-mt
