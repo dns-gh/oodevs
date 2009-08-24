@@ -291,7 +291,8 @@
                          lib${ant.project.name}_script_plugin-${platform}-mt
                          lib${ant.project.name}_3a-${platform}-mt
                          lib${ant.project.name}_score_plugin-${platform}-mt
-                         lib${ant.project.name}_clients_kernel-${platform}-mt">
+                         lib${ant.project.name}_clients_kernel-${platform}-mt
+                         lib${ant.project.name}_indicators-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,Wldap32"/>
             <includepath path="${include.dir}/masasn"/>
             <defineset define="DISPATCHER_DLL_EXPORTS"/>
@@ -320,7 +321,8 @@
                          lib${ant.project.name}_score_plugin-${platform}-mt
                          lib${ant.project.name}_crossbow_plugin-${platform}-mt
                          lib${ant.project.name}_gearth_plugin-${platform}-mt
-                         lib${ant.project.name}_clients_kernel-${platform}-mt">
+                         lib${ant.project.name}_clients_kernel-${platform}-mt
+                         lib${ant.project.name}_indicators-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/masasn"/>
             <defineset define="DISPATCHER_DLL_EXPORTS,CROSSBOW_PLUGIN"/>
@@ -367,7 +369,8 @@
                          lib${ant.project.name}_3a-${platform}-mt
                          lib${ant.project.name}_dispatcher-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt
-                         lib${ant.project.name}_score_plugin-${platform}-mt">
+                         lib${ant.project.name}_score_plugin-${platform}-mt
+                         lib${ant.project.name}_indicators-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32"/>
             <includepath path="${include.dir}/masasn"/>
         </build-app>
