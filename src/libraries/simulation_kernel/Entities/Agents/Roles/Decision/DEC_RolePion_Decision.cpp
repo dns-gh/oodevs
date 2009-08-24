@@ -15,9 +15,9 @@
 
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
+#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_FragOrder.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
@@ -281,7 +281,7 @@ void DEC_RolePion_Decision::EndCleanStateAfterCrash()
 {
     assert( pEntity_ );
     pEntity_->CancelAllActions();
-    GetPion().GetRole< PHY_RolePion_Perceiver >().DisableAllPerceptions();
+    GetPion().GetRole< PHY_RoleInterface_Perceiver >().DisableAllPerceptions();
 }
 
 // -----------------------------------------------------------------------------
@@ -1593,7 +1593,7 @@ bool DEC_RolePion_Decision::IsMoving() const
 // -----------------------------------------------------------------------------
 bool DEC_RolePion_Decision::IsContaminated() const
 {
-    return GetPion().GetRole< PHY_RolePion_NBC >().IsContaminated();
+    return GetPion().GetRole< PHY_RoleInterface_NBC >().IsContaminated();
 }
 
 // -----------------------------------------------------------------------------

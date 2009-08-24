@@ -19,7 +19,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyStockRequestContainer.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
@@ -31,7 +31,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer
 // Name: PHY_DotationStockContainer constructor
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RolePionLOG_Supply& roleSupply )
+PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply )
     : pRoleSupply_          ( &roleSupply )
     , stocks_               ()   
     , stocksChanged_        ()

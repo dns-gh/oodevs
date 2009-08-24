@@ -13,24 +13,7 @@
 #define __PHY_RolePion_Composantes_h_
 
 #include "PHY_RoleInterface_Composantes.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
-class NET_ASN_MsgUnitAttributes;
-class MIL_AgentPion;
-class MIL_ToxicEffectManipulator;
-class MIL_AutomateLOG;
-class PHY_HumanRank;
-class PHY_HumanWound;
-class PHY_Human;
-class PHY_UnitType;
-class PHY_ComposanteState;
-class PHY_DirectFireData;
-class PHY_IndirectFireData;
-class PHY_SmokeData;
-class PHY_FireDamages_Agent;
-class PHY_MaintenanceComposanteState;
-class PHY_MedicalHumanState;
-class HLA_UpdateFunctor;
 
 namespace xml
 {
@@ -45,20 +28,6 @@ namespace xml
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
 {
 
-public:
-    //! @name Types
-    //@{
-    struct T_ComposanteUse
-    {
-        uint nNbrAvailable_;
-        uint nNbrUsed_;
-        uint nNbrTotal_; // nNbrTotal_ >= nNbrAvailable_ >= nNbrUsed_
-        uint nNbrLent_;
-    };
-
-    typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
-    typedef T_ComposanteUseMap::const_iterator                         CIT_ComposanteUseMap;
-    //@}
 
 public:
     explicit PHY_RolePion_Composantes( MIL_AgentPion& pion );
@@ -85,23 +54,23 @@ public:
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 
 
-    void Update( bool bIsDead );
-    void Clean ();
+    virtual void Update( bool bIsDead );
+    virtual void Clean ();
     //@}
 
     //! @name Humans management
     //@{
-    void WoundHumans  ( const PHY_HumanRank& rank, uint nNbr );
-    void HealHumans   ( const PHY_HumanRank& rank, uint nNbr );    
-    void HealAllHumans();
+    virtual void WoundHumans  ( const PHY_HumanRank& rank, uint nNbr );
+    virtual void HealHumans   ( const PHY_HumanRank& rank, uint nNbr );    
+    virtual void HealAllHumans();
     //@}
 
     //! @name Composantes management
     //@{
-    void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, uint nNbrAvailable );
-    void RepairAllComposantes         ();
-    void DestroyRandomComposante      ();
-    void DestroyAllComposantes        ();
+    virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, uint nNbrAvailable );
+    virtual void RepairAllComposantes         ();
+    virtual void DestroyRandomComposante      ();
+    virtual void DestroyAllComposantes        ();
     //@}
 
     //! @name Pret de composantes
@@ -111,53 +80,53 @@ public:
     template < typename T > uint RetrieveLentComposantes     ( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate );
 
     // Actions on the composante owner
-    void LendComposante        ( PHY_RolePion_Composantes& borrower, PHY_ComposantePion& composante );
-    void RetrieveLentComposante( PHY_RolePion_Composantes& borrower, PHY_ComposantePion& composante );
+    virtual void LendComposante        ( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante );
+    virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante );
 
     // Notification for the beneficary
-    void NotifyLentComposanteReceived( PHY_RolePion_Composantes& lender, PHY_ComposantePion& composante ); 
-    void NotifyLentComposanteReturned( PHY_RolePion_Composantes& lender, PHY_ComposantePion& composante );
+    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante ); 
+    virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante );
     //@}
 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
 
     //! @name Logistic - maintenance
     //@{
-    void                            PreprocessRandomBreakdowns           ( uint nEndDayTimeStep ) const;
+    virtual void                            PreprocessRandomBreakdowns           ( uint nEndDayTimeStep ) const;
 
-    PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
-    void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState );
+    virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
+    virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState );
 
     //$$$$ a deplacer (functor)
-    PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& composanteType ) const;
+    virtual PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& composanteType ) const;
     //@}
 
     //! @name Logistic - Medical
     //@{
-    bool                   HasWoundedHumansToEvacuate      () const;
-    void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
-    PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 );
-    PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
-    void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
+    virtual bool                   HasWoundedHumansToEvacuate      () const;
+    virtual void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
+    virtual PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 );
+    virtual PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
+    virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
     //@}
 
     //! @name Logistic - Supply
     //@{
 
     //$$$$ a deplacer (functor)
-    PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
-    void                GetConvoyTransportersUse     ( T_ComposanteUseMap& composanteUse ) const;
+    virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
+    virtual void                GetConvoyTransportersUse     ( T_ComposanteUseMap& composanteUse ) const;
     //@}
 
     //! @name Prisoners
     //@{
-    void NotifyCaptured();
-    void NotifyReleased();
+    virtual void NotifyCaptured();
+    virtual void NotifyReleased();
     //@}
 
     //! @name Fire / Dangerosity
     //@{
-            bool     IsNeutralized                   () const;
+    virtual bool     IsNeutralized                   () const;
     virtual void     GetComposantesAbleToBeFired     ( T_ComposanteVector& targets, uint nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
     virtual void     GetComposantesAbleToBeFired     ( T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
     virtual void     Neutralize                      ();
@@ -165,16 +134,16 @@ public:
     virtual void     ApplyDirectFire                 ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
     virtual void     ApplyIndirectFire               ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
     virtual void     ApplyExplosion                  ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
-            void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination );
-            void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination );
-            MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
-            MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
-            MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
-            MT_Float GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
-            MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
-            MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
-            MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
-            MT_Float GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const;
+    virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination );
+    virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination );
+    virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
+    virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
+    virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
+    virtual MT_Float GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
+    virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
+    virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    virtual MT_Float GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const;
     //@}
 
     //! @name Perception / Knowledge
@@ -187,47 +156,47 @@ public:
 
     //! @name Load / unload / transport
     //@{
-    void DamageTransported( MT_Float rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
+    virtual void DamageTransported( MT_Float rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
     //@}
 
     //! @name Notifications (internal)
     //@{
-    void NotifyComposanteAdded   ( PHY_ComposantePion& composante );
-    void NotifyComposanteRemoved ( PHY_ComposantePion& composante );
-    void NotifyComposanteChanged ( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState );
-    void NotifyComposanteRepaired();
+    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& composante );
+    virtual void NotifyComposanteRemoved ( PHY_ComposantePion& composante );
+    virtual void NotifyComposanteChanged ( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState );
+    virtual void NotifyComposanteRepaired();
 
-    void NotifyHumanAdded  ( PHY_Human& human );
-    void NotifyHumanRemoved( PHY_Human& human );
-    void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
+    virtual void NotifyHumanAdded  ( PHY_Human& human );
+    virtual void NotifyHumanRemoved( PHY_Human& human );
+    virtual void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
     //@}
 
     //! @name Accessors
     //@{          
     virtual       MT_Float       GetOperationalState     () const;
     virtual       MT_Float       GetMajorOperationalState() const;
-                  bool           HasChanged              () const;
-                  bool           IsUsable                () const;                    
-            const MIL_AgentPion& GetPion                 () const;    
+    virtual       bool           HasChanged              () const;
+    virtual       bool           IsUsable                () const;                    
+    virtual const MIL_AgentPion& GetPion                 () const;    
     //@}
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
 
-    void SendLogisticChangedState() const;
-    void SendLogisticFullState   () const;
+    virtual void SendLogisticChangedState() const;
+    virtual void SendLogisticFullState   () const;
     //@}
 
     //! @name HLA
     //@{
-    void Serialize( HLA_UpdateFunctor& functor ) const;
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}
 
     //! @name Composante reserved
     //@{
-    void WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_FireDamages_Agent& fireDamages );
+    virtual void WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_FireDamages_Agent& fireDamages );
     //@}
 
 private:
@@ -257,7 +226,7 @@ public:
     typedef T_MaintenanceComposanteStateSet::iterator       IT_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
     
-    typedef std::map< const PHY_RolePion_Composantes*, T_ComposantePionVector > T_LoanMap;
+    typedef std::map< const PHY_RoleInterface_Composantes*, T_ComposantePionVector > T_LoanMap;
     typedef T_LoanMap::iterator                                                 IT_LoanMap;
     typedef T_LoanMap::const_iterator                                           CIT_LoanMap;
 
@@ -315,11 +284,6 @@ private:
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;
     uint                            nTickRcMaintenanceQuerySent_;
 
-public:
-    static MT_Float rOpStateWeightNonMajorComposante_;
-    static MT_Float rOpStateWeightMajorComposante_;
-    static MT_Float rMaxDangerosityDegradationByNeutralizedState_;
-    static MT_Float rMaxDangerosityDegradationByOpState_;
 
 private:
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Composantes* role, const unsigned int /*version*/ );

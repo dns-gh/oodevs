@@ -14,10 +14,10 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
-#include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
+#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Tools/MIL_Tools.h"
@@ -132,7 +132,7 @@ MT_Float PHY_SensorTypeObjectData::GetPopulationFactor( MT_Float rDensity ) cons
 MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source ) const
 {
     // Posture
-    const PHY_RolePion_Posture& sourcePosture = source.GetRole< PHY_RolePion_Posture >();
+    const PHY_RoleInterface_Posture& sourcePosture = source.GetRole< PHY_RoleInterface_Posture >();
 
     const uint nOldPostureIdx = sourcePosture.GetLastPosture   ().GetID();
     const uint nCurPostureIdx = sourcePosture.GetCurrentPosture().GetID();
@@ -146,10 +146,10 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
     rModificator *= sourcePosture.GetElongationFactor(); 
 
     // Human factors
-    rModificator *= source.GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
+    rModificator *= source.GetRole< PHY_RoleInterface_HumanFactors >().GetSensorDistanceModificator();
 
     // Population
-    const MT_Float rPopulationDensity = source.GetRole< PHY_RolePion_Population >().GetCollidingPopulationDensity();
+    const MT_Float rPopulationDensity = source.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();
     rModificator *= GetPopulationFactor( rPopulationDensity );
 
     return rModificator;

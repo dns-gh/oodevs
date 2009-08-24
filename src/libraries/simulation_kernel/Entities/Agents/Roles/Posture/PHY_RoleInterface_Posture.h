@@ -16,6 +16,8 @@
 
 class PHY_Posture;
 class MIL_AgentPion;
+class NET_ASN_MsgUnitAttributes;
+class HLA_UpdateFunctor;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Posture
@@ -43,6 +45,54 @@ public:
     virtual       void         UnsetPosturePostePrepareGenie () = 0;
     virtual       void         SetTimingFactor               ( MT_Float rFactor ) = 0;
     //@}
+
+    //! @name Operations
+    //@{
+    virtual void Update    ( bool bIsDead ) = 0;
+    virtual void Clean     () = 0;
+    virtual bool HasChanged() const = 0;
+
+    // Override automatic postures
+    virtual void SetPostureMovement           () = 0;
+    virtual void UnsetPostureMovement         () = 0;
+
+    virtual void EnableDiscreteMode () = 0;
+    virtual void DisableDiscreteMode() = 0;
+    //@}
+
+    //! @name Installation
+    //@{
+    virtual bool IsInstalled  () const = 0;
+    virtual bool IsUninstalled() const = 0;
+    virtual void Install      () = 0;
+    //@}
+
+    //! @name Perception
+    //@{
+    virtual void SetStealthFactor( MT_Float rValue ) = 0;
+    //@}
+
+    //! @name Elongation
+    //@{
+    virtual void     SetElongationFactor( MT_Float ) = 0;
+    virtual MT_Float GetElongationFactor() const = 0;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual bool IsStealth() const = 0;
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const = 0;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const = 0;
+    //@}
+
+    //! @name HLA
+    //@{
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
+    virtual bool HLAStatusHasChanged() const = 0;
 };
 
 #endif // __PHY_RoleInterface_Posture_h_

@@ -19,11 +19,11 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionView.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionCoupDeSonde.h"
@@ -564,8 +564,8 @@ MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
     assert( pPion_ );
     return    rMaxAgentPerceptionDistance_ 
-            * pPion_->GetRole< PHY_RolePion_Posture      >().GetElongationFactor() 
-            * pPion_->GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
+            * pPion_->GetRole< PHY_RoleInterface_Posture      >().GetElongationFactor() 
+            * pPion_->GetRole< PHY_RoleInterface_HumanFactors >().GetSensorDistanceModificator();
 }
 
 // -----------------------------------------------------------------------------
@@ -577,8 +577,8 @@ MT_Float PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
 {
     assert( pPion_ );
     return   rMaxObjectPerceptionDistance_             
-           * pPion_->GetRole< PHY_RolePion_Posture      >().GetElongationFactor() 
-           * pPion_->GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
+           * pPion_->GetRole< PHY_RoleInterface_Posture      >().GetElongationFactor() 
+           * pPion_->GetRole< PHY_RoleInterface_HumanFactors >().GetSensorDistanceModificator();
 }
 
 // -----------------------------------------------------------------------------
@@ -589,8 +589,8 @@ bool PHY_RolePion_Perceiver::CanPerceive() const
 {
     assert( pPion_ );
     return !pPion_->IsDead() 
-        && !pPion_->GetRole< PHY_RolePion_Transported >().IsTransported() 
-        && !pPion_->GetRole< PHY_RolePion_Surrender >().IsSurrendered();
+        && !pPion_->GetRole< PHY_RoleInterface_Transported >().IsTransported() 
+        && !pPion_->GetRole< PHY_RoleInterface_Surrender >().IsSurrendered();
 }
 
 // =============================================================================
@@ -774,13 +774,13 @@ void PHY_RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainP
 void PHY_RolePion_Perceiver::PreparePerceptionData()
 {
     assert( pPion_ );
-    PHY_RolePion_Location&    roleLocation    = pPion_->GetRole< PHY_RolePion_Location    >();
-    PHY_RolePion_Composantes& roleComposantes = pPion_->GetRole< PHY_RolePion_Composantes >();
+    PHY_RoleInterface_Location&             roleLocation    = pPion_->GetRole< PHY_RoleInterface_Location       >();
+    PHY_RolePion_Composantes&          roleComposantes = pPion_->GetRole< PHY_RolePion_Composantes    >();
     if(    !roleLocation.HasLocationChanged() 
         && !roleComposantes.HasChanged()
         && !pPion_->GetRole< PHY_RoleAction_Loading   >().HasChanged() 
-        && !pPion_->GetRole< PHY_RolePion_Transported >().HasChanged() 
-        && !pPion_->GetRole< PHY_RolePion_Surrender   >().HasChanged()
+        && !pPion_->GetRole< PHY_RoleInterface_Transported >().HasChanged() 
+        && !pPion_->GetRole< PHY_RoleInterface_Surrender   >().HasChanged()
         && !HasChanged() )
         return;
 
@@ -809,8 +809,8 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
     PHY_RolePion_Composantes& roleComposantes = pPion_->GetRole< PHY_RolePion_Composantes >();
     if(    !roleComposantes.HasChanged()
         && !pPion_->GetRole< PHY_RoleAction_Loading   >().HasChanged() 
-        && !pPion_->GetRole< PHY_RolePion_Transported >().HasChanged() 
-        && !pPion_->GetRole< PHY_RolePion_Surrender   >().HasChanged() )
+        && !pPion_->GetRole< PHY_RoleInterface_Transported >().HasChanged() 
+        && !pPion_->GetRole< PHY_RoleInterface_Surrender   >().HasChanged() )
         return;
 
     radars_.clear();
@@ -1018,16 +1018,6 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::GetArmy
-// Created: NLD 2004-08-30
-// -----------------------------------------------------------------------------
-/*const MIL_Army_ABC& PHY_RolePion_Perceiver::GetArmy() const
-{
-    assert( pPion_ );
-    return pPion_->GetArmy();
-}*/
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::GetKnowledgeGroup
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
@@ -1211,7 +1201,7 @@ void PHY_RolePion_Perceiver::SendDebugState() const
     assert( pPion_ );
     NET_ASN_MsgUnitVisionCones asn;
     asn().oid = pPion_->GetID();
-    asn().elongation = pPion_->GetRole< PHY_RolePion_Posture >().GetElongationFactor();
+    asn().elongation = pPion_->GetRole< PHY_RoleInterface_Posture >().GetElongationFactor();
     asn().cones.n = surfacesAgent_.size();
     asn().cones.elem = asn().cones.n ? new ASN1T_VisionCone[ asn().cones.n ] : 0;
     unsigned i = 0;

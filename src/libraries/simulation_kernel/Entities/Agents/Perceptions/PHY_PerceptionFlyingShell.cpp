@@ -13,7 +13,7 @@
 #include "PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
@@ -43,7 +43,7 @@ void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
 // Name: PHY_PerceptionFlyingShell constructor
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionFlyingShell::PHY_PerceptionFlyingShell( PHY_RolePion_Perceiver& perceiver )
+PHY_PerceptionFlyingShell::PHY_PerceptionFlyingShell( PHY_RoleInterface_Perceiver& perceiver )
     : PHY_Perception_ABC( perceiver )
 {
     // NOTHING

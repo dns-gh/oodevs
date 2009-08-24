@@ -15,7 +15,7 @@
 #include "MT_Tools/Role_ABC.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 
-class PHY_RolePion_Location;
+class PHY_RoleInterface_Location;
 class MIL_AgentPion;
 class DEC_Knowledge_Object;
 class MIL_Object_ABC;
@@ -117,10 +117,10 @@ private:
     //@}
 
 private:
-    MIL_AgentPion*         pPion_;
-    PHY_RolePion_Location* pRoleLocation_;
-    MT_Float               rSpeedModificator_;
-    MT_Float               rMaxSpeedModificator_;
+    MIL_AgentPion*              pPion_;
+    PHY_RoleInterface_Location* pRoleLocation_;
+    MT_Float                    rSpeedModificator_;
+    MT_Float                    rMaxSpeedModificator_;
 
     // Network
     bool bCurrentPathHasChanged_;

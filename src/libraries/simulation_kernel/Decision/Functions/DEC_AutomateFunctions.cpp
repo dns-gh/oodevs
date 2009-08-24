@@ -17,10 +17,10 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
@@ -228,7 +228,7 @@ float DEC_AutomateFunctions::PionTimeToMoveDistance( const DEC_Decision_ABC* pio
 bool DEC_AutomateFunctions::IsPionContaminated( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion )
 {
     assert( pPion && IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) );
-    return pPion->GetPion().GetRole< PHY_RolePion_NBC >().IsContaminated();
+    return pPion->GetPion().GetRole< PHY_RoleInterface_NBC >().IsContaminated();
 }
 
 // -----------------------------------------------------------------------------

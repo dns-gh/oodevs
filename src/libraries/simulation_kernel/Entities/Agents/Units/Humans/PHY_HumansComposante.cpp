@@ -238,7 +238,7 @@ void PHY_HumansComposante::NotifyComposanteBackFromMaintenance()
 // Name: PHY_HumansComposante::NotifyComposanteTransfered
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RolePion_Composantes& src, PHY_RolePion_Composantes& dest )
+void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RoleInterface_Composantes& src, PHY_RoleInterface_Composantes& dest )
 {
     for ( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
     {

@@ -13,8 +13,8 @@
 #include "PHY_PerceptionRadarData.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MIL_AgentServer.h"
 
@@ -73,7 +73,7 @@ PHY_PerceptionRadarData::~PHY_PerceptionRadarData()
 // Name: PHY_PerceptionRadarData::AcquireTargets
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRadarData::AcquireTargets( PHY_RolePion_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets )
+void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets )
 {
     for( TER_Agent_ABC::CIT_AgentPtrVector it = targets.begin(); it != targets.end(); ++it )
     {       
@@ -90,7 +90,7 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RolePion_Perceiver& perceiver,
 // Name: PHY_PerceptionRadarData::Update
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRadarData::Update( PHY_RolePion_Perceiver& perceiver )
+void PHY_PerceptionRadarData::Update( PHY_RoleInterface_Perceiver& perceiver )
 {
     assert( pRadarType_ );
     for( IT_AgentAcquisitionMap itAcquisitionData = acquisitionData_.begin(); itAcquisitionData != acquisitionData_.end(); )
@@ -112,7 +112,7 @@ void PHY_PerceptionRadarData::Update( PHY_RolePion_Perceiver& perceiver )
 // Name: PHY_PerceptionRadarData::Acquire
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRadarData::Acquire( PHY_RolePion_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition )
+void PHY_PerceptionRadarData::Acquire( PHY_RoleInterface_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition )
 {
     assert( pRadarType_ );
     TER_Agent_ABC::T_AgentPtrVector targets;

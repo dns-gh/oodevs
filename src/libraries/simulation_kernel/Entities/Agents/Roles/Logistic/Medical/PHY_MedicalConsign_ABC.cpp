@@ -14,7 +14,7 @@
 #include "PHY_MedicalConsign_ABC.h"
 
 #include "PHY_MedicalHumanState.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -22,7 +22,7 @@
 // Name: PHY_MedicalConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalConsign_ABC::PHY_MedicalConsign_ABC( PHY_RolePionLOG_Medical& medical, PHY_MedicalHumanState& humanState )
+PHY_MedicalConsign_ABC::PHY_MedicalConsign_ABC( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
     : pMedical_   ( &medical )
     , pHumanState_( &humanState )
     , nTimer_     ( 0 )
@@ -185,7 +185,7 @@ bool PHY_MedicalConsign_ABC::IsFinished() const
 // Name: PHY_MedicalConsign_ABC::GetPionMedical
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Medical& PHY_MedicalConsign_ABC::GetPionMedical() const
+PHY_RoleInterface_Medical& PHY_MedicalConsign_ABC::GetPionMedical() const
 {
     assert( pMedical_ );
     return *pMedical_;

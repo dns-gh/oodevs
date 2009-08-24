@@ -13,8 +13,8 @@
 #include "PHY_RolePion_Surrender.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -123,8 +123,8 @@ bool PHY_RolePion_Surrender::Capture( const MIL_AgentPion& pionTakingPrisoner )
     pPrison_     = 0;
     bPrisoner_   = true;
     bHasChanged_ = true;
-    pPion_->GetRole< PHY_RolePion_Dotations   >().NotifyCaptured();
-    pPion_->GetRole< PHY_RolePion_Composantes >().NotifyCaptured();
+    pPion_->GetRole< PHY_RoleInterface_Dotations   >().NotifyCaptured();
+    pPion_->GetRole< PHY_RoleInterface_Composantes >().NotifyCaptured();
     return pPion_->GetAutomate().NotifyCaptured( pionTakingPrisoner );
 }
 
@@ -140,8 +140,8 @@ bool PHY_RolePion_Surrender::Release()
     pPrison_     = 0;
     bPrisoner_   = false;
     bHasChanged_ = true;
-    pPion_->GetRole< PHY_RolePion_Dotations   >().NotifyReleased();
-    pPion_->GetRole< PHY_RolePion_Composantes >().NotifyReleased();
+    pPion_->GetRole< PHY_RoleInterface_Dotations   >().NotifyReleased();
+    pPion_->GetRole< PHY_RoleInterface_Composantes >().NotifyReleased();
     return pPion_->GetAutomate().NotifyReleased();
 }
     

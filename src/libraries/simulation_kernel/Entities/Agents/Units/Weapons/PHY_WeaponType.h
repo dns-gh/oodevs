@@ -23,7 +23,6 @@ class PHY_WeaponDataType_IndirectFire;
 class PHY_WeaponDataType_DirectFire;
 class PHY_Weapon;
 class PHY_Posture;
-class PHY_RolePion_Posture;
 class PHY_RoleInterface_Posture;
 class MIL_Effect_IndirectFire;
 class MIL_AgentPion;
@@ -32,7 +31,7 @@ class MIL_PopulationElement_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_Composante_ABC;
 class PHY_FireResults_ABC;
-class PHY_RolePion_Dotations;
+class PHY_RoleInterface_Dotations;
 class MIL_Time_ABC;
 class MIL_EffectManager;
 
@@ -90,7 +89,7 @@ public:
     MT_Float GetMaxRangeToIndirectFire() const;
     MT_Float GetMinRangeToIndirectFire() const;
 
-    MT_Float GetPHModificator( const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
+    MT_Float GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
     MT_Float GetPHModificator( const PHY_Posture&          firerPosture, const PHY_Posture&               targetPosture ) const;
     //@}
 

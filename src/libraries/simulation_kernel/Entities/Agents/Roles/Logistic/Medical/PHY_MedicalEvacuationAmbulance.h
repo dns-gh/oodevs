@@ -14,7 +14,7 @@
 
 class PHY_ComposantePion;
 class PHY_MedicalEvacuationConsign;
-class PHY_RolePionLOG_Medical;
+class PHY_RoleInterface_Medical;
 
 // =============================================================================
 // @class  PHY_MedicalEvacuationAmbulance
@@ -24,7 +24,7 @@ class PHY_MedicalEvacuationAmbulance : private boost::noncopyable
 {
 
 public:
-     PHY_MedicalEvacuationAmbulance( PHY_RolePionLOG_Medical& medical, PHY_ComposantePion& compAmbulance );
+     PHY_MedicalEvacuationAmbulance( PHY_RoleInterface_Medical& medical, PHY_ComposantePion& compAmbulance );
      PHY_MedicalEvacuationAmbulance();
     ~PHY_MedicalEvacuationAmbulance();
 
@@ -73,13 +73,13 @@ private:
     //@}
 
 private:
-    PHY_RolePionLOG_Medical* pMedical_;
-    PHY_ComposantePion*      pCompAmbulance_;
-    T_ConsignVector          consigns_;
-    E_State                  nState_;
-    int                      nTimer_;
+    PHY_RoleInterface_Medical*  pMedical_;
+    PHY_ComposantePion*         pCompAmbulance_;
+    T_ConsignVector             consigns_;
+    E_State                     nState_;
+    int                         nTimer_;
 
-    MT_Float                 rNbrHumanHandled_;
+    MT_Float                    rNbrHumanHandled_;
 };
 
 #endif // __PHY_MedicalEvacuationAmbulance_h_

@@ -14,7 +14,7 @@
 #include "DEC_GeometryFunctions.h"
 #include "DEC_FunctionsTools.h"
 #include "DEC_FrontAndBackLinesComputer.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Fuseau.h"
@@ -391,7 +391,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( 
     const MIL_Fuseau& fuseau             = callerAgent.GetOrderManager().GetFuseau();
 
     MT_Vector2D  vDirLooked;
-    pAgentToSupport->GetPion().GetRole< PHY_RolePion_Perceiver >().GetMainPerceptionDirection( vDirLooked );
+    pAgentToSupport->GetPion().GetRole< PHY_RoleInterface_Perceiver >().GetMainPerceptionDirection( vDirLooked );
 
     vDirLooked.Rotate90ClockWise();
 

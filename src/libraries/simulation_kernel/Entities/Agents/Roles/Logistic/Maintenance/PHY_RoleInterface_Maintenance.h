@@ -19,6 +19,12 @@ class PHY_MaintenanceComposanteState;
 class PHY_ComposantePion;
 class MIL_AgentPion;
 class PHY_MaintenanceWorkRate;
+class PHY_ComposanteTypePion;
+class PHY_Breakdown;
+class PHY_MaintenanceConsign_ABC;
+class PHY_ComposanteUsePredicate;
+class MIL_AgentPionLOG_ABC;
+class MIL_AutomateLOG;
 // =============================================================================
 // @class  PHY_RoleInterface_Maintenance
 // Created: JVT 2004-08-03
@@ -66,6 +72,25 @@ public:
     virtual void SendChangedState() const = 0;
     virtual void SendFullState   () const = 0;
     //@}
+
+    //! @name Tools
+    //@{
+    virtual const MT_Vector2D&  GetPosition             () const = 0;
+    virtual PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const = 0;          
+    virtual PHY_ComposantePion* GetAvailableRepairer    ( const PHY_Breakdown& breakdown ) const = 0;
+    virtual bool                HasUsableRepairer       ( const PHY_Breakdown& breakdown ) const = 0;
+    virtual bool                ConsumePartsForBreakdown( const PHY_Breakdown& breakdown ) = 0;
+
+    virtual void StartUsingForLogistic( PHY_ComposantePion& composante ) = 0;
+    virtual void StopUsingForLogistic ( PHY_ComposantePion& composante ) = 0;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual MIL_AutomateLOG&      GetAutomate() const = 0;
+    virtual const MIL_AgentPionLOG_ABC& GetPion    () const = 0;
+    //@}
+
 };
 
 #endif // __PHY_RoleInterface_Maintenance_h_

@@ -17,7 +17,7 @@
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_DirectFiring;
-class PHY_RolePion_Perceiver;
+class PHY_RoleInterface_Perceiver;
 class PHY_FireResults_Default;
 class MIL_AgentPion;
 class MIL_Object_ABC;
@@ -44,7 +44,7 @@ public:
     //@}
 
 private:
-    PHY_RolePion_Perceiver&      rolePerceiver_;
+    PHY_RoleInterface_Perceiver&      rolePerceiver_;
     PHY_RoleAction_DirectFiring& roleDirectFiring_;
     MIL_Object_ABC*              pZoneControlled_;
     PHY_FireResults_Default*     pFireResult_;

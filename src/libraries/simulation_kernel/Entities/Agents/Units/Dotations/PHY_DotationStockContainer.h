@@ -20,7 +20,7 @@ namespace xml
 
 class PHY_DotationCategory;
 class PHY_DotationStock;
-class PHY_RolePionLOG_Supply;
+class PHY_RoleInterface_Supply;
 class NET_ASN_MsgLogSupplyState;
 class PHY_SupplyStockRequestContainer;
 
@@ -32,7 +32,7 @@ class PHY_DotationStockContainer : private boost::noncopyable
 {
 
 public:
-    explicit PHY_DotationStockContainer( PHY_RolePionLOG_Supply& roleSupply );
+    explicit PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply );
              PHY_DotationStockContainer();
             ~PHY_DotationStockContainer();
 
@@ -105,7 +105,7 @@ private:
     //@}
 
 private:
-    PHY_RolePionLOG_Supply* pRoleSupply_;
+    PHY_RoleInterface_Supply* pRoleSupply_;
     T_StockMap              stocks_;   
     T_StockSet              stocksChanged_;
     bool                    bCheckStockCapacities_;

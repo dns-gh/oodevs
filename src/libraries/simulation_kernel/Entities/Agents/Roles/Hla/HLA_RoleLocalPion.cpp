@@ -10,9 +10,9 @@
 #include "simulation_kernel_pch.h"
 #include "HLA_RoleLocalPion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Hla/HLA_UpdateFunctor.h"
 #include <hla/ObjectIdentifier.h>
 
@@ -47,9 +47,9 @@ void HLA_RoleLocalPion::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll )
     assert( pAgent_ );
     HLA_UpdateFunctor updateFunctor( functor, bUpdateAll );
     dynamic_cast< MIL_AgentPion* > ( pAgent_ )->Serialize( updateFunctor );
-    pAgent_->GetRole< PHY_RolePion_Composantes >().Serialize( updateFunctor );
-    pAgent_->GetRole< PHY_RolePion_Location    >().Serialize( updateFunctor );
-    pAgent_->GetRole< PHY_RolePion_Posture     >().Serialize( updateFunctor );
+    pAgent_->GetRole< PHY_RoleInterface_Composantes >().Serialize( updateFunctor );
+    pAgent_->GetRole< PHY_RoleInterface_Location    >().Serialize( updateFunctor );
+    pAgent_->GetRole< PHY_RoleInterface_Posture     >().Serialize( updateFunctor );
 }
 
 // -----------------------------------------------------------------------------

@@ -15,8 +15,8 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
@@ -134,7 +134,7 @@ MT_Float PHY_RolePion_Posture::GetPostureTime() const
     assert( pPion_ );
     assert( rTimingFactor_ > 0. );
     
-    return pPion_->GetRole< PHY_RolePion_HumanFactors >().ModifyPostureTime( pPion_->GetType().GetUnitType().GetPostureTime( *pCurrentPosture_ ) ) / rTimingFactor_;
+    return pPion_->GetRole< PHY_RoleInterface_HumanFactors >().ModifyPostureTime( pPion_->GetType().GetUnitType().GetPostureTime( *pCurrentPosture_ ) ) / rTimingFactor_;
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +268,7 @@ void PHY_RolePion_Posture::UnsetPosturePostePrepareGenie()
 bool PHY_RolePion_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) const
 {
     assert( pPion_ );
-    if( bIsStealth_ && !perceiver.GetRole< PHY_RolePion_Perceiver >().WasPerceived( *pPion_ ) )
+    if( bIsStealth_ && !perceiver.GetRole< PHY_RoleInterface_Perceiver >().WasPerceived( *pPion_ ) )
         return false;
     return true;
 }

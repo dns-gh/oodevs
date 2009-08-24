@@ -18,7 +18,7 @@ class PHY_ComposantePion;
 class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
 class PHY_Human;
-class PHY_RolePion_Composantes;
+class PHY_RoleInterface_Composantes;
 class PHY_MedicalHumanState;
 class MIL_ToxicEffectManipulator;
 class MIL_AutomateLOG;
@@ -60,7 +60,7 @@ public:
     //@{
     void NotifyComposanteHandledByMaintenance();
     void NotifyComposanteBackFromMaintenance ();
-    void NotifyComposanteTransfered          ( PHY_RolePion_Composantes& src, PHY_RolePion_Composantes& dest );
+    void NotifyComposanteTransfered          ( PHY_RoleInterface_Composantes& src, PHY_RoleInterface_Composantes& dest );
     //@}
 
     //! @name Humans notifications

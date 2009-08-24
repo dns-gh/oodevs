@@ -7,7 +7,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -112,7 +112,7 @@ bool PHY_PerceptionSurfaceAgent::IsInside( const MT_Vector2D& vPoint ) const
 // Name: PHY_PerceptionSurfaceAgent::ComputePerception
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D& vTargetPos ) const
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vTargetPos ) const
 {
     assert( pSensorType_ );
     return pSensorType_->ComputePerception( perceiver.GetPion(), vTargetPos, rHeight_ );
@@ -122,7 +122,7 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 // Name: PHY_PerceptionSurfaceAgent::ComputePerception
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_Agent_ABC& target ) const
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_Agent_ABC& target ) const
 {
     assert( pSensorType_ );
     const MT_Vector2D& vTargetPos = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
@@ -137,7 +137,7 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 // Name: PHY_PerceptionSurfaceAgent::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const DEC_Knowledge_Agent&  target ) const
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const DEC_Knowledge_Agent&  target ) const
 {
     assert( pSensorType_ );
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );  
@@ -147,7 +147,7 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 // Name: PHY_PerceptionSurfaceAgent::ComputePerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationConcentration& target ) const
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationConcentration& target ) const
 {
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
 }
@@ -156,7 +156,7 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 // Name: PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-MT_Float PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationFlow& target ) const
+MT_Float PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target ) const
 {
     return pSensorType_->ComputePerceptionAccuracy( perceiver.GetPion(), target, rHeight_ );
 }
@@ -165,7 +165,7 @@ MT_Float PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy( const PHY_RolePi
 // Name: PHY_PerceptionSurfaceAgent::ComputePerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationFlow& target, T_PointVector& shape ) const
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target, T_PointVector& shape ) const
 {
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_, shape );
 }

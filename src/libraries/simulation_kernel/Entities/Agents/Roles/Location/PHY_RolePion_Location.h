@@ -17,8 +17,6 @@
 #include "PHY_RoleInterface_Location.h"
 
 class MIL_AgentPion;
-class NET_ASN_MsgUnitAttributes;
-class HLA_UpdateFunctor;
 
 // =============================================================================
 // @class  PHY_RolePion_Location
@@ -42,15 +40,15 @@ public:
     
     //! @name Operations
     //@{
-    void Update( bool bIsDead );
-    void Clean ();
+    virtual void Update( bool bIsDead );
+    virtual void Clean ();
 
-    void Hide     ();
-    void Show     ( const MT_Vector2D& vNewPosition );
-    void MagicMove( const MT_Vector2D& vNewPosition );
-    void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed );
-    void Follow   ( const MIL_Agent_ABC& agent );
-    void Fly      ( MT_Float rHeight );
+    virtual void Hide     ();
+    virtual void Show     ( const MT_Vector2D& vNewPosition );
+    virtual void MagicMove( const MT_Vector2D& vNewPosition );
+    virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed );
+    virtual void Follow   ( const MIL_Agent_ABC& agent );
+    virtual void Fly      ( MT_Float rHeight );
 
     virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population );
     virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population );
@@ -71,19 +69,19 @@ public:
     virtual MIL_Agent_ABC&      GetAgent          () const;
     virtual MT_Float            GetCurrentSpeed   () const;
     virtual bool                HasDoneMagicMove  () const;
-            bool                HasSpeedChanged   () const; // Position or direction or height has changed 
-            bool                HasLocationChanged() const;
+    virtual bool                HasSpeedChanged   () const; // Position or direction or height has changed 
+    virtual bool                HasLocationChanged() const;
     //@}
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const;
     //@}
 
     //! @name HLA
     //@{
-    void Serialize( HLA_UpdateFunctor& functor ) const;
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}
 
 private:

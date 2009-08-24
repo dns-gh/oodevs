@@ -13,8 +13,8 @@
 #include "PHY_PerceptionRecoPoint.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
@@ -27,7 +27,7 @@
 // Name: PHY_PerceptionRecoPoint::PHY_PerceptionRecoPoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoPoint::PHY_PerceptionRecoPoint( PHY_RolePion_Perceiver& perceiver )
+PHY_PerceptionRecoPoint::PHY_PerceptionRecoPoint( PHY_RoleInterface_Perceiver& perceiver )
     : PHY_PerceptionWithLocation< PHY_PerceptionRecoPointReco >( perceiver )
 {
 }

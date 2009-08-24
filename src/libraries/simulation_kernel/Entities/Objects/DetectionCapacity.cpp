@@ -14,7 +14,7 @@
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( DetectionCapacity, "DetectionCapacity" )
@@ -98,5 +98,5 @@ void DetectionCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent
     const AnimatorAttribute::T_AgentSet& animators = object.GetAttribute< AnimatorAttribute >().GetAnimators();
 
     for( AnimatorAttribute::CIT_AgentSet itAnimator = animators.begin(); itAnimator != animators.end(); ++itAnimator )
-        const_cast< MIL_Agent_ABC& >(**itAnimator).GetRole< PHY_RolePion_Perceiver >().NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
+        const_cast< MIL_Agent_ABC& >(**itAnimator).GetRole< PHY_RoleInterface_Perceiver >().NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
 }

@@ -14,7 +14,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
@@ -121,7 +121,7 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
     if( bNbcProtectionSuitWorn_ )
         return;
 
-    pPion_->GetRole< PHY_RolePion_Composantes >().ApplyPoisonous( contamination );
+    pPion_->GetRole< PHY_RoleInterface_Composantes >().ApplyPoisonous( contamination );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
     
     pPion_->GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( contamination );
     if( ! bNbcProtectionSuitWorn_ )
-        pPion_->GetRole< PHY_RolePion_Composantes >().ApplyContamination( contamination );
+        pPion_->GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
 
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     

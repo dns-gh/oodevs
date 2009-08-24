@@ -13,7 +13,7 @@
 #include "PHY_RolePionLOGConvoy_Supply.h"
 #include "PHY_StockConvoy.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 
@@ -73,7 +73,7 @@ void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
     assert( pPion_ );
     
     if( bIsDead )
-        pPion_->GetRole< PHY_RolePion_Location >().Follow( pPion_->GetAutomate().GetPionPC() );
+        pPion_->GetRole< PHY_RoleInterface_Location >().Follow( pPion_->GetAutomate().GetPionPC() );
 }
     
 // -----------------------------------------------------------------------------

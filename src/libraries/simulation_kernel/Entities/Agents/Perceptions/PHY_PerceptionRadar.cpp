@@ -12,14 +12,14 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRadar.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar constructor
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-PHY_PerceptionRadar::PHY_PerceptionRadar( PHY_RolePion_Perceiver& perceiver )
+PHY_PerceptionRadar::PHY_PerceptionRadar( PHY_RoleInterface_Perceiver& perceiver )
     : PHY_Perception_ABC  ( perceiver )
     , radarOnUnitPosition_( PHY_RadarClass::GetNbrClasses() )
     , radarZones_         ( PHY_RadarClass::GetNbrClasses() )
@@ -153,8 +153,8 @@ void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perc
         if( !bRadarEnabledOnPerceiverPos && zones.empty() )
             continue;
 
-        const PHY_RolePion_Perceiver::T_RadarSet& radars = perceiver_.GetRadars( *itRadarClass->second );
-        for( PHY_RolePion_Perceiver::CIT_RadarSet itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
+        const PHY_RoleInterface_Perceiver::T_RadarSet& radars = perceiver_.GetRadars( *itRadarClass->second );
+        for( PHY_RoleInterface_Perceiver::CIT_RadarSet itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
         {
             const PHY_RadarType& radarType = **itRadar;
 

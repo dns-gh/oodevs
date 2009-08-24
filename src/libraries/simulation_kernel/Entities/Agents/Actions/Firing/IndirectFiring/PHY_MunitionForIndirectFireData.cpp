@@ -15,7 +15,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
@@ -60,7 +60,7 @@ void PHY_MunitionForIndirectFireData::operator()( const PHY_ComposantePion& comp
     if( pChoosenMunition_ && weapon.GetDotationCategory() == *pChoosenMunition_ )
         return;
 
-    const PHY_RolePion_Dotations& roleDotations = firer_.GetRole< PHY_RolePion_Dotations >();
+    const PHY_RoleInterface_Dotations& roleDotations = firer_.GetRole< PHY_RoleInterface_Dotations >();
 
     if( !pChoosenMunition_ || roleDotations.GetDotationValue( *pChoosenMunition_ ) < roleDotations.GetDotationValue( weapon.GetDotationCategory() ) )
         pChoosenMunition_ = &weapon.GetDotationCategory();

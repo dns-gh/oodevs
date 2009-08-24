@@ -22,7 +22,7 @@ namespace xml
 
 class PHY_PerceptionLevel;
 class PHY_RoleInterface_Posture;
-class PHY_RolePion_Posture;
+class PHY_RoleInterface_Posture;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_PopulationConcentration;

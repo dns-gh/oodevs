@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"

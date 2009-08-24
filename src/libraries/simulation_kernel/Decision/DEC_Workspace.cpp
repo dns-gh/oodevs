@@ -11,7 +11,7 @@
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_PionMission.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
@@ -115,29 +115,29 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
     if( nTmp < 0 || nTmp > 100 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dangerosity-modifiers: max-operationnal-state not in [0..100]" );
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
-    PHY_RolePion_Composantes::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
+    PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
 
     xisDecisional >> xml::attribute( "max-neutralized-state", nTmp );
     if( nTmp < 0 || nTmp > 100 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "dangerousity-modifiers: max-neutralized-state not in [0..100]" );
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
-    PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
+    PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
 
     xisDecisional     >> xml::end()
                           >> xml::start( "operational-state-weights" )
-                              >> xml::attribute( "component", PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ )
-                              >> xml::attribute( "major-component", PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ )
+                              >> xml::attribute( "component", PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ )
+                              >> xml::attribute( "major-component", PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_ )
                               >> xml::attribute( "crew", PHY_ComposantePion::rOpStateWeightHumans_ )
                           >> xml::end();
 
-    if( PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ < 0 || PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ > 1 )
+    if( PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ < 0 || PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ > 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: component not in [0..1]" );
-    if( PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ < 0 || PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ > 1 )
+    if( PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_ < 0 || PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_ > 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: major-component not in [0..1]" );
     if( PHY_ComposantePion::rOpStateWeightHumans_ < 0 || PHY_ComposantePion::rOpStateWeightHumans_ > 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: crew not in [0..1]" );
 
-    if( PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ + PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ != 1. )
+    if( PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_ + PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ != 1. )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1" ); // $$$$ ABL 2007-07-25: error context
 
     DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional );

@@ -16,7 +16,7 @@
 #include "PHY_RoleAction_DirectFiring.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/Object.h"
@@ -74,7 +74,7 @@ namespace
 // -----------------------------------------------------------------------------
 PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Localisation* pLocalisation, MT_Float rRadius, bool bFire )
     : PHY_Action_ABC    ( pion )
-    , rolePerceiver_    ( pion.GetRole< PHY_RolePion_Perceiver      >() )
+    , rolePerceiver_    ( pion.GetRole< PHY_RoleInterface_Perceiver      >() )
     , roleDirectFiring_ ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , pFireResult_      ( 0 )  
     , pZoneControlled_  ( 0 )

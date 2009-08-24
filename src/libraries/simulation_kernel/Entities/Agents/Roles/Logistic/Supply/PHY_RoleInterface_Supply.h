@@ -21,6 +21,7 @@ class PHY_ComposantePion;
 class PHY_SupplyStockRequestContainer;
 class PHY_StockConvoy;
 class MIL_AutomateLOG;
+class MIL_AgentPionLOG_ABC;
 //@TODO make multiple interface/role with specifics methods for convoy and for stockage
 // =============================================================================
 // @class  PHY_RoleInterface_Supply
@@ -44,6 +45,11 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const uint ) = 0;
     virtual void WriteODB( xml::xostream& xos ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const MIL_AgentPionLOG_ABC& GetPion() const { return *pPion_; };
     //@}
 
     //! @name Operations
@@ -77,6 +83,7 @@ public:
 
     //! @name Stock supply
     //@{
+    virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const =0;
     virtual void FillSupplyRequest( PHY_SupplyStockRequestContainer& supplyRequest ) const;
     virtual void ResupplyStocks   ();
     virtual void ResupplyStocks   ( const PHY_DotationCategory& category, MT_Float rNbr );
@@ -110,6 +117,10 @@ public:
     virtual void SendChangedState() const;
     virtual void SendFullState   () const;
     //@}
+
+private:
+    MIL_AgentPionLOG_ABC*       pPion_; //$$$Hack
+
 };
 
 #endif // __PHY_RoleInterface_Supply_h_

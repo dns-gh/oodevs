@@ -68,20 +68,20 @@ public:
 
     //! @name Tools
     //@{
-    const MT_Vector2D&        GetPosition             () const;
-          PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const;          
-          PHY_ComposantePion* GetAvailableRepairer    ( const PHY_Breakdown& breakdown ) const;
-          bool                HasUsableRepairer       ( const PHY_Breakdown& breakdown ) const;
-          bool                ConsumePartsForBreakdown( const PHY_Breakdown& breakdown );
+    virtual const MT_Vector2D&        GetPosition             () const;
+    virtual PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const;          
+    virtual PHY_ComposantePion* GetAvailableRepairer    ( const PHY_Breakdown& breakdown ) const;
+    virtual bool                HasUsableRepairer       ( const PHY_Breakdown& breakdown ) const;
+    virtual bool                ConsumePartsForBreakdown( const PHY_Breakdown& breakdown );
 
-          void StartUsingForLogistic( PHY_ComposantePion& composante );
-          void StopUsingForLogistic ( PHY_ComposantePion& composante );
+    virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
+    virtual void StopUsingForLogistic ( PHY_ComposantePion& composante );
     //@}
 
     //! @name Accessors
     //@{
-          MIL_AutomateLOG&      GetAutomate() const;
-    const MIL_AgentPionLOG_ABC& GetPion    () const;
+    virtual MIL_AutomateLOG&      GetAutomate() const;
+    virtual const MIL_AgentPionLOG_ABC& GetPion    () const;
     //@}
 
     //! @name Network

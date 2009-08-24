@@ -10,7 +10,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -19,7 +19,7 @@
 // Name: PHY_PerceptionView constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-PHY_PerceptionView::PHY_PerceptionView( PHY_RolePion_Perceiver& perceiver )
+PHY_PerceptionView::PHY_PerceptionView( PHY_RoleInterface_Perceiver& perceiver )
     : PHY_Perception_ABC( perceiver )
     , bIsEnabled_       ( true )
 {
@@ -45,8 +45,8 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MT_Vector2D& vPoin
     
     if( bIsEnabled_ )
     {
-        const PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-        for( PHY_RolePion_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+        for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
         {
             const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, vPoint );
             if( currentLevel > *pBestLevel )
@@ -71,8 +71,8 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Agen
     
     if( bIsEnabled_ )
     {
-        const PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-        for( PHY_RolePion_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+        for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
         {
             const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, knowledge );
             if( currentLevel > *pBestLevel )
@@ -99,8 +99,8 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
         return PHY_PerceptionLevel::notSeen_;
 
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-    const PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-    for ( PHY_RolePion_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+    for ( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
     {
         const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, target );
         if( currentLevel > *pBestLevel )
@@ -139,8 +139,8 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Obje
     
     if( bIsEnabled_ )
     {
-        const PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfaces = perceiver_.GetSurfacesObject();
-        for( PHY_RolePion_Perceiver::CIT_SurfaceObjectMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        const PHY_RoleInterface_Perceiver::T_SurfaceObjectMap& surfaces = perceiver_.GetSurfacesObject();
+        for( PHY_RoleInterface_Perceiver::CIT_SurfaceObjectMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
         {
             const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, knowledge );
             if( currentLevel > *pBestLevel )
@@ -168,8 +168,8 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Object_ABC& ta
         return PHY_PerceptionLevel::identified_;
 
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-    const PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfaces = perceiver_.GetSurfacesObject();
-    for( PHY_RolePion_Perceiver::CIT_SurfaceObjectMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    const PHY_RoleInterface_Perceiver::T_SurfaceObjectMap& surfaces = perceiver_.GetSurfacesObject();
+    for( PHY_RoleInterface_Perceiver::CIT_SurfaceObjectMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
     {
         const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, target );
         if( currentLevel > *pBestLevel )
@@ -210,8 +210,8 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationFlow
     const PHY_PerceptionSurfaceAgent* pBestSurface = 0;
           MT_Float                    rBestCost    = std::numeric_limits< MT_Float >::min();
 
-    const PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-    for( PHY_RolePion_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+    for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
     {
         const PHY_PerceptionSurfaceAgent& surface = itSurface->second;
         const MT_Float                    rCost   = surface.ComputePerceptionAccuracy( perceiver_, flow );
@@ -258,8 +258,8 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationConc
         return PHY_PerceptionLevel::identified_;
 
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-    const PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-    for( PHY_RolePion_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+    for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
     {
         const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, target );
         if( currentLevel > *pBestLevel )

@@ -16,6 +16,7 @@
 
 class MIL_AgentPion;
 class MIL_Object_ABC;
+class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Refugee
@@ -43,6 +44,17 @@ public:
     virtual bool Orientate( const MIL_AgentPion& pionManaging ) = 0;
     virtual bool Release  () = 0;
     virtual bool Release  ( const MIL_Object_ABC& camp ) = 0;
+    //@}
+
+    virtual void Update    ( bool bIsDead ) = 0;
+    virtual void Clean     () = 0;
+    virtual bool HasChanged() const = 0;
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const = 0;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const = 0;
     //@}
 };
 

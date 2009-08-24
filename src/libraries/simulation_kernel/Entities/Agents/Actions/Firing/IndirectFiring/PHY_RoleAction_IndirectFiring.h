@@ -13,7 +13,7 @@
 #define __PHY_RoleAction_IndirectFiring_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 
 class PHY_RoleInterface_FireTarget;
 class MIL_AgentPion;

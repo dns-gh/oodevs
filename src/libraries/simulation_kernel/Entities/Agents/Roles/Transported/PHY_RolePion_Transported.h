@@ -39,9 +39,9 @@ public:
    
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
-    bool HasChanged() const;
+    virtual void Update    ( bool bIsDead );
+    virtual void Clean     ();
+    virtual bool HasChanged() const;
     //@}
 
     //! @name Transport
@@ -55,16 +55,16 @@ public:
 
     //! @name Human transporters ... $$$
     //@{
-    bool HasHumanTransportersReady    () const;
-    void DisableHumanTransporters     ( const MT_Vector2D& vPosition );
-    void RecoverHumanTransporters     ();
-    bool HasHumanTransportersToRecover() const;
+    virtual bool HasHumanTransportersReady    () const;
+    virtual void DisableHumanTransporters     ( const MT_Vector2D& vPosition );
+    virtual void RecoverHumanTransporters     ();
+    virtual bool HasHumanTransportersToRecover() const;
     //@}
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
 private:

@@ -14,7 +14,7 @@
 #include "PHY_SupplyDotationState.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ PHY_SupplyDotationRequestContainer::PHY_SupplyDotationRequestContainer( MIL_Auto
 {
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
     for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-        (**itPion).GetRole< PHY_RolePion_Dotations >().FillSupplyRequest( *this );
+        (**itPion).GetRole< PHY_RoleInterface_Dotations >().FillSupplyRequest( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,7 @@
 #ifndef __PHY_MedicalConsign_ABC_h_
 #define __PHY_MedicalConsign_ABC_h_
 
-class PHY_RolePionLOG_Medical;
+class PHY_RoleInterface_Medical;
 class PHY_ComposantePion;
 class PHY_MedicalHumanState;
 class PHY_MedicalAmbulance;
@@ -27,7 +27,7 @@ class PHY_MedicalConsign_ABC : private boost::noncopyable
 {
 
 public:
-             PHY_MedicalConsign_ABC( PHY_RolePionLOG_Medical& medical, PHY_MedicalHumanState& humanState );
+             PHY_MedicalConsign_ABC( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState );
              PHY_MedicalConsign_ABC();
     virtual ~PHY_MedicalConsign_ABC();
 
@@ -97,13 +97,13 @@ protected:
     E_State GetState() const;
     void    SetState( E_State nNewState );
 
-    PHY_RolePionLOG_Medical& GetPionMedical() const;
+    PHY_RoleInterface_Medical& GetPionMedical() const;
     //@}
 
 private:
-    E_State                  nState_;
-    bool                     bHasChanged_;
-    PHY_RolePionLOG_Medical* pMedical_;
+    E_State                     nState_;
+    bool                        bHasChanged_;
+    PHY_RoleInterface_Medical*  pMedical_;
 
 protected:
     PHY_MedicalHumanState*   pHumanState_;

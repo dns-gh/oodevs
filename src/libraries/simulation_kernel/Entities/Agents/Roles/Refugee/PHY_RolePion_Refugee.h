@@ -46,8 +46,6 @@ public:
     virtual bool Release  ();
     virtual bool Release  ( const MIL_Object_ABC& camp );
 
-            bool NotifyManaged  ();
-            bool NotifyUnmanaged();
     //@}
 
     //! @name Accessors

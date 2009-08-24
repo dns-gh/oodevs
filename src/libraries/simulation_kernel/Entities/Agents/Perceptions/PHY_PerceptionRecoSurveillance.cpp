@@ -12,8 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoSurveillance.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -142,7 +142,7 @@ void PHY_PerceptionRecoSurveillanceReco::GetAgentsInside( TER_Agent_ABC::T_Agent
 // Name: PHY_PerceptionRecoSurveillance constructor
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoSurveillance::PHY_PerceptionRecoSurveillance( PHY_RolePion_Perceiver& perceiver )
+PHY_PerceptionRecoSurveillance::PHY_PerceptionRecoSurveillance( PHY_RoleInterface_Perceiver& perceiver )
     : PHY_PerceptionWithLocation< PHY_PerceptionRecoSurveillanceReco >( perceiver )
 {
     // NOTHING

@@ -49,7 +49,7 @@ class PHY_PerceptionRecoObjects : public PHY_PerceptionWithLocation< PHY_Percept
 {
 
 public:
-    explicit PHY_PerceptionRecoObjects( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionRecoObjects( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoObjects();
 
     void Update();

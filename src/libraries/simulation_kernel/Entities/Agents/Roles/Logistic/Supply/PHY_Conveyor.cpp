@@ -13,7 +13,7 @@
 #include "PHY_Conveyor.h"
 #include "PHY_SupplyStockConsign.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -168,7 +168,7 @@ void PHY_Conveyor::LendTo( MIL_AgentPion& pion )
     assert( !pLentTo_ );
     pLentTo_ = &pion;
     pConveyorPion_->GetRole< PHY_RoleInterface_Supply      >().StopUsingForLogistic( *pConveyorComp_ );
-    pConveyorPion_->GetRole< PHY_RolePion_Composantes >().LendComposante      ( pLentTo_->GetRole< PHY_RolePion_Composantes >(), *pConveyorComp_ );
+    pConveyorPion_->GetRole< PHY_RoleInterface_Composantes >().LendComposante      ( pLentTo_->GetRole< PHY_RoleInterface_Composantes >(), *pConveyorComp_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ void PHY_Conveyor::LendTo( MIL_AgentPion& pion )
 void PHY_Conveyor::UndoLend()
 {
     assert( pLentTo_ );
-    pConveyorPion_->GetRole< PHY_RolePion_Composantes >().RetrieveLentComposante( pLentTo_->GetRole< PHY_RolePion_Composantes >(), *pConveyorComp_ );
+    pConveyorPion_->GetRole< PHY_RoleInterface_Composantes >().RetrieveLentComposante( pLentTo_->GetRole< PHY_RoleInterface_Composantes >(), *pConveyorComp_ );
     pConveyorPion_->GetRole< PHY_RoleInterface_Supply      >().StartUsingForLogistic ( *pConveyorComp_ );
     pLentTo_ = 0;
 }

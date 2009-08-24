@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Effect_KillOfficers.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
+#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ MIL_Effect_KillOfficers::~MIL_Effect_KillOfficers()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_KillOfficers::Execute()
 {
-    target_.GetRole< PHY_RolePion_Humans >().ChangeHumansAvailability( PHY_HumanRank::officier_, 0 );
+    target_.GetRole< PHY_RoleInterface_Humans >().ChangeHumansAvailability( PHY_HumanRank::officier_, 0 );
     delete this;
     return false; // Effect must be stopped
 }

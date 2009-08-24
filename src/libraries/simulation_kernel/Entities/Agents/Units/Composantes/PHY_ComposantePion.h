@@ -44,6 +44,7 @@ class PHY_MedicalHumanState;
 class PHY_Human;
 class DEC_Knowledge_AgentComposante;
 class MIL_Time_ABC;
+class PHY_RoleInterface_Composantes;
 
 // =============================================================================
 // @class  PHY_ComposantePion
@@ -68,7 +69,7 @@ public:
     //! @name Main
     //@{
     void Update();
-    void TransferComposante( PHY_RolePion_Composantes& newRole );
+    void TransferComposante( PHY_RoleInterface_Composantes& newRole );
 
     template< typename T > void ApplyOnWeapons( T& t ) const;
     //@}
@@ -152,22 +153,22 @@ public:
 
     //! @name Accessors
     //@{    
-      const PHY_RolePion_Composantes& GetRole            () const;
-            MT_Float                  GetWeight          () const;
-            bool                      IsMajor            () const;
-      const PHY_ComposanteState&      GetState           () const;
-            MT_Float                  GetMaxSpeed        () const;
-            MT_Float                  GetMaxSpeed        ( const TerrainData& data ) const;
-            MT_Float                  GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
-            bool                      CanMove            () const;
-            bool                      CanPerceive        () const;
-            bool                      CanBeFired         () const;
-            bool                      CanBeLent          () const;
-    virtual bool                      CanFire            () const;
-    virtual bool                      CanFireWhenUnloaded() const;            
+      const PHY_RoleInterface_Composantes&  GetRole            () const;
+            MT_Float                        GetWeight          () const;
+            bool                            IsMajor            () const;
+      const PHY_ComposanteState&            GetState           () const;
+            MT_Float                        GetMaxSpeed        () const;
+            MT_Float                        GetMaxSpeed        ( const TerrainData& data ) const;
+            MT_Float                        GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
+            bool                            CanMove            () const;
+            bool                            CanPerceive        () const;
+            bool                            CanBeFired         () const;
+            bool                            CanBeLent          () const;
+    virtual bool                            CanFire            () const;
+    virtual bool                            CanFireWhenUnloaded() const;            
             
-    virtual const PHY_ComposanteTypePion& GetType        () const;
-    virtual uint                          GetMajorScore  () const;
+    virtual const PHY_ComposanteTypePion&   GetType        () const;
+    virtual uint                            GetMajorScore  () const;
     //@}
 
     //! @name Dotations
@@ -233,17 +234,17 @@ private:
     //@}
 
 private:
-    const MIL_Time_ABC&             time_;
-          PHY_RolePion_Composantes* pRole_;
-    const PHY_ComposanteState*      pState_;
-    const PHY_ComposanteTypePion*   pType_;
-    const bool                      bMajor_;
-    const bool                      bLoadable_;
-    const bool                      bCanBePartOfConvoy_;
-          bool                      bUsedForLogistic_;
-          T_WeaponVector            weapons_;
-          T_SensorVector            sensors_;
-          PHY_HumansComposante*     pHumans_;
+    const MIL_Time_ABC&                     time_;
+          PHY_RoleInterface_Composantes*    pRole_;
+    const PHY_ComposanteState*              pState_;
+    const PHY_ComposanteTypePion*           pType_;
+    const bool                              bMajor_;
+    const bool                              bLoadable_;
+    const bool                              bCanBePartOfConvoy_;
+          bool                              bUsedForLogistic_;
+          T_WeaponVector                    weapons_;
+          T_SensorVector                    sensors_;
+          PHY_HumansComposante*             pHumans_;
 
     // Breakdowns
           uint                            nAutoRepairTimeStep_;

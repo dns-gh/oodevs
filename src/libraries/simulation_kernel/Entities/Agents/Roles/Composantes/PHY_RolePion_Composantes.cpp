@@ -19,13 +19,13 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
-#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
@@ -39,10 +39,6 @@
 #include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.h>
 
-MT_Float PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_             = 0.;
-MT_Float PHY_RolePion_Composantes::rOpStateWeightMajorComposante_                = 0.;
-MT_Float PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = 0.;
-MT_Float PHY_RolePion_Composantes::rMaxDangerosityDegradationByOpState_          = 0.;
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
@@ -502,7 +498,7 @@ void PHY_RolePion_Composantes::HealHumans( const PHY_HumanRank& rank, uint nNbr 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::UpdateOperationalStates()
 {
-    if( !HasChanged() && !pPion_->GetRole< PHY_RolePion_Humans >().HasChanged() )
+    if( !HasChanged() && !pPion_->GetRole< PHY_RoleInterface_Humans >().HasChanged() )
         return;
 
     MT_Float rMajorOpStateValue    = 0.;
@@ -567,7 +563,7 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::UpdateMajorComposante()
 {
-    if( !HasChanged() && !pPion_->GetRole< PHY_RoleAction_Loading >().HasChanged() && !pPion_->GetRole< PHY_RolePion_Transported >().HasChanged() )
+    if( !HasChanged() && !pPion_->GetRole< PHY_RoleAction_Loading >().HasChanged() && !pPion_->GetRole< PHY_RoleInterface_Transported >().HasChanged() )
         return;
 
     pMajorComposante_ = 0;
@@ -669,7 +665,7 @@ void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& compos
     UpdateDataWhenComposanteAdded( composante.GetState(), composanteTypes_[ &composante.GetType() ] );
 
     if( composante.GetState().IsUsable() )
-        pPion_->GetRole< PHY_RolePion_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pPion_->GetRole< PHY_RoleInterface_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
 }
 
 // -----------------------------------------------------------------------------
@@ -686,7 +682,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& comp
     composantes_.erase( it );
 
     if( composante.GetState().IsUsable() )
-        pPion_->GetRole< PHY_RolePion_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pPion_->GetRole< PHY_RoleInterface_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
 
     pPion_->GetRole< PHY_RoleAction_Loading   >().CheckConsistency();
     pPion_->GetRole< PHY_RoleAction_Transport >().CheckConsistency();
@@ -707,9 +703,9 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     UpdateDataWhenComposanteAdded  ( newState, properties );
 
     if( !newState.IsUsable() && oldState.IsUsable() )
-        pPion_->GetRole< PHY_RolePion_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pPion_->GetRole< PHY_RoleInterface_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
     else if( newState.IsUsable() && !oldState.IsUsable() )
-        pPion_->GetRole< PHY_RolePion_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pPion_->GetRole< PHY_RoleInterface_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
 
     pPion_->GetRole< PHY_RoleAction_Transport >().NotifyComposanteChanged( composante );
 
@@ -744,7 +740,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyHumanAdded( PHY_Human& human )
 {
-    pPion_->GetRole< PHY_RolePion_Humans >().NotifyHumanAdded( human );
+    pPion_->GetRole< PHY_RoleInterface_Humans >().NotifyHumanAdded( human );
 }
 
 // -----------------------------------------------------------------------------
@@ -753,7 +749,7 @@ void PHY_RolePion_Composantes::NotifyHumanAdded( PHY_Human& human )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyHumanRemoved( PHY_Human& human )
 {
-    pPion_->GetRole< PHY_RolePion_Humans >().NotifyHumanRemoved( human );
+    pPion_->GetRole< PHY_RoleInterface_Humans >().NotifyHumanRemoved( human );
 }
 
 // -----------------------------------------------------------------------------
@@ -762,7 +758,7 @@ void PHY_RolePion_Composantes::NotifyHumanRemoved( PHY_Human& human )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState )
 {
-    pPion_->GetRole< PHY_RolePion_Humans >().NotifyHumanChanged( human, copyOfOldHumanState );
+    pPion_->GetRole< PHY_RoleInterface_Humans >().NotifyHumanChanged( human, copyOfOldHumanState );
 }
 
 // =============================================================================
@@ -1358,7 +1354,7 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
     assert( pPion_ );
 
     if( target.IsAFriend( pPion_->GetArmy() ) == eTristate_True
-        ||  pPion_->GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
+        ||  pPion_->GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
         return 0.;
 
     // Target is dead
@@ -1558,7 +1554,7 @@ void PHY_RolePion_Composantes::EvacuateWoundedHumans( MIL_AutomateLOG& destinati
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState* PHY_RolePion_Composantes::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 )
 {
-    return pPion_->GetRole< PHY_RolePion_Humans >().NotifyHumanEvacuatedByThirdParty( human, destinationTC2 );
+    return pPion_->GetRole< PHY_RoleInterface_Humans >().NotifyHumanEvacuatedByThirdParty( human, destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -1567,7 +1563,7 @@ PHY_MedicalHumanState* PHY_RolePion_Composantes::NotifyHumanEvacuatedByThirdPart
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState* PHY_RolePion_Composantes::NotifyHumanWaitingForMedical( PHY_Human& human )
 {
-    return pPion_->GetRole< PHY_RolePion_Humans >().NotifyHumanWaitingForMedical( human );
+    return pPion_->GetRole< PHY_RoleInterface_Humans >().NotifyHumanWaitingForMedical( human );
 }
 
 // -----------------------------------------------------------------------------
@@ -1576,7 +1572,7 @@ PHY_MedicalHumanState* PHY_RolePion_Composantes::NotifyHumanWaitingForMedical( P
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState )
 {
-    pPion_->GetRole< PHY_RolePion_Humans >().NotifyHumanBackFromMedical( humanState );
+    pPion_->GetRole< PHY_RoleInterface_Humans >().NotifyHumanBackFromMedical( humanState );
 }
 
 // =============================================================================
@@ -1587,7 +1583,7 @@ void PHY_RolePion_Composantes::NotifyHumanBackFromMedical( PHY_MedicalHumanState
 // Name: PHY_RolePion_Composantes::NotifyLentComposanteReceived
 // Created: NLD 2006-07-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyLentComposanteReceived( PHY_RolePion_Composantes& lender, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante )
 {
     assert( std::find ( borrowedComposantes_[ &lender ].begin(), borrowedComposantes_[ &lender ].end(), &composante ) == borrowedComposantes_[ &lender ].end() );
 
@@ -1599,7 +1595,7 @@ void PHY_RolePion_Composantes::NotifyLentComposanteReceived( PHY_RolePion_Compos
 // Name: PHY_RolePion_Composantes::NotifyLentComposanteReturned
 // Created: NLD 2006-07-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyLentComposanteReturned( PHY_RolePion_Composantes& lender, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante )
 {
     T_ComposantePionVector& lentComps = borrowedComposantes_[ &lender ];
 
@@ -1617,7 +1613,7 @@ void PHY_RolePion_Composantes::NotifyLentComposanteReturned( PHY_RolePion_Compos
 // Name: PHY_RolePion_Composantes::LendComposante
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::LendComposante( PHY_RolePion_Composantes& borrower, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::LendComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante )
 {
     assert( composante.CanBeLent() );
     assert( std::find( composantes_.begin(), composantes_.end(), &composante ) != composantes_.end() );
@@ -1633,7 +1629,7 @@ void PHY_RolePion_Composantes::LendComposante( PHY_RolePion_Composantes& borrowe
 // Name: PHY_RolePion_Composantes::RetrieveLentComposante
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RolePion_Composantes& borrower, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante )
 {
     T_ComposantePionVector& lentComps = lentComposantes_[ &borrower ];
 

@@ -35,6 +35,16 @@ public:
     void ChangeStatus( const std::vector< std::string >& statuses );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Update    ( bool bIsDead ) {};
+    virtual void Clean     () {};
+    virtual bool HasChanged() const { return false; };
+    virtual MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const { return 0; };
+    virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const { return 0; };
+    virtual MT_Float GetCollidingPopulationDensity() const { return 0; };
+    //@}
+
 private:
     bool bInvulnerable_;
 

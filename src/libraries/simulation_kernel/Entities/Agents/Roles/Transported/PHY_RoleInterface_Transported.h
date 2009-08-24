@@ -17,6 +17,7 @@
 #include "MT_Tools/Role_ABC.h"
 
 class MIL_Agent_ABC;
+class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Transported
@@ -40,6 +41,27 @@ public:
     virtual bool CancelTransport    ( const MIL_Agent_ABC& transporter ) = 0;
     virtual void GetTransportWeight ( bool bTransportOnlyLoadable, MT_Float& rTotalWeight, MT_Float& rHeaviestComposanteWeight ) const = 0 ;
     virtual bool IsTransported      () const = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Update    ( bool bIsDead ) = 0;
+    virtual void Clean     () = 0;
+    virtual bool HasChanged() const = 0;
+    //@}
+
+    //! @name Human transporters ... $$$
+    //@{
+    virtual bool HasHumanTransportersReady    () const = 0;
+    virtual void DisableHumanTransporters     ( const MT_Vector2D& vPosition ) = 0;
+    virtual void RecoverHumanTransporters     () = 0;
+    virtual bool HasHumanTransportersToRecover() const = 0;
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const = 0;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const = 0;
     //@}
 };
 

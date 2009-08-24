@@ -13,7 +13,7 @@
 #define __PHY_PerceptionRadarData_h_
 
 class PHY_RadarType;
-class PHY_RolePion_Perceiver;
+class PHY_RoleInterface_Perceiver;
 class TER_Localisation;
 class MIL_Agent_ABC;
 
@@ -37,14 +37,14 @@ public:
 
     //! @name Operations
     //@{
-    void Acquire( PHY_RolePion_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition );
+    void Acquire( PHY_RoleInterface_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition );
     //@}
 
 private:
     //! @name Tools
     //@{
-    void AcquireTargets( PHY_RolePion_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets );
-    void Update        ( PHY_RolePion_Perceiver& perceiver );
+    void AcquireTargets( PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets );
+    void Update        ( PHY_RoleInterface_Perceiver& perceiver );
     //@}
 
 private:

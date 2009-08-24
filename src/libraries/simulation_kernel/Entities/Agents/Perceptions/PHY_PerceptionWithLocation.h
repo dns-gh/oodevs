@@ -24,7 +24,7 @@ template <typename T > class PHY_PerceptionWithLocation : public PHY_Perception_
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_PerceptionWithLocation( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionWithLocation( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionWithLocation();
     //@}
 

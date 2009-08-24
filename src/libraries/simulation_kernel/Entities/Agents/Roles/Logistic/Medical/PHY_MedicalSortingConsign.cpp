@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MedicalSortingConsign.h"
 #include "PHY_MedicalHumanState.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MedicalSortingConsign, "PHY_MedicalSortingConsign" 
 // Name: PHY_MedicalSortingConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalSortingConsign::PHY_MedicalSortingConsign( PHY_RolePionLOG_Medical& medical, PHY_MedicalHumanState& humanState )
+PHY_MedicalSortingConsign::PHY_MedicalSortingConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
     , pDoctor_              ( 0 )
 {

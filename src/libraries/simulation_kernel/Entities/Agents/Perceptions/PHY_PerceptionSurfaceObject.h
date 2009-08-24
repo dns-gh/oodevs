@@ -9,7 +9,7 @@
 
 class PHY_SensorTypeObject;
 class PHY_PerceptionLevel;
-class PHY_RolePion_Perceiver;
+class PHY_RoleInterface_Perceiver;
 class MIL_Object_ABC;
 class DEC_Knowledge_Object;
 
@@ -34,8 +34,8 @@ public:
     
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_Object_ABC&   target ) const;
-    const PHY_PerceptionLevel& ComputePerception( const PHY_RolePion_Perceiver& perceiver, const DEC_Knowledge_Object& target ) const;
+    const PHY_PerceptionLevel& ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_Object_ABC&   target ) const;
+    const PHY_PerceptionLevel& ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const DEC_Knowledge_Object& target ) const;
     //@}
 
     //! @name Accessors

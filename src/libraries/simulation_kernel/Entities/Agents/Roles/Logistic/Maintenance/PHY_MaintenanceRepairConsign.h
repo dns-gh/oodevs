@@ -14,7 +14,7 @@
 
 #include "PHY_MaintenanceConsign_ABC.h"
 
-class PHY_RolePionLOG_Maintenance;
+class PHY_RoleInterface_Maintenance;
 
 // =============================================================================
 // @class  PHY_MaintenanceRepairConsign
@@ -24,7 +24,7 @@ class PHY_MaintenanceRepairConsign : public PHY_MaintenanceConsign_ABC
 {
 
 public:
-             PHY_MaintenanceRepairConsign( PHY_RolePionLOG_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState );
+             PHY_MaintenanceRepairConsign( PHY_RoleInterface_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState );
              PHY_MaintenanceRepairConsign();
     virtual ~PHY_MaintenanceRepairConsign();
 

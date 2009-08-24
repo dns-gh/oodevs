@@ -13,18 +13,18 @@
 #include "DEC_AgentFunctions.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
-#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
-#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
-#include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
+#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
+#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
@@ -74,7 +74,7 @@ bool DEC_AgentFunctions::IsNeutralized( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::WearNbcProtectionSuit( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_NBC >().WearNbcProtectionSuit();
+    callerAgent.GetRole< PHY_RoleInterface_NBC >().WearNbcProtectionSuit();
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void DEC_AgentFunctions::WearNbcProtectionSuit( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::RemoveNbcProtectionSuit( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_NBC >().RemoveNbcProtectionSuit();
+    callerAgent.GetRole< PHY_RoleInterface_NBC >().RemoveNbcProtectionSuit();
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void DEC_AgentFunctions::RemoveNbcProtectionSuit( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::SelfDecontaminate( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_NBC >().Decontaminate();
+    callerAgent.GetRole< PHY_RoleInterface_NBC >().Decontaminate();
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ void DEC_AgentFunctions::DeactivateBlackout( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsContaminated( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RolePion_NBC >().IsContaminated();
+    return callerAgent.GetRole< PHY_RoleInterface_NBC >().IsContaminated();
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ bool DEC_AgentFunctions::IsContaminated( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsTransported( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RolePion_Transported >().IsTransported();
+    return callerAgent.GetRole< PHY_RoleInterface_Transported >().IsTransported();
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ bool DEC_AgentFunctions::IsFlying( const MIL_AgentPion& callerAgent )
 void DEC_AgentFunctions::SetElongationFactor( MIL_AgentPion& callerAgent, MT_Float factor )
 {
     assert( factor > 0. );
-    callerAgent.GetRole< PHY_RolePion_Posture >().SetElongationFactor( factor );
+    callerAgent.GetRole< PHY_RoleInterface_Posture >().SetElongationFactor( factor );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +194,7 @@ bool DEC_AgentFunctions::IsAutomateEngaged( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 MT_Float DEC_AgentFunctions::GetOperationalState( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RolePion_Composantes >().GetOperationalState();
+    return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +203,7 @@ MT_Float DEC_AgentFunctions::GetOperationalState( const MIL_AgentPion& callerAge
 // -----------------------------------------------------------------------------
 MT_Float DEC_AgentFunctions::GetMajorOperationalState( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RolePion_Composantes >().GetMajorOperationalState();
+    return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorOperationalState();
 }
 
 // -----------------------------------------------------------------------------
@@ -279,7 +279,7 @@ bool DEC_AgentFunctions::CanActivateObject( const MIL_AgentPion& callerAgent, in
 //-----------------------------------------------------------------------------
 void DEC_AgentFunctions::EnableDiscreteMode( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_Posture >().EnableDiscreteMode();
+    callerAgent.GetRole< PHY_RoleInterface_Posture >().EnableDiscreteMode();
 }
 
 //-----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ void DEC_AgentFunctions::EnableDiscreteMode( MIL_AgentPion& callerAgent )
 //-----------------------------------------------------------------------------
 void DEC_AgentFunctions::DisableDiscreteMode( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_Posture >().DisableDiscreteMode();
+    callerAgent.GetRole< PHY_RoleInterface_Posture >().DisableDiscreteMode();
 }
 
 // -----------------------------------------------------------------------------
@@ -337,7 +337,7 @@ MT_Float DEC_AgentFunctions::GetUnloadingTime( const MIL_AgentPion& callerAgent 
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::DisableHumanTransportersNow( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_Transported >().DisableHumanTransporters( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    callerAgent.GetRole< PHY_RoleInterface_Transported >().DisableHumanTransporters( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +346,7 @@ void DEC_AgentFunctions::DisableHumanTransportersNow( MIL_AgentPion& callerAgent
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::RecoverHumanTransportersNow( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_Transported >().RecoverHumanTransporters();
+    callerAgent.GetRole< PHY_RoleInterface_Transported >().RecoverHumanTransporters();
 }
 
 
@@ -356,7 +356,7 @@ void DEC_AgentFunctions::RecoverHumanTransportersNow( MIL_AgentPion& callerAgent
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AreHumanTransportersReady( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RolePion_Transported >().HasHumanTransportersReady();
+    return callerAgent.GetRole< PHY_RoleInterface_Transported >().HasHumanTransportersReady();
 }
 
 // -----------------------------------------------------------------------------
@@ -421,7 +421,7 @@ void DEC_AgentFunctions::NotifyCloseCombatStateChanged( MIL_AgentPion& callerAge
 // -----------------------------------------------------------------------------
 unsigned int DEC_AgentFunctions::GetHumanFactorTiredness( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RolePion_HumanFactors >().GetTiredness().GetID();
+    return callerAgent.GetRole< PHY_RoleInterface_HumanFactors >().GetTiredness().GetID();
 }
 
 // -----------------------------------------------------------------------------
@@ -430,7 +430,7 @@ unsigned int DEC_AgentFunctions::GetHumanFactorTiredness( const MIL_AgentPion& c
 // -----------------------------------------------------------------------------
 unsigned int DEC_AgentFunctions::GetHumanFactorMorale( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RolePion_HumanFactors >().GetMorale().GetID();
+    return callerAgent.GetRole< PHY_RoleInterface_HumanFactors >().GetMorale().GetID();
 }
 
 // -----------------------------------------------------------------------------
@@ -523,7 +523,7 @@ bool DEC_AgentFunctions::ChangeAutomate( MIL_AgentPion& callerAgent, DEC_Decisio
 // -----------------------------------------------------------------------------
 int DEC_AgentFunctions::GetPosture( const MIL_AgentPion& callerAgent )
 {
-    const PHY_RolePion_Posture& rolePosture = callerAgent.GetRole< PHY_RolePion_Posture >();
+    const PHY_RoleInterface_Posture& rolePosture = callerAgent.GetRole< PHY_RoleInterface_Posture >();
 
     return (int)( rolePosture.GetPostureCompletionPercentage() >= 1. ? rolePosture.GetCurrentPosture().GetID() : rolePosture.GetLastPosture().GetID() );
 }
@@ -534,7 +534,7 @@ int DEC_AgentFunctions::GetPosture( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 float DEC_AgentFunctions::TimeLeftForMoving( const MIL_AgentPion& callerAgent )
 {
-    const MT_Float rTime = callerAgent.GetRole< PHY_RolePion_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
+    const MT_Float rTime = callerAgent.GetRole< PHY_RoleInterface_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
     return float( MIL_Tools::ConvertSimToMinutes( rTime ) );
 }
 
@@ -600,7 +600,7 @@ void DEC_AgentFunctions::ChannelPopulations( const TER_Localisation* location )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsInstalled( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RolePion_Posture >().IsInstalled();
+    return callerAgent.GetRole< PHY_RoleInterface_Posture >().IsInstalled();
 }
 
 // -----------------------------------------------------------------------------
@@ -609,7 +609,7 @@ bool DEC_AgentFunctions::IsInstalled( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsUninstalled( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RolePion_Posture >().IsUninstalled();
+    return callerAgent.GetRole< PHY_RoleInterface_Posture >().IsUninstalled();
 }
 
 // -----------------------------------------------------------------------------
@@ -618,7 +618,7 @@ bool DEC_AgentFunctions::IsUninstalled( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::Install( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_Posture >().Install();
+    callerAgent.GetRole< PHY_RoleInterface_Posture >().Install();
 }
 
 // -----------------------------------------------------------------------------

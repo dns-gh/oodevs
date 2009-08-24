@@ -14,31 +14,6 @@
 
 #include "PHY_RoleInterface_Perceiver.h"
 
-#include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceAgent.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceObject.h"
-
-class DEC_Knowledge_Object;
-class DEC_Knowledge_Agent;
-class DEC_Decision_ABC;
-class PHY_PerceptionLevel;
-class PHY_PerceptionView;
-class PHY_Perception_ABC;
-class PHY_PerceptionCoupDeSonde;
-class PHY_PerceptionRecoPoint;
-class PHY_PerceptionRecoLocalisation;
-class PHY_PerceptionRecoSurveillance;
-class PHY_PerceptionRecoObjects;
-class PHY_PerceptionAlat;
-class PHY_PerceptionFlyingShell;
-class PHY_PerceptionRadar;
-class PHY_RadarClass;
-class PHY_RadarType;
-class MIL_Effect_IndirectFire;
-class MIL_Agent_ABC;
-class MIL_Army_ABC;
-class MIL_KnowledgeGroup;
-class MIL_AgentPion;
-class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RolePion_Perceiver
@@ -149,7 +124,6 @@ public:
 
     //! @name Tools
     //@{
-    //const MIL_Army_ABC&       GetArmy                      () const;
     const MIL_KnowledgeGroup& GetKnowledgeGroup            () const;
     const MIL_AgentPion&      GetPion                      () const;
           MT_Float            GetMaxAgentPerceptionDistance() const;

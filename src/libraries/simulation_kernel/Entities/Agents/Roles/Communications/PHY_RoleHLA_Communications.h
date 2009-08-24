@@ -45,6 +45,20 @@ public:
     void ChangeStatus( const std::vector< std::string >& statuses );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Update    ( bool bIsDead ) {};
+    virtual void Clean     () {};
+    virtual bool HasChanged() const { return false; };
+    //@}
+
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const {};
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const {};
+    //@}
+
 private:
     //! @name Member data
     //@{

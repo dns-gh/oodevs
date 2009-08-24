@@ -17,7 +17,7 @@ class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class PHY_PerceptionLevel;
-class PHY_RolePion_Perceiver;
+class PHY_RoleInterface_Perceiver;
 
 //*****************************************************************************
 // Created: DFT 02-02-26
@@ -27,7 +27,7 @@ class PHY_Perception_ABC : private boost::noncopyable
 {
 
 public:
-    explicit PHY_Perception_ABC( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_Perception_ABC( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_Perception_ABC();
 
     //! @name Execution
@@ -58,7 +58,7 @@ protected:
     //@}
 
 protected:
-    PHY_RolePion_Perceiver& perceiver_;
+    PHY_RoleInterface_Perceiver& perceiver_;
 };
 
 #endif // __PHY_Perception_ABC_h_

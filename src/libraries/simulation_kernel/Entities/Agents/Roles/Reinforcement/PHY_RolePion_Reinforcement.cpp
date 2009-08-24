@@ -11,8 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Reinforcement.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -70,7 +70,7 @@ void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
 bool PHY_RolePion_Reinforcement::CanReinforce() const
 {
     assert( pPion_ );
-    return !pPion_->IsDead() && !pPion_->GetRole< PHY_RolePion_Transported >().IsTransported();
+    return !pPion_->IsDead() && !pPion_->GetRole< PHY_RoleInterface_Transported >().IsTransported();
 }
     
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ bool PHY_RolePion_Reinforcement::CanReinforce() const
 bool PHY_RolePion_Reinforcement::CanBeReinforced() const
 {
     assert( pPion_ );
-    return !pPion_->IsDead() && !pPion_->GetRole< PHY_RolePion_Transported >().IsTransported();
+    return !pPion_->IsDead() && !pPion_->GetRole< PHY_RoleInterface_Transported >().IsTransported();
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ void PHY_RolePion_Reinforcement::Update( bool bIsDead )
     if( bIsDead )
         CancelReinforcement();
     else
-        pPion_->GetRole< PHY_RolePion_Location >().Follow( *pPionReinforced_ );
+        pPion_->GetRole< PHY_RoleInterface_Location >().Follow( *pPionReinforced_ );
 }
 
 // -----------------------------------------------------------------------------

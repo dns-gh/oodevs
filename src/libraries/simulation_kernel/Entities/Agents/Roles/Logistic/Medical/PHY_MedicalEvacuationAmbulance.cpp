@@ -14,7 +14,7 @@
 #include "PHY_MedicalEvacuationConsign.h"
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/log/MIL_AgentPionLOG_ABC.h"
 
@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MedicalEvacuationAmbulance, "PHY_MedicalEvacuationA
 // Name: PHY_MedicalEvacuationAmbulance constructor
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
-PHY_MedicalEvacuationAmbulance::PHY_MedicalEvacuationAmbulance( PHY_RolePionLOG_Medical& medical, PHY_ComposantePion& compAmbulance )
+PHY_MedicalEvacuationAmbulance::PHY_MedicalEvacuationAmbulance( PHY_RoleInterface_Medical& medical, PHY_ComposantePion& compAmbulance )
     : pMedical_        ( &medical )
     , pCompAmbulance_  ( &compAmbulance )
     , nState_          ( eWaiting )

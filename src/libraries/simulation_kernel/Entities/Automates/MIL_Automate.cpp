@@ -19,11 +19,11 @@
 #include "Entities/MIL_Formation.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Refugee/PHY_RolePion_Refugee.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
+#include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationState.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationRequestContainer.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
@@ -387,7 +387,7 @@ MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT
         {
             recycledPions_.erase( it.base() - 1 );
             pion.ChangeSuperior( *this );
-            pion.GetRole< PHY_RolePion_Location >().MagicMove( vPosition );
+            pion.GetRole< PHY_RoleInterface_Location >().MagicMove( vPosition );
             return pion;
         }
     }
@@ -682,7 +682,7 @@ void MIL_Automate::Engage()
 bool MIL_Automate::IsPerceived( const DEC_Knowledge_Agent&  knowledge ) const
 {
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
-        if( (**it).GetRole< PHY_RolePion_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
+        if( (**it).GetRole< PHY_RoleInterface_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
             return true;
     return false;
 }
@@ -694,7 +694,7 @@ bool MIL_Automate::IsPerceived( const DEC_Knowledge_Agent&  knowledge ) const
 bool MIL_Automate::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
-        if( (**it).GetRole< PHY_RolePion_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
+        if( (**it).GetRole< PHY_RoleInterface_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
             return true;
     return false;
 }

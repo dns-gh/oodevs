@@ -15,6 +15,10 @@
 #include "MT_Tools/Role_ABC.h"
 
 class MIL_NbcAgentType;
+class NET_ASN_MsgUnitAttributes;
+class PHY_Morale;
+class PHY_Experience;
+class PHY_Tiredness;
 
 // =============================================================================
 // @class  PHY_RoleInterface_HumanFactors
@@ -30,5 +34,42 @@ public:
 public:
              PHY_RoleInterface_HumanFactors();
     virtual ~PHY_RoleInterface_HumanFactors();
+
+public:
+    //! @name Operations
+    //@{
+    virtual void Update    ( bool bIsDead ) = 0;
+    virtual void Clean     () = 0;
+    virtual bool HasChanged() const = 0;
+    //@}
+
+    //! @name Main
+    //@{
+    virtual void ReadOverloading( xml::xistream& xis ) = 0;
+    virtual void SetMorale      ( const PHY_Morale& morale         ) = 0;
+    virtual void SetExperience  ( const PHY_Experience& experience ) = 0;
+    virtual void SetTiredness   ( const PHY_Tiredness&  tiredness  ) = 0;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const PHY_Morale&     GetMorale    () const = 0;
+    virtual const PHY_Tiredness&  GetTiredness () const = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual MT_Float ModifyMaxSpeed              ( MT_Float rSpeed    ) const = 0;
+    virtual MT_Float ModifyReloadingDuration     ( MT_Float rDuration ) const = 0;
+    virtual MT_Float ModifyPH                    ( MT_Float rPH       ) const = 0;
+    virtual MT_Float ModifyPostureTime           ( MT_Float rTime     ) const = 0;
+    virtual MT_Float GetSensorDistanceModificator() const = 0;
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const = 0;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const = 0;
+    //@}
 };
 #endif // __PHY_RoleInterface_HumanFactors_h_

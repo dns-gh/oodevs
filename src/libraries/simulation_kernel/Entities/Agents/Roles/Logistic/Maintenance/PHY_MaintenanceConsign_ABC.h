@@ -13,7 +13,7 @@
 #define __PHY_MaintenanceConsign_ABC_h_
 
 class PHY_MaintenanceComposanteState;
-class PHY_RolePionLOG_Maintenance;
+class PHY_RoleInterface_Maintenance;
 class PHY_ComposanteTypePion;
 class PHY_ComposantePion;
 class PHY_Breakdown;
@@ -28,7 +28,7 @@ class PHY_MaintenanceConsign_ABC : private boost::noncopyable
 {
 
 public:
-             PHY_MaintenanceConsign_ABC( PHY_RolePionLOG_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState );
+             PHY_MaintenanceConsign_ABC( PHY_RoleInterface_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState );
              PHY_MaintenanceConsign_ABC();
     virtual ~PHY_MaintenanceConsign_ABC();
 
@@ -94,11 +94,11 @@ protected:
     //@{
     void SetState( E_State nNewState );    
 
-    PHY_RolePionLOG_Maintenance& GetPionMaintenance() const;
+    PHY_RoleInterface_Maintenance& GetPionMaintenance() const;
     //@}
 
 private:
-    PHY_RolePionLOG_Maintenance*    pMaintenance_;
+    PHY_RoleInterface_Maintenance*    pMaintenance_;
     E_State                         nState_;
     bool                            bHasChanged_;
 

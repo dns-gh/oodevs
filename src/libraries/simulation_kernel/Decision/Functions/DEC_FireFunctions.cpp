@@ -14,7 +14,7 @@
 
 #include "DEC_FunctionsTools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -31,7 +31,7 @@ float DEC_FireFunctions::GetMaxRangeToFireOnEnemy( const MIL_AgentPion& callerAg
 {
     if( !pKnowledge )
         return -1.f;
-    return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToFireOn( *pKnowledge, rWantedPH ) );
+    return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFireOn( *pKnowledge, rWantedPH ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ float DEC_FireFunctions::GetMinRangeToFireOnEnemy( const MIL_AgentPion& callerAg
     if ( !pKnowledge )
         return -1.f;
     
-    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToFireOn( *pKnowledge, rWantedPH );
+    const MT_Float rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMinRangeToFireOn( *pKnowledge, rWantedPH );
     if( rRange == std::numeric_limits< MT_Float >::max() )
         return -1.f;
     return MIL_Tools::ConvertSimToMeter( (float)rRange );
@@ -57,7 +57,7 @@ float DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture( const MIL_AgentP
 {
     if( !pKnowledge )
         return -1.f;
-    return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToFireOnActualPosture( *pKnowledge, rWantedPH ) );
+    return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFireOnActualPosture( *pKnowledge, rWantedPH ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ float DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture( const MIL_AgentP
     if( !pKnowledge )
         return -1.f;
     
-    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToFireOnActualPosture( *pKnowledge, rWantedPH );
+    const MT_Float rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMinRangeToFireOnActualPosture( *pKnowledge, rWantedPH );
     if( rRange == std::numeric_limits< MT_Float >::max() )
         return -1.f;
     return MIL_Tools::ConvertSimToMeter( (float)rRange );
@@ -83,7 +83,7 @@ float DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded( const MIL_AgentPi
 {
     if( !pKnowledge )
         return -1.f;
-   return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RolePion_Composantes >().GetOnlyLoadableMaxRangeToFireOn( *pKnowledge, rWantedPH ) );
+   return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetOnlyLoadableMaxRangeToFireOn( *pKnowledge, rWantedPH ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ float DEC_FireFunctions::GetMaxRangeToIndirectFire( const MIL_AgentPion& callerA
 {
     float rRange ( -1.f );
     if( pDotationCategory )
-        rRange = ( float ) callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, true );
+        rRange = ( float ) callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, true );
       if( rRange >= 0 )
           rRange = MIL_Tools::ConvertSimToMeter( rRange );
     return rRange;
@@ -120,7 +120,7 @@ float DEC_FireFunctions::GetMinRangeToIndirectFire( const MIL_AgentPion& callerA
     if( !pDotationCategory )
         return -1.f ;
     
-    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToIndirectFire( *pDotationCategory, true );
+    const MT_Float rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMinRangeToIndirectFire( *pDotationCategory, true );
     if ( rRange == std::numeric_limits< MT_Float >::max() ) // Pas de possibilité de tir
         return  -1.f;
     return MIL_Tools::ConvertSimToMeter( rRange );
@@ -135,7 +135,7 @@ float DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck( const MIL_Ag
     if( !pDotationCategory )
         return -1.f;
 
-    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, false );
+    const MT_Float rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, false );
     
     if ( rRange < 0. ) // Pas de possibilité de tir
         return -1.f;
@@ -151,7 +151,7 @@ float DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck( const MIL_Ag
     if( !pDotationCategory )
         return -1.f;
 
-    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToIndirectFire( *pDotationCategory, false );
+    const MT_Float rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMinRangeToIndirectFire( *pDotationCategory, false );
 
     if ( rRange == std::numeric_limits< MT_Float >::max() ) // Pas de possibilité de tir
         return -1.f;

@@ -15,7 +15,7 @@
 #include "PHY_RoleInterface_Medical.h"
 #include "PHY_MedicalHumanState.h"
 #include "PHY_MedicalEvacuationAmbulance.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MedicalEvacuationConsign, "PHY_MedicalEvacuationCon
 // Name: PHY_MedicalEvacuationConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign( PHY_RolePionLOG_Medical& medical, PHY_MedicalHumanState& humanState )
+PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
     , pDoctor_              ( 0 )
     , pEvacuationAmbulance_ ( 0 )

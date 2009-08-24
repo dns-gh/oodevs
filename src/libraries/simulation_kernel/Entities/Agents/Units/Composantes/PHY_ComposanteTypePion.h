@@ -40,7 +40,7 @@ class PHY_DotationConsumptions;
 class PHY_DotationNature;
 class MIL_ObjectType_ABC;
 class MIL_Object_ABC;
-class PHY_RolePion_Dotations;
+class PHY_RoleInterface_Dotations;
 class PHY_MaintenanceLevel;
 class PHY_Breakdown;
 class PHY_BreakdownType;

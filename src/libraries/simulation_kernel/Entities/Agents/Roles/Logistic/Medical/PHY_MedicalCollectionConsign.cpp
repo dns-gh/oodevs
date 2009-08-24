@@ -15,7 +15,7 @@
 #include "PHY_RoleInterface_Medical.h"
 #include "PHY_MedicalHumanState.h"
 #include "PHY_MedicalCollectionAmbulance.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/log/MIL_AgentPionLOG_ABC.h"
 
@@ -25,7 +25,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MedicalCollectionConsign, "PHY_MedicalCollectionCon
 // Name: PHY_MedicalCollectionConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign( PHY_RolePionLOG_Medical& medical, PHY_MedicalHumanState& humanState )
+PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
     , pCollectionAmbulance_ ( 0 )
 {

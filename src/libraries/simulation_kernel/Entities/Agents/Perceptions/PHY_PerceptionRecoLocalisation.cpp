@@ -15,7 +15,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_World.h"
@@ -48,7 +48,7 @@ PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TE
 // Name: PHY_PerceptionRecoLocalisationReco::IsInside
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-bool PHY_PerceptionRecoLocalisationReco::IsInside( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D& vPoint ) const
+bool PHY_PerceptionRecoLocalisationReco::IsInside( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vPoint ) const
 {
     if ( bShouldUseRadius_ )
     {
@@ -63,7 +63,7 @@ bool PHY_PerceptionRecoLocalisationReco::IsInside( const PHY_RolePion_Perceiver&
 // Name: PHY_PerceptionRecoLocalisationReco::GetAgentsInside
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RolePion_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& result ) const
+void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& result ) const
 {
     result.clear();
     if( bShouldUseRadius_ )
@@ -85,7 +85,7 @@ void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RolePion_Per
 // Name: PHY_PerceptionRecoLocalisation constructor
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoLocalisation::PHY_PerceptionRecoLocalisation( PHY_RolePion_Perceiver& perceiver )
+PHY_PerceptionRecoLocalisation::PHY_PerceptionRecoLocalisation( PHY_RoleInterface_Perceiver& perceiver )
     : PHY_PerceptionWithLocation< PHY_PerceptionRecoLocalisationReco >( perceiver )
 {
     // NOTHING

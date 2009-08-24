@@ -36,15 +36,15 @@ public:
     
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
-    bool HasChanged() const;
+    virtual void Update    ( bool bIsDead );
+    virtual void Clean     ();
+    virtual bool HasChanged() const;
     //@}
 
     //! @name Main
     //@{
-            void NotifySurrendered      ();    
-            void NotifySurrenderCanceled();
+    virtual void NotifySurrendered      ();    
+    virtual void NotifySurrenderCanceled();
     virtual bool Capture                ( const MIL_AgentPion& pionTakingPrisoner );
     virtual bool Release                ();
     virtual bool Imprison               ( const MIL_Object_ABC& camp );
@@ -60,8 +60,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
 private:

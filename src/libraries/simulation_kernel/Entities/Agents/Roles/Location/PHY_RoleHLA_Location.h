@@ -48,17 +48,29 @@ public:
     virtual void NotifyPutOutsideObject   ( MIL_Object_ABC& object );
 
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
+
+    virtual void Update( bool bIsDead ) {};
+    virtual void Clean () {};
+
+    virtual void Hide     () {};
+    virtual void Show     ( const MT_Vector2D& vNewPosition ) {};
+    virtual void MagicMove( const MT_Vector2D& vNewPosition ) {};
+    virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed ) {};
+    virtual void Follow   ( const MIL_Agent_ABC& agent ) {};
+    virtual void Fly      ( MT_Float rHeight ) {};
     //@}
 
     //! @name Accessors
     //@{
-    virtual MT_Float           GetHeight       () const;
-    virtual MT_Float           GetAltitude     () const;
-    virtual const MT_Vector2D& GetPosition     () const;
-    virtual const MT_Vector2D& GetDirection    () const;
-    virtual MIL_Agent_ABC&     GetAgent        () const;
-    virtual MT_Float           GetCurrentSpeed () const;
-    virtual bool               HasDoneMagicMove() const;
+    virtual MT_Float           GetHeight            () const;
+    virtual MT_Float           GetAltitude          () const;
+    virtual const MT_Vector2D& GetPosition          () const;
+    virtual const MT_Vector2D& GetDirection         () const;
+    virtual MIL_Agent_ABC&     GetAgent             () const;
+    virtual MT_Float           GetCurrentSpeed      () const;
+    virtual bool               HasDoneMagicMove     () const;
+    virtual bool               HasSpeedChanged      () const { return false; }; // Position or direction or height has changed 
+    virtual bool               HasLocationChanged   () const { return false; };
 
     bool IsValid() const;
     //@}
@@ -67,6 +79,10 @@ public:
     //@{
     virtual MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, void* pParams ) const;
     //@}
+
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const {};
 
 private:
     //! @name Member data

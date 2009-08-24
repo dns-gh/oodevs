@@ -14,8 +14,8 @@
 #include "MIL_AgentServer.h"
 #include "PHY_ActionFly.h"
 #include "Entities/MIL_Entity_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_EntityManager.h"
@@ -92,7 +92,7 @@ bool PHY_RoleAction_Flying::Land()
         return false;
 
     assert( pEntity_ );
-    pEntity_->GetRole< PHY_RolePion_Location >().Fly( 0. );
+    pEntity_->GetRole< PHY_RoleInterface_Location >().Fly( 0. );
     delete pActionFly_;
     pActionFly_ = 0;
     return true;
@@ -120,7 +120,7 @@ void PHY_RoleAction_Flying::SetFlyingHeight( MT_Float rHeight )
 void PHY_RoleAction_Flying::Fly()
 {
     assert( pEntity_ );
-    bForceLanding_ = !pEntity_->GetRole< PHY_RolePion_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ );
+    bForceLanding_ = !pEntity_->GetRole< PHY_RoleInterface_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ );
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( effectFly_ );
 }
 
@@ -137,7 +137,7 @@ void PHY_RoleAction_Flying::Apply( MT_Float rHeight )
         bForceLanding_ = false;
     }
     else
-        pEntity_->GetRole< PHY_RolePion_Location  >().Fly( rHeight );
+        pEntity_->GetRole< PHY_RoleInterface_Location  >().Fly( rHeight );
 }
 
 // -----------------------------------------------------------------------------

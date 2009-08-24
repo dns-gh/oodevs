@@ -11,8 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Transported.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -132,7 +132,7 @@ bool PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
     assert( pPion_ );
     if( pTransporter_ != &transporter )
         return false;
-    pPion_->GetRole< PHY_RolePion_Location >().Show( vLoadingPosition_ );
+    pPion_->GetRole< PHY_RoleInterface_Location >().Show( vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
     vLoadingPosition_.Reset();  
@@ -153,13 +153,13 @@ bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 
     pTransporter_ = &transporter;
 
-    pPion_->GetRole< PHY_RolePion_Reinforcement >().CancelReinforcement();     
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+    pPion_->GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();     
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     while( !reinforcements.empty() )
-        (**reinforcements.begin()).GetRole< PHY_RolePion_Reinforcement >().CancelReinforcement();
+        (**reinforcements.begin()).GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
     
     pPion_->GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
-    pPion_->GetRole< PHY_RolePion_Location  >().Hide               ();   
+    pPion_->GetRole< PHY_RoleInterface_Location  >().Hide               ();   
     vLoadingPosition_= transporter.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )
         vHumanTransporterPosition_ = vLoadingPosition_;
@@ -179,7 +179,7 @@ bool PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
 
     assert( pTransporter_ );
     pPion_->GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
-    pPion_->GetRole< PHY_RolePion_Location  >().Show( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    pPion_->GetRole< PHY_RoleInterface_Location  >().Show( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pTransporter_ = 0;
     bHasChanged_  = true;
     vLoadingPosition_.Reset();
@@ -254,7 +254,7 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
     assert( pPion_ );
     if( !pTransporter_ )
         return;
-    pPion_->GetRole< PHY_RolePion_Location >().Follow( *pTransporter_ );
+    pPion_->GetRole< PHY_RoleInterface_Location >().Follow( *pTransporter_ );
 }
 
 // -----------------------------------------------------------------------------

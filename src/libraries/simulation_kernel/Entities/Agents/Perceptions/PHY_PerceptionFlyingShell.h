@@ -31,7 +31,7 @@ class PHY_PerceptionFlyingShell : public PHY_Perception_ABC
 {
 
 public:
-             PHY_PerceptionFlyingShell( PHY_RolePion_Perceiver& perceiver );
+             PHY_PerceptionFlyingShell( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionFlyingShell();
 
     //! @name Initialization

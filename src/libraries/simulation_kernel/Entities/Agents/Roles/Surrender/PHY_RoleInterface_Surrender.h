@@ -17,6 +17,7 @@
 class MIL_AgentPion;
 class MIL_Object_ABC;
 class MIL_Army;
+class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Surrender
@@ -43,10 +44,26 @@ public:
 
     //! @name Operations
     //@{
+    virtual void NotifySurrendered      () = 0;    
+    virtual void NotifySurrenderCanceled() = 0;
     virtual bool Capture ( const MIL_AgentPion& pionTakingPrisoner ) = 0;
     virtual bool Release () = 0;
     virtual bool Imprison( const MIL_Object_ABC& camp ) = 0;
+    virtual void Update    ( bool bIsDead ) = 0;
+    virtual void Clean     () = 0;
+    virtual bool HasChanged() const = 0;
     //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const = 0;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const = 0;
+    //@}
+
 };
 
 #endif // __PHY_RoleInterface_Surrender_h_
+
+
+//! @name Accessors
+//@{

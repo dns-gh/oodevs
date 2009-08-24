@@ -14,13 +14,6 @@
 
 #include "PHY_RoleInterface_Humans.h"
 
-class PHY_HumanRank;
-class PHY_HumanWound;
-class PHY_Human;
-class PHY_MedicalHumanState;
-class MIL_AgentPion;
-class MIL_AutomateLOG;
-class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RolePion_Humans
@@ -28,16 +21,6 @@ class NET_ASN_MsgUnitAttributes;
 // =============================================================================
 class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
 {
-
-public:
-    //! @name Types
-    //@{
-    enum E_EvacuationMode
-    {
-        eEvacuationMode_Auto,  // TC2 or IMEX
-        eEvacuationMode_Manual // IMEX
-    };
-    //@}
 
 public:
     explicit PHY_RolePion_Humans( MIL_AgentPion& pion );
@@ -51,45 +34,45 @@ public:
     
     //! @name Accessors
     //@{
-    uint GetNbrUsableHumans() const;
-    uint GetNbrAliveHumans ( const PHY_HumanRank& rank ) const;
-    uint GetNbrHumans      ( const PHY_HumanRank& rank ) const;
+    virtual uint GetNbrUsableHumans() const;
+    virtual uint GetNbrAliveHumans ( const PHY_HumanRank& rank ) const;
+    virtual uint GetNbrHumans      ( const PHY_HumanRank& rank ) const;
     //@}
 
     //! @name Notifications
     //@{
-    void NotifyHumanAdded  ( PHY_Human& human );
-    void NotifyHumanRemoved( PHY_Human& human );
-    void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
+    virtual void NotifyHumanAdded  ( PHY_Human& human );
+    virtual void NotifyHumanRemoved( PHY_Human& human );
+    virtual void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
     //@}
 
     //! @name Medical
     //@{
-    void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
-    bool                   HasWoundedHumansToEvacuate      () const;   
-    void                   ChangeEvacuationMode            ( E_EvacuationMode nMode );
-    PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ); // Imex
-    PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
-    void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
+    virtual void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
+    virtual bool                   HasWoundedHumansToEvacuate      () const;   
+    virtual void                   ChangeEvacuationMode            ( E_EvacuationMode nMode );
+    virtual PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ); // Imex
+    virtual PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
+    virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
     //@}
 
     //! @name Operations
     //@{
-    void Update        ( bool bIsDead );
-    void Clean         ();
-    bool HasChanged    () const;
+    virtual void Update        ( bool bIsDead );
+    virtual void Clean         ();
+    virtual bool HasChanged    () const;
 
-    void HealAllHumans           ();
-    void ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNbrAvailable );
+    virtual void HealAllHumans           ();
+    virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNbrAvailable );
     //@}
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
 
-    void SendLogisticChangedState() const;
-    void SendLogisticFullState   () const;
+    virtual void SendLogisticChangedState() const;
+    virtual void SendLogisticFullState   () const;
     //@}
 
 private:

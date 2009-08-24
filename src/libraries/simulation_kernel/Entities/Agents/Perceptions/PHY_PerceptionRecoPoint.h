@@ -52,7 +52,7 @@ class PHY_PerceptionRecoPoint : public PHY_PerceptionWithLocation< PHY_Perceptio
 {
 
 public:
-    explicit PHY_PerceptionRecoPoint( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionRecoPoint( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoPoint();
 
     void Update();

@@ -48,7 +48,7 @@ class PHY_PerceptionRecoSurveillance : public PHY_PerceptionWithLocation< PHY_Pe
 {
 
 public:
-             PHY_PerceptionRecoSurveillance( PHY_RolePion_Perceiver& perceiver );
+             PHY_PerceptionRecoSurveillance( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoSurveillance();
 
     //! @name Initialization

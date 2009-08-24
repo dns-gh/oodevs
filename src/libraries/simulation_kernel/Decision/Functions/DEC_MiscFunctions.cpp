@@ -15,7 +15,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
@@ -54,10 +54,10 @@ void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, MT_F
 // -----------------------------------------------------------------------------
 std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetReinforcements( const MIL_AgentPion& callerAgent )
 {
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = callerAgent.GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     std::vector<DEC_Decision_ABC*> result;
     result.reserve( reinforcements.size() );
-    for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         result.push_back( &(**it).GetRole< DEC_RolePion_Decision >() );
     return result;
 }
@@ -70,7 +70,7 @@ std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetReinforcements( const MIL_A
 bool DEC_MiscFunctions::Reinforce( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget )
 {
     assert ( pTarget );
-    return callerAgent.GetRole< PHY_RolePion_Reinforcement >().Reinforce( pTarget->GetPion() );
+    return callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().Reinforce( pTarget->GetPion() );
 }
 
 //-----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ bool DEC_MiscFunctions::Reinforce( MIL_AgentPion& callerAgent, const DEC_Decisio
 //-----------------------------------------------------------------------------
 void DEC_MiscFunctions::CancelReinforcement( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RolePion_Reinforcement >().CancelReinforcement();
+    callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
 }
 
 // -----------------------------------------------------------------------------

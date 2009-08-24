@@ -7,7 +7,7 @@
 #include "PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
@@ -18,7 +18,7 @@
 // Name: PHY_PerceptionAlat constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-PHY_PerceptionAlat::PHY_PerceptionAlat( PHY_RolePion_Perceiver& perceiver, const TER_Localisation& localisation )
+PHY_PerceptionAlat::PHY_PerceptionAlat( PHY_RoleInterface_Perceiver& perceiver, const TER_Localisation& localisation )
     : PHY_Perception_ABC( perceiver )
     , localisation_     ( localisation )
 {

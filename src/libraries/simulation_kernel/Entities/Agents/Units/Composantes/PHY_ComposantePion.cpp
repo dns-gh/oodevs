@@ -24,10 +24,10 @@
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_DirectFireData.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_IndirectFireData.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
@@ -203,7 +203,7 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) cons
 // Name: PHY_ComposantePion::TransferComposante
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::TransferComposante( PHY_RolePion_Composantes& newRole )
+void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newRole )
 {
     assert( pRole_ );
     assert( pHumans_ );
@@ -680,8 +680,8 @@ bool PHY_ComposantePion::CanBeUsed() const
 
     assert( pRole_ );
 
-    const PHY_RolePion_Transported& roleTransported = pRole_->GetPion().GetRole< PHY_RolePion_Transported >();
-    if( roleTransported.IsTransported() || pRole_->GetPion().GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
+    const PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< PHY_RoleInterface_Transported >();
+    if( roleTransported.IsTransported() || pRole_->GetPion().GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
         return false;
 
     if( bLoadable_ )
@@ -698,7 +698,7 @@ bool PHY_ComposantePion::CanBeUsedForMove() const
 {
     assert( pRole_ );
 
-    const PHY_RolePion_Transported& roleTransported = pRole_->GetPion().GetRole< PHY_RolePion_Transported >();
+    const PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< PHY_RoleInterface_Transported >();
     if( roleTransported.IsTransported() )
         return false;
 
@@ -729,7 +729,7 @@ bool PHY_ComposantePion::CanFireWhenUnloaded() const
     assert( pState_ );
     assert( pRole_ );
 
-    return !pRole_->IsNeutralized() && pState_->IsUsable() && !pState_->IsDamaged() && bLoadable_ && !bUsedForLogistic_ && !pRole_->GetPion().GetRole< PHY_RolePion_Transported >().IsTransported();
+    return !pRole_->IsNeutralized() && pState_->IsUsable() && !pState_->IsDamaged() && bLoadable_ && !bUsedForLogistic_ && !pRole_->GetPion().GetRole< PHY_RoleInterface_Transported >().IsTransported();
 }
 
 // -----------------------------------------------------------------------------
@@ -738,7 +738,7 @@ bool PHY_ComposantePion::CanFireWhenUnloaded() const
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::Repair()
 {
-    if( pRole_->GetPion().GetRole< PHY_RolePion_Surrender >().IsPrisoner() )
+    if( pRole_->GetPion().GetRole< PHY_RoleInterface_Surrender >().IsPrisoner() )
         ReinitializeState( PHY_ComposanteState::prisoner_ );
     else
         ReinitializeState( PHY_ComposanteState::undamaged_ );
@@ -1375,7 +1375,7 @@ uint PHY_ComposantePion::ApproximateTravelTime( const MT_Vector2D& vSourcePos, c
 // Name: PHY_ComposantePion::GetRole
 // Created: NLD 2005-03-09
 // -----------------------------------------------------------------------------
-const PHY_RolePion_Composantes& PHY_ComposantePion::GetRole() const
+const PHY_RoleInterface_Composantes& PHY_ComposantePion::GetRole() const
 {
     assert( pRole_ );
     return *pRole_;

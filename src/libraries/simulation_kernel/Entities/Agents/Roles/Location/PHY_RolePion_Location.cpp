@@ -12,13 +12,13 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
-#include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
-#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -200,11 +200,11 @@ void PHY_RolePion_Location::Fly( MT_Float rHeight )
 {
     assert( pPion_ );
     if( rHeight == 0. )
-        pPion_->GetRole< PHY_RolePion_Posture >().UnsetPostureMovement();
+        pPion_->GetRole< PHY_RoleInterface_Posture >().UnsetPostureMovement();
     else
     {
         bHasMove_ = true;
-        pPion_->GetRole< PHY_RolePion_Posture >().SetPostureMovement();
+        pPion_->GetRole< PHY_RoleInterface_Posture >().SetPostureMovement();
     }
 
     if( rHeight == rHeight_ )
@@ -238,11 +238,11 @@ void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vect
     SetDirection   ( vNewDirection );
 
     if( rCurrentSpeed_ == 0. )
-        pPion_->GetRole< PHY_RolePion_Posture >().UnsetPostureMovement();
+        pPion_->GetRole< PHY_RoleInterface_Posture >().UnsetPostureMovement();
     else
     {
         bHasMove_ = true;
-        pPion_->GetRole< PHY_RolePion_Posture >().SetPostureMovement();
+        pPion_->GetRole< PHY_RoleInterface_Posture >().SetPostureMovement();
     }
 }
 
@@ -293,8 +293,8 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
     assert( pPion_ );
-    if(    pPion_->GetRole< PHY_RolePion_Reinforcement >().IsReinforcing()
-        || pPion_->GetRole< PHY_RolePion_Transported   >().IsTransported() )
+    if(    pPion_->GetRole< PHY_RoleInterface_Reinforcement      >().IsReinforcing()
+        || pPion_->GetRole< PHY_RoleInterface_Transported   >().IsTransported() )
         return;
 
     Hide();
@@ -344,8 +344,8 @@ void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
     assert( pPion_ );
     
     object.NotifyAgentMovingInside( *pPion_ );
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
-    for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyMovingInsideObject( object );
 }
 
@@ -358,8 +358,8 @@ void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
     assert( pPion_ );
     
     object.NotifyAgentMovingOutside( *pPion_ );
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
-    for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyMovingOutsideObject( object );
 }
 
@@ -372,8 +372,8 @@ void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
     assert( pPion_ );
     
     object.NotifyAgentPutInside( *pPion_ );
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
-    for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyPutInsideObject( object );
 }
 
@@ -386,8 +386,8 @@ void PHY_RolePion_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
     assert( pPion_ );
     
     object.NotifyAgentPutOutside( *pPion_ );
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
-    for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyPutOutsideObject( object );
 }
 

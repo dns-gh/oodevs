@@ -15,7 +15,7 @@
 // Created: LDC 2009-07-29
 // -----------------------------------------------------------------------------
 template <class T >
-PHY_PerceptionWithLocation<T>::PHY_PerceptionWithLocation( PHY_RolePion_Perceiver& perceiver )
+PHY_PerceptionWithLocation<T>::PHY_PerceptionWithLocation( PHY_RoleInterface_Perceiver& perceiver )
 : PHY_Perception_ABC( perceiver )
 {
     // NOTHING

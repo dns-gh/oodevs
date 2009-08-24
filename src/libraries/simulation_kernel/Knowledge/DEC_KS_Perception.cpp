@@ -18,7 +18,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -332,7 +332,7 @@ void DEC_KS_Perception::Talk()
 {
     assert( pBlackBoard_ );
 
-    pBlackBoard_->GetPion().GetRole< PHY_RolePion_Perceiver >().ExecutePerceptions();
+    pBlackBoard_->GetPion().GetRole< PHY_RoleInterface_Perceiver >().ExecutePerceptions();
 
     for( CIT_AgentPerceptionMap itExt = externalPerceptions_.begin(); itExt != externalPerceptions_.end(); ++itExt )
         NotifyPerception( *itExt->first, *itExt->second, false );

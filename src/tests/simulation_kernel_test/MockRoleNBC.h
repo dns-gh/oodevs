@@ -45,6 +45,28 @@ public:
     MOCKPP_VOID_CHAINABLE1       ( MockRoleNBC, Contaminate, MIL_ToxicEffectManipulator );
     MOCKPP_VOID_CHAINABLE_EXT0   ( MockRoleNBC, Decontaminate, _All );    
     MOCKPP_VOID_CHAINABLE_EXT1   ( MockRoleNBC, Decontaminate, MT_Float, _Percent, MT_Float );
+
+    //! @name Operations
+    //@{
+    virtual void Update    ( bool bIsDead ) {};
+    virtual void Clean     () {};
+    virtual bool HasChanged() const { return false; };
+    //@}
+
+    //! @name Main
+    //@{
+    virtual void WearNbcProtectionSuit  () {};
+    virtual void RemoveNbcProtectionSuit() {};
+
+    virtual MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const { return 0; };
+    virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const { return 0; };
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const {};
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const {};
+    //@}
 };
 
 #endif // __MockRoleNBC_h_

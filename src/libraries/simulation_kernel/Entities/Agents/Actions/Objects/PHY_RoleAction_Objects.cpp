@@ -17,8 +17,8 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/ConstructionAttribute.h"
@@ -335,8 +335,8 @@ namespace
     {
         pPion->GetRole< PHY_RolePion_Composantes >().Apply( functor );
 
-        const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion->GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
-        for( PHY_RolePion_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
+        const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+        for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
             (*itReinforcement)->GetRole< PHY_RolePion_Composantes >().Apply( functor );
     
         return functor.GetNumberOfTheExtinguisherAgent();

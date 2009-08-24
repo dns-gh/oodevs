@@ -15,7 +15,7 @@
 #include "PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePionLOG_Maintenance.h"
+#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceTransportConsign, "PHY_MaintenanceTransportConsign" )
@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceTransportConsign, "PHY_MaintenanceTransp
 // Name: PHY_MaintenanceTransportConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( PHY_RolePionLOG_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState )
+PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( PHY_RoleInterface_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState )
     : PHY_MaintenanceConsign_ABC( maintenance, composanteState )
     , pCarrier_                 ( 0 )
 {

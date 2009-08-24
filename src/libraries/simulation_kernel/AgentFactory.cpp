@@ -14,7 +14,7 @@
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Automates/MIL_Automate.h"
 
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
@@ -81,7 +81,7 @@ void AgentFactory::Initialize( MIL_AgentPion& pion, MIL_Automate& automate, cons
 {
     automate.RegisterPion( pion );
 
-    pion.GetRole< PHY_RolePion_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );
-    pion.GetRole< PHY_RolePion_Location >().Fly ( 0. );
+    pion.GetRole< PHY_RoleInterface_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );
+    pion.GetRole< PHY_RoleInterface_Location >().Fly ( 0. );
 }
 

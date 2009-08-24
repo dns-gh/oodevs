@@ -18,7 +18,6 @@ namespace xml
 }
 
 class PHY_Posture;
-class PHY_RolePion_Posture;
 class PHY_RoleInterface_Posture;
 
 // =============================================================================
@@ -39,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetPHModificator( const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
+    MT_Float GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
     MT_Float GetPHModificator( const PHY_Posture&          firerPosture, const PHY_Posture&               targetPosture ) const;
     //@}
 

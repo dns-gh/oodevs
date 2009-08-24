@@ -45,6 +45,24 @@ public:
     void ChangeStatus( const std::vector< std::string >& statuses );
     //@}
 
+
+
+    //! @name Operations
+    //@{
+    virtual void NotifySurrendered      () {};    
+    virtual void NotifySurrenderCanceled() {};
+
+    virtual void Update    ( bool bIsDead ) {};
+    virtual void Clean     () {};
+    virtual bool HasChanged() const { return true; };
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const {};
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const {};
+    //@}
+
 private:
     bool bPrisoner_;
 };

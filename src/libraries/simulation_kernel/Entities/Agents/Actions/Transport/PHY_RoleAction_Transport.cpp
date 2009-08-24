@@ -312,7 +312,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
         {
             const MT_Float rTmpWeight = std::min( rWeightDamaged, it->second.rTransportedWeight_ );
             rWeightDamaged -= rTmpWeight; 
-            (*it->first).GetRole< PHY_RolePion_Composantes >().DamageTransported( it->second.rTransportedWeight_,composante.GetState(), it->second.bTransportOnlyLoadable_ );
+            (*it->first).GetRole< PHY_RoleInterface_Composantes >().DamageTransported( it->second.rTransportedWeight_,composante.GetState(), it->second.bTransportOnlyLoadable_ );
 
             if( !composante.GetState().IsUsable() )
             {

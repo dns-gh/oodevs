@@ -22,7 +22,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/xmlcodecs.h"
@@ -214,7 +214,7 @@ PHY_Weapon& PHY_WeaponType::InstanciateWeapon( bool bMajor ) const
 // Name: PHY_WeaponType::GetPHModificator
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetPHModificator( const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const
+MT_Float PHY_WeaponType::GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const
 {
     assert( pLauncherType_ );
     return pLauncherType_->GetPHModificator( firerPosture, targetPosture );
@@ -278,7 +278,7 @@ MT_Float PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_A
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< PHY_RolePion_Dotations >().HasDotation( *pDotationCategory_ ) )
+    if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetDangerosity( firer, target, targetComposanteType, bUsePH );
 }

@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
@@ -155,9 +155,9 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
     nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, humanData.nNbrTotal_ );
 
     if( nNewNbrFullyAliveHumans > humanData.nNbrOperational_ )
-        pPion_->GetRole< PHY_RolePion_Composantes >().HealHumans( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
+        pPion_->GetRole< PHY_RoleInterface_Composantes >().HealHumans( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
     else if( nNewNbrFullyAliveHumans < humanData.nNbrOperational_ )
-        pPion_->GetRole< PHY_RolePion_Composantes >().WoundHumans( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
+        pPion_->GetRole< PHY_RoleInterface_Composantes >().WoundHumans( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
 void PHY_RolePion_Humans::HealAllHumans()
 {
     assert( pPion_ );
-    pPion_->GetRole< PHY_RolePion_Composantes >().HealAllHumans();
+    pPion_->GetRole< PHY_RoleInterface_Composantes >().HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -374,7 +374,7 @@ void PHY_RolePion_Humans::NotifyHumanChanged( PHY_Human& human, const PHY_Human&
 void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
     assert( pPion_ );
-    pPion_->GetRole< PHY_RolePion_Composantes >().EvacuateWoundedHumans( destinationTC2 );
+    pPion_->GetRole< PHY_RoleInterface_Composantes >().EvacuateWoundedHumans( destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -384,7 +384,7 @@ void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
 bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 {
     assert( pPion_ );
-    return pPion_->GetRole< PHY_RolePion_Composantes >().HasWoundedHumansToEvacuate();
+    return pPion_->GetRole< PHY_RoleInterface_Composantes >().HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------

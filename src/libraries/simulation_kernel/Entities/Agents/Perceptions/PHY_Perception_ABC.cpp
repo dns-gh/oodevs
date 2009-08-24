@@ -7,13 +7,13 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Perception_ABC constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-PHY_Perception_ABC::PHY_Perception_ABC( PHY_RolePion_Perceiver& perceiver )
+PHY_Perception_ABC::PHY_Perception_ABC( PHY_RoleInterface_Perceiver& perceiver )
     : perceiver_( perceiver )
 {
     // NOTHING

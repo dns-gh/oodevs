@@ -12,7 +12,7 @@
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
-#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
+#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
@@ -183,7 +183,7 @@ void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_Targe
     MT_Float area = object.GetLocalisation().GetArea();
     MT_Float rPHCoeff = MT_IsZero( area ) 
                                 ? 0. 
-                                : controller_->GetRole< PHY_RolePion_Humans >().GetNbrUsableHumans() / area;
+                                : controller_->GetRole< PHY_RoleInterface_Humans >().GetNbrUsableHumans() / area;
     targets.clear();
     object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1,  boost::cref( object.GetArmy() ), rPHCoeff, boost::ref( targets ) ) );
 }

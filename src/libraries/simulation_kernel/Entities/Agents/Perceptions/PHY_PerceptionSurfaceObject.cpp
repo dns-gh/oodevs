@@ -6,7 +6,7 @@
 #include "PHY_PerceptionSurfaceObject.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
@@ -78,7 +78,7 @@ void PHY_PerceptionSurfaceObject::save( MIL_CheckPointOutArchive& file, const ui
 // Name: PHY_PerceptionSurfaceObject::ComputePerception
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceObject::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_Object_ABC& target ) const
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceObject::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_Object_ABC& target ) const
 {
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
 }
@@ -87,7 +87,7 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceObject::ComputePerception( const
 // Name: PHY_PerceptionSurfaceObject::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceObject::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const DEC_Knowledge_Object& target ) const
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceObject::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const DEC_Knowledge_Object& target ) const
 {
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );  
 }

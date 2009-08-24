@@ -218,7 +218,7 @@ void MIL_Automate::UnregisterAutomate( MIL_Automate& automate )
 template< typename T > 
 void MIL_Automate::ApplyOnHierarchy( T& functor )
 {
-    functor( *this );
+    functor(*this);
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).ApplyOnHierarchy( functor );

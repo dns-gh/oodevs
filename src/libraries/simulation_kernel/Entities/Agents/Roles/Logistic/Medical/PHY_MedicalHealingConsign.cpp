@@ -14,7 +14,7 @@
 #include "PHY_MedicalHealingConsign.h"
 #include "PHY_RoleInterface_Medical.h"
 #include "PHY_MedicalHumanState.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MedicalHealingConsign, "PHY_MedicalHealingConsign" 
 // Name: PHY_MedicalHealingConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalHealingConsign::PHY_MedicalHealingConsign( PHY_RolePionLOG_Medical& medical, PHY_MedicalHumanState& humanState )
+PHY_MedicalHealingConsign::PHY_MedicalHealingConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
     , pDoctor_              ( 0 )
 {

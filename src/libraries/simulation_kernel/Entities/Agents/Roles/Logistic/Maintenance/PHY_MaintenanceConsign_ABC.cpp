@@ -14,7 +14,7 @@
 #include "PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePionLOG_Maintenance.h"
+#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -22,7 +22,7 @@
 // Name: PHY_MaintenanceConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC( PHY_RolePionLOG_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState )
+PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC( PHY_RoleInterface_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState )
     : pMaintenance_    ( &maintenance )
     , pComposanteState_( &composanteState )
     , nTimer_          ( 0 )
@@ -183,7 +183,7 @@ const PHY_MaintenanceComposanteState& PHY_MaintenanceConsign_ABC::GetComposanteS
 // Name: PHY_MaintenanceConsign_ABC::GetPionMaintenance
 // Created: NLD 2006-08-11
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() const
+PHY_RoleInterface_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() const
 {
     assert( pMaintenance_ );
     return *pMaintenance_;

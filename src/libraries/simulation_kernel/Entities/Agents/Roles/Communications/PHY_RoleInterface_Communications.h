@@ -15,6 +15,7 @@
 #include "MT_Tools/Role_ABC.h"
 
 class MIL_Object_ABC;
+class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Communications
@@ -41,6 +42,19 @@ public:
 
     virtual MT_Float ModifySpeed            ( MT_Float rSpeed    ) const = 0;
     virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Update    ( bool bIsDead ) = 0;
+    virtual void Clean     () = 0;
+    virtual bool HasChanged() const = 0;
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const = 0;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const = 0;
     //@}
 };
 

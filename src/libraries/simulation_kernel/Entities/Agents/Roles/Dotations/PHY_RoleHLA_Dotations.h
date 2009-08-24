@@ -35,6 +35,57 @@ public:
     virtual       bool                 HasDotation       ( const PHY_DotationCategory& category ) const;
     //@}
 
+    virtual void ReadOverloading              ( xml::xistream& xis ) {};
+    virtual void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities ) {};
+    virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities ) {};
+
+    virtual void NotifyCaptured() {};
+    virtual void NotifyReleased() {};
+    //@}
+
+    //! @name Operations 
+    //@{
+    virtual void Update    ( bool bIsDead ) {};
+    virtual void Clean     () {};
+    virtual bool HasChanged() const { return false; };
+    //@}
+
+    //! @name Dotations management
+    //@{
+    virtual MT_Float GetDotationCapacity( const PHY_DotationCategory& category ) const { return 0; };
+    virtual MT_Float GetDotationValue   ( const PHY_DotationCategory& category ) const { return 0; };
+    virtual MT_Float ConsumeDotation    ( const PHY_DotationCategory& category, MT_Float rNbr ) { return 0; };
+    virtual MT_Float SupplyDotation     ( const PHY_DotationCategory& category, MT_Float rNbr ) { return 0; };
+    virtual void     ResupplyDotations  () {};
+    virtual void     ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor ) {};
+    virtual void     ResupplyDotations  ( const PHY_DotationType&      type             , MT_Float rFactor ) {};
+    //@}
+
+    //! @name Consumption management
+    //@{
+    virtual bool                 SetConsumptionMode      ( const PHY_ConsumptionType& mode ) { return false; };
+    virtual void                 RollbackConsumptionMode () {};
+    virtual MT_Float             GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const { return 0; };
+    //@}
+
+    //! @name Fire dotations
+    //@{
+    virtual MT_Float AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr ) { return 0; };
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const {};
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const {};
+    //@}
+
+    //! @name Logistic - Supply
+    //@{
+    virtual void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const {}; // Logistic
+    virtual void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& supplyRequest ) const {};
+    virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor ) const {};
+    //@}
+
 private:
     //! @name Member data
     //@{

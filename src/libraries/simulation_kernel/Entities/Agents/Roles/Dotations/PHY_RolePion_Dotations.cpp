@@ -16,7 +16,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -396,7 +396,7 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
 
     assert( pDotations_ );
     if( !pCurrentConsumptionMode_ )
-        SetConsumptionMode( pPion_->GetRole< PHY_RolePion_Posture >().GetCurrentPosture().GetConsumptionMode() );
+        SetConsumptionMode( pPion_->GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetConsumptionMode() );
     pDotations_->ConsumeConsumptionReservations();
     pPreviousConsumptionMode_ = pCurrentConsumptionMode_;
     pCurrentConsumptionMode_  = 0;

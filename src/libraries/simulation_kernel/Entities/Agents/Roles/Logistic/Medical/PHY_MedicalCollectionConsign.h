@@ -16,7 +16,6 @@
 #include "PHY_MedicalConsign_ABC.h"
 
 class PHY_RoleInterface_Medical;
-class PHY_RolePionLOG_Medical;
 class PHY_MedicalHumanState;
 
 // =============================================================================
@@ -28,7 +27,7 @@ class PHY_MedicalCollectionConsign : public PHY_MedicalConsign_ABC
     friend class PHY_MedicalCollectionAmbulance;
 
 public:
-             PHY_MedicalCollectionConsign( PHY_RolePionLOG_Medical& medical, PHY_MedicalHumanState& humanState );
+             PHY_MedicalCollectionConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState );
              PHY_MedicalCollectionConsign();
     virtual ~PHY_MedicalCollectionConsign();
 

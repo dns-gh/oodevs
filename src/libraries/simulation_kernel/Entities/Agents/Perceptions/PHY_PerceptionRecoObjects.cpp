@@ -13,7 +13,7 @@
 #include "PHY_PerceptionRecoObjects.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -86,7 +86,7 @@ void PHY_PerceptionRecoObjectsReco::GetObjectsInside( TER_Object_ABC::T_ObjectVe
 // Name: PHY_PerceptionRecoObjects::PHY_PerceptionRecoObjects
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoObjects::PHY_PerceptionRecoObjects( PHY_RolePion_Perceiver& perceiver )
+PHY_PerceptionRecoObjects::PHY_PerceptionRecoObjects( PHY_RoleInterface_Perceiver& perceiver )
     : PHY_PerceptionWithLocation< PHY_PerceptionRecoObjectsReco >( perceiver )
 {
     // NOTHING

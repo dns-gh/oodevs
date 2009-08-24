@@ -20,6 +20,8 @@ class MIL_Object_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
+class NET_ASN_MsgUnitAttributes;
+class HLA_UpdateFunctor;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Location
@@ -47,18 +49,37 @@ public:
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object ) = 0;
     virtual void NotifyPutInsideObject    ( MIL_Object_ABC& object ) = 0;
     virtual void NotifyPutOutsideObject   ( MIL_Object_ABC& object ) = 0;
+
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean () = 0;
+
+    virtual void Hide     () = 0;
+    virtual void Show     ( const MT_Vector2D& vNewPosition ) = 0;
+    virtual void MagicMove( const MT_Vector2D& vNewPosition ) = 0;
+    virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed ) = 0;
+    virtual void Follow   ( const MIL_Agent_ABC& agent ) = 0;
+    virtual void Fly      ( MT_Float rHeight ) = 0;
     //@}
 
     //! @name Accessors
     //@{
-    virtual MT_Float           GetHeight       () const = 0;
-    virtual MT_Float           GetAltitude     () const = 0;
-    virtual const MT_Vector2D& GetPosition     () const = 0;
-    virtual const MT_Vector2D& GetDirection    () const = 0;
-    virtual MIL_Agent_ABC&     GetAgent        () const = 0;
-    virtual MT_Float           GetCurrentSpeed () const = 0;
-    virtual bool               HasDoneMagicMove() const = 0;
+    virtual MT_Float            GetHeight           () const = 0;
+    virtual MT_Float            GetAltitude         () const = 0;
+    virtual const MT_Vector2D&  GetPosition         () const = 0;
+    virtual const MT_Vector2D&  GetDirection        () const = 0;
+    virtual MIL_Agent_ABC&      GetAgent            () const = 0;
+    virtual MT_Float            GetCurrentSpeed     () const = 0;
+    virtual bool                HasDoneMagicMove    () const = 0;
+    virtual bool                HasSpeedChanged     () const = 0; // Position or direction or height has changed 
+    virtual bool                HasLocationChanged  () const = 0;
     //@}
+
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const = 0;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const = 0;
+
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
+
+
 };
 
 #endif // __PHY_RoleInterface_Location_h_

@@ -88,8 +88,8 @@ public:
     //! @name Tools
     //@{
     virtual bool CanCollectionAmbulanceGo( const PHY_MedicalCollectionAmbulance& ambulance ) const;
-            void StartUsingForLogistic   ( PHY_ComposantePion& composante );
-            void StopUsingForLogistic    ( PHY_ComposantePion& composante );
+    virtual void StartUsingForLogistic   ( PHY_ComposantePion& composante );
+    virtual void StopUsingForLogistic    ( PHY_ComposantePion& composante );
     //@}
 
     //! @name Accessors

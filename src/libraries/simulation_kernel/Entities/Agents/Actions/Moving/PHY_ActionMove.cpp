@@ -15,7 +15,7 @@
 
 #include "PHY_RoleAction_Moving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathWalker.h"
@@ -70,7 +70,7 @@ void PHY_ActionMove::CreateJoiningPath()
     assert( pMainPath_.get() );
     assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
     assert( !pJoiningPath_.get() );
-    const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     pJoiningPath_.reset( new DEC_Agent_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos ), pMainPath_->GetPathType() ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
 }
@@ -109,7 +109,7 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
 {
     T_KnowledgeObjectVector knowledges;
 
-    const MT_Float rHeight = pion_.GetRole< PHY_RolePion_Location >().GetHeight();
+    const MT_Float rHeight = pion_.GetRole< PHY_RoleInterface_Location >().GetHeight();
     
     MIL_DangerousObjectFilter filter;
     pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
@@ -133,7 +133,7 @@ void PHY_ActionMove::AvoidObstacles()
     const DEC_Knowledge_Object* pObjectColliding   = 0;
           MT_Float              rDistanceCollision = 0.;
 
-    if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RolePion_Location >().GetPosition(), objectsToAvoid_, rDistanceCollision, &pObjectColliding ) )
+    if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceCollision, &pObjectColliding ) )
         return;
 
     assert( pObjectColliding );

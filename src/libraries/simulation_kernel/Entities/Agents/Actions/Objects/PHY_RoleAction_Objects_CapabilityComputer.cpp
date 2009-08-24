@@ -15,7 +15,7 @@
 
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 // -----------------------------------------------------------------------------
@@ -50,8 +50,8 @@ void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion
     if( bHasCapability_ )
         return;
 
-    const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
-    for( PHY_RolePion_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
         CollectData( **itReinforcement );
 }
 

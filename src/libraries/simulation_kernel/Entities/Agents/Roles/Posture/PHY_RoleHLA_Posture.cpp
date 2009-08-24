@@ -11,7 +11,7 @@
 #include "PHY_RoleHLA_Posture.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 
 #include <hla/AttributeIdentifier.h>
 
@@ -74,7 +74,7 @@ MT_Float PHY_RoleHLA_Posture::GetPostureCompletionPercentage() const
 // -----------------------------------------------------------------------------
 bool PHY_RoleHLA_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) const
 {
-    return ( !bIsStealth_ || perceiver.GetRole< PHY_RolePion_Perceiver >().WasPerceived( pion_ ) )
+    return ( !bIsStealth_ || perceiver.GetRole< PHY_RoleInterface_Perceiver >().WasPerceived( pion_ ) )
         && ! bTransported_; 
 }
 

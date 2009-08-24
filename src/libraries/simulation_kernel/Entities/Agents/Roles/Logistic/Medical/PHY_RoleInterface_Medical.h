@@ -18,7 +18,17 @@
 class PHY_MedicalHumanState;
 class PHY_Human;
 class MIL_AgentPion;
+class MIL_AgentPionLOG_ABC;
+class MIL_AutomateLOG;
+class MIL_Automate;
+class PHY_ComposantePion;
+class PHY_MedicalComposanteState;
+class PHY_MedicalConsign_ABC;
+class PHY_MedicalEvacuationConsign;
+class PHY_MedicalCollectionConsign;
+class PHY_MedicalEvacuationAmbulance;
 class PHY_MedicalCollectionAmbulance;
+class PHY_ComposanteUsePredicate;
 // =============================================================================
 // @class  PHY_RoleInterface_Medical
 // Created: JVT 2004-08-03
@@ -69,6 +79,13 @@ public:
 
     virtual int                    GetAvailabilityScoreForHealing  ( const PHY_MedicalHumanState& humanState ) = 0;
     virtual bool                   HandleHumanForHealing           ( PHY_MedicalHumanState& humanState ) = 0;
+
+    virtual PHY_MedicalEvacuationAmbulance* GetAvailableEvacuationAmbulance( PHY_MedicalEvacuationConsign& consign ) = 0;
+    virtual PHY_MedicalCollectionAmbulance* GetAvailableCollectionAmbulance( PHY_MedicalCollectionConsign& consign ) = 0;
+    virtual PHY_ComposantePion*             GetAvailableDoctorForDiagnosing() const = 0;
+    virtual PHY_ComposantePion*             GetAvailableDoctorForSorting   () const = 0;
+    virtual PHY_ComposantePion*             GetAvailableDoctorForHealing   ( const PHY_Human& human ) const = 0;
+    virtual bool                            HasUsableDoctorForHealing      ( const PHY_Human& human, bool bBypassPriorities = false ) const = 0;
     //@}
 
     //! @name Tools
@@ -80,6 +97,15 @@ public:
     //@{
     virtual void SendChangedState() const = 0;
     virtual void SendFullState   () const = 0;
+    //@}
+
+    virtual void StartUsingForLogistic   ( PHY_ComposantePion& composante ) = 0;
+    virtual void StopUsingForLogistic    ( PHY_ComposantePion& composante ) = 0;
+
+    //! @name Accessors
+    //@{
+    virtual MIL_AutomateLOG&      GetAutomate() const = 0;
+    virtual const MIL_AgentPionLOG_ABC& GetPion    () const = 0;
     //@}
 };
 

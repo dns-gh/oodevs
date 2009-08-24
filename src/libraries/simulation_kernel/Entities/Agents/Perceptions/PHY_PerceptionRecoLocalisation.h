@@ -22,8 +22,8 @@ public:
     PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, MT_Float rRadius );
     PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, bool bUseDefaultRadius );
 
-    bool IsInside        ( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D& vPoint )        const;
-    void GetAgentsInside ( const PHY_RolePion_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
+    bool IsInside        ( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vPoint )        const;
+    void GetAgentsInside ( const PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
 
 private:
     PHY_PerceptionRecoLocalisationReco& operator = ( const PHY_PerceptionRecoLocalisationReco& );
@@ -43,7 +43,7 @@ class PHY_PerceptionRecoLocalisation : public PHY_PerceptionWithLocation< PHY_Pe
 {
 
 public:
-    explicit PHY_PerceptionRecoLocalisation( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionRecoLocalisation( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoLocalisation();
 
     //! @name Add/Remove Points

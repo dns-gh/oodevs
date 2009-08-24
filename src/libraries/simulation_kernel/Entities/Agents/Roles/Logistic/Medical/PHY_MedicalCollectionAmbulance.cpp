@@ -14,7 +14,7 @@
 #include "PHY_MedicalCollectionConsign.h"
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MedicalCollectionAmbulance, "PHY_MedicalCollectionA
 // Name: PHY_MedicalCollectionAmbulance constructor
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
-PHY_MedicalCollectionAmbulance::PHY_MedicalCollectionAmbulance( PHY_RolePionLOG_Medical& medical, PHY_ComposantePion& compAmbulance )
+PHY_MedicalCollectionAmbulance::PHY_MedicalCollectionAmbulance( PHY_RoleInterface_Medical& medical, PHY_ComposantePion& compAmbulance )
     : pMedical_           ( &medical )
     , pCompAmbulance_     ( &compAmbulance )
     , consigns_           ()
@@ -206,7 +206,7 @@ bool PHY_MedicalCollectionAmbulance::DoSearchForSortingArea()
     if( !pMedicalSuperior )
         return true;
 
-    pSortingArea_ = static_cast< PHY_RolePionLOG_Medical* >( pMedicalSuperior->MedicalReserveForSorting( *this ) );//@TODO delete static cast and use interface in this class
+    pSortingArea_ = static_cast< PHY_RoleInterface_Medical* >( pMedicalSuperior->MedicalReserveForSorting( *this ) );//@TODO delete static cast and use interface in this class
     return pSortingArea_ != 0;
 }
 

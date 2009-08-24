@@ -78,6 +78,21 @@ public:
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyMovingOutsideObject, MIL_Object_ABC&, , MIL_Object_ABC );
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyPutInsideObject, MIL_Object_ABC&, , MIL_Object_ABC );
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyPutOutsideObject, MIL_Object_ABC&, , MIL_Object_ABC );
+
+    virtual void Update( bool bIsDead ) {};
+    virtual void Clean () {};
+
+    virtual void Hide     () {};
+    virtual void Show     ( const MT_Vector2D& vNewPosition ) {};
+    virtual void MagicMove( const MT_Vector2D& vNewPosition ) {};
+    virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed ) {};
+    virtual void Follow   ( const MIL_Agent_ABC& agent ) {};
+    virtual void Fly      ( MT_Float rHeight ) {};
+    virtual bool               HasSpeedChanged      () const { return false; }; // Position or direction or height has changed 
+    virtual bool               HasLocationChanged   () const { return false; };
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const {};
 };
 
 #endif // __MockRoleLocation_h_

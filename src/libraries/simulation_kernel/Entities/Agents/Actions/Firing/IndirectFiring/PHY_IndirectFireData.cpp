@@ -15,7 +15,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 
@@ -92,7 +92,7 @@ void PHY_IndirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY
     if( !compFirer.CanFire() || !effect_.CanWeaponBeUsed( weapon ) ) 
         return;
 
-    if( !firer_.GetRole< PHY_RolePion_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
+    if( !firer_.GetRole< PHY_RoleInterface_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;
     else
     {

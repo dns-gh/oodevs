@@ -16,7 +16,7 @@
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationCategory.h"
 #include "PHY_Dotation.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Network/NET_ASN_Messages.h"
 #include <xeumeuleu/xml.h>
 
@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_DotationGroupContainer, "PHY_DotationGroupContainer
 // Name: PHY_DotationGroupContainer constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_DotationGroupContainer::PHY_DotationGroupContainer( PHY_RolePion_Dotations& roleDotation )
+PHY_DotationGroupContainer::PHY_DotationGroupContainer( PHY_RoleInterface_Dotations& roleDotation )
     : pRoleDotation_( &roleDotation )
 {
     // NOTHING

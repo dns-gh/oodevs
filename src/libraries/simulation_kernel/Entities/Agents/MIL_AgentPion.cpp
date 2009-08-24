@@ -438,10 +438,10 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RolePion_NBC               >().Clean();
     GetRole< PHY_RolePion_Communications    >().Clean();
     GetRole< PHY_RolePion_HumanFactors      >().Clean();
-    GetRole< PHY_RolePion_Surrender         >().Clean();
+    GetRole< PHY_RoleInterface_Surrender    >().Clean();
     GetRole< PHY_RolePion_Refugee           >().Clean();
     GetRole< PHY_RolePion_Population        >().Clean();
-    GetRole< PHY_RolePion_Transported       >().Clean();
+    GetRole< PHY_RoleInterface_Transported  >().Clean();
     GetRole< PHY_RoleAction_Transport       >().Clean();    
     GetRole< PHY_RoleAction_Objects         >().Clean();
     GetRole< PHY_RoleAction_Moving          >().Clean();
@@ -814,7 +814,7 @@ void  MIL_AgentPion::OnReceiveMsgDestroyAll()
 // -----------------------------------------------------------------------------
 void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 {
-    GetRole< PHY_RolePion_Transported >().RecoverHumanTransporters();
+    GetRole< PHY_RoleInterface_Transported >().RecoverHumanTransporters();
 }
 
 // -----------------------------------------------------------------------------
@@ -849,7 +849,7 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction&
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMagicSurrender()
 {
-    GetRole< PHY_RolePion_Surrender >().NotifySurrendered();
+    GetRole< PHY_RoleInterface_Surrender >().NotifySurrendered();
     orderManager_.ReplaceMission();
     UpdatePhysicalState();
 }
@@ -860,7 +860,7 @@ void MIL_AgentPion::OnReceiveMagicSurrender()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 {
-    GetRole< PHY_RolePion_Surrender >().NotifySurrenderCanceled();
+    GetRole< PHY_RoleInterface_Surrender >().NotifySurrenderCanceled();
     UpdatePhysicalState();
 }
 
@@ -890,14 +890,14 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
 {
     functor.Serialize( "armee", false, GetArmy().GetName() );
     functor.Serialize( "type" , false, GetType().GetName() );
-    const bool bUpdateStatuses = GetRole< PHY_RolePion_Composantes    >().HasChanged()
-                              || GetRole< PHY_RolePion_Communications >().HasChanged()
-                              || GetRole< PHY_RolePion_NBC            >().HasChanged()
-                              || GetRole< PHY_RolePion_Posture        >().HLAStatusHasChanged()
-                              || GetRole< PHY_RolePion_Transported    >().HasChanged()
-                              || GetRole< PHY_RolePion_Surrender      >().HasChanged()
-                              || GetRole< PHY_RolePion_Perceiver      >().HasRadarStateChanged()
-                              || GetRole< PHY_RolePion_Population     >().HasChanged();
+    const bool bUpdateStatuses = GetRole< PHY_RolePion_Composantes      >().HasChanged()
+                              || GetRole< PHY_RolePion_Communications   >().HasChanged()
+                              || GetRole< PHY_RolePion_NBC              >().HasChanged()
+                              || GetRole< PHY_RolePion_Posture          >().HLAStatusHasChanged()
+                              || GetRole< PHY_RoleInterface_Transported >().HasChanged()
+                              || GetRole< PHY_RoleInterface_Surrender   >().HasChanged()
+                              || GetRole< PHY_RolePion_Perceiver        >().HasRadarStateChanged()
+                              || GetRole< PHY_RolePion_Population       >().HasChanged();
 
     // $$$$ AGE 2004-12-13: Test functor.MustUpdateAll() if performance issues (doubt it)
     std::vector< std::string > statuses;
@@ -911,11 +911,11 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
         statuses.push_back( "contamine" );
     if( GetRole< PHY_RolePion_Posture >().IsStealth() )
         statuses.push_back( "furtif" );
-    if( GetRole< PHY_RolePion_Transported >().IsTransported() )
+    if( GetRole< PHY_RoleInterface_Transported >().IsTransported() )
         statuses.push_back( "transporte" );
     if( GetRole< PHY_RolePion_Perceiver >().IsUsingActiveRadar() )
         statuses.push_back( "radaractif" );
-    if( GetRole< PHY_RolePion_Surrender >().IsPrisoner() )
+    if( GetRole< PHY_RoleInterface_Surrender >().IsPrisoner() )
         statuses.push_back( "prisonnier" );
     // $$$$ NLD 2007-02-14: Surrender
     if( GetRole< PHY_RolePion_Refugee >().IsManaged() )

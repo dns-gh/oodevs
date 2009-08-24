@@ -17,9 +17,9 @@
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
+#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
@@ -158,7 +158,7 @@ void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_RolePion_Decision* p
         return;
 
     MIL_AutomateLOG& tc2 = static_cast< MIL_AutomateLOG& >( pDecTC2->GetAutomate() );
-    pPionWounded->GetPion().GetRole< PHY_RolePion_Humans >().EvacuateWoundedHumans( tc2 );
+    pPionWounded->GetPion().GetRole< PHY_RoleInterface_Humans >().EvacuateWoundedHumans( tc2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_RolePion_Decision* p
 bool DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DEC_RolePion_Decision* pPion )
 {
     assert( pPion );
-    return pPion->GetPion().GetRole< PHY_RolePion_Humans >().HasWoundedHumansToEvacuate();
+    return pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ bool DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DEC_RolePion_Decision* p
 void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DEC_RolePion_Decision* pPion )
 {
     assert( pPion );
-    pPion->GetPion().GetRole< PHY_RolePion_Humans >().ChangeEvacuationMode( PHY_RolePion_Humans::eEvacuationMode_Manual );
+    pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().ChangeEvacuationMode( PHY_RoleInterface_Humans::eEvacuationMode_Manual );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +188,7 @@ void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DEC_RolePion_Deci
 void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DEC_RolePion_Decision* pPion )
 {
     assert( pPion );
-    pPion->GetPion().GetRole< PHY_RolePion_Humans >().ChangeEvacuationMode( PHY_RolePion_Humans::eEvacuationMode_Auto );
+    pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().ChangeEvacuationMode( PHY_RoleInterface_Humans::eEvacuationMode_Auto );
 }
 
 // -----------------------------------------------------------------------------
@@ -369,7 +369,7 @@ void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_AgentPion& callerA
     const PHY_AmmoDotationClass* pAmmoDotationClass = PHY_AmmoDotationClass::Find( ammoDotationClassId );
     assert( pAmmoDotationClass );
     
-    callerAgent.GetRole< PHY_RolePion_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
+    callerAgent.GetRole< PHY_RoleInterface_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
 }
 
 // -----------------------------------------------------------------------------

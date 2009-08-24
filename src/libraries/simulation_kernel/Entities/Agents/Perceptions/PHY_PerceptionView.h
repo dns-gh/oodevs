@@ -15,7 +15,7 @@ class PHY_PerceptionView : public PHY_Perception_ABC
 {
 
 public:
-    explicit PHY_PerceptionView( PHY_RolePion_Perceiver& perceiver );
+    explicit PHY_PerceptionView( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionView();
 
     //! @name Tools

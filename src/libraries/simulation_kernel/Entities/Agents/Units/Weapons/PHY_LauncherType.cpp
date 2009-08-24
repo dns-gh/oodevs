@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_LauncherType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include <xeumeuleu/xml.h>
 
 PHY_LauncherType::T_LauncherTypeMap PHY_LauncherType::launcherTypes_;
@@ -176,7 +176,7 @@ void PHY_LauncherType::RegisterPHModificator( const PHY_Posture& postureSource, 
 // Name: PHY_LauncherType::GetPHModificator
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_LauncherType::GetPHModificator( const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const
+MT_Float PHY_LauncherType::GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const
 {
     const uint     nFirerCurrentPosture      = firerPosture.GetCurrentPosture              ().GetID();
     const uint     nFirerLastPosture         = firerPosture.GetLastPosture                 ().GetID();

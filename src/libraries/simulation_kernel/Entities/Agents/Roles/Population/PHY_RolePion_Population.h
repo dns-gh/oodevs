@@ -50,11 +50,6 @@ public:
     MT_Float GetCollidingPopulationDensity() const;
     //@}
 
-    //! @name Network
-    //@{
-//    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-//    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
-    //@}
 
 private:
     MIL_Agent_ABC* pPion_;

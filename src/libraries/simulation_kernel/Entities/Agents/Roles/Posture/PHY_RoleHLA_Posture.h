@@ -54,6 +54,56 @@ public:
     void ChangeStatus( const std::vector< std::string >& statuses );
     //@}
 
+
+
+    //! @name Operations
+    //@{
+    virtual void Update    ( bool bIsDead ) {};
+    virtual void Clean     () {};
+    virtual bool HasChanged() const { return false; };
+
+    // Override automatic postures
+    virtual void SetPostureMovement           () {};
+    virtual void UnsetPostureMovement         () {};
+
+    virtual void EnableDiscreteMode () {};
+    virtual void DisableDiscreteMode() {};
+    //@}
+
+    //! @name Installation
+    //@{
+    virtual bool IsInstalled  () const { return false; };
+    virtual bool IsUninstalled() const { return false;};
+    virtual void Install      () {};
+    //@}
+
+    //! @name Perception
+    //@{
+    virtual void SetStealthFactor( MT_Float rValue ) {};
+    //@}
+
+    //! @name Elongation
+    //@{
+    virtual void     SetElongationFactor( MT_Float ) {};
+    virtual MT_Float GetElongationFactor() const { return 0; };
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual bool IsStealth() const { return false; };
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
+    //@}
+
+    //! @name HLA
+    //@{
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const {};
+    virtual bool HLAStatusHasChanged() const { return false; };
+
 private:
     //! @name Member data
     //@{
