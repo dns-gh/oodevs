@@ -142,9 +142,9 @@ void ADN_HumanFactors_Data::ReadModifier( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_HumanFactors_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "humans-factors" )
-
-            << xml::start( "experience-factor" );
+    output << xml::start( "humans-factors" );
+    ADN_Tools::AddSchema( output, "HumanFactors" );
+    output  << xml::start( "experience-factor" );
     veteranModifiers_.WriteArchive( output );
     xpModifiers_.WriteArchive( output );
     newbieModifiers_.WriteArchive( output );

@@ -409,8 +409,9 @@ void ADN_Models_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "models" )
-            << xml::start( "units" );
+    output << xml::start( "models" );
+    ADN_Tools::AddSchema( output, "Models" );
+    output  << xml::start( "units" );
     for( IT_ModelInfos_Vector it1 = vUnitModels_.begin(); it1 != vUnitModels_.end(); ++it1 )
         (*it1)->WriteArchive( "unit", output );
     output << xml::end()

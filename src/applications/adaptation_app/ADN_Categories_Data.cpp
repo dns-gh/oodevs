@@ -406,6 +406,7 @@ void ADN_Categories_Data::WriteSizes( xml::xostream& output )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated volume type names" ).ascii() );
 
     output << xml::start( "volumes" );
+    ADN_Tools::AddSchema( output, "Volumes" );
     for( T_SizeInfos_Vector::const_iterator itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
     {
         if( (*itSize)->GetData().empty() )
@@ -429,6 +430,7 @@ void ADN_Categories_Data::WriteArmors( xml::xostream& output )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated armor type names" ).ascii() );
 
     output << xml::start( "protections" );
+    ADN_Tools::AddSchema( output, "Armors" );
     for( T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
         (*itArmor)->WriteArchive( output );
     output << xml::end();
@@ -445,6 +447,7 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated resource nature names" ).ascii() );
 
     output << xml::start( "natures" );
+    ADN_Tools::AddSchema( output, "ResourceNatures" );
     for( T_DotationNatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
         if( (*it)->GetData().empty() )

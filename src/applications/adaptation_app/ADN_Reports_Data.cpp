@@ -9,9 +9,10 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Reports_Data.h"
-#include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
+#include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_Workspace.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -298,6 +299,7 @@ void ADN_Reports_Data::ReadReport( xml::xistream& input )
 void ADN_Reports_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "reports" );
+    ADN_Tools::AddSchema( output, "Reports" );
     for( unsigned long i = 0; i < reports_.size(); ++i )
         reports_[i]->WriteArchive( output, i );
     output << xml::end();

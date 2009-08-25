@@ -737,6 +737,7 @@ void ADN_Population_Data::ReadPopulation( xml::xistream& input )
 void ADN_Population_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "populations" );
+    ADN_Tools::AddSchema( output, "Populations" );
     reloadingSpeedEffectInfos_.WriteArchive( output );
     int n = 0;
     for( IT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it, ++n )

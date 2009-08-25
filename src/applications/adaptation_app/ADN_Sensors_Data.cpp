@@ -1118,7 +1118,7 @@ void ADN_Sensors_Data::ReadArchive( xml::xistream& input )
 void ADN_Sensors_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "sensors" );
-
+    ADN_Tools::AddSchema( output, "Sensors" );
     alatInfos_ .WriteArchive( output );
     cobraInfos_.WriteArchive( output );
     radarData_ .WriteArchive( output );

@@ -13,11 +13,16 @@
 #define __ADN_Tools_h_
 
 #include "ADN_Connector_ABC.h"
+
+namespace xml
+{
+    class xostream;
+}
+
 enum E_UnitPosture;
 enum E_TempsBordee;
 
 class QPopupMenu;
-
 
 // =============================================================================
 /** @class  ADN_Tools
@@ -69,6 +74,8 @@ public:
     static std::string SecondToString( double rSecond );
 
     static void SortMenu( QPopupMenu& menu );
+
+    static void AddSchema( xml::xostream& xos, const std::string& name );
 };
 
 

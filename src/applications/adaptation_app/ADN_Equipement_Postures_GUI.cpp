@@ -69,7 +69,7 @@ ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& strColC
     setSorting( true );
     setShowGrid( false );
     setLeftMargin( 0 );
-    setMinimumHeight( ( eNbrUnitPosture + 1.2 ) * 20 );
+    setMinimumHeight( int( ( eNbrUnitPosture + 1.2 ) * 20 ) );
 
     // Setup the columns and headers
     setNumCols( 2 );

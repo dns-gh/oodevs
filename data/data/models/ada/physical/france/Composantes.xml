@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<elements>
+<elements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Equipments.xsd">
   <element codeEMAT6="Bombardier" codeEMAT8="Bombardier" codeLFRIL="Bombardier" codeNNO="Bombardier" comment="" id="1" max-slope="1" name="Bombardier" protection="Aeronef" size="Gros" weight="1000">
     <speeds max="700">
       <speed terrain="inconnu" value="600"/>

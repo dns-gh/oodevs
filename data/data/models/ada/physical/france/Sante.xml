@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<health>
+<health xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Medical.xsd">
   <times diagnosis-time="30m" sorting-time="30m"/>
   <injuries>
     <injury caring-time="40m" category="UE" life-expectancy="2h" percentage="4" resting-time="1m"/>

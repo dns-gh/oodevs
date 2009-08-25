@@ -858,6 +858,7 @@ void ADN_Units_Data::ReadArchive( xml::xistream& input )
 void ADN_Units_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "units" );
+    ADN_Tools::AddSchema( output, "Units" );
     for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end();

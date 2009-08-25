@@ -1093,7 +1093,8 @@ void ADN_Objects_Data::ReadArchive( xml::xistream& xis )
 void ADN_Objects_Data::WriteArchive( xml::xostream& xos )
 {
     xos << xml::start( "objects" );
-        for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it!= vObjectInfos_.end(); ++it)
-            (*it)->WriteArchive( xos );
+    ADN_Tools::AddSchema( xos, "Objects" );
+    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it!= vObjectInfos_.end(); ++it)
+        (*it)->WriteArchive( xos );
     xos << xml::end();
 }

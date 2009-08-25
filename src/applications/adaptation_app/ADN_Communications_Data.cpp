@@ -85,8 +85,9 @@ void ADN_Communications_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Communications_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "communications" )
-            << xml::start( "communication-breakdown" )
+    output << xml::start( "communications" );
+    ADN_Tools::AddSchema( output, "Communications" );
+    output  << xml::start( "communication-breakdown" )
                 << xml::attribute( "speed-modifier", rSpeedModifier_ )
                 << xml::attribute( "reloading-time-modifier", rReloadModifier_ )
             << xml::end()

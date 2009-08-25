@@ -305,10 +305,11 @@ void ADN_Breakdowns_Data::ReadBreakdown( xml::xistream& input, const E_Breakdown
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "breakdowns" )
-            << xml::start( "diagnosis" )
-                << xml::attribute( "time", strAverageDiagnosticTime_ )
-            << xml::end();
+    output << xml::start( "breakdowns" );
+    ADN_Tools::AddSchema( output, "Breakdowns" );
+    output    << xml::start( "diagnosis" )
+                  << xml::attribute( "time", strAverageDiagnosticTime_ )
+              << xml::end();
     for( uint i = 0; i < eNbrBreakdownNTI; ++i )
     {
         output << xml::start( "category" )

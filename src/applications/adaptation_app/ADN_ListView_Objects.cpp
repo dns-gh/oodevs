@@ -98,6 +98,7 @@ namespace
         }
 
     private:
+        LinkBuilder& operator=( const LinkBuilder& );
         T_ConnectorVector& connectors_;
         ObjectInfos& infos_;
         bool bConnect_;

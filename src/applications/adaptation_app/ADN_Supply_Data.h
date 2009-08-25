@@ -57,38 +57,56 @@ public:
     typedef ADN_Type_Vector_ABC< ConvoyInfo< ADN_Type_Double > > T_ConvoyDoubleInfoVector;
     typedef T_ConvoyDoubleInfoVector::iterator                   IT_ConvoyDoubleInfoVector;
 
+    class SupplyDataInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+    public:
+        SupplyDataInfos();
+        ~SupplyDataInfos();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+        void Reset();
+
+    private:
+        void ReadConstitutionTime( xml::xistream& input );
+        void ReadLoadingTime( xml::xistream& input );
+        void ReadUnloadingTime( xml::xistream& input );
+        void ReadSpeedModifier( xml::xistream& input );
+        void ReadResourceAvailability( xml::xistream& input );
+
+    public:
+        ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;
+        ADN_TypePtr_InVector_ABC<ADN_Missions_Data::Mission> ptrSupplyMission_;
+
+        T_ConvoyTimeInfoVector   vConvoySetupInfos_;
+        T_ConvoyTimeInfoVector   vConvoyLoadingInfos_;
+        T_ConvoyTimeInfoVector   vConvoyUnloadingInfos_;
+        T_ConvoyDoubleInfoVector vConvoySpeedModificatorInfos_;
+        T_AvailabilityWarning_Vector vVectorWarnings_;
+    };
+
 // *****************************************************************************
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Supply_Data();
-    ~ADN_Supply_Data();
+             ADN_Supply_Data();
+    virtual ~ADN_Supply_Data();
     //@}
 
     //! @name Operations
     //@{
-    void FilesNeeded( T_StringList& vFiles ) const;
-    void Reset();
+    virtual void FilesNeeded( T_StringList& vFiles ) const;
+    virtual void Reset();
     //@}
 
 private:
     void ReadArchive( xml::xistream& input );
-    void ReadConstitutionTime( xml::xistream& input );
-    void ReadLoadingTime( xml::xistream& input );
-    void ReadUnloadingTime( xml::xistream& input );
-    void ReadSpeedModifier( xml::xistream& input );
-    void ReadResourceAvailability( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
 
 public:
-    ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;
-    ADN_TypePtr_InVector_ABC<ADN_Missions_Data::Mission> ptrSupplyMission_;
-
-    T_ConvoyTimeInfoVector   vConvoySetupInfos_;
-    T_ConvoyTimeInfoVector   vConvoyLoadingInfos_;
-    T_ConvoyTimeInfoVector   vConvoyUnloadingInfos_;
-    T_ConvoyDoubleInfoVector vConvoySpeedModificatorInfos_;
-    T_AvailabilityWarning_Vector vVectorWarnings_;
+    SupplyDataInfos infos_;
 };
 
 

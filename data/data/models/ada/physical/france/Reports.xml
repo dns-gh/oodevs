@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<reports>
+<reports xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Reports.xsd">
   <report id="0" message="ras"/>
   <report id="1" message="en poste face a obstacle">
     <parameter type="ObjectKnowledge"/>

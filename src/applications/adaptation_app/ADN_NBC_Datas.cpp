@@ -415,8 +415,9 @@ void ADN_NBC_Datas::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "nbc" )
-            << xml::start( "propagation" )
+    output << xml::start( "nbc" );
+    ADN_Tools::AddSchema( output, "NBC" );
+    output  << xml::start( "propagation" )
                 << xml::attribute( "wind-speed-limit", rWindSpeedLimitForSpreading_ )
             << xml::end()
             << xml::start( "nbc-suit" )

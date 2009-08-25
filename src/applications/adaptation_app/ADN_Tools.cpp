@@ -11,17 +11,13 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Tools.h"
-
+#include "ENT/ENT_Tr.h"
 #include <windows.h>
 #include <direct.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-
 #include <qpopmenu.h>
-
-#include "ENT/ENT_Tr.h"
-#include "ADN_Connector_ABC.h"
-
+#include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Tools::Replace
@@ -187,4 +183,14 @@ void ADN_Tools::SortMenu( QPopupMenu& menu )
 
     for( IT_MenuItemVector it = vItems.begin(); it != vItems.end(); ++it )
         menu.insertItem( (*it).first, (*it).second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tools::AddSchema
+// Created: SBO 2009-08-25
+// -----------------------------------------------------------------------------
+void ADN_Tools::AddSchema( xml::xostream& xos, const std::string& name )
+{
+    xos << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+        << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/physical/" + name + ".xsd" );
 }

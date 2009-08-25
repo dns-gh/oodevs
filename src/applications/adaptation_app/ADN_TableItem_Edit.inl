@@ -123,7 +123,7 @@ void ADN_TableItem_Edit<Connector,Validator>::paint( QPainter *p, const QColorGr
     rRatio = std::min( 1.0, rRatio );
 
     QColor backgroundColor;
-    backgroundColor.setHsv( 120 * rRatio, 30, 255 );
+    backgroundColor.setHsv( int( 120 * rRatio ), 30, 255 );
 
     QColorGroup newCg( cg );
     newCg.setColor( QColorGroup::Base, backgroundColor );

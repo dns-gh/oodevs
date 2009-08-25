@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<populations>
+<populations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Populations.xsd">
   <reloading-time-effect modifier="1" population-density="0.05"/>
   <population concentration-density="0.05" decisional-model="Population" id="0" moving-base-density="0.5" moving-speed="6" name="Population standard">
     <slowing-effects>

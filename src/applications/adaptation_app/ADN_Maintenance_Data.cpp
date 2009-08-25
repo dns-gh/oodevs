@@ -169,8 +169,9 @@ void ADN_Maintenance_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Maintenance_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "maintenance" )
-           << xml::start( "working-schemes" );
+    output << xml::start( "maintenance" );
+    ADN_Tools::AddSchema( output, "Maintenance" );
+    output << xml::start( "working-schemes" );
     for( IT_WorkingSchemeInfo_Vector it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end()

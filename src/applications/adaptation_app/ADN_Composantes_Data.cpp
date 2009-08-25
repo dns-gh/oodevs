@@ -2027,6 +2027,7 @@ void ADN_Composantes_Data::ReadArchive( xml::xistream& input )
 void ADN_Composantes_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "elements" );
+    ADN_Tools::AddSchema( output, "Equipments" );
     for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end();

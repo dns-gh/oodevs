@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<knowledge-groups>
+<knowledge-groups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/KnowledgeGroups.xsd">
   <knowledge-group name="Standard">
     <unit-knowledge interpolation-time="010m" max-lifetime="1h" max-unit-to-knowledge-distance="60000"/>
     <population-knowledge max-lifetime="30m"/>

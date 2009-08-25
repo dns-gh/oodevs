@@ -165,8 +165,9 @@ void ADN_Health_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Health_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "health" )
-            << xml::start( "times" )
+    output << xml::start( "health" );
+    ADN_Tools::AddSchema( output, "Medical" );
+    output  << xml::start( "times" )
                 << xml::attribute( "diagnosis-time", diagnosticTime_ )
                 << xml::attribute( "sorting-time", sortingTime_ )
             << xml::end()

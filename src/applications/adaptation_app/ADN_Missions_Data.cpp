@@ -595,6 +595,7 @@ namespace
 void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "missions" );
+    ADN_Tools::AddSchema( output, "Missions" );
     unsigned long id = 1;
     WriteMissions( output, "units"      , unitContext_,       unitMissions_, id );
     WriteMissions( output, "automats"   , automatContext_,    automatMissions_, id );

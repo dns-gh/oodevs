@@ -699,6 +699,7 @@ void ADN_Equipement_Data::ReadArchive( xml::xistream& input )
 void ADN_Equipement_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "dotations" );
+    ADN_Tools::AddSchema( output, "Resources" );
     for( IT_DotationInfos_Vector it = dotations_.begin(); it != dotations_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end();

@@ -280,6 +280,7 @@ void ADN_Automata_Data::WriteArchive( xml::xostream& output )
 {
     int nMosBaseId = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos().size() + 1;
     output << xml::start( "automats" );
+    ADN_Tools::AddSchema( output, "Automats" );
     int n = 0;
     for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it, ++n )
         (*it)->WriteArchive( output, nMosBaseId + n );

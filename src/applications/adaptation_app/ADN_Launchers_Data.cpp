@@ -230,6 +230,7 @@ void ADN_Launchers_Data::ReadArchive( xml::xistream& input )
 void ADN_Launchers_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "launchers" );
+    ADN_Tools::AddSchema( output, "Launchers" );
     for( T_LauncherInfos_Vector::iterator it = vLaunchers_.begin(); it != vLaunchers_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end();
