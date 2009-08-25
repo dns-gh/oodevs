@@ -11,7 +11,6 @@ include "resources/config.lua"
 
 function Start()
 
-	local output = {}
     local eventTable =
     {
         {
@@ -53,47 +52,26 @@ function Start()
 						:With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )
 						:Issue()
 				Trace( "indicator" )
-				--Indicator.create( "opstate", "select( operational-state(), $Unit )" )
-				--			:With( "Unit", "unit", entity:GetIdentifier() )
-				--			:Compute()
+				Indicator.create( "opstate", "select( operational-state(), $Unit )" )
+							:With( "Unit", "unit", entity:GetIdentifier() )
+							:Compute()
+							:Record()
 				Indicator.create( "distance_to_objective", "distance( select( position(), $Unit ), $Destination )" )
 							:With( "Unit", "unit", entity:GetIdentifier() )
 							:With( "Destination", "position", config.positions.destination[1] )
 							:Compute()
+							:Record()
 				Trace( "running" )
-				ChangeState( "test_run" )
+				Recorder.Start()
             end
         },
 
-		{
-			events.indicators:IndicatorChanged(),
-			{ "test_run" },
-			function( name, value )
-				Trace( "indicator updated: " .. name .. " = " .. value )
-				if output[name] == nil then
-					output[name] = {}
-				end
-				table.insert( output[name], value )
-				if #output[name] > 10 then
-					ChangeState( "test_end" )
-				end
-			end
-		},
+		Recorder.Record( 10, "test_end" ),
 
 		AtState( "test_end",
             function()
 				Trace( "end" )
-				-- output results to file
-				local results = io.open( "result.csv", "w+" )
-				for k, values in pairs( output ) do
-					results:write( k )
-					for _, v in ipairs( values ) do
-						results:write( ",", v )
-					end
-					results:write( "\n" )
-				end
-				results:close()
-
+				Recorder.Save( "output_test.csv" )
                 Deactivate()
             end
         )

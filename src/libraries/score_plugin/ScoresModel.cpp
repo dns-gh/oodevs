@@ -116,10 +116,13 @@ void ScoresModel::Update( const ASN1T_MsgsSimToClient& message )
 // -----------------------------------------------------------------------------
 void ScoresModel::RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgPlotRequest& request )
 {
-    const std::string name = boost::erase_head_copy< std::string >( request.request, 12 );
-    T_Scores::const_iterator it = scores_.find( name );
-    if( it != scores_.end() )
-        it->second->Send( publisher, request.identifier );
+    if( boost::starts_with( request.request, "indicator://" ) )
+    {
+        const std::string name = boost::erase_head_copy< std::string >( request.request, 12 );
+        T_Scores::const_iterator it = scores_.find( name );
+        if( it != scores_.end() )
+            it->second->Send( publisher, request.identifier );
+    }
 }
 
 // -----------------------------------------------------------------------------

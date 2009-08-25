@@ -79,11 +79,7 @@ void ScorePlugin::Receive( const ASN1T_MsgsAarToClient& message )
 void ScorePlugin::OnReceive( const std::string& client, const ASN1T_MsgsClientToAar& message )
 {
     if( message.msg.t == T_MsgsClientToAar_msg_msg_plot_request )
-    {
-        const ASN1T_MsgPlotRequest& request = *message.msg.u.msg_plot_request;
-        if( boost::starts_with( request.request, "indicator://" ) )
-            scores_->RequestPlot( resolver_.GetPublisher( client ), request );
-    }
+        scores_->RequestPlot( resolver_.GetPublisher( client ), *message.msg.u.msg_plot_request );
 }
 
 // -----------------------------------------------------------------------------

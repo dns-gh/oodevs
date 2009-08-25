@@ -165,9 +165,19 @@ orders =
 }
 
 Indicator = {} -- class
-Indicator.create  = function( name, formula ) return newIndicator end -- Constructor
+Indicator.create  = function( name, formula ) return newIndicator end   -- Constructor
 Indicator:With    = function( self, name, type, value ) return self end -- Add variable
-Indicator:Compute = function( self ) end -- Start computation
+Indicator:Compute = function( self ) end                                -- Start computation
+Indicator:Record  = function( self ) end                                -- Add indicator to recorder
+
+Recorder = 
+{
+    Start  = function() end,                    -- starts recorder (changes state)
+    Reset  = function() end,                    -- resets recorder data
+    Record = function( ticks, next_state ) end, -- creates fsm recording states, goto "next_state" after "ticks" simulation ticks
+    Save   = function( filename ) end,          -- saves recorded data to filename
+    Track  = function( indicatorName ) end,     -- add indicator to be recorded (used by Indicator:Record() )
+}
 
 Trace            = function( strMessage ) end
 Command          = function( tParameters, strCommand ) end
