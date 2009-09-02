@@ -21,6 +21,8 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
+        self.ficelleDeVol = {}
+        DEC_Copie_ListePoints( self._namedParams.mission.ficelleDeVole_, self.ficelleDeVol )
     end,
 
     activate = function( self )
@@ -52,7 +54,7 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
 --[[// pour être sur de revenir au point de départ
 ]]                end
 
-                DEC_ListePoints_PushBack( self._namedParams.mission.ficelleDeVole_, DEC_Agent_Position() )
+                DEC_ListePoints_PushBack( self.ficelleDeVol, DEC_Agent_Position() )
             end
 --[[//=========================================================================
 ]]--[[// SQUELETTE DE LA MISSION
@@ -89,7 +91,7 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
                     end
                 end
 
-                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.ficelleDeVole_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.ficelleDeVol, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                 --[[// Prendre de la hauteur
 ]]--[[// données doctrine 
 ]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 1000, } )
