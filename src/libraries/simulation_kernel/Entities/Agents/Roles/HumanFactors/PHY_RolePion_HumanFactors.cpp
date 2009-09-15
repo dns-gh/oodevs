@@ -17,6 +17,8 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include <xeumeuleu/xml.h>
 
+BOOST_CLASS_EXPORT_GUID( PHY_RolePion_HumanFactors, "PHY_RolePion_HumanFactors" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors constructor
 // Created: NLD 2004-09-07
@@ -48,7 +50,7 @@ void PHY_RolePion_HumanFactors::load( MIL_CheckPointInArchive& file, const uint 
     assert( !pMorale_ );
     assert( !pExperience_ );
     assert( !pTiredness_ );
-    
+    file >> boost::serialization::base_object< PHY_RoleInterface_HumanFactors >( *this );
     uint nID;
     file >> nID;
     pMorale_ = PHY_Morale::Find( nID );
@@ -72,6 +74,8 @@ void PHY_RolePion_HumanFactors::save( MIL_CheckPointOutArchive& file, const uint
     assert( pMorale_ );
     assert( pExperience_ );
     assert( pTiredness_ );
+    file << boost::serialization::base_object< PHY_RoleInterface_HumanFactors >( *this );
+
     unsigned morale     = pMorale_->GetID(),
              experience = pExperience_->GetID(),
              tiredness  = pTiredness_->GetID();

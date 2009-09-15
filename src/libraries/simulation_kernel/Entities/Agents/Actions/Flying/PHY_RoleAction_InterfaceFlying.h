@@ -64,7 +64,7 @@ public:
 template< typename Archive > 
 void PHY_RoleAction_InterfaceFlying::serialize( Archive& archive , const uint )
 {
-    //NOTHING
+	archive & boost::serialization::base_object< tools::Role_ABC >( *this );
 }
 
 #endif // __PHY_RoleAction_InterfaceFlying_h_

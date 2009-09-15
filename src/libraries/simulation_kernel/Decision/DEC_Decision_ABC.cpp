@@ -11,6 +11,8 @@
 #include "DEC_Decision_ABC.h"
 #include "Entities/MIL_Entity_ABC.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_Decision_ABC, "DEC_Decision_ABC" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC constructor
 // Created: RDS 2008-05-05

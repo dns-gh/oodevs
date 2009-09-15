@@ -114,6 +114,13 @@ public:
     virtual void RemoveNbcProtectionSuit() const;
     //@}
 
+    //! @name Serialization
+	//@{
+	template< typename Archive > void serialize( Archive& ar, const uint )
+	{
+		ar & boost::serialization::base_object< DEC_Decision_ABC >( *this );
+	}
+
 protected:
     //! @name Helpers
     //@{

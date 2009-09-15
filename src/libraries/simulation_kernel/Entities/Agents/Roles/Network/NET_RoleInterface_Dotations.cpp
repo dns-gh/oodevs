@@ -12,6 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "NET_RoleInterface_Dotations.h"
 
+BOOST_CLASS_EXPORT_GUID( NET_RoleInterface_Dotations, "NET_RoleInterface_Dotations" )
+
 // -----------------------------------------------------------------------------
 // Name: NET_RoleInterface_Dotations constructor
 // Created: JVT 2005-03-31

@@ -15,6 +15,8 @@
 #include "folk/ObjectManager_ABC.h"
 #include "folk/Object_ABC.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_FolkInfluence, "PHY_RoleAction_FolkInfluence" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_FolkInfluence constructor
 // Created: JCR 2007-09-12

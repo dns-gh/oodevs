@@ -10,6 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Communications.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_RoleHLA_Communications, "PHY_RoleHLA_Communications" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Communications constructor
 // Created: AGE 2004-11-09

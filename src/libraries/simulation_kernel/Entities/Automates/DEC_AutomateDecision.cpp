@@ -40,6 +40,8 @@
 
 #include <boost/bind.hpp>
 
+BOOST_CLASS_EXPORT_GUID( DEC_AutomateDecision, "DEC_AutomateDecision" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision constructor
 // Created: NLD 2004-08-13
@@ -118,7 +120,8 @@ DEC_AutomateDecision::~DEC_AutomateDecision()
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pEntity_
+    file >> boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this )
+		 >> pEntity_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
          >> nOperationalState_;
@@ -153,7 +156,8 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) co
 {
     assert( pEntity_ );
     unsigned id = pEntity_->GetType().GetID();
-    file << pEntity_
+    file << boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this )
+		 << pEntity_
          << nRulesOfEngagementState_
          << nCloseCombatState_
          << nOperationalState_

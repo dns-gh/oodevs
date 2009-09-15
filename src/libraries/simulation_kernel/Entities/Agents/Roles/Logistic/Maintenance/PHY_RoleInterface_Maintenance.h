@@ -90,7 +90,15 @@ public:
     virtual MIL_AutomateLOG&      GetAutomate() const = 0;
     virtual const MIL_AgentPionLOG_ABC& GetPion    () const = 0;
     //@}
-
+private:
+    //! @name Serialization
+	//@{
+	friend class boost::serialization::access;
+	template< typename Archive > void serialize( Archive& ar, const uint )
+	{
+		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+	}
+	//@}
 };
 
 #endif // __PHY_RoleInterface_Maintenance_h_

@@ -62,7 +62,15 @@ public:
     virtual bool       CanReinforce     () const = 0;
     virtual bool       CanBeReinforced  () const = 0;
     //@}
-
+private:
+    //! @name Serialization
+	//@{
+	friend class boost::serialization::access;
+	template< typename Archive > void serialize( Archive& ar, const uint )
+	{
+		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+	}
+	//@}
 };
 
 #endif // __PHY_RoleInterface_Reinforcement_h_

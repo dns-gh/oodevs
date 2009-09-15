@@ -60,6 +60,7 @@ PHY_RolePion_Population::~PHY_RolePion_Population()
 template< typename Archive >
 void PHY_RolePion_Population::serialize( Archive& file, const uint )
 {
+	file & boost::serialization::base_object< PHY_RoleInterface_Population >( *this );
 }
 
 // -----------------------------------------------------------------------------

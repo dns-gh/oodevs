@@ -66,7 +66,8 @@ PHY_RoleAction_DirectFiring::~PHY_RoleAction_DirectFiring()
 template< typename Archive >
 void PHY_RoleAction_DirectFiring::serialize( Archive& archive, const uint )
 {
-    archive & pPion_;
+    archive & boost::serialization::base_object< tools::Role_ABC >( *this )
+			& pPion_;
 }
 
 // =============================================================================

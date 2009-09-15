@@ -83,6 +83,8 @@ PHY_RolePion_Posture::~PHY_RolePion_Posture()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const uint )
 {
+	file >> boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
+
     uint nID;
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
@@ -108,6 +110,8 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+	file << boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
+
     unsigned current = pCurrentPosture_->GetID(),
              last    = pLastPosture_->GetID();
     file << current

@@ -62,7 +62,8 @@ PHY_RolePion_Refugee::~PHY_RolePion_Refugee()
 template< typename Archive >
 void PHY_RolePion_Refugee::serialize( Archive& file, const uint )
 {
-    file & bManaged_
+    file & boost::serialization::base_object< PHY_RoleInterface_Refugee >( *this )
+		 & bManaged_
          & const_cast< MIL_Object_ABC*& >( pCamp_ );
 }
 

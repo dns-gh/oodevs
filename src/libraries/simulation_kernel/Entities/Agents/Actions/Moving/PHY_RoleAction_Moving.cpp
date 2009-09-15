@@ -88,7 +88,8 @@ PHY_RoleAction_Moving::~PHY_RoleAction_Moving()
 template< typename Archive >
 void PHY_RoleAction_Moving::serialize( Archive& file, const uint )
 {
-    file & pPion_
+    file & boost::serialization::base_object< tools::Role_ABC >( *this )
+		 & pPion_
          & pRoleLocation_;
 }
 

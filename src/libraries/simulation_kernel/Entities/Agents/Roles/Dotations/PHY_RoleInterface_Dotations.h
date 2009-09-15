@@ -103,6 +103,15 @@ public:
     virtual void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& supplyRequest ) const = 0;
     virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor ) const = 0;
     //@}
+private:
+    //! @name Serialization
+	//@{
+	friend class boost::serialization::access;
+	template< typename Archive > void serialize( Archive& ar, const uint )
+	{
+		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+	}
+	//@}
 };
 
 #endif // __PHY_RoleInterface_Dotations_h_

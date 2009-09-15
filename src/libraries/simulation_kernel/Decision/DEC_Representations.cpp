@@ -12,6 +12,8 @@
 #include "Entities/Orders/MIL_FragOrder.h"
 #include "Decision/Path/DEC_PathPoint.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_Representations, "DEC_Representations" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Representations constructor
 // Created: LDC 2009-04-03

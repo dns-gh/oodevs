@@ -66,7 +66,8 @@ PHY_RoleAction_Loading::~PHY_RoleAction_Loading()
 template< typename Archive > 
 void PHY_RoleAction_Loading::serialize( Archive& file, const uint )
 {
-    file & nState_
+    file & boost::serialization::base_object< tools::Role_ABC >( *this )
+		 & nState_
          & bIsLoaded_
          & nEndTimeStep_
          & bHasBeenUpdated_;

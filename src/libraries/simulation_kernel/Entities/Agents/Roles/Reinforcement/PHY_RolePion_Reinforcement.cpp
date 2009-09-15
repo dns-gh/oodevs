@@ -61,6 +61,7 @@ PHY_RolePion_Reinforcement::~PHY_RolePion_Reinforcement()
 template< typename Archive >
 void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
 {
+	file & boost::serialization::base_object< PHY_RoleInterface_Reinforcement >( *this );
 }
 
 // -----------------------------------------------------------------------------

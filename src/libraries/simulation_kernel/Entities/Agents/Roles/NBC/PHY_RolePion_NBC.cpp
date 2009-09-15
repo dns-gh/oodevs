@@ -107,7 +107,8 @@ namespace boost
 template< typename Archive >
 void PHY_RolePion_NBC::serialize( Archive& file, const uint )
 {
-    file & nbcAgentTypesContaminating_
+    file & boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
+		 & nbcAgentTypesContaminating_
          & bNbcProtectionSuitWorn_
          & rContaminationState_;
 }

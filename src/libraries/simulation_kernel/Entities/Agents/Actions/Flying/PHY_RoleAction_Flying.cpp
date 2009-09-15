@@ -65,7 +65,8 @@ PHY_RoleAction_Flying::~PHY_RoleAction_Flying()
 template< typename Archive > 
 void PHY_RoleAction_Flying::serialize( Archive& file, const uint )
 {
-    file & pEntity_;
+    file & boost::serialization::base_object< PHY_RoleAction_InterfaceFlying >( *this )
+		 & pEntity_;
 }
 
 // -----------------------------------------------------------------------------

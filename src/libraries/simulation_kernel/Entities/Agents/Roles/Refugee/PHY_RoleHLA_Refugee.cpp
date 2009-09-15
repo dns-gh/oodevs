@@ -14,6 +14,8 @@
 #include "PHY_RoleHLA_Refugee.h"
 #include "Network/NET_ASN_Messages.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_RoleHLA_Refugee, "PHY_RoleHLA_Refugee" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Refugee constructor
 // Created: NLD 2004-09-07

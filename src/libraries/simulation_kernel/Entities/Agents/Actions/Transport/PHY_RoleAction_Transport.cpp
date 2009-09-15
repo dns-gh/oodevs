@@ -122,7 +122,8 @@ PHY_RoleAction_Transport::~PHY_RoleAction_Transport()
 template< typename Archive >
 void PHY_RoleAction_Transport::serialize( Archive& file, const uint )
 {
-    file & const_cast< MIL_AgentPion*& >( pTransporter_ )
+    file & boost::serialization::base_object< tools::Role_ABC >( *this )
+		 & const_cast< MIL_AgentPion*& >( pTransporter_ )
          & rWeightTransported_
          & transportedPions_;
 }

@@ -77,7 +77,8 @@ PHY_RoleAction_Objects::~PHY_RoleAction_Objects()
 template< typename Archive >
 void PHY_RoleAction_Objects::serialize( Archive& file, const uint )
 {
-    file & pPion_;
+    file & boost::serialization::base_object< tools::Role_ABC >( *this )
+		 & pPion_;
 }
 
 // =============================================================================

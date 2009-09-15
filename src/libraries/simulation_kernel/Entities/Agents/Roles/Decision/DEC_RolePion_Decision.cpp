@@ -206,7 +206,8 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pEntity_ 
+    file >> boost::serialization::base_object< DEC_Decision< MIL_AgentPion > >( *this )
+         >> pEntity_ 
          >> nForceRatioState_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
@@ -257,7 +258,8 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
     unsigned roe  = pRoePopulation_->GetID(),
              type = pEntity_->GetType().GetID();
     
-    file << pEntity_
+    file << boost::serialization::base_object< DEC_Decision< MIL_AgentPion > >( *this )
+         << pEntity_
          << nForceRatioState_
          << nRulesOfEngagementState_
          << nCloseCombatState_

@@ -80,7 +80,8 @@ NET_RolePion_Dotations::~NET_RolePion_Dotations()
 template< typename Archive >
 void NET_RolePion_Dotations::serialize( Archive& file, const uint )
 {
-    file & bLastStateDead_
+    file & boost::serialization::base_object< NET_RoleInterface_Dotations >( *this )
+		 & bLastStateDead_
          & bLastStateNeutralized_;
 }
 

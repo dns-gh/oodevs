@@ -30,8 +30,6 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.h>
 
-
-
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
 
 template< typename Archive >
@@ -119,7 +117,8 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> pDotations_;
+    file >> boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
+		 >> pDotations_;
          
     uint nID;
     file >> nID;
@@ -139,7 +138,8 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const uint ) 
 {
     unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (uint)-1 ) ,
              previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (uint)-1 );
-    file << pDotations_
+    file << boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
+		 << pDotations_
          << current
          << previous
          << reservedConsumptions_;

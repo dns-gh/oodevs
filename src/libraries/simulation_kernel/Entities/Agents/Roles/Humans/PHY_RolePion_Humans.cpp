@@ -110,7 +110,8 @@ PHY_RolePion_Humans::~PHY_RolePion_Humans()
 template< typename Archive >
 void PHY_RolePion_Humans::serialize( Archive& file, const uint )
 {
-    file & humansData_
+    file & boost::serialization::base_object< PHY_RoleInterface_Humans >( *this )
+		 & humansData_
          & nNbrUsableHumans_
          & nNbrHumans_ 
          & humansToUpdate_

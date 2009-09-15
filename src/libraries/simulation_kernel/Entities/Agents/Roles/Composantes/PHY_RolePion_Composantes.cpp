@@ -194,7 +194,8 @@ namespace boost
 template< typename Archive >
 void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
 {
-    file & composantes_
+    file & boost::serialization::base_object< PHY_RoleInterface_Composantes >( *this )
+		 & composantes_
          & lentComposantes_
          & borrowedComposantes_
          & composanteTypes_

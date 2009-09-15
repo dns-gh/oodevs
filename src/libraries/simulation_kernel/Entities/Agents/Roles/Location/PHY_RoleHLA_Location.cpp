@@ -17,6 +17,7 @@
 
 using namespace hla;
 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Location constructor
 // Created: AGE 2004-11-09

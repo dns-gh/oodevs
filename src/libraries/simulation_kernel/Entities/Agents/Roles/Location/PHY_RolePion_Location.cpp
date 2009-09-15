@@ -86,7 +86,8 @@ PHY_RolePion_Location::~PHY_RolePion_Location()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> vDirection_
+    file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
+		 >> vDirection_
          >> vPosition_
          >> bHasDoneMagicMove_
          >> bHasMove_;
@@ -100,7 +101,8 @@ void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << vDirection_
+    file << boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
+         << vDirection_
          << vPosition_
          << bHasDoneMagicMove_
          << bHasMove_;

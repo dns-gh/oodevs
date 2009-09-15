@@ -78,7 +78,15 @@ public:
     virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const = 0;
 
     virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
-
+private:
+    //! @name Serialization
+	//@{
+	friend class boost::serialization::access;
+	template< typename Archive > void serialize( Archive& ar, const uint )
+	{
+		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+	}
+	//@}
 
 };
 

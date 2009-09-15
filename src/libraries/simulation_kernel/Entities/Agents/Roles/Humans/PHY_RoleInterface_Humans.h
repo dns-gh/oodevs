@@ -87,6 +87,15 @@ public:
     virtual void SendLogisticChangedState() const = 0;
     virtual void SendLogisticFullState   () const = 0;
     //@}
+private:
+    //! @name Serialization
+	//@{
+	friend class boost::serialization::access;
+	template< typename Archive > void serialize( Archive& ar, const uint )
+	{
+		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+	}
+	//@}
 };
 
 #endif // __PHY_RoleInterface_Humans_h_

@@ -13,6 +13,8 @@
 #include "PHY_RoleHLA_Surrender.h"
 #include "Network/NET_ASN_Messages.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_RoleHLA_Surrender, "PHY_RoleHLA_Surrender" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Surrender constructor
 // Created: NLD 2004-09-07

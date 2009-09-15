@@ -241,6 +241,16 @@ public:
     static MT_Float rOpStateWeightMajorComposante_;
     static MT_Float rMaxDangerosityDegradationByNeutralizedState_;
     static MT_Float rMaxDangerosityDegradationByOpState_;
+
+private:
+    //! @name Serialization
+	//@{
+	friend class boost::serialization::access;
+	template< typename Archive > void serialize( Archive& ar, const uint )
+	{
+		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+	}
+	//@}
 };
 
 #endif // __PHY_RoleInterface_Composantes_h_

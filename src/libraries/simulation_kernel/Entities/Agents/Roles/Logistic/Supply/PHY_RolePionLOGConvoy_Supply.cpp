@@ -61,7 +61,8 @@ PHY_RolePionLOGConvoy_Supply::~PHY_RolePionLOGConvoy_Supply()
 template< typename Archive >
 void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const uint )
 {
-    file & pConvoy_;
+    file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this )
+		 & pConvoy_;
 }
 
 // -----------------------------------------------------------------------------

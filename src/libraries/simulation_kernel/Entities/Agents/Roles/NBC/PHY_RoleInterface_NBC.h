@@ -62,6 +62,15 @@ public:
     virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const = 0;
     virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const = 0;
     //@}
+private:
+    //! @name Serialization
+	//@{
+	friend class boost::serialization::access;
+	template< typename Archive > void serialize( Archive& ar, const uint )
+	{
+		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+	}
+	//@}
 };
 
 #endif // __PHY_RoleInterface_NBC_h_

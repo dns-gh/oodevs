@@ -158,7 +158,8 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> bSystemEnabled_
+    file >> boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
+		 >> bSystemEnabled_
          >> priorities_
          >> tacticalPriorities_;
          
@@ -189,7 +190,8 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const ui
 {
     ASN1T_EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
 
-    file << bSystemEnabled_
+    file << boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
+		 << bSystemEnabled_
          << priorities_
          << tacticalPriorities_
          << workRate

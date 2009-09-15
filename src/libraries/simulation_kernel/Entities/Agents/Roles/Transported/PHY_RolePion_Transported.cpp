@@ -64,7 +64,8 @@ PHY_RolePion_Transported::~PHY_RolePion_Transported()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
+    file >> boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
+		 >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
          >> vLoadingPosition_
          >> vHumanTransporterPosition_;
          
@@ -78,7 +79,8 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << pTransporter_
+    file << boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
+		 << pTransporter_
          << vLoadingPosition_
          << vHumanTransporterPosition_;
 }

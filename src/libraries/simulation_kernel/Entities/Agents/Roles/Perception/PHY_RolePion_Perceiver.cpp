@@ -189,7 +189,8 @@ namespace boost
 template< typename Archive >
 void PHY_RolePion_Perceiver::serialize( Archive& file, const uint )
 {
-    file & bPeriphericalVisionEnabled_
+    file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this )
+		 & bPeriphericalVisionEnabled_
          & nNextPeriphericalVisionStep_
          & surfacesAgent_
          & surfacesObject_

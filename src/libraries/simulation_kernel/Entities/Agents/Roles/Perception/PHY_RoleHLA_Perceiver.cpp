@@ -12,6 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Perceiver.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_RoleHLA_Perceiver, "PHY_RoleHLA_Perceiver" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Perceiver constructor
 // Created: NLD 2005-02-23

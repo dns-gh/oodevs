@@ -10,6 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_NBC.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_RoleHLA_NBC, "PHY_RoleHLA_NBC" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_NBC constructor
 // Created: AGE 2004-11-09

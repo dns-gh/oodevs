@@ -236,7 +236,8 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> bSystemEnabled_
+    file >> boost::serialization::base_object< PHY_RoleInterface_Medical >( *this )
+		 >> bSystemEnabled_
          >> bSortingFunctionEnabled_
          >> bHealingFunctionEnabled_
          >> priorities_
@@ -266,7 +267,8 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << bSystemEnabled_
+    file << boost::serialization::base_object< PHY_RoleInterface_Medical >( *this )
+		 << bSystemEnabled_
          << bSortingFunctionEnabled_
          << bHealingFunctionEnabled_
          << priorities_

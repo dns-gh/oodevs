@@ -69,7 +69,8 @@ PHY_RolePion_Surrender::~PHY_RolePion_Surrender()
 template< typename Archive >
 void PHY_RolePion_Surrender::serialize( Archive& file, const uint )
 {
-    file & bPrisoner_
+    file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this )
+		 & bPrisoner_
          & const_cast< MIL_Object_ABC*& >( pPrison_ );
 }
 

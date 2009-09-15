@@ -52,6 +52,15 @@ private:
     DEC_Representations& operator=( const DEC_Representations& ); //!< Assignment operator
     //@}
 
+    //! @name Serialization
+	//@{
+    friend class boost::serialization::access;
+	template< typename Archive > void serialize( Archive& ar, const uint )
+	{
+		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+	}
+	//@}
+
     //! @name Types
     //@{
     typedef std::vector< MIL_FragOrder* >          T_OrdersRepresentationVector;
