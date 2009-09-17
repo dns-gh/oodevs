@@ -31,6 +31,7 @@ class DEC_Model_ABC;
 class MIL_Automate;
 class MIL_AgentPion;
 class MIL_RealObjectType;
+class AlgorithmsFactories;
 
 // =============================================================================
 // @class  MIL_AgentTypePion
@@ -53,11 +54,11 @@ public:
     static const MIL_AgentTypePion* Find  ( uint nID );
     //@}
 
-    //! @name Instanciation
+    //! @name Instantiation
     //@{
     virtual MIL_AgentPion* InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const;
     virtual MIL_AgentPion* InstanciatePion( uint nID, MIL_Automate& automate ) const;
-    virtual void RegisterRoles( MIL_AgentPion& pion ) const;
+    virtual void RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories& algorithmsFactories ) const;
     //@}
 
     //! @name Accessors

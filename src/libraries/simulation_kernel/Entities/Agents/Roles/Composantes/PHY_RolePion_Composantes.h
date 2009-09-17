@@ -26,6 +26,7 @@ namespace xml
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
+                               , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
 {
 
 
@@ -51,6 +52,7 @@ public:
     template< typename T > void                GetComposantesUse  ( T_ComposanteUseMap& composanteUse, T& t ) const;
     template< typename T > bool                HasUsableComposante( T& t ) const;
 
+    virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 
 

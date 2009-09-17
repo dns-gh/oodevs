@@ -14,6 +14,7 @@
 #include "clients_kernel/Resolver.h"
 
 class MIL_IDManager;
+class AlgorithmsFactories;
 
 // =============================================================================
 /** @class  AgentFactory
@@ -53,6 +54,7 @@ private:
     //! @name Member data
     //@{
     MIL_IDManager& idManager_;
+    std::auto_ptr< AlgorithmsFactories > algorithmsFactories_;
     //@}
 };
 

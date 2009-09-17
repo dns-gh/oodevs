@@ -1789,3 +1789,14 @@ void PHY_RolePion_Composantes::DestroyAllComposantes()
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         (**it).ReinitializeState( PHY_ComposanteState::dead_ );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Created: MGD 2009-09-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        (**it).Execute( algorithm );
+}

@@ -58,6 +58,8 @@
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+
 #include "Decision/DEC_Representations.h"
 
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
@@ -319,7 +321,7 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& autom
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
+void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories& algorithmsFactories ) const
 {
     pion.RegisterRole< NET_RolePion_Dotations         >( pion );
     pion.RegisterRole< PHY_RolePion_Reinforcement     >( pion );
@@ -340,7 +342,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
     pion.RegisterRole< PHY_RoleAction_Transport       >( pion );
     pion.RegisterRole< PHY_RoleAction_Moving          >( pion );
     pion.RegisterRole< PHY_RoleAction_Objects         >( pion );
-    pion.RegisterRole< PHY_RoleAction_DirectFiring    >( pion );
+    pion.RegisterRole< PHY_RoleAction_DirectFiring    >( pion, *algorithmsFactories.weaponAvailabilityComputerFactory_ );
     pion.RegisterRole< PHY_RoleAction_IndirectFiring  >( pion );
     pion.RegisterRole< DEC_RolePion_Decision          >( pion );
     pion.RegisterRole< PHY_RoleAction_FolkInfluence   >();

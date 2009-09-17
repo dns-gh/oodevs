@@ -18,6 +18,8 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "PHY_DirectFireData.h"
 
+#include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
+
 class PHY_RoleInterface_FireTarget;
 class PHY_AmmoDotationClass;
 class PHY_FireResults_Pion;
@@ -42,8 +44,7 @@ public:
     //@}
 
 public:
-    explicit PHY_RoleAction_DirectFiring( MIL_AgentPion& pion );
-             PHY_RoleAction_DirectFiring();
+             PHY_RoleAction_DirectFiring( MIL_AgentPion& pion, const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory );
     virtual ~PHY_RoleAction_DirectFiring();
 
     //! @name Checkpoints
@@ -93,10 +94,14 @@ private:
     //@{
     MIL_Population* GetPopulationTarget( uint nTargetKnowledgeID );
     void            FirePion           ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
     //@}
 
 private:
     MIL_AgentPion* pPion_;
+    const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory_;
+
 };
 
 #endif // __PHY_RoleAction_DirectFiring_h_

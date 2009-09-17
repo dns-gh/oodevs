@@ -28,23 +28,36 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/MIL_Knowledgegroup.h"
 
+#include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
+#include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_DirectFiring, "PHY_RoleAction_DirectFiring" )
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ )
+{
+    const firing::WeaponAvailabilityComputerFactory_ABC* const factory = &role->weaponAvailabilityComputerFactory_;
+    archive << role->pPion_
+            << factory;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ )
+{
+    MIL_AgentPion* pion;
+    firing::WeaponAvailabilityComputerFactory_ABC* weaponAvailabilityComputerFactory;
+    archive >> pion
+            >> weaponAvailabilityComputerFactory;
+    ::new( role )PHY_RoleAction_DirectFiring( *pion, *weaponAvailabilityComputerFactory );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_DirectFiring constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-PHY_RoleAction_DirectFiring::PHY_RoleAction_DirectFiring( MIL_AgentPion& pion )
+PHY_RoleAction_DirectFiring::PHY_RoleAction_DirectFiring( MIL_AgentPion& pion, const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory )
     : pPion_     ( &pion )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_DirectFiring constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RoleAction_DirectFiring::PHY_RoleAction_DirectFiring()
-    : pPion_     ( 0 )
+    , weaponAvailabilityComputerFactory_ ( weaponAvailabilityComputerFactory )
 {
 }
 
@@ -162,7 +175,9 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
 
     // Firers
     PHY_DirectFireData firerWeapons( *pPion_, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, pAmmoDotationClass );
-    pPion_->GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
+    
+    std::auto_ptr< firing::WeaponAvailabilityComputer_ABC > algorithm( weaponAvailabilityComputerFactory_.Create( firerWeapons) );
+    pPion_->Execute( *algorithm );
 
     const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )

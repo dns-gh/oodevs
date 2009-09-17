@@ -66,6 +66,11 @@ public:
     }
     //@}
     template< typename Role > typename Role::RoleInterface& RegisterRole( Role* r);
+
+    //! @name Operation
+    //@{
+    template< typename Algorithm > void Execute( Algorithm& algorithm );
+    //@}
 };
 
 

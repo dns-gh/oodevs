@@ -22,6 +22,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 
 #include "MT_Tools/MT_Random.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class MIL_AgentPion;
 class MIL_AutomateLOG;
@@ -45,6 +46,11 @@ class PHY_Human;
 class DEC_Knowledge_AgentComposante;
 class MIL_Time_ABC;
 class PHY_RoleInterface_Composantes;
+
+namespace firing
+{
+    class WeaponAvailabilityComputer_ABC;
+}
 
 // =============================================================================
 // @class  PHY_ComposantePion
@@ -208,6 +214,8 @@ public:
     //@{
     template< typename T > void ApplyOnSensors( T& func ) const;
     template< typename T > void ApplyOnRadars ( T& func ) const;
+
+    void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
 
     MT_Float GetOperationalState() const;
     void     ReinitializeState  ( const PHY_ComposanteState& state );

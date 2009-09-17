@@ -19,6 +19,8 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+
 #include <xeumeuleu/xml.h>
 
 
@@ -28,6 +30,7 @@
 // -----------------------------------------------------------------------------
 AgentFactory::AgentFactory( MIL_IDManager& idManager )
     : idManager_( idManager ) 
+    , algorithmsFactories_( new AlgorithmsFactories() )
 {
 
 }
@@ -51,7 +54,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     xis >> xml::attribute( "id", id );//TODO refactor IDManager to reserve ID
 
     MIL_AgentPion* pPion = type.InstanciatePion( id, automate, xis );//@TODO REPLACE WHEN PIONLOG WILL BE DELETED
-    type.RegisterRoles( *pPion );
+    type.RegisterRoles( *pPion, *algorithmsFactories_ );
     
     std::string strPosition;
     xis >> xml::attribute( "position", strPosition );
@@ -71,7 +74,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
     MIL_AgentPion* pPion = type.InstanciatePion( idManager_.GetFreeId(), automate );
-    type.RegisterRoles( *pPion );
+    type.RegisterRoles( *pPion, *algorithmsFactories_ );
 
     Initialize( *pPion, automate, vPosition );
     return pPion;

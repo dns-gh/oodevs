@@ -67,6 +67,7 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
 {
     brainFile_ = brainFile;
     includePath_ = includePath;
+    pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     pBrain_.reset( new directia::Brain( brainFile, "name", includePath ) );
     pRefs_.reset( new ScriptRefs( *pBrain_ ) );
     RegisterUserFunctions( *pBrain_ );

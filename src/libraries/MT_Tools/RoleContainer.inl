@@ -81,3 +81,14 @@ void RoleContainer::save( Archive& archive, const unsigned int /*version*/ ) con
 {
     archive << extensions_.Container();
 }
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Algorithm > void Execute( Algorithm& algorithm )
+// Created: SBO 2009-08-14
+// -----------------------------------------------------------------------------
+template< typename Algorithm >
+void RoleContainer::Execute( Algorithm& algorithm )
+{
+    Apply( & AlgorithmModifier_ABC< Algorithm >::Execute, algorithm );
+}
+

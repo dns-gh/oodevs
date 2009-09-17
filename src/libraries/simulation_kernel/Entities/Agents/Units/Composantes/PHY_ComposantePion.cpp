@@ -42,6 +42,8 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_Singletons.h"
 
+#include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
+
 MT_Random PHY_ComposantePion::random_;
 MT_Float  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
 
@@ -1380,4 +1382,15 @@ const PHY_RoleInterface_Composantes& PHY_ComposantePion::GetRole() const
     assert( pRole_ );
     return *pRole_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::Execute
+// Created: MGD 2009-09-15
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const
+{
+    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
+        algorithm.ApplyOnWeapon( *this, **itWeapon );
+}
+
 
