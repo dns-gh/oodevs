@@ -24,7 +24,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Transported, "PHY_RolePion_Transported" )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Transported* role, const unsigned int /*version*/ )
 {
-    archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -40,7 +41,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, cons
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Transported::PHY_RolePion_Transported( MIL_AgentPion& pion )
-    : pPion_                       ( &pion )
+    : pion_                        ( pion )
     , bHasChanged_                 ( true )
     , pTransporter_                ( 0 )
     , vLoadingPosition_            ()
@@ -118,8 +119,8 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::GetTransportWeight( bool bTransportOnlyLoadable, MT_Float& rTotalWeight, MT_Float& rHeaviestComposanteWeight ) const
 {
-    assert( pPion_ );
-    sTransportedData data( *pPion_, bTransportOnlyLoadable );
+
+    sTransportedData data( pion_, bTransportOnlyLoadable );
 
     rTotalWeight              = data.rTotalWeight_;
     rHeaviestComposanteWeight = data.rHeaviestComposanteWeight_;    
@@ -131,10 +132,10 @@ void PHY_RolePion_Transported::GetTransportWeight( bool bTransportOnlyLoadable, 
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter )
 {
-    assert( pPion_ );
+
     if( pTransporter_ != &transporter )
         return false;
-    pPion_->GetRole< PHY_RoleInterface_Location >().Show( vLoadingPosition_ );
+    pion_.GetRole< PHY_RoleInterface_Location >().Show( vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
     vLoadingPosition_.Reset();  
@@ -147,7 +148,7 @@ bool PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
-    assert( pPion_ );
+
     if( pTransporter_ && pTransporter_ == &transporter)
         return true;
     if( pTransporter_ )
@@ -155,13 +156,13 @@ bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 
     pTransporter_ = &transporter;
 
-    pPion_->GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();     
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    pion_.GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();     
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     while( !reinforcements.empty() )
         (**reinforcements.begin()).GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
     
-    pPion_->GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
-    pPion_->GetRole< PHY_RoleInterface_Location  >().Hide               ();   
+    pion_.GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
+    pion_.GetRole< PHY_RoleInterface_Location  >().Hide               ();   
     vLoadingPosition_= transporter.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )
         vHumanTransporterPosition_ = vLoadingPosition_;
@@ -175,13 +176,13 @@ bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
-    assert( pPion_ );
+
     if( pTransporter_ != &transporter )
         return false;
 
     assert( pTransporter_ );
-    pPion_->GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
-    pPion_->GetRole< PHY_RoleInterface_Location  >().Show( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    pion_.GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
+    pion_.GetRole< PHY_RoleInterface_Location  >().Show( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pTransporter_ = 0;
     bHasChanged_  = true;
     vLoadingPosition_.Reset();
@@ -196,10 +197,10 @@ bool PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::DisableHumanTransporters( const MT_Vector2D& vPos )
 {
-    assert( pPion_ );
+
     if ( vHumanTransporterPosition_.IsZero() )
     {
-        pPion_->GetRole< PHY_RoleAction_Loading >().ForceUnloadedState();
+        pion_.GetRole< PHY_RoleAction_Loading >().ForceUnloadedState();
         vHumanTransporterPosition_ = vPos;
         bHasChanged_ = true;
     }
@@ -240,9 +241,9 @@ namespace
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Transported::HasHumanTransportersReady() const
 {
-    assert( pPion_ );
+
     sTransporterComposantePresent func;
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
     
     return vHumanTransporterPosition_.IsZero() && func.bComposantePresent_;
 }
@@ -253,10 +254,10 @@ bool PHY_RolePion_Transported::HasHumanTransportersReady() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
 {
-    assert( pPion_ );
+
     if( !pTransporter_ )
         return;
-    pPion_->GetRole< PHY_RoleInterface_Location >().Follow( *pTransporter_ );
+    pion_.GetRole< PHY_RoleInterface_Location >().Follow( *pTransporter_ );
 }
 
 // -----------------------------------------------------------------------------

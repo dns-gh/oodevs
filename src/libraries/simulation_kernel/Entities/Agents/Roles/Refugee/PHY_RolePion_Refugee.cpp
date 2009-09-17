@@ -21,7 +21,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Refugee, "PHY_RolePion_Refugee" )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Refugee* role, const unsigned int /*version*/ )
 {
-    archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -37,7 +38,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Refugee* role, const un
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Refugee::PHY_RolePion_Refugee( MIL_AgentPion& pion )
-    : pPion_                   ( &pion )
+    : pion_                    ( pion )
     , bManaged_                ( false )
     , pCamp_                   ( 0 )
     , bHasChanged_             ( true )
@@ -83,14 +84,14 @@ void PHY_RolePion_Refugee::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Refugee::Orientate( const MIL_AgentPion& pionManaging )
 {
-    assert( pPion_ );
-    if( !pPion_->GetType().IsRefugee() )
+
+    if( !pion_.GetType().IsRefugee() )
         return false;
 
     pCamp_       = 0;
     bManaged_    = true;
     bHasChanged_ = true;
-    pPion_->GetAutomate().NotifyRefugeeOriented( pionManaging );
+    pion_.GetAutomate().NotifyRefugeeOriented( pionManaging );
     return true;
 }
 
@@ -100,14 +101,14 @@ bool PHY_RolePion_Refugee::Orientate( const MIL_AgentPion& pionManaging )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Refugee::Release()
 {
-    assert( pPion_ );
-    if( !pPion_->GetType().IsRefugee() || !bManaged_ )
+
+    if( !pion_.GetType().IsRefugee() || !bManaged_ )
         return false;
 
     pCamp_       = 0;
     bManaged_    = false;
     bHasChanged_ = true;
-    pPion_->GetAutomate().NotifyRefugeeReleased();
+    pion_.GetAutomate().NotifyRefugeeReleased();
     return true;
 }
 
@@ -117,14 +118,14 @@ bool PHY_RolePion_Refugee::Release()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Refugee::Release( const MIL_Object_ABC& camp )
 {
-    assert( pPion_ );
-    if( !pPion_->GetType().IsRefugee() || !bManaged_ )
+
+    if( !pion_.GetType().IsRefugee() || !bManaged_ )
         return false;
     
     pCamp_       = &camp;
     bManaged_    = true;
     bHasChanged_ = true;
-    pPion_->GetAutomate().NotifyRefugeeReleased( camp );
+    pion_.GetAutomate().NotifyRefugeeReleased( camp );
     return true;
 }
 

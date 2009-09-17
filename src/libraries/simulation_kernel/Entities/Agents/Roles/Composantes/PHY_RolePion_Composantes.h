@@ -266,7 +266,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion*         pPion_;
+    MIL_AgentPion&         pion_;
     T_ComposantePionVector composantes_;
     T_ComposanteTypeMap    composanteTypes_;
     uint                   nNbrComposanteChanged_;

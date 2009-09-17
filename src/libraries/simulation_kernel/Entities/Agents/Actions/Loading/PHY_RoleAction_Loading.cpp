@@ -20,12 +20,27 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RoleAction_Loading* role, const unsigned int /*version*/ )
+{
+    MIL_Agent_ABC* const pion = &role->pion_;
+    archive << pion;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RoleAction_Loading* role, const unsigned int /*version*/ )
+{
+    MIL_Agent_ABC* pion;
+    archive >> pion;
+    ::new( role )PHY_RoleAction_Loading( *pion );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading constructor
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion )
-    : pPion_                  ( &pion )
+    : pion_                  ( pion )
     , bIsLoaded_              ( false )
     , nState_                 ( eNothing )
     , nEndTimeStep_           ( 0 )
@@ -33,21 +48,6 @@ PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion )
     , bHasBeenUpdated_        ( false )
 {
     SetLoadedState();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Loading constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RoleAction_Loading::PHY_RoleAction_Loading()
-    : pPion_          ( 0 )
-    , bIsLoaded_      ( false )
-    , nState_         ( eNothing )
-    , nEndTimeStep_   ( 0 )
-    , bHasChanged_    ( true )
-    , bHasBeenUpdated_( false )    
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -134,9 +134,8 @@ namespace
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 {
-    assert( pPion_ );
     sLoadingUnloadingTimesFunctor func;
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
     if( func.rNbrHumansLoadedPerTimeStep_ == 0. )
         return std::numeric_limits< MT_Float >::max();
     return func.nNbrHumans_ / func.rNbrHumansLoadedPerTimeStep_;
@@ -148,9 +147,8 @@ MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Loading::ComputeUnloadingTime() const
 {
-    assert( pPion_ );
     sLoadingUnloadingTimesFunctor func;
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
     if( func.rNbrHumansUnloadedPerTimeStep_ == 0. )
         return std::numeric_limits< MT_Float >::max();
     return func.nNbrHumans_ / func.rNbrHumansUnloadedPerTimeStep_;
@@ -256,9 +254,9 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::CheckConsistency()
 {
-    assert( pPion_ );
+
     sLoadedStateConsistency func;
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
 
     if( bIsLoaded_ )
     {

@@ -173,7 +173,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
+    MIL_AgentPion& pion_;
     bool           bPeriphericalVisionEnabled_;
     uint           nNextPeriphericalVisionStep_;
     bool           bRecordModeEnabled_;

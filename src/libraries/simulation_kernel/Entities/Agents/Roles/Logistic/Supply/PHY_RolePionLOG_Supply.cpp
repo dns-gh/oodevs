@@ -29,7 +29,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Supply, "PHY_RolePionLOG_Supply" )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ )
 {
-    archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -45,7 +46,7 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const 
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion )
-    : pPion_             ( &pion )
+    : pion_             ( pion )
     , bSystemEnabled_    ( false )
     , bHasChanged_       ( true )
     , pStocks_           ( 0 )
@@ -114,8 +115,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
 {
     if( !bSystemEnabled_ )
         return 0;
-    assert( pPion_ );
-    return pPion_->GetRole< PHY_RoleInterface_Composantes >().GetAvailableConvoyTransporter( dotationCategory );
+
+    return pion_.GetRole< PHY_RoleInterface_Composantes >().GetAvailableConvoyTransporter( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,9 +125,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePionLOG_Supply::GetStockAvailablity( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const
 {
-    assert( pPion_ );
+
     
-    if( !bSystemEnabled_ && !pPion_->IsDead() ) // <== Stock à terre quand pion mort = libre service
+    if( !bSystemEnabled_ && !pion_.IsDead() ) // <== Stock à terre quand pion mort = libre service
         return 0.;
     return std::min( GetStockValue( dotationCategory ), rRequestedValue );
 }
@@ -161,9 +162,9 @@ void PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategory&
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
 {
-    assert( pPion_ );
+
     PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
-    pPion_->GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
+    pion_.GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
 
     uint nNbrTotal                  = 0;
     uint nNbrAvailableAllowedToWork = 0;
@@ -189,7 +190,7 @@ void PHY_RolePionLOG_Supply::StartUsingForLogistic( PHY_ComposantePion& composan
     composante.StartUsingForLogistic();
 
     if( PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( rTransporterRatio, GetConvoyTransportersAvailabilityRatio() ) )
-        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_ConvoyTransporterResourcesLevelReached );
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_ConvoyTransporterResourcesLevelReached );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,12 +213,12 @@ void PHY_RolePionLOG_Supply::StopUsingForLogistic( PHY_ComposantePion& composant
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
-    assert( pPion_ );   
+   
     
     if( bNewNeed )
-        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_LogisticStockThresholdExceeded );
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticStockThresholdExceeded );
 
-    pPion_->GetLogAutomate().NotifyStockSupplyNeeded( dotationCategory );
+    pion_.GetLogAutomate().NotifyStockSupplyNeeded( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -365,18 +366,18 @@ void SendComposanteUse( const PHY_RoleInterface_Composantes::T_ComposanteUseMap&
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::SendFullState() const
 {
-    assert( pPion_ );
+
 
     NET_ASN_MsgLogSupplyState asn;
 
     asn().m.chaine_activeePresent                       = 1;
     asn().m.disponibilites_transporteurs_convoisPresent = 1;
 
-    asn().oid_pion        = pPion_->GetID();
+    asn().oid_pion        = pion_.GetID();
     asn().chaine_activee  = bSystemEnabled_;
   
     PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
-    pPion_->GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
+    pion_.GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
     SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois  );
 
     assert( pStocks_ );
@@ -396,16 +397,16 @@ void PHY_RolePionLOG_Supply::SendFullState() const
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::SendChangedState() const
 {
-    assert( pPion_ );
+
     assert( pStocks_ );    
-    if( !( bHasChanged_ || pPion_->GetRole< PHY_RoleInterface_Composantes >().HasChanged() || pStocks_->HasChanged() ) )
+    if( !( bHasChanged_ || pion_.GetRole< PHY_RoleInterface_Composantes >().HasChanged() || pStocks_->HasChanged() ) )
         return;
 
     NET_ASN_MsgLogSupplyState asn;
-    assert( pPion_ );
-    asn().oid_pion = pPion_->GetID();
 
-    if( bHasChanged_ || pPion_->GetRole< PHY_RoleInterface_Composantes >().HasChanged() )
+    asn().oid_pion = pion_.GetID();
+
+    if( bHasChanged_ || pion_.GetRole< PHY_RoleInterface_Composantes >().HasChanged() )
     {
         asn().m.chaine_activeePresent                       = 1;
         asn().m.disponibilites_transporteurs_convoisPresent = 1;
@@ -413,7 +414,7 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
         asn().chaine_activee  = bSystemEnabled_;
       
         PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
-        pPion_->GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
+        pion_.GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
         SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois );
     }
 
@@ -453,6 +454,6 @@ void PHY_RolePionLOG_Supply::DisableSystem()
 // -----------------------------------------------------------------------------
 const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Supply::GetPion() const
 {
-    assert( pPion_ );
-    return *pPion_;
+
+    return pion_;
 }

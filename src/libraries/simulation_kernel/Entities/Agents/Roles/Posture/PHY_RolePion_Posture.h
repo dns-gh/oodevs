@@ -108,7 +108,7 @@ private:
     //@}
 
 private:
-    const MIL_AgentPion* pPion_;
+    const MIL_AgentPion& pion_;
     const PHY_Posture*   pCurrentPosture_;
     const PHY_Posture*   pLastPosture_;
           MT_Float       rPostureCompletionPercentage_;

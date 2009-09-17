@@ -68,7 +68,7 @@ public:
     //@}
 
 private:
-          MIL_AgentPion* pPion_;
+          MIL_AgentPion& pion_;
           bool           bHasChanged_;
     const MIL_Agent_ABC* pTransporter_;
 

@@ -39,7 +39,6 @@ public:
 
 public:
              PHY_RoleAction_Objects( MIL_AgentPion& pion );
-             PHY_RoleAction_Objects();
     virtual ~PHY_RoleAction_Objects();
 
     //! @name CheckPoints
@@ -109,10 +108,12 @@ private:
     int Construct( MIL_Object_ABC& object );
     int Mine     ( MIL_Object_ABC& object );
     int Demine   ( MIL_Object_ABC& object );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Objects* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Objects* role, const unsigned int /*version*/ );
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
+    MIL_AgentPion& pion_;
 };
 
 #endif // __PHY_RoleAction_Objects_h_

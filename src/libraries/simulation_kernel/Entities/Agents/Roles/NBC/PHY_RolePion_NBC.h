@@ -75,7 +75,7 @@ public:
     //@}
 
 private:
-    MIL_AgentPion*      pPion_;
+    MIL_AgentPion&      pion_;
     T_NbcAgentTypeSet   nbcAgentTypesContaminating_;
     bool                bNbcProtectionSuitWorn_;
     MT_Float            rContaminationState_;

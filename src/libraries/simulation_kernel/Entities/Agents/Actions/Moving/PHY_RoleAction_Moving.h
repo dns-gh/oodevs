@@ -116,8 +116,14 @@ private:
     void SendEnvironmentType() const;
     //@}
 
+    //! @name Tools
+    //@{
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Moving* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Moving* role, const unsigned int /*version*/ );
+    //@}
+
 private:
-    MIL_AgentPion*              pPion_;
+    MIL_AgentPion&              pion_;
     PHY_RoleInterface_Location* pRoleLocation_;
     MT_Float                    rSpeedModificator_;
     MT_Float                    rMaxSpeedModificator_;

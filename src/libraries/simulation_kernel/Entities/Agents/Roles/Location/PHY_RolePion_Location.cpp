@@ -37,7 +37,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Location, "PHY_RolePion_Location" )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ )
 {
-	archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -53,7 +54,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const u
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
-    : pPion_                    ( &pion    )
+    : pion_                     ( pion    )
     , vDirection_               (  0.,  0. )
     , vPosition_                ( -1., -1. )    //$$$ Devrait être 'NULL'
     , rHeight_                  ( -1.      )
@@ -118,8 +119,7 @@ void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const uint ) c
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC& PHY_RolePion_Location::GetAgent() const
 {
-    assert( pPion_ );
-    return *pPion_;    
+    return pion_;    
 }
 
 // -----------------------------------------------------------------------------
@@ -200,13 +200,13 @@ void PHY_RolePion_Location::SetCurrentSpeed( MT_Float rSpeed )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Fly( MT_Float rHeight )
 {
-    assert( pPion_ );
+
     if( rHeight == 0. )
-        pPion_->GetRole< PHY_RoleInterface_Posture >().UnsetPostureMovement();
+        pion_.GetRole< PHY_RoleInterface_Posture >().UnsetPostureMovement();
     else
     {
         bHasMove_ = true;
-        pPion_->GetRole< PHY_RoleInterface_Posture >().SetPostureMovement();
+        pion_.GetRole< PHY_RoleInterface_Posture >().SetPostureMovement();
     }
 
     if( rHeight == rHeight_ )
@@ -234,17 +234,17 @@ void PHY_RolePion_Location::Fly( MT_Float rHeight )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed )
 {
-    assert( pPion_ );
+
     SetCurrentSpeed( rNewSpeed     );
     SetPosition    ( vNewPosition  );
     SetDirection   ( vNewDirection );
 
     if( rCurrentSpeed_ == 0. )
-        pPion_->GetRole< PHY_RoleInterface_Posture >().UnsetPostureMovement();
+        pion_.GetRole< PHY_RoleInterface_Posture >().UnsetPostureMovement();
     else
     {
         bHasMove_ = true;
-        pPion_->GetRole< PHY_RoleInterface_Posture >().SetPostureMovement();
+        pion_.GetRole< PHY_RoleInterface_Posture >().SetPostureMovement();
     }
 }
 
@@ -294,9 +294,9 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
-    assert( pPion_ );
-    if(    pPion_->GetRole< PHY_RoleInterface_Reinforcement      >().IsReinforcing()
-        || pPion_->GetRole< PHY_RoleInterface_Transported   >().IsTransported() )
+
+    if(    pion_.GetRole< PHY_RoleInterface_Reinforcement      >().IsReinforcing()
+        || pion_.GetRole< PHY_RoleInterface_Transported   >().IsTransported() )
         return;
 
     Hide();
@@ -313,8 +313,8 @@ void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationFlow& population )
 {
-    assert( pPion_ );
-    pPion_->GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
+
+    pion_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -323,8 +323,8 @@ void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationFlow& popul
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationConcentration& population )
 {
-    assert( pPion_ );
-    pPion_->GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
+
+    pion_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -333,8 +333,8 @@ void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationConcentrati
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyObjectCollision( MIL_Object_ABC& object )
 {
-    assert( pPion_ );
-    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, vPosition_ );
+
+    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, vPosition_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,10 +343,8 @@ void PHY_RolePion_Location::NotifyObjectCollision( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    assert( pPion_ );
-    
-    object.NotifyAgentMovingInside( *pPion_ );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    object.NotifyAgentMovingInside( pion_ );
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyMovingInsideObject( object );
 }
@@ -357,10 +355,10 @@ void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    assert( pPion_ );
+
     
-    object.NotifyAgentMovingOutside( *pPion_ );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    object.NotifyAgentMovingOutside( pion_ );
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyMovingOutsideObject( object );
 }
@@ -371,10 +369,10 @@ void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 {
-    assert( pPion_ );
+
     
-    object.NotifyAgentPutInside( *pPion_ );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    object.NotifyAgentPutInside( pion_ );
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyPutInsideObject( object );
 }
@@ -385,10 +383,10 @@ void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
 {
-    assert( pPion_ );
+
     
-    object.NotifyAgentPutOutside( *pPion_ );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    object.NotifyAgentPutOutside( pion_ );
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).GetRole< PHY_RolePion_Location >().NotifyPutOutsideObject( object );
 }

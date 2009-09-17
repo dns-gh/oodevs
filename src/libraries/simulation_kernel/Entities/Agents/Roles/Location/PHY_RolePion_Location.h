@@ -94,7 +94,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
+    MIL_AgentPion& pion_;
     MT_Vector2D    vDirection_;
     MT_Vector2D    vPosition_;
     MT_Float       rHeight_;

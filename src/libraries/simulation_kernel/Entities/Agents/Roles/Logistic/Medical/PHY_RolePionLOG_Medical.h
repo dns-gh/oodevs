@@ -144,7 +144,7 @@ private:
     //@}    
 
 private:
-    MIL_AgentPionLOG_ABC*   pPion_;
+    MIL_AgentPionLOG_ABC&   pion_;
     bool                    bHasChanged_;
     bool                    bSystemEnabled_;
     bool                    bSortingFunctionEnabled_;

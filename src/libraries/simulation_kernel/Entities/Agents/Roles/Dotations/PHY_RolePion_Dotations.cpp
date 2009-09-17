@@ -35,7 +35,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
-	archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -51,7 +52,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const 
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
-    : pPion_                     ( &pion )
+    : pion_                      ( pion )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
     , reservedConsumptions_      ()
@@ -241,7 +242,7 @@ public:
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& consumptionMode )
 {
-    assert( pPion_ );
+
     if( pCurrentConsumptionMode_ && consumptionMode < *pCurrentConsumptionMode_  )
         return true;
 
@@ -249,7 +250,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
 
     if( func.bReservationOK_ )
     {
@@ -263,7 +264,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
-        pPion_->GetRole< PHY_RolePion_Composantes >().Apply( funcRollback );
+        pion_.GetRole< PHY_RolePion_Composantes >().Apply( funcRollback );
         assert( funcRollback.bReservationOK_ );
     }
     return false;
@@ -336,7 +337,7 @@ MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_Consumption
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }
 
@@ -361,9 +362,9 @@ const PHY_ConsumptionType& PHY_RolePion_Dotations::GetConsumptionMode() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor ) const
 {
-    assert( pPion_ );
+
     
-    MIL_AutomateLOG* pTC2 = pPion_->GetAutomate().GetTC2();
+    MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
     if( !pTC2 )
         return;
     assert( pDotations_ );
@@ -376,12 +377,12 @@ void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationTyp
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
-    assert( pPion_ );   
+   
 
     if( bNewNeed )
-        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_LogisticDotationThresholdExceeded, dotationCategory );
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticDotationThresholdExceeded, dotationCategory );
 
-    pPion_->GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
+    pion_.GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -390,13 +391,13 @@ void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dot
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::Update( bool bIsDead )
 {
-    assert( pPion_ );
+
     if( bIsDead )
         return;
 
     assert( pDotations_ );
     if( !pCurrentConsumptionMode_ )
-        SetConsumptionMode( pPion_->GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetConsumptionMode() );
+        SetConsumptionMode( pion_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetConsumptionMode() );
     pDotations_->ConsumeConsumptionReservations();
     pPreviousConsumptionMode_ = pCurrentConsumptionMode_;
     pCurrentConsumptionMode_  = 0;

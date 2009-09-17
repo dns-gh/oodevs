@@ -35,7 +35,6 @@ public:
 
 public:
     explicit PHY_RoleAction_IndirectFiring( MIL_AgentPion& pion );
-             PHY_RoleAction_IndirectFiring();
     virtual ~PHY_RoleAction_IndirectFiring();
 
     //! @name CheckPoints
@@ -77,10 +76,16 @@ private:
     };
     //@}
 
+    //! @name Tools
+    //@{
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion* pPion_;
+    MIL_AgentPion& pion_;
     //@}
 };
 

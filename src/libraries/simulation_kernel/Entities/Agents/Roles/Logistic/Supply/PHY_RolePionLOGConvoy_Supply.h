@@ -63,7 +63,7 @@ public:
     //@}
 
 private:
-    MIL_AgentPion*   pPion_;
+    MIL_AgentPion&   pion_;
     PHY_StockConvoy* pConvoy_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ );

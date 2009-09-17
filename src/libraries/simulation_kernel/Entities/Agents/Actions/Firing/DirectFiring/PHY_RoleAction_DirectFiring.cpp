@@ -37,7 +37,8 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ )
 {
     const firing::WeaponAvailabilityComputerFactory_ABC* const factory = &role->weaponAvailabilityComputerFactory_;
-    archive << role->pPion_
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion
             << factory;
 }
 
@@ -56,7 +57,7 @@ void load_construct_data( Archive& archive, PHY_RoleAction_DirectFiring* role, c
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 PHY_RoleAction_DirectFiring::PHY_RoleAction_DirectFiring( MIL_AgentPion& pion, const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory )
-    : pPion_     ( &pion )
+    : pion_     ( pion )
     , weaponAvailabilityComputerFactory_ ( weaponAvailabilityComputerFactory )
 {
 }
@@ -79,8 +80,7 @@ PHY_RoleAction_DirectFiring::~PHY_RoleAction_DirectFiring()
 template< typename Archive >
 void PHY_RoleAction_DirectFiring::serialize( Archive& archive, const uint )
 {
-    archive & boost::serialization::base_object< tools::Role_ABC >( *this )
-			& pPion_;
+    archive & boost::serialization::base_object< tools::Role_ABC >( *this );
 }
 
 // =============================================================================
@@ -93,9 +93,7 @@ void PHY_RoleAction_DirectFiring::serialize( Archive& archive, const uint )
 // -----------------------------------------------------------------------------
 MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( uint nTargetKnowledgeID )
 {
-    assert( pPion_ );
-    
-    DEC_Knowledge_Population* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
+    DEC_Knowledge_Population* pKnowledge = pion_.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
     return pKnowledge ? &pKnowledge->GetPopulationKnown() : 0;
 }
 
@@ -109,8 +107,6 @@ MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( uint nTargetKn
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult )
 {
-    assert( pPion_ );
-
     // Pour chaque cible, choix de la meilleure arme
     uint nNbrWeaponsUsed = 0;
     for( PHY_RoleInterface_Composantes::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
@@ -124,7 +120,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
             continue;
 
         assert( pBestFirerWeapon );
-        pBestFirerWeapon->DirectFire( *pPion_, target, compTarget, fireResult, true ); // 'true' is for 'use ph'
+        pBestFirerWeapon->DirectFire( pion_, target, compTarget, fireResult, true ); // 'true' is for 'use ph'
         ++nNbrWeaponsUsed;
 
         firerWeapons.ReleaseWeapon( *pBestFirer, *pBestFirerWeapon );
@@ -141,7 +137,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
         {
             PHY_Composante_ABC& compTarget = **itCompTarget;
 
-            const MT_Float rCurrentScore = pUnusedFirerWeapon->GetDangerosity( *pPion_, target, compTarget.GetType(), true ); // 'true' is for 'use ph'
+            const MT_Float rCurrentScore = pUnusedFirerWeapon->GetDangerosity( pion_, target, compTarget.GetType(), true ); // 'true' is for 'use ph'
             if( rCurrentScore > rBestScore )
             {
                 rBestScore      = rCurrentScore;
@@ -151,7 +147,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
 
         if( pBestCompTarget )
         {
-            pUnusedFirerWeapon->DirectFire( *pPion_, target, *pBestCompTarget, fireResult, true ); // 'true' is for 'use ph'
+            pUnusedFirerWeapon->DirectFire( pion_, target, *pBestCompTarget, fireResult, true ); // 'true' is for 'use ph'
             ++nNbrWeaponsUsed;
         }
 
@@ -165,7 +161,6 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
 {
-    assert( pPion_ );
     MIL_Agent_ABC* pTarget = pEnemy ? &pEnemy->GetAgentKnown() : 0;
     if( !pTarget )
         return eImpossible;
@@ -174,10 +169,10 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
         return eEnemyDestroyed;
 
     // Firers
-    PHY_DirectFireData firerWeapons( *pPion_, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, pAmmoDotationClass );
+    PHY_DirectFireData firerWeapons( pion_, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, pAmmoDotationClass );
     
     std::auto_ptr< firing::WeaponAvailabilityComputer_ABC > algorithm( weaponAvailabilityComputerFactory_.Create( firerWeapons) );
-    pPion_->Execute( *algorithm );
+    pion_.Execute( *algorithm );
 
     const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )
@@ -189,8 +184,8 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
         return eNoCapacity;
     }
     
-    pPion_ ->NotifyAttacking ( *pTarget );
-    pTarget->NotifyAttackedBy( *pPion_  );
+    pion_.NotifyAttacking ( *pTarget );
+    pTarget->NotifyAttackedBy( pion_  );
 
     // Targets
     PHY_RoleInterface_Composantes::T_ComposanteVector targets;
@@ -202,7 +197,7 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
     assert( targets.size() == nNbrWeaponsUsable );    
 
     if( !pFireResult )
-        pFireResult = new PHY_FireResults_Pion( *pPion_, *pTarget );
+        pFireResult = new PHY_FireResults_Pion( pion_, *pTarget );
 
     FirePion( firerWeapons, *pTarget, targets, *pFireResult );
     return eRunning;
@@ -217,8 +212,8 @@ void PHY_RoleAction_DirectFiring::FirePionSuspended( DEC_Knowledge_Agent* pEnemy
     MIL_Agent_ABC* pTarget = pEnemy ? &pEnemy->GetAgentKnown() : 0;
     if ( pTarget )
     {
-        assert( pPion_ );
-        pTarget->NotifyAttackedBy( *pPion_ );
+    
+        pTarget->NotifyAttackedBy( pion_ );
     }
 }
 
@@ -231,7 +226,7 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_Fi
     if( !pFireResult )
         pFireResult = new PHY_FireResults_Default();
 
-    assert( pPion_ );    
+    
     typedef std::pair< MIL_Agent_ABC*, PHY_Composante_ABC* > T_TargetPair;
     typedef std::vector< T_TargetPair >                      T_TargetVector;
     typedef T_TargetVector::const_iterator                   CIT_TargetVector;
@@ -241,8 +236,8 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_Fi
     if ( capacity )
         capacity->RetrieveTargets( object, targets );
     
-    PHY_DirectFireData firerWeapons( *pPion_, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFiringModeNormal );
-    pPion_->GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
+    PHY_DirectFireData firerWeapons( pion_, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFiringModeNormal );
+    pion_.GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
 
     for( CIT_TargetVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
     {
@@ -256,7 +251,7 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_Fi
             continue;
 
         assert( pFirerWeapon );
-        pFirerWeapon->DirectFire( *pPion_, *itTarget->first, *itTarget->second, *pFireResult, false ); // 'false' is for 'don't use ph'
+        pFirerWeapon->DirectFire( pion_, *itTarget->first, *itTarget->second, *pFireResult, false ); // 'false' is for 'don't use ph'
         
         firerWeapons.ReleaseWeapon( *pCompFirer, *pFirerWeapon );
     } 
@@ -272,7 +267,7 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_Fi
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult )
 {
-    assert( pPion_ );
+
     MIL_Population* pTarget = GetPopulationTarget( nTargetKnowledgeID );
     if( !pTarget )
         return eImpossible;
@@ -280,13 +275,13 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
     if( pTarget->IsDead() )
         return eEnemyDestroyed;
 
-    MIL_PopulationElement_ABC* pPopulationElement = pTarget->GetClosestAliveElement( *pPion_ );
+    MIL_PopulationElement_ABC* pPopulationElement = pTarget->GetClosestAliveElement( pion_ );
     if( !pPopulationElement )
         return eEnemyDestroyed;
    
     // Firers
-    PHY_DirectFireData firerWeapons( *pPion_, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFiringModeNormal, 1., &PHY_AmmoDotationClass::mitraille_ );
-    pPion_->GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
+    PHY_DirectFireData firerWeapons( pion_, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFiringModeNormal, 1., &PHY_AmmoDotationClass::mitraille_ );
+    pion_.GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
 
     const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )
@@ -298,18 +293,18 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
         return eNoCapacity;
     }
 
-    pPion_ ->NotifyAttacking ( *pTarget );
-    pTarget->NotifyAttackedBy( *pPion_  );
+    pion_.NotifyAttacking ( *pTarget );
+    pTarget->NotifyAttackedBy( pion_  );
 
     if( !pFireResult )
-        pFireResult = new PHY_FireResults_Pion( *pPion_, *pTarget );
+        pFireResult = new PHY_FireResults_Pion( pion_, *pTarget );
 
     // Tir
     const PHY_ComposantePion* pFirer       = 0;
     PHY_Weapon*         pFirerWeapon = 0;
     while( firerWeapons.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) )
     {
-        pFirerWeapon->DirectFire( *pPion_, *pPopulationElement, *pFireResult ); 
+        pFirerWeapon->DirectFire( pion_, *pPopulationElement, *pFireResult ); 
         firerWeapons.ReleaseWeapon( *pFirer, *pFirerWeapon );
     }
 
@@ -325,8 +320,8 @@ void PHY_RoleAction_DirectFiring::FirePopulationSuspended( uint nTargetKnowledge
     MIL_Population* pTarget = GetPopulationTarget( nTargetKnowledgeID );
     if ( pTarget )
     {
-        assert( pPion_ );
-        pTarget->NotifyAttackedBy( *pPion_ );
+    
+        pTarget->NotifyAttackedBy( pion_ );
     }
 }
 

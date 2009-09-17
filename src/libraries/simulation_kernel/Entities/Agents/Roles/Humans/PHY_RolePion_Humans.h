@@ -115,7 +115,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion*    pPion_;
+    MIL_AgentPion&    pion_;
     T_HumanDataVector humansData_;
     uint              nNbrUsableHumans_;
 

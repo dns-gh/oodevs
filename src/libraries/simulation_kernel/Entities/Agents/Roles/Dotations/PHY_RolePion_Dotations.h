@@ -105,7 +105,7 @@ public:
     //@}
 
 private:
-          MIL_AgentPion*              pPion_;
+          MIL_AgentPion&              pion_;
           PHY_DotationGroupContainer* pDotations_;
 
     const PHY_ConsumptionType*  pCurrentConsumptionMode_;

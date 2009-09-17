@@ -52,7 +52,7 @@ public:
 
 
 private:
-    MIL_Agent_ABC* pPion_;
+    MIL_Agent_ABC& pion_;
     bool           bHasChanged_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Population* role, const unsigned int /*version*/ );

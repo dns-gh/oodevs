@@ -30,7 +30,8 @@ static const MT_Float rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ )
 {
-    archive << role->pPion_;
+    const MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -46,7 +47,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const un
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Posture::PHY_RolePion_Posture( const MIL_AgentPion& pion )
-    : pPion_                               ( &pion )
+    : pion_                                ( pion )
     , pCurrentPosture_                     ( &PHY_Posture::arret_ )
     , pLastPosture_                        ( &PHY_Posture::arret_ )
     , rPostureCompletionPercentage_        ( 1. )
@@ -135,10 +136,10 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) co
 MT_Float PHY_RolePion_Posture::GetPostureTime() const
 {
     assert( pCurrentPosture_ );
-    assert( pPion_ );
+
     assert( rTimingFactor_ > 0. );
     
-    return pPion_->GetRole< PHY_RoleInterface_HumanFactors >().ModifyPostureTime( pPion_->GetType().GetUnitType().GetPostureTime( *pCurrentPosture_ ) ) / rTimingFactor_;
+    return pion_.GetRole< PHY_RoleInterface_HumanFactors >().ModifyPostureTime( pion_.GetType().GetUnitType().GetPostureTime( *pCurrentPosture_ ) ) / rTimingFactor_;
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +228,7 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SetPostureMovement()
 {
-    if( !pPion_->GetRole< PHY_RoleAction_Loading >().IsLoaded() ) //$$$ bDummy pour l'infanterie ... a virer le jour ou le débarquement n'existera plus (1 pion INF => 2 pions)
+    if( !pion_.GetRole< PHY_RoleAction_Loading >().IsLoaded() ) //$$$ bDummy pour l'infanterie ... a virer le jour ou le débarquement n'existera plus (1 pion INF => 2 pions)
         ChangePosture( PHY_Posture::posteReflexe_ );
     else if( bDiscreteModeEnabled_ )
         ChangePosture( PHY_Posture::mouvementDiscret_ );
@@ -271,8 +272,8 @@ void PHY_RolePion_Posture::UnsetPosturePostePrepareGenie()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) const
 {
-    assert( pPion_ );
-    if( bIsStealth_ && !perceiver.GetRole< PHY_RoleInterface_Perceiver >().WasPerceived( *pPion_ ) )
+
+    if( bIsStealth_ && !perceiver.GetRole< PHY_RoleInterface_Perceiver >().WasPerceived( pion_ ) )
         return false;
     return true;
 }
@@ -287,7 +288,7 @@ void PHY_RolePion_Posture::Install()
     if( rInstallationState_ >= 1. )
         return;
 
-    const MT_Float rTime = pPion_->GetType().GetUnitType().GetInstallationTime();
+    const MT_Float rTime = pion_.GetType().GetUnitType().GetInstallationTime();
     if( rTime == 0 )
         rInstallationState_ = 1.;
     else
@@ -309,7 +310,7 @@ void PHY_RolePion_Posture::Uninstall()
     if( rInstallationState_ <= 0. || bInstallationSetUpInProgress_ )
         return;
 
-    const MT_Float rTime = pPion_->GetType().GetUnitType().GetUninstallationTime();
+    const MT_Float rTime = pion_.GetType().GetUnitType().GetUninstallationTime();
     if( rTime == 0 )
         rInstallationState_ = 0.;
     else

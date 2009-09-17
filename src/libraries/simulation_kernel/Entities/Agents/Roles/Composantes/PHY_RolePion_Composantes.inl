@@ -14,7 +14,8 @@
 template< typename Archive >
 inline void save_construct_data( Archive& archive, const PHY_RolePion_Composantes* role, const unsigned int /*version*/ )
 {
-    archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -185,7 +186,7 @@ uint PHY_RolePion_Composantes::GetLentComposantesTravelTime( PHY_RolePion_Compos
     uint nNbrDone = 0;
     uint nTime    = 0;
 
-    const MT_Vector2D& srcPos  =          pPion_->GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const MT_Vector2D& srcPos  =          pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Vector2D& destPos = borrower.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...
 
     for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )

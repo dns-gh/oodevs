@@ -21,7 +21,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Population, "PHY_RolePion_Population" )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Population* role, const unsigned int /*version*/ )
 {
-    archive << role->pPion_;
+    MIL_Agent_ABC* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -38,7 +39,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Population* role, const
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Population::PHY_RolePion_Population( MIL_Agent_ABC& pion )
-    : pPion_                                ( &pion )
+    : pion_                                 ( pion )
     , bHasChanged_                          ( true )
 {
     // NOTHING
@@ -69,10 +70,10 @@ void PHY_RolePion_Population::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
 {
-    assert( pPion_ );
+
 
     T_KnowledgePopulationCollisionVector collisions;
-    pPion_->GetKnowledge().GetPopulationsColliding( collisions );
+    pion_.GetKnowledge().GetPopulationsColliding( collisions );
 
     MT_Float rMaxSpeed = rSpeed;
     for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
@@ -90,10 +91,10 @@ MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) const
 {
-    assert( pPion_ );
+
 
     T_KnowledgePopulationCollisionVector collisions;
-    pPion_->GetKnowledge().GetPopulationsColliding( collisions );
+    pion_.GetKnowledge().GetPopulationsColliding( collisions );
 
     MT_Float rFactor = 1.;
     for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
@@ -111,10 +112,10 @@ MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) 
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Population::GetCollidingPopulationDensity() const
 {
-    assert( pPion_ );
+
 
     T_KnowledgePopulationCollisionVector populationsColliding;
-    pPion_->GetKnowledge().GetPopulationsColliding( populationsColliding );
+    pion_.GetKnowledge().GetPopulationsColliding( populationsColliding );
     MT_Float rPopulationDensity = 0.;
     for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
         rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );

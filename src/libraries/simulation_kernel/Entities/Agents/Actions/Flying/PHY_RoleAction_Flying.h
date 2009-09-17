@@ -27,7 +27,6 @@ class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
 
 public:
     explicit PHY_RoleAction_Flying( MIL_Entity_ABC& entity );
-             PHY_RoleAction_Flying();
     virtual ~PHY_RoleAction_Flying();
 
     //! @name CheckPoints
@@ -59,12 +58,14 @@ private:
     //@{
     bool TakeOff();
     bool Land   ();
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_Entity_ABC* pEntity_;
+    MIL_Entity_ABC& entity_;
     MIL_Effect_Fly effectFly_;
     PHY_ActionFly* pActionFly_;
     bool           bForceLanding_;

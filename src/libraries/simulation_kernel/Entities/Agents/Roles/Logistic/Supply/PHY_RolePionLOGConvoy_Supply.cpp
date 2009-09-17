@@ -22,7 +22,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOGConvoy_Supply, "PHY_RolePionLOGConvoy_Su
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ )
 {
-    archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -38,7 +39,7 @@ void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, 
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
 PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion )
-    : pPion_             ( &pion )
+    : pion_             ( pion )
     , pConvoy_           ( 0 )
 {
     // NOTHING
@@ -70,11 +71,9 @@ void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const uint )
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
-{
-    assert( pPion_ );
-    
+{ 
     if( bIsDead )
-        pPion_->GetRole< PHY_RoleInterface_Location >().Follow( pPion_->GetAutomate().GetPionPC() );
+        pion_.GetRole< PHY_RoleInterface_Location >().Follow( pion_.GetAutomate().GetPionPC() );
 }
     
 // -----------------------------------------------------------------------------

@@ -42,30 +42,29 @@
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Moving, "PHY_RoleAction_Moving" )
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RoleAction_Moving* role, const unsigned int /*version*/ )
+{
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RoleAction_Moving* role, const unsigned int /*version*/ )
+{
+    MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RoleAction_Moving( *pion );
+}
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving constructor
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
-    : pPion_                 ( &pion )
-    , pRoleLocation_         ( &pPion_->GetRole< PHY_RoleInterface_Location >() )
+    : pion_                 ( pion )
+    , pRoleLocation_         ( &pion_.GetRole< PHY_RoleInterface_Location >() )
     , rSpeedModificator_     ( 1. )
     , rMaxSpeedModificator_  ( 1. )    
-    , bCurrentPathHasChanged_( true )
-    , bEnvironmentHasChanged_( true )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving constructor
-// Created: JVT 2005-03-30
-// -----------------------------------------------------------------------------
-PHY_RoleAction_Moving::PHY_RoleAction_Moving()
-    : pPion_                 ( 0 )
-    , pRoleLocation_         ( 0 )
-    , rSpeedModificator_     ( 1. )
-    , rMaxSpeedModificator_  ( 1. )
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
 {
@@ -89,7 +88,7 @@ template< typename Archive >
 void PHY_RoleAction_Moving::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< tools::Role_ABC >( *this )
-		 & pPion_
+		 & pion_
          & pRoleLocation_;
 }
 
@@ -99,10 +98,10 @@ void PHY_RoleAction_Moving::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::ApplyMaxSpeedModificators( MT_Float rSpeed ) const
 {
-    assert( pPion_ );
-    rSpeed  = pPion_->GetRole< PHY_RoleInterface_NBC          >().ModifyMaxSpeed( rSpeed );
-    rSpeed  = pPion_->GetRole< PHY_RoleInterface_HumanFactors >().ModifyMaxSpeed( rSpeed );
-    rSpeed  = pPion_->GetRole< PHY_RoleInterface_Population   >().ModifyMaxSpeed( rSpeed );
+
+    rSpeed  = pion_.GetRole< PHY_RoleInterface_NBC          >().ModifyMaxSpeed( rSpeed );
+    rSpeed  = pion_.GetRole< PHY_RoleInterface_HumanFactors >().ModifyMaxSpeed( rSpeed );
+    rSpeed  = pion_.GetRole< PHY_RoleInterface_Population   >().ModifyMaxSpeed( rSpeed );
     rSpeed *= rMaxSpeedModificator_;
     return rSpeed;
 }
@@ -113,9 +112,9 @@ MT_Float PHY_RoleAction_Moving::ApplyMaxSpeedModificators( MT_Float rSpeed ) con
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::ApplySpeedModificators( MT_Float rSpeed ) const
 {
-    assert( pPion_ );
-    rSpeed = pPion_->GetRole< PHY_RoleInterface_Communications >().ModifySpeed( rSpeed );
-    PHY_RoleInterface_Supply* role = pPion_->RetrieveRole< PHY_RoleInterface_Supply >();
+
+    rSpeed = pion_.GetRole< PHY_RoleInterface_Communications >().ModifySpeed( rSpeed );
+    PHY_RoleInterface_Supply* role = pion_.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         rSpeed = role->ModifySpeed( rSpeed );
     rSpeed *= rSpeedModificator_;
@@ -154,9 +153,9 @@ namespace
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
-    assert( pPion_ );
+
     sMaxSpeedObjectCalculator functor( object );
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( functor );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( functor );
 
     if( !functor.bHasUsableComposante_ )
         return 0.;
@@ -196,9 +195,9 @@ namespace
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
-    assert( pPion_ );
+
     sMaxSpeedEnvCalculator functor( environment );
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( functor );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( functor );
 
     if( !functor.bHasUsableComposante_  )
         return 0.;
@@ -237,9 +236,9 @@ namespace
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetMaxSpeed() const
 {
-    assert( pPion_ );
+
     sMaxSpeedCalculator functor;
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( functor );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( functor );
 
     if( !functor.bHasUsableComposante_  )
         return 0.;
@@ -273,9 +272,9 @@ namespace
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetMaxSlope() const
 {
-    assert( pPion_ );
+
     sMaxSlopeCalculator calculator;
-    pPion_->GetRole< PHY_RolePion_Composantes >().Apply( calculator );
+    pion_.GetRole< PHY_RolePion_Composantes >().Apply( calculator );
     return calculator.MaxSlope();
 }
 
@@ -285,9 +284,9 @@ MT_Float PHY_RoleAction_Moving::GetMaxSlope() const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
-    assert( pPion_ );
+
     MT_Float rSpeed = GetMaxSpeed();
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
         rSpeed = std::min( rSpeed, (**itReinforcement).GetRole< PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement() );
     return ApplyMaxSpeedModificators( rSpeed );
@@ -299,9 +298,9 @@ MT_Float PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    assert( pPion_ );
+
     MT_Float rSpeed = GetMaxSpeed( environment );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
         rSpeed = std::min( rSpeed, (**itReinforcement).GetRole< PHY_RoleAction_Moving >().GetSpeedWithReinforcement( environment ) );
 
@@ -318,9 +317,9 @@ MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& en
     if( !object().HasMobilityInfluence() )
         return std::numeric_limits< MT_Float >::max();
 
-    assert( pPion_ );
+
     MT_Float rObjectSpeed = GetMaxSpeed( object );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
         rObjectSpeed = std::min( rObjectSpeed, (**itReinforcement).GetRole< PHY_RoleAction_Moving >().GetSpeedWithReinforcement( environment, object ) );
 
@@ -338,8 +337,8 @@ MT_Float PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& en
 // -----------------------------------------------------------------------------
 MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const MT_Float rTime, const bool bBoundOnPath ) const
 {
-    assert( pPion_ );
-    const PHY_RoleInterface_Location& roleLocation = pPion_->GetRole< PHY_RoleInterface_Location >();
+
+    const PHY_RoleInterface_Location& roleLocation = pion_.GetRole< PHY_RoleInterface_Location >();
     return PHY_MovingEntity_ABC::ExtrapolatePosition( roleLocation.GetPosition(), roleLocation.GetCurrentSpeed(), rTime, bBoundOnPath );
 }
 
@@ -349,9 +348,9 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const MT_Float rTime, co
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SendEnvironmentType() const
 {
-    assert( pPion_ );
+
     NET_ASN_MsgUnitEnvironmentType asn;
-    asn().oid = pPion_->GetID();
+    asn().oid = pion_.GetID();
     SerializeEnvironmentType( asn() );
     asn.Send();
 }
@@ -364,8 +363,8 @@ void PHY_RoleAction_Moving::SendCurrentPath() const
 {  
     NET_ASN_MsgUnitPathFind asnMsg;
     
-    assert( pPion_ );
-    asnMsg().oid = pPion_->GetID();   
+
+    asnMsg().oid = pion_.GetID();   
     if( !SerializeCurrentPath( asnMsg().itineraire ) )
         return;
 
@@ -442,8 +441,8 @@ void PHY_RoleAction_Moving::NotifyMovingOnPathPoint( const DEC_PathPoint& /*poin
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( const DEC_PathPoint& point )
 {
-    assert( pPion_ );
-    point.SendToDIA( pPion_->GetRole< DEC_Representations >() );
+
+    point.SendToDIA( pion_.GetRole< DEC_Representations >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -472,13 +471,13 @@ void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::CanMove() const
 {
-    assert( pPion_ );
-    if( pPion_->GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
+
+    if( pion_.GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
         return true;
 
-    return      pPion_->GetRole< PHY_RoleAction_InterfaceFlying >().CanMove() 
-            && !pPion_->GetRole< PHY_RoleInterface_Transported  >().IsTransported()
-            && !pPion_->GetRole< PHY_RoleInterface_Reinforcement     >().IsReinforcing();
+    return      pion_.GetRole< PHY_RoleAction_InterfaceFlying >().CanMove() 
+            && !pion_.GetRole< PHY_RoleInterface_Transported  >().IsTransported()
+            && !pion_.GetRole< PHY_RoleInterface_Reinforcement     >().IsReinforcing();
 }
 
 // -----------------------------------------------------------------------------
@@ -487,7 +486,7 @@ bool PHY_RoleAction_Moving::CanMove() const
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object ) const
 {
-    return object.CanInteractWith( *pPion_ );
+    return object.CanInteractWith( pion_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -496,16 +495,16 @@ bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object 
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::HasResources()
 {
-    assert( pPion_ );
-    if( pPion_->GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
+
+    if( pion_.GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
         return true;
     
     // Reservation des consommations du pion + renforts
     uint nNbrPionToRollback = 1;
-    if( !pPion_->GetRole< PHY_RoleInterface_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ ) )  
+    if( !pion_.GetRole< PHY_RoleInterface_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ ) )  
         return false;
 
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion_->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement;
     for( itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
     {
@@ -519,7 +518,7 @@ bool PHY_RoleAction_Moving::HasResources()
         return true;
     
     // Rollback
-    pPion_->GetRole< PHY_RoleInterface_Dotations >().RollbackConsumptionMode();
+    pion_.GetRole< PHY_RoleInterface_Dotations >().RollbackConsumptionMode();
     itReinforcement = reinforcements.begin();
     while( --nNbrPionToRollback )
         (**itReinforcement++).GetRole< PHY_RoleInterface_Dotations >().RollbackConsumptionMode();
@@ -532,8 +531,8 @@ bool PHY_RoleAction_Moving::HasResources()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SendRC( int nReportID ) const
 {
-    assert( pPion_ );
-    MIL_Report::PostEvent( *pPion_, (MIL_Report::E_EngineReport)nReportID );
+
+    MIL_Report::PostEvent( pion_, (MIL_Report::E_EngineReport)nReportID );
 }
 
 // -----------------------------------------------------------------------------

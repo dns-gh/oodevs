@@ -94,7 +94,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPionLOG_ABC*       pPion_;
+    MIL_AgentPionLOG_ABC&       pion_;
     bool                        bSystemEnabled_;
     bool                        bHasChanged_;
     PHY_DotationStockContainer* pStocks_; 

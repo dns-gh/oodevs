@@ -24,7 +24,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_NBC, "PHY_RolePion_NBC" )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ )
 {
-	archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -40,7 +41,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsign
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
-    : pPion_                      ( &pion )
+    : pion_                       ( pion )
     , bNbcProtectionSuitWorn_     ( false )
     , nbcAgentTypesContaminating_ ()
     , rContaminationState_        ( 0. )
@@ -122,7 +123,7 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
     if( bNbcProtectionSuitWorn_ )
         return;
 
-    pPion_->GetRole< PHY_RoleInterface_Composantes >().ApplyPoisonous( contamination );
+    pion_.GetRole< PHY_RoleInterface_Composantes >().ApplyPoisonous( contamination );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,9 +135,9 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
 	if( contamination.GetQuantity() < 1e-15 ) // TODO
 		return;
     
-    pPion_->GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( contamination );
+    pion_.GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( contamination );
     if( ! bNbcProtectionSuitWorn_ )
-        pPion_->GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
+        pion_.GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
 
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     
@@ -176,8 +177,8 @@ void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
         return;
     }
 
-    assert( pPion_ );
-    MT_Float rNewContaminationState = rContaminationState_ - ( pPion_->GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
+
+    MT_Float rNewContaminationState = rContaminationState_ - ( pion_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
     rNewContaminationState = std::max( rNewContaminationState, 0. );
 
     if( (uint)( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )

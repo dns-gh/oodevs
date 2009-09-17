@@ -24,7 +24,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Communications, "PHY_RolePion_Communicatio
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ )
 {
-	archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -60,7 +61,7 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_AgentPion& pion )
-    : pPion_                          ( &pion )
+    : pion_                           ( pion )
     , bHasChanged_                    ( true )
     , bBlackoutActivated_             ( false )
 {
@@ -133,7 +134,7 @@ void PHY_RolePion_Communications::serialize( Archive& file, const uint )
 void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 {
     // UAC ...
-    if( pPion_->IsAutonomous() ) 
+    if( pion_.IsAutonomous() ) 
         return;
     bHasChanged_ = jammers_.insert( &jammer ).second;
 }

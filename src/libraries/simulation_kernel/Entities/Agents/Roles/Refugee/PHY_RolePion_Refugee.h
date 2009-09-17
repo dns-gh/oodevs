@@ -61,7 +61,7 @@ public:
     //@}
 
 private:
-          MIL_AgentPion*    pPion_;
+          MIL_AgentPion&    pion_;
           bool              bManaged_;
     const MIL_Object_ABC*   pCamp_;
           bool              bHasChanged_;

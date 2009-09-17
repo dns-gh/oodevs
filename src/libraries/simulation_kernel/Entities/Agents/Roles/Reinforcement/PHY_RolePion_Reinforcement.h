@@ -77,7 +77,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
+    MIL_AgentPion& pion_;
     MIL_AgentPion* pPionReinforced_;
     T_PionSet      reinforcements_;
     bool           bHasChanged_;

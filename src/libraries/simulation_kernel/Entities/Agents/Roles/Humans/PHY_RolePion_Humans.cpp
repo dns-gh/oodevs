@@ -26,7 +26,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Humans, "PHY_RolePion_Humans" )
 template< typename Archive >
 inline void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ )
 {
-	archive << role->pPion_;
+    MIL_AgentPion* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
@@ -79,7 +80,7 @@ void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const uint )
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 PHY_RolePion_Humans::PHY_RolePion_Humans( MIL_AgentPion& pion )
-    : pPion_                  ( &pion )
+    : pion_                   ( pion )
     , humansData_             ( PHY_HumanRank::GetHumanRanks().size(), T_HumanData() )
     , nNbrHumansDataChanged_  ( humansData_.size() )
     , nNbrUsableHumans_       ( 0 )
@@ -151,14 +152,14 @@ void PHY_RolePion_Humans::WriteODB( xml::xostream& /*xos*/ ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNewNbrFullyAliveHumans )
 {
-    assert( pPion_ );
+
     const T_HumanData& humanData = humansData_[ rank.GetID() ];
     nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, humanData.nNbrTotal_ );
 
     if( nNewNbrFullyAliveHumans > humanData.nNbrOperational_ )
-        pPion_->GetRole< PHY_RoleInterface_Composantes >().HealHumans( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
+        pion_.GetRole< PHY_RoleInterface_Composantes >().HealHumans( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
     else if( nNewNbrFullyAliveHumans < humanData.nNbrOperational_ )
-        pPion_->GetRole< PHY_RoleInterface_Composantes >().WoundHumans( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
+        pion_.GetRole< PHY_RoleInterface_Composantes >().WoundHumans( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,8 +168,8 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::HealAllHumans()
 {
-    assert( pPion_ );
-    pPion_->GetRole< PHY_RoleInterface_Composantes >().HealAllHumans();
+
+    pion_.GetRole< PHY_RoleInterface_Composantes >().HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -374,8 +375,8 @@ void PHY_RolePion_Humans::NotifyHumanChanged( PHY_Human& human, const PHY_Human&
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
-    assert( pPion_ );
-    pPion_->GetRole< PHY_RoleInterface_Composantes >().EvacuateWoundedHumans( destinationTC2 );
+
+    pion_.GetRole< PHY_RoleInterface_Composantes >().EvacuateWoundedHumans( destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -384,8 +385,8 @@ void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 {
-    assert( pPion_ );
-    return pPion_->GetRole< PHY_RoleInterface_Composantes >().HasWoundedHumansToEvacuate();
+
+    return pion_.GetRole< PHY_RoleInterface_Composantes >().HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------
@@ -394,9 +395,9 @@ bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 )
 {
-    assert( pPion_ );
+
     
-    PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( *pPion_, human );
+    PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( pion_, human );
     if( !pMedicalHumanState )
         return 0;
     
@@ -411,19 +412,19 @@ PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( PH
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Human& human )
 {
-    assert( pPion_ );
+
     
-    MIL_AutomateLOG* pTC2 = pPion_->GetAutomate().GetTC2();
+    MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
     if ( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
         return 0;
 
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMedicalQuerySent_ + 1 ) || nTickRcMedicalQuerySent_ == 0 )
-        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_MedicalEvacuationRequest );
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_MedicalEvacuationRequest );
     nTickRcMedicalQuerySent_ = nCurrentTick;
 
-    PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( *pPion_, human );
+    PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( pion_, human );
     if( !pMedicalHumanState )
         return 0;
     

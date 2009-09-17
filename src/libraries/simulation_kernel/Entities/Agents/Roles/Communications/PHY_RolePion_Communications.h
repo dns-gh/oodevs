@@ -81,7 +81,7 @@ public:
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
+    MIL_AgentPion& pion_;
     T_JammerSet    jammers_;
     bool           bBlackoutActivated_;
     bool           bHasChanged_;

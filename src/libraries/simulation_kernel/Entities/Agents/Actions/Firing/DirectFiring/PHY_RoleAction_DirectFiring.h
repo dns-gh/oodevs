@@ -99,7 +99,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
+    MIL_AgentPion& pion_;
     const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory_;
 
 };

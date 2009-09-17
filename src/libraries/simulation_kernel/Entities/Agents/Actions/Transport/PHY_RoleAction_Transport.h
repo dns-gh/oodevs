@@ -56,7 +56,6 @@ public:
 
 public:
              PHY_RoleAction_Transport( MIL_AgentPion& pion );
-             PHY_RoleAction_Transport();
     virtual ~PHY_RoleAction_Transport();
 
     //! @name CheckPoints
@@ -136,10 +135,13 @@ private:
 
     MT_Float DoLoad  ( const MT_Float rWeightToLoad   );
     MT_Float DoUnload( const MT_Float rWeightToUnload );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
+
     //@}
 
 private:
-    const MIL_AgentPion*        pTransporter_;
+    const MIL_AgentPion&        transporter_;
           bool                  bHasChanged_;
           E_State               nState_;
           bool                  bLoadUnloadHasBeenUpdated_;
