@@ -20,10 +20,11 @@
 // Name: LoggerApplication constructor
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-LoggerApplication::LoggerApplication( const std::string& hostname, const std::string& logFile, const std::string& login, const std::string& password )
+LoggerApplication::LoggerApplication( const std::string& hostname, const std::string& logFile, const std::string& login, const std::string& password, bool verbose )
 : login_          ( login )
 , password_       ( password )
 , bConnectionLost_( false )
+, bVerbose_       ( verbose )
 {
     file_.open( logFile.c_str(), std::ios::out | std::ios::trunc );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgSimToClient );
@@ -52,10 +53,23 @@ LoggerApplication::~LoggerApplication()
 // -----------------------------------------------------------------------------
 int LoggerApplication::Run()
 {
-    while ( !bConnectionLost_ )
+    try
     {
-        Update();
-        boost::this_thread::sleep( boost::posix_time::milliseconds( 50 ) ) ;
+        while ( !bConnectionLost_ )
+        {
+            Update();
+            boost::this_thread::sleep( boost::posix_time::milliseconds( 50 ) ) ;
+        }
+    }
+    catch (std::runtime_error& err )
+    {
+        file_ << "Error: " << err.what() << std::endl;
+        return 2;
+    }
+    catch (...)
+    {
+        file_ << "Unexpected exception caught" << std::endl;
+        return 3;
     }
     return 0;
 }
@@ -137,7 +151,7 @@ void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*fro
 // Name: LoggerApplication::OnReceiveMsgMessengerToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& from, const ASN1T_MsgsMessengerToClient& message )
+void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& /*from*/, const ASN1T_MsgsMessengerToClient& /*message*/ )
 {
     DumpTime();
     file_ << "Messenger message received" << std::endl << std::flush;
@@ -147,7 +161,7 @@ void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& from, 
 // Name: LoggerApplication::OnReceiveMsgReplayToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& from, const ASN1T_MsgsReplayToClient& message )
+void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& /*from*/, const ASN1T_MsgsReplayToClient& /*message*/ )
 {
     DumpTime();
     file_ << "Replay message received" << std::endl << std::flush;
@@ -157,7 +171,7 @@ void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& from, con
 // Name: LoggerApplication::OnReceiveMsgAarToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgAarToClient( const std::string& from, const ASN1T_MsgsAarToClient& message )
+void LoggerApplication::OnReceiveMsgAarToClient( const std::string& /*from*/, const ASN1T_MsgsAarToClient& /*message*/ )
 {
     DumpTime();
     file_ << "Aar message received" << std::endl << std::flush;
@@ -179,8 +193,11 @@ void LoggerApplication::OnReceiveMsgControlBeginTick( int tick )
 // -----------------------------------------------------------------------------
 void LoggerApplication::LogMessage( int type )
 {
-    DumpTime();
-    file_ << "Received message type " << type << std::endl << std::flush;
+    if( bVerbose_ )
+    {
+        DumpTime();
+        file_ << "Received message type " << type << std::endl << std::flush;
+    }
 }
 
 // -----------------------------------------------------------------------------

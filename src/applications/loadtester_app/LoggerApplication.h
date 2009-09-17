@@ -33,7 +33,7 @@ class LoggerApplication : public tools::ClientNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             LoggerApplication( const std::string& hostname, const std::string& logFile, const std::string& login, const std::string& password  );
+             LoggerApplication( const std::string& hostname, const std::string& logFile, const std::string& login, const std::string& password, bool verbose );
     virtual ~LoggerApplication();
     //@}
 
@@ -77,6 +77,7 @@ private:
     std::string   password_;
     std::string   endpoint_;
     bool          bConnectionLost_;
+    bool          bVerbose_;
     //@}
 };
 

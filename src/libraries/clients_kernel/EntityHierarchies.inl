@@ -139,6 +139,8 @@ void EntityHierarchies< Interface >::UnregisterParent()
 template< typename Interface >
 void EntityHierarchies< Interface >::ChangeSuperior( Entity_ABC* superior )
 {
+    if( GetSuperior() == superior )
+        return;
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->RemoveSubordinate( entity_ );
     SetSuperiorInternal( superior );

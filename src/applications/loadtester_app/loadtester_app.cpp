@@ -13,17 +13,22 @@
 
 int main( int argc, char** argv )
 {
-    std::cout << "Usage: loadtester hostname logFile [login password]]" << std::endl;
+    std::cout << "Usage: loadtester hostname logFile [verbose [login password]]]" << std::endl;
     if( argc < 3 )
         return 1;
     std::string hostname( argv[1] );
     std::string logFile( argv[2] );
-    std::string login;
+    std::string verbose;
     if( argc > 3 )
-        login = argv[3];
-    std::string password;
+        verbose = argv[3];
+    std::string login;
     if( argc > 4 )
-        password = argv[4];
-    LoggerApplication application( hostname, logFile, login, password );
-    return application.Run();
+        login = argv[4];
+    std::string password;
+    if( argc > 5 )
+        password = argv[5];
+    LoggerApplication application( hostname, logFile, login, password, verbose == "verbose" );
+    int rc = application.Run();
+    std::cout << "RC = " << rc << std::endl;
+    return rc;
 }

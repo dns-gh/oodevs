@@ -81,6 +81,7 @@ Section "!${APP_NAME}"
     SetOutPath "$INSTDIR\applications"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
+    File "${OUTDIR}\release\applications\dispatcher_app\*.exe"
     File "${OUTDIR}\release\applications\gaming_app\*.exe"
     File "${OUTDIR}\release\applications\preparation_app\*.exe"
     File "${OUTDIR}\release\applications\simulation_app\*.exe"
@@ -168,7 +169,11 @@ SectionGroupEnd
 ;--------------------------------
 SectionGroup "Exercises" s_exo
 
-    !if "${APP_MODEL}" == "worldwide"
+    !ifdef STRESS
+        !insertmacro OT.AddExercise "Charge" "Cabourg" "s_exo1"
+        !insertmacro OT.AddExercise "ChargeLight" "Cabourg" "s_exo2"
+        !insertmacro OT.AddExercise "ChargeMedium" "Cabourg" "s_exo3"
+    !else if "${APP_MODEL}" == "worldwide"
         !insertmacro OT.AddExercise "Egypt" "Nord egypt" "s_exo1"
         !insertmacro OT.AddExercise "Paris" "Paris_Est" "s_exo2"
         !insertmacro OT.AddExercise "Scripting demo" "test" "s_exo3"

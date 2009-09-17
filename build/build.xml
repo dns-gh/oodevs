@@ -548,7 +548,7 @@
     </macrodef>
 
     <target name="test-scripts" description="run all tests">
-        <!--test-scripts dataset="ada" physical="france"/-->
+        <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="worldwide"/>
     </target>
 
@@ -628,7 +628,7 @@
       package
     ============================================================================
     -->
-    <target name="package" description="package the installers" depends="package.standard,package.eval,package.france"/>
+    <target name="package" description="package the installers" depends="package.standard,package.eval,package.france,package.stress"/>
     
     <target name="package.standard" description="package the standard installer: worlwide, no license">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
@@ -649,6 +649,17 @@
         </nsis>
     </target>
 
+    <target name="package.stress" description="package the french version of installer for stress test: france, 3 months license">
+        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DEVALUATION=1"/>
+            <arg value="/DAPP_MODEL=france"/>
+            <arg value="/DSTRESS=1"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+    </target>
+    
     <target name="package.france" description="package the french version of installer: france, no license">
         <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
