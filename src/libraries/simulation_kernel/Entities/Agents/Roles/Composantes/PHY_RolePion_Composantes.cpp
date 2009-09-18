@@ -1008,7 +1008,7 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& 
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
-
+//TODO MGD TO REMOVE
         if( composante.CanBeFired() )
         {
             if( !bFireOnlyOnMajorComposantes || composante.IsMajor() )

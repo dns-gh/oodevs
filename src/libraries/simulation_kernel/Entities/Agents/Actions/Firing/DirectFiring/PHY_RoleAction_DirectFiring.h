@@ -18,8 +18,6 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "PHY_DirectFireData.h"
 
-#include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
-
 class PHY_RoleInterface_FireTarget;
 class PHY_AmmoDotationClass;
 class PHY_FireResults_Pion;
@@ -29,6 +27,11 @@ class MIL_AgentPion;
 class MIL_Population;
 class MIL_Object_ABC;
 
+namespace firing
+{
+    class WeaponAvailabilityComputerFactory_ABC;
+    class ComposantesAbleToBeFiredComputerFactory_ABC;
+}
 // =============================================================================
 // @class  PHY_RoleAction_DirectFiring
 // Created: JVT 2004-08-03
@@ -44,7 +47,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_DirectFiring( MIL_AgentPion& pion, const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory );
+             PHY_RoleAction_DirectFiring( MIL_AgentPion& pion, const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory, const firing::ComposantesAbleToBeFiredComputerFactory_ABC& composantesAbleToBeFiredComputerFactory );
     virtual ~PHY_RoleAction_DirectFiring();
 
     //! @name Checkpoints
@@ -101,7 +104,8 @@ private:
 private:
     MIL_AgentPion& pion_;
     const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory_;
-
+    const firing::ComposantesAbleToBeFiredComputerFactory_ABC& composantesAbleToBeFiredComputerFactory_;
+    
 };
 
 #endif // __PHY_RoleAction_DirectFiring_h_

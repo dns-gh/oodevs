@@ -13,6 +13,7 @@
 namespace firing
 {
     class WeaponAvailabilityComputerFactory_ABC;
+    class ComposantesAbleToBeFiredComputerFactory_ABC;
 }
 // =============================================================================
 /** @class  AlgorithmsFactories
@@ -33,6 +34,7 @@ public:
     //! @name Attribute
     //@{
     std::auto_ptr< firing::WeaponAvailabilityComputerFactory_ABC > weaponAvailabilityComputerFactory_;
+    std::auto_ptr< firing::ComposantesAbleToBeFiredComputerFactory_ABC > composantesAbleToBeFiredComputerFactory_;
     //@}
 };
 

@@ -9,27 +9,23 @@
 
 #include "simulation_kernel_pch.h"
 
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/WeaponAvailabilityComputerFactory.h"
-#include "simulation_kernel/ComposantesAbleToBeFiredComputerFactory.h"
+#include "simulation_kernel/ComposantesAbleToBeFiredComputerFactory_ABC.h"
 
 using namespace firing;
 // -----------------------------------------------------------------------------
-// Name: AlgorithmsFactories constructor
-// Created: MGD 2009-08-17
+// Name: ComposantesAbleToBeFiredComputerFactory_ABC constructor
+// Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-AlgorithmsFactories::AlgorithmsFactories()
-    : weaponAvailabilityComputerFactory_( new firing::WeaponAvailabilityComputerFactory() )
-    , composantesAbleToBeFiredComputerFactory_( new firing::ComposantesAbleToBeFiredComputerFactory() )
+ComposantesAbleToBeFiredComputerFactory_ABC::ComposantesAbleToBeFiredComputerFactory_ABC()
 {
     //NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AlgorithmsFactories destructor
-// Created: MGD 2009-08-17
+// Name: ComposantesAbleToBeFiredComputerFactory_ABC destructor
+// Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-AlgorithmsFactories::~AlgorithmsFactories()
+ComposantesAbleToBeFiredComputerFactory_ABC::~ComposantesAbleToBeFiredComputerFactory_ABC()
 {
     // NOTHING
 }

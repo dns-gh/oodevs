@@ -7,36 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __WeaponAvailabilityComputerFactory_h_
-#define __WeaponAvailabilityComputerFactory_h_
-
-#include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
+#ifndef __ComposantesAbleToBeFiredComputerFactory_ABC_h_
+#define __ComposantesAbleToBeFiredComputerFactory_ABC_h_
 
 namespace firing
 {
-
+    class ComposantesAbleToBeFiredComputer_ABC;
 // =============================================================================
-/** @class  WeaponAvailabilityComputerFactory
-    @brief  WeaponAvailabilityComputerFactory
+/** @class  ComposantesAbleToBeFiredComputerFactory_ABC
+    @brief  ComposantesAbleToBeFiredComputerFactory_ABC
 */
 // Created: MGD 2009-08-13
 // =============================================================================
-class WeaponAvailabilityComputerFactory : public WeaponAvailabilityComputerFactory_ABC
+class ComposantesAbleToBeFiredComputerFactory_ABC : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponAvailabilityComputerFactory();
-    virtual ~WeaponAvailabilityComputerFactory();
+             ComposantesAbleToBeFiredComputerFactory_ABC();
+    virtual ~ComposantesAbleToBeFiredComputerFactory_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< WeaponAvailabilityComputer_ABC > Create( PHY_DirectFireData& firerWeapons ) const;
+    virtual std::auto_ptr< class ComposantesAbleToBeFiredComputer_ABC > Create( bool bFireOnlyOnMajorComposantes = false ) const = 0;
     //@}
 };
 
 }
 
-#endif // __WeaponAvailabilityComputerFactory_h_
+#endif // __ComposantesAbleToBeFiredComputerFactory_ABC_h_
