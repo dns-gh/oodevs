@@ -15,10 +15,9 @@
 #include "MIL.h"
 
 #include "MT_Tools/Role_ABC.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "PHY_DirectFireData.h"
 
-class PHY_RoleInterface_FireTarget;
 class PHY_AmmoDotationClass;
 class PHY_FireResults_Pion;
 class PHY_FireResults_Default;
@@ -26,6 +25,7 @@ class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_Population;
 class MIL_Object_ABC;
+class DEC_Knowledge_Agent;
 
 namespace firing
 {
@@ -96,7 +96,7 @@ private:
     //! @name Tools
     //@{
     MIL_Population* GetPopulationTarget( uint nTargetKnowledgeID );
-    void            FirePion           ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
+    void            FirePion           ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
     //@}

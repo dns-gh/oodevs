@@ -23,13 +23,14 @@
 #include "HLA_TargetedInteraction.h"
 #include "HLA_FireInteraction.h"
 
+#include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
+
 namespace hla
 {
     template< typename T > class Interaction;
     template< typename T > class InteractionNotification_ABC;
 }
 
-class PHY_Composante_ABC;
 class PHY_FireResults_ABC;
 
 // =============================================================================
@@ -57,14 +58,10 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< PHY_Composante_ABC* > T_ComposanteVector;
-    //@}
 
     //! @name Helpers
     //@{
-    void ApplyFire( const PHY_DotationCategory& ammunition, MIL_Agent_ABC& target, const std::string& strTargetComposante, const T_ComposanteVector& allComposantes, PHY_FireResults_ABC& fireResult ) const;
+    void ApplyFire( const PHY_DotationCategory& ammunition, MIL_Agent_ABC& target, const std::string& strTargetComposante, const PHY_Composante_ABC::T_ComposanteVector& allComposantes, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
     //! @name Member data

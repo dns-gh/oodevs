@@ -94,7 +94,7 @@ void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& 
     if( target.GetRole< PHY_RoleInterface_Population >().IsInvulnerable() )
         return;
 
-    PHY_RoleInterface_Composantes::T_ComposanteVector compTargets;
+    PHY_Composante_ABC::T_ComposanteVector compTargets;
     target.GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
     if( compTargets.empty() )
         return;

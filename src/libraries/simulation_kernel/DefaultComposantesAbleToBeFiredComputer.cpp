@@ -50,7 +50,7 @@ void DefaultComposantesAbleToBeFiredComputer::ApplyOnComposante( PHY_ComposanteP
 // Name: DefaultComposantesAbleToBeFiredComputer::Execute
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Composantes::T_ComposanteVector& DefaultComposantesAbleToBeFiredComputer::ResultLimited( unsigned int nNbrWeaponsUsable )
+PHY_Composante_ABC::T_ComposanteVector& DefaultComposantesAbleToBeFiredComputer::ResultLimited( unsigned int nNbrWeaponsUsable )
 {
     if( availableTargets_.empty() )
         return availableTargets_;
@@ -69,7 +69,7 @@ PHY_RoleInterface_Composantes::T_ComposanteVector& DefaultComposantesAbleToBeFir
 // Name: DefaultComposantesAbleToBeFiredComputer::Execute
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Composantes::T_ComposanteVector& DefaultComposantesAbleToBeFiredComputer::ResultAll()
+PHY_Composante_ABC::T_ComposanteVector& DefaultComposantesAbleToBeFiredComputer::ResultAll()
 {
    return availableTargets_;
 }

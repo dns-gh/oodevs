@@ -129,8 +129,8 @@ public:
     //! @name Fire / Dangerosity
     //@{
     virtual bool     IsNeutralized                   () const;
-    virtual void     GetComposantesAbleToBeFired     ( T_ComposanteVector& targets, uint nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
-    virtual void     GetComposantesAbleToBeFired     ( T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual void     GetComposantesAbleToBeFired     ( PHY_Composante_ABC::T_ComposanteVector& targets, uint nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual void     GetComposantesAbleToBeFired     ( PHY_Composante_ABC::T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
     virtual void     Neutralize                      ();
     virtual void     ApplyPopulationFire             ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
     virtual void     ApplyDirectFire                 ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
@@ -218,17 +218,12 @@ private:
 
 public:
     //! @name Types
-    //@{
-    typedef std::vector< PHY_ComposantePion* >       T_ComposantePionVector;
-    typedef T_ComposantePionVector::iterator         IT_ComposantePionVector;
-    typedef T_ComposantePionVector::const_iterator   CIT_ComposantePionVector;
-    typedef T_ComposantePionVector::reverse_iterator RIT_ComposantePionVector;
-    
+    //@{   
     typedef std::set< PHY_MaintenanceComposanteState* >     T_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::iterator       IT_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
     
-    typedef std::map< const PHY_RoleInterface_Composantes*, T_ComposantePionVector > T_LoanMap;
+    typedef std::map< const PHY_RoleInterface_Composantes*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
     typedef T_LoanMap::iterator                                                 IT_LoanMap;
     typedef T_LoanMap::const_iterator                                           CIT_LoanMap;
 
@@ -241,7 +236,7 @@ private:
     //! @name Init
     //@{
     void DistributeCommanders      ();
-    void DistributeHumanWounds     ( const PHY_HumanRank& rank, const PHY_HumanWound& wound, uint nNbr, CIT_ComposantePionVector& itCurrentComp );
+    void DistributeHumanWounds     ( const PHY_HumanRank& rank, const PHY_HumanWound& wound, uint nNbr, PHY_ComposantePion::CIT_ComposantePionVector& itCurrentComp );
     void ReadHumansOverloading     ( xml::xistream& xis );
     void ReadComposantesOverloading( xml::xistream& xis );
     //@}
@@ -267,7 +262,7 @@ private:
 
 private:
     MIL_AgentPion&         pion_;
-    T_ComposantePionVector composantes_;
+    PHY_ComposantePion::T_ComposantePionVector composantes_;
     T_ComposanteTypeMap    composanteTypes_;
     uint                   nNbrComposanteChanged_;
     MT_Float               rMajorOperationalState_;

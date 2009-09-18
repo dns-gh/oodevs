@@ -33,7 +33,7 @@ inline void load_construct_data( Archive& archive, PHY_RolePion_Composantes* rol
 template< typename T > 
 inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
 {
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         (**it).ApplyOnWeapons( t );
 }
 
@@ -44,7 +44,7 @@ inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
 template< typename T > 
 inline void PHY_RolePion_Composantes::Apply( T& functor ) const
 {
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         functor( **it );
 }
 
@@ -55,7 +55,7 @@ inline void PHY_RolePion_Composantes::Apply( T& functor ) const
 template< typename T > 
 inline PHY_ComposantePion* PHY_RolePion_Composantes::GetComposante( T& functor ) const
 {
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         if( functor( **it ) )
             return *it;
@@ -71,7 +71,7 @@ template< typename T >
 inline bool PHY_RolePion_Composantes::HasUsableComposante( T& functor ) const
 {
     // ne teste pas l'état logistique (= potentiellement utilisable)
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         if( functor( ( **it).GetType() ) && (**it).GetState().IsUsable() )
             return true;
@@ -87,7 +87,7 @@ template< typename T >
 inline void PHY_RolePion_Composantes::GetComposantesUse( T_ComposanteUseMap& composanteUse, T& functor ) const
 {
     composanteUse.clear();
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         const PHY_ComposantePion& comp = **it;
         if( functor( comp.GetType() ) )
@@ -106,8 +106,8 @@ inline void PHY_RolePion_Composantes::GetComposantesUse( T_ComposanteUseMap& com
 
     for( CIT_LoanMap itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
     {
-        const T_ComposantePionVector& composantes = itLoan->second;
-        for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
+        const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
         {
             const PHY_ComposantePion& comp = **it;
             if( functor( comp.GetType() ) )
@@ -129,7 +129,7 @@ template < typename T >
 uint PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate )
 {
     uint nNbrDone = 0;
-    for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
+    for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
     {
         PHY_ComposantePion& composante = **it;
 
@@ -160,8 +160,8 @@ uint PHY_RolePion_Composantes::RetrieveLentComposantes( PHY_RolePion_Composantes
             return nNbrDone;
 
         PHY_ComposantePion* pComposante = 0;
-        const T_ComposantePionVector& lentComps = it->second;
-        for( CIT_ComposantePionVector it = lentComps.begin(); it != lentComps.end(); ++it )
+        const PHY_ComposantePion::T_ComposantePionVector& lentComps = it->second;
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = lentComps.begin(); it != lentComps.end(); ++it )
         {
             PHY_ComposantePion& composante = **it;
             if( funcPredicate( composante ) )
@@ -189,7 +189,7 @@ uint PHY_RolePion_Composantes::GetLentComposantesTravelTime( PHY_RolePion_Compos
     const MT_Vector2D& srcPos  =          pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Vector2D& destPos = borrower.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...
 
-    for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
+    for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {
         PHY_ComposantePion& composante = **it;
 

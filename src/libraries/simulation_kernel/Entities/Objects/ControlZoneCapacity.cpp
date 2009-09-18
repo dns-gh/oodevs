@@ -196,9 +196,9 @@ void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_AB
 {
     if ( army.IsAFriend( agent->GetArmy() ) == eTristate_True )
         return;    
-    PHY_RoleInterface_Composantes::T_ComposanteVector compTargets;
+    PHY_Composante_ABC::T_ComposanteVector compTargets;
     agent->GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
-    for( PHY_RoleInterface_Composantes::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
+    for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
     {
         PHY_Composante_ABC& compTarget = **itCompTarget;
 

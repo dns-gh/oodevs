@@ -60,6 +60,11 @@ class PHY_ComposantePion : public PHY_Composante_ABC
 {
 
 public:
+    typedef std::vector< PHY_ComposantePion* >       T_ComposantePionVector;
+    typedef T_ComposantePionVector::iterator         IT_ComposantePionVector;
+    typedef T_ComposantePionVector::const_iterator   CIT_ComposantePionVector;
+    typedef T_ComposantePionVector::reverse_iterator RIT_ComposantePionVector;
+
              PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy );
              PHY_ComposantePion();
     virtual ~PHY_ComposantePion();

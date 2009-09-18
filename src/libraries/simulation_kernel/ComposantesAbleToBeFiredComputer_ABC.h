@@ -37,8 +37,8 @@ public:
     //! @name Operations
     //@{
     virtual void ApplyOnComposante( PHY_ComposantePion& fired ) = 0;
-    virtual PHY_RoleInterface_Composantes::T_ComposanteVector& ResultAll() = 0;
-    virtual PHY_RoleInterface_Composantes::T_ComposanteVector& ResultLimited( unsigned int nNbrWeaponsUsable ) = 0;
+    virtual PHY_Composante_ABC::T_ComposanteVector& ResultAll() = 0;
+    virtual PHY_Composante_ABC::T_ComposanteVector& ResultLimited( unsigned int nNbrWeaponsUsable ) = 0;
     //@}
 };
 

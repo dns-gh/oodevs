@@ -66,20 +66,11 @@ public:
 
     typedef PHY_RoleInterface_Composantes RoleInterface;
 
-    typedef std::vector< PHY_Composante_ABC* >  T_ComposanteVector;
-    typedef T_ComposanteVector::iterator        IT_ComposanteVector;
-    typedef T_ComposanteVector::const_iterator  CIT_ComposanteVector;
-
-    typedef std::vector< PHY_ComposantePion* >       T_ComposantePionVector;
-    typedef T_ComposantePionVector::iterator         IT_ComposantePionVector;
-    typedef T_ComposantePionVector::const_iterator   CIT_ComposantePionVector;
-    typedef T_ComposantePionVector::reverse_iterator RIT_ComposantePionVector;
-
     typedef std::set< PHY_MaintenanceComposanteState* >     T_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::iterator       IT_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
 
-    typedef std::map< const PHY_RoleInterface_Composantes*, T_ComposantePionVector > T_LoanMap;
+    typedef std::map< const PHY_RoleInterface_Composantes*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
     typedef T_LoanMap::iterator                                                 IT_LoanMap;
     typedef T_LoanMap::const_iterator                                           CIT_LoanMap;
 
@@ -173,8 +164,8 @@ public:
     //! @name Fire
     //@{
     virtual bool IsNeutralized              () const = 0;
-    virtual void GetComposantesAbleToBeFired( T_ComposanteVector& targets, uint nNbrFirers, bool bFireOnlyOnMajorComposantes = false ) const = 0;
-    virtual void GetComposantesAbleToBeFired( T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const = 0;
+    virtual void GetComposantesAbleToBeFired( PHY_Composante_ABC::T_ComposanteVector& targets, uint nNbrFirers, bool bFireOnlyOnMajorComposantes = false ) const = 0;//TODO MGD Remove and use ComposantesAbleToBeFired
+    virtual void GetComposantesAbleToBeFired( PHY_Composante_ABC::T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const = 0;
     virtual void Neutralize                 () = 0;
     virtual void ApplyPopulationFire        ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result ) = 0;

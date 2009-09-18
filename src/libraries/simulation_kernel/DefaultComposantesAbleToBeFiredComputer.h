@@ -36,15 +36,15 @@ public:
     //! @name Operations
     //@{
     virtual void ApplyOnComposante( PHY_ComposantePion& fired );
-    virtual PHY_RoleInterface_Composantes::T_ComposanteVector& ResultAll();
-    virtual PHY_RoleInterface_Composantes::T_ComposanteVector& ResultLimited( unsigned int nNbrWeaponsUsable );
+    virtual PHY_Composante_ABC::T_ComposanteVector& ResultAll();
+    virtual PHY_Composante_ABC::T_ComposanteVector& ResultLimited( unsigned int nNbrWeaponsUsable );
     //@}
 
 private:
     //! @name Member data
     //@{
-    PHY_RoleInterface_Composantes::T_ComposanteVector availableTargets_;
-    PHY_RoleInterface_Composantes::T_ComposanteVector targets_;
+    PHY_Composante_ABC::T_ComposanteVector availableTargets_;
+    PHY_Composante_ABC::T_ComposanteVector targets_;
     bool bFireOnlyOnMajorComposantes_;
     //@}
 };

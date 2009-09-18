@@ -111,11 +111,11 @@ MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( uint nTargetKn
 // Name: PHY_RoleAction_DirectFiring::FirePion
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult )
+void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult )
 {
     // Pour chaque cible, choix de la meilleure arme
     uint nNbrWeaponsUsed = 0;
-    for( PHY_RoleInterface_Composantes::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
+    for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
     {
         PHY_Composante_ABC& compTarget       = **itCompTarget;
         const PHY_ComposantePion* pBestFirer       = 0;
@@ -139,7 +139,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
     {
         PHY_Composante_ABC*  pBestCompTarget = 0;
         MT_Float             rBestScore      = 0.;
-        for( PHY_RoleInterface_Composantes::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
+        for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
         {
             PHY_Composante_ABC& compTarget = **itCompTarget;
 
@@ -197,7 +197,7 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
 
     std::auto_ptr< firing::ComposantesAbleToBeFiredComputer_ABC > composantesAbleToBeFiredComputer( composantesAbleToBeFiredComputerFactory_.Create( bFireOnlyOnMajorComposantes ) );
     pion_.Execute( *composantesAbleToBeFiredComputer );
-    PHY_RoleInterface_Composantes::T_ComposanteVector& targets = composantesAbleToBeFiredComputer->ResultLimited( nNbrWeaponsUsable );
+    PHY_Composante_ABC::T_ComposanteVector& targets = composantesAbleToBeFiredComputer->ResultLimited( nNbrWeaponsUsable );
 
     if( targets.empty() )
         return eEnemyDestroyed;

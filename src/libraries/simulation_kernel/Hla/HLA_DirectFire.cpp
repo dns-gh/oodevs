@@ -90,7 +90,7 @@ void HLA_DirectFire::Execute() const
     if( ! pCategory )
         return;
 
-    T_ComposanteVector totalTargets;
+    PHY_Composante_ABC::T_ComposanteVector totalTargets;
     pTarget->GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( totalTargets );
 
     PHY_FireResults_ABC* pFireResult = new PHY_FireResults_ABC();
@@ -118,9 +118,9 @@ namespace
 // Name: HLA_DirectFire::ApplyFire
 // Created: AGE 2004-11-26
 // -----------------------------------------------------------------------------
-void HLA_DirectFire::ApplyFire( const PHY_DotationCategory& ammunition, MIL_Agent_ABC& target, const std::string& strTargetComposante, const T_ComposanteVector& allComposantes, PHY_FireResults_ABC& fireResult ) const
+void HLA_DirectFire::ApplyFire( const PHY_DotationCategory& ammunition, MIL_Agent_ABC& target, const std::string& strTargetComposante, const PHY_Composante_ABC::T_ComposanteVector& allComposantes, PHY_FireResults_ABC& fireResult ) const
 {
-    T_ComposanteVector typeTargets;
+    PHY_Composante_ABC::T_ComposanteVector typeTargets;
     std::remove_copy_if( allComposantes.begin(), allComposantes.end(), std::back_inserter( typeTargets ), ComposanteTypeIsNot( strTargetComposante ) );
     std::random_shuffle( typeTargets.begin(), typeTargets.end() );
     if( ! typeTargets.empty() )
