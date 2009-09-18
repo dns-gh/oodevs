@@ -342,8 +342,8 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories&
     pion.RegisterRole< PHY_RoleAction_Transport       >( pion );
     pion.RegisterRole< PHY_RoleAction_Moving          >( pion );
     pion.RegisterRole< PHY_RoleAction_Objects         >( pion );
-    pion.RegisterRole< PHY_RoleAction_DirectFiring    >( pion, *algorithmsFactories.weaponAvailabilityComputerFactory_, *algorithmsFactories.composantesAbleToBeFiredComputerFactory_ );
-    pion.RegisterRole< PHY_RoleAction_IndirectFiring  >( pion );
+    pion.RegisterRole< firing::PHY_RoleAction_DirectFiring    >( pion, *algorithmsFactories.weaponAvailabilityComputerFactory_, *algorithmsFactories.composantesAbleToBeFiredComputerFactory_ );
+    pion.RegisterRole< firing::PHY_RoleAction_IndirectFiring  >( pion, *algorithmsFactories.weaponAvailabilityComputerFactory_ );
     pion.RegisterRole< DEC_RolePion_Decision          >( pion );
     pion.RegisterRole< PHY_RoleAction_FolkInfluence   >();
     pion.RegisterRole< DEC_Representations            >();

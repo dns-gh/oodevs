@@ -19,6 +19,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 
+using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_IndirectFireData::sComposanteWeapons::sComposanteWeapons
 // Created: NLD 2004-10-05

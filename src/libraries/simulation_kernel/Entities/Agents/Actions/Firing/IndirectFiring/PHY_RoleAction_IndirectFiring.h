@@ -19,6 +19,9 @@ class PHY_RoleInterface_FireTarget;
 class MIL_AgentPion;
 class MIL_Effect_IndirectFire;
 
+namespace firing
+{
+    class WeaponAvailabilityComputerFactory_ABC;
 // =============================================================================
 // @class  PHY_RoleAction_IndirectFiring
 // Created: JVT 2004-08-03
@@ -34,7 +37,7 @@ public:
     //@}
 
 public:
-    explicit PHY_RoleAction_IndirectFiring( MIL_AgentPion& pion );
+    explicit PHY_RoleAction_IndirectFiring( MIL_AgentPion& pion, const WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory );
     virtual ~PHY_RoleAction_IndirectFiring();
 
     //! @name CheckPoints
@@ -86,7 +89,10 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion& pion_;
+    const WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory_;
     //@}
 };
+
+} //namespace firing
 
 #endif // __PHY_RoleAction_IndirectFiring_h_

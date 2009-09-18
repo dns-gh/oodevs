@@ -33,14 +33,16 @@ class PHY_HumanWound;
 class PHY_Human;
 class PHY_UnitType;
 class PHY_ComposanteState;
-class PHY_DirectFireData;
-class PHY_IndirectFireData;
-class PHY_SmokeData;
 class PHY_FireDamages_Agent;
 class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
 class HLA_UpdateFunctor;
 class PHY_ComposanteTypePion;
+
+namespace firing
+{
+    class PHY_SmokeData;
+}
 
 // =============================================================================
 // @class  PHY_RoleInterface_Composantes

@@ -13,6 +13,7 @@
 
 #include "PHY_ActionDirectFirePionUsingOnlyCarrier.h"
 
+using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePionUsingOnlyCarrier constructor
 // Created: NLD 2004-08-18

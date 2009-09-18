@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
+using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_MunitionForIndirectFireData constructor
 // Created: NLD 2004-10-21

@@ -13,6 +13,7 @@
 
 #include "PHY_ActionDirectFirePionOnMajorComposantes.h"
 
+using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePionOnMajorComposantes constructor
 // Created: NLD 2004-08-18

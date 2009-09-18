@@ -12,17 +12,21 @@
 #ifndef __PHY_IndirectFireData_h_
 #define __PHY_IndirectFireData_h_
 
+#include "simulation_kernel/FireData_ABC.h"
+
 class MIL_AgentPion;
 class MIL_Effect_IndirectFire;
 class PHY_ComposantePion;
 class PHY_Weapon;
 class PHY_DotationCategory;
 
+namespace firing
+{
 // =============================================================================
 // @class  PHY_IndirectFireData
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_IndirectFireData : private boost::noncopyable
+class PHY_IndirectFireData : public FireData_ABC
 {
 
 public:
@@ -31,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    void operator()          ( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
+    virtual void operator()  ( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
     void RemoveFirer         ( const PHY_ComposantePion& firer );
     bool GetUnusedFirerWeapon( const PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const;
     //@}
@@ -85,5 +89,7 @@ private:
     bool                     bHasWeaponsNotReady_;
     bool                     bHasWeaponsAndNoAmmo_;
 };
+
+} // namespace firing
 
 #endif // __PHY_IndirectFireData_h_

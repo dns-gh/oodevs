@@ -12,11 +12,9 @@
 
 #include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
 
-class PHY_DirectFireData;
-
 namespace firing
 {
-
+    class FireData_ABC;
 // =============================================================================
 /** @class  DefaultWeaponAvailabilitycomputer
     @brief  DefaultWeaponAvailabilitycomputer
@@ -29,7 +27,7 @@ class DefaultWeaponAvailabilityComputer : public WeaponAvailabilityComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultWeaponAvailabilityComputer( PHY_DirectFireData& firerWeapons );
+             DefaultWeaponAvailabilityComputer( FireData_ABC& firerWeapons );
     virtual ~DefaultWeaponAvailabilityComputer();
     //@}
 
@@ -41,7 +39,7 @@ public:
 private:
     //! @name Member data
     //@{
-    PHY_DirectFireData& firerWeapons_; //TODO MGD Fusionner WeaponAvailabilityComputer et PHY_DirectFireData , ajouter la stratégie à ce moment
+    FireData_ABC& firerWeapons_; //TODO MGD Fusionner WeaponAvailabilityComputer et PHY_DirectFireData , ajouter la stratégie à ce moment
     //@}
 };
 

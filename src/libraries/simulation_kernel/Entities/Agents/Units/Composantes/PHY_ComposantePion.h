@@ -33,10 +33,7 @@ class PHY_Weapon;
 class PHY_DotationGroupContainer;
 class MIL_Object_ABC;
 class AttritionCapacity;
-class PHY_DirectFireData;
-class PHY_IndirectFireData;
 class PHY_IndirectFireDotationClass;
-class PHY_SmokeData;
 class PHY_FireDamages_Agent;
 class PHY_AttritionData;
 class PHY_Breakdown;
@@ -50,6 +47,9 @@ class PHY_RoleInterface_Composantes;
 namespace firing
 {
     class WeaponAvailabilityComputer_ABC;
+    class PHY_DirectFireData;
+    class PHY_IndirectFireData;
+    class PHY_SmokeData;
 }
 
 // =============================================================================

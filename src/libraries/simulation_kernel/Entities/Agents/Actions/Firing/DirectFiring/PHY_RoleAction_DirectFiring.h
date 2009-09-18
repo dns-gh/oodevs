@@ -31,7 +31,6 @@ namespace firing
 {
     class WeaponAvailabilityComputerFactory_ABC;
     class ComposantesAbleToBeFiredComputerFactory_ABC;
-}
 // =============================================================================
 // @class  PHY_RoleAction_DirectFiring
 // Created: JVT 2004-08-03
@@ -47,7 +46,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_DirectFiring( MIL_AgentPion& pion, const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory, const firing::ComposantesAbleToBeFiredComputerFactory_ABC& composantesAbleToBeFiredComputerFactory );
+             PHY_RoleAction_DirectFiring( MIL_AgentPion& pion, const WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory, const ComposantesAbleToBeFiredComputerFactory_ABC& composantesAbleToBeFiredComputerFactory );
     virtual ~PHY_RoleAction_DirectFiring();
 
     //! @name Checkpoints
@@ -103,9 +102,11 @@ private:
 
 private:
     MIL_AgentPion& pion_;
-    const firing::WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory_;
-    const firing::ComposantesAbleToBeFiredComputerFactory_ABC& composantesAbleToBeFiredComputerFactory_;
+    const WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory_;
+    const ComposantesAbleToBeFiredComputerFactory_ABC& composantesAbleToBeFiredComputerFactory_;
     
 };
+
+} //namespace firing
 
 #endif // __PHY_RoleAction_DirectFiring_h_

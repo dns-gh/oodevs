@@ -18,6 +18,8 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 
+using namespace firing;
+
 MT_Random PHY_DirectFireData::randomGenerator_;
 
 // -----------------------------------------------------------------------------

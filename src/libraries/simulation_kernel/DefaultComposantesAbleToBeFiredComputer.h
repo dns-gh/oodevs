@@ -12,7 +12,7 @@
 
 #include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
 
-class PHY_DirectFireData;
+class firing::PHY_DirectFireData;
 
 namespace firing
 {

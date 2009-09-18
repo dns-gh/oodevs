@@ -12,16 +12,20 @@
 #ifndef __PHY_SmokeData_h_
 #define __PHY_SmokeData_h_
 
+#include "simulation_kernel/FireData_ABC.h"
+
 class MIL_AgentPion;
 class PHY_Weapon;
 class PHY_ComposantePion;
 class PHY_IndirectFireDotationClass;
 
+namespace firing
+{
 // =============================================================================
 // @class  PHY_SmokeData
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SmokeData : private boost::noncopyable
+class PHY_SmokeData : public FireData_ABC
 {
 
 public:
@@ -30,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    void operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon );
+    virtual void operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon );
     PHY_Weapon* GetWeapon () const;
     //@}
 
@@ -43,5 +47,7 @@ private:
           PHY_Weapon*                       pWeapon_;
     //@}
 };
+
+} // namespace firing
 
 #endif // __PHY_SmokeData_h_

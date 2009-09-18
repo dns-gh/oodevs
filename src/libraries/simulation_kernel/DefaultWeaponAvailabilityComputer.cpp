@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 
 #include "simulation_kernel/DefaultWeaponAvailabilityComputer.h"
-#include "simulation_kernel/Entities/Agents/Actions/Firing/DirectFiring/PHY_DirectFireData.h"
+#include "simulation_kernel/FireData_ABC.h"
 
 using namespace firing;
 
@@ -18,7 +18,7 @@ using namespace firing;
 // Name: DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
-DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer( PHY_DirectFireData& firerWeapons )
+DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer( FireData_ABC& firerWeapons )
     : firerWeapons_( firerWeapons )
 {
 

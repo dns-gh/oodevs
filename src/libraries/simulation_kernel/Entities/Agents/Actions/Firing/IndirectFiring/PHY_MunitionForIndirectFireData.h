@@ -12,17 +12,22 @@
 #ifndef __PHY_MunitionForIndirectFireData_h_
 #define __PHY_MunitionForIndirectFireData_h_
 
+#include "simulation_kernel/FireData_ABC.h"
+
 class MIL_AgentPion;
 class PHY_Weapon;
 class PHY_ComposantePion;
 class PHY_DotationCategory;
 class PHY_IndirectFireDotationClass;
 
+namespace firing
+{
+
 // =============================================================================
 // @class  PHY_MunitionForIndirectFireData
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_MunitionForIndirectFireData : private boost::noncopyable
+class PHY_MunitionForIndirectFireData : public FireData_ABC
 {
 
 public:
@@ -31,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    void operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon );
+    virtual void operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon );
     const PHY_DotationCategory* GetChoosenMunition() const;
     //@}
 
@@ -44,5 +49,7 @@ private:
     const PHY_DotationCategory*             pChoosenMunition_;
     //@}
 };
+
+} // namespace firing
 
 #endif // __PHY_MunitionForIndirectFireData_h_

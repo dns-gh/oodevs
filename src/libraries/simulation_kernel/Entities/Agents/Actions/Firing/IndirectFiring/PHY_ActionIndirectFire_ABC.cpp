@@ -16,6 +16,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Decision_ABC.h"
 
+using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_ABC constructor
 // Created: NLD 2004-10-08

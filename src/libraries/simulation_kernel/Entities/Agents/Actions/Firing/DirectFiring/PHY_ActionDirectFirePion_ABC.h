@@ -32,7 +32,7 @@ public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-             PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType );
+             PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType );
     virtual ~PHY_ActionDirectFirePion_ABC();
 
     //! @name Operations
@@ -42,12 +42,12 @@ public:
     //@}
 
 private:
-          PHY_RoleAction_DirectFiring&               role_;
+          firing::PHY_RoleAction_DirectFiring&       role_;
           DEC_Knowledge_Agent*                       pEnemy_;
     const MT_Float                                   rPercentageComposantesToUse_;
-    const PHY_DirectFireData::E_FiringMode           nFiringMode_;
-    const PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;
-    const PHY_DirectFireData::E_ComposanteFiredType  nComposanteFiredType_;
+    const firing::PHY_DirectFireData::E_FiringMode           nFiringMode_;
+    const firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;
+    const firing::PHY_DirectFireData::E_ComposanteFiredType  nComposanteFiredType_;
     const PHY_AmmoDotationClass*                     pAmmoDotationClass_;
    
           PHY_FireResults_Pion*                      pFireResult_;

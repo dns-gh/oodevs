@@ -73,7 +73,7 @@
 
 #include <xeumeuleu/xml.h>
 
-
+using namespace firing;
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
 

@@ -19,6 +19,8 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Decision_ABC.h"
 
+using namespace firing;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePopulation constructor
 // Created: NLD 2004-08-18

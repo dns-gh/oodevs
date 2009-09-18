@@ -14,7 +14,7 @@
 
 namespace firing
 {
-
+    class FireData_ABC;
 // =============================================================================
 /** @class  WeaponAvailabilityComputerFactory
     @brief  WeaponAvailabilityComputerFactory
@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< WeaponAvailabilityComputer_ABC > Create( PHY_DirectFireData& firerWeapons ) const;
+    virtual std::auto_ptr< WeaponAvailabilityComputer_ABC > Create( FireData_ABC& firerWeapons ) const;
     //@}
 };
 

@@ -19,6 +19,8 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Decision/DEC_Tools.h"
 
+using namespace firing;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Position constructor
 // Created: NLD 2004-08-18

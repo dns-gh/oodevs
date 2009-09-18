@@ -35,7 +35,7 @@ WeaponAvailabilityComputerFactory::~WeaponAvailabilityComputerFactory()
 // Name: WeaponAvailabilityComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-std::auto_ptr< WeaponAvailabilityComputer_ABC > WeaponAvailabilityComputerFactory::Create( PHY_DirectFireData& firerWeapons ) const
+std::auto_ptr< WeaponAvailabilityComputer_ABC > WeaponAvailabilityComputerFactory::Create( FireData_ABC& firerWeapons ) const
 {
     return std::auto_ptr< WeaponAvailabilityComputer_ABC >( new DefaultWeaponAvailabilityComputer( firerWeapons ) );
 }

@@ -16,7 +16,11 @@
 
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
-class PHY_RoleAction_DirectFiring;
+namespace firing
+{
+    class PHY_RoleAction_DirectFiring;
+}
+
 class PHY_FireResults_Pion;
 class MIL_AgentPion;
 
@@ -41,7 +45,7 @@ public:
     //@}
 
 private:
-          PHY_RoleAction_DirectFiring& role_;
+          firing::PHY_RoleAction_DirectFiring& role_;
     const uint                         nTargetKnowledgeID_;
           PHY_FireResults_Pion*        pFireResult_;
 };

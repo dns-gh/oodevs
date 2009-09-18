@@ -18,7 +18,7 @@
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePion::PHY_ActionDirectFirePion( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass )
-: PHY_ActionDirectFirePion_ABC( pion, pEnemy, percentage, firingMode, ammoDotationClass, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFireOnAllComposantes )
+: PHY_ActionDirectFirePion_ABC( pion, pEnemy, percentage, firingMode, ammoDotationClass, firing::PHY_DirectFireData::eFireUsingAllComposantes, firing::PHY_DirectFireData::eFireOnAllComposantes )
 {
 }
 

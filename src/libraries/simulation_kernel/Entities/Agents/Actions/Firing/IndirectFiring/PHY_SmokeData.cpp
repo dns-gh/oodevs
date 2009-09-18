@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 
+using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_SmokeData constructor
 // Created: NLD 2004-10-21

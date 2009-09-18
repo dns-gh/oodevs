@@ -39,6 +39,8 @@
 #include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.h>
 
+#include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
@@ -1795,4 +1797,14 @@ void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& 
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         (**it).Execute( algorithm );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Created: MGD 2009-09-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Execute( firing::ComposantesAbleToBeFiredComputer_ABC& algorithm ) const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        algorithm.ApplyOnComposante( **it );
 }

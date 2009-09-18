@@ -28,6 +28,8 @@
 #include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_Localisation.h"
 
+using namespace firing;
+
 namespace
 {
     class ControlZoneType : public MIL_ObjectType_ABC

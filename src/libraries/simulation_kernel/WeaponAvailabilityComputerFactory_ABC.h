@@ -10,11 +10,10 @@
 #ifndef __WeaponAvailabilityComputerFactory_ABC_h_
 #define __WeaponAvailabilityComputerFactory_ABC_h_
 
-class PHY_DirectFireData;
-
 namespace firing
 {
     class WeaponAvailabilityComputer_ABC;
+    class FireData_ABC;
 // =============================================================================
 /** @class  WeaponAvailabilityComputerFactory_ABC
     @brief  WeaponAvailabilityComputerFactory_ABC
@@ -33,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< WeaponAvailabilityComputer_ABC > Create( PHY_DirectFireData& firerWeapons ) const = 0;
+    virtual std::auto_ptr< WeaponAvailabilityComputer_ABC > Create( FireData_ABC& firerWeapons ) const = 0;
     //@}
 };
 

@@ -19,16 +19,17 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Decision_ABC.h"
 
+using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePion_ABC constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType )
+PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_                       ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , pEnemy_                     ( pEnemy )
     , rPercentageComposantesToUse_( std::max( 0., std::min( 1., percentage ) ) )
-    , nFiringMode_                ( (PHY_DirectFireData::E_FiringMode)firingMode )
+    , nFiringMode_                ( (firing::PHY_DirectFireData::E_FiringMode)firingMode )
     , nComposanteFiringType_      ( nComposanteFiringType )
     , nComposanteFiredType_       ( nComposanteFiredType  )
     , pAmmoDotationClass_         ( 0 )

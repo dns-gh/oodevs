@@ -23,6 +23,7 @@
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
 
+using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::GetMaxRangeToFireOnEnemy
 // Created: NLD 2004-04-02

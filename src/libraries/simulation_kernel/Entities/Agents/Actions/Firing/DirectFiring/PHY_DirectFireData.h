@@ -13,6 +13,7 @@
 #define __PHY_DirectFireData_h_
 
 #include "MT_Tools/MT_Random.h"
+#include "simulation_kernel/FireData_ABC.h"
 
 class PHY_Composante_ABC;
 class PHY_ComposantePion;
@@ -21,11 +22,14 @@ class PHY_AmmoDotationClass;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 
+namespace firing
+{
+
 // =============================================================================
 // @class  PHY_DirectFireData
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DirectFireData : private boost::noncopyable
+class PHY_DirectFireData : public FireData_ABC
 {
 public:
     //! @name Types
@@ -56,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    void operator() ( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
+    virtual void operator() ( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
 
     void ChooseRandomWeapon  ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
     void ChooseBestWeapon    ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
@@ -127,5 +131,7 @@ private:
 private:
     static MT_Random randomGenerator_;
 };
+
+} // namespace firing
 
 #endif // __PHY_DirectFireData_h_

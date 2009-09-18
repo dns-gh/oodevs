@@ -21,12 +21,19 @@ namespace xml
     class xistream;
 }
 
+namespace firing
+{
+    class WeaponAvailabilityComputer_ABC;
+    class ComposantesAbleToBeFiredComputer_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePion_Composantes
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
+                               , public tools::AlgorithmModifier_ABC< firing::ComposantesAbleToBeFiredComputer_ABC >
 {
 
 
@@ -53,6 +60,8 @@ public:
     template< typename T > bool                HasUsableComposante( T& t ) const;
 
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
+    virtual void Execute( firing::ComposantesAbleToBeFiredComputer_ABC& algorithm ) const;
+
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 
 

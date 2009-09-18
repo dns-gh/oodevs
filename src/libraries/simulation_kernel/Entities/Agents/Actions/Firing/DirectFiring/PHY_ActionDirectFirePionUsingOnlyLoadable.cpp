@@ -13,6 +13,7 @@
 
 #include "PHY_ActionDirectFirePionUsingOnlyLoadable.h"
 
+using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePionUsingOnlyLoadable constructor
 // Created: NLD 2004-08-18

@@ -14,7 +14,11 @@
 
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
-class PHY_RoleAction_IndirectFiring;
+namespace firing
+{
+    class PHY_RoleAction_IndirectFiring;
+}
+
 class PHY_DotationCategory;
 class MIL_AgentPion;
 class DEC_Decision_ABC;
@@ -34,7 +38,7 @@ public:
     virtual ~PHY_ActionIndirectFire_ABC();
 
 protected:
-          PHY_RoleAction_IndirectFiring& role_;
+          firing::PHY_RoleAction_IndirectFiring& role_;
     const PHY_DotationCategory*          pDotationCategory_;
     const MT_Float                       rNbInterventionType_;
 };
