@@ -7,37 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __WeaponAvailabilityComputer_ABC_h_
-#define __WeaponAvailabilityComputer_ABC_h_
+#ifndef __LocationComputerFactory_ABC_h_
+#define __LocationComputerFactory_ABC_h_
 
-class PHY_ComposantePion;
-class PHY_Weapon;
-
-namespace firing
+namespace location
 {
-
+    class LocationComputer_ABC;
 // =============================================================================
-/** @class  WeaponAvailabilitycomputer_ABC
-    @brief  WeaponAvailabilitycomputer_ABC
+/** @class  LocationComputerFactory_ABC
+    @brief  LocationComputerFactory_ABC
 */
-// Created: MGD 2009-09-15
+// Created: MGD 2009-08-13
 // =============================================================================
-class WeaponAvailabilityComputer_ABC
+class LocationComputerFactory_ABC : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponAvailabilityComputer_ABC();
-    virtual ~WeaponAvailabilityComputer_ABC();
+             LocationComputerFactory_ABC();
+    virtual ~LocationComputerFactory_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
+    virtual LocationComputer_ABC& Create() const = 0;
     //@}
 };
 
-} // namespace firing
+}
 
-#endif // __WeaponAvailabilityComputer_ABC_h_
+#endif // __LocationComputerFactory_ABC_h_

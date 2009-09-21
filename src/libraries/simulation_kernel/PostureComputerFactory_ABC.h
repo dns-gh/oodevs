@@ -7,37 +7,35 @@
 //
 // *****************************************************************************
 
-#ifndef __WeaponAvailabilityComputer_ABC_h_
-#define __WeaponAvailabilityComputer_ABC_h_
+#ifndef __PostureComputerFactory_ABC_h_
+#define __PostureComputerFactory_ABC_h_
 
-class PHY_ComposantePion;
-class PHY_Weapon;
-
-namespace firing
+class PHY_Posture;
+namespace posture
 {
-
+    class PostureComputer_ABC;
 // =============================================================================
-/** @class  WeaponAvailabilitycomputer_ABC
-    @brief  WeaponAvailabilitycomputer_ABC
+/** @class  PostureComputerFactory_ABC
+    @brief  PostureComputerFactory_ABC
 */
-// Created: MGD 2009-09-15
+// Created: MGD 2009-08-13
 // =============================================================================
-class WeaponAvailabilityComputer_ABC
+class PostureComputerFactory_ABC : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponAvailabilityComputer_ABC();
-    virtual ~WeaponAvailabilityComputer_ABC();
+             PostureComputerFactory_ABC();
+    virtual ~PostureComputerFactory_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
+    virtual PostureComputer_ABC& Create(const PHY_Posture& posture, bool bIsLoaded, bool bDiscreteModeEnabled ) const = 0;
     //@}
 };
 
-} // namespace firing
+}
 
-#endif // __WeaponAvailabilityComputer_ABC_h_
+#endif // __PostureComputerFactory_ABC_h_

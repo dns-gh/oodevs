@@ -18,6 +18,11 @@
 
 class MIL_AgentPion;
 
+namespace location
+{
+    class LocationComputerFactory_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePion_Location
 // Created: JVT 2004-08-03
@@ -26,7 +31,7 @@ class PHY_RolePion_Location : public PHY_RoleInterface_Location
 {
 
 public:
-    explicit PHY_RolePion_Location( MIL_AgentPion& pion );
+    explicit PHY_RolePion_Location( MIL_AgentPion& pion, const location::LocationComputerFactory_ABC& locationComputerFactory );
     virtual ~PHY_RolePion_Location();
 
     //! @name CheckPoints
@@ -48,7 +53,6 @@ public:
     virtual void MagicMove( const MT_Vector2D& vNewPosition );
     virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed );
     virtual void Follow   ( const MIL_Agent_ABC& agent );
-    virtual void Fly      ( MT_Float rHeight );
 
     virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population );
     virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population );
@@ -101,6 +105,8 @@ private:
     MT_Float       rCurrentSpeed_;
     bool           bHasDoneMagicMove_;
     bool           bHasMove_;
+
+    const location::LocationComputerFactory_ABC& locationComputerFactory_;
 
     bool bPositionHasChanged_;
     bool bDirectionHasChanged_;

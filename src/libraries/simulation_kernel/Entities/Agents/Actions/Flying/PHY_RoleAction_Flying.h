@@ -14,15 +14,26 @@
 
 #include "PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Effects/MIL_Effect_Fly.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class PHY_ActionFly;
 class MIL_Entity_ABC;
 
+namespace location
+{
+    class LocationComputer_ABC;
+}
+namespace posture
+{
+    class PostureComputer_ABC;
+}
 // =============================================================================
 // @class  PHY_RoleAction_Flying
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
+                            , public tools::AlgorithmModifier_ABC< location::LocationComputer_ABC >
+                            , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
 {
 
 public:
@@ -60,6 +71,8 @@ private:
     bool Land   ();
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
+    virtual void Execute( location::LocationComputer_ABC& algorithm ) const;
+    virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     //@}
 
 private:
@@ -69,6 +82,7 @@ private:
     MIL_Effect_Fly effectFly_;
     PHY_ActionFly* pActionFly_;
     bool           bForceLanding_;
+    double         rHeight_;
     //@}
 };
 

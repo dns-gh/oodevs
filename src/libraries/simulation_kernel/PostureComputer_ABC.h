@@ -7,37 +7,39 @@
 //
 // *****************************************************************************
 
-#ifndef __WeaponAvailabilityComputer_ABC_h_
-#define __WeaponAvailabilityComputer_ABC_h_
+#ifndef __PostureComputer_ABC_h_
+#define __PostureComputer_ABC_h_
 
-class PHY_ComposantePion;
-class PHY_Weapon;
-
-namespace firing
+class PHY_Posture;
+namespace posture
 {
 
 // =============================================================================
-/** @class  WeaponAvailabilitycomputer_ABC
-    @brief  WeaponAvailabilitycomputer_ABC
+/** @class  PostureComputer_ABC
+    @brief  PostureComputer_ABC
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class WeaponAvailabilityComputer_ABC
+class PostureComputer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponAvailabilityComputer_ABC();
-    virtual ~WeaponAvailabilityComputer_ABC();
+             PostureComputer_ABC();
+    virtual ~PostureComputer_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
+    virtual void Reset( const PHY_Posture& posture, bool bIsLoaded, bool bDiscreteModeEnabled ) = 0;
+    virtual void SetPostureMovement() = 0;
+    virtual void UnsetPostureMovement() = 0;
+    virtual bool MustBeForce() = 0;
+    virtual const PHY_Posture& GetPosture() = 0;
     //@}
 };
 
 } // namespace firing
 
-#endif // __WeaponAvailabilityComputer_ABC_h_
+#endif // __PostureComputer_ABC_h_

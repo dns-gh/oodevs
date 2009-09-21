@@ -15,6 +15,14 @@ namespace firing
     class WeaponAvailabilityComputerFactory_ABC;
     class ComposantesAbleToBeFiredComputerFactory_ABC;
 }
+namespace location
+{
+    class LocationComputerFactory_ABC;
+}
+namespace posture
+{
+    class PostureComputerFactory_ABC;
+}
 // =============================================================================
 /** @class  AlgorithmsFactories
     @brief  AlgorithmsFactories
@@ -35,6 +43,8 @@ public:
     //@{
     std::auto_ptr< firing::WeaponAvailabilityComputerFactory_ABC > weaponAvailabilityComputerFactory_;
     std::auto_ptr< firing::ComposantesAbleToBeFiredComputerFactory_ABC > composantesAbleToBeFiredComputerFactory_;
+    std::auto_ptr< posture::PostureComputerFactory_ABC > postureComputerFactory_;
+    std::auto_ptr< location::LocationComputerFactory_ABC > locationComputerFactory_;
     //@}
 };
 

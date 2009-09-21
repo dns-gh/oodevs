@@ -21,6 +21,11 @@ class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
 class HLA_UpdateFunctor;
 
+namespace posture
+{
+    class PostureComputerFactory_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePion_Posture
 // Created: JVT 2004-08-03
@@ -29,7 +34,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
 {
 
 public:
-    explicit  PHY_RolePion_Posture( const MIL_AgentPion& pion );
+    explicit  PHY_RolePion_Posture( MIL_AgentPion& pion, const posture::PostureComputerFactory_ABC& postureComputerFactory );
     virtual ~PHY_RolePion_Posture();
 
     //! @name CheckPoints
@@ -108,7 +113,7 @@ private:
     //@}
 
 private:
-    const MIL_AgentPion& pion_;
+          MIL_AgentPion& pion_;
     const PHY_Posture*   pCurrentPosture_;
     const PHY_Posture*   pLastPosture_;
           MT_Float       rPostureCompletionPercentage_;
@@ -117,6 +122,8 @@ private:
           bool           bDiscreteModeEnabled_;
           MT_Float       rStealthFactor_;
           bool           bIsStealth_;
+
+    const posture::PostureComputerFactory_ABC& postureComputerFactory_;
 
           // Installation
           MT_Float       rInstallationState_;

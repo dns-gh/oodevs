@@ -12,8 +12,9 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/WeaponAvailabilityComputerFactory.h"
 #include "simulation_kernel/ComposantesAbleToBeFiredComputerFactory.h"
+#include "simulation_kernel/LocationComputerFactory.h"
+#include "simulation_kernel/PostureComputerFactory.h"
 
-using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: AlgorithmsFactories constructor
 // Created: MGD 2009-08-17
@@ -21,6 +22,8 @@ using namespace firing;
 AlgorithmsFactories::AlgorithmsFactories()
     : weaponAvailabilityComputerFactory_( new firing::WeaponAvailabilityComputerFactory() )
     , composantesAbleToBeFiredComputerFactory_( new firing::ComposantesAbleToBeFiredComputerFactory() )
+    , locationComputerFactory_( new location::LocationComputerFactory() )
+    , postureComputerFactory_( new posture::PostureComputerFactory() )
 {
     //NOTHING
 }

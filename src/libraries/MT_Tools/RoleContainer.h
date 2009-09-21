@@ -15,6 +15,7 @@
 #include "MT_Tools/Role_ABC.h"
 #include "tools/Extendable.h"
 #include "tools/InterfaceContainer.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 #include <boost/serialization/split_member.hpp>
 
 namespace tools

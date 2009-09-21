@@ -85,6 +85,5 @@ void AgentFactory::Initialize( MIL_AgentPion& pion, MIL_Automate& automate, cons
     automate.RegisterPion( pion );
 
     pion.GetRole< PHY_RoleInterface_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );
-    pion.GetRole< PHY_RoleInterface_Location >().Fly ( 0. );
 }
 

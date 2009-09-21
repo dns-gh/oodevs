@@ -14,11 +14,13 @@
 #include "MIL_AgentServer.h"
 #include "PHY_ActionFly.h"
 #include "Entities/MIL_Entity_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_EntityManager.h"
+
+#include "simulation_kernel/LocationComputer_ABC.h"
+#include "simulation_kernel/PostureComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Flying, "PHY_RoleAction_Flying" )
 
@@ -92,7 +94,7 @@ bool PHY_RoleAction_Flying::Land()
     if( !pActionFly_ ) 
         return false;
 
-    entity_.GetRole< PHY_RoleInterface_Location >().Fly( 0. );
+    rHeight_ = 0.;
     delete pActionFly_;
     pActionFly_ = 0;
     return true;
@@ -137,7 +139,7 @@ void PHY_RoleAction_Flying::Apply( MT_Float rHeight )
         bForceLanding_ = false;
     }
     else
-        entity_.GetRole< PHY_RoleInterface_Location  >().Fly( rHeight );
+        rHeight_ = rHeight;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,3 +177,25 @@ bool PHY_RoleAction_Flying::IsFlying() const
 {
     return pActionFly_ != 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Flying::Execute( location::LocationComputer_ABC& algorithm ) const
+{
+    algorithm.SetHeight( rHeight_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Flying::Execute( posture::PostureComputer_ABC& algorithm ) const
+{
+    if( rHeight_ == 0. )
+        algorithm.UnsetPostureMovement();
+    else
+        algorithm.SetPostureMovement();
+}
+

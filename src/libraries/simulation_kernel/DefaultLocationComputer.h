@@ -7,37 +7,45 @@
 //
 // *****************************************************************************
 
-#ifndef __WeaponAvailabilityComputer_ABC_h_
-#define __WeaponAvailabilityComputer_ABC_h_
+#ifndef __DefaultLocationComputer_h_
+#define __DefaultLocationComputer_h_
 
-class PHY_ComposantePion;
-class PHY_Weapon;
+#include "simulation_kernel/LocationComputer_ABC.h"
 
-namespace firing
+namespace location
 {
 
 // =============================================================================
-/** @class  WeaponAvailabilitycomputer_ABC
-    @brief  WeaponAvailabilitycomputer_ABC
+/** @class  DefaultLocationComputer
+    @brief  DefaultLocationComputer
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class WeaponAvailabilityComputer_ABC
+class DefaultLocationComputer : public LocationComputer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponAvailabilityComputer_ABC();
-    virtual ~WeaponAvailabilityComputer_ABC();
+             DefaultLocationComputer();
+    virtual ~DefaultLocationComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
+    virtual void Reset();
+    virtual void SetHeight( double height );
+    virtual double GetHeight();
     //@}
+
+private:
+    //! @name Attribute
+    //@{
+    double height_;
+    //@}
+
 };
 
 } // namespace firing
 
-#endif // __WeaponAvailabilityComputer_ABC_h_
+#endif // __DefaultLocationComputer_h_

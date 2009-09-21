@@ -32,28 +32,37 @@
 #include "Hla/HLA_UpdateFunctor.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
+#include "simulation_kernel/LocationComputer_ABC.h"
+#include "simulation_kernel/LocationComputerFactory_ABC.h"
+
+using namespace location;
+
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Location, "PHY_RolePion_Location" )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
+    const LocationComputerFactory_ABC* const locationComputerFactory = &role->locationComputerFactory_;
+    archive << pion
+            << locationComputerFactory;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-	archive >> pion;
-	::new( role )PHY_RolePion_Location( *pion );
+    LocationComputerFactory_ABC* locationComputerFactory;
+	archive >> pion
+            >> locationComputerFactory;
+	::new( role )PHY_RolePion_Location( *pion, *locationComputerFactory );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
+PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion, const location::LocationComputerFactory_ABC& locationComputerFactory )
     : pion_                     ( pion    )
     , vDirection_               (  0.,  0. )
     , vPosition_                ( -1., -1. )    //$$$ Devrait être 'NULL'
@@ -65,6 +74,7 @@ PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
     , bDirectionHasChanged_     ( true     )
     , bCurrentSpeedHasChanged_  ( true     )
     , bHeightHasChanged_        ( true     )
+    , locationComputerFactory_  ( locationComputerFactory)
 {
 }
 
@@ -192,40 +202,6 @@ void PHY_RolePion_Location::SetCurrentSpeed( MT_Float rSpeed )
         return;
     bCurrentSpeedHasChanged_ = true;
     rCurrentSpeed_           = rSpeed;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Location::Fly
-// Created: NLD 2004-10-04
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Location::Fly( MT_Float rHeight )
-{
-
-    if( rHeight == 0. )
-        pion_.GetRole< PHY_RoleInterface_Posture >().UnsetPostureMovement();
-    else
-    {
-        bHasMove_ = true;
-        pion_.GetRole< PHY_RoleInterface_Posture >().SetPostureMovement();
-    }
-
-    if( rHeight == rHeight_ )
-        return;
-
-    // For decontamination zone ... refaire
-    /*TER_Object_ABC::T_ObjectVector objectsColliding;
-    TER_Object_ABC::CIT_ObjectVector itObject;
-    TER_World::GetWorld().GetObjectManager().GetListAt( vPosition_, objectsColliding );
-    for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
-        NotifyMovingOutsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
-    */
-
-    SetHeight( rHeight );
-
-  /*
-    for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
-        NotifyMovingInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) ); 
-    */
 }
 
 // -----------------------------------------------------------------------------
@@ -516,8 +492,12 @@ void PHY_RolePion_Location::Update( bool bIsDead )
     if( bIsDead || !bHasMove_ )
     {
         Move( vPosition_, vDirection_, 0. );
-        Fly ( 0. );
     }
+
+    location::LocationComputer_ABC& locationComputer = locationComputerFactory_.Create();
+    pion_.Execute(locationComputer );
+    SetHeight( locationComputer.GetHeight() );
+
 }
 
 // -----------------------------------------------------------------------------

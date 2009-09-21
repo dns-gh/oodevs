@@ -13,9 +13,9 @@
 #define __PHY_RoleAction_IndirectFiring_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 
-class PHY_RoleInterface_FireTarget;
+class PHY_IndirectFireDotationClass;
+class PHY_DotationCategory;
 class MIL_AgentPion;
 class MIL_Effect_IndirectFire;
 

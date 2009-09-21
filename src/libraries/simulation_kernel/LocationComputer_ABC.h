@@ -7,37 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __WeaponAvailabilityComputer_ABC_h_
-#define __WeaponAvailabilityComputer_ABC_h_
+#ifndef __LocationComputer_ABC_h_
+#define __LocationComputer_ABC_h_
 
-class PHY_ComposantePion;
-class PHY_Weapon;
-
-namespace firing
+namespace location
 {
 
 // =============================================================================
-/** @class  WeaponAvailabilitycomputer_ABC
-    @brief  WeaponAvailabilitycomputer_ABC
+/** @class  LocationComputer_ABC
+    @brief  LocationComputer_ABC
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class WeaponAvailabilityComputer_ABC
+class LocationComputer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponAvailabilityComputer_ABC();
-    virtual ~WeaponAvailabilityComputer_ABC();
+             LocationComputer_ABC();
+    virtual ~LocationComputer_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
+    virtual void Reset() = 0;
+    virtual void SetHeight( double height ) = 0;
+    virtual double GetHeight() = 0;
     //@}
 };
 
 } // namespace firing
 
-#endif // __WeaponAvailabilityComputer_ABC_h_
+#endif // __LocationComputer_ABC_h_
