@@ -75,9 +75,6 @@ public:
     virtual bool HasChanged() const { return false; };
 
     // Override automatic postures
-    virtual void SetPostureMovement           () {};
-    virtual void UnsetPostureMovement         () {};
-
     virtual void EnableDiscreteMode () {};
     virtual void DisableDiscreteMode() {};
     //@}

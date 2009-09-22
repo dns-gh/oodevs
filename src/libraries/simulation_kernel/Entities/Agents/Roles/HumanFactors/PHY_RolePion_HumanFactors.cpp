@@ -15,6 +15,8 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
+#include "simulation_kernel/PostureComputer_ABC.h"
+
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_HumanFactors, "PHY_RolePion_HumanFactors" )
@@ -263,15 +265,6 @@ MT_Float PHY_RolePion_HumanFactors::ModifyPH( MT_Float rPH ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_HumanFactors::ModifyPostureTime
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_HumanFactors::ModifyPostureTime( MT_Float rTime ) const
-{
-    return rTime * pExperience_->GetCoefPostureTimeModificator() * pTiredness_->GetCoefPostureTimeModificator();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::GetSensorDistanceModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
@@ -298,4 +291,14 @@ const PHY_Tiredness& PHY_RolePion_HumanFactors::GetTiredness() const
 {
     assert( pTiredness_ );
     return *pTiredness_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::Execute
+// Created: MGD 2009-09-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_HumanFactors::Execute( posture::PostureComputer_ABC& algorithm ) const
+{
+    algorithm.AddCoefficientModifier( pExperience_->GetCoefPostureTimeModificator() );
+    algorithm.AddCoefficientModifier( pTiredness_->GetCoefPostureTimeModificator() );
 }

@@ -27,27 +27,34 @@ class DefaultPostureComputer : public PostureComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultPostureComputer();
+             DefaultPostureComputer( MT_Random& random );
     virtual ~DefaultPostureComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( const PHY_Posture& posture, bool bIsLoaded, bool bDiscreteModeEnabled );
+    virtual void Reset( Parameters& param );
     virtual void SetPostureMovement();
     virtual void UnsetPostureMovement();
-    virtual bool MustBeForce();
-    virtual const PHY_Posture& GetPosture();
+    virtual void AddCoefficientModifier( double coef );
+    virtual Results& Result();
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    void Update();
+    double GetPostureTime() const;
     //@}
 
 private:
     //! @name Attribute
     //@{
-    bool bIsLoaded_;
-    bool bDiscreteModeEnabled_;
-    bool bMustBeForce_;
-    const PHY_Posture* pCurrentPosture_;
-    const PHY_Posture* pNewPosture_;
+    Parameters* params_;
+    std::vector< double > coefficientsModifier_;
+    Results results_;
+
+    MT_Random& random_;
     //@}
 
 };

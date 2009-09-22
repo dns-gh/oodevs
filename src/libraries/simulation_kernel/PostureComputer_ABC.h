@@ -11,6 +11,7 @@
 #define __PostureComputer_ABC_h_
 
 class PHY_Posture;
+class PHY_UnitType;
 namespace posture
 {
 
@@ -24,6 +25,28 @@ class PostureComputer_ABC
 {
 
 public:
+
+    struct Parameters
+    {
+        const PHY_UnitType& unitType_;
+        const PHY_Posture& posture_;
+        bool bIsDead_;
+        double rCompletionPercentage_;
+        bool bIsLoaded_;
+        bool bDiscreteModeEnabled_;
+        double rStealthFactor_;
+        double rTimingFactor_;
+
+        Parameters( const PHY_UnitType& unitType, const PHY_Posture& posture );
+    };
+
+    struct Results
+    {
+        const PHY_Posture* newPosture_;
+        double postureCompletionPercentage_;
+        bool bIsStealth_;
+    };
+
     //! @name Constructors/Destructor
     //@{
              PostureComputer_ABC();
@@ -32,11 +55,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset( const PHY_Posture& posture, bool bIsLoaded, bool bDiscreteModeEnabled ) = 0;
+    virtual void Reset( Parameters& param ) = 0;
     virtual void SetPostureMovement() = 0;
     virtual void UnsetPostureMovement() = 0;
-    virtual bool MustBeForce() = 0;
-    virtual const PHY_Posture& GetPosture() = 0;
+    virtual void AddCoefficientModifier( double coef ) = 0;
+    virtual Results& Result() = 0;
     //@}
 };
 

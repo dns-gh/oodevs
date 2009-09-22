@@ -33,13 +33,19 @@ public:
 
     //! @name Operations
     //@{
-    virtual PostureComputer_ABC& Create( const PHY_Posture& posture, bool bIsLoaded, bool bDiscreteModeEnabled ) const;
+    virtual PostureComputer_ABC& Create( PostureComputer_ABC::Parameters& params ) const;
     //@}
 
 private:
     //! @name Operations
     //@{
     std::auto_ptr< PostureComputer_ABC > pPostureComputer_;
+    //@}
+
+private:
+    //! @name Attribute
+    //@{
+    MT_Random random_;
     //@}
 };
 

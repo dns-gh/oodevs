@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "PHY_RoleInterface_HumanFactors.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 namespace xml
 {
@@ -25,11 +26,17 @@ class PHY_Morale;
 class PHY_Experience;
 class PHY_Tiredness;
 
+namespace posture
+{
+    class PostureComputer_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePion_HumanFactors
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
+                                , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
 {
 
 public:
@@ -50,6 +57,7 @@ public:
     void Update    ( bool bIsDead );
     void Clean     ();
     bool HasChanged() const;
+    virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Main
@@ -71,7 +79,6 @@ public:
     MT_Float ModifyMaxSpeed              ( MT_Float rSpeed    ) const;
     MT_Float ModifyReloadingDuration     ( MT_Float rDuration ) const;
     MT_Float ModifyPH                    ( MT_Float rPH       ) const;
-    MT_Float ModifyPostureTime           ( MT_Float rTime     ) const;
     MT_Float GetSensorDistanceModificator() const;
      //@}
 

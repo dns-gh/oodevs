@@ -18,7 +18,7 @@ using namespace posture;
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
 PostureComputerFactory::PostureComputerFactory() 
-: pPostureComputer_( new DefaultPostureComputer() )
+: pPostureComputer_( new DefaultPostureComputer( random_ ) )
 {
 }
 
@@ -35,8 +35,8 @@ PostureComputerFactory::~PostureComputerFactory()
 // Name: PostureComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-PostureComputer_ABC& PostureComputerFactory::Create( const PHY_Posture& posture, bool bIsLoaded, bool bDiscreteModeEnabled ) const
+PostureComputer_ABC& PostureComputerFactory::Create( PostureComputer_ABC::Parameters& params ) const
 {
-    pPostureComputer_->Reset( posture, bIsLoaded, bDiscreteModeEnabled );
+    pPostureComputer_->Reset( params );
     return *pPostureComputer_;
 }

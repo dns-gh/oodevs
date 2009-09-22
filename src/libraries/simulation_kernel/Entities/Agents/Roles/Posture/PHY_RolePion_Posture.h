@@ -59,8 +59,6 @@ public:
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
 
     // Override automatic postures
-            void SetPostureMovement           ();
-            void UnsetPostureMovement         ();
     virtual void SetPosturePostePrepareGenie  ();
     virtual void UnsetPosturePostePrepareGenie();
 
@@ -113,7 +111,6 @@ public:
 private:
     //! @name Tools
     //@{
-    MT_Float GetPostureTime                   () const;
     void     ChangePosture                    ( const PHY_Posture& newPosture );
     void     ChangePostureCompletionPercentage( const MT_Float rNewPercentage );
     void     Uninstall                        ();

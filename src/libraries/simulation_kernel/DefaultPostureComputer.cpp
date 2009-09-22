@@ -11,6 +11,7 @@
 
 #include "simulation_kernel/DefaultPostureComputer.h"
 #include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "simulation_kernel/Entities/Agents/Units/PHY_UnitType.h"
 
 using namespace posture;
 
@@ -18,12 +19,9 @@ using namespace posture;
 // Name: DefaultPostureComputer::DefaultPostureComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-DefaultPostureComputer::DefaultPostureComputer()
-: bIsLoaded_( false )
-, bDiscreteModeEnabled_( false )
-, bMustBeForce_( false )
-, pCurrentPosture_( 0 )
-, pNewPosture_( 0 )
+DefaultPostureComputer::DefaultPostureComputer( MT_Random& random )
+: params_( 0 )
+, random_( random )
 {
 
 }
@@ -41,13 +39,14 @@ DefaultPostureComputer::~DefaultPostureComputer()
 // Name: DefaultPostureComputer::~DefaultPostureComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-void DefaultPostureComputer::Reset( const PHY_Posture& posture, bool bIsLoaded, bool bDiscreteModeEnabled )
+void DefaultPostureComputer::Reset( PostureComputer_ABC::Parameters& param )
 {
-    pCurrentPosture_ = &posture;
-    pNewPosture_ = 0;
-    bIsLoaded_ = bIsLoaded;
-    bDiscreteModeEnabled_ = bDiscreteModeEnabled;
-    bMustBeForce_ = false;
+    params_ = &param;
+    coefficientsModifier_.clear();
+
+    results_.newPosture_ = 0;
+    results_.postureCompletionPercentage_= param.rCompletionPercentage_;
+    results_.bIsStealth_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -56,13 +55,12 @@ void DefaultPostureComputer::Reset( const PHY_Posture& posture, bool bIsLoaded, 
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::SetPostureMovement()
 {
-    if( !bIsLoaded_ )
-        pNewPosture_ = &PHY_Posture::posteReflexe_;
-    else if( bDiscreteModeEnabled_ )
-        pNewPosture_ = &PHY_Posture::mouvementDiscret_;
+    if( !params_->bIsLoaded_ )
+        results_.newPosture_ = &PHY_Posture::posteReflexe_;
+    else if( params_->bDiscreteModeEnabled_ )
+        results_.newPosture_ = &PHY_Posture::mouvementDiscret_;
     else
-        pNewPosture_ = &PHY_Posture::mouvement_;
-    bMustBeForce_ = true;
+        results_.newPosture_ = &PHY_Posture::mouvement_;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,11 +69,10 @@ void DefaultPostureComputer::SetPostureMovement()
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::UnsetPostureMovement()
 {
-    if ( pCurrentPosture_ == &PHY_Posture::mouvement_ 
-        || pCurrentPosture_ == &PHY_Posture::mouvementDiscret_ )
+    if ( &params_->posture_ == &PHY_Posture::mouvement_ 
+        || &params_->posture_ == &PHY_Posture::mouvementDiscret_ )
     {
-        pNewPosture_ = &PHY_Posture::arret_;
-        bMustBeForce_ = true;
+        results_.newPosture_ = &PHY_Posture::arret_;
     }
 }
 
@@ -83,16 +80,74 @@ void DefaultPostureComputer::UnsetPostureMovement()
 // Name: DefaultPostureComputer::MustBeForce
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-bool DefaultPostureComputer::MustBeForce()
+void DefaultPostureComputer::AddCoefficientModifier( double coef )
 {
-    return bMustBeForce_;
+    coefficientsModifier_.push_back( coef );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DefaultPostureComputer::GetPosture
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-const PHY_Posture& DefaultPostureComputer::GetPosture()
+PostureComputer_ABC::Results& DefaultPostureComputer::Result()
 {
-    return *pNewPosture_;
+    Update();
+    return results_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::Update
+// Created: MGD 2009-09-22
+// -----------------------------------------------------------------------------
+void DefaultPostureComputer::Update()
+{
+    if( params_->bIsDead_ )
+    {
+        results_.newPosture_ = &PHY_Posture::arret_;
+        results_.postureCompletionPercentage_ = 1.;
+        results_.bIsStealth_ = false;
+        return;
+    }
+
+    // Mode furtif
+    results_.bIsStealth_ = !( random_.rand_oi( 0., 1. ) <= params_->rStealthFactor_ );
+
+    if( results_.postureCompletionPercentage_ == 1. )
+    {
+        const PHY_Posture* pNextAutoPosture = params_->posture_.GetNextAutoPosture();
+        if( !pNextAutoPosture )
+            return;
+        results_.newPosture_ = pNextAutoPosture;
+    }
+    else
+    {
+        const double rPostureTime = GetPostureTime();
+        double rNewPostureCompletionPercentage = results_.postureCompletionPercentage_;
+        if( rPostureTime )
+        {
+            rNewPostureCompletionPercentage += ( 1. / rPostureTime );
+            if( rNewPostureCompletionPercentage > 1. )
+                rNewPostureCompletionPercentage = 1.;
+        }
+        else
+            rNewPostureCompletionPercentage = 1.;
+
+        results_.postureCompletionPercentage_ = rNewPostureCompletionPercentage;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::GetPostureTime
+// Created: MGD 2009-09-22
+// -----------------------------------------------------------------------------
+double DefaultPostureComputer::GetPostureTime() const
+{
+    assert( params_->rTimingFactor_ > 0. );
+
+    double postureTime = params_->unitType_.GetPostureTime( params_->posture_ );
+    for( std::vector< double >::const_iterator it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); it++ )
+    {
+        postureTime *= *it;
+    }
+    return postureTime / params_->rTimingFactor_;
 }

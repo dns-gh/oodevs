@@ -17,6 +17,15 @@ using namespace posture;
 // Name: PostureComputer_ABC::PostureComputer_ABC
 // Created: MGD 2009-09-16
 // -----------------------------------------------------------------------------
+PostureComputer_ABC::Parameters::Parameters( const PHY_UnitType& unitType, const PHY_Posture& posture )
+    : unitType_( unitType )
+    , posture_( posture )
+{
+}
+// -----------------------------------------------------------------------------
+// Name: PostureComputer_ABC::PostureComputer_ABC
+// Created: MGD 2009-09-16
+// -----------------------------------------------------------------------------
 PostureComputer_ABC::PostureComputer_ABC()
 {
 

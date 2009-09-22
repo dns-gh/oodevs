@@ -27,8 +27,6 @@
 
 using namespace posture;
 
-MT_Random PHY_RolePion_Posture::random_;
-
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Posture, "PHY_RolePion_Posture" )
 
 static const MT_Float rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
@@ -141,19 +139,6 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) co
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::GetPostureTime
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Posture::GetPostureTime() const
-{
-    assert( pCurrentPosture_ );
-
-    assert( rTimingFactor_ > 0. );
-    
-    return pion_.GetRole< PHY_RoleInterface_HumanFactors >().ModifyPostureTime( pion_.GetType().GetUnitType().GetPostureTime( *pCurrentPosture_ ) ) / rTimingFactor_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::ChangePostureCompletionPercentage
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
@@ -197,71 +182,21 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 {
     Uninstall();
 
-    if( bIsDead )
-    {
-        ChangePosture                    ( PHY_Posture::arret_ );
-        ChangePostureCompletionPercentage( 1. );
-        bIsStealth_ = false;
-        return;
-    }
+    PostureComputer_ABC::Parameters params( pion_.GetType().GetUnitType(), *pCurrentPosture_ );
+    params.bIsDead_ = bIsDead;
+    params.rCompletionPercentage_ = rPostureCompletionPercentage_;
+    params.bIsLoaded_ = pion_.GetRole< PHY_RoleAction_Loading >().IsLoaded();
+    params.bDiscreteModeEnabled_ = bDiscreteModeEnabled_;
+    params.rStealthFactor_ = rStealthFactor_;
+    params.rTimingFactor_ = rTimingFactor_;
 
-    //@TODO MGD Move all posture update logique in PostureComputer
-    posture::PostureComputer_ABC& postureComputer = postureComputerFactory_.Create( *pCurrentPosture_, pion_.GetRole< PHY_RoleAction_Loading >().IsLoaded(), bDiscreteModeEnabled_ );
+    posture::PostureComputer_ABC& postureComputer = postureComputerFactory_.Create( params ); 
     pion_.Execute( postureComputer );
-    if( postureComputer.MustBeForce() )
-        ChangePosture( postureComputer.GetPosture() );
-
-    // Mode furtif
-    bIsStealth_ = !( random_.rand_oi( 0., 1. ) <= rStealthFactor_ );
-
-    if( rPostureCompletionPercentage_ == 1. )
-    {
-        assert( pCurrentPosture_ );
-        const PHY_Posture* pNextAutoPosture = pCurrentPosture_->GetNextAutoPosture();
-        if( !pNextAutoPosture )
-            return;
-        ChangePosture( *pNextAutoPosture );
-    }
-    else
-    {
-        const MT_Float rPostureTime                   = GetPostureTime();
-              MT_Float rNewPostureCompetionPercentage = rPostureCompletionPercentage_;
-        if( rPostureTime )
-        {
-            rNewPostureCompetionPercentage += ( 1. / rPostureTime );
-            if( rNewPostureCompetionPercentage > 1. )
-                rNewPostureCompetionPercentage = 1.;
-        }
-        else
-            rNewPostureCompetionPercentage = 1.;
-
-        ChangePostureCompletionPercentage( rNewPostureCompetionPercentage );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::SetPostureMovement
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SetPostureMovement()
-{
-    if( !pion_.GetRole< PHY_RoleAction_Loading >().IsLoaded() ) //$$$ bDummy pour l'infanterie ... a virer le jour ou le débarquement n'existera plus (1 pion INF => 2 pions)
-        ChangePosture( PHY_Posture::posteReflexe_ );
-    else if( bDiscreteModeEnabled_ )
-        ChangePosture( PHY_Posture::mouvementDiscret_ );
-    else
-        ChangePosture( PHY_Posture::mouvement_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::UnsetPostureMovement
-// Created: JVT 2004-09-28
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::UnsetPostureMovement()
-{
-    if ( pCurrentPosture_ == &PHY_Posture::mouvement_ 
-      || pCurrentPosture_ == &PHY_Posture::mouvementDiscret_ )
-        ChangePosture( PHY_Posture::arret_ );
+    PostureComputer_ABC::Results& result = postureComputer.Result(); 
+    if( result.newPosture_ )
+        ChangePosture( *result.newPosture_ );
+    ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
+    bIsStealth_ = result.bIsStealth_;
 }
 
 // -----------------------------------------------------------------------------
