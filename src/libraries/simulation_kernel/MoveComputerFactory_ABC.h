@@ -1,0 +1,40 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __MoveComputerFactory_ABC_h_
+#define __MoveComputerFactory_ABC_h_
+
+namespace moving
+{
+    class MoveComputer_ABC;
+// =============================================================================
+/** @class  MoveComputerFactory_ABC
+    @brief  MoveComputerFactory_ABC
+*/
+// Created: MGD 2009-08-13
+// =============================================================================
+class MoveComputerFactory_ABC : private boost::noncopyable
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             MoveComputerFactory_ABC();
+    virtual ~MoveComputerFactory_ABC();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual MoveComputer_ABC& Create() const = 0;
+    //@}
+};
+
+}
+
+#endif // __MoveComputerFactory_ABC_h_

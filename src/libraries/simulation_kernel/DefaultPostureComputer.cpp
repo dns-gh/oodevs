@@ -62,6 +62,7 @@ void DefaultPostureComputer::SetPostureMovement()
         pNewPosture_ = &PHY_Posture::mouvementDiscret_;
     else
         pNewPosture_ = &PHY_Posture::mouvement_;
+    bMustBeForce_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +73,10 @@ void DefaultPostureComputer::UnsetPostureMovement()
 {
     if ( pCurrentPosture_ == &PHY_Posture::mouvement_ 
         || pCurrentPosture_ == &PHY_Posture::mouvementDiscret_ )
+    {
         pNewPosture_ = &PHY_Posture::arret_;
+        bMustBeForce_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------

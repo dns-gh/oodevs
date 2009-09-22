@@ -40,6 +40,8 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Messages.h"
 
+#include "simulation_kernel/PostureComputer_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Moving, "PHY_RoleAction_Moving" )
 
 template< typename Archive >
@@ -63,6 +65,7 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Moving* role, const u
 PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
     : pion_                 ( pion )
     , pRoleLocation_         ( &pion_.GetRole< PHY_RoleInterface_Location >() )
+    , rSpeed_                ( 0.)
     , rSpeedModificator_     ( 1. )
     , rMaxSpeedModificator_  ( 1. )    
     , bCurrentPathHasChanged_( true )
@@ -421,6 +424,7 @@ const MT_Vector2D& PHY_RoleAction_Moving::GetDirection() const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float /*rWalkedDistance*/ )
 {
+    rSpeed_ = rSpeed;
     assert( pRoleLocation_ );
     return pRoleLocation_->Move( position, direction, rSpeed );
 }
@@ -600,3 +604,18 @@ void PHY_RoleAction_Moving::SetMaxSpeedModificator( MT_Float rFactor )
 {
     rMaxSpeedModificator_ = rFactor;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::Execute( posture::PostureComputer_ABC& algorithm ) const
+{
+    if( rSpeed_ == 0. )
+        algorithm.UnsetPostureMovement();
+    else
+    {
+        algorithm.SetPostureMovement();
+    }
+}
+

@@ -13,6 +13,7 @@
 #define __PHY_RoleAction_Moving_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 
 class PHY_RoleInterface_Location;
@@ -20,6 +21,10 @@ class MIL_AgentPion;
 class DEC_Knowledge_Object;
 class MIL_Object_ABC;
 
+namespace posture
+{
+    class PostureComputer_ABC;
+}
 // =============================================================================
 // @class  PHY_RoleAction_Moving
 // Created: JVT 2004-08-03
@@ -27,6 +32,7 @@ class MIL_Object_ABC;
 class PHY_RoleAction_Moving : public tools::Role_ABC
                             , public PHY_MovingEntity_ABC
                             , private boost::noncopyable
+                            , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
 {
 
 public:
@@ -50,6 +56,7 @@ public:
     void Update    ( bool bIsDead );
     void Clean     ();
     bool HasChanged() const;
+    virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Operations
@@ -125,6 +132,7 @@ private:
 private:
     MIL_AgentPion&              pion_;
     PHY_RoleInterface_Location* pRoleLocation_;
+    double                      rSpeed_;
     MT_Float                    rSpeedModificator_;
     MT_Float                    rMaxSpeedModificator_;
 

@@ -23,6 +23,14 @@ namespace posture
 {
     class PostureComputerFactory_ABC;
 }
+namespace dotation
+{
+    class ConsumptionComputerFactory_ABC;
+}
+namespace moving
+{
+    class MoveComputerFactory_ABC;
+}
 // =============================================================================
 /** @class  AlgorithmsFactories
     @brief  AlgorithmsFactories
@@ -45,6 +53,8 @@ public:
     std::auto_ptr< firing::ComposantesAbleToBeFiredComputerFactory_ABC > composantesAbleToBeFiredComputerFactory_;
     std::auto_ptr< posture::PostureComputerFactory_ABC > postureComputerFactory_;
     std::auto_ptr< location::LocationComputerFactory_ABC > locationComputerFactory_;
+    std::auto_ptr< dotation::ConsumptionComputerFactory_ABC > consumptionComputerFactory_;
+    std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
     //@}
 };
 

@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "PHY_RoleInterface_Dotations.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 namespace xml
 {
@@ -21,15 +22,25 @@ namespace xml
     class xistream;
 }
 
+namespace dotation
+{
+    class ConsumptionComputerFactory_ABC;
+}
+namespace moving
+{
+    class MoveComputer_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePion_Dotations
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
+                             , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
 {
 
 public:
-    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion );
+    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, const dotation::ConsumptionComputerFactory_ABC& consumptionComputerFactory );
     virtual ~PHY_RolePion_Dotations();
 
     //! @name CheckPoints
@@ -57,6 +68,7 @@ public:
     void Update    ( bool bIsDead );
     void Clean     ();
     bool HasChanged() const;
+    virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Dotations management
@@ -111,6 +123,8 @@ private:
     const PHY_ConsumptionType*  pCurrentConsumptionMode_;
     const PHY_ConsumptionType*  pPreviousConsumptionMode_;
           T_DotationReservedMap reservedConsumptions_;
+
+    const dotation::ConsumptionComputerFactory_ABC& consumptionComputerFactory_;
 
 	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
 	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );

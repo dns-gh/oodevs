@@ -215,13 +215,9 @@ void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vect
     SetPosition    ( vNewPosition  );
     SetDirection   ( vNewDirection );
 
-    if( rCurrentSpeed_ == 0. )
-        pion_.GetRole< PHY_RoleInterface_Posture >().UnsetPostureMovement();
-    else
-    {
+    //@TODO MGD see if bHasMove_ always usefull
+    if( rCurrentSpeed_ != 0. )
         bHasMove_ = true;
-        pion_.GetRole< PHY_RoleInterface_Posture >().SetPostureMovement();
-    }
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 
 #include "PHY_RoleInterface_Posture.h"
 #include "MT_Tools/MT_Random.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
@@ -25,12 +26,17 @@ namespace posture
 {
     class PostureComputerFactory_ABC;
 }
+namespace dotation
+{
+    class ConsumptionComputer_ABC;
+}
 
 // =============================================================================
 // @class  PHY_RolePion_Posture
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
+                           , public tools::AlgorithmModifier_ABC< dotation::ConsumptionComputer_ABC >
 {
 
 public:
@@ -50,6 +56,7 @@ public:
     void Update    ( bool bIsDead );
     void Clean     ();
     bool HasChanged() const;
+    virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
 
     // Override automatic postures
             void SetPostureMovement           ();

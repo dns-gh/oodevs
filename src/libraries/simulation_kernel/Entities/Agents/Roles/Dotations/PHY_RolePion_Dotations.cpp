@@ -30,33 +30,42 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.h>
 
+#include "simulation_kernel/ConsumptionComputer_ABC.h"
+#include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
+#include "simulation_kernel/MoveComputer_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
+    const dotation::ConsumptionComputerFactory_ABC* consumptionComputerFactory = &role->consumptionComputerFactory_;
+    archive << pion
+            << consumptionComputerFactory;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-	archive >> pion;
-	::new( role )PHY_RolePion_Dotations( *pion );
+    dotation::ConsumptionComputerFactory_ABC* consumptionComputerFactory;
+	archive >> pion
+            >> consumptionComputerFactory;
+	::new( role )PHY_RolePion_Dotations( *pion, *consumptionComputerFactory );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
+PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion, const dotation::ConsumptionComputerFactory_ABC& consumptionComputerFactory )
     : pion_                      ( pion )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
     , reservedConsumptions_      ()
     , pDotations_                ( 0 )
+    , consumptionComputerFactory_( consumptionComputerFactory )
 {
     pDotations_ = new PHY_DotationGroupContainer( *this );
     pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_ );
@@ -396,8 +405,11 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
         return;
 
     assert( pDotations_ );
-    if( !pCurrentConsumptionMode_ )
-        SetConsumptionMode( pion_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetConsumptionMode() );
+    
+    dotation::ConsumptionComputer_ABC& consumptionComputer = consumptionComputerFactory_.Create();
+    pion_.Execute( consumptionComputer );
+    SetConsumptionMode( consumptionComputer.Result() );
+
     pDotations_->ConsumeConsumptionReservations();
     pPreviousConsumptionMode_ = pCurrentConsumptionMode_;
     pCurrentConsumptionMode_  = 0;
@@ -543,4 +555,14 @@ void PHY_RolePion_Dotations::SendFullState( NET_ASN_MsgUnitAttributes& asn ) con
 {
     assert( pDotations_ );
     pDotations_->SendFullState( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::Execute( moving::MoveComputer_ABC& algorithm ) const
+{
+    if( pCurrentConsumptionMode_ != &PHY_ConsumptionType::moving_ )//@TODO MGD is it really a good modifier
+        algorithm.NotifyNoDotation();
 }

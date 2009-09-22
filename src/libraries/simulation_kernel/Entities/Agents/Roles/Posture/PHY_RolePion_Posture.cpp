@@ -23,6 +23,7 @@
 
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/PostureComputerFactory_ABC.h"
+#include "simulation_kernel/ConsumptionComputer_ABC.h"
 
 using namespace posture;
 
@@ -204,6 +205,12 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
         return;
     }
 
+    //@TODO MGD Move all posture update logique in PostureComputer
+    posture::PostureComputer_ABC& postureComputer = postureComputerFactory_.Create( *pCurrentPosture_, pion_.GetRole< PHY_RoleAction_Loading >().IsLoaded(), bDiscreteModeEnabled_ );
+    pion_.Execute( postureComputer );
+    if( postureComputer.MustBeForce() )
+        ChangePosture( postureComputer.GetPosture() );
+
     // Mode furtif
     bIsStealth_ = !( random_.rand_oi( 0., 1. ) <= rStealthFactor_ );
 
@@ -230,12 +237,6 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 
         ChangePostureCompletionPercentage( rNewPostureCompetionPercentage );
     }
-
-    //@TODO MGD Move all posture update logique in PostureComputer
-    posture::PostureComputer_ABC& postureComputer = postureComputerFactory_.Create( *pCurrentPosture_, pion_.GetRole< PHY_RoleAction_Loading >().IsLoaded(), bDiscreteModeEnabled_ );
-    pion_.Execute( postureComputer );
-    if( postureComputer.MustBeForce() )
-        ChangePosture( postureComputer.GetPosture() );
 }
 
 // -----------------------------------------------------------------------------
@@ -554,4 +555,13 @@ bool PHY_RolePion_Posture::IsInstalled() const
 bool PHY_RolePion_Posture::IsUninstalled() const
 {
     return rInstallationState_ <= 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Execute( dotation::ConsumptionComputer_ABC& algorithm ) const
+{
+    algorithm.SetConsumptionMode( GetCurrentPosture().GetConsumptionMode() );
 }

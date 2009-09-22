@@ -14,6 +14,8 @@
 #include "simulation_kernel/ComposantesAbleToBeFiredComputerFactory.h"
 #include "simulation_kernel/LocationComputerFactory.h"
 #include "simulation_kernel/PostureComputerFactory.h"
+#include "simulation_kernel/ConsumptionComputerFactory.h"
+#include "simulation_kernel/DefaultMoveComputer.h"
 
 // -----------------------------------------------------------------------------
 // Name: AlgorithmsFactories constructor
@@ -24,6 +26,8 @@ AlgorithmsFactories::AlgorithmsFactories()
     , composantesAbleToBeFiredComputerFactory_( new firing::ComposantesAbleToBeFiredComputerFactory() )
     , locationComputerFactory_( new location::LocationComputerFactory() )
     , postureComputerFactory_( new posture::PostureComputerFactory() )
+    , consumptionComputerFactory_( new dotation::ConsumptionComputerFactory() )
+    , moveComputerFactory_( new moving::DefaultMoveComputer() )
 {
     //NOTHING
 }
