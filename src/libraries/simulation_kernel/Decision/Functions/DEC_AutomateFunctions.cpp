@@ -228,7 +228,7 @@ float DEC_AutomateFunctions::PionTimeToMoveDistance( const DEC_Decision_ABC* pio
 bool DEC_AutomateFunctions::IsPionContaminated( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion )
 {
     assert( pPion && IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) );
-    return pPion->GetPion().GetRole< PHY_RoleInterface_NBC >().IsContaminated();
+    return pPion->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().IsContaminated();
 }
 
 // -----------------------------------------------------------------------------

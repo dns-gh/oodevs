@@ -13,7 +13,7 @@
 #define __PHY_RolePion_Composantes_h_
 
 #include "PHY_RoleInterface_Composantes.h"
-
+#include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 
 namespace xml
 {
@@ -27,6 +27,7 @@ namespace firing
     class ComposantesAbleToBeFiredComputer_ABC;
 }
 
+
 // =============================================================================
 // @class  PHY_RolePion_Composantes
 // Created: JVT 2004-08-03
@@ -34,6 +35,7 @@ namespace firing
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< firing::ComposantesAbleToBeFiredComputer_ABC >
+							   , public nbc::ToxicEffectHandler_ABC
 {
 
 
@@ -147,6 +149,7 @@ public:
     virtual void     ApplyExplosion                  ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
     virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination );
     virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination );
+
     virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;

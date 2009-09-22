@@ -176,7 +176,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { PHY_RolePion_Humans           * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Composantes      * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Perceiver        * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_NBC              * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { nbc::PHY_RolePion_NBC         * pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RolePion_Communications   * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_HumanFactors     * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Transported      * pRole; file >> pRole; RegisterRole( pRole ); } 
@@ -220,7 +220,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     SaveRole< PHY_RolePion_Humans            >( *this, file );
     SaveRole< PHY_RolePion_Composantes       >( *this, file );
     SaveRole< PHY_RolePion_Perceiver         >( *this, file );
-    SaveRole< PHY_RolePion_NBC               >( *this, file );
+    SaveRole< nbc::PHY_RolePion_NBC          >( *this, file );
     SaveRole< PHY_RolePion_Communications    >( *this, file );
     SaveRole< PHY_RolePion_HumanFactors      >( *this, file );
     SaveRole< PHY_RolePion_Transported       >( *this, file );
@@ -367,7 +367,7 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< PHY_RolePion_Posture           >().Update( bIsDead );
     GetRole< PHY_RolePion_Reinforcement     >().Update( bIsDead );
     GetRole< PHY_RolePion_Location          >().Update( bIsDead );
-    GetRole< PHY_RolePion_NBC               >().Update( bIsDead );
+    GetRole< nbc::PHY_RolePion_NBC          >().Update( bIsDead );
     GetRole< PHY_RolePion_Communications    >().Update( bIsDead );
     GetRole< PHY_RolePion_HumanFactors      >().Update( bIsDead );
     GetRole< PHY_RolePion_Transported       >().Update( bIsDead );
@@ -435,7 +435,7 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RolePion_Composantes       >().Clean();
     GetRole< PHY_RolePion_Posture           >().Clean();
     GetRole< PHY_RolePion_Reinforcement     >().Clean();
-    GetRole< PHY_RolePion_NBC               >().Clean();
+    GetRole< nbc::PHY_RolePion_NBC          >().Clean();
     GetRole< PHY_RolePion_Communications    >().Clean();
     GetRole< PHY_RolePion_HumanFactors      >().Clean();
     GetRole< PHY_RoleInterface_Surrender    >().Clean();
@@ -726,7 +726,7 @@ void MIL_AgentPion::OnReceiveMsgResupplyAll()
     if( role )
         role->ResupplyStocks();
     GetRole< PHY_RolePion_Humans      >().HealAllHumans       ();
-    GetRole< PHY_RolePion_NBC         >().Decontaminate       ();
+    GetRole< nbc::PHY_RolePion_NBC    >().Decontaminate       ();
 }
 
 // -----------------------------------------------------------------------------
@@ -892,7 +892,7 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "type" , false, GetType().GetName() );
     const bool bUpdateStatuses = GetRole< PHY_RolePion_Composantes      >().HasChanged()
                               || GetRole< PHY_RolePion_Communications   >().HasChanged()
-                              || GetRole< PHY_RolePion_NBC              >().HasChanged()
+                              || GetRole< nbc::PHY_RolePion_NBC         >().HasChanged()
                               || GetRole< PHY_RolePion_Posture          >().HLAStatusHasChanged()
                               || GetRole< PHY_RoleInterface_Transported >().HasChanged()
                               || GetRole< PHY_RoleInterface_Surrender   >().HasChanged()
@@ -907,7 +907,7 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
         statuses.push_back( "neutralise" );
     if( ! GetRole< PHY_RolePion_Communications >().CanCommunicate() )
         statuses.push_back( "brouille" );
-    if( GetRole< PHY_RolePion_NBC >().IsContaminated() )
+    if( GetRole< nbc::PHY_RolePion_NBC >().IsContaminated() )
         statuses.push_back( "contamine" );
     if( GetRole< PHY_RolePion_Posture >().IsStealth() )
         statuses.push_back( "furtif" );

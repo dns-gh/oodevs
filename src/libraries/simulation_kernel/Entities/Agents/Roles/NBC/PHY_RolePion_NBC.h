@@ -19,6 +19,9 @@ class MIL_ToxicEffectManipulator;
 class MIL_NbcAgentType;
 class MIL_AgentPion;
 
+namespace nbc
+{
+
 // =============================================================================
 // @class  PHY_RolePion_NBC
 // Created: JVT 2004-08-03
@@ -86,5 +89,7 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ );
 
 };
+
+}
 
 #endif // __PHY_RolePion_NBC_h_

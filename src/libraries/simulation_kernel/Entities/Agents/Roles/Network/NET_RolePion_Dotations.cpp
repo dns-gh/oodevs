@@ -98,7 +98,7 @@ bool NET_RolePion_Dotations::DataUpdated() const
         || pPion_->GetRole< PHY_RoleInterface_Location          >().HasLocationChanged()
         || pPion_->GetRole< PHY_RoleInterface_Location          >().HasSpeedChanged()
         || pPion_->GetRole< PHY_RoleInterface_Reinforcement     >().HasChanged()
-        || pPion_->GetRole< PHY_RoleInterface_NBC               >().HasChanged()
+        || pPion_->GetRole< nbc::PHY_RoleInterface_NBC          >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_Communications    >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_Transported       >().HasChanged()
         || pPion_->GetRole< PHY_RoleAction_Transport            >().HasChanged()
@@ -185,7 +185,7 @@ void NET_RolePion_Dotations::SendChangedState() const
     pPion_->GetRole< PHY_RoleInterface_Composantes      >().SendChangedState( msg ); // Etat ops
     pPion_->GetRole< PHY_RoleInterface_Reinforcement    >().SendChangedState( msg ); // Reinforcement
     pPion_->GetRole< PHY_RoleAction_Loading             >().SendChangedState( msg ); // Loading state
-    pPion_->GetRole< PHY_RoleInterface_NBC              >().SendChangedState( msg ); // NBC state
+    pPion_->GetRole< nbc::PHY_RoleInterface_NBC         >().SendChangedState( msg ); // NBC state
     pPion_->GetRole< PHY_RoleInterface_Communications   >().SendChangedState( msg ); // Brouillage / silence radio
     pPion_->GetRole< PHY_RoleInterface_HumanFactors     >().SendChangedState( msg );
     pPion_->GetRole< PHY_RoleInterface_Transported      >().SendChangedState( msg );
@@ -252,7 +252,7 @@ void NET_RolePion_Dotations::SendFullState() const
     pPion_->GetRole< PHY_RoleInterface_Reinforcement    >().SendFullState( msg ); // Reinforcement
     pPion_->GetRole< PHY_RoleAction_Loading             >().SendFullState( msg ); // Loading state
     pPion_->GetRole< DEC_RolePion_Decision              >().SendFullState( msg ); // Dec states
-    pPion_->GetRole< PHY_RoleInterface_NBC              >().SendFullState( msg ); // NBC state
+    pPion_->GetRole< nbc::PHY_RoleInterface_NBC         >().SendFullState( msg ); // NBC state
     pPion_->GetRole< PHY_RoleInterface_Communications   >().SendFullState( msg ); // Brouillage
     pPion_->GetRole< PHY_RoleInterface_HumanFactors     >().SendFullState( msg );
     pPion_->GetRole< PHY_RoleInterface_Transported      >().SendFullState( msg );

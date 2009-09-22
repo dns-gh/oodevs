@@ -17,6 +17,9 @@
 class MIL_ToxicEffectManipulator;
 class NET_ASN_MsgUnitAttributes;
 
+namespace nbc
+{
+
 // =============================================================================
 // @class  PHY_RoleInterface_NBC
 // Created: JVT 2004-08-03
@@ -65,12 +68,14 @@ public:
 private:
     //! @name Serialization
 	//@{
-	friend class boost::serialization::access;
+	friend class ::boost::serialization::access;
 	template< typename Archive > void serialize( Archive& ar, const uint )
 	{
-		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+		ar & ::boost::serialization::base_object< ::tools::Role_ABC >( *this );
 	}
 	//@}
 };
+
+}
 
 #endif // __PHY_RoleInterface_NBC_h_

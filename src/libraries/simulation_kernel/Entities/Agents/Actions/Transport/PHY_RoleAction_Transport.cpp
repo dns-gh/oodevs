@@ -15,7 +15,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -322,22 +321,30 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
         }
     }       
 }
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::ApplyContamination
+// Created: AHC 2009-09-22
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::ApplyContamination  ( const MIL_ToxicEffectManipulator& contamination )
+{
+	MT_Float rWeightDamaged = rWeightTransported_;
+	for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )
+	{
+		if( it->second.rTransportedWeight_ )
+		{
+			rWeightDamaged -= it->second.rTransportedWeight_;
+			(*it->first).Apply(& nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination);
+		}
+	}
+}
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Transport::NotifyComposanteContaminated
-// Created: NLD 2004-11-24
+// Name: PHY_RoleAction_Transport::ApplyPoisonous
+// Created: AHC 2009-09-22
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::NotifyComposanteContaminated( const MIL_ToxicEffectManipulator& nbcAgent )
+void PHY_RoleAction_Transport::ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination )
 {
-    MT_Float rWeightDamaged = rWeightTransported_;
-    for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )
-    {
-        if( it->second.rTransportedWeight_ )
-        {
-            rWeightDamaged -= it->second.rTransportedWeight_;
-            (*it->first).GetRole< PHY_RoleInterface_NBC >().Contaminate( nbcAgent );
-        }
-    }
+	// nothing ??
 }
 
 // -----------------------------------------------------------------------------

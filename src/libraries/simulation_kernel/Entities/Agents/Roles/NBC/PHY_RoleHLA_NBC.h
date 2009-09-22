@@ -18,7 +18,7 @@
 */
 // Created: AGE 2004-11-09
 // =============================================================================
-class PHY_RoleHLA_NBC : public PHY_RoleInterface_NBC
+class PHY_RoleHLA_NBC : public nbc::PHY_RoleInterface_NBC
 {
 
 public:

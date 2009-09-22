@@ -20,7 +20,7 @@
 // =============================================================================
 class MockRoleNBC
     : public mockpp::ChainableMockObject
-    , public PHY_RoleInterface_NBC
+    , public nbc::PHY_RoleInterface_NBC
 {
 public:
     
@@ -28,7 +28,7 @@ public:
     //@{
     MockRoleNBC( )
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockRoleNBC" ) )
-        , PHY_RoleInterface_NBC( )
+        , nbc::PHY_RoleInterface_NBC( )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsContaminated )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Poison )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Contaminate )

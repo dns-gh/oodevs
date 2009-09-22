@@ -13,6 +13,7 @@
 #define __PHY_RoleAction_Transport_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_Agent_ABC;
@@ -20,11 +21,14 @@ class MIL_AgentPion;
 class PHY_ComposantePion;
 class MIL_ToxicEffectManipulator;
 
+
+
 // =============================================================================
 // @class  PHY_RoleAction_Transport
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Transport : public tools::Role_ABC
+							   , public nbc::ToxicEffectHandler_ABC
                                , private boost::noncopyable
 {
 
@@ -55,7 +59,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_Transport( MIL_AgentPion& pion );
+    explicit PHY_RoleAction_Transport( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Transport();
 
     //! @name CheckPoints
@@ -99,7 +103,9 @@ public:
     //! @name Notifications on transporter
     //@{
     void NotifyComposanteChanged     ( const PHY_ComposantePion& composante );
-    void NotifyComposanteContaminated( const MIL_ToxicEffectManipulator& nbcAgent );
+    //void NotifyComposanteContaminated( const MIL_ToxicEffectManipulator& nbcAgent );
+    virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination ) ;
+    virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination ) ;
     //@}
 
     //! @name Network

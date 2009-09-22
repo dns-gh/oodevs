@@ -12,6 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleInterface_NBC.h"
 
+namespace nbc
+{
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_NBC constructor
 // Created: JVT 2005-03-30
@@ -28,4 +31,6 @@ PHY_RoleInterface_NBC::PHY_RoleInterface_NBC()
 PHY_RoleInterface_NBC::~PHY_RoleInterface_NBC()
 {
     // NOTHING
+}
+
 }

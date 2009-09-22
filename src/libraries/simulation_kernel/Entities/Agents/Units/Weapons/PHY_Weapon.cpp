@@ -147,7 +147,7 @@ MT_Float PHY_Weapon::GetMinRangeToIndirectFire() const
 inline
 MT_Float PHY_Weapon::ModifyReloadingDuration( const MIL_AgentPion& firer, MT_Float rDuration ) const
 {
-    rDuration = firer.GetRole< PHY_RoleInterface_NBC            >().ModifyReloadingDuration( rDuration );
+    rDuration = firer.GetRole< nbc::PHY_RoleInterface_NBC            >().ModifyReloadingDuration( rDuration );
     rDuration = firer.GetRole< PHY_RoleInterface_Communications >().ModifyReloadingDuration( rDuration );
     rDuration = firer.GetRole< PHY_RoleInterface_HumanFactors   >().ModifyReloadingDuration( rDuration );
     rDuration = firer.GetRole< PHY_RoleInterface_Population     >().ModifyReloadingDuration( rDuration );

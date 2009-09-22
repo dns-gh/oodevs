@@ -102,7 +102,7 @@ void DecontaminationCapacity::Update( Object& object, uint /*time*/ )
 // -----------------------------------------------------------------------------
 bool DecontaminationCapacity::Decontaminate( Object& object, MIL_Agent_ABC& agent )
 {
-    PHY_RoleInterface_NBC& roleNBC = agent.GetRole< PHY_RoleInterface_NBC >();
+    nbc::PHY_RoleInterface_NBC& roleNBC = agent.GetRole< nbc::PHY_RoleInterface_NBC >();
     if ( !roleNBC.IsContaminated() )
         return true;
 

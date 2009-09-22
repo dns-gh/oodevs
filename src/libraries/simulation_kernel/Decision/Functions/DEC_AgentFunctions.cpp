@@ -74,7 +74,7 @@ bool DEC_AgentFunctions::IsNeutralized( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::WearNbcProtectionSuit( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_NBC >().WearNbcProtectionSuit();
+    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().WearNbcProtectionSuit();
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void DEC_AgentFunctions::WearNbcProtectionSuit( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::RemoveNbcProtectionSuit( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_NBC >().RemoveNbcProtectionSuit();
+    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().RemoveNbcProtectionSuit();
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void DEC_AgentFunctions::RemoveNbcProtectionSuit( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::SelfDecontaminate( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_NBC >().Decontaminate();
+    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().Decontaminate();
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ void DEC_AgentFunctions::DeactivateBlackout( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsContaminated( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_NBC >().IsContaminated();
+    return callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().IsContaminated();
 }
 
 // -----------------------------------------------------------------------------

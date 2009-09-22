@@ -12,14 +12,57 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_NBC.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
+#include "ToxicEffectHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_NBC, "PHY_RolePion_NBC" )
+BOOST_CLASS_EXPORT_GUID( nbc::PHY_RolePion_NBC, "PHY_RolePion_NBC" )
+
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+namespace boost
+{
+    namespace serialization
+    {
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const uint nVersion )
+        {
+            split_free( file, set, nVersion );
+        }
+
+        template< typename Archive >
+        void save( Archive& file, const nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const uint )
+        {
+            unsigned size = set.size();
+            file << size;
+            for ( nbc::PHY_RolePion_NBC::CIT_NbcAgentTypeSet it = set.begin(); it != set.end(); ++it )
+            {
+                unsigned id = (*it)->GetID();
+                file << id;
+            }
+        }
+
+        template< typename Archive >
+        void load( Archive& file, nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const uint )
+        {
+            uint nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                uint nID;
+                file >> nID;
+                set.insert( MIL_NbcAgentType::Find( nID ) );
+            }
+        }
+    }
+}
+
+namespace nbc
+{
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ )
@@ -60,47 +103,6 @@ PHY_RolePion_NBC::~PHY_RolePion_NBC()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive > 
-        inline
-        void serialize( Archive& file, PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const uint nVersion )
-        {
-            split_free( file, set, nVersion );
-        }
-        
-        template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const uint )
-        {
-            unsigned size = set.size();
-            file << size;
-            for ( PHY_RolePion_NBC::CIT_NbcAgentTypeSet it = set.begin(); it != set.end(); ++it )
-            {
-                unsigned id = (*it)->GetID();
-                file << id;
-            }
-        }
-        
-        template< typename Archive >
-        void load( Archive& file, PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const uint )
-        {
-            uint nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                uint nID;
-                file >> nID;
-                set.insert( MIL_NbcAgentType::Find( nID ) );
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::serialize
 // Created: JVT 2005-03-30
@@ -108,7 +110,7 @@ namespace boost
 template< typename Archive >
 void PHY_RolePion_NBC::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
+    file & ::boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
 		 & nbcAgentTypesContaminating_
          & bNbcProtectionSuitWorn_
          & rContaminationState_;
@@ -123,7 +125,7 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
     if( bNbcProtectionSuitWorn_ )
         return;
 
-    pion_.GetRole< PHY_RoleInterface_Composantes >().ApplyPoisonous( contamination );
+    pion_.Apply(& nbc::ToxicEffectHandler_ABC::ApplyPoisonous, contamination);
 }
 
 // -----------------------------------------------------------------------------
@@ -135,9 +137,8 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
 	if( contamination.GetQuantity() < 1e-15 ) // TODO
 		return;
     
-    pion_.GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( contamination );
     if( ! bNbcProtectionSuitWorn_ )
-        pion_.GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
+    	pion_.Apply(& nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination);
 
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     
@@ -310,4 +311,6 @@ void PHY_RolePion_NBC::Clean()
 bool PHY_RolePion_NBC::HasChanged() const
 {
     return bHasChanged_;
+}
+
 }

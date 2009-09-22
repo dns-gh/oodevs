@@ -331,7 +331,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories&
     pion.RegisterRole< PHY_RolePion_Humans            >( pion );
     pion.RegisterRole< PHY_RolePion_Composantes       >( pion );
     pion.RegisterRole< PHY_RolePion_Perceiver         >( pion );
-    pion.RegisterRole< PHY_RolePion_NBC               >( pion );
+    pion.RegisterRole< nbc::PHY_RolePion_NBC          >( pion );
     pion.RegisterRole< PHY_RolePion_Communications    >( pion );
     pion.RegisterRole< PHY_RolePion_HumanFactors      >();
     pion.RegisterRole< PHY_RolePion_Transported       >( pion );

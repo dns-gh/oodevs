@@ -111,12 +111,12 @@ void IntoxicationCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& ag
         if( pAttribute )
         {
             MIL_ToxicEffectManipulator contamination( pAttribute->GetContaminationEffect( *pNBC, position ) );
-            agent.GetRole< PHY_RoleInterface_NBC >().Poison( contamination );
+            agent.GetRole< nbc::PHY_RoleInterface_NBC >().Poison( contamination );
         }
         else
         {
             MIL_ToxicEffectManipulator contamination( object.GetAttribute< NBCAttribute >().GetNBCAgents(), 1 );
-            agent.GetRole< PHY_RoleInterface_NBC >().Poison( contamination );
+            agent.GetRole< nbc::PHY_RoleInterface_NBC >().Poison( contamination );
         }
     }
 }

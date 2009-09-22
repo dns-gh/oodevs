@@ -102,7 +102,7 @@ void PHY_RoleAction_Moving::serialize( Archive& file, const uint )
 MT_Float PHY_RoleAction_Moving::ApplyMaxSpeedModificators( MT_Float rSpeed ) const
 {
 
-    rSpeed  = pion_.GetRole< PHY_RoleInterface_NBC          >().ModifyMaxSpeed( rSpeed );
+    rSpeed  = pion_.GetRole< nbc::PHY_RoleInterface_NBC     >().ModifyMaxSpeed( rSpeed );
     rSpeed  = pion_.GetRole< PHY_RoleInterface_HumanFactors >().ModifyMaxSpeed( rSpeed );
     rSpeed  = pion_.GetRole< PHY_RoleInterface_Population   >().ModifyMaxSpeed( rSpeed );
     rSpeed *= rMaxSpeedModificator_;

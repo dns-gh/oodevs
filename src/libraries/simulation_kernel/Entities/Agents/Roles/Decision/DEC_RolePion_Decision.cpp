@@ -1595,7 +1595,7 @@ bool DEC_RolePion_Decision::IsMoving() const
 // -----------------------------------------------------------------------------
 bool DEC_RolePion_Decision::IsContaminated() const
 {
-    return GetPion().GetRole< PHY_RoleInterface_NBC >().IsContaminated();
+    return GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().IsContaminated();
 }
 
 // -----------------------------------------------------------------------------
