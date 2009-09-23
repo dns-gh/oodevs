@@ -24,6 +24,9 @@
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
+#include "simulation_kernel/DetectionComputer_ABC.h"
+#include "simulation_kernel/DetectionComputerFactory_ABC.h"
+
 
 namespace
 {
@@ -199,7 +202,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MT_Vec
 // Name: PHY_PerceptionRecoSurveillance::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
+void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     
@@ -210,7 +213,12 @@ void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVec
         for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-            if( target.GetRole< PHY_RoleInterface_Posture >().CanBePerceived( perceiver_.GetPion() ) )
+
+            detection::DetectionComputer_ABC& detectionComputer = detectionComputerFactory.Create( target );
+            perceiver_.GetPion().Execute( detectionComputer );
+            target.Execute( detectionComputer );
+
+            if( detectionComputer.CanBeSeen() )
                 perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
     }
@@ -222,8 +230,6 @@ void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVec
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MIL_Agent_ABC& agent ) const
 {
-    if( !agent.GetRole< PHY_RoleInterface_Posture >().CanBePerceived( perceiver_.GetPion() ) )
-        return PHY_PerceptionLevel::notSeen_;
     return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
 

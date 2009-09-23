@@ -52,6 +52,11 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 
+#include "simulation_kernel/DetectionComputer_ABC.h"
+#include "simulation_kernel/DetectionComputerFactory_ABC.h"
+
+using namespace detection;
+
 const uint PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Perceiver, "PHY_RolePion_Perceiver" )
@@ -60,23 +65,28 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
+    const DetectionComputerFactory_ABC* const detectionComputerFactory = &role->detectionComputerFactory_;
+    archive << pion
+            << detectionComputerFactory;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_Perceiver( *pion );
+    DetectionComputerFactory_ABC* detectionComputerFactory;
+    archive >> pion
+            >> detectionComputerFactory;
+    ::new( role )PHY_RolePion_Perceiver( *pion, *detectionComputerFactory );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion )
+PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
     : pion_                        ( pion )
+    , detectionComputerFactory_    ( detectionComputerFactory )
     , rMaxAgentPerceptionDistance_ ( 0. )
     , rMaxObjectPerceptionDistance_( 0. )
     , bPeriphericalVisionEnabled_  ( false )
@@ -564,7 +574,6 @@ void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
-
     return    rMaxAgentPerceptionDistance_ 
             * pion_.GetRole< PHY_RoleInterface_Posture      >().GetElongationFactor() 
             * pion_.GetRole< PHY_RoleInterface_HumanFactors >().GetSensorDistanceModificator();
@@ -901,8 +910,9 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 
         TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableAgents );
+        
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableAgents );
+            (**itPerception).Execute( perceivableAgents, detectionComputerFactory_ );
         
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( pion_.GetRole< PHY_RoleInterface_Location>().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );
@@ -1047,16 +1057,6 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 {
 
     return pion_.GetKnowledge().IsIdentified( agent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::WasPerceived
-// Created: NLD 2004-09-14
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Perceiver::WasPerceived( const MIL_Agent_ABC& agent  ) const
-{
-
-    return pion_.GetKnowledge().WasPerceived( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1249,7 +1249,7 @@ bool PHY_RolePion_Perceiver::IsPeriphericalVisionEnabled() const
 // Name: PHY_RolePion_Perceiver::GetPion
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const MIL_AgentPion& PHY_RolePion_Perceiver::GetPion() const
+MIL_AgentPion& PHY_RolePion_Perceiver::GetPion() const
 {
 
     return pion_;
@@ -1349,4 +1349,14 @@ const PHY_RolePion_Perceiver::T_SurfaceObjectMap& PHY_RolePion_Perceiver::GetSur
 const PHY_RolePion_Perceiver::T_RadarSet& PHY_RolePion_Perceiver::GetRadars( const PHY_RadarClass& radarClass )
 {
     return radars_[ &radarClass ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::Execute
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorithm ) const
+{
+    if( algorithm.GetTarget() != pion_ && pion_.GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
+        algorithm.AlreadyPerceived();
 }

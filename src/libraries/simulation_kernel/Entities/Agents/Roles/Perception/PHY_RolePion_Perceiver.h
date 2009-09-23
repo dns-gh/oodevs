@@ -14,13 +14,20 @@
 
 #include "PHY_RoleInterface_Perceiver.h"
 
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
+namespace detection
+{
+    class DetectionComputerFactory_ABC;
+    class DetectionComputer_ABC;
+}
 // =============================================================================
 // @class  PHY_RolePion_Perceiver
 // Created: JVT 2004-08-03
 // Modified: JVT 2004-10-28
 // =============================================================================
 class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
+                             , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
 {
 
 public:
@@ -42,7 +49,7 @@ public:
     //@}
 
 public:
-    explicit PHY_RolePion_Perceiver( MIL_AgentPion& pion );
+    explicit PHY_RolePion_Perceiver( MIL_AgentPion& pion, const detection::DetectionComputerFactory_ABC& detectionComputerFactory );
     virtual ~PHY_RolePion_Perceiver();
 
     //! @name CheckPoints
@@ -76,6 +83,8 @@ public:
 
             bool HasRadarStateChanged() const;
     virtual bool IsUsingActiveRadar  () const;
+
+    virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Perceptions
@@ -125,14 +134,13 @@ public:
     //! @name Tools
     //@{
     const MIL_KnowledgeGroup& GetKnowledgeGroup            () const;
-    const MIL_AgentPion&      GetPion                      () const;
+          MIL_AgentPion&      GetPion                      () const;
           MT_Float            GetMaxAgentPerceptionDistance() const;
           void                GetMainPerceptionDirection   ( MT_Vector2D& vDirection ) const;
 
     bool IsPeriphericalVisionEnabled() const;
     bool IsKnown                    ( const MIL_Agent_ABC&               agent         ) const;
     bool IsIdentified               ( const MIL_Agent_ABC&               agent         ) const;
-    bool WasPerceived               ( const MIL_Agent_ABC&               agent         ) const;
     bool IsKnown                    ( const MIL_Object_ABC&              object        ) const;
     bool IsIdentified               ( const MIL_Object_ABC&              object        ) const;
     bool IsIdentified               ( const MIL_PopulationConcentration& concentration ) const;
@@ -201,6 +209,8 @@ private:
 
     bool bHasChanged_;
     bool bRadarStateHasChanged_;
+
+    const detection::DetectionComputerFactory_ABC& detectionComputerFactory_;
 
 private:
     static const uint nNbrStepsBetweenPeriphericalVision_;

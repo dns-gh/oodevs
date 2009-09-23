@@ -13,10 +13,15 @@
 #define __PHY_RoleAction_Loading_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class MIL_Agent_ABC;
 class NET_ASN_MsgUnitAttributes;
 
+namespace posture
+{
+    class PostureComputer_ABC;
+}
 namespace transport
 {
 
@@ -26,6 +31,7 @@ namespace transport
 // =============================================================================
 class PHY_RoleAction_Loading : public tools::Role_ABC
                              , private boost::noncopyable
+                             , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
 {
 
 public:
@@ -48,6 +54,7 @@ public:
     void Update    ( bool bIsDead );
     void Clean     ();
     bool HasChanged() const;
+    virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Operations

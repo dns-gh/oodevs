@@ -16,6 +16,8 @@
 
 #include "PHY_RoleInterface_Location.h"
 
+#include "MT_Tools/AlgorithmModifier_ABC.h"
+
 class MIL_AgentPion;
 
 namespace location
@@ -62,6 +64,7 @@ public:
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
     virtual void NotifyPutInsideObject    ( MIL_Object_ABC& object );
     virtual void NotifyPutOutsideObject   ( MIL_Object_ABC& object );
+
     //@}
 
     //! @name Accessors

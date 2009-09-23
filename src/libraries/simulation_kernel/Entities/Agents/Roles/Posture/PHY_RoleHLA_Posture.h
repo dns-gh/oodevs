@@ -11,11 +11,18 @@
 #define __PHY_RoleHLA_Posture_h_
 
 #include "PHY_RoleInterface_Posture.h"
+
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "hla/Deserializer.h"
 
 namespace hla 
 {
     class AttributeIdentifier;
+}
+
+namespace detection
+{
+    class DetectionComputer_ABC;
 }
 
 class MIL_Agent_ABC;
@@ -27,6 +34,7 @@ class MIL_Agent_ABC;
 // Created: AGE 2004-11-09
 // =============================================================================
 class PHY_RoleHLA_Posture : public PHY_RoleInterface_Posture
+                          , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
 {
 
 public:
@@ -41,12 +49,13 @@ public:
     virtual const PHY_Posture& GetLastPosture                () const;
     virtual const PHY_Posture& GetCurrentPosture             () const;
     virtual       MT_Float     GetPostureCompletionPercentage() const;    
-    virtual       bool         CanBePerceived                ( const MIL_AgentPion& perceiver ) const;
     virtual       void         SetPosturePostePrepareGenie   ();
     virtual       void         UnsetPosturePostePrepareGenie ();
     virtual       void         SetTimingFactor               ( MT_Float rFactor );
     
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
+
+    virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Modifiers

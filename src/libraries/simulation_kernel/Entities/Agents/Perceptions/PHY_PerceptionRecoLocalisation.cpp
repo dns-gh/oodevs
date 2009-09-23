@@ -20,6 +20,9 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_World.h"
 
+#include "simulation_kernel/DetectionComputer_ABC.h"
+#include "simulation_kernel/DetectionComputerFactory_ABC.h"
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisationReco constructor
 // Created: JVT 2004-10-21
@@ -164,7 +167,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MT_Vec
 // Name: PHY_PerceptionRecoLocalisation::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
+void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     
@@ -175,7 +178,12 @@ void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVec
         for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >(**it).GetAgent();
-            if( target.GetRole< PHY_RoleInterface_Posture >().CanBePerceived( perceiver_.GetPion() ) )
+
+            detection::DetectionComputer_ABC& detectionComputer = detectionComputerFactory.Create( target );
+            perceiver_.GetPion().Execute( detectionComputer );
+            target.Execute( detectionComputer );
+
+            if( detectionComputer.CanBeSeen() )
                 perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
     }
@@ -186,9 +194,7 @@ void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVec
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MIL_Agent_ABC& agent ) const
-{
-    if( !agent.GetRole< PHY_RoleInterface_Posture >().CanBePerceived( perceiver_.GetPion() ) )
-        return PHY_PerceptionLevel::notSeen_;
+{//@TODO move to  private
     return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
 

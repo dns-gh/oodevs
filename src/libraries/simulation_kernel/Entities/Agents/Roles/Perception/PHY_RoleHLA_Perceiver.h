@@ -110,7 +110,7 @@ public:
     //! @name Tools
     //@{
     virtual const MIL_KnowledgeGroup& GetKnowledgeGroup            () const { return pPion_->GetKnowledgeGroup(); };
-    virtual const MIL_AgentPion&      GetPion                      () const { return *pPion_; };
+    virtual MIL_AgentPion&      GetPion                      () const { return *pPion_; };
     virtual MT_Float            GetMaxAgentPerceptionDistance() const { return 0; };
     virtual void                GetMainPerceptionDirection   ( MT_Vector2D& vDirection ) const {};
 

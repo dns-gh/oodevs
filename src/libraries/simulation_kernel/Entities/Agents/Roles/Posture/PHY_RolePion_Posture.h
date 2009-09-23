@@ -30,6 +30,10 @@ namespace dotation
 {
     class ConsumptionComputer_ABC;
 }
+namespace detection
+{
+    class DetectionComputer_ABC;
+}
 
 // =============================================================================
 // @class  PHY_RolePion_Posture
@@ -37,6 +41,7 @@ namespace dotation
 // =============================================================================
 class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< dotation::ConsumptionComputer_ABC >
+                           , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
 {
 
 public:
@@ -57,6 +62,7 @@ public:
     void Clean     ();
     bool HasChanged() const;
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
+    virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
 
     // Override automatic postures
     virtual void SetPosturePostePrepareGenie  ();
@@ -77,8 +83,7 @@ public:
 
     //! @name Perception
     //@{
-            void SetStealthFactor( MT_Float rValue );
-    virtual bool CanBePerceived  ( const MIL_AgentPion& perceiver ) const;
+    void SetStealthFactor( MT_Float rValue );
     //@}
     
     //! @name Elongation

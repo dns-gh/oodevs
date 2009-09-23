@@ -157,14 +157,13 @@ public:
     //! @name Tools
     //@{
     virtual const MIL_KnowledgeGroup& GetKnowledgeGroup            () const = 0;
-    virtual const MIL_AgentPion&      GetPion                      () const = 0;
+    virtual MIL_AgentPion&      GetPion                      () const = 0;
     virtual MT_Float            GetMaxAgentPerceptionDistance() const = 0;
     virtual void                GetMainPerceptionDirection   ( MT_Vector2D& vDirection ) const = 0;
 
     virtual bool IsPeriphericalVisionEnabled() const = 0;
     virtual bool IsKnown                    ( const MIL_Agent_ABC&               agent         ) const = 0;
     virtual bool IsIdentified               ( const MIL_Agent_ABC&               agent         ) const = 0;
-    virtual bool WasPerceived               ( const MIL_Agent_ABC&               agent         ) const = 0;
     virtual bool IsKnown                    ( const MIL_Object_ABC&              object        ) const = 0;
     virtual bool IsIdentified               ( const MIL_Object_ABC&              object        ) const = 0;
     virtual bool IsIdentified               ( const MIL_PopulationConcentration& concentration ) const = 0;

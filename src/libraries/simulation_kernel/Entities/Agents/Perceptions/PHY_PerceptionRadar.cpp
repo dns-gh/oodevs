@@ -15,6 +15,8 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 
+#include "simulation_kernel/DetectionComputerFactory_ABC.h"
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar constructor
 // Created: NLD 2005-05-02
@@ -142,7 +144,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const DEC_Knowledge_Age
 // Name: PHY_PerceptionRadar::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
+void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses();
     for( PHY_RadarClass::CIT_RadarClassMap itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
@@ -162,7 +164,7 @@ void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perc
             if( itRadarData == radarData_.end() )
                 itRadarData  = radarData_.insert( std::make_pair( &radarType, PHY_PerceptionRadarData( radarType ) ) ).first;
         
-            itRadarData->second.Acquire( perceiver_, zones, bRadarEnabledOnPerceiverPos );
+            itRadarData->second.Acquire( perceiver_, zones, bRadarEnabledOnPerceiverPos, detectionComputerFactory );
         }
     }
 }

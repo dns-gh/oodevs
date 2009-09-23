@@ -31,6 +31,10 @@ namespace moving
 {
     class MoveComputerFactory_ABC;
 }
+namespace detection
+{
+    class DetectionComputerFactory_ABC;
+}
 
 namespace transport
 {
@@ -60,6 +64,7 @@ public:
     std::auto_ptr< location::LocationComputerFactory_ABC > locationComputerFactory_;
     std::auto_ptr< dotation::ConsumptionComputerFactory_ABC > consumptionComputerFactory_;
     std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
+    std::auto_ptr< detection::DetectionComputerFactory_ABC > detectionComputerFactory_;
     std::auto_ptr< transport::TransportCapacityComputerFactory_ABC > transportCapacityComputerFactory_;
     //@}
 };

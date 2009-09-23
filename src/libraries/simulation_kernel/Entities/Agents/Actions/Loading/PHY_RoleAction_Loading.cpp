@@ -18,6 +18,8 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
+#include "simulation_kernel/PostureComputer_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
 
 namespace transport
@@ -397,6 +399,15 @@ void PHY_RoleAction_Loading::Clean()
 {
     bHasChanged_     = false;
     bHasBeenUpdated_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::Execute
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Loading::Execute( posture::PostureComputer_ABC& algorithm ) const
+{
+    algorithm.NotifyLoaded();
 }
 
 } // namespace transport

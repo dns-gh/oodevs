@@ -37,6 +37,7 @@ public:
     virtual void SetPostureMovement();
     virtual void UnsetPostureMovement();
     virtual void AddCoefficientModifier( double coef );
+    virtual void NotifyLoaded();
     virtual Results& Result();
     //@}
 
@@ -52,6 +53,9 @@ private:
     //@{
     Parameters* params_;
     std::vector< double > coefficientsModifier_;
+    bool bForceMovement_;
+    bool bForceStop_;
+    bool bIsLoaded_;
     Results results_;
 
     MT_Random& random_;

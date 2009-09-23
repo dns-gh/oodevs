@@ -14,16 +14,13 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
 
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/PostureComputerFactory_ABC.h"
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
+#include "simulation_kernel/DetectionComputer_ABC.h"
 
 using namespace posture;
 
@@ -185,7 +182,6 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     PostureComputer_ABC::Parameters params( pion_.GetType().GetUnitType(), *pCurrentPosture_ );
     params.bIsDead_ = bIsDead;
     params.rCompletionPercentage_ = rPostureCompletionPercentage_;
-    params.bIsLoaded_ = pion_.GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
     params.bDiscreteModeEnabled_ = bDiscreteModeEnabled_;
     params.rStealthFactor_ = rStealthFactor_;
     params.rTimingFactor_ = rTimingFactor_;
@@ -216,18 +212,6 @@ void PHY_RolePion_Posture::UnsetPosturePostePrepareGenie()
 {
     if ( pCurrentPosture_ == &PHY_Posture::postePrepareGenie_ )
         ChangePosture( PHY_Posture::arret_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::CanBePerceived
-// Created: NLD 2004-11-22
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) const
-{
-
-    if( bIsStealth_ && !perceiver.GetRole< PHY_RoleInterface_Perceiver >().WasPerceived( pion_ ) )
-        return false;
-    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -462,7 +446,7 @@ void PHY_RolePion_Posture::SetElongationFactor( MT_Float rFactor )
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Posture::GetElongationFactor() const
 {
-    return rElongationFactor_;
+    return rElongationFactor_;//@TODO REMOVE
 }
 
 // -----------------------------------------------------------------------------
@@ -499,4 +483,14 @@ bool PHY_RolePion_Posture::IsUninstalled() const
 void PHY_RolePion_Posture::Execute( dotation::ConsumptionComputer_ABC& algorithm ) const
 {
     algorithm.SetConsumptionMode( GetCurrentPosture().GetConsumptionMode() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Execute( detection::DetectionComputer_ABC& algorithm ) const
+{
+    if( bIsStealth_ && algorithm.GetTarget() == pion_ )
+        algorithm.NotifyStealth();
 }

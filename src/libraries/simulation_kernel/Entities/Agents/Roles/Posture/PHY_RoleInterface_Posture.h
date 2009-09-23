@@ -39,7 +39,6 @@ public:
     virtual const PHY_Posture& GetLastPosture                () const = 0;
     virtual const PHY_Posture& GetCurrentPosture             () const = 0;
     virtual       MT_Float     GetPostureCompletionPercentage() const = 0;    
-    virtual       bool         CanBePerceived                ( const MIL_AgentPion& perceiver ) const = 0;
 
     virtual       void         SetPosturePostePrepareGenie   () = 0;
     virtual       void         UnsetPosturePostePrepareGenie () = 0;

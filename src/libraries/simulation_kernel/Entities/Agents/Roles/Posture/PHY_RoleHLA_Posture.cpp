@@ -13,6 +13,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 
+#include "simulation_kernel/DetectionComputer_ABC.h"
+
 #include <hla/AttributeIdentifier.h>
 
 using namespace hla;
@@ -69,16 +71,6 @@ MT_Float PHY_RoleHLA_Posture::GetPostureCompletionPercentage() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Posture::CanBePerceived
-// Created: NLD 2004-11-25
-// -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) const
-{
-    return ( !bIsStealth_ || perceiver.GetRole< PHY_RoleInterface_Perceiver >().WasPerceived( pion_ ) )
-        && ! bTransported_; 
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Posture::SetPosturePostePrepareGenie
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
@@ -129,4 +121,14 @@ void PHY_RoleHLA_Posture::ChangeStatus( const std::vector< std::string >& status
 {
     bIsStealth_   = std::find( statuses.begin(), statuses.end(), "furtif" ) != statuses.end();
     bTransported_ = std::find( statuses.begin(), statuses.end(), "transporte" ) != statuses.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Posture::Execute
+// Created: MGD 2009-09-23
+// -----------------------------------------------------------------------------
+void PHY_RoleHLA_Posture::Execute( detection::DetectionComputer_ABC& algorithm ) const
+{
+    if( bIsStealth_ && algorithm.GetTarget() == pion_ )
+        algorithm.NotifyStealth();
 }

@@ -32,7 +32,6 @@ public:
         const PHY_Posture& posture_;
         bool bIsDead_;
         double rCompletionPercentage_;
-        bool bIsLoaded_;
         bool bDiscreteModeEnabled_;
         double rStealthFactor_;
         double rTimingFactor_;
@@ -59,6 +58,7 @@ public:
     virtual void SetPostureMovement() = 0;
     virtual void UnsetPostureMovement() = 0;
     virtual void AddCoefficientModifier( double coef ) = 0;
+    virtual void NotifyLoaded() = 0;
     virtual Results& Result() = 0;
     //@}
 };

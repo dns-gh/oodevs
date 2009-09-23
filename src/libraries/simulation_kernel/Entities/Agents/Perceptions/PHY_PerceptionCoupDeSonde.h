@@ -7,6 +7,10 @@
 
 #include "PHY_Perception_ABC.h"
 
+namespace detection
+{
+    class DetectionComputerFactory_ABC;
+}
 //*****************************************************************************
 // Created: DFT 02-02-26
 // Last modified: JVT 03-09-01
@@ -20,7 +24,7 @@ public:
 
     //! @name Execution
     //@{
-    virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents );
+    virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputer );
     virtual const PHY_PerceptionLevel& Compute( const MT_Vector2D& vPoint ) const;
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;

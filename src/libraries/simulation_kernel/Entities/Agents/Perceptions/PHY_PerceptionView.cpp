@@ -6,6 +6,7 @@
 #include "PHY_PerceptionView.h"
 #include "PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
@@ -14,6 +15,9 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+
+#include "simulation_kernel/DetectionComputer_ABC.h"
+#include "simulation_kernel/DetectionComputerFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView constructor
@@ -95,7 +99,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
     if( target.BelongsTo( perceiver_.GetKnowledgeGroup() ) || perceiver_.IsIdentified( target ) )
         return PHY_PerceptionLevel::identified_;
 
-    if( !( bIsEnabled_ && target.GetRole< PHY_RoleInterface_Posture >().CanBePerceived( perceiver_.GetPion() ) ) )
+    if( !bIsEnabled_ )
         return PHY_PerceptionLevel::notSeen_;
 
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
@@ -117,14 +121,20 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
 // Name: PHY_PerceptionView::Execute
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents )
+void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     if( bIsEnabled_ )
     {
         for ( TER_Agent_ABC::CIT_AgentPtrVector itAgent = perceivableAgents.begin(); itAgent != perceivableAgents.end(); ++itAgent )
         {
             MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
-            perceiver_.NotifyPerception( agent, Compute( agent ) );
+           
+            detection::DetectionComputer_ABC& detectionComputer = detectionComputerFactory.Create( agent );
+            perceiver_.GetPion().Execute( detectionComputer );
+            agent.Execute( detectionComputer );
+
+            if( detectionComputer.CanBeSeen() )
+                perceiver_.NotifyPerception( agent, Compute( agent ) );
         }
     }
 }

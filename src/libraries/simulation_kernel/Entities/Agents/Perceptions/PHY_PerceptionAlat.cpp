@@ -14,6 +14,9 @@
 #include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_World.h"
 
+#include "simulation_kernel/DetectionComputer_ABC.h"
+#include "simulation_kernel/DetectionComputerFactory_ABC.h"
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionAlat constructor
 // Created: NLD 2004-08-20
@@ -38,7 +41,7 @@ PHY_PerceptionAlat::~PHY_PerceptionAlat()
 // Name: PHY_PerceptionAlat::Execute
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
+void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     const PHY_RoleInterface_Location& perceiverRoleLocation = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
     const MT_Float               rDetectionSemiHeight  = perceiver_.GetMaxAgentPerceptionDistance() / 2.;
@@ -51,8 +54,13 @@ void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perce
     // Enregistrement des pions vus
     for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsDetected.begin(); itAgent != agentsDetected.end(); ++itAgent )
     {        
-        PHY_RoleInterface_Location& targetRoleLocation = static_cast< PHY_RoleInterface_Location& >( **itAgent );
-        if( targetRoleLocation.GetAgent().GetRole< PHY_RoleInterface_Posture >().CanBePerceived( perceiver_.GetPion() ) && fabs( ( targetRoleLocation.GetPosition() - perceiverRoleLocation.GetPosition() ) * perceiverRoleLocation.GetDirection() ) <= rDetectionSemiHeight )
+        PHY_RoleInterface_Location& targetRoleLocation = static_cast< PHY_RoleInterface_Location& >( **itAgent );  
+        MIL_Agent_ABC& target = targetRoleLocation.GetAgent();
+        detection::DetectionComputer_ABC& detectionComputer = detectionComputerFactory.Create( target );
+        perceiver_.GetPion().Execute( detectionComputer );
+        target.Execute( detectionComputer );
+
+        if( detectionComputer.CanBeSeen() && fabs( ( targetRoleLocation.GetPosition() - perceiverRoleLocation.GetPosition() ) * perceiverRoleLocation.GetDirection() ) <= rDetectionSemiHeight )
         {
             const bool bPerceptionDelayed = ( rawVisionData.GetVisionObject( targetRoleLocation.GetPosition() ) != PHY_RawVisionData::eVisionEmpty );
             perceiver_.NotifyPerception( targetRoleLocation.GetAgent(), PHY_PerceptionLevel::recognized_, bPerceptionDelayed );

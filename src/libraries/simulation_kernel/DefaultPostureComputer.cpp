@@ -21,6 +21,9 @@ using namespace posture;
 // -----------------------------------------------------------------------------
 DefaultPostureComputer::DefaultPostureComputer( MT_Random& random )
 : params_( 0 )
+, bForceMovement_( false )
+, bForceStop_( false )
+, bIsLoaded_( false )
 , random_( random )
 {
 
@@ -42,7 +45,11 @@ DefaultPostureComputer::~DefaultPostureComputer()
 void DefaultPostureComputer::Reset( PostureComputer_ABC::Parameters& param )
 {
     params_ = &param;
+    
     coefficientsModifier_.clear();
+    bForceMovement_ = false;
+    bForceStop_ = false;
+    bIsLoaded_ = false;
 
     results_.newPosture_ = 0;
     results_.postureCompletionPercentage_= param.rCompletionPercentage_;
@@ -55,12 +62,8 @@ void DefaultPostureComputer::Reset( PostureComputer_ABC::Parameters& param )
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::SetPostureMovement()
 {
-    if( !params_->bIsLoaded_ )
-        results_.newPosture_ = &PHY_Posture::posteReflexe_;
-    else if( params_->bDiscreteModeEnabled_ )
-        results_.newPosture_ = &PHY_Posture::mouvementDiscret_;
-    else
-        results_.newPosture_ = &PHY_Posture::mouvement_;
+    assert( !bForceStop_ );
+    bForceMovement_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,11 +72,17 @@ void DefaultPostureComputer::SetPostureMovement()
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::UnsetPostureMovement()
 {
-    if ( &params_->posture_ == &PHY_Posture::mouvement_ 
-        || &params_->posture_ == &PHY_Posture::mouvementDiscret_ )
-    {
-        results_.newPosture_ = &PHY_Posture::arret_;
-    }
+    assert( !bForceMovement_ );
+    bForceStop_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::NotifyLoaded
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void DefaultPostureComputer::NotifyLoaded()
+{
+    bIsLoaded_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,6 +115,26 @@ void DefaultPostureComputer::Update()
         results_.newPosture_ = &PHY_Posture::arret_;
         results_.postureCompletionPercentage_ = 1.;
         results_.bIsStealth_ = false;
+        return;
+    }
+
+    if( bForceStop_ )
+    {
+        if ( &params_->posture_ == &PHY_Posture::mouvement_ 
+            || &params_->posture_ == &PHY_Posture::mouvementDiscret_ )
+        {
+            results_.newPosture_ = &PHY_Posture::arret_;
+        }
+        return;
+    }
+    if( bForceMovement_ )
+    {
+        if( !bIsLoaded_ )
+            results_.newPosture_ = &PHY_Posture::posteReflexe_;
+        else if( params_->bDiscreteModeEnabled_ )
+            results_.newPosture_ = &PHY_Posture::mouvementDiscret_;
+        else
+            results_.newPosture_ = &PHY_Posture::mouvement_;
         return;
     }
 

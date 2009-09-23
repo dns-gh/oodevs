@@ -330,7 +330,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories&
     pion.RegisterRole< PHY_RolePion_Dotations         >( pion, *algorithmsFactories.consumptionComputerFactory_ );
     pion.RegisterRole< PHY_RolePion_Humans            >( pion );
     pion.RegisterRole< PHY_RolePion_Composantes       >( pion );
-    pion.RegisterRole< PHY_RolePion_Perceiver         >( pion );
+    pion.RegisterRole< PHY_RolePion_Perceiver         >( pion, *algorithmsFactories.detectionComputerFactory_ );
     pion.RegisterRole< nbc::PHY_RolePion_NBC          >( pion );
     pion.RegisterRole< PHY_RolePion_Communications    >( pion );
     pion.RegisterRole< PHY_RolePion_HumanFactors      >();

@@ -17,6 +17,11 @@ class PHY_RoleInterface_Perceiver;
 class TER_Localisation;
 class MIL_Agent_ABC;
 
+namespace detection
+{
+    class DetectionComputerFactory_ABC;
+}
+
 // =============================================================================
 // @class  PHY_PerceptionRadarData
 // Created: NLD 2005-05-02
@@ -37,13 +42,13 @@ public:
 
     //! @name Operations
     //@{
-    void Acquire( PHY_RoleInterface_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition );
+    void Acquire( PHY_RoleInterface_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition, const detection::DetectionComputerFactory_ABC& detectionComputerFactory );
     //@}
 
 private:
     //! @name Tools
     //@{
-    void AcquireTargets( PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets );
+    void AcquireTargets( PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets, const detection::DetectionComputerFactory_ABC& detectionComputerFactory );
     void Update        ( PHY_RoleInterface_Perceiver& perceiver );
     //@}
 

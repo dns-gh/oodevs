@@ -15,7 +15,8 @@
 #include "simulation_kernel/LocationComputerFactory.h"
 #include "simulation_kernel/PostureComputerFactory.h"
 #include "simulation_kernel/ConsumptionComputerFactory.h"
-#include "simulation_kernel/DefaultMoveComputer.h"
+#include "simulation_kernel/MoveComputerFactory.h"
+#include "simulation_kernel/DetectionComputerFactory.h"
 #include "simulation_kernel/TransportCapacityComputerFactory.h"
 
 // -----------------------------------------------------------------------------
@@ -28,7 +29,8 @@ AlgorithmsFactories::AlgorithmsFactories()
     , locationComputerFactory_( new location::LocationComputerFactory() )
     , postureComputerFactory_( new posture::PostureComputerFactory() )
     , consumptionComputerFactory_( new dotation::ConsumptionComputerFactory() )
-    , moveComputerFactory_( new moving::DefaultMoveComputer() )
+    , moveComputerFactory_( new moving::MoveComputerFactory() )
+    , detectionComputerFactory_( new detection::DetectionComputerFactory() )
     ,transportCapacityComputerFactory_( new transport::TransportCapacityComputerFactory() )
 {
     //NOTHING

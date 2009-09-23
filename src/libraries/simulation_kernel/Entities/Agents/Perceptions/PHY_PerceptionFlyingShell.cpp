@@ -94,7 +94,7 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 // Name: PHY_PerceptionFlyingShell::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
+void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& /*detectionComputerFactory*/ )
 {
     const MIL_EffectManager::T_FlyingShellSet& flyingShells = MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().GetFlyingShells();
     const MT_Vector2D&                         source       = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
