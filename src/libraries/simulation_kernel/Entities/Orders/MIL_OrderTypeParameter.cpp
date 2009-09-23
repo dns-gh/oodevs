@@ -20,8 +20,7 @@
 // Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
 MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
-    : nDIAParameter_( 0 )
-    , bIsOptional_  ( xml::attribute< bool >( xis, "optional", false ) )
+    : bIsOptional_  ( xml::attribute< bool >( xis, "optional", false ) )
     , strName_      ( xml::attribute< std::string >( xis, "name" ) )
     , strDiaName_   ( xml::attribute< std::string >( xis, "dia-name" ) )
     , pParameter_   ( MIL_ParameterType_ABC::Find( xml::attribute< std::string >( xis, "type" ) ) )
@@ -35,8 +34,7 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
 MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderType, xml::xistream& xis )
-    : nDIAParameter_( 0 ) // $$$$ LDC FIXME Supprimer: DEC_Tools::InitializeDIAField( xml::attribute< std::string >( xis, "dia-name" ), orderType.GetDIAType() ) )
-    , bIsOptional_  ( xml::attribute< bool >( xis, "optional", false ) )
+    : bIsOptional_  ( xml::attribute< bool >( xis, "optional", false ) )
     , strName_      ( xml::attribute< std::string >( xis, "name" ) )
     , strDiaName_   ( xml::attribute< std::string >( xis, "dia-name" ) )
     , pParameter_   ( MIL_ParameterType_ABC::Find( xml::attribute< std::string >( xis, "type" ) ) )

@@ -65,6 +65,8 @@ public:
     virtual MIL_AgentPion& GetPion() const = 0;
     virtual MIL_Automate& GetAutomate() const = 0;
     
+    virtual void GarbageCollect() = 0;
+    
     virtual void StartMissionBehavior( MIL_Mission_ABC& mission ) = 0;
     virtual void StopMissionBehavior ( MIL_Mission_ABC& mission ) = 0;
     

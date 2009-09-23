@@ -319,6 +319,7 @@ void MIL_Population::UpdateDecision( float duration )
 {
     orderManager_.Update();
     GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
+    GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 
 // -----------------------------------------------------------------------------

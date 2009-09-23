@@ -352,6 +352,7 @@ void MIL_AgentPion::UpdateDecision( float duration )
         orderManager_.ReplaceMission( 0 );
     orderManager_.Update();
     GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
+    GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 
 // -----------------------------------------------------------------------------

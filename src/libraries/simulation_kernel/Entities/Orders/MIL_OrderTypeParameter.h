@@ -52,7 +52,6 @@ public:
 private:
     //! @name Member data
     //@{
-          int                    nDIAParameter_;
           std::string            strName_;
           std::string            strDiaName_;
           bool                   bIsOptional_;

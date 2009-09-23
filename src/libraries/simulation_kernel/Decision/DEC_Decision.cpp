@@ -30,6 +30,8 @@ ScriptRefs::ScriptRefs( directia::Brain& brain )
 , startEvent_      ( brain.GetScriptFunction( "StartEvent" ) )
 , stopEvents_      ( brain.GetScriptFunction( "StopEvents" ) )
 , setStateVariable_( brain.GetScriptFunction( "SetStateVariable" ) )
+, collectgarbage_  ( brain.GetScriptFunction( "collectgarbage" ) )
+, step_            ( brain.RegisterObject( std::string( "step" ) ) )
 {
 }
 

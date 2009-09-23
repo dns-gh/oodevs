@@ -115,6 +115,16 @@ void DEC_Decision<T>::UpdateDecision( float duration )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::GarbageCollect
+// Created: LDC 2009-09-22
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::GarbageCollect()
+{
+    pRefs_->collectgarbage_( pRefs_->step_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::Reset
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------

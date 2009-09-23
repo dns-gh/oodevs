@@ -504,6 +504,7 @@ void MIL_Automate::UpdateDecision( float duration )
         MT_LOG_ERROR_MSG( "Entity " << GetID() << "('" << GetName() << "') : Mission impossible" );
     }
     GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
+    GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 
 // -----------------------------------------------------------------------------

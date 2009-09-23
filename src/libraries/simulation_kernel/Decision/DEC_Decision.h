@@ -58,6 +58,8 @@ public:
     virtual MIL_AgentPion& GetPion() const;
     virtual MIL_Automate& GetAutomate() const;
     
+    virtual void GarbageCollect();
+    
     virtual void StartMissionBehavior( MIL_Mission_ABC& mission );
     virtual void StopMissionBehavior ( MIL_Mission_ABC& mission );
 
@@ -162,6 +164,7 @@ private:
     std::string                        brainFile_;
     std::string                        includePath_;
     std::string                        diaType_;
+    int                                toto_;
     //@}
 };
 
@@ -174,6 +177,8 @@ public:
     directia::ScriptRef startEvent_;
     directia::ScriptRef stopEvents_;
     directia::ScriptRef setStateVariable_;
+    directia::ScriptRef collectgarbage_;
+    directia::ScriptRef step_;
 private:
     ScriptRefs();
     ScriptRefs( const ScriptRefs& );
