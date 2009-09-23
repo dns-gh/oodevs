@@ -269,9 +269,13 @@ void SIM_App::AnimateIcon()
 void SIM_App::Cleanup()
 {
     // stop the dispatcher
-    if( pDispatcher_ )
+    if( dispatcherThread_.get() )
+    {
+        while( !pDispatcher_ )
+            ::Sleep( 0 );
         pDispatcher_->Stop();
-    dispatcherThread_->join();
+        dispatcherThread_->join();
+    }
 
     MIL_AgentServer::DestroyWorkspace();
 
