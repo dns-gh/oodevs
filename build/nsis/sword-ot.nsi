@@ -171,8 +171,6 @@ SectionGroup "Exercises" s_exo
 
     !ifdef STRESS
         !insertmacro OT.AddExercise "Charge" "Cabourg" "s_exo1"
-        !insertmacro OT.AddExercise "ChargeLight" "Cabourg" "s_exo2"
-        !insertmacro OT.AddExercise "ChargeMedium" "Cabourg" "s_exo3"
     !else if "${APP_MODEL}" == "worldwide"
         !insertmacro OT.AddExercise "Egypt" "Nord egypt" "s_exo1"
         !insertmacro OT.AddExercise "Paris" "Paris_Est" "s_exo2"
