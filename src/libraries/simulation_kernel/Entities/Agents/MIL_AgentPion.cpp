@@ -179,15 +179,15 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { nbc::PHY_RolePion_NBC         * pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RolePion_Communications   * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_HumanFactors     * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Transported      * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { transport::PHY_RolePion_Transported      * pRole; file >> pRole; RegisterRole( pRole ); }
     //{ PHY_RoleInterface_Maintenance * pRole; file >> pRole; RegisterRole( pRole ); } //@TODO refactor with new save
     //{ PHY_RoleInterface_Medical     * pRole; file >> pRole; RegisterRole( pRole ); } 
     //{ PHY_RoleInterface_Supply      * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Surrender        * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Refugee          * pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RolePion_Population       * pRole; file >> pRole; RegisterRole( pRole ); }
-    { PHY_RoleAction_Loading        * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RoleAction_Transport      * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { transport::PHY_RoleAction_Loading        * pRole; file >> pRole; RegisterRole( pRole ); }
+    { transport::PHY_RoleAction_Transport      * pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RoleAction_Moving         * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_Objects        * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_DirectFiring   * pRole; file >> pRole; RegisterRole( pRole ); } 
@@ -223,15 +223,15 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     SaveRole< nbc::PHY_RolePion_NBC          >( *this, file );
     SaveRole< PHY_RolePion_Communications    >( *this, file );
     SaveRole< PHY_RolePion_HumanFactors      >( *this, file );
-    SaveRole< PHY_RolePion_Transported       >( *this, file );
+    SaveRole< transport::PHY_RolePion_Transported       >( *this, file );
     //SaveRole< PHY_RolePion_Maintenance       >( *this, file );//@TODO refactor with new save
     //SaveRole< PHY_RolePion_Medical           >( *this, file );
     //SaveRole< PHY_RolePion_Supply            >( *this, file );
     SaveRole< PHY_RolePion_Surrender         >( *this, file );
     SaveRole< PHY_RolePion_Refugee           >( *this, file );
     SaveRole< PHY_RolePion_Population        >( *this, file );
-    SaveRole< PHY_RoleAction_Loading         >( *this, file );
-    SaveRole< PHY_RoleAction_Transport       >( *this, file );
+    SaveRole< transport::PHY_RoleAction_Loading         >( *this, file );
+    SaveRole< transport::PHY_RoleAction_Transport       >( *this, file );
     SaveRole< PHY_RoleAction_Moving          >( *this, file );
     SaveRole< PHY_RoleAction_Objects         >( *this, file );
     SaveRole< PHY_RoleAction_DirectFiring    >( *this, file );
@@ -371,13 +371,13 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< nbc::PHY_RolePion_NBC          >().Update( bIsDead );
     GetRole< PHY_RolePion_Communications    >().Update( bIsDead );
     GetRole< PHY_RolePion_HumanFactors      >().Update( bIsDead );
-    GetRole< PHY_RolePion_Transported       >().Update( bIsDead );
+    GetRole< transport::PHY_RolePion_Transported       >().Update( bIsDead );
     GetRole< PHY_RolePion_Surrender         >().Update( bIsDead );
     GetRole< PHY_RolePion_Refugee           >().Update( bIsDead );    
     GetRole< PHY_RolePion_Population        >().Update( bIsDead );    
     GetRole< PHY_RolePion_Perceiver         >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
-    GetRole< PHY_RoleAction_Loading         >().Update( bIsDead );
-    GetRole< PHY_RoleAction_Transport       >().Update( bIsDead );
+    GetRole< transport::PHY_RoleAction_Loading         >().Update( bIsDead );
+    GetRole< transport::PHY_RoleAction_Transport       >().Update( bIsDead );
     GetRole< PHY_RoleAction_Objects         >().Update( bIsDead );
     GetRole< PHY_RoleAction_Moving          >().Update( bIsDead );
     GetRole< PHY_RoleAction_InterfaceFlying >().Update( bIsDead );
@@ -442,8 +442,8 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RoleInterface_Surrender    >().Clean();
     GetRole< PHY_RolePion_Refugee           >().Clean();
     GetRole< PHY_RolePion_Population        >().Clean();
-    GetRole< PHY_RoleInterface_Transported  >().Clean();
-    GetRole< PHY_RoleAction_Transport       >().Clean();    
+    GetRole< transport::PHY_RoleInterface_Transported  >().Clean();
+    GetRole< transport::PHY_RoleAction_Transport       >().Clean();
     GetRole< PHY_RoleAction_Objects         >().Clean();
     GetRole< PHY_RoleAction_Moving          >().Clean();
     GetRole< PHY_RoleAction_InterfaceFlying >().Clean();
@@ -815,7 +815,7 @@ void  MIL_AgentPion::OnReceiveMsgDestroyAll()
 // -----------------------------------------------------------------------------
 void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 {
-    GetRole< PHY_RoleInterface_Transported >().RecoverHumanTransporters();
+    GetRole< transport::PHY_RoleInterface_Transported >().RecoverHumanTransporters();
 }
 
 // -----------------------------------------------------------------------------
@@ -895,7 +895,7 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
                               || GetRole< PHY_RolePion_Communications   >().HasChanged()
                               || GetRole< nbc::PHY_RolePion_NBC         >().HasChanged()
                               || GetRole< PHY_RolePion_Posture          >().HLAStatusHasChanged()
-                              || GetRole< PHY_RoleInterface_Transported >().HasChanged()
+                              || GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
                               || GetRole< PHY_RoleInterface_Surrender   >().HasChanged()
                               || GetRole< PHY_RolePion_Perceiver        >().HasRadarStateChanged()
                               || GetRole< PHY_RolePion_Population       >().HasChanged();
@@ -912,7 +912,7 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
         statuses.push_back( "contamine" );
     if( GetRole< PHY_RolePion_Posture >().IsStealth() )
         statuses.push_back( "furtif" );
-    if( GetRole< PHY_RoleInterface_Transported >().IsTransported() )
+    if( GetRole< transport::PHY_RoleInterface_Transported >().IsTransported() )
         statuses.push_back( "transporte" );
     if( GetRole< PHY_RolePion_Perceiver >().IsUsingActiveRadar() )
         statuses.push_back( "radaractif" );

@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 PHY_ActionTransportUnload::PHY_ActionTransportUnload( MIL_AgentPion& pion )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , role_         ( pion.GetRole< PHY_RoleAction_Transport >() )
+    , role_         ( pion.GetRole< transport::PHY_RoleAction_Transport >() )
 {    
     Callback( role_.GetInitialReturnCode() );
 }

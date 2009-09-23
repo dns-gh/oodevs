@@ -682,12 +682,12 @@ bool PHY_ComposantePion::CanBeUsed() const
 
     assert( pRole_ );
 
-    const PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< PHY_RoleInterface_Transported >();
+    const transport::PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >();
     if( roleTransported.IsTransported() || pRole_->GetPion().GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
         return false;
 
     if( bLoadable_ )
-        return !pRole_->GetPion().GetRole< PHY_RoleAction_Loading >().IsLoaded();
+        return !pRole_->GetPion().GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
     else   
         return !roleTransported.HasHumanTransportersToRecover();
 }
@@ -700,12 +700,12 @@ bool PHY_ComposantePion::CanBeUsedForMove() const
 {
     assert( pRole_ );
 
-    const PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< PHY_RoleInterface_Transported >();
+    const transport::PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >();
     if( roleTransported.IsTransported() )
         return false;
 
     if( bLoadable_ )
-        return !pRole_->GetPion().GetRole< PHY_RoleAction_Loading >().IsLoaded();
+        return !pRole_->GetPion().GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
     else   
         return !roleTransported.HasHumanTransportersToRecover();
 }
@@ -731,7 +731,7 @@ bool PHY_ComposantePion::CanFireWhenUnloaded() const
     assert( pState_ );
     assert( pRole_ );
 
-    return !pRole_->IsNeutralized() && pState_->IsUsable() && !pState_->IsDamaged() && bLoadable_ && !bUsedForLogistic_ && !pRole_->GetPion().GetRole< PHY_RoleInterface_Transported >().IsTransported();
+    return !pRole_->IsNeutralized() && pState_->IsUsable() && !pState_->IsDamaged() && bLoadable_ && !bUsedForLogistic_ && !pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
 }
 
 // -----------------------------------------------------------------------------

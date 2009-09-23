@@ -18,7 +18,10 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
+BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
+
+namespace transport
+{
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RoleAction_Loading* role, const unsigned int /*version*/ )
@@ -395,3 +398,5 @@ void PHY_RoleAction_Loading::Clean()
     bHasChanged_     = false;
     bHasBeenUpdated_ = false;
 }
+
+} // namespace transport

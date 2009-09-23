@@ -17,6 +17,9 @@
 class MIL_Agent_ABC;
 class NET_ASN_MsgUnitAttributes;
 
+namespace transport
+{
+
 // =============================================================================
 // @class  PHY_RoleAction_Loading
 // Created: JVT 2004-08-03
@@ -118,5 +121,7 @@ private:
     bool    bHasBeenUpdated_; // Le trigger Load / Unload ou RecoverCarriers a été appelé durant le pas de temps
     //@}
 };
+
+} // namespace transport
 
 #endif // __PHY_RoleAction_Loading_h_

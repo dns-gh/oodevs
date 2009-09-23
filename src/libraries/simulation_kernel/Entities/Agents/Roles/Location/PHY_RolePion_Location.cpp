@@ -268,7 +268,7 @@ void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
 
     if(    pion_.GetRole< PHY_RoleInterface_Reinforcement      >().IsReinforcing()
-        || pion_.GetRole< PHY_RoleInterface_Transported   >().IsTransported() )
+        || pion_.GetRole< transport::PHY_RoleInterface_Transported   >().IsTransported() )
         return;
 
     Hide();

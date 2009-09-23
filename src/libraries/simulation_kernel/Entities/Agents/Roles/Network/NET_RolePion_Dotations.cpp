@@ -100,10 +100,10 @@ bool NET_RolePion_Dotations::DataUpdated() const
         || pPion_->GetRole< PHY_RoleInterface_Reinforcement     >().HasChanged()
         || pPion_->GetRole< nbc::PHY_RoleInterface_NBC          >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_Communications    >().HasChanged()
-        || pPion_->GetRole< PHY_RoleInterface_Transported       >().HasChanged()
-        || pPion_->GetRole< PHY_RoleAction_Transport            >().HasChanged()
+        || pPion_->GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
+        || pPion_->GetRole< transport::PHY_RoleAction_Transport  >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_HumanFactors      >().HasChanged()
-        || pPion_->GetRole< PHY_RoleAction_Loading              >().HasChanged()
+        || pPion_->GetRole< transport::PHY_RoleAction_Loading              >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_Surrender         >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_Refugee           >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_Perceiver         >().HasRadarStateChanged() 
@@ -164,8 +164,8 @@ void NET_RolePion_Dotations::SendChangedState() const
         if(    pPion_->GetRole< PHY_RoleInterface_Location      >().HasLocationChanged()
             || pPion_->GetRole< PHY_RoleInterface_Composantes   >().HasChanged()
             || pPion_->GetRole< PHY_RoleInterface_Perceiver     >().HasChanged()
-            || pPion_->GetRole< PHY_RoleAction_Loading          >().HasChanged()
-            || pPion_->GetRole< PHY_RoleInterface_Transported   >().HasChanged()
+            || pPion_->GetRole< transport::PHY_RoleAction_Loading          >().HasChanged()
+            || pPion_->GetRole< transport::PHY_RoleInterface_Transported   >().HasChanged()
             || pPion_->GetRole< PHY_RoleInterface_Surrender     >().HasChanged()
             || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
             pPion_->GetRole< PHY_RoleInterface_Perceiver        >().SendDebugState(); //$$ BOF
@@ -184,12 +184,12 @@ void NET_RolePion_Dotations::SendChangedState() const
     pPion_->GetRole< PHY_RoleInterface_Location         >().SendChangedState( msg ); // Direction, speed, altitude, position
     pPion_->GetRole< PHY_RoleInterface_Composantes      >().SendChangedState( msg ); // Etat ops
     pPion_->GetRole< PHY_RoleInterface_Reinforcement    >().SendChangedState( msg ); // Reinforcement
-    pPion_->GetRole< PHY_RoleAction_Loading             >().SendChangedState( msg ); // Loading state
+    pPion_->GetRole< transport::PHY_RoleAction_Loading             >().SendChangedState( msg ); // Loading state
     pPion_->GetRole< nbc::PHY_RoleInterface_NBC         >().SendChangedState( msg ); // NBC state
     pPion_->GetRole< PHY_RoleInterface_Communications   >().SendChangedState( msg ); // Brouillage / silence radio
     pPion_->GetRole< PHY_RoleInterface_HumanFactors     >().SendChangedState( msg );
-    pPion_->GetRole< PHY_RoleInterface_Transported      >().SendChangedState( msg );
-    pPion_->GetRole< PHY_RoleAction_Transport           >().SendChangedState( msg );
+    pPion_->GetRole< transport::PHY_RoleInterface_Transported      >().SendChangedState( msg );
+    pPion_->GetRole< transport::PHY_RoleAction_Transport           >().SendChangedState( msg );
     pPion_->GetRole< PHY_RoleInterface_Perceiver        >().SendChangedState( msg );
     pPion_->GetRole< PHY_RoleInterface_Surrender        >().SendChangedState( msg );
     pPion_->GetRole< PHY_RoleInterface_Refugee          >().SendChangedState( msg );
@@ -250,13 +250,13 @@ void NET_RolePion_Dotations::SendFullState() const
     pPion_->GetRole< PHY_RoleInterface_Location         >().SendFullState( msg ); // Direction, speed, altitude, position
     pPion_->GetRole< PHY_RoleInterface_Composantes      >().SendFullState( msg ); // Etat ops
     pPion_->GetRole< PHY_RoleInterface_Reinforcement    >().SendFullState( msg ); // Reinforcement
-    pPion_->GetRole< PHY_RoleAction_Loading             >().SendFullState( msg ); // Loading state
+    pPion_->GetRole< transport::PHY_RoleAction_Loading             >().SendFullState( msg ); // Loading state
     pPion_->GetRole< DEC_RolePion_Decision              >().SendFullState( msg ); // Dec states
     pPion_->GetRole< nbc::PHY_RoleInterface_NBC         >().SendFullState( msg ); // NBC state
     pPion_->GetRole< PHY_RoleInterface_Communications   >().SendFullState( msg ); // Brouillage
     pPion_->GetRole< PHY_RoleInterface_HumanFactors     >().SendFullState( msg );
-    pPion_->GetRole< PHY_RoleInterface_Transported      >().SendFullState( msg );
-    pPion_->GetRole< PHY_RoleAction_Transport           >().SendFullState( msg );
+    pPion_->GetRole< transport::PHY_RoleInterface_Transported      >().SendFullState( msg );
+    pPion_->GetRole< transport::PHY_RoleAction_Transport           >().SendFullState( msg );
     pPion_->GetRole< PHY_RoleInterface_Perceiver        >().SendFullState( msg );
     pPion_->GetRole< PHY_RoleInterface_Surrender        >().SendFullState( msg );
     pPion_->GetRole< PHY_RoleInterface_Refugee          >().SendFullState( msg );

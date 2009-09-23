@@ -37,7 +37,7 @@ public:
     //@}
 
 private:
-    //! @name Operations
+    //! @name Attribute
     //@{
     std::auto_ptr< PostureComputer_ABC > pPostureComputer_;
     //@}

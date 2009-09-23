@@ -70,7 +70,7 @@ public:
 
     //! @name Operation
     //@{
-    template< typename Algorithm > void Execute( Algorithm& algorithm );
+    template< typename Algorithm > const Algorithm& Execute( Algorithm& algorithm );
     //@}
 };
 

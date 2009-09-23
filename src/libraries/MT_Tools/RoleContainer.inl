@@ -83,12 +83,13 @@ void RoleContainer::save( Archive& archive, const unsigned int /*version*/ ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Algorithm > void Execute( Algorithm& algorithm )
+// Name: template< typename Algorithm > Algorithm Execute( Algorithm& algorithm )
 // Created: SBO 2009-08-14
 // -----------------------------------------------------------------------------
 template< typename Algorithm >
-void RoleContainer::Execute( Algorithm& algorithm )
+const Algorithm& RoleContainer::Execute( Algorithm& algorithm )
 {
     Apply( & AlgorithmModifier_ABC< Algorithm >::Execute, algorithm );
+    return algorithm;
 }
 

@@ -185,7 +185,7 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     PostureComputer_ABC::Parameters params( pion_.GetType().GetUnitType(), *pCurrentPosture_ );
     params.bIsDead_ = bIsDead;
     params.rCompletionPercentage_ = rPostureCompletionPercentage_;
-    params.bIsLoaded_ = pion_.GetRole< PHY_RoleAction_Loading >().IsLoaded();
+    params.bIsLoaded_ = pion_.GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
     params.bDiscreteModeEnabled_ = bDiscreteModeEnabled_;
     params.rStealthFactor_ = rStealthFactor_;
     params.rTimingFactor_ = rTimingFactor_;

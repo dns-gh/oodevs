@@ -16,6 +16,7 @@
 #include "simulation_kernel/PostureComputerFactory.h"
 #include "simulation_kernel/ConsumptionComputerFactory.h"
 #include "simulation_kernel/DefaultMoveComputer.h"
+#include "simulation_kernel/TransportCapacityComputerFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: AlgorithmsFactories constructor
@@ -28,6 +29,7 @@ AlgorithmsFactories::AlgorithmsFactories()
     , postureComputerFactory_( new posture::PostureComputerFactory() )
     , consumptionComputerFactory_( new dotation::ConsumptionComputerFactory() )
     , moveComputerFactory_( new moving::DefaultMoveComputer() )
+    ,transportCapacityComputerFactory_( new transport::TransportCapacityComputerFactory() )
 {
     //NOTHING
 }

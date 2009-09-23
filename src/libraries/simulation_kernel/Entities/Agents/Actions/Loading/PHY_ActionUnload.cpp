@@ -14,6 +14,8 @@
 #include "PHY_RoleAction_Loading.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
+namespace transport
+{
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionUnload constructor
 // Created: NLD 2004-08-18
@@ -52,3 +54,5 @@ void PHY_ActionUnload::ExecuteSuspended()
 {
     role_.UnloadSuspended();
 }
+
+} // namespace transport

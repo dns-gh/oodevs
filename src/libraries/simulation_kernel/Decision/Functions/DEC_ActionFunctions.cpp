@@ -42,7 +42,7 @@ namespace
 void DEC_ActionFunctions::Prisoners_CaptureAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
     if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Capture( callerAgent ) )
-        callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
+        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
 }
    
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void DEC_ActionFunctions::Prisoners_Unload( MIL_AgentPion& callerAgent, DEC_Know
     if( pKnowledge )
     {
         pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Release();
-        callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
+        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
     }
 }
 
@@ -68,7 +68,7 @@ void DEC_ActionFunctions::Prisoners_UnloadInCamp( MIL_AgentPion& callerAgent, DE
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return;
 
-    callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
+    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
     pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Imprison( *pCampKnowledge->GetObjectKnown() );
 }
 
@@ -92,7 +92,7 @@ bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent
 void DEC_ActionFunctions::Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
 	if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Orientate( callerAgent ) )
-        callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
+        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
 }
    
 // -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ void DEC_ActionFunctions::Refugees_Unload( MIL_AgentPion& callerAgent, DEC_Knowl
 	if( !pKnowledge )
         return;
     pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Release();
-    callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
+    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void DEC_ActionFunctions::Refugees_UnloadInCamp( MIL_AgentPion& callerAgent, DEC
 	DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy          () );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return;
-    callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
+    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
     pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Release( *pCampKnowledge->GetObjectKnown() );
 }
 
@@ -129,7 +129,7 @@ bool DEC_ActionFunctions::PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgen
     if( !pKnowledge )
         return false;
     else
-        return callerAgent.GetRole< PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) ;
+        return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ bool DEC_ActionFunctions::Refugees_IsUnloadedInCamp( MIL_AgentPion& callerAgent,
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_AddPion( MIL_AgentPion& callerAgent, DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
 {
-    callerAgent.GetRole< PHY_RoleAction_Transport >().AddPion( pPion->GetPion(), bTransportOnlyLoadable );
+    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().AddPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const 
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {   
         MIL_AgentPion& pion = ( *itPion )->GetPion();
-        callerAgent.GetRole< PHY_RoleAction_Transport >().AddPion( pion, bTransportOnlyLoadable );
+        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().AddPion( pion, bTransportOnlyLoadable );
     }
 }
 
@@ -178,7 +178,7 @@ void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const 
 void DEC_ActionFunctions::Transport_MagicLoadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable  )
 {
     assert( pPion );
-    callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pPion->GetPion(), bTransportOnlyLoadable );
+    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicLoadPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +190,7 @@ void DEC_ActionFunctions::Transport_MagicLoadPions( MIL_AgentPion& callerAgent, 
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {   
         MIL_AgentPion& pion = ( *itPion )->GetPion();
-        callerAgent.GetRole< PHY_RoleAction_Transport >().MagicLoadPion( pion, bTransportOnlyLoadable );
+        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicLoadPion( pion, bTransportOnlyLoadable );
     }
 }
 
@@ -201,7 +201,7 @@ void DEC_ActionFunctions::Transport_MagicLoadPions( MIL_AgentPion& callerAgent, 
 void DEC_ActionFunctions::Transport_MagicUnloadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion )
 {
 	assert( pPion );
-    callerAgent.GetRole< PHY_RoleAction_Transport >().MagicUnloadPion( pPion->GetPion() );
+    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pPion->GetPion() );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +210,7 @@ void DEC_ActionFunctions::Transport_MagicUnloadPion( MIL_AgentPion& callerAgent,
 // -----------------------------------------------------------------------------
 bool DEC_ActionFunctions::Transport_IsFinished( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Transport >().IsFinished() ;
+    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsFinished() ;
 }
 
 // -----------------------------------------------------------------------------
@@ -219,7 +219,7 @@ bool DEC_ActionFunctions::Transport_IsFinished( const MIL_AgentPion& callerAgent
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_Cancel( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleAction_Transport >().Cancel();
+    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().Cancel();
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ void DEC_ActionFunctions::Transport_Cancel( MIL_AgentPion& callerAgent )
 bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
 {
     assert( pPion );
-    return callerAgent.GetRole< PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable ) ;
+    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -238,5 +238,5 @@ bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, co
 // -----------------------------------------------------------------------------
 bool DEC_ActionFunctions::Transport_IsTransporting( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Transport >().IsTransporting();
+    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsTransporting();
 }

@@ -27,6 +27,10 @@ namespace firing
     class ComposantesAbleToBeFiredComputer_ABC;
 }
 
+namespace transport
+{
+	class TransportCapacityComputer_ABC;
+}
 
 // =============================================================================
 // @class  PHY_RolePion_Composantes
@@ -35,6 +39,7 @@ namespace firing
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< firing::ComposantesAbleToBeFiredComputer_ABC >
+							   , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
 							   , public nbc::ToxicEffectHandler_ABC
 {
 
@@ -63,6 +68,7 @@ public:
 
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
     virtual void Execute( firing::ComposantesAbleToBeFiredComputer_ABC& algorithm ) const;
+    virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;
 
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 

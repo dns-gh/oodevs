@@ -40,6 +40,7 @@
 #include <xeumeuleu/xml.h>
 
 #include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
+#include "simulation_kernel/TransportCapacityComputer_ABC.h"
 
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
@@ -566,7 +567,8 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::UpdateMajorComposante()
 {
-    if( !HasChanged() && !pion_.GetRole< PHY_RoleAction_Loading >().HasChanged() && !pion_.GetRole< PHY_RoleInterface_Transported >().HasChanged() )
+    if( !HasChanged() && !pion_.GetRole< transport::PHY_RoleAction_Loading >().HasChanged() &&
+    		!pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged() )
         return;
 
     pMajorComposante_ = 0;
@@ -687,8 +689,8 @@ void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& comp
     if( composante.GetState().IsUsable() )
         pion_.GetRole< PHY_RoleInterface_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
 
-    pion_.GetRole< PHY_RoleAction_Loading   >().CheckConsistency();
-    pion_.GetRole< PHY_RoleAction_Transport >().CheckConsistency();
+    pion_.GetRole< transport::PHY_RoleAction_Loading   >().CheckConsistency();
+    pion_.GetRole< transport::PHY_RoleAction_Transport >().CheckConsistency();
 }
 
 // -----------------------------------------------------------------------------
@@ -710,14 +712,14 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     else if( newState.IsUsable() && !oldState.IsUsable() )
         pion_.GetRole< PHY_RoleInterface_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
 
-    pion_.GetRole< PHY_RoleAction_Transport >().NotifyComposanteChanged( composante );
+    pion_.GetRole< transport::PHY_RoleAction_Transport >().NotifyComposanteChanged( composante );
 
     PHY_RoleInterface_Supply* role = pion_.Retrieve< PHY_RoleInterface_Supply >();
     if( role )
         role->NotifyComposanteChanged( composante );
 
-    pion_.GetRole< PHY_RoleAction_Loading   >().CheckConsistency();
-    pion_.GetRole< PHY_RoleAction_Transport >().CheckConsistency();
+    pion_.GetRole< transport::PHY_RoleAction_Loading   >().CheckConsistency();
+    pion_.GetRole< transport::PHY_RoleAction_Transport >().CheckConsistency();
 }
 
 // -----------------------------------------------------------------------------
@@ -965,7 +967,7 @@ void PHY_RolePion_Composantes::Neutralize()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_FireDamages_Agent& fireDamages )
 {
-    if( !pion_.GetRole< PHY_RoleAction_Loading >().IsLoaded() )
+    if( !pion_.GetRole< transport::PHY_RoleAction_Loading >().IsLoaded() )
         return;
 
     if( !composanteChanged.CanTransportHumans() )
@@ -1804,6 +1806,16 @@ void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& 
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( firing::ComposantesAbleToBeFiredComputer_ABC& algorithm ) const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        algorithm.ApplyOnComposante( **it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Created: AHC 2009-09-23
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC& algorithm ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         algorithm.ApplyOnComposante( **it );

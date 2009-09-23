@@ -14,13 +14,15 @@
 #include "PHY_RoleAction_Loading.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
+namespace transport
+{
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionLoad constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionLoad::PHY_ActionLoad( MIL_AgentPion& pion )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , role_         ( pion.GetRole< PHY_RoleAction_Loading >() )
+    , role_         ( pion.GetRole< transport::PHY_RoleAction_Loading >() )
 {    
     Callback( role_.GetInitialReturnCode() );
 }
@@ -52,3 +54,4 @@ void PHY_ActionLoad::ExecuteSuspended()
 {
     role_.LoadSuspended();
 }
+} // namespace transport

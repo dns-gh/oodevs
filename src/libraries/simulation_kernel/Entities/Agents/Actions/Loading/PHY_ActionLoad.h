@@ -15,7 +15,10 @@
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class MIL_AgentPion;
-class PHY_RoleAction_Loading;
+namespace transport
+{
+
+	class PHY_RoleAction_Loading;
 
 // =============================================================================
 // @class  PHY_ActionLoad
@@ -43,5 +46,7 @@ private:
     PHY_RoleAction_Loading& role_;
     //@}
 };
+
+} // namespace transport
 
 #endif // __PHY_ActionLoad_h_

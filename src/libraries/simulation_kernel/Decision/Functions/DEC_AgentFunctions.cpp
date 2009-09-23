@@ -128,7 +128,7 @@ bool DEC_AgentFunctions::IsContaminated( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsTransported( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Transported >().IsTransported();
+    return callerAgent.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +310,7 @@ void DEC_AgentFunctions::DecisionalState( const MIL_AgentPion& callerAgent, cons
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsLoaded( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Loading >().IsLoaded();
+    return callerAgent.GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
 }
 
 // -----------------------------------------------------------------------------
@@ -319,7 +319,7 @@ bool DEC_AgentFunctions::IsLoaded( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 MT_Float DEC_AgentFunctions::GetLoadingTime( const MIL_AgentPion& callerAgent )
 {
-    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< PHY_RoleAction_Loading >().GetLoadingTime() );
+    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetLoadingTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -328,7 +328,7 @@ MT_Float DEC_AgentFunctions::GetLoadingTime( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 MT_Float DEC_AgentFunctions::GetUnloadingTime( const MIL_AgentPion& callerAgent )
 {
-    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< PHY_RoleAction_Loading >().GetUnloadingTime() );
+    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetUnloadingTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -337,7 +337,7 @@ MT_Float DEC_AgentFunctions::GetUnloadingTime( const MIL_AgentPion& callerAgent 
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::DisableHumanTransportersNow( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Transported >().DisableHumanTransporters( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    callerAgent.GetRole< transport::PHY_RoleInterface_Transported >().DisableHumanTransporters( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +346,7 @@ void DEC_AgentFunctions::DisableHumanTransportersNow( MIL_AgentPion& callerAgent
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::RecoverHumanTransportersNow( MIL_AgentPion& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Transported >().RecoverHumanTransporters();
+    callerAgent.GetRole< transport::PHY_RoleInterface_Transported >().RecoverHumanTransporters();
 }
 
 
@@ -356,7 +356,7 @@ void DEC_AgentFunctions::RecoverHumanTransportersNow( MIL_AgentPion& callerAgent
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AreHumanTransportersReady( const MIL_AgentPion& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Transported >().HasHumanTransportersReady();
+    return callerAgent.GetRole< transport::PHY_RoleInterface_Transported >().HasHumanTransportersReady();
 }
 
 // -----------------------------------------------------------------------------

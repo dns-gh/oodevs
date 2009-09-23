@@ -19,6 +19,9 @@
 class MIL_Agent_ABC;
 class NET_ASN_MsgUnitAttributes;
 
+namespace transport
+{
+
 // =============================================================================
 // @class  PHY_RoleInterface_Transported
 // Created: JVT 2004-08-03
@@ -74,5 +77,5 @@ private:
 	//@}
 };
 
-
+} // namespace transport
 #endif // __PHY_RoleInterface_Transported_h_

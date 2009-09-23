@@ -350,7 +350,7 @@ void PHY_DotationStockContainer::CheckStockCapacities()
     sStockChecker stockChecker;
 
     assert( pRoleSupply_ );
-    pRoleSupply_->GetPion().GetRole< PHY_RolePion_Composantes >().Apply( stockChecker );
+    pRoleSupply_->GetPion().GetRole< PHY_RolePion_Composantes >().Apply( stockChecker ); // TODO remove PHY_RolePion_Composantes::Apply
 
     for( CIT_NatureStockData it = stocksByNatures.begin(); it != stocksByNatures.end(); ++it )
     {

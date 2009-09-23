@@ -12,28 +12,37 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_RoleAction_Transport.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Transport, "PHY_RoleAction_Transport" )
-BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Transport::sTransportData, "PHY_RoleAction_Transport::sTransportData" )
+#include "DefaultTransportCapacityComputer.h"
+#include "TransportCapacityComputerFactory_ABC.h"
+
+BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Transport, "PHY_RoleAction_Transport" )
+BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Transport::sTransportData, "PHY_RoleAction_Transport::sTransportData" )
+
+namespace transport
+{
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ )
 {
     const MIL_AgentPion* const pion = &role->transporter_;
-    archive << pion;
+    const TransportCapacityComputerFactory_ABC* const fact = &role->  pTransportCapacityComputerFactory_;
+    archive << pion
+            << fact;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RoleAction_Transport( *pion );
+    TransportCapacityComputerFactory_ABC* fact;
+    archive >> pion >> fact;
+    ::new( role )PHY_RoleAction_Transport( *pion, *fact );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,8 +100,9 @@ void PHY_RoleAction_Transport::sTransportData::serialize( Archive& file, const u
 // Name: PHY_RoleAction_Transport constructor
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion )
+PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion, const TransportCapacityComputerFactory_ABC& factory )
     : transporter_             ( pion )
+    , pTransportCapacityComputerFactory_(factory)
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
     , rWeightTransported_       ( 0. )
@@ -128,42 +138,6 @@ void PHY_RoleAction_Transport::serialize( Archive& file, const uint )
 
 
 // =============================================================================
-// TOOLS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Transport::GetTransportWeightCapacity
-// Created: NLD 2004-11-19
-// -----------------------------------------------------------------------------
-struct sTransporterData
-{
-    sTransporterData( const MIL_AgentPion& transporter )
-        : rWeightCapacity_                ( 0. )
-        , rWeightLoadedPerTimeStep_       ( 0. )
-        , rWeightUnloadedPerTimeStep_     ( 0. )
-        , rMaxComposanteTransportedWeight_( 0. )
-    {
-        transporter.GetRole< PHY_RolePion_Composantes >().Apply( *this );
-    }
-
-    void operator() ( const PHY_ComposantePion& composante )
-    {
-        if( composante.CanTransportPion() )
-        {
-            rWeightCapacity_                 += composante.GetPionTransporterWeightCapacity           ();
-            rWeightLoadedPerTimeStep_        += composante.GetPionTransporterWeightLoadedPerTimeStep  ();
-            rWeightUnloadedPerTimeStep_      += composante.GetPionTransporterWeightUnloadedPerTimeStep();
-            rMaxComposanteTransportedWeight_  = std::max( rMaxComposanteTransportedWeight_, composante.GetPionTransporterWeightCapacity() );
-        }
-    }
-
-    MT_Float rWeightCapacity_;
-    MT_Float rWeightLoadedPerTimeStep_;
-    MT_Float rWeightUnloadedPerTimeStep_;
-    MT_Float rMaxComposanteTransportedWeight_;
-};
-
-// =============================================================================
 // LOADING
 // =============================================================================
 
@@ -179,14 +153,15 @@ int PHY_RoleAction_Transport::Load()
 
     if( nState_ == eLoading )
     {
-        sTransporterData func( transporter_ );
-        if( func.rWeightLoadedPerTimeStep_ == 0. )
+    	const TransportCapacityComputer_ABC& comp = transporter_.Execute( pTransportCapacityComputerFactory_.Create() );
+
+        if( comp.WeightLoadedPerTimeStep() == 0. )
             return eErrorNoCarriers;
 
-        const MT_Float rWeightToLoad = std::min( func.rWeightLoadedPerTimeStep_, func.rWeightCapacity_ - rWeightTransported_ );
+        const MT_Float rWeightToLoad = std::min( comp.WeightLoadedPerTimeStep(), comp.WeightCapacity() - rWeightTransported_ );
         const MT_Float rWeightLoaded = DoLoad( rWeightToLoad );
         rWeightTransported_ += rWeightLoaded;
-        if( rWeightLoaded == 0 || rWeightTransported_ >= func.rWeightCapacity_ )
+        if( rWeightLoaded == 0 || rWeightTransported_ >= comp.WeightCapacity() )
         {
             nState_ = eNothing;
             return eFinished;
@@ -239,11 +214,11 @@ int PHY_RoleAction_Transport::Unload()
 
     if( nState_ == eUnloading )
     {
-        sTransporterData func( transporter_ );
-        if( func.rWeightUnloadedPerTimeStep_ == 0. )
+    	const TransportCapacityComputer_ABC& comp = transporter_.Execute( pTransportCapacityComputerFactory_.Create() );
+        if( comp.WeightUnloadedPerTimeStep() == 0. )
             return eErrorNoCarriers;
 
-        const MT_Float rWeightUnloaded = DoUnload( func.rWeightUnloadedPerTimeStep_ );
+        const MT_Float rWeightUnloaded = DoUnload( comp.WeightUnloadedPerTimeStep() );
         rWeightTransported_ -= rWeightUnloaded;
         if( rWeightUnloaded == 0. || rWeightTransported_ <= 0. )
         {
@@ -353,8 +328,7 @@ void PHY_RoleAction_Transport::ApplyPoisonous                  ( const MIL_Toxic
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::CheckConsistency()
 {
-    sTransporterData func( transporter_ );
-    if( func.rWeightCapacity_ == 0. )
+    if( transporter_.Execute( pTransportCapacityComputerFactory_.Create() ).WeightCapacity() == 0. )
         Cancel();
 }
 
@@ -379,8 +353,8 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
     if( rTotalTransportedWeight <= 0. )
         return false;
 
-    sTransporterData transporterData( transporter_ );
-    if( !bTransportOnlyLoadable && rHeaviestComposanteTransportedWeight > transporterData.rMaxComposanteTransportedWeight_ )
+    if( !bTransportOnlyLoadable && rHeaviestComposanteTransportedWeight >
+		transporter_.Execute( pTransportCapacityComputerFactory_.Create() ).MaxComposanteTransportedWeight() )
         return false;
 
     transportedPions_[ &transported ].sTransportData::sTransportData( rTotalTransportedWeight, bTransportOnlyLoadable );
@@ -464,8 +438,8 @@ bool PHY_RoleAction_Transport::CanTransportPion( const MIL_Agent_ABC& transporte
     if( rTotalTransportedWeight <= 0. )
         return false;
 
-    sTransporterData transporterData( transporter_ );
-    if( !bTransportOnlyLoadable && rHeaviestComposanteTransportedWeight > transporterData.rMaxComposanteTransportedWeight_ )
+    if( !bTransportOnlyLoadable && rHeaviestComposanteTransportedWeight >
+		transporter_.Execute( pTransportCapacityComputerFactory_.Create() ).MaxComposanteTransportedWeight() )
         return false;
     return true;
 }
@@ -606,3 +580,5 @@ bool PHY_RoleAction_Transport::IsTransporting() const
 {
     return rWeightTransported_ > 0.;
 }
+
+} //namespace transport

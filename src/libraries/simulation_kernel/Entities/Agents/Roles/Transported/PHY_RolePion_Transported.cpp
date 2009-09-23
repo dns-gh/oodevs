@@ -19,7 +19,10 @@
 #include "Network/NET_ASN_Messages.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Transported, "PHY_RolePion_Transported" )
+BOOST_CLASS_EXPORT_GUID( transport::PHY_RolePion_Transported, "PHY_RolePion_Transported" )
+
+namespace transport
+{
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Transported* role, const unsigned int /*version*/ )
@@ -65,7 +68,7 @@ PHY_RolePion_Transported::~PHY_RolePion_Transported()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
+    file >> ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
 		 >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
          >> vLoadingPosition_
          >> vHumanTransporterPosition_;
@@ -80,7 +83,7 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
+    file << ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
 		 << pTransporter_
          << vLoadingPosition_
          << vHumanTransporterPosition_;
@@ -318,3 +321,5 @@ bool PHY_RolePion_Transported::HasHumanTransportersToRecover() const
 {
     return !vHumanTransporterPosition_.IsZero();
 }
+
+} // namespace transport

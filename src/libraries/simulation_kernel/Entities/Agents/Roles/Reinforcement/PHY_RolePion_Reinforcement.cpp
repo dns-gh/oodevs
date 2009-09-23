@@ -72,7 +72,7 @@ void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
 bool PHY_RolePion_Reinforcement::CanReinforce() const
 {
 
-    return !pion_.IsDead() && !pion_.GetRole< PHY_RoleInterface_Transported >().IsTransported();
+    return !pion_.IsDead() && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
 }
     
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ bool PHY_RolePion_Reinforcement::CanReinforce() const
 bool PHY_RolePion_Reinforcement::CanBeReinforced() const
 {
 
-    return !pion_.IsDead() && !pion_.GetRole< PHY_RoleInterface_Transported >().IsTransported();
+    return !pion_.IsDead() && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
 }
 
 // -----------------------------------------------------------------------------

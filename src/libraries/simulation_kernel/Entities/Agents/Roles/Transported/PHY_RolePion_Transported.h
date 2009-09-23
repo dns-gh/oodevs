@@ -18,6 +18,10 @@
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
 
+namespace transport
+{
+
+
 // =============================================================================
 // @class  PHY_RolePion_Transported
 // Created: JVT 2004-08-03
@@ -79,5 +83,7 @@ private:
   	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, const unsigned int /*version*/ );
 
 };
+
+} // namespace transport
 
 #endif // __PHY_RolePion_Transported_h_

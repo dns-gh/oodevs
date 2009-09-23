@@ -335,9 +335,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC__StartControlerZone",
             boost::function< PHY_Action_ABC*( const TER_Localisation*, MT_Float, bool ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionControlZone, const TER_Localisation*, MT_Float, bool >, boost::ref( GetPion() ), _1, _2, _3 ) ) );    
     brain.RegisterFunction( "DEC_StartEmbarquement",
-            boost::function< PHY_Action_ABC*() >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionLoad >, boost::ref( GetPion() ) ) ) );
+            boost::function< PHY_Action_ABC*() >( boost::bind( &DEC_ActionFunctions::StartAction  < transport::PHY_ActionLoad >, boost::ref( GetPion() ) ) ) );
     brain.RegisterFunction( "DEC_StartDebarquement",
-            boost::function< PHY_Action_ABC*() >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionUnload >, boost::ref( GetPion() ) ) ) );
+            boost::function< PHY_Action_ABC*() >( boost::bind( &DEC_ActionFunctions::StartAction  < transport::PHY_ActionUnload >, boost::ref( GetPion() ) ) ) );
 
     // Embarquement / dbarquement
     brain.RegisterFunction( "DEC_Agent_EstEmbarque",
