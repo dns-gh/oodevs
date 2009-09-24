@@ -21,21 +21,30 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 
+#include "simulation_kernel/HealComputer_ABC.h"
+#include "simulation_kernel/HealComputerFactory_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Humans, "PHY_RolePion_Humans" )
+
+using namespace human;
 
 template< typename Archive >
 inline void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
+    const human::HealComputerFactory_ABC* const healComputerFactory = &role->healComputerFactory_;
+    archive << pion
+            << healComputerFactory;
 }
 
 template< typename Archive >
 inline void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-	archive >> pion;
-	::new( role )PHY_RolePion_Humans( *pion );
+  human::HealComputerFactory_ABC* healComputerFactory;
+	archive >> pion
+          >> healComputerFactory;
+	::new( role )PHY_RolePion_Humans( *pion, *healComputerFactory );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,8 +88,9 @@ void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_Humans constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Humans::PHY_RolePion_Humans( MIL_AgentPion& pion )
+PHY_RolePion_Humans::PHY_RolePion_Humans( MIL_AgentPion& pion, const human::HealComputerFactory_ABC& healComputerFactory )
     : pion_                   ( pion )
+    , healComputerFactory_    ( healComputerFactory )
     , humansData_             ( PHY_HumanRank::GetHumanRanks().size(), T_HumanData() )
     , nNbrHumansDataChanged_  ( humansData_.size() )
     , nNbrUsableHumans_       ( 0 )
@@ -157,7 +167,7 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
     nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, humanData.nNbrTotal_ );
 
     if( nNewNbrFullyAliveHumans > humanData.nNbrOperational_ )
-        pion_.GetRole< PHY_RoleInterface_Composantes >().HealHumans( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
+        pion_.Execute( healComputerFactory_.Create( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ ) ).Heal();
     else if( nNewNbrFullyAliveHumans < humanData.nNbrOperational_ )
         pion_.GetRole< PHY_RoleInterface_Composantes >().WoundHumans( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
 }

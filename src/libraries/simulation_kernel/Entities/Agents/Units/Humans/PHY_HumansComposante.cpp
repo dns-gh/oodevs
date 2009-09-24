@@ -71,7 +71,7 @@ bool PHY_HumansComposante::ChangeHumanRank( const PHY_HumanRank& oldRank, const 
     if( oldRank == newRank )
         return false;
 
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
     {
         PHY_Human& human = **it;
         if( human.GetRank() == oldRank && human.GetWound() == wound )
@@ -89,7 +89,7 @@ bool PHY_HumansComposante::ChangeHumanRank( const PHY_HumanRank& oldRank, const 
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::HealAllHumans()
 {
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
         (**it).Heal();
 }
     
@@ -103,7 +103,7 @@ uint PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, uint nNbrToCha
 
     uint nNbrChanged = 0;
 
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange; ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange; ++it )
     {
         PHY_Human& human = **it;
 
@@ -127,7 +127,7 @@ uint PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, uint nNbrToCh
         return 0;
 
     uint nNbrChanged = 0;
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange ; ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange ; ++it )
     {
         PHY_Human& human = **it;
         if( human.GetRank() != rank )
@@ -173,7 +173,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
     uint nNbrDead    = (uint)round( humans_.size() * protection.GetHumanDeadRatio   ( newComposanteState ) );
     uint nNbrWounded = (uint)round( humans_.size() * protection.GetHumanWoundedRatio( newComposanteState ) );
 
-    CIT_HumanVector itCur = humans_.begin();
+    PHY_Human::CIT_HumanVector itCur = humans_.begin();
     while( itCur != humans_.end() && nNbrDead != 0 )
     {
         PHY_Human& human = **itCur;
@@ -200,7 +200,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
 {
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
         (**it).ApplyContamination( contamination );
 }
 
@@ -210,7 +210,7 @@ void PHY_HumansComposante::ApplyContamination( const MIL_ToxicEffectManipulator&
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
 {
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
         (**it).ApplyPoisonous( contamination );
 }
 
@@ -220,7 +220,7 @@ void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& con
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::NotifyComposanteHandledByMaintenance()
 {
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
         (**it).NotifyComposanteHandledByMaintenance();
 }
 
@@ -230,7 +230,7 @@ void PHY_HumansComposante::NotifyComposanteHandledByMaintenance()
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::NotifyComposanteBackFromMaintenance()
 {
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
         (**it).NotifyComposanteBackFromMaintenance();
 }
 
@@ -240,7 +240,7 @@ void PHY_HumansComposante::NotifyComposanteBackFromMaintenance()
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RoleInterface_Composantes& src, PHY_RoleInterface_Composantes& dest )
 {
-    for ( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    for ( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
     {
         (**it).CancelLogisticRequest();
         src .NotifyHumanRemoved( **it );
@@ -340,7 +340,7 @@ PHY_MedicalHumanState* PHY_HumansComposante::NotifyHumanEvacuatedByThirdParty( P
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
         (**it).Evacuate( destinationTC2 );
 }
 
@@ -350,7 +350,7 @@ void PHY_HumansComposante::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC
 // -----------------------------------------------------------------------------
 bool PHY_HumansComposante::HasWoundedHumansToEvacuate() const
 {
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
     {
         if( (**it).NeedEvacuation() )
             return true;

@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -277,8 +278,9 @@ bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& ef
 // Name: PHY_Weapon::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_Weapon::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
-{
+void PHY_Weapon::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
+{//@TODO MGD See with AHC if we remove this GetRole kind
+    const MT_Vector2D& vSourcePosition = firer.GetRole< PHY_RoleInterface_Location >().GetPosition();
     uint nNbrAmmoReserved = (uint)firer.GetRole< PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmo );
     assert( nNbrAmmoReserved == nNbrAmmo );
     type_.ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );

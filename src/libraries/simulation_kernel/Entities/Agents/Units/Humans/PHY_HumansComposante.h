@@ -12,12 +12,12 @@
 #ifndef __PHY_HumansComposante_h_
 #define __PHY_HumansComposante_h_
 
+#include "simulation_kernel/Entities/Agents/Units/Humans/PHY_Human.h"
 class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_ComposantePion;
 class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
-class PHY_Human;
 class PHY_RoleInterface_Composantes;
 class PHY_MedicalHumanState;
 class MIL_ToxicEffectManipulator;
@@ -87,15 +87,8 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< PHY_Human* >      T_HumanVector;
-    typedef T_HumanVector::const_iterator  CIT_HumanVector;
-    //@}
-
-private:
     PHY_ComposantePion* pComposante_;
-    T_HumanVector       humans_;
+    PHY_Human::T_HumanVector humans_;
     uint                nNbrUsableHumans_;
 };
 

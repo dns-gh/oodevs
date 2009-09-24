@@ -35,7 +35,10 @@ namespace detection
 {
     class DetectionComputerFactory_ABC;
 }
-
+namespace human
+{
+    class HealComputerFactory_ABC;
+}
 namespace transport
 {
 	class TransportCapacityComputerFactory_ABC;
@@ -66,6 +69,7 @@ public:
     std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
     std::auto_ptr< detection::DetectionComputerFactory_ABC > detectionComputerFactory_;
     std::auto_ptr< transport::TransportCapacityComputerFactory_ABC > transportCapacityComputerFactory_;
+    std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
     //@}
 };
 

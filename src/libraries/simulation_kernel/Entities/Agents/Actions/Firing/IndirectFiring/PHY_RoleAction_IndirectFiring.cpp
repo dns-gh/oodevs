@@ -156,7 +156,7 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
         return eNoCapacity;
 
     PHY_FireResults_Default fireResult; //$$$ POURRI
-    pWeapon->ThrowSmoke( pion_, pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), vTargetPosition, nNbrAmmo, fireResult );
+    pWeapon->ThrowSmoke( pion_, vTargetPosition, nNbrAmmo, fireResult );
     return eFinished;
 }
 

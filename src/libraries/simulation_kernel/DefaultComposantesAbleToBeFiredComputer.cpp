@@ -38,7 +38,7 @@ DefaultComposantesAbleToBeFiredComputer::~DefaultComposantesAbleToBeFiredCompute
 // -----------------------------------------------------------------------------
 void DefaultComposantesAbleToBeFiredComputer::ApplyOnComposante( PHY_ComposantePion& fired )
 {
-    availableTargets_.clear();
+    availableTargets_.clear();//@TODO move to reset BUG
     if( fired.CanBeFired() )
     {
         if( !bFireOnlyOnMajorComposantes_ || fired.IsMajor() )

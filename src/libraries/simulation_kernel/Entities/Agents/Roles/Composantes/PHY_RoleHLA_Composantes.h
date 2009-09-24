@@ -97,8 +97,7 @@ public:
 
     //! @name Humans management
     //@{
-    virtual void WoundHumans  ( const PHY_HumanRank& rank, uint nNbr ) {};
-    virtual void HealHumans   ( const PHY_HumanRank& rank, uint nNbr ) {};    
+    virtual void WoundHumans  ( const PHY_HumanRank& rank, uint nNbr ) {};  
     virtual void HealAllHumans() {};
     //@}
 

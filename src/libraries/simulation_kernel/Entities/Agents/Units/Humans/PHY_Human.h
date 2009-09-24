@@ -39,6 +39,9 @@ public:
         eMaintenance,
         eMedical
     };
+
+    typedef std::vector< PHY_Human* >      T_HumanVector;
+    typedef T_HumanVector::const_iterator  CIT_HumanVector;
     //@}
 
 public:

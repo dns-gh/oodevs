@@ -41,6 +41,7 @@
 
 #include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
+#include "simulation_kernel/HealComputer_ABC.h"
 
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
@@ -459,31 +460,6 @@ void PHY_RolePion_Composantes::WoundHumans( const PHY_HumanRank& rank, uint nNbr
     while( nNbr && itCurrentComp != composantes.end() )
     {
         uint nNbrChanged = (*itCurrentComp)->WoundHumans( rank, 1, PHY_HumanWound::killed_ );
-        if( nNbrChanged == 0 )
-            itCurrentComp = composantes.erase( itCurrentComp );
-        else
-        {
-            nNbr -= nNbrChanged;
-            ++ itCurrentComp;
-        }
-        if( itCurrentComp == composantes.end() )
-            itCurrentComp = composantes.begin();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HealHumans
-// Created: NLD 2005-07-28
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::HealHumans( const PHY_HumanRank& rank, uint nNbr )
-{
-    PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
-
-    PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = composantes.begin();
-    while( nNbr && itCurrentComp != composantes.end() )
-    {
-        uint nNbrChanged = (*itCurrentComp)->HealHumans( rank, 1 );
         if( nNbrChanged == 0 )
             itCurrentComp = composantes.erase( itCurrentComp );
         else
@@ -1820,3 +1796,14 @@ void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         algorithm.ApplyOnComposante( **it );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Created: AHC 2009-09-23
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Execute( human::HealComputer_ABC& algorithm ) const
+{
+  for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    algorithm.ApplyOnComposante( **it );
+}
+

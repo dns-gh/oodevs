@@ -32,6 +32,11 @@ namespace transport
 	class TransportCapacityComputer_ABC;
 }
 
+namespace human
+{
+  class HealComputer_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePion_Composantes
 // Created: JVT 2004-08-03
@@ -39,8 +44,9 @@ namespace transport
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< firing::ComposantesAbleToBeFiredComputer_ABC >
-							   , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
-							   , public nbc::ToxicEffectHandler_ABC
+							                 , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
+                               , public tools::AlgorithmModifier_ABC< human::HealComputer_ABC >
+                               , public nbc::ToxicEffectHandler_ABC
 {
 
 
@@ -69,6 +75,7 @@ public:
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
     virtual void Execute( firing::ComposantesAbleToBeFiredComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;
+    virtual void Execute( human::HealComputer_ABC& algorithm ) const;
 
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 
@@ -79,8 +86,7 @@ public:
 
     //! @name Humans management
     //@{
-    virtual void WoundHumans  ( const PHY_HumanRank& rank, uint nNbr );
-    virtual void HealHumans   ( const PHY_HumanRank& rank, uint nNbr );    
+    virtual void WoundHumans  ( const PHY_HumanRank& rank, uint nNbr );    
     virtual void HealAllHumans();
     //@}
 
