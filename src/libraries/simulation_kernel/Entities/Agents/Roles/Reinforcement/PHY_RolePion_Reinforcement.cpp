@@ -134,8 +134,6 @@ void PHY_RolePion_Reinforcement::CancelReinforcement()
 {
     if( pPionReinforced_ )
     {
-    
-        
         pPionReinforced_->GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementRemoved( pion_ );
         pPionReinforced_ = 0;
         bHasChanged_ = true;
@@ -255,4 +253,20 @@ bool PHY_RolePion_Reinforcement::HasChanged() const
 const PHY_RolePion_Reinforcement::T_PionSet& PHY_RolePion_Reinforcement::GetReinforcements() const
 {
     return reinforcements_;
+}
+
+void PHY_RolePion_Reinforcement::LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+{
+	CancelReinforcement();
+	const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = GetReinforcements();
+	while( !reinforcements.empty() )
+	   (**reinforcements.begin()).GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
+}
+void PHY_RolePion_Reinforcement::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+{
+
+}
+void PHY_RolePion_Reinforcement::CancelTransport    ( const MIL_Agent_ABC& transporter )
+{
+
 }

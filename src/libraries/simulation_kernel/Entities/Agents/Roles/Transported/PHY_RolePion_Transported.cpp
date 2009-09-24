@@ -89,109 +89,62 @@ void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint 
          << vHumanTransporterPosition_;
 }
 
-namespace
-{
-    struct sTransportedData : private boost::noncopyable
-    {
-        sTransportedData( const MIL_AgentPion& transported, const bool bTransportOnlyLoadable )
-            : rTotalWeight_             ( 0. )
-            , rHeaviestComposanteWeight_( 0. )
-            , bTransportOnlyLoadable_   ( bTransportOnlyLoadable )
-        {
-            transported.GetRole< PHY_RolePion_Composantes >().Apply( *this );
-        }
-
-        void operator() ( const PHY_ComposantePion& composante )
-        {
-            if( composante.CanBeTransported() && ( !bTransportOnlyLoadable_ || composante.CanBeLoaded() ) )
-            {
-                rTotalWeight_             += composante.GetWeight();
-                rHeaviestComposanteWeight_ = std::max( rHeaviestComposanteWeight_, composante.GetWeight() );
-            }
-        }
-
-              MT_Float rTotalWeight_;
-              MT_Float rHeaviestComposanteWeight_;
-        const bool     bTransportOnlyLoadable_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Transported::GetTransportWeight
-// Created: NLD 2007-02-14
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::GetTransportWeight( bool bTransportOnlyLoadable, MT_Float& rTotalWeight, MT_Float& rHeaviestComposanteWeight ) const
-{
-
-    sTransportedData data( pion_, bTransportOnlyLoadable );
-
-    rTotalWeight              = data.rTotalWeight_;
-    rHeaviestComposanteWeight = data.rHeaviestComposanteWeight_;    
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::CancelTransport
 // Created: NLD 2004-11-24
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter )
+void PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter )
 {
 
     if( pTransporter_ != &transporter )
-        return false;
+        return ;//false;
     pion_.GetRole< PHY_RoleInterface_Location >().Show( vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
     vLoadingPosition_.Reset();  
-    return true;
+    return ;//true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::LoadForTransport
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
 
     if( pTransporter_ && pTransporter_ == &transporter)
-        return true;
+        return ;//true;
     if( pTransporter_ )
-        return false;
+        return ;//false;
 
     pTransporter_ = &transporter;
 
-    pion_.GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();     
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    while( !reinforcements.empty() )
-        (**reinforcements.begin()).GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
-    
-    pion_.GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
     pion_.GetRole< PHY_RoleInterface_Location  >().Hide               ();   
     vLoadingPosition_= transporter.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )
         vHumanTransporterPosition_ = vLoadingPosition_;
     bHasChanged_ = true;
-    return true;
+    return ;//true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::UnloadFromTransport
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
 
     if( pTransporter_ != &transporter )
-        return false;
+        return ; //false;
 
     assert( pTransporter_ );
-    pion_.GetRole< PHY_RoleAction_Loading >().ForceUnloadedState ();
     pion_.GetRole< PHY_RoleInterface_Location  >().Show( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pTransporter_ = 0;
     bHasChanged_  = true;
     vLoadingPosition_.Reset();
     if( !bTransportOnlyLoadable )
         vHumanTransporterPosition_.Reset();
-    return true;
+    return ;//true;
 }
 
 // -----------------------------------------------------------------------------

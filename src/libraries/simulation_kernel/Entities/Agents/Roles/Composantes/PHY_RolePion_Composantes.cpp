@@ -41,6 +41,7 @@
 
 #include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
+#include "simulation_kernel/TransportWeightComputer_ABC.h""
 #include "simulation_kernel/HealComputer_ABC.h"
 
 using namespace human;
@@ -1738,6 +1739,18 @@ void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         algorithm.ApplyOnComposante( **it );
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Created: AHC 2009-09-23
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& algorithm ) const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+    	if( (*it)->CanBeTransported() )
+    		algorithm.AddTransportedWeight((*it)->GetWeight(), (*it)->CanBeLoaded());
+    }
 }
 
 // -----------------------------------------------------------------------------

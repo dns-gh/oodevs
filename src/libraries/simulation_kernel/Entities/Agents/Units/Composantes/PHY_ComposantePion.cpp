@@ -45,7 +45,7 @@
 #include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
 
 MT_Random PHY_ComposantePion::random_;
-MT_Float  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
+double  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
 
 BOOST_CLASS_EXPORT_GUID( PHY_ComposantePion, "PHY_ComposantePion" )
 
@@ -303,7 +303,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
 // Name: PHY_ComposantePion::GetMaxSpeed
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMaxSpeed( const TerrainData& data ) const
+double   PHY_ComposantePion::GetMaxSpeed( const TerrainData& data ) const
 {
     assert( pType_ );
     
@@ -314,7 +314,7 @@ MT_Float PHY_ComposantePion::GetMaxSpeed( const TerrainData& data ) const
 // Name: PHY_ComposantePion::GetMaxSpeed
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMaxSpeed() const
+double   PHY_ComposantePion::GetMaxSpeed() const
 {
     assert( pType_ );
     return CanMove() ? pType_->GetMaxSpeed() : 0.;
@@ -324,7 +324,7 @@ MT_Float PHY_ComposantePion::GetMaxSpeed() const
 // Name: PHY_ComposantePion::GetMaxSpeed
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
+double PHY_ComposantePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
     return CanMove() ? pType_->GetMaxSpeed( object ) : 0.;
 }
@@ -456,7 +456,7 @@ void PHY_ComposantePion::ApplyPoisonous( const MIL_ToxicEffectManipulator& conta
 // Name: PHY_ComposantePion::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rDistBtwFirerAndTarget ) const
+double PHY_ComposantePion::GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget ) const
 {
     assert( pType_ );
     assert( pRole_ );
@@ -467,7 +467,7 @@ MT_Float PHY_ComposantePion::GetDangerosity( const DEC_Knowledge_AgentComposante
 // Name: PHY_ComposantePion::GetOnlyLoadableMaxRangeToFireOn
 // Created: JVT 2005-01-03
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH ) const
+double PHY_ComposantePion::GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const
 {
     assert( pType_ );
     return bLoadable_ && CanFireWhenUnloaded() ? pType_->GetMaxRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH ) : 0.;
@@ -477,7 +477,7 @@ MT_Float PHY_ComposantePion::GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledg
 // Name: PHY_ComposantePion::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH ) const
+double PHY_ComposantePion::GetMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const
 {
     assert( pType_ );
     return CanFire() ? pType_->GetMaxRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH ) : 0.;
@@ -487,17 +487,17 @@ MT_Float PHY_ComposantePion::GetMaxRangeToFireOn( const DEC_Knowledge_AgentCompo
 // Name: PHY_ComposantePion::GetMinRangeToFireOn
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMinRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH ) const
+double PHY_ComposantePion::GetMinRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMinRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH ) : std::numeric_limits< MT_Float >::max();
+    return CanFire() ? pType_->GetMinRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH ) : std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMaxRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMaxRangeToFireOnWithPosture( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const
+double PHY_ComposantePion::GetMaxRangeToFireOnWithPosture( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, double rWantedPH ) const
 {
     assert( pType_ );
     return CanFire() ? pType_->GetMaxRangeToFireOnWithPosture( pRole_->GetPion(), target, compTarget.GetType(), rWantedPH ) : 0;
@@ -507,17 +507,17 @@ MT_Float PHY_ComposantePion::GetMaxRangeToFireOnWithPosture( const DEC_Knowledge
 // Name: PHY_ComposantePion::GetMinRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMinRangeToFireOnWithPosture( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const
+double PHY_ComposantePion::GetMinRangeToFireOnWithPosture( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, double rWantedPH ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMinRangeToFireOnWithPosture( pRole_->GetPion(), target, compTarget.GetType(), rWantedPH ) : std::numeric_limits< MT_Float >::max();
+    return CanFire() ? pType_->GetMinRangeToFireOnWithPosture( pRole_->GetPion(), target, compTarget.GetType(), rWantedPH ) : std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     assert( pType_ );
     return CanFire() ? pType_->GetMaxRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : -1.;
@@ -527,10 +527,10 @@ MT_Float PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_DotationCatego
 // Name: PHY_ComposantePion::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMinRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : std::numeric_limits< MT_Float >::max();
+    return CanFire() ? pType_->GetMinRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : std::numeric_limits< double >::max();
 }
 
 
@@ -799,7 +799,7 @@ void PHY_ComposantePion::ApplyHumansWounds( const PHY_ComposanteState& composant
 // Name: PHY_ComposantePion::GetOperationalState
 // Created: NLD 2006-02-09
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetOperationalState() const
+double PHY_ComposantePion::GetOperationalState() const
 {
     assert( pState_ );
     if( *pState_ != PHY_ComposanteState::undamaged_ )
@@ -1002,7 +1002,7 @@ bool PHY_ComposantePion::CanTransportStock( const PHY_DotationCategory& dotation
 // Name: PHY_ComposantePion::GetStockTransporterCapacity
 // Created: NLD 2005-07-18
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::GetStockTransporterCapacity( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const
+void PHY_ComposantePion::GetStockTransporterCapacity( double& rWeightMax, double& rVolumeMax ) const
 {
     assert( pType_ );
     return pType_->GetStockTransporterCapacity( rWeightMax, rVolumeMax );
@@ -1078,7 +1078,7 @@ bool PHY_ComposantePion::IsMajor() const
 // Name: PHY_ComposantePion::GetWeight
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetWeight() const
+double PHY_ComposantePion::GetWeight() const
 {
     assert( pType_ );
     return pType_->GetWeight();
@@ -1148,7 +1148,7 @@ bool PHY_ComposantePion::CanTransportPion() const
 // Name: PHY_ComposantePion::GetPionTransporterWeightCapacity
 // Created: NLD 2006-03-23
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetPionTransporterWeightCapacity() const
+double PHY_ComposantePion::GetPionTransporterWeightCapacity() const
 {
     assert( pType_ );
     return pType_->GetPionTransporterWeightCapacity();
@@ -1158,7 +1158,7 @@ MT_Float PHY_ComposantePion::GetPionTransporterWeightCapacity() const
 // Name: PHY_ComposantePion::GetPionTransporterWeightLoadedPerTimeStep
 // Created: NLD 2006-03-23
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetPionTransporterWeightLoadedPerTimeStep() const
+double PHY_ComposantePion::GetPionTransporterWeightLoadedPerTimeStep() const
 {
     assert( pType_ );
     return pType_->GetPionTransporterWeightLoadedPerTimeStep();
@@ -1168,7 +1168,7 @@ MT_Float PHY_ComposantePion::GetPionTransporterWeightLoadedPerTimeStep() const
 // Name: PHY_ComposantePion::GetPionTransporterWeightUnloadedPerTimeStep
 // Created: NLD 2006-03-23
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetPionTransporterWeightUnloadedPerTimeStep() const
+double PHY_ComposantePion::GetPionTransporterWeightUnloadedPerTimeStep() const
 {
     assert( pType_ );
     return pType_->GetPionTransporterWeightUnloadedPerTimeStep();
@@ -1256,10 +1256,10 @@ bool PHY_ComposantePion::CanBypass( const MIL_ObjectType_ABC& objectType, bool b
 // Name: PHY_ComposantePion::GetConstructionTime
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetConstructionTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const
+double PHY_ComposantePion::GetConstructionTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
 
     assert( pType_ );
     return pType_->GetConstructionTime( objectType, rSizeCoef );
@@ -1269,10 +1269,10 @@ MT_Float PHY_ComposantePion::GetConstructionTime( const MIL_ObjectType_ABC& obje
 // Name: PHY_ComposantePion::GetDestructionTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetDestructionTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const
+double PHY_ComposantePion::GetDestructionTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
 
     assert( pType_ );
     return pType_->GetDestructionTime( objectType, rSizeCoef );
@@ -1282,10 +1282,10 @@ MT_Float PHY_ComposantePion::GetDestructionTime( const MIL_ObjectType_ABC& objec
 // Name: PHY_ComposantePion::GetMiningTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMiningTime( const MIL_ObjectType_ABC& objectType ) const
+double PHY_ComposantePion::GetMiningTime( const MIL_ObjectType_ABC& objectType ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
 
     assert( pType_ );
     return pType_->GetMiningTime( objectType );
@@ -1295,10 +1295,10 @@ MT_Float PHY_ComposantePion::GetMiningTime( const MIL_ObjectType_ABC& objectType
 // Name: PHY_ComposantePion::GetDeminingTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetDeminingTime( const MIL_ObjectType_ABC& objectType ) const
+double PHY_ComposantePion::GetDeminingTime( const MIL_ObjectType_ABC& objectType ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
 
     assert( pType_ );
     return pType_->GetDeminingTime( objectType );
@@ -1308,10 +1308,10 @@ MT_Float PHY_ComposantePion::GetDeminingTime( const MIL_ObjectType_ABC& objectTy
 // Name: PHY_ComposantePion::GetBypassTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetBypassTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const
+double PHY_ComposantePion::GetBypassTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef, bool bObjectIsMined ) const
 {
     if( !( CanBeUsed() && pState_->IsUsable() ) )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
 
     assert( pType_ );
     return pType_->GetBypassTime( objectType, rSizeCoef, bObjectIsMined );

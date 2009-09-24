@@ -13,6 +13,7 @@
 #define __PHY_RolePion_Reinforcement_h_
 
 #include "PHY_RoleInterface_Reinforcement.h"
+#include "TransportNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
@@ -21,7 +22,8 @@ class NET_ASN_MsgUnitAttributes;
 // @class  PHY_RolePion_Reinforcement
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement
+class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement,
+	public transport::TransportNotificationHandler_ABC
 {
 
 public:
@@ -54,6 +56,10 @@ public:
     bool IsReinforcing      () const;
     bool IsReinforced       () const;
     bool IsReinforcedBy     ( MIL_AgentPion& pion ) const;
+
+    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+	void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+	void CancelTransport    ( const MIL_Agent_ABC& transporter );
     //@}
 
     //! @name Network

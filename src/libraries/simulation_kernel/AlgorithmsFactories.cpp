@@ -18,6 +18,7 @@
 #include "simulation_kernel/MoveComputerFactory.h"
 #include "simulation_kernel/DetectionComputerFactory.h"
 #include "simulation_kernel/TransportCapacityComputerFactory.h"
+#include "simulation_kernel/TransportWeightComputerFactory.h"
 #include "simulation_kernel/HealComputerFactory.h"
 
 // -----------------------------------------------------------------------------
@@ -46,3 +47,4 @@ AlgorithmsFactories::~AlgorithmsFactories()
 {
     // NOTHING
 }
+

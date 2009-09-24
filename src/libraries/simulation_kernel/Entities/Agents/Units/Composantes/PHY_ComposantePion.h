@@ -152,25 +152,25 @@ public:
     void     ApplyPoisonous                 ( const MIL_ToxicEffectManipulator& contamination );
     uint     GetNeutralizationTime          () const;
     void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );
-    MT_Float GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rDistBtwFirerAndTarget ) const;
-    MT_Float GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH              ) const;
-    MT_Float GetMaxRangeToFireOn            ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH              ) const;
-    MT_Float GetMinRangeToFireOn            ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH              ) const;
-    MT_Float GetMaxRangeToFireOnWithPosture ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOnWithPosture ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    MT_Float GetMaxRangeToIndirectFire      ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
-    MT_Float GetMinRangeToIndirectFire      ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget ) const;
+    double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
+    double GetMaxRangeToFireOn              ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
+    double GetMinRangeToFireOn              ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
+    double GetMaxRangeToFireOnWithPosture   ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    double GetMinRangeToFireOnWithPosture   ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    double GetMaxRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    double GetMinRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     //@}
 
     //! @name Accessors
     //@{    
       const PHY_RoleInterface_Composantes&  GetRole            () const;
-            MT_Float                        GetWeight          () const;
+            double                          GetWeight          () const;
             bool                            IsMajor            () const;
       const PHY_ComposanteState&            GetState           () const;
-            MT_Float                        GetMaxSpeed        () const;
-            MT_Float                        GetMaxSpeed        ( const TerrainData& data ) const;
-            MT_Float                        GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
+			double                          GetMaxSpeed        () const;
+			double                          GetMaxSpeed        ( const TerrainData& data ) const;
+			double                          GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
             bool                            CanMove            () const;
             bool                            CanPerceive        () const;
             bool                            CanBeFired         () const;

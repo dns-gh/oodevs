@@ -14,6 +14,7 @@
 
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "TransportNotificationHandler_ABC.h"
 
 class MIL_Agent_ABC;
 class NET_ASN_MsgUnitAttributes;
@@ -32,6 +33,7 @@ namespace transport
 class PHY_RoleAction_Loading : public tools::Role_ABC
                              , private boost::noncopyable
                              , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
+							 , public transport::TransportNotificationHandler_ABC
 {
 
 public:
@@ -71,6 +73,13 @@ public:
     void CheckConsistency  (); // Appelé quand l'état des composantes d'un pion change
     void ForceUnloadedState();
     //@}
+
+    //! @name Event handler
+	//@{
+    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+	void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+	void CancelTransport    ( const MIL_Agent_ABC& transporter );
+	//@}
 
     //! @name Network
     //@{

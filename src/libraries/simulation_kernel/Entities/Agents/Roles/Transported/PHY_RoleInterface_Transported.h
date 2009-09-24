@@ -39,10 +39,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) = 0;
-    virtual bool UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) = 0;
-    virtual bool CancelTransport    ( const MIL_Agent_ABC& transporter ) = 0;
-    virtual void GetTransportWeight ( bool bTransportOnlyLoadable, MT_Float& rTotalWeight, MT_Float& rHeaviestComposanteWeight ) const = 0 ;
     virtual bool IsTransported      () const = 0;
     //@}
 

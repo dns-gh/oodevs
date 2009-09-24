@@ -14,19 +14,19 @@
 
 #include "MIL.h"
 #include "PHY_RoleInterface_Transported.h"
+#include "TransportNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
 
 namespace transport
 {
-
-
 // =============================================================================
 // @class  PHY_RolePion_Transported
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Transported : public PHY_RoleInterface_Transported
+class PHY_RolePion_Transported : public PHY_RoleInterface_Transported,
+	public TransportNotificationHandler_ABC
 {
 
 public:
@@ -50,10 +50,9 @@ public:
 
     //! @name Transport
     //@{
-    virtual bool LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-    virtual bool UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-    virtual bool CancelTransport    ( const MIL_Agent_ABC& transporter );
-    virtual void GetTransportWeight ( bool bTransportOnlyLoadable, MT_Float& rTotalWeight, MT_Float& rHeaviestComposanteWeight ) const;
+    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+    virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+    virtual void CancelTransport    ( const MIL_Agent_ABC& transporter );
     virtual bool IsTransported      () const;
     //@}
 
