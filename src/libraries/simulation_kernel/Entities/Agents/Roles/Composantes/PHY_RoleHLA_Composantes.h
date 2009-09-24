@@ -95,12 +95,6 @@ public:
     virtual void Clean () {};
     //@}
 
-    //! @name Humans management
-    //@{
-    virtual void WoundHumans  ( const PHY_HumanRank& rank, uint nNbr ) {};  
-    virtual void HealAllHumans() {};
-    //@}
-
     //! @name Composantes management
     //@{
     virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, uint nNbrAvailable ) {};
@@ -133,8 +127,6 @@ public:
 
     //! @name Logistic - Medical
     //@{
-    virtual bool                   HasWoundedHumansToEvacuate      () const {return false; };
-    virtual void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const {};
     virtual PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) { return NULL; };
     virtual PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) { return NULL; };
     virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) {};

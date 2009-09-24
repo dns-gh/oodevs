@@ -17,7 +17,6 @@
 namespace human
 {
   class HealComputerFactory_ABC;
-}
 
 // =============================================================================
 // @class  PHY_RolePion_Humans
@@ -137,5 +136,7 @@ private:
 	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ );
 	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ );
 };
+
+} //namespace human
 
 #endif // __PHY_RolePion_Humans_h_

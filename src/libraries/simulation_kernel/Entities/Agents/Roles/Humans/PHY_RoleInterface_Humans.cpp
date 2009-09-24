@@ -12,6 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleInterface_Humans.h"
 
+namespace human
+{
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Humans constructor
 // Created: JVT 2005-03-31
@@ -29,3 +32,5 @@ PHY_RoleInterface_Humans::~PHY_RoleInterface_Humans()
 {
     // NOTHING
 }
+
+} // namespace human

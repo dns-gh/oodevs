@@ -73,8 +73,6 @@
 
 #include <xeumeuleu/xml.h>
 
-using namespace firing;
-
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
 
 namespace
@@ -173,7 +171,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { PHY_RolePion_Posture          * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Location         * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Humans           * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { human::PHY_RolePion_Humans           * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Composantes      * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Perceiver        * pRole; file >> pRole; RegisterRole( pRole ); } 
     { nbc::PHY_RolePion_NBC         * pRole; file >> pRole; RegisterRole( pRole ); }
@@ -190,8 +188,8 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { transport::PHY_RoleAction_Transport      * pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RoleAction_Moving         * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_Objects        * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RoleAction_DirectFiring   * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RoleAction_IndirectFiring * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { firing::PHY_RoleAction_DirectFiring   * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { firing::PHY_RoleAction_IndirectFiring * pRole; file >> pRole; RegisterRole( pRole ); } 
     { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_InterfaceFlying* pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RoleAction_FolkInfluence  * pRole; file >> pRole; RegisterRole( pRole ); }
@@ -217,7 +215,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     SaveRole< PHY_RolePion_Posture           >( *this, file );
     SaveRole< PHY_RolePion_Location          >( *this, file );
     SaveRole< PHY_RolePion_Dotations         >( *this, file );
-    SaveRole< PHY_RolePion_Humans            >( *this, file );
+    SaveRole< human::PHY_RolePion_Humans            >( *this, file );
     SaveRole< PHY_RolePion_Composantes       >( *this, file );
     SaveRole< PHY_RolePion_Perceiver         >( *this, file );
     SaveRole< nbc::PHY_RolePion_NBC          >( *this, file );
@@ -234,8 +232,8 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     SaveRole< transport::PHY_RoleAction_Transport       >( *this, file );
     SaveRole< PHY_RoleAction_Moving          >( *this, file );
     SaveRole< PHY_RoleAction_Objects         >( *this, file );
-    SaveRole< PHY_RoleAction_DirectFiring    >( *this, file );
-    SaveRole< PHY_RoleAction_IndirectFiring  >( *this, file );
+    SaveRole< firing::PHY_RoleAction_DirectFiring    >( *this, file );
+    SaveRole< firing::PHY_RoleAction_IndirectFiring  >( *this, file );
     SaveRole< DEC_RolePion_Decision          >( *this, file );
     SaveRole< PHY_RoleAction_InterfaceFlying >( *this, file );
     SaveRole< PHY_RoleAction_FolkInfluence   >( *this, file );    
@@ -259,7 +257,7 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
 
     GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipements
-    GetRole< PHY_RolePion_Humans      >().WriteODB( xos ); // Personnels
+    GetRole< human::PHY_RolePion_Humans      >().WriteODB( xos ); // Personnels
     GetRole< PHY_RolePion_Dotations   >().WriteODB( xos ); // Dotations
     
     const PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();//@TODO verify
@@ -363,7 +361,7 @@ void MIL_AgentPion::UpdatePhysicalState()
 {
     const bool bIsDead = IsDead();
     GetRole< PHY_RolePion_Dotations         >().Update( bIsDead );
-    GetRole< PHY_RolePion_Humans            >().Update( bIsDead );
+    GetRole< human::PHY_RolePion_Humans            >().Update( bIsDead );
     GetRole< PHY_RolePion_Composantes       >().Update( bIsDead );
     GetRole< PHY_RolePion_Posture           >().Update( bIsDead );
     GetRole< PHY_RolePion_Reinforcement     >().Update( bIsDead );
@@ -381,8 +379,8 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< PHY_RoleAction_Objects         >().Update( bIsDead );
     GetRole< PHY_RoleAction_Moving          >().Update( bIsDead );
     GetRole< PHY_RoleAction_InterfaceFlying >().Update( bIsDead );
-    GetRole< PHY_RoleAction_DirectFiring    >().Update( bIsDead );
-    GetRole< PHY_RoleAction_IndirectFiring  >().Update( bIsDead );
+    GetRole< firing::PHY_RoleAction_DirectFiring    >().Update( bIsDead );
+    GetRole< firing::PHY_RoleAction_IndirectFiring  >().Update( bIsDead );
     GetRole< PHY_RoleAction_FolkInfluence   >().Update( bIsDead );
 
     PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO add update to new role interface
@@ -432,7 +430,7 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RolePion_Location          >().Clean();
     GetRole< PHY_RolePion_Perceiver         >().Clean();
     GetRole< PHY_RolePion_Dotations         >().Clean();
-    GetRole< PHY_RolePion_Humans            >().Clean();
+    GetRole< human::PHY_RolePion_Humans            >().Clean();
     GetRole< PHY_RolePion_Composantes       >().Clean();
     GetRole< PHY_RolePion_Posture           >().Clean();
     GetRole< PHY_RolePion_Reinforcement     >().Clean();
@@ -447,8 +445,8 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RoleAction_Objects         >().Clean();
     GetRole< PHY_RoleAction_Moving          >().Clean();
     GetRole< PHY_RoleAction_InterfaceFlying >().Clean();
-    GetRole< PHY_RoleAction_DirectFiring    >().Clean();
-    GetRole< PHY_RoleAction_IndirectFiring  >().Clean();
+    GetRole< firing::PHY_RoleAction_DirectFiring    >().Clean();
+    GetRole< firing::PHY_RoleAction_IndirectFiring  >().Clean();
     GetRole< DEC_RolePion_Decision          >().Clean();
     GetRole< PHY_RoleAction_FolkInfluence   >().Clean();
 
@@ -690,7 +688,7 @@ void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChan
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMsgResupplyHumans()
 {
-    GetRole< PHY_RolePion_Humans >().HealAllHumans();
+    GetRole< human::PHY_RolePion_Humans >().HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -726,7 +724,7 @@ void MIL_AgentPion::OnReceiveMsgResupplyAll()
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ResupplyStocks();
-    GetRole< PHY_RolePion_Humans      >().HealAllHumans       ();
+    GetRole< human::PHY_RolePion_Humans      >().HealAllHumans       ();
     GetRole< nbc::PHY_RolePion_NBC    >().Decontaminate       ();
 }
 
@@ -750,7 +748,7 @@ void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionPartialRecover
 
     if( asn.m.personnelsPresent )
     {
-        PHY_RolePion_Humans& roleHumans = GetRole< PHY_RolePion_Humans >();
+        human::PHY_RolePion_Humans& roleHumans = GetRole< human::PHY_RolePion_Humans >();
         for( uint i = 0 ; i < asn.personnels.n; ++i )
         {
             const ASN1T_HumanRecovery& asnPersonnel = asn.personnels.elem[ i ];

@@ -10,7 +10,6 @@
 #ifndef __HealableComputerFactory_ABC_h_
 #define __HealableComputerFactory_ABC_h_
 
-class PHY_HumanRank;
 namespace human
 {
     class HealComputer_ABC;
@@ -32,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual HealComputer_ABC& Create( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const = 0;
+    virtual HealComputer_ABC& Create() const = 0;
     //@}
 };
 

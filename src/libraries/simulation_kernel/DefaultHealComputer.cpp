@@ -12,7 +12,8 @@
 #include "simulation_kernel/DefaultHealComputer.h"
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 
-using namespace human;
+namespace human
+{
 
 // -----------------------------------------------------------------------------
 // Name: DefaultHealableComputer::DefaultHealableComputer
@@ -36,11 +37,9 @@ DefaultHealComputer::~DefaultHealComputer()
 // Name: DefaultHealableComputer::Reset
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-void DefaultHealComputer::Reset( const PHY_HumanRank& rank, unsigned int nNbrToChange )
+void DefaultHealComputer::Reset()
 {
-  pRank_ = &rank;
-  nNbrToChange_ = nNbrToChange;
-  healablesComponents_.clear();
+  components_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,23 +48,22 @@ void DefaultHealComputer::Reset( const PHY_HumanRank& rank, unsigned int nNbrToC
 // -----------------------------------------------------------------------------
 void DefaultHealComputer::ApplyOnComposante( PHY_ComposantePion& component )
 {
-  healablesComponents_.push_back( &component );
+  components_.push_back( &component );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultHealableComputer::GetHealables
+// Name: DefaultHealableComputer::Heal
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-void DefaultHealComputer::Heal() const
+void DefaultHealComputer::Heal( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const
 {
-  PHY_ComposantePion::T_ComposantePionVector components = healablesComponents_;
+  PHY_ComposantePion::T_ComposantePionVector components = components_;
   std::random_shuffle( components.begin(), components.end() );
 
   PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = components.begin();
-  unsigned int nNbrToChange = nNbrToChange_;
   while( nNbrToChange && itCurrentComp != components.end() )
   {
-    unsigned int nNbrChanged = (*itCurrentComp)->HealHumans( *pRank_, 1 );
+    unsigned int nNbrChanged = (*itCurrentComp)->HealHumans( rank, 1 );
     if( nNbrChanged == 0 )
       itCurrentComp = components.erase( itCurrentComp );
     else
@@ -77,3 +75,64 @@ void DefaultHealComputer::Heal() const
       itCurrentComp = components.begin();
   }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultHealableComputer::Wound
+// Created: MGD 2009-09-24
+// -----------------------------------------------------------------------------
+void DefaultHealComputer::Wound( const PHY_HumanRank& rank, unsigned int nNbrToChange  ) const
+{
+    PHY_ComposantePion::T_ComposantePionVector composantes = components_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
+
+    PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = composantes.begin();
+    while( nNbrToChange && itCurrentComp != composantes.end() )
+    {
+        uint nNbrChanged = (*itCurrentComp)->WoundHumans( rank, 1, PHY_HumanWound::killed_ );
+        if( nNbrChanged == 0 )
+            itCurrentComp = composantes.erase( itCurrentComp );
+        else
+        {
+            nNbrToChange -= nNbrChanged;
+            ++ itCurrentComp;
+        }
+        if( itCurrentComp == composantes.end() )
+            itCurrentComp = composantes.begin();
+    }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DefaultHealableComputer::HealAll
+// Created: MGD 2009-09-24
+// -----------------------------------------------------------------------------
+void DefaultHealComputer::HealAll() const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = components_.begin(); it != components_.end(); ++it )
+        (**it).HealAllHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultHealableComputer::HealAll
+// Created: MGD 2009-09-24
+// -----------------------------------------------------------------------------
+void DefaultHealComputer::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = components_.begin(); it != components_.end(); ++it )
+        (**it).EvacuateWoundedHumans( destinationTC2 );
+}
+// -----------------------------------------------------------------------------
+// Name: DefaultHealableComputer::HealAll
+// Created: MGD 2009-09-24
+// -----------------------------------------------------------------------------
+bool DefaultHealComputer::HasWoundedHumansToEvacuate() const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = components_.begin(); it != components_.end(); ++it )
+    {
+        if( (**it).HasWoundedHumansToEvacuate() )
+            return true;
+    }
+    return false;
+}
+
+} // namespace human

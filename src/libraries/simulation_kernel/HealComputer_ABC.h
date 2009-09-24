@@ -13,7 +13,7 @@
 #include "simulation_kernel/Entities/Agents/Units/Humans/PHY_Human.h"
 
 class PHY_ComposantePion;
-
+class MIL_AutomateLOG;
 namespace human
 {
 
@@ -35,9 +35,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
+    virtual void Reset() = 0;
     virtual void ApplyOnComposante( PHY_ComposantePion& component ) = 0;
-    virtual void Heal() const = 0;
+    virtual void Heal( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const = 0;
+    virtual void Wound( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const = 0;
+    virtual void HealAll() const = 0;
+    virtual void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const = 0;
+    virtual bool HasWoundedHumansToEvacuate() const = 0;
     //@}
 };
 

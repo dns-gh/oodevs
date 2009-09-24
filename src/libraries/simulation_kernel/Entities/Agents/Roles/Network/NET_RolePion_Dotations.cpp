@@ -109,7 +109,7 @@ bool NET_RolePion_Dotations::DataUpdated() const
         || pPion_->GetRole< PHY_RoleInterface_Perceiver         >().HasRadarStateChanged() 
         || pPion_->GetRole< DEC_RolePion_Decision               >().HasStateChanged()
         || pPion_->GetRole< PHY_RoleInterface_Dotations         >().HasChanged()
-        || pPion_->GetRole< PHY_RoleInterface_Humans            >().HasChanged()
+        || pPion_->GetRole< human::PHY_RoleInterface_Humans            >().HasChanged()
         || pPion_->IsDead()        != bLastStateDead_
         || pPion_->IsNeutralized() != bLastStateNeutralized_ )
         return true;
@@ -178,7 +178,7 @@ void NET_RolePion_Dotations::SendChangedState() const
     assert( pPion_ );
     msg().oid = pPion_->GetID();
 
-    pPion_->GetRole< PHY_RoleInterface_Humans           >().SendChangedState( msg );
+    pPion_->GetRole< human::PHY_RoleInterface_Humans           >().SendChangedState( msg );
     pPion_->GetRole< PHY_RoleInterface_Dotations        >().SendChangedState( msg );
     pPion_->GetRole< PHY_RoleInterface_Posture          >().SendChangedState( msg ); // Current, old, pourcentage
     pPion_->GetRole< PHY_RoleInterface_Location         >().SendChangedState( msg ); // Direction, speed, altitude, position
@@ -216,7 +216,7 @@ void NET_RolePion_Dotations::SendChangedState() const
     // Other messages
     pPion_->GetRole< PHY_RoleAction_Moving          >().SendChangedState        (); // Itineraire
     pPion_->GetRole< PHY_RoleInterface_Composantes  >().SendLogisticChangedState(); // Consignes logistiques maintenance
-    pPion_->GetRole< PHY_RoleInterface_Humans       >().SendLogisticChangedState(); // Consignes logistiques santé
+    pPion_->GetRole< human::PHY_RoleInterface_Humans       >().SendLogisticChangedState(); // Consignes logistiques santé
     
     PHY_RoleInterface_Maintenance* roleMaintenance = pPion_->Retrieve< PHY_RoleInterface_Maintenance >();
     if( roleMaintenance )
@@ -244,7 +244,7 @@ void NET_RolePion_Dotations::SendFullState() const
     msg().mort                = bLastStateDead_ = pPion_->IsDead();
     msg().m.neutralisePresent = 1;
     msg().neutralise          = bLastStateNeutralized_ = pPion_->IsNeutralized();
-    pPion_->GetRole< PHY_RoleInterface_Humans           >().SendFullState( msg );
+    pPion_->GetRole< human::PHY_RoleInterface_Humans           >().SendFullState( msg );
     pPion_->GetRole< PHY_RoleInterface_Dotations        >().SendFullState( msg );
     pPion_->GetRole< PHY_RoleInterface_Posture          >().SendFullState( msg ); // Current, old, pourcentage
     pPion_->GetRole< PHY_RoleInterface_Location         >().SendFullState( msg ); // Direction, speed, altitude, position
@@ -265,7 +265,7 @@ void NET_RolePion_Dotations::SendFullState() const
     // Other messages
     pPion_->GetRole< PHY_RoleAction_Moving          >().SendFullState        (); // Itineraire
     pPion_->GetRole< PHY_RoleInterface_Composantes  >().SendLogisticFullState(); // Consignes logistiques maintenance
-    pPion_->GetRole< PHY_RoleInterface_Humans       >().SendLogisticFullState(); // Consignes logistiques santé
+    pPion_->GetRole< human::PHY_RoleInterface_Humans       >().SendLogisticFullState(); // Consignes logistiques santé
     PHY_RoleInterface_Maintenance* roleMaintenance = pPion_->Retrieve< PHY_RoleInterface_Maintenance >();
     if( roleMaintenance )
         roleMaintenance->SendFullState();

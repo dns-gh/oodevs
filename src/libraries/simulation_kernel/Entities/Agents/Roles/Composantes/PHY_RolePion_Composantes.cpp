@@ -43,6 +43,8 @@
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
 #include "simulation_kernel/HealComputer_ABC.h"
 
+using namespace human;
+
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
@@ -444,31 +446,6 @@ void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_Composan
                 -- nNbrUndamagedComposantes;
             }
         }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::WoundHumans
-// Created: NLD 2005-07-28
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WoundHumans( const PHY_HumanRank& rank, uint nNbr )
-{
-    PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
-
-    PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = composantes.begin();
-    while( nNbr && itCurrentComp != composantes.end() )
-    {
-        uint nNbrChanged = (*itCurrentComp)->WoundHumans( rank, 1, PHY_HumanWound::killed_ );
-        if( nNbrChanged == 0 )
-            itCurrentComp = composantes.erase( itCurrentComp );
-        else
-        {
-            nNbr -= nNbrChanged;
-            ++ itCurrentComp;
-        }
-        if( itCurrentComp == composantes.end() )
-            itCurrentComp = composantes.begin();
     }
 }
 
@@ -1502,30 +1479,6 @@ PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableHauler( const PHY_Comp
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HasWoundedHumansToEvacuate
-// Created: NLD 2005-08-08
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Composantes::HasWoundedHumansToEvacuate() const
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).HasWoundedHumansToEvacuate() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::EvacuateWoundedHumans
-// Created: NLD 2005-08-01
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).EvacuateWoundedHumans( destinationTC2 );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyHumanEvacuatedByThirdParty
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
@@ -1724,16 +1677,6 @@ void PHY_RolePion_Composantes::RepairAllComposantes()
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         (**it).Repair();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HealAllHumans
-// Created: NLD 2004-09-21
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::HealAllHumans()
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------

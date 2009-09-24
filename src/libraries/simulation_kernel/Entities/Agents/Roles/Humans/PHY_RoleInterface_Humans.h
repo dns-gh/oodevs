@@ -21,6 +21,9 @@ class PHY_MedicalHumanState;
 class MIL_AgentPion;
 class MIL_AutomateLOG;
 class NET_ASN_MsgUnitAttributes;
+
+namespace human
+{
 // =============================================================================
 // @class  PHY_RoleInterface_Humans
 // Created: JVT 2004-08-03
@@ -97,5 +100,7 @@ private:
 	}
 	//@}
 };
+
+} //namespace human
 
 #endif // __PHY_RoleInterface_Humans_h_

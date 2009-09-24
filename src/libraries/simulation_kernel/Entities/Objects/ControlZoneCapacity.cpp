@@ -183,7 +183,7 @@ void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_Targe
     MT_Float area = object.GetLocalisation().GetArea();
     MT_Float rPHCoeff = MT_IsZero( area ) 
                                 ? 0. 
-                                : controller_->GetRole< PHY_RoleInterface_Humans >().GetNbrUsableHumans() / area;
+                                : controller_->GetRole< human::PHY_RoleInterface_Humans >().GetNbrUsableHumans() / area;
     targets.clear();
     object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1,  boost::cref( object.GetArmy() ), rPHCoeff, boost::ref( targets ) ) );
 }

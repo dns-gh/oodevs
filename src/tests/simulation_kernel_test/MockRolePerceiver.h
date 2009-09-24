@@ -12,6 +12,10 @@
 
 #include "simulation_kernel/Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 
+namespace detection
+{
+   class DetectionComputerFactory_ABC;//@TODO MGD Make true mock
+}
 // =============================================================================
 /** @class  MockRolePerceiver
     @brief  MockRolePerceiver
@@ -27,7 +31,7 @@ public:
     //@{
     explicit MockRolePerceiver( )
                  : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockRolePerceiver" ) )
-                 , PHY_RolePion_Perceiver( *(MIL_AgentPion*)0 )
+                 , PHY_RolePion_Perceiver( *(MIL_AgentPion*)0, *(detection::DetectionComputerFactory_ABC*)0  )
                  , NotifyExternalPerception_mocker( "NotifyExternalPerception", this )
              {}
     virtual ~MockRolePerceiver() {}

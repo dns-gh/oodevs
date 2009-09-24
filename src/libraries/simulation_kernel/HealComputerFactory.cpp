@@ -12,7 +12,9 @@
 #include "simulation_kernel/HealComputerFactory.h"
 #include "simulation_kernel/DefaultHealComputer.h"
 
-using namespace human;
+namespace human
+{
+
 // -----------------------------------------------------------------------------
 // Name: HealableComputerFactory constructor
 // Created: MGD 2009-08-13
@@ -35,8 +37,10 @@ HealComputerFactory::~HealComputerFactory()
 // Name: HealableComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-HealComputer_ABC& HealComputerFactory::Create( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const
+HealComputer_ABC& HealComputerFactory::Create() const
 {
-    pHealableComputer_->Reset( rank, nNbrToChange );
+    pHealableComputer_->Reset();
     return *pHealableComputer_;
 }
+
+} // namespace human

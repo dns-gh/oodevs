@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual HealComputer_ABC& Create( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const;
+    virtual HealComputer_ABC& Create() const;
     //@}
 
 private:

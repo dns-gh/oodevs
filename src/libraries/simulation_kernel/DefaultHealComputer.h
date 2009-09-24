@@ -34,17 +34,19 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset( const PHY_HumanRank& rank, unsigned int nNbrToChange );
+    virtual void Reset();
     virtual void ApplyOnComposante( PHY_ComposantePion& component );
-    virtual void Heal() const;
+    virtual void Heal( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const;
+    virtual void Wound( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const;
+    virtual void HealAll() const;
+    virtual void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const;
+    virtual bool HasWoundedHumansToEvacuate() const;
     //@}
 
 private:
     //! @name Attribute
     //@{
-    PHY_ComposantePion::T_ComposantePionVector healablesComponents_;
-    const PHY_HumanRank* pRank_;
-    unsigned int nNbrToChange_;
+    PHY_ComposantePion::T_ComposantePionVector components_;
     //@}
 
 };

@@ -40,7 +40,7 @@ MIL_Effect_KillOfficers::~MIL_Effect_KillOfficers()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_KillOfficers::Execute()
 {
-    target_.GetRole< PHY_RoleInterface_Humans >().ChangeHumansAvailability( PHY_HumanRank::officier_, 0 );
+    target_.GetRole< human::PHY_RoleInterface_Humans >().ChangeHumansAvailability( PHY_HumanRank::officier_, 0 );
     delete this;
     return false; // Effect must be stopped
 }
