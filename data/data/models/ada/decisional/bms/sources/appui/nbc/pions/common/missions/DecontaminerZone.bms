@@ -56,52 +56,58 @@ includedFiles["sources/appui/nbc/pions/common/missions/DecontaminerZone.bms"] = 
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Prepa
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Prepa
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Aera decontamination mission begining", } )
-                self.ePhaseMission = eRejoindrePosition
-                
-            --[[// 2) Progression jusqu'au point à reconnaitre
-]]elseif switch_1 == eRejoindrePosition then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Aera decontamination mission begining", } )
+                    self.ePhaseMission = eRejoindrePosition
+                    
+                --[[// 2) Progression jusqu'au point à reconnaitre
+]]                cases_switch_1[1] = true
+elseif switch_1 == eRejoindrePosition then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Progresser vers le center de la zone
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eReconnaitre
-                                                        return
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eReconnaitre
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionDansZone, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// 3) Decontamination (joue un délai de decontamination)
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionDansZone, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// 3) Decontamination (joue un délai de decontamination)
 ]]elseif switch_1 == eReconnaitre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
-                    do
-                        Activate( self.activations.ACT_Nbc_Pion_Nbc_Decontaminer, 1, { self._namedParams.mission.zone_, } )
-                        self.ePhaseMission = eFinMission
-                    end
-                end
-
-                
-            --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+                        do
+                            Activate( self.activations.ACT_Nbc_Pion_Nbc_Decontaminer, 1, { self._namedParams.mission.zone_, } )
+                            self.ePhaseMission = eFinMission
                         end
+                    end
+
+                    
+                --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

@@ -46,7 +46,7 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner CDT.
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
         Activate( self.activations.BEH_Conduite_Automate_INF_Freiner, 1, {} )
-        local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( S_ObtenirPionsOperationnels(), GroupeInfanterie_Mortier )
+        local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( S_ObtenirPionsOperationnels(), "GroupeInfanterie_Mortier" )
         Activate( self.activations.BEH_Conduite_Automate_INF_GererOrdre_Mortier, 1, { selAppuis_Mortier, } )
     end,
 

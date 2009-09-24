@@ -50,57 +50,61 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/SeFaireDecontamin
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == eSeFaireDecontaminer then
-                --[[// Fin contamination
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == eSeFaireDecontaminer then
+                    --[[// Fin contamination
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[//---------------------------------------------------------------------
+                    --[[//---------------------------------------------------------------------
 ]]--[[// Fin contamination
 ]]--[[//---------------------------------------------------------------------
 ]]if( not DEC_Agent_EstContamine() ) then
-                    do
-                        DEC_Trace( "---- Unite decontaminee ----" )
-                        self.ePhaseMission = eFinDecontamination
-                                                return
-
-                    end
---[[//---------------------------------------------------------------------
-]]--[[// Rejoindre le site
-]]--[[//---------------------------------------------------------------------
-]]                end
-
-                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionSite ) > 0 ) then
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.positionSite, eProgressionDirect, eTypeItiMouvement, } )
-                end
-
-                --[[//---------------------------------------------------------------------
-]]--[[// Demander à se faire decontaminer (se mettre en liste d'attente)
-]]--[[//---------------------------------------------------------------------
-]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
-                
-            --[[// Fin decontamination
-]]elseif switch_1 == eFinDecontamination then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
+                        do
+                            DEC_Trace( "---- Unite decontaminee ----" )
+                            self.ePhaseMission = eFinDecontamination
                                                         return
 
                         end
+--[[//---------------------------------------------------------------------
+]]--[[// Rejoindre le site
+]]--[[//---------------------------------------------------------------------
+]]                    end
 
+                    if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionSite ) > 0 ) then
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.positionSite, eProgressionDirect, eTypeItiMouvement, } )
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointArrivee_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Fin mission
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                StopActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    --[[//---------------------------------------------------------------------
+]]--[[// Demander à se faire decontaminer (se mettre en liste d'attente)
+]]--[[//---------------------------------------------------------------------
+]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
+                    
+                --[[// Fin decontamination
+]]elseif switch_1 == eFinDecontamination then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
+
                         end
+                    end
+
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointArrivee_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Fin mission
+]]elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    StopActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                                cases_switch_1[3] = true
+                end
+            end
 
     end,
 

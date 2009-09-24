@@ -63,48 +63,54 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Canaliser.bms"] 
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Canalizing population mission begining", } )
-                self.ePhaseMission = eAborderObjectif
-                
-            --[[// 2) Rejoindre la localisation
-]]elseif switch_1 == eAborderObjectif then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) <= 100 ) then
-                    self.ePhaseMission = eAnimer
-                else
-                    Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, { self.objectif, eProgressionDefaut, eTypeItiMouvement, } )
-                end
-
-                
-            --[[// 2) Animer la canalisation
-]]elseif switch_1 == eAnimer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
-                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) > 100 ) then
-                    do
-                        self.ePhaseMission = eAborderObjectif
-                        
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Canalizing population mission begining", } )
+                    self.ePhaseMission = eAborderObjectif
+                    
+                --[[// 2) Rejoindre la localisation
+]]                cases_switch_1[1] = true
+elseif switch_1 == eAborderObjectif then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) <= 100 ) then
+                        self.ePhaseMission = eAnimer
+                    else
+                        Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, { self.objectif, eProgressionDefaut, eTypeItiMouvement, } )
                     end
-                end
 
-                if( self.ePreparation == eActionEffectuee ) then
-                    Activate( self.activations.ACT_Pion_Canaliser, 1, { self.localisation, } )
-                end
-
-                Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePreparation = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// 3) Fin de la mission de reconnaissance SUR ORDRE
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                                Halt()
-
-            
-            else
+                    
+                --[[// 2) Animer la canalisation
+]]                cases_switch_1[2] = true
+elseif switch_1 == eAnimer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) > 100 ) then
+                        do
+                            self.ePhaseMission = eAborderObjectif
+                            
                         end
+                    end
+
+                    if( self.ePreparation == eActionEffectuee ) then
+                        Activate( self.activations.ACT_Pion_Canaliser, 1, { self.localisation, } )
+                    end
+
+                    Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePreparation = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// 3) Fin de la mission de reconnaissance SUR ORDRE
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                                        Halt()
+
+                end
+                if not cases_switch_1[1] and not cases_switch_1[2] and not cases_switch_1[3] then
+                                end
+            end
 
     end,
 

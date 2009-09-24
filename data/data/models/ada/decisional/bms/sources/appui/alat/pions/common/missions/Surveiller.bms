@@ -95,114 +95,117 @@ include "bit.lua"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            if( #( self.listeLocalisations ) > self.positionZoneDansListe + 1 ) then
-                                do
-                                    self.localisationCourante = DEC_UserTypeList_GetAt( self.listeLocalisations, self.positionZoneDansListe + 1 )
-                                                                        self.positionZoneDansListe = self.positionZoneDansListe + 1
-                                end
-                            else
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                if( #( self.listeLocalisations ) > self.positionZoneDansListe + 1 ) then
+                                    do
+                                        self.localisationCourante = DEC_UserTypeList_GetAt( self.listeLocalisations, self.positionZoneDansListe + 1 )
+                                                                                self.positionZoneDansListe = self.positionZoneDansListe + 1
+                                    end
+                                else
 do
-                                    self.localisationCourante = DEC_UserTypeList_GetAt( self.listeLocalisations, 0 )
-                                    self.positionZoneDansListe = 0
+                                        self.localisationCourante = DEC_UserTypeList_GetAt( self.listeLocalisations, 0 )
+                                        self.positionZoneDansListe = 0
+                                    end
                                 end
+
+                                                                return
+
                             end
 
-                                                        return
-
                         end
-
                     end
-                end
 
-                if( self.eEtat == eActionImpossible ) then
-                    do
-                                                do
-                            DEC_Warning( eRC_MissionImpossible )
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt()
+
+                            end
+
                                                         self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
                     end
-                end
 
-                if( ( self.localisationCourante == 0 or self.localisationCourante == nil ) ) then
-                    return
-                end
+                    if( ( self.localisationCourante == 0 or self.localisationCourante == nil ) ) then
+                        return
+                    end
 
-                DEC_Copie_Point( S_Geometrie_BarycentreZone( self.localisationCourante ), self.objectifCourant )
-                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.objectifCourant, } )
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                Activate( self.activations.BEH_Obs_Pion_ALAT_ReconnaitreZone, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self.localisationCourante, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.BEH_Eni_Pion_ALAT_GererUnitesDetectes, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, {} )
-                Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniSurveiller, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 8, { self._namedParams.mission.zone_, } )
-                
-            elseif switch_1 == eSExfiltrer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
-                end
+                    DEC_Copie_Point( S_Geometrie_BarycentreZone( self.localisationCourante ), self.objectifCourant )
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.objectifCourant, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.BEH_Obs_Pion_ALAT_ReconnaitreZone, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self.localisationCourante, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Eni_Pion_ALAT_GererUnitesDetectes, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, {} )
+                    Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniSurveiller, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 8, { self._namedParams.mission.zone_, } )
+                    
+                elseif switch_1 == eSExfiltrer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    end
 
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eFinMission
-                                                        return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                if( self.eEtat == eActionImpossible ) then
-                    do
-                                                do
-                            DEC_Warning( eRC_MissionImpossible )
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt()
+
+                            end
+
                                                         self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
                     end
-                end
 
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            DIA_Clear( myself.plotsRavitaillement_ )
-                            F_Pion_SetobjectifEsquive( myself, nil )
-                            DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-                        end
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                                end
+            end
 
     end,
 

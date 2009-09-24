@@ -42,24 +42,30 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Ordre.bms"] = true
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_Interrompre" then
-                        DEC_Trace( "======= Frag order --> Stop mission =====" )
-                        --[[// poursuivre si en poste
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_Interrompre" then
+                            DEC_Trace( "======= Frag order --> Stop mission =====" )
+                            --[[// poursuivre si en poste
 ]]SetStateVariable( "VE_SePoster", 0 )
-                                                self.params.__returnValue = eActionHalt
-                        return
+                                                        self.params.__returnValue = eActionHalt
+                            return
 
-                    elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
-                        DEC_Trace( "======= Frag order --> WAIT =====" )
-                        SetStateVariable( "VE_SePoster", 2 )
-                        
-                    elseif switch_1 == "Rep_OrderConduite_Deboucher"
-                    or switch_1 == "Rep_OrderConduite_Poursuivre" then
-                        DEC_Trace( "======= Frag order --> RESUME =====" )
-                        SetStateVariable( "VE_SePoster", 0 )
-                        
-                                        end
+                                                end
+                        if cases_switch_1[1] or switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                            DEC_Trace( "======= Frag order --> WAIT =====" )
+                            SetStateVariable( "VE_SePoster", 2 )
+                            
+                                                cases_switch_1[2] = true
+elseif switch_1 == "Rep_OrderConduite_Deboucher"
+                        or switch_1 == "Rep_OrderConduite_Poursuivre" then
+                            DEC_Trace( "======= Frag order --> RESUME =====" )
+                            SetStateVariable( "VE_SePoster", 0 )
+                            
+                                                cases_switch_1[3] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end

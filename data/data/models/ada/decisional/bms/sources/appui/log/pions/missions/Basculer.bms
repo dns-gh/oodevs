@@ -47,43 +47,50 @@ includedFiles["sources/appui/log/pions/missions/Basculer.bms"] = true
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhaseMission = eRejoindrePosition
-                
-            --[[// Progression jusqu'au lieu de rendez-vous
-]]elseif switch_1 == eRejoindrePosition then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eSeMettreEnPlace
-                            
-                        end
+                    self.ePhaseMission = eRejoindrePosition
+                    
+                --[[// Progression jusqu'au lieu de rendez-vous
+]]                cases_switch_1[1] = true
+elseif switch_1 == eRejoindrePosition then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eSeMettreEnPlace
+                                
+                            end
 
+                        end
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pionPC:DEC_Agent_Position(), eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Renforce l'unité amie
-]]elseif switch_1 == eSeMettreEnPlace then
-                if( DEC_Pion_ChangeAutomate( self._namedParams.mission.automatePourBascule_ ) ) then
-                    DEC_RC( eRC_ReussiteRenforcement, myself, self._namedParams.mission.automatePourBascule_ )
-                else
-                    DEC_RC( eRC_EchecRenforcement, myself, self._namedParams.mission.automatePourBascule_ )
-                end
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pionPC:DEC_Agent_Position(), eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Renforce l'unité amie
+]]                cases_switch_1[2] = true
+elseif switch_1 == eSeMettreEnPlace then
+                    if( DEC_Pion_ChangeAutomate( self._namedParams.mission.automatePourBascule_ ) ) then
+                        DEC_RC( eRC_ReussiteRenforcement, myself, self._namedParams.mission.automatePourBascule_ )
+                    else
+                        DEC_RC( eRC_EchecRenforcement, myself, self._namedParams.mission.automatePourBascule_ )
+                    end
 
-                self.ePhaseMission = eFinMission
-                
-            --[[// Fin mission
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                
-                        end
+                    self.ePhaseMission = eFinMission
+                    
+                --[[// Fin mission
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    
+                                cases_switch_1[4] = true
+                end
+            end
 
     end,
 

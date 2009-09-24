@@ -25,7 +25,7 @@ includedFiles["sources/appui/circulation/automates/missions/armerpias/ArmerPIAs 
         self.eEtatMissionAppuyer = self.eEtatMissionAppuyer or eActionEnCours
         self.listePIA = self.listePIA or {}
         self.rIterateurPosition = self.rIterateurPosition or 0
-        local listePions = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), PatrouilleCirculation )
+        local listePions = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), "PatrouilleCirculation" )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -59,56 +59,59 @@ includedFiles["sources/appui/circulation/automates/missions/armerpias/ArmerPIAs 
 ]]--[[// =============================================================================
 ]]        end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMRT_AssignerMissions then
-                --[[//---------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
 ]]--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
 ]]if( self.eEtatMissionAppuyer == eActionImpossible ) then
-                    do
-                        self.ePhase = eMRT_Valider
-                                                return
+                        do
+                            self.ePhase = eMRT_Valider
+                                                        return
 
+                        end
                     end
-                end
 
-                if( self.eEtatMissionAppuyer == eActionEffectuee ) then
-                    do
-                        self.ePhase = eMRT_Valider
-                                                return
+                    if( self.eEtatMissionAppuyer == eActionEffectuee ) then
+                        do
+                            self.ePhase = eMRT_Valider
+                                                        return
 
-                    end
+                        end
 --[[// Controle création mission
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( listePions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionAppuyer = v else rawset( t, k, v ) end end } ) )
-                --[[// ordre de missions
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( listePions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionAppuyer = v else rawset( t, k, v ) end end } ) )
+                    --[[// ordre de missions
 ]]if( ( #( listePions ) ~= 0 and #( listePions ) ~= nil ) ) then
-                    Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe, 1, { ePhase_MRT, listePions, self.listePIA, } )
-                end
+                        Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe, 1, { ePhase_MRT, listePions, self.listePIA, } )
+                    end
 
-                
-            --[[//---------------------------------------------------------------------
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_MissionImpossible then
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            --[[//---------------------------------------------------------------------
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_Valider then
-                DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
     end,
 

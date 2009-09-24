@@ -55,62 +55,68 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/common/missions/RenseignerSur
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// Progresser jusqu'à zone de débarquement
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// Progresser jusqu'à zone de débarquement
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Spé rens ne pas bouger tant qu'il fait pas nuit
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( not DEC_Nuit() ) then
-                    do
-                        Activate( self.activations.ACT_Info_Trace, 1, { "Il fait ne pas nuit, l'unité reste cachée", } )
-                        Activate( self.activations.ACT_RC, 1, { eRC_AttenteConditionFavorablePourInfiltration, } )
-                        Activate( self.activations.BEH_Dep_SePoster, 1.5, {} )
+                        do
+                            Activate( self.activations.ACT_Info_Trace, 1, { "Il fait ne pas nuit, l'unité reste cachée", } )
+                            Activate( self.activations.ACT_RC, 1, { eRC_AttenteConditionFavorablePourInfiltration, } )
+                            Activate( self.activations.BEH_Dep_SePoster, 1.5, {} )
+                        end
                     end
-                end
 
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eSurveiller
-                                                        return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eSurveiller
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pointARenseigner, eProgressionReco, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Surveiller
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pointARenseigner, eProgressionReco, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Surveiller
 ]]elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                --[[//----------------------------------------------------------------------
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    --[[//----------------------------------------------------------------------
 ]]--[[// RC + Surveiller (seulement qd installé)
 ]]--[[//----------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Rens_EnSurveillanceDe, 1, { self._namedParams.mission.zoneAObserver_, } )
-                --[[//----------------------------------------------------------------------
+                    --[[//----------------------------------------------------------------------
 ]]--[[// Dans cette phase on revient tj à sa position si esquive ou autre
 ]]--[[//----------------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointARenseigner ) > 200 ) then
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.pointARenseigner, eProgressionReco, eTypeItiMouvement, } )
-                end
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.pointARenseigner, eProgressionReco, eTypeItiMouvement, } )
+                    end
 
-                
-            --[[// Fin de la mission --> SUR ORDRE
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    
+                --[[// Fin de la mission --> SUR ORDRE
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

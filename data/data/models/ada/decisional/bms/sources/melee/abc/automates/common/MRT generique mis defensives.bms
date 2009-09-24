@@ -48,7 +48,8 @@ include "bit.lua"
         self.selABC_NonPrevus = self.selABC_NonPrevus or {}
         self.selINF = self.selINF or {}
         self.selABC_PAD = self.selABC_PAD or {}
-        switch_1 = --[[// =============================================================================
+         do
+            local switch_1 = --[[// =============================================================================
 ]]--[[// PHASE DU COMPORTEMENT
 ]]--[[// 1) Vérifier les moyens, des renforts éventuels
 ]]--[[// 2) Déterminer les échelons
@@ -57,297 +58,325 @@ include "bit.lua"
 ]]--[[// $$$$ MIA 2004-10-01: car elles sont en permance évaluées durant la mission.
 ]]--[[// =============================================================================                                  
 ]]self.ePhase
-            if switch_1 == eMRT_DeterminerEchelonsGlobals then
-                for _,x in pairs( --[[//-----------------------------------------------------------------------------
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_DeterminerEchelonsGlobals then
+                    for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Verification des moyens
 ]]--[[//-----------------------------------------------------------------------------
 ]]selPions ) do
-                local _continue = true
+                    local _continue = true
 do
-                        local pion = x
-                        --[[// On ne traite pas les pions non opérationnels
+                            local pion = x
+                            --[[// On ne traite pas les pions non opérationnels
 ]]if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
-                            do
-                                DEC_Trace( DEC_GetSzName( pion ) .. " non operationnal" )
-                                DIA_PushFront( self.selABC_SE, pion )
-                                _continue = false
+                                do
+                                    DEC_Trace( DEC_GetSzName( pion ) .. " non operationnal" )
+                                    DIA_PushFront( self.selABC_SE, pion )
+                                    _continue = false
+                                end
+                            end
+
+                                if _continue then
+                                 do
+                                    local switch_2 = pion:GetType()
+                                    local cases_switch_2 = {}
+                                        if switch_2 == "Peloton_AD" then
+                                            DIA_PushFront( self.selABC_PAD, pion )
+                                            
+                                                                                cases_switch_2[1] = true
+elseif switch_2 == "Patrouille_EI"
+                                        or switch_2 == "Patrouille_EI_Milan" then
+                                            DIA_PushFront( self.selABC_PEcl, pion )
+                                            
+                                                                                cases_switch_2[2] = true
+elseif switch_2 == "Peloton_XL"
+                                        or switch_2 == "Peloton_AMX" then
+                                            DIA_PushFront( self.selABC_Blindes, pion )
+                                            
+                                                                                cases_switch_2[3] = true
+elseif switch_2 == "SectionInfanterie"
+                                        or switch_2 == "SectionInfanterie_HOT"
+                                        or switch_2 == "SectionInfanterie_MILAN" then
+                                            DIA_PushFront( self.selINF, pion )
+                                            
+                                                                                cases_switch_2[4] = true
+
+                                        else
+                                            DIA_PushFront( self.selABC_NonPrevus, pion )
+                                            
+                                                                                end
+                                    end
+
                             end
                         end
+--[[// Si pas de pions capable de faire la mission...mission impossible
+]]
+                    end
 
-                            if _continue then
-                            switch_2 = pion:GetType()
-                                if switch_2 == "Peloton_AD" then
-                                    DIA_PushFront( self.selABC_PAD, pion )
-                                    
-                                elseif switch_2 == "Patrouille_EI"
-                                or switch_2 == "Patrouille_EI_Milan" then
-                                    DIA_PushFront( self.selABC_PEcl, pion )
-                                    
-                                elseif switch_2 == "Peloton_XL"
-                                or switch_2 == "Peloton_AMX" then
-                                    DIA_PushFront( self.selABC_Blindes, pion )
-                                    
-                                elseif switch_2 == "SectionInfanterie"
-                                or switch_2 == "SectionInfanterie_HOT"
-                                or switch_2 == "SectionInfanterie_MILAN" then
-                                    DIA_PushFront( self.selINF, pion )
-                                    
-                                
-                                else
-                                    DIA_PushFront( self.selABC_NonPrevus, pion )
-                                    
-                                                                end
+                    if( DIA_IsListEmpty( self.selABC_PEcl ) and DIA_IsListEmpty( self.selABC_Blindes ) ) then
+                        do
+                            DEC_Trace( "No adapted units to perform the mission" )
+                            self.ePhase = eMRT_MissionImpossible
+                                                        return
 
                         end
                     end
---[[// Si pas de pions capable de faire la mission...mission impossible
-]]
-                end
 
-                if( DIA_IsListEmpty( self.selABC_PEcl ) and DIA_IsListEmpty( self.selABC_Blindes ) ) then
-                    do
-                        DEC_Trace( "No adapted units to perform the mission" )
-                        self.ePhase = eMRT_MissionImpossible
-                                                return
-
-                    end
-                end
-
-                if( #( self.selABC_Blindes ) > 0 ) then
-                    self.ePhase = eMRT_DeterminerEchelonsLocals
-                else
-                    --[[// que de l'éclairage --> on peut qd même faire certaines missions
+                    if( #( self.selABC_Blindes ) > 0 ) then
+                        self.ePhase = eMRT_DeterminerEchelonsLocals
+                    else
+                        --[[// que de l'éclairage --> on peut qd même faire certaines missions
 ]]self.ePhase = eMRT_AssignerMissions
-                end
+                    end
 
-                
-            --[[//-----------------------------------------------------------------------------
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Determination des unités de premier échelon et de deuxième échelon
 ]]--[[//-----------------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_DeterminerEchelonsLocals then
-                --[[// Proportion des pions en garde
+                    --[[// Proportion des pions en garde
 ]]local fProportionEnSoutien = 1 / 3
-                local fNbPionsEnSoutien = 0
-                local fNbPionsEnSoutienMin = 0
-                if( #( self.selABC_Blindes ) > 2 ) then
-                    fNbPionsEnSoutienMin = #( self.selABC_Blindes ) * fProportionEnSoutien
-                end
+                    local fNbPionsEnSoutien = 0
+                    local fNbPionsEnSoutienMin = 0
+                    if( #( self.selABC_Blindes ) > 2 ) then
+                        fNbPionsEnSoutienMin = #( self.selABC_Blindes ) * fProportionEnSoutien
+                    end
 
-                --[[//-----------------------------------------------------------------------------
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// PE / SE
 ]]--[[//-----------------------------------------------------------------------------
 ]]fNbPionsEnSoutienMin = Floor( fNbPionsEnSoutienMin )
-                for _,x in pairs( self.selABC_Blindes ) do
-                local _continue = true
+                    for _,x in pairs( self.selABC_Blindes ) do
+                    local _continue = true
 do
-                        local pion = x
-                        if( fNbPionsEnSoutien < fNbPionsEnSoutienMin ) then
-                            do
-                                DIA_PushFront( self.selABC_SE, pion )
-                                                                fNbPionsEnSoutien = fNbPionsEnSoutien + 1
+                            local pion = x
+                            if( fNbPionsEnSoutien < fNbPionsEnSoutienMin ) then
+                                do
+                                    DIA_PushFront( self.selABC_SE, pion )
+                                                                        fNbPionsEnSoutien = fNbPionsEnSoutien + 1
+                                end
+                            else
+                                DIA_PushFront( self.selABC_PE, pion )
                             end
-                        else
-                            DIA_PushFront( self.selABC_PE, pion )
+
                         end
 
                     end
 
-                end
-
-                self.ePhase = eMRT_AssignerMissions
-                
-            --[[//-----------------------------------------------------------------------------
+                    self.ePhase = eMRT_AssignerMissions
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// 1) Assigner les missions
 ]]--[[//// $$$$ MIA 04-02-06: TEMP A REFAIRE L'ECHELONNEMENT AVEC P ECL
 ]]--[[//// $$$$ MIA 04-02-06: GENERICITE ++
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eMRT_AssignerMissions then
-                --[[/* ------------------------------------------------------------- */]]--[[/* -------------  Gestion erreur/ bon deroulement -------------- */]]--[[/* ------------------------------------------------------------- */]]if( self.eEtat == eActionImpossible ) then
-                    do
-                        --[[// ePhase = eMRT_MissionImpossible;
+]]                cases_switch_1[2] = true
+elseif switch_1 == eMRT_AssignerMissions then
+                    --[[/* ------------------------------------------------------------- */]]--[[/* -------------  Gestion erreur/ bon deroulement -------------- */]]--[[/* ------------------------------------------------------------- */]]if( self.eEtat == eActionImpossible ) then
+                        do
+                            --[[// ePhase = eMRT_MissionImpossible;
 ]]DEC_Trace( "Warning: some front units did not received mission " )
-                        self.ePhase = eMRT_Valider
-                                                return
+                            self.ePhase = eMRT_Valider
+                                                        return
 
+                        end
                     end
-                end
 
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.ePhase = eMRT_Valider
-                                                return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.ePhase = eMRT_Valider
+                                                        return
 
-                    end
+                        end
 --[[/* ------------------------------------------------------------- */]]--[[/* ------- Fin Gestion erreur/ bon deroulement ------- */]]--[[/* ------------------------------------------------------------- */]]--[[// Suivant le type de mission...
-]]                end
+]]                    end
 
-                switch_2 = self._namedParams.eType
-                    if switch_2 == "T_Mission_Automate_ABC_Tenir" then
-                        --[[//-----------------------------------------------------------------------------
+                     do
+                        local switch_2 = self._namedParams.eType
+                        local cases_switch_2 = {}
+                            if switch_2 == "T_Mission_Automate_ABC_Tenir" then
+                                --[[//-----------------------------------------------------------------------------
 ]]--[[// Couvrir 
 ]]--[[//-----------------------------------------------------------------------------
 ]]local mission = DEC_GetMission( myself )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionBarrerA, 1, { self.selABC_PE, mission.positionInstallation_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionBarrerA, 1, { self.selABC_PE, mission.positionInstallation_, eEtatEchelon_Premier, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// Appuyer sur position
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_AppuyerSurPosition" then
-                        local mission = DEC_GetMission( myself )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionBarrerA, 1, { self.selABC_PE, mission.positionInstallation_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+]]                            cases_switch_2[1] = true
+elseif switch_2 == "T_Mission_Automate_ABC_AppuyerSurPosition" then
+                                local mission = DEC_GetMission( myself )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionBarrerA, 1, { self.selABC_PE, mission.positionInstallation_, eEtatEchelon_Premier, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// Couvrir 
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_Couvrir" then
-                        local mission = DEC_GetMission( myself )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionBarrerA, 1, { self.selABC_PE, mission.positionInstallation_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+]]                            cases_switch_2[2] = true
+elseif switch_2 == "T_Mission_Automate_ABC_Couvrir" then
+                                local mission = DEC_GetMission( myself )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionBarrerA, 1, { self.selABC_PE, mission.positionInstallation_, eEtatEchelon_Premier, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.positionInstallation_, eEtatEchelon_Eclairage, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// Interdire
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_Interdire" then
-                        --[[// Spé mission à cause LI
+]]                            cases_switch_2[3] = true
+elseif switch_2 == "T_Mission_Automate_ABC_Interdire" then
+                                --[[// Spé mission à cause LI
 ]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_Interdire_AssignerMissionBarrerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA, 1, { self.selABC_PAD, eEtatEchelon_Eclairage, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+                                Activate( self.activations.BEH_Medo_Automate_ABC_Interdire_AssignerMissionBarrerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA, 1, { self.selABC_PAD, eEtatEchelon_Eclairage, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// REDUIRE
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_Reduire" then
-                        local mission = DEC_GetMission( myself )
-                        if( DIA_IsListEmpty( self.selABC_PE ) ) then
-                            self.ePhase = eMRT_MissionImpossible
-                        end
+]]                            cases_switch_2[4] = true
+elseif switch_2 == "T_Mission_Automate_ABC_Reduire" then
+                                local mission = DEC_GetMission( myself )
+                                if( DIA_IsListEmpty( self.selABC_PE ) ) then
+                                    self.ePhase = eMRT_MissionImpossible
+                                end
 
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA, 1, { self.selABC_PE, mission.zoneResistance_, eEtatEchelon_Premier, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA, 1, { self.selABC_PE, mission.zoneResistance_, eEtatEchelon_Premier, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// SEMPARER DE
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_Semparer" then
-                        local mission = DEC_GetMission( myself )
-                        if( DIA_IsListEmpty( self.selABC_PE ) ) then
-                            self.ePhase = eMRT_MissionImpossible
-                        end
+]]                            cases_switch_2[5] = true
+elseif switch_2 == "T_Mission_Automate_ABC_Semparer" then
+                                local mission = DEC_GetMission( myself )
+                                if( DIA_IsListEmpty( self.selABC_PE ) ) then
+                                    self.ePhase = eMRT_MissionImpossible
+                                end
 
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA, 1, { self.selABC_PE, mission.objectif_, eEtatEchelon_Premier, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA, 1, { self.selABC_PE, mission.objectif_, eEtatEchelon_Premier, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// COUP D'ARRET
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_DonnerCoupArret" then
-                        --[[// Spé mission à cause LCAR
+]]                            cases_switch_2[6] = true
+elseif switch_2 == "T_Mission_Automate_ABC_DonnerCoupArret" then
+                                --[[// Spé mission à cause LCAR
 ]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_DonnerCoupArret_AssignerMissionBarrerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_DonnerCoupArret_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_DonnerCoupArret_AssignerMissionSurveillerA, 1, { self.selABC_PAD, eEtatEchelon_Eclairage, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+                                Activate( self.activations.BEH_Medo_Automate_ABC_DonnerCoupArret_AssignerMissionBarrerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_DonnerCoupArret_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_DonnerCoupArret_AssignerMissionSurveillerA, 1, { self.selABC_PAD, eEtatEchelon_Eclairage, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// COUP D'ARRET
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_RecueillirUnite" then
-                        --[[// Spé mission à cause LR et LIA
+]]                            cases_switch_2[7] = true
+elseif switch_2 == "T_Mission_Automate_ABC_RecueillirUnite" then
+                                --[[// Spé mission à cause LR et LIA
 ]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_Recueillir_AssignerMissionBarrerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA, 1, { self.selABC_PAD, eEtatEchelon_Eclairage, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+                                Activate( self.activations.BEH_Medo_Automate_ABC_Recueillir_AssignerMissionBarrerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA, 1, { self.selABC_PAD, eEtatEchelon_Eclairage, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// CONTROLER
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_Controler" then
-                        local mission = DEC_GetMission( myself )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerControlerZoneA, 1, { self.selABC_PE, mission.zoneAControler_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerControlerZoneA, 1, { self.selABC_PEcl, mission.zoneAControler_, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.zoneAControler_, eEtatEchelon_Eclairage, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+]]                            cases_switch_2[8] = true
+elseif switch_2 == "T_Mission_Automate_ABC_Controler" then
+                                local mission = DEC_GetMission( myself )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerControlerZoneA, 1, { self.selABC_PE, mission.zoneAControler_, eEtatEchelon_Premier, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerControlerZoneA, 1, { self.selABC_PEcl, mission.zoneAControler_, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.zoneAControler_, eEtatEchelon_Eclairage, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// RENSEIGNER SECTEUR --> donner eclairer plutôt...aller dans la zone...
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_RenseignerSur" then
-                        local mission = DEC_GetMission( myself )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PE, mission.zoneARenseigner_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.zoneARenseigner_, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.zoneARenseigner_, eEtatEchelon_Eclairage, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+]]                            cases_switch_2[9] = true
+elseif switch_2 == "T_Mission_Automate_ABC_RenseignerSur" then
+                                local mission = DEC_GetMission( myself )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PE, mission.zoneARenseigner_, eEtatEchelon_Premier, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.zoneARenseigner_, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.zoneARenseigner_, eEtatEchelon_Eclairage, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// Surveiller secteur
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_Surveiller" then
-                        local mission = DEC_GetMission( myself )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PE, mission.zoneInstallation_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.zoneInstallation_, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.zoneInstallation_, eEtatEchelon_Eclairage, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+]]                            cases_switch_2[10] = true
+elseif switch_2 == "T_Mission_Automate_ABC_Surveiller" then
+                                local mission = DEC_GetMission( myself )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ) + #( self.selABC_PAD ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PE, mission.zoneInstallation_, eEtatEchelon_Premier, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.zoneInstallation_, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PAD, mission.zoneInstallation_, eEtatEchelon_Eclairage, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// Armer point controle
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_ArmerPointDeControle" then
-                        local mission = DEC_GetMission( myself )
-                        --[[// MISSIONS ASSIGNEES DS CONDUITE, juste creation du site
+]]                            cases_switch_2[11] = true
+elseif switch_2 == "T_Mission_Automate_ABC_ArmerPointDeControle" then
+                                local mission = DEC_GetMission( myself )
+                                --[[// MISSIONS ASSIGNEES DS CONDUITE, juste creation du site
 ]]--[[// HACK
 ]]local pointTemp = S_Geometrie_BarycentreZone( mission.zoneDeControle_ )
-                        local zoneControle = DEC_Geometrie_ConvertirPointEnLocalisation( pointTemp )
-                        DEC_CreerObjetSansDelais( S_TypeObject_ToString( eTypeObjectPosteControle ), zoneControle )
-                        self.ePhase = eMRT_Valider
-                        
-                    --[[//-----------------------------------------------------------------------------
+                                local zoneControle = DEC_Geometrie_ConvertirPointEnLocalisation( pointTemp )
+                                DEC_CreerObjetSansDelais( S_TypeObject_ToString( eTypeObjectPosteControle ), zoneControle )
+                                self.ePhase = eMRT_Valider
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// ReconnaitrePoint
 ]]--[[// SPE EEI, les patrouille n'ont pas cette mission donc 
 ]]--[[// on leur donne Eclairer vers le point
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_ReconnaitrePoint" then
-                        local mission = DEC_GetMission( myself )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.pointAReconnaitre_, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionReconnaitrePointA, 1, { self.selABC_PE, mission.pointAReconnaitre_, eEtatEchelon_Premier, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+]]                            cases_switch_2[12] = true
+elseif switch_2 == "T_Mission_Automate_ABC_ReconnaitrePoint" then
+                                local mission = DEC_GetMission( myself )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.pointAReconnaitre_, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionReconnaitrePointA, 1, { self.selABC_PE, mission.pointAReconnaitre_, eEtatEchelon_Premier, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// OrganiserAccueilColonneRefugies
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies" then
-                        local mission = DEC_GetMission( myself )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.zoneInstallation_, eEtatEchelon_Eclairage, } )
-                        Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PE, mission.zoneInstallation_, eEtatEchelon_Premier, } )
-                        
-                                        end
+]]                            cases_switch_2[13] = true
+elseif switch_2 == "T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies" then
+                                local mission = DEC_GetMission( myself )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_PEcl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PEcl, mission.zoneInstallation_, eEtatEchelon_Eclairage, } )
+                                Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionSurveillerA, 1, { self.selABC_PE, mission.zoneInstallation_, eEtatEchelon_Premier, } )
+                                
+                                                        cases_switch_2[14] = true
+                            end
+                        end
 
-                
-            --[[//-----------------------------------------------------------------------------
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_MissionImpossible then
-                Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                
-            --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// 2) Validation MRT
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eMRT_Valider then
-                DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+]]                cases_switch_1[4] = true
+elseif switch_1 == eMRT_Valider then
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            
-            else
-                        end
+                end
+                if not cases_switch_1[1] and not cases_switch_1[2] and not cases_switch_1[3] and not cases_switch_1[4] then
+                                end
+            end
 
     end,
 

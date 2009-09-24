@@ -19,7 +19,7 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/behaviors/Behaviors
 
     activate = function( self )
         --[[// variables locales
-]]local listeSAMP = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsSansPC(), TheaterHighAltitudeDefenseTroop )
+]]local listeSAMP = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsSansPC(), "TheaterHighAltitudeDefenseTroop" )
         local sListeEnis = S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( DEC_Automate_PionsAvecPC() )
         local sListeEnisADetruire = {}
         for _,x in pairs( --[[//effacer les piste des unites hawk subordonnées
@@ -62,7 +62,7 @@ node "BEH_Eni_ASA_HAWK_GererTirsDefendreSite"
 
     activate = function( self )
         --[[// variables locales
-]]local listeSAMP = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsSansPC(), TheaterHighAltitudeDefenseTroop )
+]]local listeSAMP = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsSansPC(), "TheaterHighAltitudeDefenseTroop" )
         local sListeEnis = S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( DEC_Automate_PionsAvecPC() )
         local sListeEnisADetruire = {}
         for _,x in pairs( --[[//effacer les piste des unites hawk subordonnées
@@ -103,7 +103,7 @@ node "BEH_Eni_ASA_HAWK_GererTirsSurveiller"
 
     activate = function( self )
         --[[// variables locales
-]]local listeSAMP = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsSansPC(), TheaterHighAltitudeDefenseTroop )
+]]local listeSAMP = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsSansPC(), "TheaterHighAltitudeDefenseTroop" )
         local sListeEnis = S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( DEC_Automate_PionsAvecPC() )
         local sListeEnisADetruire = {}
         for _,x in pairs( --[[//effacer les piste des unites hawk subordonnées

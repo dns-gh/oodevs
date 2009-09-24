@@ -75,74 +75,80 @@ includedFiles["sources/melee/abc/pions/common/missions/ReconnaitrePoint.bms"] = 
             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_Info_Trace, 1, { "Point reconnaissance beginig", } )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// Progression tactique et reconnaissance du point
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// Progression tactique et reconnaissance du point
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Progression
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
-                                                        return
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointAReconnaitre_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                --[[// Changement d'ambiance
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POUR_SURETE() ) then
-                    F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                end
-
-                --[[// Abordage du point
-]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POSITION_OBSERVATION() ) then
-                    self.ePhaseMission = eReconnaitre
-                end
-
-                
-            --[[// Abordage et reconnaissance du point
-]]elseif switch_1 == eReconnaitre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
-                                                        return
-
-                        end
-
-                    end
-                end
-
-                Activate( self.activations.BEH_Obs_Pion_ABC_ReconnaitrePointMission, 1, setmetatable( { self._namedParams.mission.pointAReconnaitre_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                                return
-
-            --[[// Fin de la mission de reconnaissance
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                else
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointAReconnaitre_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                end
+                    --[[// Changement d'ambiance
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POUR_SURETE() ) then
+                        F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
+                    end
 
-                
-            
-            else
+                    --[[// Abordage du point
+]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointAReconnaitre_ ) < M_MODELE_PION_ABC_DISTANCE_POSITION_OBSERVATION() ) then
+                        self.ePhaseMission = eReconnaitre
+                    end
+
+                    
+                --[[// Abordage et reconnaissance du point
+]]elseif switch_1 == eReconnaitre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
+
                         end
+                    end
+
+                    Activate( self.activations.BEH_Obs_Pion_ABC_ReconnaitrePointMission, 1, setmetatable( { self._namedParams.mission.pointAReconnaitre_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                        return
+
+                --[[// Fin de la mission de reconnaissance
+]]                end
+                if cases_switch_1[3] or switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    else
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointAReconnaitre_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    end
+
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

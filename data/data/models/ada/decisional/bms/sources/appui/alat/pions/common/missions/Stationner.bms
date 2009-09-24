@@ -48,38 +48,41 @@ includedFiles["sources/appui/alat/pions/common/missions/Stationner.bms"] = true
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eProgresser then
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eFinMission
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eProgresser then
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                return
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointAttente_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eFinMission then
+                    --[[// quand on stationne, on débarque les passagers
+]]if( self.eEtat == eActionEffectuee ) then
+                        do
+                            DEC_Transport_Annuler()
                                                         return
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointAttente_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFinMission then
-                --[[// quand on stationne, on débarque les passagers
-]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        DEC_Transport_Annuler()
-                                                return
-
-                    end
-                end
-
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                                end
+            end
 
     end,
 

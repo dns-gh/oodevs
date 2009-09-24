@@ -65,35 +65,45 @@ node "BEH_ROE_Automate_RecevoirOrdreInopine"
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_ChangerReglesEngagement" then
-                        local ordreROE = repOrdre
-                        switch_2 = ordreROE:GetorderConduiteChangerReglesEngagement_()
-                            if switch_2 == eEtatROE_TirLibre then
-                                --[[// TIR LIBRE
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_ChangerReglesEngagement" then
+                            local ordreROE = repOrdre
+                             do
+                                local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagement_()
+                                local cases_switch_2 = {}
+                                    if switch_2 == eEtatROE_TirLibre then
+                                        --[[// TIR LIBRE
 ]]DEC_Trace( " === ORDRE --> ROE TIR LIBRE" )
-                                StartActivate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                                StopActivate( self.activations.BEH_ROE_Automate_TirRestreint, {} )
-                                StopActivate( self.activations.BEH_ROE_Automate_TirInterdit, {} )
-                                
-                            --[[// TIR SUR RIPOSTE
-]]elseif switch_2 == eEtatROE_TirSurRiposte then
-                                DEC_Trace( " === ORDRE --> ROE TIR SUR RIPOSTE" )
-                                StartActivate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                                StopActivate( self.activations.BEH_ROE_Automate_TirLibre, {} )
-                                StopActivate( self.activations.BEH_ROE_Automate_TirInterdit, {} )
-                                
-                            --[[// TIR INTERDIT
-]]elseif switch_2 == eEtatROE_TirInterdit then
-                                DEC_Trace( " === ORDRE --> ROE TIR INTERDIT" )
-                                StartActivate( self.activations.BEH_ROE_Automate_TirInterdit, 1, {} )
-                                StopActivate( self.activations.BEH_ROE_Automate_TirLibre, {} )
-                                StopActivate( self.activations.BEH_ROE_Automate_TirRestreint, {} )
-                                
-                                                        end
+                                        StartActivate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                                        StopActivate( self.activations.BEH_ROE_Automate_TirRestreint, {} )
+                                        StopActivate( self.activations.BEH_ROE_Automate_TirInterdit, {} )
+                                        
+                                    --[[// TIR SUR RIPOSTE
+]]                                    cases_switch_2[1] = true
+elseif switch_2 == eEtatROE_TirSurRiposte then
+                                        DEC_Trace( " === ORDRE --> ROE TIR SUR RIPOSTE" )
+                                        StartActivate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                                        StopActivate( self.activations.BEH_ROE_Automate_TirLibre, {} )
+                                        StopActivate( self.activations.BEH_ROE_Automate_TirInterdit, {} )
+                                        
+                                    --[[// TIR INTERDIT
+]]                                    cases_switch_2[2] = true
+elseif switch_2 == eEtatROE_TirInterdit then
+                                        DEC_Trace( " === ORDRE --> ROE TIR INTERDIT" )
+                                        StartActivate( self.activations.BEH_ROE_Automate_TirInterdit, 1, {} )
+                                        StopActivate( self.activations.BEH_ROE_Automate_TirLibre, {} )
+                                        StopActivate( self.activations.BEH_ROE_Automate_TirRestreint, {} )
+                                        
+                                                                        cases_switch_2[3] = true
+                                    end
+                                end
 
-                        
-                                        end
+                            
+                                                cases_switch_1[1] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end

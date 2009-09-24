@@ -31,9 +31,9 @@ include "bit.lua"
 ]]--[[// Obtention Stations et cougar
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Une seule normalement!
-]]self.listeStations = self.listeStations or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), Stations_Horizon )
+]]self.listeStations = self.listeStations or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), "Stations_Horizon" )
         --[[// Une seule normalement!
-]]self.listePionsCougar = self.listePionsCougar or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), Cougar_Horizon )
+]]self.listePionsCougar = self.listePionsCougar or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), "Cougar_Horizon" )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

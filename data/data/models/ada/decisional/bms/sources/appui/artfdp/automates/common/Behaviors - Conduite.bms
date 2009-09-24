@@ -78,14 +78,18 @@ node "BEH_Situation_Automate_ASS_FinMission"
         local _continue = true
 do
                 local x_pion = x
-                switch_1 = --[[// Situation Mission
+                 do
+                    local switch_1 = --[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
 ]]F_Pion_GeteEtatPhaseMission( x_pion )
-                    if switch_1 == eEtatPhaseMission_None
-                    or switch_1 == eEtatPhaseMission_FinMission then
-                                                rN_Fin = rN_Fin + 1
-                        
-                                        end
+                    local cases_switch_1 = {}
+                        if switch_1 == eEtatPhaseMission_None
+                        or switch_1 == eEtatPhaseMission_FinMission then
+                                                        rN_Fin = rN_Fin + 1
+                            
+                                                cases_switch_1[1] = true
+                        end
+                    end
 
             end
 

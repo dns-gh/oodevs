@@ -100,32 +100,35 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eActionObjet
-            if switch_1 == eActionObjetTerminee then
-                DEC_Trace( "  end of works " )
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_FinTravaux )
-                    else
-                        DEC_Message( eRC_FinTravaux )
+         do
+            local switch_1 = self.eActionObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "  end of works " )
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
                     end
 
-                end
+                                        self.params.__returnValue = eActionEffectuee
+                    return
 
-                                self.params.__returnValue = eActionEffectuee
-                return
+                    
+                elseif switch_1 == eActionObjetManqueDotation
+                or switch_1 == eActionObjetPasDeCapacite
+                or switch_1 == eActionObjetImpossible then
+                    DEC_Trace( "  impossible works " )
+                    DEC_Trace( EnumToString( self.eActionObjet, E_EtatActionObjet ) )
+                                        self.params.__returnValue = eActionEffectuee
+                    return
 
-                
-            elseif switch_1 == eActionObjetManqueDotation
-            or switch_1 == eActionObjetPasDeCapacite
-            or switch_1 == eActionObjetImpossible then
-                DEC_Trace( "  impossible works " )
-                DEC_Trace( EnumToString( self.eActionObjet, E_EtatActionObjet ) )
-                                self.params.__returnValue = eActionEffectuee
-                return
-
-                
-                        end
+                    
+                                end
+            end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
 ]]--[[//-----------------------------------------------------------------
@@ -218,29 +221,33 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eActionObjet
-            if switch_1 == eActionObjetTerminee then
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_FinTravaux )
-                    else
-                        DEC_Message( eRC_FinTravaux )
+         do
+            local switch_1 = self.eActionObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetTerminee then
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
                     end
 
-                end
+                                        self.params.__returnValue = eActionEffectuee
+                    return
 
-                                self.params.__returnValue = eActionEffectuee
-                return
+                                end
+                if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
+                or switch_1 == eActionObjetImpossible
+                or switch_1 == eActionObjetManqueDotation then
+                    DEC_Trace( "Impossible to build the object" )
+                                        self.params.__returnValue = eActionEffectuee
+                    return
 
-            elseif switch_1 == eActionObjetPasDeCapacite
-            or switch_1 == eActionObjetImpossible
-            or switch_1 == eActionObjetManqueDotation then
-                DEC_Trace( "Impossible to build the object" )
-                                self.params.__returnValue = eActionEffectuee
-                return
-
-                
-                        end
+                    
+                                end
+            end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
 ]]--[[//-----------------------------------------------------------------
@@ -373,29 +380,33 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eActionObjet
-            if switch_1 == eActionObjetTerminee then
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_FinTravaux )
-                    else
-                        DEC_Message( eRC_FinTravaux )
+         do
+            local switch_1 = self.eActionObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetTerminee then
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
                     end
 
-                end
+                                        self.params.__returnValue = eActionEffectuee
+                    return
 
-                                self.params.__returnValue = eActionEffectuee
-                return
+                                end
+                if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
+                or switch_1 == eActionObjetImpossible
+                or switch_1 == eActionObjetManqueDotation then
+                    DEC_Trace( "Impossible to improve the object" )
+                                        self.params.__returnValue = eActionEffectuee
+                    return
 
-            elseif switch_1 == eActionObjetPasDeCapacite
-            or switch_1 == eActionObjetImpossible
-            or switch_1 == eActionObjetManqueDotation then
-                DEC_Trace( "Impossible to improve the object" )
-                                self.params.__returnValue = eActionEffectuee
-                return
-
-                
-                        end
+                    
+                                end
+            end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
 ]]--[[//-----------------------------------------------------------------
@@ -484,26 +495,31 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eActionObjet
-            if switch_1 == eActionObjetTerminee then
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_FinTravaux )
-                    else
-                        DEC_Message( eRC_FinTravaux )
+         do
+            local switch_1 = self.eActionObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetTerminee then
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
                     end
 
+                                        self.params.__returnValue = eActionEffectuee
+                    return
+
+                                end
+                if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
+                or switch_1 == eActionObjetImpossible
+                or switch_1 == eActionObjetManqueDotation then
+                    DEC_Trace( "Impossible to remove the object" )
+                    
+                                cases_switch_1[2] = true
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
-            elseif switch_1 == eActionObjetPasDeCapacite
-            or switch_1 == eActionObjetImpossible
-            or switch_1 == eActionObjetManqueDotation then
-                DEC_Trace( "Impossible to remove the object" )
-                
-                        end
+            end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
 ]]--[[//-----------------------------------------------------------------
@@ -591,26 +607,31 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eActionObjet
-            if switch_1 == eActionObjetTerminee then
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_ContournementRealise )
-                    else
-                        DEC_Message( eRC_ContournementRealise )
+         do
+            local switch_1 = self.eActionObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetTerminee then
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_ContournementRealise )
+                        else
+                            DEC_Message( eRC_ContournementRealise )
+                        end
+
                     end
 
+                                        self.params.__returnValue = eActionEffectuee
+                    return
+
+                                end
+                if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation
+                or switch_1 == eActionObjetPasDeCapacite
+                or switch_1 == eActionObjetImpossible then
+                    DEC_Trace( "Impossible to bypass" )
+                    
+                                cases_switch_1[2] = true
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
-            elseif switch_1 == eActionObjetManqueDotation
-            or switch_1 == eActionObjetPasDeCapacite
-            or switch_1 == eActionObjetImpossible then
-                DEC_Trace( "Impossible to bypass" )
-                
-                        end
+            end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
 ]]--[[//-----------------------------------------------------------------
@@ -699,26 +720,31 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eActionObjet
-            if switch_1 == eActionObjetTerminee then
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_FinTravaux )
-                    else
-                        DEC_Message( eRC_FinTravaux )
+         do
+            local switch_1 = self.eActionObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetTerminee then
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
                     end
 
+                                        self.params.__returnValue = eActionEffectuee
+                    return
+
+                                end
+                if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation
+                or switch_1 == eActionObjetPasDeCapacite
+                or switch_1 == eActionObjetImpossible then
+                    DEC_Trace( "impossible obstacle creation" )
+                    
+                                cases_switch_1[2] = true
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
-            elseif switch_1 == eActionObjetManqueDotation
-            or switch_1 == eActionObjetPasDeCapacite
-            or switch_1 == eActionObjetImpossible then
-                DEC_Trace( "impossible obstacle creation" )
-                
-                        end
+            end
 --[[//-----------------------------------------------------------------
 ]]--[[// Reprise si suspendu
 ]]--[[//-----------------------------------------------------------------

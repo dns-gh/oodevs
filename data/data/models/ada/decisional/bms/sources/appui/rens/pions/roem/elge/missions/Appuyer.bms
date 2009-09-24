@@ -52,67 +52,71 @@ includedFiles["sources/appui/rens/pions/roem/elge/missions/Appuyer.bms"] = true
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// Progresser jusqu'à zone de débarquement
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eAppuyer
-                                                        return
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// Progresser jusqu'à zone de débarquement
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eAppuyer
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// eAppuyer
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// eAppuyer
 ]]elseif switch_1 == eAppuyer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                --[[//---------------------------------------------------------------------
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    --[[//---------------------------------------------------------------------
 ]]--[[// Apres avoir deposer le Brod --> Brouillage // MIA amélioration
 ]]--[[// --> order de conduite brouiller
 ]]--[[// halt seule
 ]]--[[//---------------------------------------------------------------------
 ]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            StartActivate( self.activations.BEH_Objet_Rens_ActiverBrouilleur, 1, { eTypeObjectZoneBrouillage, } )
-                            self.ePhaseMission = eFinMission
-                                                        return
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                StartActivate( self.activations.BEH_Objet_Rens_ActiverBrouilleur, 1, { eTypeObjectZoneBrouillage, } )
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
-                    end
 --[[//---------------------------------------------------------------------
 ]]--[[// Deposer le Brod
 ]]--[[//---------------------------------------------------------------------
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Objet_Rens_DeposerBrouilleur, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Fin de la mission --> SUR ORDRE
+                    Activate( self.activations.BEH_Objet_Rens_DeposerBrouilleur, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Fin de la mission --> SUR ORDRE
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    return
-                end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        return
+                    end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
     end,
 

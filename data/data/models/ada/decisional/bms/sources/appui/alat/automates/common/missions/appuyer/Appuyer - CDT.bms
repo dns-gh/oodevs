@@ -58,12 +58,12 @@ includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - CD
         self.listePionsSgptSansRavitaillementsEnCours = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsSgpt, listePionsEnCoursRavitaillement )
         --[[// Mise à Jour des selections
 ]]--[[// --------------------------
-]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AntitankHelicopterPatrol )
-        local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, EscortAndCloseSupportHelicopterPatrol )
-        local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AirDefenseHelicopterPatrol )
+]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AntitankHelicopterPatrol" )
+        local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
+        local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
         --[[// liste des unités pour IMEX
 ]]DIA_Clear( self.listeHMLog )
-        self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgptSansRavitaillementsEnCours, GeneralPurposeHelicopterPatrol )
+        self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgptSansRavitaillementsEnCours, "GeneralPurposeHelicopterPatrol" )
         --[[// liste des unités à appuyer
 ]]DIA_Clear( self.listePionsAAppuyer )
         self.listePionsAAppuyer = S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAAppuyer_ )
@@ -98,62 +98,67 @@ do
 
         DIA_Clear( self.listePionsAAppuyerIMEX )
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
-        switch_1 = --[[// phases mission
+         do
+            local switch_1 = --[[// phases mission
 ]]self.ePhase
-            if switch_1 == eAppuyer then
-                --[[//Tir sur riposte si est unites a appuyer sont dans une position
+            local cases_switch_1 = {}
+                if switch_1 == eAppuyer then
+                    --[[//Tir sur riposte si est unites a appuyer sont dans une position
 ]]--[[//favorable, sinon, tir libre.
 ]]local bBesoinAppuisFeu = false
-                for _,x in pairs( self.listePionsAAppuyer ) do
-                local _continue = true
+                    for _,x in pairs( self.listePionsAAppuyer ) do
+                    local _continue = true
 do
-                        local pionDEC = x
-                        if( F_Pion_GeteEtatDec( pionDEC ) == eEtatDec_Sauvegarde ) then
-                            bBesoinAppuisFeu = true
+                            local pionDEC = x
+                            if( F_Pion_GeteEtatDec( pionDEC ) == eEtatDec_Sauvegarde ) then
+                                bBesoinAppuisFeu = true
+                            end
+
                         end
 
                     end
 
-                end
-
-                if( bBesoinAppuisFeu ) then
-                    do
-                        Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                        Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
-                    end
-                else
+                    if( bBesoinAppuisFeu ) then
+                        do
+                            Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                        end
+                    else
 do
-                        Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                        Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
-                    end
+                            Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                        end
 --[[// missions
-]]                end
+]]                    end
 
-                if( not DIA_IsListEmpty( self.listeDetruire ) ) then
-                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_CDT, self.listeDetruire, self._namedParams.mission.zone_, self._namedParams.mission.pointDislocation_, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
-                end
+                    if( not DIA_IsListEmpty( self.listeDetruire ) ) then
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe, 1, { ePhase_CDT, self.listeDetruire, self._namedParams.mission.zone_, self._namedParams.mission.pointDislocation_, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, false, } )
+                    end
 
-                if( not DIA_IsListEmpty( self.listeAppuyer ) ) then
-                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsAppuyerDirectAuContactAListe, 1, { ePhase_CDT, self.listeAppuyer, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, self.listePionsAAppuyer, } )
-                end
+                    if( not DIA_IsListEmpty( self.listeAppuyer ) ) then
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsAppuyerDirectAuContactAListe, 1, { ePhase_CDT, self.listeAppuyer, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ciblesPrioritaires_, self.listePionsAAppuyer, } )
+                    end
 
-                --[[//pas de coordination des feux dans cette mission
+                    --[[//pas de coordination des feux dans cette mission
 ]]if( not DIA_IsListEmpty( self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours ) ) then
-                    Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours, 0, } )
-                end
+                        Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours, 0, } )
+                    end
 
-                if( not DIA_IsListEmpty( self.listePionsPourMissionAppuyerOuDetruire ) ) then
-                    Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePionsPourMissionAppuyerOuDetruire, } )
-                end
+                    if( not DIA_IsListEmpty( self.listePionsPourMissionAppuyerOuDetruire ) ) then
+                        Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePionsPourMissionAppuyerOuDetruire, } )
+                    end
 
-                --[[// IMEX et ravitaillements
+                    --[[// IMEX et ravitaillements
 ]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
-                
-            elseif switch_1 == eSExfiltrer then
-                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
-                
-                        end
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eSExfiltrer then
+                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                    Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
+                    
+                                cases_switch_1[2] = true
+                end
+            end
 
     end,
 

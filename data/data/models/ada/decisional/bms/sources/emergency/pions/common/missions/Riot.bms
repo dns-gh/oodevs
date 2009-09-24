@@ -51,45 +51,49 @@ includedFiles["sources/emergency/pions/common/missions/Riot.bms"] = true
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                if( self.eAction == eActionEnCours ) then
-                    do
-                        StartActivate( self.activations.BEH_Pion_Emergency_GartherPeople, 5, setmetatable( { 3, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    if( self.eAction == eActionEnCours ) then
+                        do
+                            StartActivate( self.activations.BEH_Pion_Emergency_GartherPeople, 5, setmetatable( { 3, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                        return
 
-                    end
-                end
-
-                self.eAction = eActionEnCours
-                self.ePhase = eReconnaitre
-            elseif switch_1 == eReconnaitre then
-                --[[// behavior BEH_Pion_Emergency_Riot( mission.position, eProgressionDefaut, eTypeItiMouvement ) return in eAction : strength = DIA_GetMotivation( MOT_Mission );
-]]Activate( self.activations.ACT_Pion_Emergency_Influence, 1, { "riot", GetMotivation( "MOT_Mission" ), } )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
-                                                return
-
-                    end
-                end
-
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.mission.position_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                    do
-                        DEC_FinMission()
-                                                self.params.__returnValue = eActionEffectuee
-                        Halt()
-
-                    end
-                end
-
-                
                         end
+                    end
+
+                    self.eAction = eActionEnCours
+                    self.ePhase = eReconnaitre
+                                end
+                if cases_switch_1[1] or switch_1 == eReconnaitre then
+                    --[[// behavior BEH_Pion_Emergency_Riot( mission.position, eProgressionDefaut, eTypeItiMouvement ) return in eAction : strength = DIA_GetMotivation( MOT_Mission );
+]]Activate( self.activations.ACT_Pion_Emergency_Influence, 1, { "riot", GetMotivation( "MOT_Mission" ), } )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                                                        return
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.mission.position_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+                    end
+
+                    
+                                end
+            end
 
     end,
 

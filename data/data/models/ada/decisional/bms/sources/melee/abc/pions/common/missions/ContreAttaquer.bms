@@ -72,41 +72,46 @@ includedFiles["sources/melee/abc/pions/common/missions/ContreAttaquer.bms"] = tr
             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Counter attack mission begining", } )
-                self.ePhaseMission = eDonnerAssaut
-                
-            --[[// 2) Donner l'assaut
-]]elseif switch_1 == eDonnerAssaut then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                Activate( self.activations.BEH_Dep_Pion_ABC_GererDeboucher, 1, {} )--[[// Gestion du déboucher
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Counter attack mission begining", } )
+                    self.ePhaseMission = eDonnerAssaut
+                    
+                --[[// 2) Donner l'assaut
+]]                cases_switch_1[1] = true
+elseif switch_1 == eDonnerAssaut then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                    Activate( self.activations.BEH_Dep_Pion_ABC_GererDeboucher, 1, {} )--[[// Gestion du déboucher
 ]]
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
-                                                        return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraireAssaut_, eProgressionDefaut, eTypeItiAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
-                
-            --[[// 5) Fin de la mission
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraireAssaut_, eProgressionDefaut, eTypeItiAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
+                    
+                --[[// 5) Fin de la mission
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
 
     end,
 

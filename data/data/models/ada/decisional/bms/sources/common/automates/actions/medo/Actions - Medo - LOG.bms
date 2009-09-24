@@ -31,18 +31,23 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - LOG.bms"] 
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_SeDeployer" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_SeDeployer" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_SeDeployer" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_SeDeployer" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -106,18 +111,23 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - LOG.bms"] 
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_DecontaminerBlesses" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_DecontaminerBlesses" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_DecontaminerBlesses" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_DecontaminerBlesses" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -181,18 +191,23 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - LOG.bms"] 
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_Reparer" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_Reparer" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_Reparer" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_Reparer" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -256,18 +271,23 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - LOG.bms"] 
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_TrierEtTraiterBlesses" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_TrierEtTraiterBlesses" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_TrierEtTraiterBlesses" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_TrierEtTraiterBlesses" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -331,18 +351,23 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - LOG.bms"] 
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_TraiterBlesses" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_TraiterBlesses" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_TraiterBlesses" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_TraiterBlesses" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -406,18 +431,23 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - LOG.bms"] 
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end

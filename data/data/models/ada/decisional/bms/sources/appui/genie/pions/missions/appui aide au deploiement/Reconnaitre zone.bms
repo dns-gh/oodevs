@@ -49,60 +49,65 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Reco
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhase = eProgresser
-                
-            --[[// Progression
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eReconnaitre
-                                                        return
+                    self.ePhase = eProgresser
+                    
+                --[[// Progression
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eReconnaitre
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptZone, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Reconnaisance
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptZone, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Reconnaisance
 ]]elseif switch_1 == eReconnaitre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                --[[// On a arrive dans la zone
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    --[[// On a arrive dans la zone
 ]]if( DEC_Geometrie_EstPointDansLocalisation( myself:DEC_Agent_Position(), self._namedParams.mission.zone_ ) ) then
-                    do
-                        Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { M_Dep_Pion_GEN_AMBIANCE_ENI(), } )
-                        F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
+                        do
+                            Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { M_Dep_Pion_GEN_AMBIANCE_ENI(), } )
+                            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
+                        end
                     end
-                end
 
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eFinMission
-                                                        return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, setmetatable( { self.ptZone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Fin de la mission
+                    Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, setmetatable( { self.ptZone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Fin de la mission
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[4] = true
+                end
+            end
 
     end,
 

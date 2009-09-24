@@ -137,7 +137,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites"
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                local selSectionGen = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), SectionGenie )
+                local selSectionGen = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionGenie" )
                 if( DIA_IsListEmpty( selSectionGen ) ) then
                     return
                 end
@@ -288,35 +288,40 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcements"
             return
         end
 
-        switch_1 = --[[//-------------------------------------------------------------------------
+         do
+            local switch_1 = --[[//-------------------------------------------------------------------------
 ]]--[[// Renforcement des sites un par un
 ]]--[[//-------------------------------------------------------------------------
 ]]self.ePhase
-            if switch_1 == eDeterminerSite then
-                --[[//-------------------------------------------------------------------------
+            local cases_switch_1 = {}
+                if switch_1 == eDeterminerSite then
+                    --[[//-------------------------------------------------------------------------
 ]]--[[// Sites
 ]]--[[//-------------------------------------------------------------------------
 ]]local conSite = DIA_GetAt( g_selConnaissanceObs, self.rIterateur )
-                local rTailleSite = DEC_ConnaissanceObjet_LargeurSiteFranchissement( conSite:Getobstacle_() )
-                --[[// Renforcement si reconnu
+                    local rTailleSite = DEC_ConnaissanceObjet_LargeurSiteFranchissement( conSite:Getobstacle_() )
+                    --[[// Renforcement si reconnu
 ]]if( rTailleSite > 0 and not conSite:GetbEstRenforce_() ) then
-                    Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour, 1, { conSite, rTailleSite, } )
-                end
+                        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour, 1, { conSite, rTailleSite, } )
+                    end
 
-                                self.rIterateur = self.rIterateur + 1
-                self.ePhase = eAttendre
-                
-            --[[//-------------------------------------------------------------------------
+                                        self.rIterateur = self.rIterateur + 1
+                    self.ePhase = eAttendre
+                    
+                --[[//-------------------------------------------------------------------------
 ]]--[[// Vérification iteration
 ]]--[[//-------------------------------------------------------------------------
-]]elseif switch_1 == eAttendre then
-                if( self.rIterateur == #( g_selConnaissanceObs ) ) then
-                    self.rIterateur = 0
-                end
+]]                cases_switch_1[1] = true
+elseif switch_1 == eAttendre then
+                    if( self.rIterateur == #( g_selConnaissanceObs ) ) then
+                        self.rIterateur = 0
+                    end
 
-                self.ePhase = eDeterminerSite
-                
-                        end
+                    self.ePhase = eDeterminerSite
+                    
+                                cases_switch_1[2] = true
+                end
+            end
 
     end,
 
@@ -344,10 +349,10 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
 
     activate = function( self )
         --[[//liste des moyens disponibles dans le sous groupement  
-]]local selPAA = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), GroupePAA, eEtatEchelon_Second )
-        local selMLF = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), GroupeMLF, eEtatEchelon_Second )
-        local selEFA = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), GroupeEFA, eEtatEchelon_Second )
-        local selPFM = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), SectionPFM, eEtatEchelon_Second )
+]]local selPAA = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), "GroupePAA", eEtatEchelon_Second )
+        local selMLF = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), "GroupeMLF", eEtatEchelon_Second )
+        local selEFA = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), "GroupeEFA", eEtatEchelon_Second )
+        local selPFM = S_Cherche_Automate_Filtre_TypePionEchelon( DEC_Automate_PionsSansPC(), "SectionPFM", eEtatEchelon_Second )
         --[[//-------------------------------------------------------------------------
 ]]--[[// Renforcement PAA
 ]]--[[//-------------------------------------------------------------------------
@@ -554,7 +559,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererFinMission"
 ]]--[[//-----------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                local listePions = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), SectionGenie )
+                local listePions = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionGenie" )
                 for _,x in pairs( listePions ) do
                 local _continue = true
                     do
@@ -608,24 +613,30 @@ node "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite"
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_Interrompre" then
-                        bOrdreConduiteInterrompre = true
-                        
-                    elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
-                        --[[// Mise en attente de la progression
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_Interrompre" then
+                            bOrdreConduiteInterrompre = true
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                            --[[// Mise en attente de la progression
 ]]DEC_Trace( "$ --- Wait fragmentary order ---$" )
-                        StartActivate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
-                        
-                    elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
-                        --[[// ordre de poursuivre -> on reprend la progression
+                            StartActivate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                            
+                                                cases_switch_1[2] = true
+elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
+                            --[[// ordre de poursuivre -> on reprend la progression
 ]]--[[// la section n est plus en attente d'ordre
 ]]DEC_Trace( "$ --- Resume fragmentary order ---$" )
-                        StopActivate( self.activations.BEH_Ordre_Automate_Attendre_, {} )
-                        Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
+                            StopActivate( self.activations.BEH_Ordre_Automate_Attendre_, {} )
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
 ]]
-                        
-                                        end
+                            
+                                                cases_switch_1[3] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end

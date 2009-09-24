@@ -85,18 +85,23 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC"
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
-                        DEC_Trace( "$ --- ORDRE Mettre tenue NBC ---$" )
-                        StartActivate( self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, {} )
-                        StopActivate( self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, {} )
-                        
-                    elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
-                        DEC_Trace( "$ --- ORDRE Enlever tenue NBC ---$" )
-                        StopActivate( self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, {} )
-                        StartActivate( self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, 1, {} )
-                        
-                                        end
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
+                            DEC_Trace( "$ --- ORDRE Mettre tenue NBC ---$" )
+                            StartActivate( self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, {} )
+                            StopActivate( self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, {} )
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
+                            DEC_Trace( "$ --- ORDRE Enlever tenue NBC ---$" )
+                            StopActivate( self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, {} )
+                            StartActivate( self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, 1, {} )
+                            
+                                                cases_switch_1[2] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end

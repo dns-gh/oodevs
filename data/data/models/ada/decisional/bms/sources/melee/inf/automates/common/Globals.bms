@@ -265,15 +265,19 @@ function S_Nombre_PionsActifs( )
     for _,x in pairs( selPions ) do
     local _continue = true
 do
-            switch_1 = x:GetType()
-                if switch_1 == "SectionInfanterie"
-                or switch_1 == "SectionInfanterie_HOT"
-                or switch_1 == "SectionInfanterie_MILAN"
-                or switch_1 == "Peloton_AMX"
-                or switch_1 == "Peloton_XL" then
-                                        _returnValue = _returnValue + 1
-                    
-                                end
+             do
+                local switch_1 = x:GetType()
+                local cases_switch_1 = {}
+                    if switch_1 == "SectionInfanterie"
+                    or switch_1 == "SectionInfanterie_HOT"
+                    or switch_1 == "SectionInfanterie_MILAN"
+                    or switch_1 == "Peloton_AMX"
+                    or switch_1 == "Peloton_XL" then
+                                                _returnValue = _returnValue + 1
+                        
+                                        cases_switch_1[1] = true
+                    end
+                end
 
         end
 
@@ -285,7 +289,7 @@ end
 function S_Cherche_Automate_PionsPourReleve( )
     local _returnValue = {}
     local lstPionsEnSoutien = {}
-    local selPion = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), SectionInfanterie )
+    local selPion = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionInfanterie" )
     for _,x in pairs( selPion ) do
     local _continue = true
 do
@@ -383,20 +387,26 @@ function S_Automate_INF_UniteMission_Appuyer( pPionAppui )
     end
 
     local mission = DEC_GetMission( pPionAppui )
-    switch_1 = mission:GetType()
-        if switch_1 == "T_Mission_Pion_ABC_Soutenir" then
-            local missionABC = DEC_GetMission( pPionAppui )
-            _returnValue = missionABC.uniteASoutenir_
-            
-        elseif switch_1 == "T_Mission_Pion_ABC_Appuyer" then
-            local missionABC = DEC_GetMission( pPionAppui )
-            _returnValue = missionABC.uniteAAppuyer_
-            
-        elseif switch_1 == "T_Mission_Pion_INF_Appuyer" then
-            local missionINF = DEC_GetMission( pPionAppui )
-            _returnValue = missionINF.uniteAAppuyer_
-            
-                end
+     do
+        local switch_1 = mission:GetType()
+        local cases_switch_1 = {}
+            if switch_1 == "T_Mission_Pion_ABC_Soutenir" then
+                local missionABC = DEC_GetMission( pPionAppui )
+                _returnValue = missionABC.uniteASoutenir_
+                
+                        cases_switch_1[1] = true
+elseif switch_1 == "T_Mission_Pion_ABC_Appuyer" then
+                local missionABC = DEC_GetMission( pPionAppui )
+                _returnValue = missionABC.uniteAAppuyer_
+                
+                        cases_switch_1[2] = true
+elseif switch_1 == "T_Mission_Pion_INF_Appuyer" then
+                local missionINF = DEC_GetMission( pPionAppui )
+                _returnValue = missionINF.uniteAAppuyer_
+                
+                        cases_switch_1[3] = true
+            end
+        end
 
     return _returnValue
 end
@@ -532,12 +542,16 @@ function S_ObtenirPionsOperationnels_SansPC_Coordination( )
     local _continue = true
 do
             local pion = x
-            switch_1 = pion:GetType()
-                if switch_1 == "GroupeInfanterie_Mortier" then
-                    
-                
-                else
-                    DIA_PushBack( selTemp, pion )
+             do
+                local switch_1 = pion:GetType()
+                local cases_switch_1 = {}
+                    if switch_1 == "GroupeInfanterie_Mortier" then
+                        
+                                        cases_switch_1[1] = true
+
+                    else
+                        DIA_PushBack( selTemp, pion )
+                    end
                 end
 
         end
@@ -720,19 +734,25 @@ function S_Conduite_PionEnAttente_OrdreCoordination( sPionsOrdre )
     local _continue = true
 do
             local pionOrdre = x
-            switch_1 = F_Pion_GeteEtatPhaseMission( pionOrdre )
-                if switch_1 == eEtatPhaseMission_RejointFuseau then
-                    _returnValue = true
-                                        return _returnValue
+             do
+                local switch_1 = F_Pion_GeteEtatPhaseMission( pionOrdre )
+                local cases_switch_1 = {}
+                    if switch_1 == eEtatPhaseMission_RejointFuseau then
+                        _returnValue = true
+                                                return _returnValue
 
-                                end
+                                        end
+                end
 
-            switch_1 = F_Pion_GeteEtatLima( pionOrdre )
-                if switch_1 == eEtatLima_Fuseau then
-                    _returnValue = true
-                                        return _returnValue
+             do
+                local switch_1 = F_Pion_GeteEtatLima( pionOrdre )
+                local cases_switch_1 = {}
+                    if switch_1 == eEtatLima_Fuseau then
+                        _returnValue = true
+                                                return _returnValue
 
-                                end
+                                        end
+                end
 
         end
 
@@ -853,12 +873,16 @@ do
             local pion = x
             if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second and F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_None ) then
                 do
-                    switch_1 = pion:GetType()
-                        if switch_1 == "Peloton_AMX"
-                        or switch_1 == "Peloton_XL" then
-                                                    DIA_PushFront( listePionDeSoutien, pion )
-                            
-                                                end
+                     do
+                        local switch_1 = pion:GetType()
+                        local cases_switch_1 = {}
+                            if switch_1 == "Peloton_AMX"
+                            or switch_1 == "Peloton_XL" then
+                                                            DIA_PushFront( listePionDeSoutien, pion )
+                                
+                                                        cases_switch_1[1] = true
+                            end
+                        end
 
                 end
             end

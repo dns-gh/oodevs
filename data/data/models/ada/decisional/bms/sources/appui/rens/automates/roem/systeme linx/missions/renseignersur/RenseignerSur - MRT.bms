@@ -31,9 +31,9 @@ include "bit.lua"
 ]]--[[// Obtention du SMO et Stations
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Une seule normalement!
-]]self.listeStationsLinx = self.listeStationsLinx or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), Stations_Lynx )
+]]self.listeStationsLinx = self.listeStationsLinx or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), "Stations_Lynx" )
         --[[// Une seule normalement!
-]]self.listePionsCoge = self.listePionsCoge or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), Section_Coge )
+]]self.listePionsCoge = self.listePionsCoge or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), "Section_Coge" )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

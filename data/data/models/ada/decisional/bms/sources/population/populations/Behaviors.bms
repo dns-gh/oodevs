@@ -116,20 +116,26 @@ if( ( GetStateVariable( "VE_Domination" ) == 1 and rCourage == 0 or GetStateVari
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_AttendreSePoster" then
-                        DEC_Trace( "======= Ordre --> Stationnement =====" )
-                        UpdateStateVariable( "VE_Stationner", 1 - GetStateVariable( "VE_Stationner" ) )
-                        
-                    elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
-                        DEC_Trace( "======= Ordre --> Fin du Stationnement =====" )
-                        UpdateStateVariable( "VE_Stationner", 0 - GetStateVariable( "VE_Stationner" ) )
-                        
-                    elseif switch_1 == "Rep_OrderConduite_Population_ChangerAttitude" then
-                        local ordreAtt = ordre
-                        S_ChangerAttitude( ordreAtt:GetorderConduitePopulationChangerAttitude_() )
-                        
-                                        end
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                            DEC_Trace( "======= Ordre --> Stationnement =====" )
+                            UpdateStateVariable( "VE_Stationner", 1 - GetStateVariable( "VE_Stationner" ) )
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
+                            DEC_Trace( "======= Ordre --> Fin du Stationnement =====" )
+                            UpdateStateVariable( "VE_Stationner", 0 - GetStateVariable( "VE_Stationner" ) )
+                            
+                                                cases_switch_1[2] = true
+elseif switch_1 == "Rep_OrderConduite_Population_ChangerAttitude" then
+                            local ordreAtt = ordre
+                            S_ChangerAttitude( ordreAtt:GetorderConduitePopulationChangerAttitude_() )
+                            
+                                                cases_switch_1[3] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end

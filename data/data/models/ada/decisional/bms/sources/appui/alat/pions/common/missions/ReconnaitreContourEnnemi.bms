@@ -83,175 +83,178 @@ include "bit.lua"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eReconnaitre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Reconnaissance, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.recoEnCours = false
-                            --[[//Supression de la localisation courante
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eReconnaitre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Reconnaissance, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.recoEnCours = false
+                                --[[//Supression de la localisation courante
 ]]--[[//sauf si c'est la dernière
 ]]if( #( self.listeLocalisationsATraiter ) > 1 ) then
 if( DEC_UserTypeList_Contient( self.listeLocalisationsATraiter, self.localisationCourante ) ) then
-                                    DEC_UserTypeList_Remove( self.listeLocalisationsATraiter, self.localisationCourante )
+                                        DEC_UserTypeList_Remove( self.listeLocalisationsATraiter, self.localisationCourante )
+                                    end
                                 end
-                            end
 
-                            --[[//on prend la localisation la plus proche qui sera forcement la suivante
+                                --[[//on prend la localisation la plus proche qui sera forcement la suivante
 ]]--[[//avec notre algo
 ]]self.localisationCourante = S_Geometrie_LocalisationProche( self.listeLocalisationsATraiter )
+                            end
+
                         end
-
                     end
-                end
 
-                if( self.eEtat == eActionImpossible ) then
-                    do
-                                                do
-                            DIA_Clear( myself.plotsRavitaillement_ )
-                            F_Pion_SetobjectifEsquive( myself, nil )
-                            DEC_Warning( eRC_MissionImpossible )
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt()
+
+                            end
+
                                                         self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
                     end
-                end
 
-                self.nouvelleLocalisation = nil
-                for _,x in pairs( self.listeLocalisations ) do
-                local _continue = true
+                    self.nouvelleLocalisation = nil
+                    for _,x in pairs( self.listeLocalisations ) do
+                    local _continue = true
 do
-                        if( DEC_Geometrie_EstPointDansLocalisation( myself:DEC_Agent_Position(), x ) ) then
-                            self.nouvelleLocalisation = x
-                        end
+                            if( DEC_Geometrie_EstPointDansLocalisation( myself:DEC_Agent_Position(), x ) ) then
+                                self.nouvelleLocalisation = x
+                            end
 
-                    end
+                        end
 --[[//supprimer toutes les localisations situées avant la localisations
 ]]--[[//courante
 ]]
-                end
+                    end
 
-                if( self.nouvelleLocalisation ~= nil ) then
-                    do
-                        for _,x in pairs( self.listeLocalisations ) do
-                        local _continue = true
-                            do
-                                if( x ~= self.nouvelleLocalisation ) then
-                                    do
-                                        if( DEC_UserTypeList_Contient( self.listeLocalisationsATraiter, x ) ) then
-                                            DEC_UserTypeList_Remove( self.listeLocalisationsATraiter, x )
+                    if( self.nouvelleLocalisation ~= nil ) then
+                        do
+                            for _,x in pairs( self.listeLocalisations ) do
+                            local _continue = true
+                                do
+                                    if( x ~= self.nouvelleLocalisation ) then
+                                        do
+                                            if( DEC_UserTypeList_Contient( self.listeLocalisationsATraiter, x ) ) then
+                                                DEC_UserTypeList_Remove( self.listeLocalisationsATraiter, x )
+                                            end
+
                                         end
-
+                                    else
+                                        break
                                     end
-                                else
-                                    break
+
                                 end
 
                             end
 
                         end
-
                     end
-                end
 
-                if( DEC_UserTypeList_Contient( self.listeLocalisationsATraiter, self.nouvelleLocalisation ) ) then
-                    self.localisationCourante = self.nouvelleLocalisation
-                else
-                    self.localisationCourante = S_Geometrie_LocalisationProche( self.listeLocalisationsATraiter )
-                end
+                    if( DEC_UserTypeList_Contient( self.listeLocalisationsATraiter, self.nouvelleLocalisation ) ) then
+                        self.localisationCourante = self.nouvelleLocalisation
+                    else
+                        self.localisationCourante = S_Geometrie_LocalisationProche( self.listeLocalisationsATraiter )
+                    end
 
-                --[[//si on a percu un ennemi dans le fuseau, passage en première allure
+                    --[[//si on a percu un ennemi dans le fuseau, passage en première allure
 ]]if( not DIA_IsListEmpty( DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau() ) ) then
-                    StartActivate( self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, GetMotivation( "MOT_Manoeuvrer" ) * 4, {} )
-                end
+                        StartActivate( self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, GetMotivation( "MOT_Manoeuvrer" ) * 4, {} )
+                    end
 
-                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointFinFuseau, } )
-                Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self.pointFinFuseau, } )
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                --[[// si l'agent n'est pas dans son fuseau ou s'il n'est pas dans une zone non reconnue
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointFinFuseau, } )
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self.pointFinFuseau, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    --[[// si l'agent n'est pas dans son fuseau ou s'il n'est pas dans une zone non reconnue
 ]]if( ( not DEC_Geometrie_EstPointDansFuseau( myself:DEC_Agent_Position() ) or ( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Surete ) ) and not self.recoEnCours ) then
-                    do
-                        Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ) * 2, { self.pointFinFuseau, eProgressionDefaut, eTypeItiReconnaissance, } )
-                    end
-                else
+                        do
+                            Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ) * 2, { self.pointFinFuseau, eProgressionDefaut, eTypeItiReconnaissance, } )
+                        end
+                    else
 do
-                        if( ( self.localisationCourante == 0 or self.localisationCourante == nil ) ) then
-                            return
+                            if( ( self.localisationCourante == 0 or self.localisationCourante == nil ) ) then
+                                return
+                            end
+
+                            self.recoEnCours = true
+                            Activate( self.activations.BEH_Obs_Pion_ALAT_ReconnaitreZone, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self.localisationCourante, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniRecoContourEni, GetMotivation( "MOT_Manoeuvrer" ) * 2, { self.localisationCourante, } )
                         end
-
-                        self.recoEnCours = true
-                        Activate( self.activations.BEH_Obs_Pion_ALAT_ReconnaitreZone, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self.localisationCourante, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniRecoContourEni, GetMotivation( "MOT_Manoeuvrer" ) * 2, { self.localisationCourante, } )
                     end
-                end
 
-                
-            elseif switch_1 == eSExfiltrer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
-                end
+                    
+                elseif switch_1 == eSExfiltrer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    end
 
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eFinMission
-                                                        return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                if( self.eEtat == eActionImpossible ) then
-                    do
-                                                do
-                            DIA_Clear( myself.plotsRavitaillement_ )
-                            F_Pion_SetobjectifEsquive( myself, nil )
-                            DEC_Warning( eRC_MissionImpossible )
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt()
+
+                            end
+
                                                         self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
                     end
-                end
 
-                Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointRegroupement_, } )
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            DIA_Clear( myself.plotsRavitaillement_ )
-                            F_Pion_SetobjectifEsquive( myself, nil )
-                            DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointRegroupement_, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-                        end
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                                end
+            end
 
     end,
 

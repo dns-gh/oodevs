@@ -78,81 +78,87 @@ node "BEH_Mission_Pion_INF_Harceler"
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eSeMettreEnPlace then
-                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// On va se mettre en position en restant sur nos garde
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSeMettreEnPlace then
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// On va se mettre en position en restant sur nos garde
 ]]
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eAborderObjectif
-                                                        self.params.__returnValue = self.ePhase
-                            return
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eAborderObjectif
+                                                                self.params.__returnValue = self.ePhase
+                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointRegroupement_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eAborderObjectif then
-                --[[// Aborder Objectif
+                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointRegroupement_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eAborderObjectif then
+                    --[[// Aborder Objectif
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eInstallerDispositif
-                        end
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eInstallerDispositif
+                            end
 
-                    end
-                else
+                        end
+                    else
 do
-                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                return
+                            Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                        return
 
+                        end
                     end
-                end
 
-            elseif switch_1 == eInstallerDispositif then
-                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+                                end
+                if cases_switch_1[2] or switch_1 == eInstallerDispositif then
+                    Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                    --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]StartActivate( self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.secteur_, } )
-                StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, false, } )
-                Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eSurveiller
-                                                        self.params.__returnValue = self.ePhase
-                            return
+                    StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, false, } )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eSurveiller
+                                                                self.params.__returnValue = self.ePhase
+                                return
+
+                            end
 
                         end
-
-                    end
 --[[// Temps de mise en place du dispositif
+]]                    end
+
+                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                        self.params.__returnValue = self.ePhase
+                    return
+
+                --[[// L'ensemble du dispositif est installe, on surveiller la zone
 ]]                end
-
-                Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                self.params.__returnValue = self.ePhase
-                return
-
-            --[[// L'ensemble du dispositif est installe, on surveiller la zone
-]]elseif switch_1 == eSurveiller then
-                --[[// Surveille secteur			
+                if cases_switch_1[3] or switch_1 == eSurveiller then
+                    --[[// Surveille secteur			
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
-                Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
-                --[[// action ACT_Pion_VAB_ControleZone( mission.secteur_, M_CAPACITE_SURVEILLANCE(), false );				
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                    --[[// action ACT_Pion_VAB_ControleZone( mission.secteur_, M_CAPACITE_SURVEILLANCE(), false );				
 ]]Activate( self.activations.BEH_Pion_INF_Detruire_Harceler, 2, { self.mission.secteur_, self.mission.natureObjectif_, } )
-                
-            
-            else
-                        end
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
                 self.params.__returnValue = self.ePhase
         return
@@ -191,23 +197,28 @@ node "BEH_Pion_INF_Detruire_Harceler"
                 self.selPointsAttente = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zone, 3, eCodeLocRgpt )
                 eCodeLocRgpt = self.selPointsAttente.second
                 self.selPointsAttente = self.selPointsAttente.first
-                switch_1 = eCodeLocRgpt
-                    if switch_1 == eError_PionsPasDansMemeFuseau
-                    or switch_1 == eError_LocalisationPasDansFuseau then
-                                            DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
-                                                do
-                                                        self.params.__returnValue = eActionImpossible
-                            Halt()
+                 do
+                    local switch_1 = eCodeLocRgpt
+                    local cases_switch_1 = {}
+                        if switch_1 == eError_PionsPasDansMemeFuseau
+                        or switch_1 == eError_LocalisationPasDansFuseau then
+                                                    DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
+                                                        do
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt()
 
+                            end
+
+                            
+                        elseif switch_1 == eWarning_DecoupageIncomplet then
+                                                    DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
+                            
+                                                cases_switch_1[2] = true
+elseif switch_1 == eNoError then
+                                                    
+                                                cases_switch_1[3] = true
                         end
-
-                        
-                    elseif switch_1 == eWarning_DecoupageIncomplet then
-                                            DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
-                        
-                    elseif switch_1 == eNoError then
-                                            
-                                        end
+                    end
 
                 self.ptRegroupement = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.selPointsAttente, self.nPos ) )
             end

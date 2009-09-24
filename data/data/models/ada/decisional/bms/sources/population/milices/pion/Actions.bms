@@ -51,27 +51,33 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
             end
         end
 
-        switch_1 = self.eEtatObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_Trace( "fin realisation" )
-                DEC_RC( eRC_FinTravaux )
-                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+         do
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "fin realisation" )
+                    DEC_RC( eRC_FinTravaux )
+                    --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
 ]]self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionObjetManqueDotation then
-            elseif switch_1 == eActionObjetImpossible then
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    
+                elseif switch_1 == eActionObjetManqueDotation then
+                                cases_switch_1[3] = true
+                end
+                if cases_switch_1[3] or switch_1 == eActionObjetImpossible then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            --[[// Pas de delais de reorganisation du chantier
-]]            end
+                    
+                --[[// Pas de delais de reorganisation du chantier
+]]                end
+            end
 
         if( self.bSuspendu ) then
             do
@@ -144,35 +150,41 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
             end
         end
 
-        switch_1 = self.eEtatObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_Trace( "realisation objet : fin realisation" )
-                DEC_RC( eRC_FinTravaux )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+         do
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "realisation objet : fin realisation" )
+                    DEC_RC( eRC_FinTravaux )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionObjetPasDeCapacite then
-                DEC_Trace( "realisation objet : pas de capacites" )
-                self.actionID = DEC_StopAction( self.actionID )
-                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
-]]                self.params.__returnValue = eActionImpossible
-                Halt()
+                    
+                elseif switch_1 == eActionObjetPasDeCapacite then
+                    DEC_Trace( "realisation objet : pas de capacites" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                    --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+]]                    self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            elseif switch_1 == eActionObjetManqueDotation then
-                DEC_Trace( "realisation objet : manque dotation" )
-            elseif switch_1 == eActionObjetImpossible then
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    
+                elseif switch_1 == eActionObjetManqueDotation then
+                    DEC_Trace( "realisation objet : manque dotation" )
+                                cases_switch_1[4] = true
+                end
+                if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            --[[// Pas de delais de reorganisation du chantier
-]]            end
+                    
+                --[[// Pas de delais de reorganisation du chantier
+]]                end
+            end
 
         if( self.bSuspendu ) then
             do
@@ -243,26 +255,30 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
             end
         end
 
-        switch_1 = self.eEtatObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_Trace( "preparation : fin" )
-                DEC_RC( eRC_FinTravaux )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+         do
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "preparation : fin" )
+                    DEC_RC( eRC_FinTravaux )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionObjetImpossible
-            or switch_1 == eActionObjetManqueDotation then
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    
+                elseif switch_1 == eActionObjetImpossible
+                or switch_1 == eActionObjetManqueDotation then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            --[[// Pas de delais de reorganisation du chantier
-]]            end
+                    
+                --[[// Pas de delais de reorganisation du chantier
+]]                end
+            end
 
         if( self.bSuspendu ) then
             do
@@ -363,25 +379,29 @@ do
             end
         end
 
-        switch_1 = self.eEtatObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_Trace( "destruction : fin" )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+         do
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "destruction : fin" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionObjetImpossible
-            or switch_1 == eActionObjetManqueDotation then
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    
+                elseif switch_1 == eActionObjetImpossible
+                or switch_1 == eActionObjetManqueDotation then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            --[[// Pas de delais de reorganisation du chantier
-]]            end
+                    
+                --[[// Pas de delais de reorganisation du chantier
+]]                end
+            end
 
         if( self.bSuspendu ) then
             do

@@ -52,46 +52,51 @@ includedFiles["sources/appui/trans/pions/missions/SeFaireTransporter.bms"] = tru
 ]]--[[// Se faire transporter --> CR
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        switch_1 = --[[//=============================================================================
+         do
+            local switch_1 = --[[//=============================================================================
 ]]--[[// Calcule it et progression
 ]]--[[//=============================================================================
 ]]self.ePhase
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhase = eProgresser
-                
-            --[[// Deplacement
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eFinMission
-                                                        return
+                    self.ePhase = eProgresser
+                    
+                --[[// Deplacement
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointEmbarquement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Attendre le transport
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointEmbarquement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Attendre le transport
 ]]elseif switch_1 == eAttendre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            --[[// Fin mission
-]]elseif switch_1 == eFinMission then
-                if( DEC_Agent_EstTransporte() ) then
-                    return
-                end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                --[[// Fin mission
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    if( DEC_Agent_EstTransporte() ) then
+                        return
+                    end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                                end
+            end
 
     end,
 

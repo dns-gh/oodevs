@@ -63,30 +63,35 @@ end
     local _continue = true
 do
             local pion = x
-            switch_1 = pion:GetType()
-                if switch_1 == "SectionASS_EO"
-                or switch_1 == "GroupeInfanterie_Commando"
-                or switch_1 == "SectionInfanterie_Appui"
-                or switch_1 == "SectionInfanterie" then
-                    if( _returnValue < 300 ) then
-                        _returnValue = 300
-                    end
+             do
+                local switch_1 = pion:GetType()
+                local cases_switch_1 = {}
+                    if switch_1 == "SectionASS_EO"
+                    or switch_1 == "GroupeInfanterie_Commando"
+                    or switch_1 == "SectionInfanterie_Appui"
+                    or switch_1 == "SectionInfanterie" then
+                        if( _returnValue < 300 ) then
+                            _returnValue = 300
+                        end
 
-                    
-                elseif switch_1 == "SectionInfanterie_HOT"
-                or switch_1 == "SectionInfanterie_MILAN" then
-                    if( _returnValue < 800 ) then
-                        _returnValue = 800
-                    end
+                        
+                                        cases_switch_1[1] = true
+elseif switch_1 == "SectionInfanterie_HOT"
+                    or switch_1 == "SectionInfanterie_MILAN" then
+                        if( _returnValue < 800 ) then
+                            _returnValue = 800
+                        end
 
-                    
-                
-                else
-                    if( _returnValue < M_DISTANCE_MIN() ) then
-                        _returnValue = M_DISTANCE_MIN()
-                    end
+                        
+                                        cases_switch_1[2] = true
 
-                                end
+                    else
+                        if( _returnValue < M_DISTANCE_MIN() ) then
+                            _returnValue = M_DISTANCE_MIN()
+                        end
+
+                                        end
+                end
 
         end
 
@@ -110,29 +115,34 @@ function S_Dist_MissionSuivre_Max( )
     local _continue = true
 do
             local pion = x
-            switch_1 = pion:GetType()
-                if switch_1 == "GroupeInfanterie_Commando"
-                or switch_1 == "SectionInfanterie_Appui"
-                or switch_1 == "SectionInfanterie" then
-                    if( _returnValue < 800 ) then
-                        _returnValue = 800
-                    end
+             do
+                local switch_1 = pion:GetType()
+                local cases_switch_1 = {}
+                    if switch_1 == "GroupeInfanterie_Commando"
+                    or switch_1 == "SectionInfanterie_Appui"
+                    or switch_1 == "SectionInfanterie" then
+                        if( _returnValue < 800 ) then
+                            _returnValue = 800
+                        end
 
-                    
-                elseif switch_1 == "SectionInfanterie_HOT"
-                or switch_1 == "SectionInfanterie_MILAN" then
-                    if( _returnValue < 1500 ) then
-                        _returnValue = 1500
-                    end
+                        
+                                        cases_switch_1[1] = true
+elseif switch_1 == "SectionInfanterie_HOT"
+                    or switch_1 == "SectionInfanterie_MILAN" then
+                        if( _returnValue < 1500 ) then
+                            _returnValue = 1500
+                        end
 
-                    
-                
-                else
-                    if( _returnValue < M_DISTANCE_MAX() ) then
-                        _returnValue = M_DISTANCE_MAX()
-                    end
+                        
+                                        cases_switch_1[2] = true
 
-                                end
+                    else
+                        if( _returnValue < M_DISTANCE_MAX() ) then
+                            _returnValue = M_DISTANCE_MAX()
+                        end
+
+                                        end
+                end
 
         end
 

@@ -134,35 +134,46 @@ node "BEH_ROE_Recevoir_OrdreInopinePopulation"
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
-                        --[[// cast
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
+                            --[[// cast
 ]]local ordreROE = repOrdre
-                        switch_2 = ordreROE:GetorderConduiteChangerReglesEngagementPopulation_()
-                            if switch_2 == eEtatROEPopulation_EmploiForceInterdit then
-                                --[[// TIR INTERDIT POP
+                             do
+                                local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagementPopulation_()
+                                local cases_switch_2 = {}
+                                    if switch_2 == eEtatROEPopulation_EmploiForceInterdit then
+                                        --[[// TIR INTERDIT POP
 ]]DEC_Trace( " === Frag order --> POPULATION ROE: USE OF FORCE FORBIDDEN" )
-                                Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, {} )
-                                
-                            --[[// TIR SOMMATION POP
-]]elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
-                                DEC_Trace( " === Frag order --> POPULATION ROE: KEEP DISTANCE WITH NON LETHAL MEANS" )
-                                Activate( self.activations.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, 1, {} )
-                                
-                            --[[// TIR DISSUASION POP
-]]elseif switch_2 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
-                                DEC_Trace( " === Frag order --> POPULATION ROE: DISPERSE WITH DEFENSIVE WEAPONS ENABLED" )
-                                Activate( self.activations.ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs, 1, {} )
-                                
-                            --[[// TIR NEUTRALISATION POP
-]]elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
-                                DEC_Trace( " === Frag order --> POPULATION ROE: ENABLE LETHAL WEAPONS" )
-                                Activate( self.activations.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, 1, {} )
-                                
-                                                        end
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, {} )
+                                        
+                                    --[[// TIR SOMMATION POP
+]]                                    cases_switch_2[1] = true
+elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+                                        DEC_Trace( " === Frag order --> POPULATION ROE: KEEP DISTANCE WITH NON LETHAL MEANS" )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, 1, {} )
+                                        
+                                    --[[// TIR DISSUASION POP
+]]                                    cases_switch_2[2] = true
+elseif switch_2 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
+                                        DEC_Trace( " === Frag order --> POPULATION ROE: DISPERSE WITH DEFENSIVE WEAPONS ENABLED" )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs, 1, {} )
+                                        
+                                    --[[// TIR NEUTRALISATION POP
+]]                                    cases_switch_2[3] = true
+elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
+                                        DEC_Trace( " === Frag order --> POPULATION ROE: ENABLE LETHAL WEAPONS" )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, 1, {} )
+                                        
+                                                                        cases_switch_2[4] = true
+                                    end
+                                end
 
-                        
-                                        end
+                            
+                                                cases_switch_1[1] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end

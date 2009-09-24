@@ -90,42 +90,46 @@ node "MIS_Pion_INF_Fixer"
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eFixer then
-                if( self.eAction == eActionImpossible or self.eAction == eActionHalt ) then
-                    self.ePhase = eFinMission
-                end
-
-                if( self.eCurrentPhase ~= eFinMission ) then
-                    do
-                        Activate( self.activations.BEH_Mission_Pion_VAB_Fixer, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                                                return
-
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eFixer then
+                    if( self.eAction == eActionImpossible or self.eAction == eActionHalt ) then
+                        self.ePhase = eFinMission
                     end
-                else
-                    self.ePhase = eFinMission
-                end
 
-            elseif switch_1 == eFinMission then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            DEC_Trace( "fin mission fixer" )
-                            DEC_FinMission()
-                                                        Halt()
+                    if( self.eCurrentPhase ~= eFinMission ) then
+                        do
+                            Activate( self.activations.BEH_Mission_Pion_VAB_Fixer, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                                                        return
 
                         end
-
+                    else
+                        self.ePhase = eFinMission
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                end
+                if cases_switch_1[1] or switch_1 == eFinMission then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                DEC_Trace( "fin mission fixer" )
+                                DEC_FinMission()
+                                                                Halt()
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
     end,
 
@@ -187,22 +191,26 @@ node "BEH_Mission_Pion_VAB_Fixer"
 ]]        end
 
         Activate( self.activations.BEH_Dep_Pion_INF_PreciserMaintenirContact, 1, setmetatable( { self.ksMission, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionPreciser = v else rawset( t, k, v ) end end } ) )
-        switch_1 = DEC_ConnaissanceAgent_NiveauPerceptionMax( self.ksMission )
-            if switch_1 == eReconnu
-            or switch_1 == eIdentifie then
-                Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self.ksMission ), } )
-                Activate( self.activations.BEH_Eni_Pion_VAB_Fixer, 2 * S_Force_DangerSur( self.ksMission ), setmetatable( { self.ksMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            
-            else
-                --[[// Si on n'a pas retrouve la connaissance
-]]if( DEC_ConnaissanceAgent_EstValide( self.ksMission ) and S_Geometrie_EstProchePosition( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self.ksMission ), M_DISTANCE_FIXER_SECURITE() ) ) then
-                    do
-                        Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 3, { DEC_ConnaissanceAgent_Position( self.ksMission ), } )
-                    end
-                end
+         do
+            local switch_1 = DEC_ConnaissanceAgent_NiveauPerceptionMax( self.ksMission )
+            local cases_switch_1 = {}
+                if switch_1 == eReconnu
+                or switch_1 == eIdentifie then
+                    Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self.ksMission ), } )
+                    Activate( self.activations.BEH_Eni_Pion_VAB_Fixer, 2 * S_Force_DangerSur( self.ksMission ), setmetatable( { self.ksMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                                cases_switch_1[1] = true
 
+                else
+                    --[[// Si on n'a pas retrouve la connaissance
+]]if( DEC_ConnaissanceAgent_EstValide( self.ksMission ) and S_Geometrie_EstProchePosition( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self.ksMission ), M_DISTANCE_FIXER_SECURITE() ) ) then
+                        do
+                            Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 3, { DEC_ConnaissanceAgent_Position( self.ksMission ), } )
                         end
+                    end
+
+                                end
+            end
 
     end,
 

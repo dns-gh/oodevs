@@ -48,23 +48,28 @@ includedFiles["sources/melee/inf/pions/grp mortier/Actions.bms"] = true
             end
         end
 
-        switch_1 = self.eEtat_EmbDeb
-            if switch_1 == eActionEmbDeb_EnCours then
-                
-            elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
-            or switch_1 == eActionEmbDeb_PasDeTransporteurs then
-                DEC_Trace( "Debarquement : ignore transporteur" )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+         do
+            local switch_1 = self.eEtat_EmbDeb
+            local cases_switch_1 = {}
+                if switch_1 == eActionEmbDeb_EnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
+                or switch_1 == eActionEmbDeb_PasDeTransporteurs then
+                    DEC_Trace( "Debarquement : ignore transporteur" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            elseif switch_1 == eActionEmbDeb_Termine then
-                DEC_Trace( "Debarquement : fin" )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                                end
+                if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
+                    DEC_Trace( "Debarquement : fin" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                        end
+                                end
+            end
 
         if( self.bReprise ) then
             do
@@ -148,93 +153,101 @@ node "ACT_Tir_Pion_INF_TirCouverture"
         end
 
         myself.eEtatTir_Indirect_ = self.eTir
-        switch_1 = self.eTir
-            if switch_1 == eActionTirIndirect_Impossible then
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirIndirect_Termine then
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_TirExecute )
-                    else
-                        DEC_Message( eRC_TirExecute )
+         do
+            local switch_1 = self.eTir
+            local cases_switch_1 = {}
+                if switch_1 == eActionTirIndirect_Impossible then
+                    do
                     end
 
-                end
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
-
-            elseif switch_1 == eActionTirIndirect_NoAmmo then
-                do
-                end
-
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_TirExecute )
-                    else
-                        DEC_Message( eRC_TirExecute )
+                                end
+                if cases_switch_1[1] or switch_1 == eActionTirIndirect_Termine then
+                    do
                     end
 
-                end
-
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_TirImpossiblePlusDeMunitions )
-                    else
-                        DEC_Message( eRC_TirImpossiblePlusDeMunitions )
-                    end
-
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirIndirect_PasDeCapacite then
-                do
-                end
-
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_TirAnnule )
-                    else
-                        DEC_Message( eRC_TirAnnule )
-                    end
-
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirIndirect_EnCours then
-                if( self.bPremierCoupPartie ) then
+                    self.actionID = DEC_StopAction( self.actionID )
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
-                            DEC_RC( eRC_PremierCoupParti )
+                            DEC_RC( eRC_TirExecute )
                         else
-                            DEC_Message( eRC_PremierCoupParti )
+                            DEC_Message( eRC_TirExecute )
                         end
 
                     end
-                end
 
-                self.bPremierCoupPartie = ModuleBegins()
-                do
-                end
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTirIndirect_NoAmmo then
+                    do
+                    end
+
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_TirExecute )
+                        else
+                            DEC_Message( eRC_TirExecute )
                         end
+
+                    end
+
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_TirImpossiblePlusDeMunitions )
+                        else
+                            DEC_Message( eRC_TirImpossiblePlusDeMunitions )
+                        end
+
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[3] or switch_1 == eActionTirIndirect_PasDeCapacite then
+                    do
+                    end
+
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_TirAnnule )
+                        else
+                            DEC_Message( eRC_TirAnnule )
+                        end
+
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[4] or switch_1 == eActionTirIndirect_EnCours then
+                    if( self.bPremierCoupPartie ) then
+                        do
+                            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                                DEC_RC( eRC_PremierCoupParti )
+                            else
+                                DEC_Message( eRC_PremierCoupParti )
+                            end
+
+                        end
+                    end
+
+                    self.bPremierCoupPartie = ModuleBegins()
+                    do
+                    end
+
+                    
+                                cases_switch_1[5] = true
+                end
+            end
 
                 self.params.__returnValue = eActionEnCours
         return
@@ -298,85 +311,93 @@ node "ACT_Tir_Pion_INF_TirCouverture"
         end
 
         myself.eEtatTir_Indirect_ = self.eTir
-        switch_1 = self.eTir
-            if switch_1 == eActionTirIndirect_Impossible then
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirIndirect_Termine then
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_TirExecute )
-                    else
-                        DEC_Message( eRC_TirExecute )
+         do
+            local switch_1 = self.eTir
+            local cases_switch_1 = {}
+                if switch_1 == eActionTirIndirect_Impossible then
+                    do
                     end
 
-                end
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
-
-            elseif switch_1 == eActionTirIndirect_NoAmmo then
-                do
-                end
---[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
-]]
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_TirAnnule )
-                    else
-                        DEC_Message( eRC_TirAnnule )
+                                end
+                if cases_switch_1[1] or switch_1 == eActionTirIndirect_Termine then
+                    do
                     end
 
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirIndirect_PasDeCapacite then
-                do
-                end
-
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_TirAnnule )
-                    else
-                        DEC_Message( eRC_TirAnnule )
-                    end
-
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirIndirect_EnCours then
-                if( self.bPremierCoupPartie ) then
+                    self.actionID = DEC_StopAction( self.actionID )
                     do
                         if( not DEC_Agent_AutomateEstEmbraye() ) then
-                            DEC_RC( eRC_PremierCoupParti )
+                            DEC_RC( eRC_TirExecute )
                         else
-                            DEC_Message( eRC_PremierCoupParti )
+                            DEC_Message( eRC_TirExecute )
                         end
 
                     end
-                end
 
-                self.bPremierCoupPartie = ModuleBegins()
-                do
-                end
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTirIndirect_NoAmmo then
+                    do
+                    end
+--[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
+]]
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_TirAnnule )
+                        else
+                            DEC_Message( eRC_TirAnnule )
                         end
+
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[3] or switch_1 == eActionTirIndirect_PasDeCapacite then
+                    do
+                    end
+
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_TirAnnule )
+                        else
+                            DEC_Message( eRC_TirAnnule )
+                        end
+
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[4] or switch_1 == eActionTirIndirect_EnCours then
+                    if( self.bPremierCoupPartie ) then
+                        do
+                            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                                DEC_RC( eRC_PremierCoupParti )
+                            else
+                                DEC_Message( eRC_PremierCoupParti )
+                            end
+
+                        end
+                    end
+
+                    self.bPremierCoupPartie = ModuleBegins()
+                    do
+                    end
+
+                    
+                                cases_switch_1[5] = true
+                end
+            end
 
                 self.params.__returnValue = eActionEnCours
         return

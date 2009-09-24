@@ -65,7 +65,7 @@ node "BEH_Dispositif_Automate_ABC_GererMortier"
     end,
 
     activate = function( self )
-        local listePionsMortier = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsAvecPC(), GroupeInfanterie_Mortier )
+        local listePionsMortier = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsAvecPC(), "GroupeInfanterie_Mortier" )
         for _,pion in pairs( listePionsMortier ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), eEtatEchelon_Second, } )
@@ -225,31 +225,35 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositif_"
 
     activate = function( self )
         self.ePhase = self.ePhase or eGererSecondEchelon
-        switch_1 = self.ePhase
-            if switch_1 == eGererPionDetruit then
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eGererPionDetruit then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Si un pion detruit de PE alors relever le pion si possible
 ]]--[[// Puis réévaluation du SE --> donc un pion détruit = réorganisation = delai
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// 1 iteration ou l'on redonne les missions
 ]]Activate( self.activations.BEH_Dispositif_Automate_ABC_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
-                self.ePhase = eGererSecondEchelon
-                
-            --[[//-----------------------------------------------------------------------------
+                    self.ePhase = eGererSecondEchelon
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Organisation du SE
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eGererSecondEchelon then
-                if( S_Dispositif_Automate_ABC_EvtPionDetruit() ) then
-                    do
-                        self.ePhase = eGererPionDetruit
-                                                return
+]]                cases_switch_1[1] = true
+elseif switch_1 == eGererSecondEchelon then
+                    if( S_Dispositif_Automate_ABC_EvtPionDetruit() ) then
+                        do
+                            self.ePhase = eGererPionDetruit
+                                                        return
 
-                    end
-                end
-
-                Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSE_, 1, {} )
-                
                         end
+                    end
+
+                    Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSE_, 1, {} )
+                    
+                                end
+            end
 
     end,
 
@@ -409,31 +413,35 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_"
 
     activate = function( self )
         self.ePhase = self.ePhase or eGererSecondEchelon
-        switch_1 = self.ePhase
-            if switch_1 == eGererPionDetruit then
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eGererPionDetruit then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Si un pion detruit de PE alors relever le pion si possible
 ]]--[[// Puis réévaluation du SE --> donc un pion détruit = réorganisation = delai
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// 1 iteration ou l'on redonne les missions
 ]]Activate( self.activations.BEH_Dispositif_Automate_ABC_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
-                self.ePhase = eGererSecondEchelon
-                
-            --[[//-----------------------------------------------------------------------------
+                    self.ePhase = eGererSecondEchelon
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Organisation du SE
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eGererSecondEchelon then
-                if( S_Dispositif_Automate_ABC_EvtPionDetruit() ) then
-                    do
-                        self.ePhase = eGererPionDetruit
-                                                return
+]]                cases_switch_1[1] = true
+elseif switch_1 == eGererSecondEchelon then
+                    if( S_Dispositif_Automate_ABC_EvtPionDetruit() ) then
+                        do
+                            self.ePhase = eGererPionDetruit
+                                                        return
 
-                    end
-                end
-
-                Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSEStatique_, 1, { self._namedParams.positionInstallation, } )
-                
                         end
+                    end
+
+                    Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSEStatique_, 1, { self._namedParams.positionInstallation, } )
+                    
+                                end
+            end
 
     end,
 
@@ -534,31 +542,35 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_"
 
     activate = function( self )
         self.ePhase = self.ePhase or eGererSecondEchelon
-        switch_1 = self.ePhase
-            if switch_1 == eGererPionDetruit then
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eGererPionDetruit then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Si un pion detruit de PE alors relever le pion si possible
 ]]--[[// Puis réévaluation du SE --> donc un pion détruit = réorganisation = delai
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// 1 iteration ou l'on redonne les missions
 ]]Activate( self.activations.BEH_Dispositif_Automate_ABC_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
-                self.ePhase = eGererSecondEchelon
-                
-            --[[//-----------------------------------------------------------------------------
+                    self.ePhase = eGererSecondEchelon
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Organisation du SE
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eGererSecondEchelon then
-                if( S_Dispositif_Automate_ABC_EvtPionDetruit() ) then
-                    do
-                        self.ePhase = eGererPionDetruit
-                                                return
+]]                cases_switch_1[1] = true
+elseif switch_1 == eGererSecondEchelon then
+                    if( S_Dispositif_Automate_ABC_EvtPionDetruit() ) then
+                        do
+                            self.ePhase = eGererPionDetruit
+                                                        return
 
-                    end
-                end
-
-                Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_, 1, { self._namedParams.lima, } )
-                
                         end
+                    end
+
+                    Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_, 1, { self._namedParams.lima, } )
+                    
+                                end
+            end
 
     end,
 

@@ -68,64 +68,78 @@ end
 
 function S_AugmenterROEPopulation( eROEPopulationVirtuel )
     local _returnValue = nil
-    switch_1 = eROEPopulationVirtuel
-        if switch_1 == eEtatROEPopulation_None then
-            _returnValue = eEtatROEPopulation_EmploiForceInterdit
-            
-        elseif switch_1 == eEtatROEPopulation_EmploiForceInterdit then
-            _returnValue = eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux
-            
-        elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
-            _returnValue = eEtatROEPopulation_DispersionParMoyensDeDefenseActifs
-            
-        elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs
-        or switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
-            _returnValue = eEtatROEPopulation_ArmesLetalesAutorisees
-            
-                end
+     do
+        local switch_1 = eROEPopulationVirtuel
+        local cases_switch_1 = {}
+            if switch_1 == eEtatROEPopulation_None then
+                _returnValue = eEtatROEPopulation_EmploiForceInterdit
+                
+                        cases_switch_1[1] = true
+elseif switch_1 == eEtatROEPopulation_EmploiForceInterdit then
+                _returnValue = eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux
+                
+                        cases_switch_1[2] = true
+elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+                _returnValue = eEtatROEPopulation_DispersionParMoyensDeDefenseActifs
+                
+                        cases_switch_1[3] = true
+elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs
+            or switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
+                _returnValue = eEtatROEPopulation_ArmesLetalesAutorisees
+                
+                        cases_switch_1[4] = true
+            end
+        end
 
     return _returnValue
 end
 
 function S_RCROE( eROEPopulationVirtuel )
     local _returnValue = false
-    switch_1 = eROEPopulationVirtuel
-        if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
-            
-        elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
-            do
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    DEC_RC( eRC_UtilisationArmesNonLetalesFaceAPopulation )
-                else
-                    DEC_Message( eRC_UtilisationArmesNonLetalesFaceAPopulation )
+     do
+        local switch_1 = eROEPopulationVirtuel
+        local cases_switch_1 = {}
+            if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
+                
+                        cases_switch_1[1] = true
+elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
+                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_UtilisationArmesNonLetalesFaceAPopulation )
+                    else
+                        DEC_Message( eRC_UtilisationArmesNonLetalesFaceAPopulation )
+                    end
+
                 end
 
+                
+                        cases_switch_1[2] = true
+elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
+                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_UtilisationMoyensDefenseActifsFaceAPopulation )
+                    else
+                        DEC_Message( eRC_UtilisationMoyensDefenseActifsFaceAPopulation )
+                    end
+
+                end
+
+                
+                        cases_switch_1[3] = true
+elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
+                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_UtilisationArmementsFaceAPopulation )
+                    else
+                        DEC_Message( eRC_UtilisationArmementsFaceAPopulation )
+                    end
+
+                end
+
+                
+                        cases_switch_1[4] = true
             end
-
-            
-        elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
-            do
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    DEC_RC( eRC_UtilisationMoyensDefenseActifsFaceAPopulation )
-                else
-                    DEC_Message( eRC_UtilisationMoyensDefenseActifsFaceAPopulation )
-                end
-
-            end
-
-            
-        elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
-            do
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    DEC_RC( eRC_UtilisationArmementsFaceAPopulation )
-                else
-                    DEC_Message( eRC_UtilisationArmementsFaceAPopulation )
-                end
-
-            end
-
-            
-                end
+        end
 
     _returnValue = true
     return _returnValue

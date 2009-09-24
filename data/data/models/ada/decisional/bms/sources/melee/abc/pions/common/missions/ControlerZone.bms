@@ -71,45 +71,51 @@ includedFiles["sources/melee/abc/pions/common/missions/ControlerZone.bms"] = tru
             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission.
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission.
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Aera control mission begining", } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// 2) Progression tactique
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eSurveiller
-                                                        return
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Aera control mission begining", } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// 2) Progression tactique
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eSurveiller
+                                                                return
+
+                            end
 
                         end
-
-                    end
 --[[// force de 1.
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionObs, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// 4) Puis on observe la zone souhaitée.
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionObs, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// 4) Puis on observe la zone souhaitée.
 ]]elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                Activate( self.activations.BEH_Pion_ABC_InstallerDispositifPourControleDe, 1, { self._namedParams.mission.zone_, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            --[[// Fin mission  --> sur ordre
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    Activate( self.activations.BEH_Pion_ABC_InstallerDispositifPourControleDe, 1, { self._namedParams.mission.zone_, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                --[[// Fin mission  --> sur ordre
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

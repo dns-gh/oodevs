@@ -44,12 +44,14 @@ node "MIS_Pion_MILICE_PrendreEtTenir"
 
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, 0.3, } )
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
-        switch_1 = self.ePhase
-            if switch_1 == eReconnaitre then
-                Activate( self.activations.BEH_Mission_Pion_Milice_PrendreEtTenir, GetMotivation( "MOT_Mission" ), {} )
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eReconnaitre then
+                    Activate( self.activations.BEH_Mission_Pion_Milice_PrendreEtTenir, GetMotivation( "MOT_Mission" ), {} )
+                    --[[//-----------------------------------------------------------------------------
 ]]
-            --[[// Fin de mission
+                --[[// Fin de mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[/*
 				if( 	eAction == eActionEffectuee )    {        	eAction=eActionEnCours;        									{										
@@ -59,22 +61,24 @@ node "MIS_Pion_MILICE_PrendreEtTenir"
 									}
 								  
     }
-				*/]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                    do
-                        DEC_FinMission()
-                                                self.params.__returnValue = eActionEffectuee
-                        Halt()
+				*/]]                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
 
+                        end
                     end
-                end
 
+                    
                 
-            
-            else
-            --[[// On cherche une position d'observation
-]]            end
+                else
+                --[[// On cherche une position d'observation
+]]                end
+            end
 
 --[[// On tient 5 ennemis supplementaires
 ]]    end,
@@ -95,26 +99,30 @@ node "BEH_Mission_Pion_Milice_PrendreEtTenir"
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eReconnaitre
         self.eAction = self.eAction or eActionEnCours
-        switch_1 = self.ePhase
-            if switch_1 == eReconnaitre then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            F_Pion_SetrTenir( myself, 5 )
-                            self.ePhase = eSurveiller
-                                                        return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eReconnaitre then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                F_Pion_SetrTenir( myself, 5 )
+                                self.ePhase = eSurveiller
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_Milice_PrendreEtTenir, 1, setmetatable( { self.mission.pointAPrendre_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eSurveiller then
-                
-                        end
+                    Activate( self.activations.BEH_Dep_Pion_Milice_PrendreEtTenir, 1, setmetatable( { self.mission.pointAPrendre_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eSurveiller then
+                    
+                                cases_switch_1[2] = true
+                end
+            end
 
     end,
 
@@ -171,21 +179,26 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
         end
 --[[// S'il ya du monde, intimider ...				
 ]]
-        switch_1 = self.ePhase
-            if switch_1 == eReconnaitre then
-                if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
-                    do
-                        Activate( self.activations.ACT_Info_Trace, 1, { "Arrive sur position d'observation", } )
-                        self.ePhase = eSurveiller
-                    end
-                end
-
-                
-            elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptObjectif, } )
-            
-            else
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eReconnaitre then
+                    if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
+                        do
+                            Activate( self.activations.ACT_Info_Trace, 1, { "Arrive sur position d'observation", } )
+                            self.ePhase = eSurveiller
                         end
+                    end
+
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptObjectif, } )
+                                cases_switch_1[2] = true
+end
+                if not cases_switch_1[1] then
+                                end
+            end
 
     end,
 

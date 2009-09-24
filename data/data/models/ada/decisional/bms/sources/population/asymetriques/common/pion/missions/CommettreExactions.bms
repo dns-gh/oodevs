@@ -51,35 +51,41 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreExa
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone: debut **", } )
-                self.ePhaseMission = eAborderObjectif
-                
-            --[[// Rejoindre la zone
-]]elseif switch_1 == eAborderObjectif then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
-                if( not DEC_Geometrie_EstPointDansLocalisation( DEC_Agent_Position(), self._namedParams.mission.zone_ ) ) then
-                    Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, { self.objectif, } )
-                else
-                    self.ePhaseMission = eNettoyer
-                end
+                    Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone: debut **", } )
+                    self.ePhaseMission = eAborderObjectif
+                    
+                --[[// Rejoindre la zone
+]]                cases_switch_1[1] = true
+elseif switch_1 == eAborderObjectif then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
+                    if( not DEC_Geometrie_EstPointDansLocalisation( DEC_Agent_Position(), self._namedParams.mission.zone_ ) ) then
+                        Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, { self.objectif, } )
+                    else
+                        self.ePhaseMission = eNettoyer
+                    end
 
-                
-            --[[// Commettre les exactions
-]]elseif switch_1 == eNettoyer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
-                --[[//choisir une population et la rejoindre, en même temps agresser toute population ennemie à portée
+                    
+                --[[// Commettre les exactions
+]]                cases_switch_1[2] = true
+elseif switch_1 == eNettoyer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
+                    --[[//choisir une population et la rejoindre, en même temps agresser toute population ennemie à portée
 ]]Activate( self.activations.BEH_Eni_Pion_ASY_CommettreExactionDans, 1, { self._namedParams.mission.zone_, } )
-                
-            --[[// Fin --> sur ordre
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                Halt()
+                    
+                --[[// Fin --> sur ordre
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                                        Halt()
 
-                        end
+                                end
+            end
 
     end,
 

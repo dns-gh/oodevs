@@ -47,24 +47,29 @@ includedFiles["sources/emergency/pions/common/missions/DisperseDemonstration.bms
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eRejoindre then
-                
-            elseif switch_1 == eDeployer then
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                    do
-                        DEC_FinMission()
-                                                self.params.__returnValue = eActionEffectuee
-                        Halt()
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindre then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eDeployer then
+                    
+                                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
 
-                    end
-                end
-
-                
                         end
+                    end
+
+                    
+                                end
+            end
 
     end,
 

@@ -97,39 +97,43 @@ node "BEH_Conduite_Automate_INF_Relever"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eRejoindre then
-                if( self.eActionReleve == eActionEffectuee ) then
-                    do
-                        self.eActionReleve = eActionEnCours
-                        Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { DEC_Automate_PionsSansPC(), } )
-                        self.ePhase = eRelever
-                                                return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindre then
+                    if( self.eActionReleve == eActionEffectuee ) then
+                        do
+                            self.eActionReleve = eActionEnCours
+                            Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { DEC_Automate_PionsSansPC(), } )
+                            self.ePhase = eRelever
+                                                        return
 
-                    end
-                end
-
-                Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, {} )
-                Activate( self.activations.BEH_Situation_Automate_INF_Relever, 1, { self.rN_PE, self.mission.compagnie_, } )
-                Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, setmetatable( { self.rN_PE, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eRelever then
-                if( self.eActionReleve == eActionEffectuee ) then
-                    do
-                        self.eActionReleve = eActionEnCours
-                        self.ePhase = eFinMission
-                                                return
-
-                    end
-                end
-
-                Activate( self.activations.BEH_Conduite_Automate_INF_Relever_AssignerReleve, 1, setmetatable( { self.mission.compagnie_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.BEH_Conduite_Automate_INF_Relever_ApresReleve, 1, {} )--[[// Freiner ? 
-]]
-                
                         end
+                    end
+
+                    Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, {} )
+                    Activate( self.activations.BEH_Situation_Automate_INF_Relever, 1, { self.rN_PE, self.mission.compagnie_, } )
+                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, setmetatable( { self.rN_PE, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eRelever then
+                    if( self.eActionReleve == eActionEffectuee ) then
+                        do
+                            self.eActionReleve = eActionEnCours
+                            self.ePhase = eFinMission
+                                                        return
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_AssignerReleve, 1, setmetatable( { self.mission.compagnie_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_ApresReleve, 1, {} )--[[// Freiner ? 
+]]
+                    
+                                cases_switch_1[3] = true
+                end
+            end
 
     end,
 

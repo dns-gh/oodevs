@@ -40,23 +40,28 @@ node "ACT_Transport_Pion_INF_Debarquer"
             end
         end
 
-        switch_1 = self.eEtat_EmbDeb
-            if switch_1 == eActionEmbDeb_EnCours then
-                
-            elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
-            or switch_1 == eActionEmbDeb_PasDeTransporteurs then
-                DEC_Trace( "Debarquement : ignore transporteur" )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+         do
+            local switch_1 = self.eEtat_EmbDeb
+            local cases_switch_1 = {}
+                if switch_1 == eActionEmbDeb_EnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
+                or switch_1 == eActionEmbDeb_PasDeTransporteurs then
+                    DEC_Trace( "Debarquement : ignore transporteur" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            elseif switch_1 == eActionEmbDeb_Termine then
-                DEC_Trace( "Debarquement : fin" )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                                end
+                if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
+                    DEC_Trace( "Debarquement : fin" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                        end
+                                end
+            end
 
         if( self.bReprise ) then
             do
@@ -126,60 +131,69 @@ node "ACT_Transport_Pion_INF_Debarquer"
             end
         end
 
-        switch_1 = self.eTir
-            if switch_1 == eActionTirDirect_EnemyDestroyed then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
+         do
+            local switch_1 = self.eTir
+            local cases_switch_1 = {}
+                if switch_1 == eActionTirDirect_EnemyDestroyed then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                                end
+                if cases_switch_1[1] or switch_1 == eActionTirDirect_Impossible then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTirDirect_Finished then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                    --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
+]]                    self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                                end
+                if cases_switch_1[3] or switch_1 == eActionTirDirect_NoAmmo then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[4] or switch_1 == eActionTirDirect_NoCapacity then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[5] or switch_1 == eActionTirDirect_Running then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
+                    do
+                    end
+
+                    
+                                cases_switch_1[6] = true
                 end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_Impossible then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_Finished then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
-]]                self.params.__returnValue = eActionEffectuee
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_NoAmmo then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_NoCapacity then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_Running then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                do
-                end
-
-                
-                        end
+            end
 
                 self.params.__returnValue = eActionEnCours
         return
@@ -247,60 +261,69 @@ node "ACT_Transport_Pion_INF_Debarquer"
             end
         end
 
-        switch_1 = self.eTir
-            if switch_1 == eActionTirDirect_EnemyDestroyed then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
+         do
+            local switch_1 = self.eTir
+            local cases_switch_1 = {}
+                if switch_1 == eActionTirDirect_EnemyDestroyed then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                                end
+                if cases_switch_1[1] or switch_1 == eActionTirDirect_Impossible then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTirDirect_Finished then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                    --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
+]]                    self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                                end
+                if cases_switch_1[3] or switch_1 == eActionTirDirect_NoAmmo then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[4] or switch_1 == eActionTirDirect_NoCapacity then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[5] or switch_1 == eActionTirDirect_Running then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
+                    do
+                    end
+
+                    
+                                cases_switch_1[6] = true
                 end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_Impossible then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_Finished then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
-]]                self.params.__returnValue = eActionEffectuee
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_NoAmmo then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_NoCapacity then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_Running then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                do
-                end
-
-                
-                        end
+            end
 
                 self.params.__returnValue = eActionEnCours
         return
@@ -440,35 +463,41 @@ node "ACT_Pion_VAB_ControleZone"
             end
         end
 
-        switch_1 = self.eEtatObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_Trace( "fin realisation" )
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_FinTravaux )
-                    else
-                        DEC_Message( eRC_FinTravaux )
-                    end
+         do
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "fin realisation" )
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
 
-                end
+                    end
 --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
 ]]
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionObjetManqueDotation then
-            elseif switch_1 == eActionObjetImpossible then
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    
+                elseif switch_1 == eActionObjetManqueDotation then
+                                cases_switch_1[3] = true
+                end
+                if cases_switch_1[3] or switch_1 == eActionObjetImpossible then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            --[[// Pas de delais de reorganisation du chantier
-]]            end
+                    
+                --[[// Pas de delais de reorganisation du chantier
+]]                end
+            end
 
         if( self.bSuspendu ) then
             do
@@ -550,43 +579,49 @@ node "ACT_Pion_VAB_ControleZone"
             end
         end
 
-        switch_1 = self.eEtatObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_Trace( "realisation objet : fin realisation" )
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_FinTravaux )
-                    else
-                        DEC_Message( eRC_FinTravaux )
+         do
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "realisation objet : fin realisation" )
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
                     end
 
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                    
+                elseif switch_1 == eActionObjetPasDeCapacite then
+                    DEC_Trace( "realisation objet : pas de capacites" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                    --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
+]]                    self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                    
+                elseif switch_1 == eActionObjetManqueDotation then
+                    DEC_Trace( "realisation objet : manque dotation" )
+                                cases_switch_1[4] = true
                 end
+                if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
-
-                
-            elseif switch_1 == eActionObjetPasDeCapacite then
-                DEC_Trace( "realisation objet : pas de capacites" )
-                self.actionID = DEC_StopAction( self.actionID )
-                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
-]]                self.params.__returnValue = eActionImpossible
-                Halt()
-
-                
-            elseif switch_1 == eActionObjetManqueDotation then
-                DEC_Trace( "realisation objet : manque dotation" )
-            elseif switch_1 == eActionObjetImpossible then
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-                
-            --[[// Pas de delais de reorganisation du chantier
-]]            end
+                    
+                --[[// Pas de delais de reorganisation du chantier
+]]                end
+            end
 
         if( self.bSuspendu ) then
             do
@@ -666,35 +701,41 @@ node "ACT_Pion_VAB_ControleZone"
             end
         end
 
-        switch_1 = self.eEtatObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_Trace( "preparation : fin" )
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_FinTravaux )
-                    else
-                        DEC_Message( eRC_FinTravaux )
+         do
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "preparation : fin" )
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
                     end
 
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                    
+                elseif switch_1 == eActionObjetManqueDotation then
+                    DEC_Trace( "preparation : manque dotations." )
+                                cases_switch_1[3] = true
                 end
+                if cases_switch_1[3] or switch_1 == eActionObjetImpossible then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
-
-                
-            elseif switch_1 == eActionObjetManqueDotation then
-                DEC_Trace( "preparation : manque dotations." )
-            elseif switch_1 == eActionObjetImpossible then
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-                
-            --[[// Pas de delais de reorganisation du chantier
-]]            end
+                    
+                --[[// Pas de delais de reorganisation du chantier
+]]                end
+            end
 
         if( self.bSuspendu ) then
             do
@@ -767,34 +808,38 @@ node "ACT_Pion_VAB_ControleZone"
             end
         end
 
-        switch_1 = self.eEtatObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_Trace( "valorisation : fin" )
-                do
-                    if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        DEC_RC( eRC_FinTravaux )
-                    else
-                        DEC_Message( eRC_FinTravaux )
+         do
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "valorisation : fin" )
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
                     end
 
-                end
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    
+                elseif switch_1 == eActionObjetImpossible
+                or switch_1 == eActionObjetManqueDotation then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            elseif switch_1 == eActionObjetImpossible
-            or switch_1 == eActionObjetManqueDotation then
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-                
-            --[[// Pas de delais de reorganisation du chantier
-]]            end
+                    
+                --[[// Pas de delais de reorganisation du chantier
+]]                end
+            end
 
         if( self.bSuspendu ) then
             do
@@ -904,25 +949,29 @@ do
             end
         end
 
-        switch_1 = self.eEtatObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_Trace( "destruction : fin" )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+         do
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "destruction : fin" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionObjetImpossible
-            or switch_1 == eActionObjetManqueDotation then
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    
+                elseif switch_1 == eActionObjetImpossible
+                or switch_1 == eActionObjetManqueDotation then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            --[[// Pas de delais de reorganisation du chantier
-]]            end
+                    
+                --[[// Pas de delais de reorganisation du chantier
+]]                end
+            end
 
         if( self.bSuspendu ) then
             do

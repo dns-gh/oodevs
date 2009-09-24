@@ -404,17 +404,22 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
 --[[// Tout le monde tir lorsque l'on est a distance de tir	
 ]]        end
 
-        switch_1 = self._namedParams.eFormationTir
-            if switch_1 == eFormationTir_Debarque then
-                Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Debarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFormationTir_Embarque then
-                Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Embarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
-                
-            
-            else
-                Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
-                        end
+         do
+            local switch_1 = self._namedParams.eFormationTir
+            local cases_switch_1 = {}
+                if switch_1 == eFormationTir_Debarque then
+                    Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Debarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eFormationTir_Embarque then
+                    Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Embarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
+                    
+                                cases_switch_1[2] = true
+
+                else
+                    Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
+                                end
+            end
 
     end,
 

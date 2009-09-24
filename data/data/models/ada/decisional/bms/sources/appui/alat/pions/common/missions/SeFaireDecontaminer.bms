@@ -52,66 +52,70 @@ includedFiles["sources/appui/alat/pions/common/missions/SeFaireDecontaminer.bms"
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
-                self.ePhaseMission = eSeFaireDecontaminer
-                
-            elseif switch_1 == eSeFaireDecontaminer then
-                if( not DEC_Agent_EstContamine() ) then
-                    do
-                        self.ePhaseMission = eFinDecontamination
-                                                return
-
-                    end
---[[// Rejoindre le site
-]]--[[// -----------------
-]]                end
-
-                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionSite ) > 100 ) then
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), { self.positionSite, eProgressionDefaut, eTypeItiInfiltration, } )
-                end
-
-                --[[// Demander à se faire decontminer (se mettre en liste d'attente)
-]]--[[// -------------------------------------------------------------
-]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
-                
-            elseif switch_1 == eFinDecontamination then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                    self.ePhaseMission = eSeFaireDecontaminer
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eSeFaireDecontaminer then
+                    if( not DEC_Agent_EstContamine() ) then
+                        do
+                            self.ePhaseMission = eFinDecontamination
                                                         return
 
                         end
+--[[// Rejoindre le site
+]]--[[// -----------------
+]]                    end
 
+                    if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionSite ) > 100 ) then
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), { self.positionSite, eProgressionDefaut, eTypeItiInfiltration, } )
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointArrivee_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            DIA_Clear( myself.plotsRavitaillement_ )
-                            F_Pion_SetobjectifEsquive( myself, nil )
-                            DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+                    --[[// Demander à se faire decontminer (se mettre en liste d'attente)
+]]--[[// -------------------------------------------------------------
+]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
+                    
+                elseif switch_1 == eFinDecontamination then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointArrivee_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
+
                         end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                                end
+            end
 
     end,
 

@@ -34,7 +34,7 @@ include "bit.lua"
         self.listePointsAvant = self.listePointsAvant or DEC_Geometrie_CreerListePoints()
         self.pionPC = self.pionPC or DEC_Automate_PionPC()
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
-        self.listeSectionRolandCarol = self.listeSectionRolandCarol or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, ShortRangeSurfaceToAirDefenseTroop )
+        self.listeSectionRolandCarol = self.listeSectionRolandCarol or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "ShortRangeSurfaceToAirDefenseTroop" )
         self.listePC = self.listePC or {}
         if( ( self.listePointsPourPC == 0 or self.listePointsPourPC == nil ) or ( ( DEC_ListePoints_Size( self.listePointsPourPC ) == 0 or DEC_ListePoints_Size( self.listePointsPourPC ) == nil ) ) ) then
             self.ePhase = eMRT_MissionImpossible
@@ -66,47 +66,51 @@ do
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMRT_AssignerMissions then
-                if( self.eEtatMissionsDefendreItineraire == eActionImpossible ) then
-                    do
-                        self.ePhase = eMRT_MissionImpossible
-                                                return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    if( self.eEtatMissionsDefendreItineraire == eActionImpossible ) then
+                        do
+                            self.ePhase = eMRT_MissionImpossible
+                                                        return
 
-                    end
-                end
-
-                if( self.eEtatMissionsDefendreItineraire == eActionEffectuee ) then
-                    do
-                        self.ePhase = eMRT_Valider
-                                                return
-
-                    end
---[[//controle des creations de missions
-]]                end
-
-                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeSectionRolandCarol ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsDefendreItineraire = v else rawset( t, k, v ) end end } ) )
-                --[[//Defendre itineraire à partir de position calculées
-]]if( not DIA_IsListEmpty( self.listeSectionRolandCarol ) ) then
-                    Activate( self.activations.BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe, 1, { ePhase_MRT, self.listeSectionRolandCarol, self.listePoints, } )
-                end
-
-                --[[//Le pc va toujours stationner au milieu de l'itineraire
-]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_MRT, self.listePC, DEC_ListePoints_GetAt( self.listePointsPourPC, 0 ), } )
-                
-            elseif switch_1 == eMRT_MissionImpossible then
-                DEC_RC( eRC_MissionImpossible )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eMRT_Valider then
-                DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
-
-            
-            else
                         end
+                    end
+
+                    if( self.eEtatMissionsDefendreItineraire == eActionEffectuee ) then
+                        do
+                            self.ePhase = eMRT_Valider
+                                                        return
+
+                        end
+--[[//controle des creations de missions
+]]                    end
+
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeSectionRolandCarol ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsDefendreItineraire = v else rawset( t, k, v ) end end } ) )
+                    --[[//Defendre itineraire à partir de position calculées
+]]if( not DIA_IsListEmpty( self.listeSectionRolandCarol ) ) then
+                        Activate( self.activations.BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe, 1, { ePhase_MRT, self.listeSectionRolandCarol, self.listePoints, } )
+                    end
+
+                    --[[//Le pc va toujours stationner au milieu de l'itineraire
+]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_MRT, self.listePC, DEC_ListePoints_GetAt( self.listePointsPourPC, 0 ), } )
+                    
+                elseif switch_1 == eMRT_MissionImpossible then
+                    DEC_RC( eRC_MissionImpossible )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[2] or switch_1 == eMRT_Valider then
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                end
+                if not cases_switch_1[1] then
+                                end
+            end
 
     end,
 

@@ -68,41 +68,47 @@ includedFiles["sources/melee/abc/pions/common/missions/RenseignerSur.bms"] = tru
             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Gathering combat intelligence mission begining", } )
-                self.ePhaseMission = eRejoindre
-                
-            --[[// Progresser
-]]elseif switch_1 == eRejoindre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[// Simulation d'un point d'observation à 500 m
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Gathering combat intelligence mission begining", } )
+                    self.ePhaseMission = eRejoindre
+                    
+                --[[// Progresser
+]]                cases_switch_1[1] = true
+elseif switch_1 == eRejoindre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[// Simulation d'un point d'observation à 500 m
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.pointARenseigner_ ) < M_MODELE_PION_ABC_DISTANCE_POSITION_OBSERVATION() ) then
-                    do
-                        self.ePhaseMission = eSurveiller
-                                                return
+                        do
+                            self.ePhaseMission = eSurveiller
+                                                        return
 
-                    end
---[[// Progression vers position d'observation.
-]]                end
-
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointARenseigner_, eProgressionReco, eTypeItiReconnaissance, } )
-                
-            --[[// Renseigner sur le point
-]]elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                Activate( self.activations.BEH_Obs_Pion_ABC_RenseignerSurPoint, 1, { self._namedParams.mission.pointARenseigner_, } )
-                
-            --[[// Fin de la mission --> SUR ORDRE
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
                         end
+--[[// Progression vers position d'observation.
+]]                    end
+
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointARenseigner_, eProgressionReco, eTypeItiReconnaissance, } )
+                    
+                --[[// Renseigner sur le point
+]]elseif switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    Activate( self.activations.BEH_Obs_Pion_ABC_RenseignerSurPoint, 1, { self._namedParams.mission.pointARenseigner_, } )
+                    
+                --[[// Fin de la mission --> SUR ORDRE
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

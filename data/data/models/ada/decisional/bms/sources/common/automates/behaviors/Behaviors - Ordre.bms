@@ -81,40 +81,46 @@ node "BEH_Ordre_Automate_RecevoirOrdreInopine"
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_Interrompre" then
-                        DEC_Trace( "$ --- ORDRE Interruption mission ---$" )
-                        Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, {} )
-                                                self.params.__returnValue = eActionHalt
-                        return
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_Interrompre" then
+                            DEC_Trace( "$ --- ORDRE Interruption mission ---$" )
+                            Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, {} )
+                                                        self.params.__returnValue = eActionHalt
+                            return
 
-                        
-                    elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
-                        DEC_Trace( "$ --- ORDRE Attendre ---$" )
-                        g_bOrdreAnibas = true
-                        StartActivate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
-                        
-                    elseif switch_1 == "Rep_OrderConduite_Deboucher"
-                    or switch_1 == "Rep_OrderConduite_Poursuivre" then
-                        DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
-                        g_bOrdreAnibas = false
-                        StopActivate( self.activations.BEH_Ordre_Automate_Attendre_, {} )
-                        Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
+                            
+                        elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                            DEC_Trace( "$ --- ORDRE Attendre ---$" )
+                            g_bOrdreAnibas = true
+                            StartActivate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                            
+                                                cases_switch_1[2] = true
+elseif switch_1 == "Rep_OrderConduite_Deboucher"
+                        or switch_1 == "Rep_OrderConduite_Poursuivre" then
+                            DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
+                            g_bOrdreAnibas = false
+                            StopActivate( self.activations.BEH_Ordre_Automate_Attendre_, {} )
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
 ]]
-                        
-                    elseif switch_1 == "Rep_OrderConduite_ChangerAmbiance" then
-                        DEC_Trace( "======= Ordre --> Changer ambiance =====" )
-                        --[[// Cast
+                            
+                                                cases_switch_1[3] = true
+elseif switch_1 == "Rep_OrderConduite_ChangerAmbiance" then
+                            DEC_Trace( "======= Ordre --> Changer ambiance =====" )
+                            --[[// Cast
 ]]local ordreAmbiance = repOrdre
-                        if( ordreAmbiance:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete ) then
-                            Activate( self.activations.BEH_Ordre_Automate_AmbianceSurete_, 1, {} )
-                        else
-                            Activate( self.activations.BEH_Ordre_Automate_AmbianceVitesse_, 1, {} )--[[//eAmbianceMission_Vitesse
+                            if( ordreAmbiance:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete ) then
+                                Activate( self.activations.BEH_Ordre_Automate_AmbianceSurete_, 1, {} )
+                            else
+                                Activate( self.activations.BEH_Ordre_Automate_AmbianceVitesse_, 1, {} )--[[//eAmbianceMission_Vitesse
 ]]
-                        end
+                            end
 
-                        
-                                        end
+                            
+                                                cases_switch_1[4] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end

@@ -65,92 +65,97 @@ include "bit.lua"
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eSeMettreEnPlace then
-                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// On va se mettre en position en restant sur nos garde
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSeMettreEnPlace then
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// On va se mettre en position en restant sur nos garde
 ]]
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eAborderObjectif
-                                                        self.params.__returnValue = self.ePhase
-                            return
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eAborderObjectif
+                                                                self.params.__returnValue = self.ePhase
+                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointRegroupement_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eAborderObjectif then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eInstallerDispositif
+                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointRegroupement_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eAborderObjectif then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eInstallerDispositif
+                            end
+
                         end
-
-                    end
-                else
+                    else
 do
-                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                return
-
-                    end
-                end
-
-            elseif switch_1 == eInstallerDispositif then
-                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointRegroupement_, false, } )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eSurveiller
-                                                        self.params.__returnValue = self.ePhase
-                            return
+                            Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                        return
 
                         end
-
                     end
+
+                                end
+                if cases_switch_1[2] or switch_1 == eInstallerDispositif then
+                    Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                    --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+]]StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointRegroupement_, false, } )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eSurveiller
+                                                                self.params.__returnValue = self.ePhase
+                                return
+
+                            end
+
+                        end
 --[[// Temps de mise en place du dispositif
-]]                end
+]]                    end
 
-                Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                self.params.__returnValue = self.ePhase
-                return
+                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                        self.params.__returnValue = self.ePhase
+                    return
 
-            elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// Posture discret
+                                end
+                if cases_switch_1[3] or switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// Posture discret
 ]]
-                if( self.eActionDeplacement == eActionEffectuee ) then
-                    do
-                        self.eActionDeplacement = eActionEnCours
-                                                self.params.__returnValue = eFinMission
-                        Halt()
+                    if( self.eActionDeplacement == eActionEffectuee ) then
+                        do
+                            self.eActionDeplacement = eActionEnCours
+                                                        self.params.__returnValue = eFinMission
+                            Halt()
 
-                    end
+                        end
 --[[// Se replier a chaque fois sur une position differente
 ]]--[[// Lorsque DetruireParCoupDeMain ne fait plus rien, progresser
 ]]--[[// prend le pas
-]]                end
+]]                    end
 
-                if( self.eActionDeplacement ~= eActionImpossible ) then
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1.5, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDeplacement = v else rawset( t, k, v ) end end } ) )
-                end
+                    if( self.eActionDeplacement ~= eActionImpossible ) then
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1.5, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDeplacement = v else rawset( t, k, v ) end end } ) )
+                    end
 
-                Activate( self.activations.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, 2, { self.mission.pointObjectif_, self.mission.natureDestruction_, self.mission.heureDestruction_, } )
+                    Activate( self.activations.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, 2, { self.mission.pointObjectif_, self.mission.natureDestruction_, self.mission.heureDestruction_, } )
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
                 self.params.__returnValue = self.ePhase
         return
@@ -334,16 +339,22 @@ node "BEH_Pion_INF_Detruire_CoupDeMain"
     end,
 
     activate = function( self )
-        switch_1 = self._namedParams.eNatureObjectif
-            if switch_1 == eNatureObjectif_ElementTerrain then
-                Activate( self.activations.BEH_Obj_Pion_INF_Detruire_ElementsTerrain, 2, { self._namedParams.zone, } )
-                
-            elseif switch_1 == eNatureObjectif_Objets then
-                Activate( self.activations.BEH_Obj_Pion_INF_Detruire_Objets, 2, { self._namedParams.zone, } )
-                
-            elseif switch_1 == eNatureObjectif_ElementMobile then
-                
-                        end
+         do
+            local switch_1 = self._namedParams.eNatureObjectif
+            local cases_switch_1 = {}
+                if switch_1 == eNatureObjectif_ElementTerrain then
+                    Activate( self.activations.BEH_Obj_Pion_INF_Detruire_ElementsTerrain, 2, { self._namedParams.zone, } )
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eNatureObjectif_Objets then
+                    Activate( self.activations.BEH_Obj_Pion_INF_Detruire_Objets, 2, { self._namedParams.zone, } )
+                    
+                                cases_switch_1[2] = true
+elseif switch_1 == eNatureObjectif_ElementMobile then
+                    
+                                cases_switch_1[3] = true
+                end
+            end
 
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
         Activate( self.activations.BEH_Eni_Pion_VAB_Offensif_Manoeuvre, 1, {} )
@@ -450,24 +461,27 @@ node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
         self.ePhase = self.ePhase or eRejoindrePointChantier
         self.eAction = self.eAction or eActionEnCours
         self.ptObj = self.ptObj or S_Geometrie_BarycentreZone( self._namedParams.zoneObj )
-        switch_1 = self.ePhase
-            if switch_1 == eRejoindrePointChantier then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindrePointChantier then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObj, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// ============================================================================
-]]            end
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObj, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// ============================================================================
+]]                end
+            end
 --[[// BEH_Obj_Pion_VAB_DetruireObjet
 ]]
     end,

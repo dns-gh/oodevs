@@ -42,31 +42,35 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
 ]]--[[// -----------------------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eEtatTransport
-            if switch_1 == eActionTransport_Running then
-                do
-                end
+         do
+            local switch_1 = self.eEtatTransport
+            local cases_switch_1 = {}
+                if switch_1 == eActionTransport_Running then
+                    do
+                    end
 
-                
-            elseif switch_1 == eActionTransport_Finished then
-                do
-                end
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionTransport_Finished then
+                    do
+                    end
 
-                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionTransport_Impossible then
-                do
-                end
+                    
+                elseif switch_1 == eActionTransport_Impossible then
+                    do
+                    end
 
-                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-                        end
+                    
+                                end
+            end
 
     end,
 
@@ -120,31 +124,35 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
 ]]--[[// -----------------------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eEtatTransport
-            if switch_1 == eActionTransport_Running then
-                do
-                end
+         do
+            local switch_1 = self.eEtatTransport
+            local cases_switch_1 = {}
+                if switch_1 == eActionTransport_Running then
+                    do
+                    end
 
-                
-            elseif switch_1 == eActionTransport_Finished then
-                do
-                end
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionTransport_Finished then
+                    do
+                    end
 
-                self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionTransport_Impossible then
-                do
-                end
+                    
+                elseif switch_1 == eActionTransport_Impossible then
+                    do
+                    end
 
-                self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-                        end
+                    
+                                end
+            end
 
     end,
 

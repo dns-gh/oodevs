@@ -77,30 +77,35 @@ includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eActionObjet
-            if switch_1 == eActionObjetEnCours then
-                
-            elseif switch_1 == eActionObjetTerminee then
-                DEC_RC( eRC_FinTravaux )
-                                self.params.__returnValue = eActionEffectuee
-                return
+         do
+            local switch_1 = self.eActionObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_RC( eRC_FinTravaux )
+                                        self.params.__returnValue = eActionEffectuee
+                    return
 
-                
-            elseif switch_1 == eActionObjetManqueDotation then
-                self.bDummy = self.bDummy or true
-                                return
+                    
+                elseif switch_1 == eActionObjetManqueDotation then
+                    self.bDummy = self.bDummy or true
+                                        return
 
-                
-            elseif switch_1 == eActionObjetPasDeCapacite then
-                                self.params.__returnValue = eActionImpossible
-                return
+                    
+                elseif switch_1 == eActionObjetPasDeCapacite then
+                                        self.params.__returnValue = eActionImpossible
+                    return
 
-            elseif switch_1 == eActionObjetImpossible then
-                                self.params.__returnValue = eActionImpossible
-                return
+                                end
+                if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
+                                        self.params.__returnValue = eActionImpossible
+                    return
 
-                
-                        end
+                    
+                                end
+            end
 
         if( self.bSuspendu ) then
             do

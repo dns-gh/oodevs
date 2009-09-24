@@ -151,14 +151,18 @@ function S_Cherche_GE_Filtre_TypeAutomate_Melee( sPions )
     local _continue = true
 do
             local pion = x
-            switch_1 = pion:GetType()
-                if switch_1 == "Escadron_AMX"
-                or switch_1 == "Escadron_XL"
-                or switch_1 == "CompagnieInfanterie_HOT"
-                or switch_1 == "CompagnieInfanterie" then
-                    DIA_PushBack( sFiltre, pion )
-                    
-                                end
+             do
+                local switch_1 = pion:GetType()
+                local cases_switch_1 = {}
+                    if switch_1 == "Escadron_AMX"
+                    or switch_1 == "Escadron_XL"
+                    or switch_1 == "CompagnieInfanterie_HOT"
+                    or switch_1 == "CompagnieInfanterie" then
+                        DIA_PushBack( sFiltre, pion )
+                        
+                                        cases_switch_1[1] = true
+                    end
+                end
 
         end
 
@@ -251,12 +255,16 @@ function S_Cherche_GE_Filtre_TypeAutomate_Appui( sPions )
     local _continue = true
 do
             local pion = x
-            switch_1 = pion:GetType()
-                if switch_1 == "BatterieASS"
-                or switch_1 == "CompagnieGenie"
-                or switch_1 == "CompagnieLogTC2"
-                or switch_1 == "CompagnieLog" then
-                    DIA_PushBack( sFiltre, pion )
+             do
+                local switch_1 = pion:GetType()
+                local cases_switch_1 = {}
+                    if switch_1 == "BatterieASS"
+                    or switch_1 == "CompagnieGenie"
+                    or switch_1 == "CompagnieLogTC2"
+                    or switch_1 == "CompagnieLog" then
+                        DIA_PushBack( sFiltre, pion )
+                    cases_switch_1[1] = true
+                    end
                 end
 
         end

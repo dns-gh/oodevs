@@ -100,59 +100,65 @@ node "BEH_Mission_Pion_ABC_RASIT_SurveillerSecteur"
             Halt()
         end
 
-        switch_1 = --[[//=========================================================================
+         do
+            local switch_1 = --[[//=========================================================================
 ]]--[[// SQUELETTE DE LA MISSION
 ]]--[[//
 ]]--[[// strength = 1
 ]]--[[//
 ]]--[[//=========================================================================
 ]]self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[//---------------------------------------------------------------------
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[//---------------------------------------------------------------------
 ]]--[[// 1) Preparation de la mission.
 ]]--[[//---------------------------------------------------------------------
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Radar detection mission begining", } )
-                self.ePhaseMission = eProgresser
-                
-            --[[//---------------------------------------------------------------------
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Radar detection mission begining", } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// 2) Progression tactique
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eSurveiller
-                                                        return
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eSurveiller
+                                                                return
+
+                            end
 
                         end
-
-                    end
 --[[// force de 1.
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.position_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[//---------------------------------------------------------------------
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.position_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// 4) Puis on observe la zone souhaitée.
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, {} )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Fin mission
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

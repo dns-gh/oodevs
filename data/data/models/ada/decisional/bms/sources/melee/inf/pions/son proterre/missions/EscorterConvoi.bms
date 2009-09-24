@@ -45,43 +45,46 @@ node "MIS_Pion_INF_EscorterUnite"
 
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_TIR_PH_MISSION_MANOEUVRE(), } )
-        switch_1 = self.ePhase
-            if switch_1 == eSeMettreEnPlace then
-                --[[// eDefendre
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSeMettreEnPlace then
+                    --[[// eDefendre
 ]]if( self.eCurrentPhase == eFinMission ) then
-                    do
-                        self.ePhase = eFinMission
-                                                return
+                        do
+                            self.ePhase = eFinMission
+                                                        return
 
+                        end
                     end
-                end
 
-                Activate( self.activations.BEH_Mission_Pion_VAB_EscorterUnConvoi, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFinMission then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.BEH_Mission_Pion_VAB_EscorterUnConvoi, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eFinMission then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                --[[//-----------------------------------------------------------------------------
 ]]--[[// On rend compte de la mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]DEC_Trace( "Mission 'Escorter un convoi' : fin" )
-                            DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
     end,
 
@@ -117,55 +120,60 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
 
         Activate( self.activations.ACT_Misc_Pion_Melee_Escorter, 1, { self.pionConvoi, } )
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                --[[// Aller au plus vite			
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Aller au plus vite			
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DebutMission, } )
-            --[[// Progression tactique
-]]elseif switch_1 == eRejoindre then
-                if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
-                    Activate( self.activations.ACT_Dep_ModulationVitesse, 2, { 1, } )
+                --[[// Progression tactique
+]]                cases_switch_1[1] = true
                 end
-
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
-                --[[// Escvorter l'unite à bonne distance
-]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.pionConvoi:DEC_Agent_Position(), 200 ) ) then
-                    do
-                        self.ePhase = eEscorter
-                                                return
-
+                if cases_switch_1[1] or switch_1 == eRejoindre then
+                    if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
+                        Activate( self.activations.ACT_Dep_ModulationVitesse, 2, { 1, } )
                     end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
+                    --[[// Escvorter l'unite à bonne distance
+]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.pionConvoi:DEC_Agent_Position(), 200 ) ) then
+                        do
+                            self.ePhase = eEscorter
+                                                        return
+
+                        end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Rejoindre unite
 ]]--[[//-----------------------------------------------------------------------------      
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Dep_Suivre, 1, { self.pionConvoi, 50, } )
-                
-            elseif switch_1 == eEscorter then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "** Escorte de l'unité **", } )
-                --[[// Objectif de l'unité escorté                
+                    Activate( self.activations.BEH_Dep_Suivre, 1, { self.pionConvoi, 50, } )
+                    
+                elseif switch_1 == eEscorter then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "** Escorte de l'unité **", } )
+                    --[[// Objectif de l'unité escorté                
 ]]if( ( F_Pion_GetitMvt( self.pionConvoi ) == 0 or F_Pion_GetitMvt( self.pionConvoi ) == nil ) ) then
-                    do
-                        Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escorter doit avoir un objectif **** ", } )
-                                                return
+                        do
+                            Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escorter doit avoir un objectif **** ", } )
+                                                        return
 
-                    end
-                end
-
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                self.params.__returnValue = eFinMission
-                        Halt()
-
-                    end
-                end
-
-                Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { F_Pion_GetitMvt( self.pionConvoi ), eProgressionReco, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
                         end
+                    end
+
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        self.params.__returnValue = eFinMission
+                            Halt()
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { F_Pion_GetitMvt( self.pionConvoi ), eProgressionReco, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                                end
+            end
 
     end,
 

@@ -129,12 +129,16 @@ do
             local pion = x
             if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second and F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_None ) then
                 do
-                    switch_1 = pion:GetType()
-                        if switch_1 == "Peloton_AMX"
-                        or switch_1 == "Peloton_XL" then
-                                                    DIA_PushFront( listePionDeSoutien, pion )
-                            
-                                                end
+                     do
+                        local switch_1 = pion:GetType()
+                        local cases_switch_1 = {}
+                            if switch_1 == "Peloton_AMX"
+                            or switch_1 == "Peloton_XL" then
+                                                            DIA_PushFront( listePionDeSoutien, pion )
+                                
+                                                        cases_switch_1[1] = true
+                            end
+                        end
 
                 end
             end

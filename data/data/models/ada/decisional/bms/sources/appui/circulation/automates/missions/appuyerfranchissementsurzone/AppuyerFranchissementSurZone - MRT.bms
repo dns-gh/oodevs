@@ -22,7 +22,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
     end,
 
     activate = function( self )
-        local selPions = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), PatrouilleCirculation )
+        local selPions = S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), "PatrouilleCirculation" )
         self.ePhase = self.ePhase or eMRT_AssignerMissions
         self.eEtatMissionAppuyer = self.eEtatMissionAppuyer or eActionEnCours
         self.listobj = self.listobj or DEC_Connaissances_ObjetsDansZone( self._namedParams.mission.zone_, S_TypeObject_ToString( eTypeObjectSiteFranchissement ) )
@@ -66,64 +66,67 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
 ]]--[[// =============================================================================
 ]]        end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMRT_AssignerMissions then
-                --[[//---------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
 ]]--[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
 ]]if( self.eEtatMissionAppuyer == eActionImpossible ) then
-                    do
-                        self.ePhase = eMRT_MissionImpossible
-                                                return
+                        do
+                            self.ePhase = eMRT_MissionImpossible
+                                                        return
 
+                        end
                     end
-                end
 
-                if( self.eEtatMissionAppuyer == eActionEffectuee ) then
-                    do
-                        self.ePhase = eMRT_Valider
-                                                return
+                    if( self.eEtatMissionAppuyer == eActionEffectuee ) then
+                        do
+                            self.ePhase = eMRT_Valider
+                                                        return
 
-                    end
+                        end
 --[[//liste des pions qui ne sont pas dans la liste "listePionsPourMission"
-]]                end
+]]                    end
 
-                local listePourRenforcement = S_Cherche_Automate_Filtre_PionNonDansListe( selPions, self.listePionsPourMission )
-                --[[// controle de creation des missions de construction de zone à mobilité améliorée
+                    local listePourRenforcement = S_Cherche_Automate_Filtre_PionNonDansListe( selPions, self.listePionsPourMission )
+                    --[[// controle de creation des missions de construction de zone à mobilité améliorée
 ]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePionsPourMission ) + #( listePourRenforcement ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionAppuyer = v else rawset( t, k, v ) end end } ) )
-                --[[// ordre de creation des missions
+                    --[[// ordre de creation des missions
 ]]if( ( #( self.listePionsPourMission ) ~= 0 and #( self.listePionsPourMission ) ~= nil ) ) then
-                    Activate( self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe, 1, { ePhase_MRT, self.listePionsPourMission, self.listobj, } )
-                end
+                        Activate( self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe, 1, { ePhase_MRT, self.listePionsPourMission, self.listobj, } )
+                    end
 
-                --[[// ordre de création des missions de renforcement
+                    --[[// ordre de création des missions de renforcement
 ]]if( ( #( listePourRenforcement ) ~= 0 and #( listePourRenforcement ) ~= nil ) ) then
-                    Activate( self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe, 1, { ePhase_MRT, listePourRenforcement, self.pion, } )
-                end
+                        Activate( self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe, 1, { ePhase_MRT, listePourRenforcement, self.pion, } )
+                    end
 
-                
-            --[[//-----------------------------------------------------------------------------
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_MissionImpossible then
-                DEC_RC( eRC_MissionImpossible )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    DEC_RC( eRC_MissionImpossible )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                
-            --[[//---------------------------------------------------------------------
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_Valider then
-                DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
     end,
 

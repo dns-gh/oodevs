@@ -58,66 +58,72 @@ includedFiles["sources/appui/nbc/pions/common/missions/ArmerPlotDecontamination.
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparer mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparer mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Arming decontamination site mission begining", } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// 2) Rejoindre la position
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionSiteDecontamination_ ) < 300 ) then
-                    self.ePhaseMission = eAnimer
-                end
-
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionSiteDecontamination_, eProgressionBond, eTypeItiMouvement, } )
-                
-            --[[// 3) Qd prêt Barrer la direction dangereuse
-]]elseif switch_1 == eAnimer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                self.siteDecontamination = S_Nbc_ObtenirSiteSur( self._namedParams.mission.positionSiteDecontamination_ )
-                if( ( self.siteDecontamination == 0 or self.siteDecontamination == nil ) ) then
-                    do
-                        Activate( self.activations.ACT_Pion_Nbc_CreerSiteSur, 1, { self._namedParams.mission.positionSiteDecontamination_, } )
-                                                return
-
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Arming decontamination site mission begining", } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// 2) Rejoindre la position
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionSiteDecontamination_ ) < 300 ) then
+                        self.ePhaseMission = eAnimer
                     end
+
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionSiteDecontamination_, eProgressionBond, eTypeItiMouvement, } )
+                    
+                --[[// 3) Qd prêt Barrer la direction dangereuse
+]]                cases_switch_1[2] = true
+elseif switch_1 == eAnimer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    self.siteDecontamination = S_Nbc_ObtenirSiteSur( self._namedParams.mission.positionSiteDecontamination_ )
+                    if( ( self.siteDecontamination == 0 or self.siteDecontamination == nil ) ) then
+                        do
+                            Activate( self.activations.ACT_Pion_Nbc_CreerSiteSur, 1, { self._namedParams.mission.positionSiteDecontamination_, } )
+                                                        return
+
+                        end
 --[[//---------------------------------------------------------------------
 ]]--[[// Tester la saturation du site
 ]]--[[//---------------------------------------------------------------------
-]]                end
+]]                    end
 
-                if( not DEC_ConnaissanceObjet_PeutEtreAnime( self.siteDecontamination ) ) then
-                    do
-                        Activate( self.activations.ACT_Warning, 1, { eRC_SiteSature, } )
-                        Activate( self.activations.ACT_Info_Trace, 1, { "Site overloaded...", } )
-                                                return
+                    if( not DEC_ConnaissanceObjet_PeutEtreAnime( self.siteDecontamination ) ) then
+                        do
+                            Activate( self.activations.ACT_Warning, 1, { eRC_SiteSature, } )
+                            Activate( self.activations.ACT_Info_Trace, 1, { "Site overloaded...", } )
+                                                        return
 
-                    end
+                        end
 --[[//---------------------------------------------------------------------
 ]]--[[// Rejoindre le site
 ]]--[[//---------------------------------------------------------------------
-]]                end
+]]                    end
 
-                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionSiteDecontamination_ ) > 300 ) then
-                    self.ePhaseMission = eProgresser
-                end
+                    if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionSiteDecontamination_ ) > 300 ) then
+                        self.ePhaseMission = eProgresser
+                    end
 
-                --[[//---------------------------------------------------------------------
+                    --[[//---------------------------------------------------------------------
 ]]--[[// Animer le site
 ]]--[[//---------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Pion_NBC_AnimerSite, 1, { self.siteDecontamination, } )
-                
-            --[[// 4) Fin de la mission de reconnaissance SUR ORDRE
+                    
+                --[[// 4) Fin de la mission de reconnaissance SUR ORDRE
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

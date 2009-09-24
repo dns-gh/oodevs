@@ -79,73 +79,79 @@ includedFiles["sources/melee/abc/pions/common/missions/Appuyer.bms"] = true
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_Info_Trace, 1, { "Spontaneous support mission begining", } )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// 3) Progression vers position amie --> au plus vite
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[// passer en appui à une certaine distance de l'ami
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// 3) Progression vers position amie --> au plus vite
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[// passer en appui à une certaine distance de l'ami
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.uniteAAppuyer_:DEC_Agent_Position() ) < M_MODELE_PION_ABC_DISTANCE_PASSAGE_APPUI() ) then
-                    do
-                        DEC_Trace( "L'unite passe en appui" )
-                        self.ePhaseMission = ePasserEnAppui
-                                                return
-
-                    end
-                end
-
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
+                        do
+                            DEC_Trace( "L'unite passe en appui" )
                             self.ePhaseMission = ePasserEnAppui
                                                         return
 
                         end
-
                     end
+
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = ePasserEnAppui
+                                                                return
+
+                            end
+
+                        end
 --[[// au plus vite
-]]                end
+]]                    end
 
-                Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
-                --[[// force de 1.
+                    Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
+                    --[[// force de 1.
 ]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionAmie, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Passer en appui
+                    
+                --[[// Passer en appui
 ]]elseif switch_1 == ePasserEnAppui then
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eSePoster
-                                                        return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eSePoster
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour, 1, setmetatable( { self._namedParams.mission.uniteAAppuyer_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// On se poste sur la position d'appui
+                    Activate( self.activations.BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour, 1, setmetatable( { self._namedParams.mission.uniteAAppuyer_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// On se poste sur la position d'appui
 ]]elseif switch_1 == eSePoster then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, {} )
-                
-            --[[// 4) Fin de la mission de reconnaissance
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, {} )
+                    
+                --[[// 4) Fin de la mission de reconnaissance
+]]                cases_switch_1[4] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[5] = true
+
+                else
+                                end
+            end
 
     end,
 

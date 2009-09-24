@@ -133,33 +133,37 @@ node "BEH_Obj_Pion_VAB_InstallerCheckPoint"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eInstallerDispositif then
-                --[[// Cree un poste de controle				
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eInstallerDispositif then
+                    --[[// Cree un poste de controle				
 ]]if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.ksPosteControle = S_Obj_ObtenirObjetProcheDe( self.locPtCheckPoint, eTypeObjectPosteControle, 500 )
-                        self.ePhase = eAnimer
-                                                return
+                        do
+                            self.ksPosteControle = S_Obj_ObtenirObjetProcheDe( self.locPtCheckPoint, eTypeObjectPosteControle, 500 )
+                            self.ePhase = eAnimer
+                                                        return
 
-                    end
+                        end
 --[[// Si on arrive a retrouver la connaissance de l'objet construit, 
 ]]--[[// on active le poste
-]]                end
+]]                    end
 
-                Activate( self.activations.ACT_Obj_Pion_INF_RealiserObjet, 1, setmetatable( { eTypeObjectPosteControle, self.locPtCheckPoint, 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eAnimer then
-                if( DEC_ConnaissanceObjet_EstValide( self.ksPosteControle ) ) then
-                    --[[// ============================================================================
+                    Activate( self.activations.ACT_Obj_Pion_INF_RealiserObjet, 1, setmetatable( { eTypeObjectPosteControle, self.locPtCheckPoint, 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eAnimer then
+                    if( DEC_ConnaissanceObjet_EstValide( self.ksPosteControle ) ) then
+                        --[[// ============================================================================
 ]]Activate( self.activations.ACT_Obj_Pion_AnimerSite, 1, { self.ksPosteControle, } )
-                end
+                    end
 
-                --[[// BEH_Obj_Pion_VAB_NettoyerObstacle
+                    --[[// BEH_Obj_Pion_VAB_NettoyerObstacle
 ]]
-            --[[//
+                --[[//
 ]]--[[// Nettoie un obstacle construit proche de la position actuelle
-]]            end
+]]                cases_switch_1[2] = true
+                end
+            end
 --[[// ============================================================================
 ]]
     end,

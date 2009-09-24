@@ -105,60 +105,63 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMRT_SelectionnerPions then
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_SelectionnerPions then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------						
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
-]]self.selPions_ASS_RATAC = S_Cherche_Automate_Filtre_TypePion( self.selPions, GroupeASS_RATAC )
-                if( ( #( self.selPions_ASS_RATAC ) == 0 or #( self.selPions_ASS_RATAC ) == nil ) ) then
-                    do
-                        DEC_Trace( "First echelon is empty" )
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
+]]self.selPions_ASS_RATAC = S_Cherche_Automate_Filtre_TypePion( self.selPions, "GroupeASS_RATAC" )
+                    if( ( #( self.selPions_ASS_RATAC ) == 0 or #( self.selPions_ASS_RATAC ) == nil ) ) then
+                        do
+                            DEC_Trace( "First echelon is empty" )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
 
+                        end
                     end
-                end
 
-                self.ePhase = eMRT_AssignerMissions
-                
-            elseif switch_1 == eMRT_AssignerMissions then
-                --[[//-----------------------------------------------------------------------------
+                    self.ePhase = eMRT_AssignerMissions
+                    
+                elseif switch_1 == eMRT_AssignerMissions then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner les missions au pions subordonnéss
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// On verifie juste que la batterie peut effectuer la mission
 ]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
 ]]if( self.eValidationMRT == eActionImpossible ) then
-                    do
-                                                do
-                            DEC_Trace( "eValidationMRT == eActionImpossible" )
-                        end
+                        do
+                                                        do
+                                DEC_Trace( "eValidationMRT == eActionImpossible" )
+                            end
 
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
-                    end
-                end
-
-                if( self.eValidationMRT == eActionEffectuee ) then
-                    do
-                        self.eValidationMRT = eActionEnCours
-                                                do
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selPions_ASS_RATAC ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.BEH_Medo_Automate_ASS_AcquerirObjectifs, 1, setmetatable( { self.selPions_ASS_RATAC, self.mission.zonesAObserver_, self.mission.positionsDeploiement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                --[[// Assigne la mission au pc
-]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_RATAC, } )
-                
+                    if( self.eValidationMRT == eActionEffectuee ) then
+                        do
+                            self.eValidationMRT = eActionEnCours
+                                                        do
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
+
                         end
+                    end
+
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selPions_ASS_RATAC ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ASS_AcquerirObjectifs, 1, setmetatable( { self.selPions_ASS_RATAC, self.mission.zonesAObserver_, self.mission.positionsDeploiement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                    --[[// Assigne la mission au pc
+]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_RATAC, } )
+                    
+                                end
+            end
 
     end,
 

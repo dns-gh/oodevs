@@ -73,59 +73,64 @@ includedFiles["sources/melee/abc/pions/common/missions/ArmerPointControle.bms"] 
             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Arming check point mission begining", } )
-                self.ePhaseMission = eAnimer
-                
-            elseif switch_1 == eAnimer then
-                self.posteControle = S_Objet_Pion_ABC_ObtenirSiteSur( self._namedParams.mission.pointDeControle_ )
-                if( ( self.posteControle == 0 or self.posteControle == nil ) ) then
-                    do
-                        Activate( self.activations.ACT_Pion_ABC_CreerSiteSur, 1, { self._namedParams.mission.pointDeControle_, } )
-                                                return
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Arming check point mission begining", } )
+                    self.ePhaseMission = eAnimer
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eAnimer then
+                    self.posteControle = S_Objet_Pion_ABC_ObtenirSiteSur( self._namedParams.mission.pointDeControle_ )
+                    if( ( self.posteControle == 0 or self.posteControle == nil ) ) then
+                        do
+                            Activate( self.activations.ACT_Pion_ABC_CreerSiteSur, 1, { self._namedParams.mission.pointDeControle_, } )
+                                                        return
 
-                    end
+                        end
 --[[//---------------------------------------------------------------------
 ]]--[[// Tester la saturation du site
 ]]--[[//---------------------------------------------------------------------
-]]                end
+]]                    end
 
-                if( not DEC_ConnaissanceObjet_PeutEtreAnime( self.posteControle ) ) then
-                    do
-                        Activate( self.activations.ACT_Info_Trace, 1, { "Check point overloaded", } )
-                                                return
+                    if( not DEC_ConnaissanceObjet_PeutEtreAnime( self.posteControle ) ) then
+                        do
+                            Activate( self.activations.ACT_Info_Trace, 1, { "Check point overloaded", } )
+                                                        return
 
-                    end
+                        end
 --[[//---------------------------------------------------------------------
 ]]--[[// Rejoindre le site
 ]]--[[//---------------------------------------------------------------------
-]]                end
+]]                    end
 
-                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.pointDeControle_ ) > 300 ) then
-                    do
-                        Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self._namedParams.mission.pointDeControle_, eProgressionDefaut, eTypeItiMouvement, } )
-                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.pointDeControle_ ) > 300 ) then
+                        do
+                            Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self._namedParams.mission.pointDeControle_, eProgressionDefaut, eTypeItiMouvement, } )
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                        end
+                    else
+                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
                     end
-                else
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
-                end
 
-                --[[//---------------------------------------------------------------------
+                    --[[//---------------------------------------------------------------------
 ]]--[[// Animer le site
 ]]--[[//---------------------------------------------------------------------
 ]]Activate( self.activations.ACT_Pion_ABC_AnimerSite, 1, { self.posteControle, } )
-                
-            --[[// 4) Fin de la mission de reconnaissance SUR ORDRE
+                    
+                --[[// 4) Fin de la mission de reconnaissance SUR ORDRE
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
 
     end,
 

@@ -70,18 +70,23 @@ node "ACT_Mission_Automate_INF_AssignerAppuyerA"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Appuyer" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Appuyer" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Appuyer" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Appuyer" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -152,18 +157,23 @@ node "ACT_Mission_Automate_INF_AssignerAppuyerA"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_SurveillerSecteur" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_SurveillerSecteur" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_SurveillerSecteur" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_SurveillerSecteur" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -193,33 +203,37 @@ node "ACT_Mission_Automate_INF_AssignerAppuyerA"
             end
         end
 
-        switch_1 = self.ePhaseMRT
-            if switch_1 == eMRT_AssignerMissions then
-                DEC_Copie_Point_Mission( self.ptZone, self.missionPion, "positionInstallation_" )
-                F_Pion_SeteEtatEchelon( self._namedParams.pPion, eEtatEchelon_Premier )
-                self.ePhaseMRT = eMRT_RetablirFuseau
-                
-            elseif switch_1 == eMRT_RetablirFuseau then
-                if( self.eActionFuseau == eActionEffectuee ) then
-                    do
-                        self.eActionFuseau = eActionEnCours
-                        self.ePhaseMRT = eMRT_Valider
-                                                return
-
-                    end
-                end
-
-                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eMRT_Valider then
-                if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
-                end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
+         do
+            local switch_1 = self.ePhaseMRT
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    DEC_Copie_Point_Mission( self.ptZone, self.missionPion, "positionInstallation_" )
+                    F_Pion_SeteEtatEchelon( self._namedParams.pPion, eEtatEchelon_Premier )
+                    self.ePhaseMRT = eMRT_RetablirFuseau
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_RetablirFuseau then
+                    if( self.eActionFuseau == eActionEffectuee ) then
+                        do
+                            self.eActionFuseau = eActionEnCours
+                            self.ePhaseMRT = eMRT_Valider
+                                                        return
 
                         end
+                    end
+
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eMRT_Valider then
+                    if( self._namedParams.ePhase == ePhase_CDT ) then
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    return
+
+                                end
+            end
 
     end,
 
@@ -254,18 +268,23 @@ node "ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_SurveillerSecteur" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_SurveillerSecteur" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_SurveillerSecteur" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_SurveillerSecteur" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -284,32 +303,36 @@ node "ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition"
             end
         end
 
-        switch_1 = self.ePhaseMRT
-            if switch_1 == eMRT_AssignerMissions then
-                DEC_Copie_Point_Mission( self._namedParams.ptZone, self.missionPion, "positionInstallation_" )
-                self.ePhaseMRT = eMRT_RetablirFuseau
-                
-            elseif switch_1 == eMRT_RetablirFuseau then
-                if( self.eActionFuseau == eActionEffectuee ) then
-                    do
-                        self.eActionFuseau = eActionEnCours
-                        self.ePhaseMRT = eMRT_Valider
-                                                return
-
-                    end
-                end
-
-                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eMRT_Valider then
-                if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
-                end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
+         do
+            local switch_1 = self.ePhaseMRT
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    DEC_Copie_Point_Mission( self._namedParams.ptZone, self.missionPion, "positionInstallation_" )
+                    self.ePhaseMRT = eMRT_RetablirFuseau
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_RetablirFuseau then
+                    if( self.eActionFuseau == eActionEffectuee ) then
+                        do
+                            self.eActionFuseau = eActionEnCours
+                            self.ePhaseMRT = eMRT_Valider
+                                                        return
 
                         end
+                    end
+
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eMRT_Valider then
+                    if( self._namedParams.ePhase == ePhase_CDT ) then
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    return
+
+                                end
+            end
 
     end,
 
@@ -336,18 +359,23 @@ node "ACT_Mission_Automate_INF_AssignerA_Controler"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ControlerSecteur" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ControlerSecteur" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ControlerSecteur" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ControlerSecteur" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -413,18 +441,23 @@ node "ACT_Mission_Automate_INF_AssignerA_Controler"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Harceler" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Harceler" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Harceler" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Harceler" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -498,18 +531,23 @@ node "ACT_Mission_Automate_INF_AssignerA_Controler"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Semparer" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Semparer" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Semparer" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Semparer" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -570,18 +608,23 @@ node "ACT_Mission_Automate_INF_AssignerA_Controler"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ReconnaitreAxe" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ReconnaitreAxe" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ReconnaitreAxe" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ReconnaitreAxe" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -651,18 +694,23 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ReconnaitreAxe" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ReconnaitreAxe" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ReconnaitreAxe" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_ReconnaitreAxe" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -724,18 +772,23 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Reduire" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Reduire" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Reduire" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Reduire" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -793,18 +846,23 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_PrendrePreciserContact" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_PrendrePreciserContact" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_PrendrePreciserContact" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_PrendrePreciserContact" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -862,18 +920,23 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Fixer" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Fixer" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Fixer" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Fixer" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -934,18 +997,23 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Interdire" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Interdire" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Interdire" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Interdire" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -1015,18 +1083,23 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Defendre" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Defendre" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Defendre" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Defendre" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -1097,18 +1170,23 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Freiner" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Freiner" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Freiner" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Freiner" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -1186,18 +1264,23 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Couvrir" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Couvrir" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Couvrir" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Couvrir" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -1297,18 +1380,23 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Barrer" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Barrer" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Barrer" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_INF_Barrer" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -1328,69 +1416,72 @@ node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
             end
         end
 
-        switch_1 = self.ePhaseMRT
-            if switch_1 == eMRT_AssignerMissions then
-                --[[//DEC_Debug( "assert halt failed : " +  "ACT_Mission_Automate_INF_AssignerA_Barrer : ptBarrer != 0"  );
+         do
+            local switch_1 = self.ePhaseMRT
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    --[[//DEC_Debug( "assert halt failed : " +  "ACT_Mission_Automate_INF_AssignerA_Barrer : ptBarrer != 0"  );
 ]]if( not ( ( self._namedParams.ptBarrer ~= 0 and self._namedParams.ptBarrer ~= nil ) ) ) then
-                    do
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
+                        do
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
 
-                    end
+                        end
 --[[// if ( !(  missionPion.positionABarrer_ != 0 ) )	{		halt( eActionImpossible );	}//DEC_Debug( "assert halt failed : " +  "ACT_Mission_Automate_INF_AssignerA_Barrer : missionPion.positionABarrer_ != 0"  );
 ]]--[[// Dans le cas ou une section HOT a ete rajoute en renforcement,
 ]]--[[// on la recule de 1000m (au risque qu'elle ne voit rien ...)
-]]                end
+]]                    end
 
-                if( self._namedParams.pPion:GetType() == "SectionInfanterie_HOT" and myself:GetType() ~= "CompagnieInfanterie_HOT" ) then
-                    do
-                        local mission = DEC_GetMission( myself )
-                        local ptBarrer_HOT = S_Geometrie_PtInvDirDangereuse( self._namedParams.ptBarrer, DEC_GetDirectionEnnemi( mission ), 1000 )
-                        DEC_Copie_Point_Mission( ptBarrer_HOT, self.missionPion, "positionABarrer_" )
+                    if( self._namedParams.pPion:GetType() == "SectionInfanterie_HOT" and myself:GetType() ~= "CompagnieInfanterie_HOT" ) then
+                        do
+                            local mission = DEC_GetMission( myself )
+                            local ptBarrer_HOT = S_Geometrie_PtInvDirDangereuse( self._namedParams.ptBarrer, DEC_GetDirectionEnnemi( mission ), 1000 )
+                            DEC_Copie_Point_Mission( ptBarrer_HOT, self.missionPion, "positionABarrer_" )
+                        end
+                    else
+                        DEC_Copie_Point_Mission( self._namedParams.ptBarrer, self.missionPion, "positionABarrer_" )
                     end
-                else
-                    DEC_Copie_Point_Mission( self._namedParams.ptBarrer, self.missionPion, "positionABarrer_" )
-                end
 
-                --[[// DEC_Copie_Point( ptRgrpt, missionPion.pointRegroupement_ );
+                    --[[// DEC_Copie_Point( ptRgrpt, missionPion.pointRegroupement_ );
 ]]if( self._namedParams.bRetablirFuseau ) then
-                    self.ePhaseMRT = eMRT_RetablirFuseau
-                else
-                    self.ePhaseMRT = eMRT_Valider
-                end
-
-                
-            elseif switch_1 == eMRT_RetablirFuseau then
-                if( self.eActionFuseau == eActionEffectuee ) then
-                    do
-                        self.eActionFuseau = eActionEnCours
+                        self.ePhaseMRT = eMRT_RetablirFuseau
+                    else
                         self.ePhaseMRT = eMRT_Valider
-                                                return
-
                     end
-                end
 
-                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eMRT_Valider then
-                self.ePhaseMRT = eMRT_Effectuee
-                --[[//-----------------------------------------------------------------------------
+                    
+                elseif switch_1 == eMRT_RetablirFuseau then
+                    if( self.eActionFuseau == eActionEffectuee ) then
+                        do
+                            self.eActionFuseau = eActionEnCours
+                            self.ePhaseMRT = eMRT_Valider
+                                                        return
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eMRT_Valider then
+                    self.ePhaseMRT = eMRT_Effectuee
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Envoie la mission si l'on se trouve dans la conduite
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
-                end
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
 
-                                self.params.__returnValue = eActionEffectuee
-                return
+                                        self.params.__returnValue = eActionEffectuee
+                    return
 
-                --[[//-----------------------------------------------------------------------------
+                    --[[//-----------------------------------------------------------------------------
 ]]
-            elseif switch_1 == eMRT_Effectuee then
-                                self.params.__returnValue = eActionEffectuee
-                return
+                elseif switch_1 == eMRT_Effectuee then
+                                        self.params.__returnValue = eActionEffectuee
+                    return
 
-                        end
+                                end
+            end
 
     end,
 
@@ -1420,18 +1511,23 @@ node "ACT_Mission_Automate_INF_AssignerEscorterA"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_EscorterUnite" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_EscorterUnite" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_EscorterUnite" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_EscorterUnite" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -1496,18 +1592,23 @@ node "ACT_Mission_Automate_INF_AssignerEscorterA"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_EscorterUnites" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_EscorterUnites" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_EscorterUnites" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_EscorterUnites" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end
@@ -1572,18 +1673,23 @@ node "ACT_Mission_Automate_INF_AssignerEscorterA"
 ]]
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.ePhase
-                    if switch_1 == ePhase_MRT then
-                                            local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionSoutien, "T_Mission_Pion_INF_Soutenir" )
-                        self.missionPion = misMRT
-                        
-                    elseif switch_1 == ePhase_CDT then
-                                            local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionSoutien, "T_Mission_Pion_INF_Soutenir" )
-                        self.missionPion = misCDT
-                        
-                    
-                    else
-                        assert( false, "parametre invalide : ePhase" )
+                 do
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionSoutien, "T_Mission_Pion_INF_Soutenir" )
+                            self.missionPion = misMRT
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionSoutien, "T_Mission_Pion_INF_Soutenir" )
+                            self.missionPion = misCDT
+                            
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
                     end
 
             end

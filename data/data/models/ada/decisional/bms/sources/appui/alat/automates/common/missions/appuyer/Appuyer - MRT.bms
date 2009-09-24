@@ -16,8 +16,8 @@ includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - MR
     activate = function( self )
         --[[// variables presistantes
 ]]self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
-        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, AntitankHelicopterPatrol )
-        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, EscortAndCloseSupportHelicopterPatrol )
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, "AntitankHelicopterPatrol" )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
         self.listePeutAppuyerOuDetruire = self.listePeutAppuyerOuDetruire or S_Liste_Concatene( self.listeHAP, self.listeHAC )
         if( ModuleBegins() ) then
             do

@@ -64,15 +64,20 @@ node "MIS_Pion_INF_SurveillerSecteur"
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_Pion_ExecuterTir" then
-                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
-                        
-                    elseif switch_1 == "Rep_OrderConduite_Decrocher" then
-                        self.ePhase = eSeReplier
-                        self.eAction = eActionEnCours
-                        
-                                        end
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_Pion_ExecuterTir" then
+                            Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "Rep_OrderConduite_Decrocher" then
+                            self.ePhase = eSeReplier
+                            self.eAction = eActionEnCours
+                            
+                                                cases_switch_1[2] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end
@@ -91,77 +96,81 @@ do
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eSurveiller then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eFinMission
-                                                        return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSurveiller then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                if( self.eActionEnnemi == eActionEffectuee ) then
-                    do
-                        self.eActionEnnemi = eActionEnCours
-                                                do
-                            self.ePhase = eSeReplier
-                                                        return
+                    if( self.eActionEnnemi == eActionEffectuee ) then
+                        do
+                            self.eActionEnnemi = eActionEnCours
+                                                        do
+                                self.ePhase = eSeReplier
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionEnnemi = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_Mission" ), {} )
-                
-            --[[// Rejoins une position de replis
+                    Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionEnnemi = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_Mission" ), {} )
+                    
+                --[[// Rejoins une position de replis
 ]]elseif switch_1 == eSeReplier then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eFinMission
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                            end
+
                         end
-
-                    end
-                else
+                    else
 do
-                        Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                return
+                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                        return
 
+                        end
                     end
-                end
 
-            elseif switch_1 == eFinMission then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            DEC_Trace( "fin de mission" )
-                            --[[//-----------------------------------------------------------------------------
+                                end
+                if cases_switch_1[2] or switch_1 == eFinMission then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                DEC_Trace( "fin de mission" )
+                                --[[//-----------------------------------------------------------------------------
 ]]--[[// On rend compte de la mission
 ]]--[[//-----------------------------------------------------------------------------												
 ]]DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
     end,
 

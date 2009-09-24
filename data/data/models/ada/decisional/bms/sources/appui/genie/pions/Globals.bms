@@ -96,34 +96,39 @@ end
     local selMLF = S_Filtre_ChercheTypePion( selPions, GroupeMLF )
     local selEFA = S_Filtre_ChercheTypePion( selPions, GroupeEFA )
     local selPFM = S_Filtre_ChercheTypePion( selPions, SectionPFM )
-    switch_1 = type
-        if switch_1 == eFranchissement_Continu then
-            if( fTailleSite <= ( M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PAA() * #( selPAA ) ) ) then
+     do
+        local switch_1 = type
+        local cases_switch_1 = {}
+            if switch_1 == eFranchissement_Continu then
+                if( fTailleSite <= ( M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PAA() * #( selPAA ) ) ) then
+                    _returnValue = true
+                end
+
+                if( fTailleSite <= ( M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_MLF() * #( selMLF ) ) ) then
+                    _returnValue = true
+                end
+
+                if( fTailleSite <= ( M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_EFA() * #( selEFA ) ) ) then
+                    _returnValue = true
+                end
+
+                if( fTailleSite <= ( M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PFM() * #( selPFM ) ) ) then
+                    _returnValue = true
+                end
+
+                
+                        cases_switch_1[1] = true
+elseif switch_1 == eFranchissement_Discontinu then
+                if( ( #( selMLF ) + #( selEFA ) + #( selPFM ) == 0 or #( selMLF ) + #( selEFA ) + #( selPFM ) == nil ) ) then
+                    _returnValue = false
+                end
+
+                
+                        cases_switch_1[2] = true
+
+            else
                 _returnValue = true
             end
-
-            if( fTailleSite <= ( M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_MLF() * #( selMLF ) ) ) then
-                _returnValue = true
-            end
-
-            if( fTailleSite <= ( M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_EFA() * #( selEFA ) ) ) then
-                _returnValue = true
-            end
-
-            if( fTailleSite <= ( M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PFM() * #( selPFM ) ) ) then
-                _returnValue = true
-            end
-
-            
-        elseif switch_1 == eFranchissement_Discontinu then
-            if( ( #( selMLF ) + #( selEFA ) + #( selPFM ) == 0 or #( selMLF ) + #( selEFA ) + #( selPFM ) == nil ) ) then
-                _returnValue = false
-            end
-
-            
-        
-        else
-            _returnValue = true
         end
 
     if( not _returnValue ) then

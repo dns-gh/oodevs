@@ -97,36 +97,43 @@ node "BEH_Mission_Pion_ABC_RASIT_RenseignerSur"
             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission.
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission.
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Radar detection mission begining", } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// 2) Progression tactique
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[// Surveiller si à distance
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Radar detection mission begining", } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// 2) Progression tactique
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[// Surveiller si à distance
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pointARenseigner ) < 15000 ) then
-                    self.ePhaseMission = eSurveiller
-                end
+                        self.ePhaseMission = eSurveiller
+                    end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.pointARenseigner, eProgressionReco, eTypeItiMouvement, } )
-                
-            --[[// Surveiller 
-]]elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                Activate( self.activations.BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe, 1, { self._namedParams.mission.zone_, } )
-                
-            --[[// Fin de la mission --> SUR ORDRE
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.pointARenseigner, eProgressionReco, eTypeItiMouvement, } )
+                    
+                --[[// Surveiller 
+]]                cases_switch_1[2] = true
+elseif switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    Activate( self.activations.BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe, 1, { self._namedParams.mission.zone_, } )
+                    
+                --[[// Fin de la mission --> SUR ORDRE
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

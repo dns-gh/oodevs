@@ -55,47 +55,52 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreAxe.bms"] = tr
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Prepa
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Prepa
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Route reconnaissance mission begining", } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// 2) Progression tactique
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                --[[//---------------------------------------------------------------------
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Route reconnaissance mission begining", } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// 2) Progression tactique
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                    --[[//---------------------------------------------------------------------
 ]]--[[// Faire des mesures
 ]]--[[//---------------------------------------------------------------------
 ]]--[[// Poste pour mesure donc en comptète avec deplacement
 ]]Activate( self.activations.BEH_Nbc_Pion_FaireDesMesures, 1.1, {} )
-                --[[//---------------------------------------------------------------------
+                    --[[//---------------------------------------------------------------------
 ]]--[[// Deplacement
 ]]--[[//---------------------------------------------------------------------
 ]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
-                                                        return
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
-                    end
 --[[// force de 1.
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// 4) Fin de la mission de reconnaissance
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// 4) Fin de la mission de reconnaissance
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
 
     end,
 

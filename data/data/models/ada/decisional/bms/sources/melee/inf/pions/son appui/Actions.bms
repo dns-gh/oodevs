@@ -41,23 +41,28 @@ includedFiles["sources/melee/inf/pions/son appui/Actions.bms"] = true
             end
         end
 
-        switch_1 = self.eEtat_EmbDeb
-            if switch_1 == eActionEmbDeb_EnCours then
-                
-            elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
-            or switch_1 == eActionEmbDeb_PasDeTransporteurs then
-                DEC_Trace( "Debarquement : ignore transporteur" )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+         do
+            local switch_1 = self.eEtat_EmbDeb
+            local cases_switch_1 = {}
+                if switch_1 == eActionEmbDeb_EnCours then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
+                or switch_1 == eActionEmbDeb_PasDeTransporteurs then
+                    DEC_Trace( "Debarquement : ignore transporteur" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            elseif switch_1 == eActionEmbDeb_Termine then
-                DEC_Trace( "Debarquement : fin" )
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                                end
+                if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
+                    DEC_Trace( "Debarquement : fin" )
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                        end
+                                end
+            end
 
         if( self.bReprise ) then
             do
@@ -128,60 +133,69 @@ includedFiles["sources/melee/inf/pions/son appui/Actions.bms"] = true
             end
         end
 
-        switch_1 = self.eTir
-            if switch_1 == eActionTirDirect_EnemyDestroyed then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
+         do
+            local switch_1 = self.eTir
+            local cases_switch_1 = {}
+                if switch_1 == eActionTirDirect_EnemyDestroyed then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
 
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            elseif switch_1 == eActionTirDirect_Impossible then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
+                                end
+                if cases_switch_1[1] or switch_1 == eActionTirDirect_Impossible then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
 
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-            elseif switch_1 == eActionTirDirect_Finished then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTirDirect_Finished then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
 
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            elseif switch_1 == eActionTirDirect_NoAmmo then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
+                                end
+                if cases_switch_1[3] or switch_1 == eActionTirDirect_NoAmmo then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
 --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
 ]]
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-            elseif switch_1 == eActionTirDirect_NoCapacity then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
+                                end
+                if cases_switch_1[4] or switch_1 == eActionTirDirect_NoCapacity then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[5] or switch_1 == eActionTirDirect_Running then
+                    do
+                    end
+
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
+                    
+                                cases_switch_1[6] = true
                 end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_Running then
-                do
-                end
-
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                
-                        end
+            end
 
                 self.params.__returnValue = eActionEnCours
         return
@@ -249,60 +263,69 @@ includedFiles["sources/melee/inf/pions/son appui/Actions.bms"] = true
             end
         end
 
-        switch_1 = self.eTir
-            if switch_1 == eActionTirDirect_EnemyDestroyed then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
+         do
+            local switch_1 = self.eTir
+            local cases_switch_1 = {}
+                if switch_1 == eActionTirDirect_EnemyDestroyed then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
 
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            elseif switch_1 == eActionTirDirect_Impossible then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
+                                end
+                if cases_switch_1[1] or switch_1 == eActionTirDirect_Impossible then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
 
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-            elseif switch_1 == eActionTirDirect_Finished then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTirDirect_Finished then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
 
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            elseif switch_1 == eActionTirDirect_NoAmmo then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
-                end
+                                end
+                if cases_switch_1[3] or switch_1 == eActionTirDirect_NoAmmo then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
 --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
 ]]
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-            elseif switch_1 == eActionTirDirect_NoCapacity then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                do
+                                end
+                if cases_switch_1[4] or switch_1 == eActionTirDirect_NoCapacity then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                    do
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[5] or switch_1 == eActionTirDirect_Running then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
+                    do
+                    end
+
+                    
+                                cases_switch_1[6] = true
                 end
-
-                self.actionID = DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eActionTirDirect_Running then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                do
-                end
-
-                
-                        end
+            end
 
                 self.params.__returnValue = eActionEnCours
         return

@@ -70,185 +70,202 @@ node "BEH_Medo_Automate_INF_PreparerMission_Retrograde"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMRT_SelectionnerPions then
-                self.ePhase = eMRT_AffecterFuseaux
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_SelectionnerPions then
+                    self.ePhase = eMRT_AffecterFuseaux
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------								
 ]]DEC_Trace( "Selection des composantes pion : Infanterie" )
-                --[[// Selection les types de composantes
-]]local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie )
-                local sUnites_HOT = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie_HOT )
-                local sUnites_MILAN = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie_MILAN )
-                local sUnites_ABC = S_Cherche_Automate_Filtre_TypePion_ABC( self.selPions )
-                self.selPions_INF_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, GroupeInfanterie_Mortier )
-                --[[// Dans les missions retrograde, tout les pions ABC sont en appuis
+                    --[[// Selection les types de composantes
+]]local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie" )
+                    local sUnites_HOT = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie_HOT" )
+                    local sUnites_MILAN = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie_MILAN" )
+                    local sUnites_ABC = S_Cherche_Automate_Filtre_TypePion_ABC( self.selPions )
+                    self.selPions_INF_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, "GroupeInfanterie_Mortier" )
+                    --[[// Dans les missions retrograde, tout les pions ABC sont en appuis
 ]]S_Automate_ValideEchelonPion( sUnites_ABC, self.lstPionsAttaque, 0, self.lstPionsAppui )
-                --[[// Determine les echelons	
+                    --[[// Determine les echelons	
 ]]local rN_PE_AC = 0
-                local rN_PE = 0
-                local rN_SE = 0
-                switch_2 = self._namedParams.eTypeMission
-                    if switch_2 == "T_Mission_Automate_INF_MenerDefenseUsure" then
-                        --[[// On affecte un fuseau au pions de toutes maniere
+                    local rN_PE = 0
+                    local rN_SE = 0
+                     do
+                        local switch_2 = self._namedParams.eTypeMission
+                        local cases_switch_2 = {}
+                            if switch_2 == "T_Mission_Automate_INF_MenerDefenseUsure" then
+                                --[[// On affecte un fuseau au pions de toutes maniere
 ]]self.ePhase = eMRT_AffecterFuseaux
-                        --[[// Premier Echelon
+                                --[[// Premier Echelon
 ]]rN_PE = 2
-                        DEC_Trace( "Selection des composantes pion" )
-                        S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsSurveillance, rN_PE, self.lstPionsAppui )
-                        S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsSurveillance, rN_PE, self.lstPionsAppui )
-                        S_Automate_ValideTroisEchelons_Pion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsSurveillance, rN_PE, self.lstPionsAppui )
-                        
-                    elseif switch_2 == "T_Mission_Automate_INF_RompreContact" then
-                        --[[// Determine les echelons	
+                                DEC_Trace( "Selection des composantes pion" )
+                                S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsSurveillance, rN_PE, self.lstPionsAppui )
+                                S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsSurveillance, rN_PE, self.lstPionsAppui )
+                                S_Automate_ValideTroisEchelons_Pion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsSurveillance, rN_PE, self.lstPionsAppui )
+                                
+                                                        cases_switch_2[1] = true
+elseif switch_2 == "T_Mission_Automate_INF_RompreContact" then
+                                --[[// Determine les echelons	
 ]]rN_PE_AC = #( sUnites_INF ) + #( sUnites_MILAN )
-                        rN_PE = Max( #( sUnites_HOT ), rN_PE_AC - Floor( rN_PE_AC / 3 ) )
-                        if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
-                            rN_PE = Min( self._namedParams.rN_Position, rN_PE )
-                        end
+                                rN_PE = Max( #( sUnites_HOT ), rN_PE_AC - Floor( rN_PE_AC / 3 ) )
+                                if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
+                                    rN_PE = Min( self._namedParams.rN_Position, rN_PE )
+                                end
 
-                        rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
-                        --[[// Selection des composantes
+                                rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
+                                --[[// Selection des composantes
 ]]DEC_Trace( "Selection des composantes pion" )
-                        self.selPions_PE_HOT = S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
-                        self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
-                        self.selPions_PE_MILAN = S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
-                        
-                    elseif switch_2 == "T_Mission_Automate_INF_Freiner" then
-                        --[[// Regarde le nombre de localisation				
+                                self.selPions_PE_HOT = S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                                self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                                self.selPions_PE_MILAN = S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                                
+                                                        cases_switch_2[2] = true
+elseif switch_2 == "T_Mission_Automate_INF_Freiner" then
+                                --[[// Regarde le nombre de localisation				
 ]]--[[// Premier Echelon
 ]]rN_PE = 2
-                        rN_PE_AC = 1
-                        --[[// Second Echelon
+                                rN_PE_AC = 1
+                                --[[// Second Echelon
 ]]rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
-                        self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
-                        --[[// Regarde si la compagnie dispose d'appuis anti-char					
+                                self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                                --[[// Regarde si la compagnie dispose d'appuis anti-char					
 ]]self.selPions_PE_MILAN = S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsAppui_AC, rN_PE_AC, self.lstPionsAppui )
-                        self.selPions_PE_HOT = S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsAppui_AC, rN_PE_AC, self.lstPionsAppui )
-                        
-                    elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
-                        --[[// On prend toutes les unites HOT dispo										
+                                self.selPions_PE_HOT = S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsAppui_AC, rN_PE_AC, self.lstPionsAppui )
+                                
+                                                        cases_switch_2[3] = true
+elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
+                                --[[// On prend toutes les unites HOT dispo										
 ]]--[[// Selection des composantes
 ]]DEC_Trace( "Selection des composantes pion" )
-                        --[[// selPions_PE_HOT = sUnites_HOT;										
+                                --[[// selPions_PE_HOT = sUnites_HOT;										
 ]]self.lstPionsAttaque = sUnites_HOT
-                        self.ePhase = eMRT_AssignerMissions
-                        
-                                        end
+                                self.ePhase = eMRT_AssignerMissions
+                                
+                                                        cases_switch_2[4] = true
+                            end
+                        end
 --[[// 
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
 ]]
-                if( ( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == 0 or self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == nil ) ) then
-                    do
-                        DEC_Trace( "Pas de 1er echelon" )
-                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
+                    if( ( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == 0 or self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == nil ) ) then
+                        do
+                            DEC_Trace( "Pas de 1er echelon" )
+                            DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
 
+                        end
                     end
-                end
 
-                
-            elseif switch_1 == eMRT_AffecterFuseaux then
-                --[[//-----------------------------------------------------------------------------
+                    
+                elseif switch_1 == eMRT_AffecterFuseaux then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[//Le fuseau de la compagnie est coupe en DEUX
 ]]--[[//le pion en appui utilise le fuseau de la compagnie
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eActionMRT == eActionEffectuee ) then
-                    do
-                        self.eActionMRT = eActionEnCours
-                                                do
-                            self.ePhase = eMRT_AssignerMissions
-                                                        return
+                        do
+                            self.eActionMRT = eActionEnCours
+                                                        do
+                                self.ePhase = eMRT_AssignerMissions
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { self.lstPionsAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, { self.lstPionsSurveillance, } )
-                
-            elseif switch_1 == eMRT_AssignerMissions then
-                --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { self.lstPionsAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, { self.lstPionsSurveillance, } )
+                    
+                elseif switch_1 == eMRT_AssignerMissions then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner les missions au pions subordonnéss
 ]]--[[//-----------------------------------------------------------------------------				
 ]]if( self.eActionMRT == eActionImpossible ) then
-                    do
-                                                do
-                        end
+                        do
+                                                        do
+                            end
 
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
-                    end
-                end
-
-                if( self.eValidationMRT == eActionImpossible ) then
-                    do
-                                                do
-                            DEC_Trace( "eValidationMRT == eActionImpossible" )
-                        end
-
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
-                    end
-                end
-
-                if( self.eValidationMRT == eActionEffectuee ) then
-                    do
-                        self.eValidationMRT = eActionEnCours
-                                                do
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
                     end
+
+                    if( self.eValidationMRT == eActionImpossible ) then
+                        do
+                                                        do
+                                DEC_Trace( "eValidationMRT == eActionImpossible" )
+                            end
+
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
+                        end
+                    end
+
+                    if( self.eValidationMRT == eActionEffectuee ) then
+                        do
+                            self.eValidationMRT = eActionEnCours
+                                                        do
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
+
+                        end
 --[[// Dans le cas ou l'on passe le test du nombre de pions en attaque 
 ]]--[[// lorsque l'on rompt le contact
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { Max( 1, #( self.lstPionsAttaque ) ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
-                switch_2 = self._namedParams.eTypeMission
-                    if switch_2 == "T_Mission_Automate_INF_MenerDefenseUsure" then
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerInterdire_Lima, 1, { self.lstPionsAttaque, self.limaLCAR, } )
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Lima, 1, { self.lstPionsSurveillance, self.limaLCAR, } )
-                        
-                    elseif switch_2 == "T_Mission_Automate_INF_RompreContact" then
-                        local mission = DEC_GetMission( myself )
-                        local selPionsDetruits = S_ObtenirPionsDetruits_SansPC()
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone, 1, { self.lstPionsAttaque, mission.zoneRegroupement_, } )
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone, 1, { selPionsDetruits, mission.zoneRegroupement_, } )
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, mission.zoneRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                        
-                    elseif switch_2 == "T_Mission_Automate_INF_Freiner" then
-                        Activate( self.activations.BEH_Medo_Automate_INF_OrganiserMissions_Freiner, 1, { self.lstPionsAttaque, self.lstPionsAppui_AC, } )
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerFreiner, 1, { self.lstPionsAttaque, } )
-                        
-                    elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
-                        local mission = DEC_GetMission( myself )
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerFreinage, 1, { self.lstPionsAttaque, mission.compagnie_, } )
-                        
-                    
-                    else
-                        DEC_Trace( "Mission Inconnue" )
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { Max( 1, #( self.lstPionsAttaque ) ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                     do
+                        local switch_2 = self._namedParams.eTypeMission
+                        local cases_switch_2 = {}
+                            if switch_2 == "T_Mission_Automate_INF_MenerDefenseUsure" then
+                                Activate( self.activations.BEH_Medo_Automate_INF_AssignerInterdire_Lima, 1, { self.lstPionsAttaque, self.limaLCAR, } )
+                                Activate( self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Lima, 1, { self.lstPionsSurveillance, self.limaLCAR, } )
+                                
+                                                        cases_switch_2[1] = true
+elseif switch_2 == "T_Mission_Automate_INF_RompreContact" then
+                                local mission = DEC_GetMission( myself )
+                                local selPionsDetruits = S_ObtenirPionsDetruits_SansPC()
+                                Activate( self.activations.BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone, 1, { self.lstPionsAttaque, mission.zoneRegroupement_, } )
+                                Activate( self.activations.BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone, 1, { selPionsDetruits, mission.zoneRegroupement_, } )
+                                Activate( self.activations.BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, mission.zoneRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                                
+                                                        cases_switch_2[2] = true
+elseif switch_2 == "T_Mission_Automate_INF_Freiner" then
+                                Activate( self.activations.BEH_Medo_Automate_INF_OrganiserMissions_Freiner, 1, { self.lstPionsAttaque, self.lstPionsAppui_AC, } )
+                                Activate( self.activations.BEH_Medo_Automate_INF_AssignerFreiner, 1, { self.lstPionsAttaque, } )
+                                
+                                                        cases_switch_2[3] = true
+elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
+                                local mission = DEC_GetMission( myself )
+                                Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerFreinage, 1, { self.lstPionsAttaque, mission.compagnie_, } )
+                                
+                                                        cases_switch_2[4] = true
 
-                                        end
+                            else
+                                DEC_Trace( "Mission Inconnue" )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt()
+
+                                                        end
+                        end
 --[[// Donner une mission retrograde
 ]]
-                if( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" ) then
-                    Activate( self.activations.BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                end
+                    if( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" ) then
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                    end
 
-                Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
-                Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
-                
-                        end
+                    Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
+                    Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
+                    
+                                end
+            end
 
     end,
 

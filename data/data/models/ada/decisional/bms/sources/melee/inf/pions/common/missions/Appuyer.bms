@@ -127,136 +127,141 @@ node "BEH_Dep_Pion_INF_GererPhaseAppuyer"
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eSuivreUnite then
-                --[[// On fait ralentir l'unite en avance afin de pouvoir la couvrir
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSuivreUnite then
+                    --[[// On fait ralentir l'unite en avance afin de pouvoir la couvrir
 ]]if( myself:GetType() == "SectionInfanterie_MILAN" or myself:GetType() == "SectionInfanterie_HOT" ) then
-                    do
-                        if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
-                            Activate( self.activations.ACT_Ordre_Pion_INF_AC_FaireRalentir, 1, { self._namedParams.tAmi, } )
+                        do
+                            if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                Activate( self.activations.ACT_Ordre_Pion_INF_AC_FaireRalentir, 1, { self._namedParams.tAmi, } )
+                            end
+
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_RC, 1, { eRC_SuitUnite, } )
-                --[[// deplacement sur la position courante de l'unite soutenue
+                    Activate( self.activations.ACT_RC, 1, { eRC_SuitUnite, } )
+                    --[[// deplacement sur la position courante de l'unite soutenue
 ]]--[[// effectue
 ]]if( rDist < self._namedParams.rDist_SuiviMin ) then
-                    do
-                        if( self._namedParams.tAmi:DEC_Agent_EstEnMouvement() ) then
-                            self.ePhase = eAttendre
-                        else
-                            --[[// la section est proche de la section soutenue
-]]self.ePhase = eAppuyer
-                        end
-
-                    end
-                end
-
-                
-            elseif switch_1 == eAttendre then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            if( not self._namedParams.tAmi:DEC_Agent_EstEnMouvement() or rDist < self._namedParams.rDist_SuiviMin ) then
-                                self.ePhase = eAppuyer
+                        do
+                            if( self._namedParams.tAmi:DEC_Agent_EstEnMouvement() ) then
+                                self.ePhase = eAttendre
                             else
-                                self.ePhase = eSuivreUnite
-                            end
-
-                                                        self.params.__returnValue = self.ePhase
-                            return
-
-                        end
-
-                    end
-                end
-
-                local mission = DEC_GetMission( myself )
-                Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-                Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_TEMPS_ATTENTE_APPUI(), "", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eAppuyer then
-                --[[// on observe l'eni
-]]Activate( self.activations.ACT_RC, 1, { eRC_PasseEnAppui, } )
-                Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// on rejoint la position d'appui a couvert
-]]
-                if( rDist > self._namedParams.rDist_SuiviMax ) then
-                    do
-                        self.ePhase = eSuivreUnite
-                                                self.params.__returnValue = eSuivreUnite
-                        return
-
-                    end
-                end
-
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            DEC_Trace( "position d'appui atteinte" )
-                            self.ePhase = eSePoster
-                        end
-
-                    end
-                else
-do
-                        Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppui, 1, setmetatable( { self._namedParams.tAmi, self.repCurEni, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                return
-
-                    end
-                end
-
-            elseif switch_1 == eSePoster then
-                --[[// Lorsque la section appuyee s'est trop deplacee
-]]if( rDist > self._namedParams.rDist_SuiviMax ) then
-                    do
-                        if( not DEC_ConnaissanceAgent_EstValide( F_Pion_GeteniEnCours( self._namedParams.tAmi ) ) ) then
-                            --[[// la section est trop loin pour appuyer
-]]--[[// elle doit re suivre l'unite appuyee
-]]self.ePhase = eSuivreUnite
-                        else
-if( not S_Geometrie_EstProchePosition( DEC_ConnaissanceAgent_Position( F_Pion_GeteniEnCours( self._namedParams.tAmi ) ), self._namedParams.tAmi:DEC_Agent_Position(), self._namedParams.rDist_SuiviMax ) ) then
-                                do
-                                    --[[// Si l'unite appuye traite un ennemi mais qu'elle n'intervient
-]]--[[// pas encore dessus, on se repositionne
+                                --[[// la section est proche de la section soutenue
 ]]self.ePhase = eAppuyer
-                                    DEC_Trace( "Ennemi en Cours mais unite eloignee" )
-                                end
                             end
-                        end
 
-                        if( self.ePhase ~= eSePoster ) then
-                            do
-                                self.eAction = eActionEnCours
+                        end
+                    end
+
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eAttendre then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                if( not self._namedParams.tAmi:DEC_Agent_EstEnMouvement() or rDist < self._namedParams.rDist_SuiviMin ) then
+                                    self.ePhase = eAppuyer
+                                else
+                                    self.ePhase = eSuivreUnite
+                                end
+
                                                                 self.params.__returnValue = self.ePhase
                                 return
 
                             end
+
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_RC, 1, { eRC_EnAppui, } )
-                Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
-                --[[// on observe la direction dangereuse
+                    local mission = DEC_GetMission( myself )
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+                    Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_TEMPS_ATTENTE_APPUI(), "", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eAppuyer then
+                    --[[// on observe l'eni
+]]Activate( self.activations.ACT_RC, 1, { eRC_PasseEnAppui, } )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// on rejoint la position d'appui a couvert
+]]
+                    if( rDist > self._namedParams.rDist_SuiviMax ) then
+                        do
+                            self.ePhase = eSuivreUnite
+                                                        self.params.__returnValue = eSuivreUnite
+                            return
+
+                        end
+                    end
+
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                DEC_Trace( "position d'appui atteinte" )
+                                self.ePhase = eSePoster
+                            end
+
+                        end
+                    else
+do
+                            Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppui, 1, setmetatable( { self._namedParams.tAmi, self.repCurEni, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                        return
+
+                        end
+                    end
+
+                                end
+                if cases_switch_1[3] or switch_1 == eSePoster then
+                    --[[// Lorsque la section appuyee s'est trop deplacee
+]]if( rDist > self._namedParams.rDist_SuiviMax ) then
+                        do
+                            if( not DEC_ConnaissanceAgent_EstValide( F_Pion_GeteniEnCours( self._namedParams.tAmi ) ) ) then
+                                --[[// la section est trop loin pour appuyer
+]]--[[// elle doit re suivre l'unite appuyee
+]]self.ePhase = eSuivreUnite
+                            else
+if( not S_Geometrie_EstProchePosition( DEC_ConnaissanceAgent_Position( F_Pion_GeteniEnCours( self._namedParams.tAmi ) ), self._namedParams.tAmi:DEC_Agent_Position(), self._namedParams.rDist_SuiviMax ) ) then
+                                    do
+                                        --[[// Si l'unite appuye traite un ennemi mais qu'elle n'intervient
+]]--[[// pas encore dessus, on se repositionne
+]]self.ePhase = eAppuyer
+                                        DEC_Trace( "Ennemi en Cours mais unite eloignee" )
+                                    end
+                                end
+                            end
+
+                            if( self.ePhase ~= eSePoster ) then
+                                do
+                                    self.eAction = eActionEnCours
+                                                                        self.params.__returnValue = self.ePhase
+                                    return
+
+                                end
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_RC, 1, { eRC_EnAppui, } )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                    --[[// on observe la direction dangereuse
 ]]local mission = DEC_GetMission( myself )
-                Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-                --[[// la section debarque		
+                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
+                    --[[// la section debarque		
 ]]if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
-                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
-                end
+                        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    end
 
-                Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, {} )--[[// on indique a l'unites appuyee que la section
+                    Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, {} )--[[// on indique a l'unites appuyee que la section
 ]]--[[// est en position d'appui
 ]]
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
                 self.params.__returnValue = self.ePhase
         return

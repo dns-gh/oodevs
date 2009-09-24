@@ -15,8 +15,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
 
     activate = function( self )
         self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
-        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, AntitankHelicopterPatrol )
-        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, EscortAndCloseSupportHelicopterPatrol )
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, "AntitankHelicopterPatrol" )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
         self.listeAttaquer = self.listeAttaquer or S_Liste_Concatene( self.listeHAC, self.listeHAP )
         if( ModuleBegins() ) then
             do

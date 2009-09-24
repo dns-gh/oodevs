@@ -227,59 +227,64 @@ do
                         --[[// On traite uniquement les points avec le type specifie
 ]]if( ( bit.band( self._namedParams.typeProgression, DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) ) ) ) ~= eProgressionDirect ) then
                             do
-                                switch_1 = DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) )
-                                    if switch_1 == eTypePointCCT
-                                    or switch_1 == eTypePointBond then
-                                                                            if( meleeInfPionsCommon() ) then
-                                            do
-                                                if( GetActivity() >= 1 and F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
-                                                    do
-                                                        Activate( self.activations.ACT_Info_Trace, 1, { "Sur avant bond", } )
-                                                        StartActivate( self.activations.BEH_Progression_Pion_INF_Aborder, 1, { DEC_GetDestPoint( repAvantPt ), } )
-                                                    end
-                                                end
-
-                                            end
-                                        end
-
-                                        
-                                    elseif switch_1 == eTypePointParticulier then
-                                        do
-                                            pointVar = DEC_GetDestPoint( repAvantPt )
-                                            if( appuiGeniePions() ) then
-if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
-                                                    StartActivate( self.activations.BEH_Obs_Pion_Gen_ReconnaitrePoint, 1, { pointVar, } )
-                                                end
-                                            end
-
-                                            if( appuiNbcPionsCommon() ) then
-if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
-                                                    StartActivate( self.activations.BEH_Obs_Pion_NBC_ReconnaitrePoint, 1, { pointVar, } )
-                                                end
-                                            end
-
-                                            if( meleeAbcPionsCommon() ) then
-if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
-                                                    StartActivate( self.activations.BEH_Obs_Pion_ABC_ReconnaitrePoint, 1, { pointVar, } )
-                                                end
-                                            end
-
-                                            if( meleeInfPionsCommon() ) then
+                                 do
+                                    local switch_1 = DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) )
+                                    local cases_switch_1 = {}
+                                        if switch_1 == eTypePointCCT
+                                        or switch_1 == eTypePointBond then
+                                                                                    if( meleeInfPionsCommon() ) then
                                                 do
                                                     if( GetActivity() >= 1 and F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                                                         do
-                                                            Activate( self.activations.ACT_Info_Trace, 1, { "Sur avant point", } )
-                                                            StartActivate( self.activations.BEH_Obs_Pion_INF_RecoPoint_Copie, 1, { DEC_GetRepPoint( pointVar ), S_TempsObservationPoint_Ambiance(), } )
+                                                            Activate( self.activations.ACT_Info_Trace, 1, { "Sur avant bond", } )
+                                                            StartActivate( self.activations.BEH_Progression_Pion_INF_Aborder, 1, { DEC_GetDestPoint( repAvantPt ), } )
                                                         end
                                                     end
 
                                                 end
                                             end
 
-                                        end
+                                            
+                                                                                cases_switch_1[1] = true
+elseif switch_1 == eTypePointParticulier then
+                                            do
+                                                pointVar = DEC_GetDestPoint( repAvantPt )
+                                                if( appuiGeniePions() ) then
+if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                                        StartActivate( self.activations.BEH_Obs_Pion_Gen_ReconnaitrePoint, 1, { pointVar, } )
+                                                    end
+                                                end
 
-                                        
-                                                                        end
+                                                if( appuiNbcPionsCommon() ) then
+if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                                        StartActivate( self.activations.BEH_Obs_Pion_NBC_ReconnaitrePoint, 1, { pointVar, } )
+                                                    end
+                                                end
+
+                                                if( meleeAbcPionsCommon() ) then
+if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                                        StartActivate( self.activations.BEH_Obs_Pion_ABC_ReconnaitrePoint, 1, { pointVar, } )
+                                                    end
+                                                end
+
+                                                if( meleeInfPionsCommon() ) then
+                                                    do
+                                                        if( GetActivity() >= 1 and F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
+                                                            do
+                                                                Activate( self.activations.ACT_Info_Trace, 1, { "Sur avant point", } )
+                                                                StartActivate( self.activations.BEH_Obs_Pion_INF_RecoPoint_Copie, 1, { DEC_GetRepPoint( pointVar ), S_TempsObservationPoint_Ambiance(), } )
+                                                            end
+                                                        end
+
+                                                    end
+                                                end
+
+                                            end
+
+                                            
+                                                                                cases_switch_1[2] = true
+                                        end
+                                    end
 
                             end
                         end
@@ -650,49 +655,53 @@ node "BEH_Dep_Suivre"
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatObstacle = self.eEtatObstacle or eActionEnCours
         self.recalculerItineraire = self.recalculerItineraire or false
-        switch_1 = self.eComportement
-            if switch_1 == eCreerItineraire then
-                self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
-                self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
-                self.eComportement = eRejoindre
-                self.recalculerItineraire = false
-                
-            elseif switch_1 == eRejoindre then
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                        self.eComportement = eCreerItineraire
-                                                return
+         do
+            local switch_1 = self.eComportement
+            local cases_switch_1 = {}
+                if switch_1 == eCreerItineraire then
+                    self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
+                    self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
+                    self.eComportement = eRejoindre
+                    self.recalculerItineraire = false
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eRejoindre then
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                            self.eComportement = eCreerItineraire
+                                                        return
 
+                        end
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                --[[// Aller au plus vite
+                    Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    --[[// Aller au plus vite
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
-                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) <= self._namedParams.rDistanceMin ) then
-                    do
-                        Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
-                        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
-                        self.recalculerItineraire = true
-                    end
-                else
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) <= self._namedParams.rDistanceMin ) then
+                        do
+                            Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
+                            Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
+                            self.recalculerItineraire = true
+                        end
+                    else
 do
-                        if( self.recalculerItineraire ) then
-                            do
-                                self.eComportement = eCreerItineraire
-                                                                return
+                            if( self.recalculerItineraire ) then
+                                do
+                                    self.eComportement = eCreerItineraire
+                                                                        return
 
+                                end
                             end
-                        end
 
+                        end
                     end
-                end
 
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
     end,
 
@@ -806,56 +815,60 @@ node "BEH_Dep_Suivre_Elastique"
             DEC_Trace( "The unit follows " .. DEC_GetSzName( self._namedParams.ami ) )
         end
 
-        switch_1 = self.eComportement
-            if switch_1 == eCreerItineraire then
-                if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin ) ) then
-                    return
-                end
-
-                self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
-                self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
-                self.eComportement = eRejoindre
-            elseif switch_1 == eRejoindre then
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                        self.eComportement = eCreerItineraire
-                                                return
-
+         do
+            local switch_1 = self.eComportement
+            local cases_switch_1 = {}
+                if switch_1 == eCreerItineraire then
+                    if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin ) ) then
+                        return
                     end
-                end
 
-                if( self.bEnAttente ) then
-                    self.bEnAttente = S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMax )
-                end
+                    self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
+                    self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
+                    self.eComportement = eRejoindre
+                                end
+                if cases_switch_1[1] or switch_1 == eRejoindre then
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                            self.eComportement = eCreerItineraire
+                                                        return
 
-                Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                --[[// Aller au plus vite
+                        end
+                    end
+
+                    if( self.bEnAttente ) then
+                        self.bEnAttente = S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMax )
+                    end
+
+                    Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    --[[// Aller au plus vite
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
-                if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin - 200 ) ) then
-                    self.eEtat = eActionEffectuee
-                end
-
-                self.bEnAttente = self.bEnAttente or S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin )
-                if( self.bEnAttente ) then
-                    do
-                        Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
-                        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
-                    end
-                end
-
-                if( self.eEtatObstacle == eActionEffectuee ) then
-                    do
-                        self.eComportement = eCreerItineraire
+                    if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin - 200 ) ) then
                         self.eEtat = eActionEffectuee
                     end
-                end
 
-                StartActivate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatObstacle = v else rawset( t, k, v ) end end } ) )
-                
-            
-            else
+                    self.bEnAttente = self.bEnAttente or S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin )
+                    if( self.bEnAttente ) then
+                        do
+                            Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
+                            Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
                         end
+                    end
+
+                    if( self.eEtatObstacle == eActionEffectuee ) then
+                        do
+                            self.eComportement = eCreerItineraire
+                            self.eEtat = eActionEffectuee
+                        end
+                    end
+
+                    StartActivate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatObstacle = v else rawset( t, k, v ) end end } ) )
+                    
+                
+                else
+                                end
+            end
 
     end,
 

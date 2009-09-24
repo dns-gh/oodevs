@@ -53,121 +53,125 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_CommettreAttentatContrePopulation:debut **", } )
-                self.ePhaseMission = eSInfiltrer
-                
-            --[[// Infiltration
-]]elseif switch_1 == eSInfiltrer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhaseMission = eAgirSurEni
+                    Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_CommettreAttentatContrePopulation:debut **", } )
+                    self.ePhaseMission = eSInfiltrer
+                    
+                --[[// Infiltration
+]]                cases_switch_1[1] = true
+elseif switch_1 == eSInfiltrer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
                             self.eAction = eActionEnCours
-                                                        return
+                                                        do
+                                self.ePhaseMission = eAgirSurEni
+                                self.eAction = eActionEnCours
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur, 1, setmetatable( { self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Infiltration au plus près dans un rayon de 500m autour du lieu de l'attentat
+                    Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur, 1, setmetatable( { self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Infiltration au plus près dans un rayon de 500m autour du lieu de l'attentat
 ]]elseif switch_1 == eAborderObjectif then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
                             self.eAction = eActionEnCours
-                            self.ePhaseMission = eAgirSurEni
-                                                        return
+                                                        do
+                                self.eAction = eActionEnCours
+                                self.ePhaseMission = eAgirSurEni
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, setmetatable( { self.objectif, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Declenchement de l'attentat
+                    Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, setmetatable( { self.objectif, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Declenchement de l'attentat
 ]]elseif switch_1 == eAgirSurEni then
-                --[[// Attentat effectué, on s'exfiltre
+                    --[[// Attentat effectué, on s'exfiltre
 ]]if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
+                        do
                             self.eAction = eActionEnCours
-                            self.ePhaseMission = eSExfiltrer
-                                                        return
+                                                        do
+                                self.eAction = eActionEnCours
+                                self.ePhaseMission = eSExfiltrer
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                local pointPopu = DEC_ConnaissancePopulation_PointPlusProche( self._namedParams.mission.populationCible_ )
-                if( ( pointPopu == 0 or pointPopu == nil ) ) then
-                    do
-                        DEC_RC( eRC_MissionImpossible )
-                        DEC_Trace( "connaissance non valide" )
-                        self.ePhaseMission = eSExfiltrer
-                        
-                    end
+                    local pointPopu = DEC_ConnaissancePopulation_PointPlusProche( self._namedParams.mission.populationCible_ )
+                    if( ( pointPopu == 0 or pointPopu == nil ) ) then
+                        do
+                            DEC_RC( eRC_MissionImpossible )
+                            DEC_Trace( "connaissance non valide" )
+                            self.ePhaseMission = eSExfiltrer
+                            
+                        end
 --[[//execution à portée
-]]                end
+]]                    end
 
-                if( DEC_Geometrie_Distance( DEC_Agent_Position(), pointPopu ) <= 10 ) then
-                    Activate( self.activations.ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation, 1, setmetatable( { self._namedParams.mission.populationCible_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                else
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), pointPopu ) <= 10 ) then
+                        Activate( self.activations.ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation, 1, setmetatable( { self._namedParams.mission.populationCible_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    else
 --[[//rejoindre la population si elle est dans un rayon de 500m
 ]]if( DEC_Geometrie_Distance( self.lieuAttentat, pointPopu ) < 500 ) then
-                        do
-                            self.objectif = pointPopu
-                            self.ePhaseMission = eAborderObjectif
-                        end
---[[//on s'est trop eloigné du lieu de l'attentat   
-]]                    else
-if( DEC_Geometrie_Distance( self.lieuAttentat, DEC_Agent_Position() ) > 10 ) then
                             do
-                                self.objectif = self.lieuAttentat
+                                self.objectif = pointPopu
                                 self.ePhaseMission = eAborderObjectif
+                            end
+--[[//on s'est trop eloigné du lieu de l'attentat   
+]]                        else
+if( DEC_Geometrie_Distance( self.lieuAttentat, DEC_Agent_Position() ) > 10 ) then
+                                do
+                                    self.objectif = self.lieuAttentat
+                                    self.ePhaseMission = eAborderObjectif
+                                end
                             end
                         end
                     end
-                end
 
-                DEC_DebugAffichePoint( self.lieuAttentat )
-                
-            --[[// Rejoindre la position de repli
+                    DEC_DebugAffichePoint( self.lieuAttentat )
+                    
+                --[[// Rejoindre la position de repli
 ]]elseif switch_1 == eSExfiltrer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
-                                                        return
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, setmetatable( { self._namedParams.mission.pointRepli_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Fin
+                    Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, setmetatable( { self._namedParams.mission.pointRepli_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Fin
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                Halt()
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                                        Halt()
 
-                        end
+                                end
+            end
 
     end,
 

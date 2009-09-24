@@ -31,45 +31,48 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] =
         self.positionARejoindre = self.positionARejoindre or S_Geometrie_BarycentreZone( self._namedParams.zone )
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
-        switch_1 = self.ePhase
-            if switch_1 == eRejoindre then
-                Activate( self.activations.ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus, 1, { self._namedParams.zone, } )
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eSePoster
-                                                        return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindre then
+                    Activate( self.activations.ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus, 1, { self._namedParams.zone, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eSePoster
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                for _,x in pairs( DEC_Connaissances_UnitesEnnemiesDangereuses() ) do
-                local _continue = true
-for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone ) ) do
+                    for _,x in pairs( DEC_Connaissances_UnitesEnnemiesDangereuses() ) do
                     local _continue = true
+for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone ) ) do
+                        local _continue = true
 if( x == y ) then
-                            self.params.__returnValue = eActionEffectuee
-                            Halt()
+                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+                            end
+
                         end
 
                     end
 
-                end
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionARejoindre, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eSePoster then
+                    if( DEC_ALAT_ReconnaissanceNonVuTerminee() ) then
+                        self.params.__returnValue = eActionEffectuee
+                        Halt()
+                    end
 
-                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionARejoindre, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eSePoster then
-                if( DEC_ALAT_ReconnaissanceNonVuTerminee() ) then
-                    self.params.__returnValue = eActionEffectuee
-                    Halt()
-                end
-
-                
-                        end
+                    
+                                end
+            end
 
     end,
 

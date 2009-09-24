@@ -44,36 +44,40 @@ includedFiles["sources/common/automates/missions/fairemouvementrmm/MRT - FaireMo
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.ePhase
-            if switch_1 == eDonnerMission then
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eDonnerMission then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des mission SeDeplacer aux pions
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eTerminerMission
-                            
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eTerminerMission
+                                
+                            end
+
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Automate_MRT_SeDeplacer, 1, setmetatable( { myself:DEC_Automate_PionsSansPC(), self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.BEH_Automate_MRT_SeDeplacer, 1, setmetatable( { myself:DEC_Automate_PionsSansPC(), self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Validation 
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eTerminerMission then
-                --[[//Fin MRT
+]]                cases_switch_1[1] = true
+elseif switch_1 == eTerminerMission then
+                    --[[//Fin MRT
 ]]DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            
-            else
-                        end
+                end
+                if not cases_switch_1[1] then
+                                end
+            end
 
     end,
 

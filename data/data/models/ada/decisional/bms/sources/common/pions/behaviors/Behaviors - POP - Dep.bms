@@ -394,60 +394,65 @@ node "BEH_Pop_Pion_BloquerPopulation"
         end
 
         self.posteControle = S_Obj_ObtenirObjetProcheDe( self.localisation, eTypeObjectPosteControle, self._namedParams.rMax )
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[//---------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[//---------------------------------------------------------------------
 ]]--[[//---------------------------------------------------------------------
 ]]--[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { self._namedParams.missionName .. " begining", } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// 2) Rejoindre le site
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[//DEC_Trace(  FloatToString( DEC_Geometrie_Distance( myself.DEC_Agent_Position(), objectif ) )  );
+                    Activate( self.activations.ACT_Info_Trace, 1, { self._namedParams.missionName .. " begining", } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// 2) Rejoindre le site
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[//DEC_Trace(  FloatToString( DEC_Geometrie_Distance( myself.DEC_Agent_Position(), objectif ) )  );
 ]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.objectif ) > 15 ) then
-                    Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, { self._namedParams.objectif, eProgressionDefaut, eTypeItiMouvement, } )
-                else
-                    self.ePhaseMission = eAnimer
-                end
+                        Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, { self._namedParams.objectif, eProgressionDefaut, eTypeItiMouvement, } )
+                    else
+                        self.ePhaseMission = eAnimer
+                    end
 
-                
-            --[[// 3) Animer
-]]elseif switch_1 == eAnimer then
-                Activate( self.activations.BEH_Pop_GererPositionBarrage, 1.1, { self._namedParams.objectif, self.localisationEtendue, } )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
-                if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.objectif ) < self._namedParams.rMax ) then
-                    do
-                        --[[// l'objet n'existe pas encore... on le construit
+                    
+                --[[// 3) Animer
+]]                cases_switch_1[2] = true
+elseif switch_1 == eAnimer then
+                    Activate( self.activations.BEH_Pop_GererPositionBarrage, 1.1, { self._namedParams.objectif, self.localisationEtendue, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
+                    if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.objectif ) < self._namedParams.rMax ) then
+                        do
+                            --[[// l'objet n'existe pas encore... on le construit
 ]]if( ( self.posteControle == 0 or self.posteControle == nil ) ) then
-                            do
-                                Activate( self.activations.ACT_Pion_CreerObjetSur, 1, { self.localisation, eTypeObjectPosteControle, } )
-                                                                return
+                                do
+                                    Activate( self.activations.ACT_Pion_CreerObjetSur, 1, { self.localisation, eTypeObjectPosteControle, } )
+                                                                        return
 
-                            end
+                                end
 --[[//---------------------------------------------------------------------
 ]]--[[// Animer le poste
 ]]--[[//---------------------------------------------------------------------
 ]]--[[//if( ePreparation == eActionEffectuee )
-]]                        end
+]]                            end
 
-                        Activate( self.activations.BEH_Pop_Pion_AnimerBlocagePopulation, 1, { self.posteControle, self._namedParams.permeabilite, } )
-                        Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePreparation = v else rawset( t, k, v ) end end } ) )
-                    end
-                end
-
-                
-            --[[// 3) Fin de la mission de reconnaissance SUR ORDRE
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                self.params.__returnValue = eActionHalt
-                return
-
-            
-            else
+                            Activate( self.activations.BEH_Pop_Pion_AnimerBlocagePopulation, 1, { self.posteControle, self._namedParams.permeabilite, } )
+                            Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePreparation = v else rawset( t, k, v ) end end } ) )
                         end
+                    end
+
+                    
+                --[[// 3) Fin de la mission de reconnaissance SUR ORDRE
+]]elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                                        self.params.__returnValue = eActionHalt
+                    return
+
+                end
+                if not cases_switch_1[1] and not cases_switch_1[2] and not cases_switch_1[3] then
+                                end
+            end
 
     end,
 

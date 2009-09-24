@@ -65,9 +65,9 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
         DIA_Clear( self.listeSuivre )
         self.listeSuivre = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_Suivre" )
         --[[// liste des pions qui peuvent Reconnaitre
-]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AntitankHelicopterPatrol )
-        local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, EscortAndCloseSupportHelicopterPatrol )
-        local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, AirDefenseHelicopterPatrol )
+]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AntitankHelicopterPatrol" )
+        local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
+        local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
         DIA_Clear( self.listePeutFaireReconnaitre )
         self.listePeutFaireReconnaitre = S_Liste_Concatene( S_Liste_Concatene( listeHAC, listeHAP ), listeHAM )
         --[[//liste des pions de reserve
@@ -75,47 +75,51 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
         self.listeReserve = S_Cherche_Automate_Filtre_PionNonDansListe( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireReconnaitre, self.listeReconnaitreOperationnels ), self.listeSuivre )
         --[[// liste des pions HM Log
 ]]DIA_Clear( self.listeHMLog )
-        self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, GeneralPurposeHelicopterPatrol )
+        self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
         DIA_Clear( self.listePionsAAppuyerIMEX )
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
-        switch_1 = self.ePhase
-            if switch_1 == eReconnaitre then
-                if( DIA_IsListEmpty( self.listeReconnaitreOperationnels ) ) then
-                    do
-                        self.ePhase = eSExfiltrer
-                                                return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eReconnaitre then
+                    if( DIA_IsListEmpty( self.listeReconnaitreOperationnels ) ) then
+                        do
+                            self.ePhase = eSExfiltrer
+                                                        return
 
+                        end
                     end
-                end
 
-                if( not DIA_IsListEmpty( self.listeReconnaitreOperationnels ) ) then
-                    do
-                        local pionASuivre = DEC_Geometrie_PionDerriere( self.listeReconnaitreOperationnels, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
-                        Activate( self.activations.BEH_Mission_Automate_AssignerSuivreAListe, 1, { ePhase_CDT, self.listeReserve, pionASuivre, } )
-                    end
+                    if( not DIA_IsListEmpty( self.listeReconnaitreOperationnels ) ) then
+                        do
+                            local pionASuivre = DEC_Geometrie_PionDerriere( self.listeReconnaitreOperationnels, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
+                            Activate( self.activations.BEH_Mission_Automate_AssignerSuivreAListe, 1, { ePhase_CDT, self.listeReserve, pionASuivre, } )
+                        end
 --[[// gestion des releves - listeReconnaitrePrec peut contenir des
 ]]--[[// unités détruites
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererReleves, 1, { self.listeReconnaitrePrec, self.listeSuivre, } )
-                self.listeReconnaitrePrec = self.listeReconnaitre
-                --[[// Gestion Coordination Ravitaillements
+                    Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererReleves, 1, { self.listeReconnaitrePrec, self.listeSuivre, } )
+                    self.listeReconnaitrePrec = self.listeReconnaitre
+                    --[[// Gestion Coordination Ravitaillements
 ]]if( not DIA_IsListEmpty( self.listePeutFaireReconnaitre ) ) then
-                    Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePeutFaireReconnaitre, } )
-                end
+                        Activate( self.activations.BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, 1, { self.listePeutFaireReconnaitre, } )
+                    end
 
-                --[[// Gestion de l'étalement du dispositif
+                    --[[// Gestion de l'étalement du dispositif
 ]]Activate( self.activations.BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif, 1, { self.listeReconnaitreOperationnels, 15000, } )
-                --[[// Gestion de la coordination des feux
+                    --[[// Gestion de la coordination des feux
 ]]Activate( self.activations.BEH_Automate_ALAT_CoordonnerFeux, 1, { self.listeReconnaitreOperationnels, 0, } )
-                --[[// ravitaillements et IMEX
+                    --[[// ravitaillements et IMEX
 ]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
-                
-            elseif switch_1 == eSExfiltrer then
-                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
-                
-                        end
+                    
+                elseif switch_1 == eSExfiltrer then
+                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                    Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
+                    
+                                cases_switch_1[2] = true
+                end
+            end
 
     end,
 

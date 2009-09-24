@@ -50,35 +50,40 @@ includedFiles["sources/emergency/pions/common/missions/OrganiseShelter.bms"] = t
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eRejoindre then
-                if( self.eAction == eActionEnCours ) then
-                    do
-                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                        Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.mission.position_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindre then
+                    if( self.eAction == eActionEnCours ) then
+                        do
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                            Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.mission.position_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                        return
 
-                    end
-                end
-
-                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
-                self.ePhase = eDeployer
-            elseif switch_1 == eDeployer then
-                Activate( self.activations.BEH_Pion_Emergency_OrganiseShelter, 1, { self._namedParams.mission.area_, } )
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                    do
-                        DEC_FinMission()
-                                                self.params.__returnValue = eActionEffectuee
-                        Halt()
-
-                    end
-                end
-
-                
                         end
+                    end
+
+                    Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                    self.ePhase = eDeployer
+                                end
+                if cases_switch_1[1] or switch_1 == eDeployer then
+                    Activate( self.activations.BEH_Pion_Emergency_OrganiseShelter, 1, { self._namedParams.mission.area_, } )
+                    
+                                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+                    end
+
+                    
+                                end
+            end
 
     end,
 

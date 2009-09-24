@@ -55,105 +55,125 @@ includedFiles["sources/appui/log/automates/missions/SeDeployer - MRT.bms"] = tru
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMRT_AssignerMissions then
-                for _,x in pairs( self.selPions ) do
-                local _continue = true
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    for _,x in pairs( self.selPions ) do
+                    local _continue = true
 do
-                        local pion = x
-                        switch_2 = --[[// Suivant le type de pions...
+                            local pion = x
+                             do
+                                local switch_2 = --[[// Suivant le type de pions...
 ]]pion:GetType()
-                            if switch_2 == "GroupeRamassage" then
-                                DIA_PushFront( self.sel_groupeRamassage, pion )
-                                
-                            elseif switch_2 == "DecontaminationNBC" then
-                                DIA_PushFront( self.sel_decontaminationNBC, pion )
-                                
-                            elseif switch_2 == "SectionTriage" then
-                                DIA_PushFront( self.sel_sectionTriage, pion )
-                                
-                            elseif switch_2 == "ACA" then
-                                DIA_PushFront( self.sel_ACA, pion )
-                                
-                            elseif switch_2 == "UniteSoin" then
-                                DIA_PushFront( self.sel_uniteSoin, pion )
-                                
-                            elseif switch_2 == "UniteSpy" then
-                                DIA_PushFront( self.sel_uniteSpy, pion )
-                                
-                            elseif switch_2 == "PionStock" then
-                                DIA_PushFront( self.sel_pionStock, pion )
-                                
-                            elseif switch_2 == "PionTransport" then
-                                DIA_PushFront( self.sel_pionTransport, pion )
-                                
-                            elseif switch_2 == "GroupeMaintenanceEvacuation" then
-                                DIA_PushFront( self.sel_groupeMaintenanceEvacuation, pion )
-                                
-                            elseif switch_2 == "SectionMaintenance" then
-                                DIA_PushFront( self.sel_sectionMaintenance, pion )
-                                
-                            elseif switch_2 == "SectionLOGTC2" then
-                                DIA_PushFront( self.sel_sectionLOGTC2, pion )
-                                
-                            elseif switch_2 == "PionConvoi" then
-                                --[[// rien
+                                local cases_switch_2 = {}
+                                    if switch_2 == "GroupeRamassage" then
+                                        DIA_PushFront( self.sel_groupeRamassage, pion )
+                                        
+                                                                        cases_switch_2[1] = true
+elseif switch_2 == "DecontaminationNBC" then
+                                        DIA_PushFront( self.sel_decontaminationNBC, pion )
+                                        
+                                                                        cases_switch_2[2] = true
+elseif switch_2 == "SectionTriage" then
+                                        DIA_PushFront( self.sel_sectionTriage, pion )
+                                        
+                                                                        cases_switch_2[3] = true
+elseif switch_2 == "ACA" then
+                                        DIA_PushFront( self.sel_ACA, pion )
+                                        
+                                                                        cases_switch_2[4] = true
+elseif switch_2 == "UniteSoin" then
+                                        DIA_PushFront( self.sel_uniteSoin, pion )
+                                        
+                                                                        cases_switch_2[5] = true
+elseif switch_2 == "UniteSpy" then
+                                        DIA_PushFront( self.sel_uniteSpy, pion )
+                                        
+                                                                        cases_switch_2[6] = true
+elseif switch_2 == "PionStock" then
+                                        DIA_PushFront( self.sel_pionStock, pion )
+                                        
+                                                                        cases_switch_2[7] = true
+elseif switch_2 == "PionTransport" then
+                                        DIA_PushFront( self.sel_pionTransport, pion )
+                                        
+                                                                        cases_switch_2[8] = true
+elseif switch_2 == "GroupeMaintenanceEvacuation" then
+                                        DIA_PushFront( self.sel_groupeMaintenanceEvacuation, pion )
+                                        
+                                                                        cases_switch_2[9] = true
+elseif switch_2 == "SectionMaintenance" then
+                                        DIA_PushFront( self.sel_sectionMaintenance, pion )
+                                        
+                                                                        cases_switch_2[10] = true
+elseif switch_2 == "SectionLOGTC2" then
+                                        DIA_PushFront( self.sel_sectionLOGTC2, pion )
+                                        
+                                                                        cases_switch_2[11] = true
+elseif switch_2 == "PionConvoi" then
+                                        --[[// rien
 ]]
-                            
-                            else
-                                DIA_PushFront( self.selAutres, pion )
-                                
-                                                        end
+                                                                        cases_switch_2[12] = true
 
-                    end
+                                    else
+                                        DIA_PushFront( self.selAutres, pion )
+                                        
+                                                                        end
+                                end
+
+                        end
 --[[// ordre de création des missions de deploiement
 ]]
-                end
-
-                if( ( #( self.selPions ) ~= 0 and #( self.selPions ) ~= nil ) ) then
-                    do
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeMaintenanceEvacuation, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_pionStock, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_pionTransport, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeMaintenanceEvacuation, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_sectionLOGTC2, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeRamassage, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_sectionTriage, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_ACA, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe, 1, { ePhase_MRT, self.sel_decontaminationNBC, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_uniteSoin, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe, 1, { ePhase_MRT, self.sel_uniteSpy, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        Activate( self.activations.BEH_Mission_Automate_LOG_AssignerReparerAListe, 1, { ePhase_MRT, self.sel_sectionMaintenance, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
-                        --[[// pion inconnu --> juste deplacement si deploiement vers position
-]]if( ( self._namedParams.mission.positionDeploiement_ ~= 0 and self._namedParams.mission.positionDeploiement_ ~= nil ) ) then
-                            Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementAListe, 1, { ePhase_MRT, self.selAutres, self._namedParams.mission.positionDeploiement_, } )
-                        end
-
-                        self.ePhase = eMRT_Valider
                     end
---[[// pas de pions opérationnels
-]]                else
-                    Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                end
 
-                
-            --[[//-----------------------------------------------------------------------------
+                    if( ( #( self.selPions ) ~= 0 and #( self.selPions ) ~= nil ) ) then
+                        do
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeMaintenanceEvacuation, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_pionStock, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_pionTransport, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeMaintenanceEvacuation, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_sectionLOGTC2, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerAListe, 1, { ePhase_MRT, self.sel_groupeRamassage, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_sectionTriage, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_ACA, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe, 1, { ePhase_MRT, self.sel_decontaminationNBC, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe, 1, { ePhase_MRT, self.sel_uniteSoin, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe, 1, { ePhase_MRT, self.sel_uniteSpy, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            Activate( self.activations.BEH_Mission_Automate_LOG_AssignerReparerAListe, 1, { ePhase_MRT, self.sel_sectionMaintenance, self._namedParams.mission.positionDeploiement_, eEtatEchelon_Premier, } )
+                            --[[// pion inconnu --> juste deplacement si deploiement vers position
+]]if( ( self._namedParams.mission.positionDeploiement_ ~= 0 and self._namedParams.mission.positionDeploiement_ ~= nil ) ) then
+                                Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementAListe, 1, { ePhase_MRT, self.selAutres, self._namedParams.mission.positionDeploiement_, } )
+                            end
+
+                            self.ePhase = eMRT_Valider
+                        end
+--[[// pas de pions opérationnels
+]]                    else
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                    end
+
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eMRT_MissionImpossible then
-                Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossible, } )
-                
-            --[[//---------------------------------------------------------------------
+]]                cases_switch_1[1] = true
+elseif switch_1 == eMRT_MissionImpossible then
+                    Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossible, } )
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_Valider then
-                DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+]]                cases_switch_1[2] = true
+elseif switch_1 == eMRT_Valider then
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            
-            else
-                        end
+                end
+                if not cases_switch_1[1] and not cases_switch_1[2] then
+                                end
+            end
 
     end,
 

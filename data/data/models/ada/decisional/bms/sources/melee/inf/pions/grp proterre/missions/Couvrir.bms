@@ -78,31 +78,35 @@ node "MIS_Pion_INF_Couvrir"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eCouvrir then
-                Activate( self.activations.BEH_Mission_Pion_VAB_Couvrir, GetMotivation( "MOT_Mission" ), {} )
-                
-            elseif switch_1 == eFinMission then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            DEC_Trace( "fin mission" )
-                            DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eCouvrir then
+                    Activate( self.activations.BEH_Mission_Pion_VAB_Couvrir, GetMotivation( "MOT_Mission" ), {} )
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                DEC_Trace( "fin mission" )
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
     end,
 
@@ -143,39 +147,44 @@ node "BEH_Mission_Pion_VAB_Couvrir"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eRejoindre then
-                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
-                            self.ePhase = eCouvrir
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindre then
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
                             self.eAction = eActionEnCours
+                                                        do
+                                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                                self.ePhase = eCouvrir
+                                self.eAction = eActionEnCours
+                            end
+
                         end
-
-                    end
-                else
+                    else
 do
-                        Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir, 1, setmetatable( { M_TEMPS_PREPARATION_APPUYER(), self.mission.pointCouverture_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                return
+                            Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir, 1, setmetatable( { M_TEMPS_PREPARATION_APPUYER(), self.mission.pointCouverture_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                        return
 
+                        end
                     end
-                end
 
-            elseif switch_1 == eCouvrir then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnCouverture, } )
-                Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 2.5, } )
-                Activate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointCouverture_, false, } )
-                --[[// S'il est inoffensif et que l'on est deja en train de le traiter, 
+                                end
+                if cases_switch_1[1] or switch_1 == eCouvrir then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnCouverture, } )
+                    Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 2.5, } )
+                    Activate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointCouverture_, false, } )
+                    --[[// S'il est inoffensif et que l'on est deja en train de le traiter, 
 ]]--[[// ne rien faire
 ]]if( ( self.repAmi ~= 0 and self.repAmi ~= nil ) and F_Pion_GeteniEnCours( self.repAmi ) ~= nil ) then
-                    Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, -1 * GetMotivation( "MOT_ManoeuvrerSurEnis" ), { F_Pion_GeteniEnCours( self.repAmi ), true, } )
-                end
+                        Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, -1 * GetMotivation( "MOT_ManoeuvrerSurEnis" ), { F_Pion_GeteniEnCours( self.repAmi ), true, } )
+                    end
 
-                
-                        end
+                    
+                                cases_switch_1[2] = true
+                end
+            end
 
                 self.params.__returnValue = self.ePhase
         return
@@ -238,48 +247,53 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
-                    do
-                        Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { self._namedParams.rTempsPreparation, } )
-                                                return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
+                        do
+                            Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { self._namedParams.rTempsPreparation, } )
+                                                        return
 
+                        end
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DebutMission, } )
-                StartActivate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptObjectif, eProgressionDefaut, eTypeItiAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
-                self.ePhase = eReconnaitre
-            --[[// On cherche une position d'observation
-]]elseif switch_1 == eReconnaitre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[// Calcul de position d'observation ?
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DebutMission, } )
+                    StartActivate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptObjectif, eProgressionDefaut, eTypeItiAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
+                    self.ePhase = eReconnaitre
+                --[[// On cherche une position d'observation
+]]                end
+                if cases_switch_1[1] or switch_1 == eReconnaitre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[// Calcul de position d'observation ?
 ]]if( S_EstADistanceTir_Pt( self._namedParams.ptObjectif ) ) then
-                    do
-                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.5, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
-                        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptObjectif, } )
-                        if( DEC_Perception_PointEstVisible( self._namedParams.ptObjectif ) ) then
-                            do
-                                self.ePhase = eRejoindre
-                                                                return
+                        do
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.5, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
+                            Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ptObjectif, } )
+                            if( DEC_Perception_PointEstVisible( self._namedParams.ptObjectif ) ) then
+                                do
+                                    self.ePhase = eRejoindre
+                                                                        return
 
+                                end
                             end
-                        end
 
+                        end
                     end
-                end
 
-                
-            elseif switch_1 == eRejoindre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                
-            
-            else
-                do
-                end
+                    
+                elseif switch_1 == eRejoindre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    
+                                cases_switch_1[3] = true
 
-                        end
+                else
+                    do
+                    end
+
+                                end
+            end
 
     end,
 

@@ -10,9 +10,9 @@ node "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur"
 
     activate = function( self )
         self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
-        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, AntitankHelicopterPatrol )
-        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, EscortAndCloseSupportHelicopterPatrol )
-        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePion( self.selPions, AirDefenseHelicopterPatrol )
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, "AntitankHelicopterPatrol" )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePion( self.selPions, "AirDefenseHelicopterPatrol" )
         self.listeDetruire = self.listeDetruire or S_Liste_Concatene( self.listeHAC, self.listeHAP )
         if( ModuleBegins() ) then
             do

@@ -25,9 +25,9 @@ includedFiles["sources/appui/alat/automates/common/missions/escorter/Escorter - 
 
     activate = function( self )
         self.listePionsSgpt = self.listePionsSgpt or DEC_Automate_PionsSansPC()
-        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, AntitankHelicopterPatrol )
-        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, EscortAndCloseSupportHelicopterPatrol )
-        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, AirDefenseHelicopterPatrol )
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "AntitankHelicopterPatrol" )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
         self.listePatrouillesPeutFaireMissionEscorteOuCouvrir = self.listePatrouillesPeutFaireMissionEscorteOuCouvrir or S_Liste_Concatene( S_Liste_Concatene( self.listeHAP, self.listeHAC ), self.listeHAM )
         if( ModuleBegins() ) then
             do

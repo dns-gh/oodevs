@@ -39,57 +39,61 @@ node "BEH_Mission_Pion_INF_Defendre"
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
         self.locADefendre = self.locADefendre or DEC_Geometrie_ConvertirPointEnLocalisation( self.mission.pointADefendre_ )
-        switch_1 = self.ePhase
-            if switch_1 == eSeMettreEnPlace then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eInstallerDispositif
-                                                        self.params.__returnValue = self.ePhase
-                            return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSeMettreEnPlace then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eInstallerDispositif
+                                                                self.params.__returnValue = self.ePhase
+                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-                --[[// Rejoins une position d'observation de la position a Barrer
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    --[[// Rejoins une position d'observation de la position a Barrer
 ]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointADefendre_, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eInstallerDispositif then
-                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+                    
+                elseif switch_1 == eInstallerDispositif then
+                    Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                    --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]--[[// On surveille la zone en meme temps que l'on prepare
 ]]--[[// On fait d'abord debarquer				
 ]]StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointADefendre_, self.mission.preparerTerrain_, } )
-                --[[// preparation 5min
+                    --[[// preparation 5min
 ]]if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eSurveiller
-                                                        self.params.__returnValue = self.ePhase
-                            return
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eSurveiller
+                                                                self.params.__returnValue = self.ePhase
+                                return
+
+                            end
 
                         end
-
-                    end
 --[[// Temps de mise en place du dispositif
-]]                end
+]]                    end
 
-                Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// On surveille jusqu'a la fin...
+                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// On surveille jusqu'a la fin...
 ]]elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DispositifInstalle, } )
-                Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 2.5, } )
-                
-            
-            else
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DispositifInstalle, } )
+                    Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 2.5, } )
+                    
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
 
                 self.params.__returnValue = self.ePhase
         return

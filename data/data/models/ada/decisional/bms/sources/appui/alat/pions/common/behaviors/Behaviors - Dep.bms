@@ -66,25 +66,30 @@ node "BEH_Dep_Pion_ALAT_Voler"
     end,
 
     activate = function( self )
-        switch_1 = F_Pion_GeteEtatAmbiance( myself )
-            if switch_1 == eEtatAmbiance_Surete then
-                Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
-                if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SecondeAllure, 1, {} )
-                else
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis, 1, {} )
-                end
+         do
+            local switch_1 = F_Pion_GeteEtatAmbiance( myself )
+            local cases_switch_1 = {}
+                if switch_1 == eEtatAmbiance_Surete then
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                    if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_SecondeAllure, 1, {} )
+                    else
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis, 1, {} )
+                    end
 
-                
-            elseif switch_1 == eEtatAmbiance_Vitesse then
-                if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllure, 1, {} )
-                else
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis, 1, {} )
-                end
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eEtatAmbiance_Vitesse then
+                    if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllure, 1, {} )
+                    else
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis, 1, {} )
+                    end
 
-                
-                        end
+                    
+                                cases_switch_1[2] = true
+                end
+            end
 
     end,
 
@@ -428,36 +433,43 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
 
         Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
         Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itineraire, self._namedParams.typeProgression, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-        switch_1 = --[[// gestion de l'état du calcul de l'itineraire
+         do
+            local switch_1 = --[[// gestion de l'état du calcul de l'itineraire
 ]]DEC_Itineraire_Etat( self.itineraire )
-            if switch_1 == eItineraire_Valide
-            or switch_1 == eItineraire_Partiel then
-                if( not self.initialisationOK ) then
-                    do
-                        self.pointEffectifARejoindre = DEC_Itineraire_DernierPoint( self.itineraire )
-                        self.initialisationOK = true
-                    end
-                end
-
-                
-            elseif switch_1 == eItineraire_Invalide then
-                self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eItineraire_CalculEnCours then
-                
-            elseif switch_1 == eItineraire_Impossible then
-                self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eItineraire_Annule then
-                self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
+            local cases_switch_1 = {}
+                if switch_1 == eItineraire_Valide
+                or switch_1 == eItineraire_Partiel then
+                    if( not self.initialisationOK ) then
+                        do
+                            self.pointEffectifARejoindre = DEC_Itineraire_DernierPoint( self.itineraire )
+                            self.initialisationOK = true
                         end
+                    end
+
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eItineraire_Invalide then
+                    self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[2] or switch_1 == eItineraire_CalculEnCours then
+                    
+                                cases_switch_1[3] = true
+elseif switch_1 == eItineraire_Impossible then
+                    self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[4] or switch_1 == eItineraire_Annule then
+                    self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+            end
 
     end,
 

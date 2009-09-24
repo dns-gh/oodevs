@@ -138,14 +138,18 @@ end
         return _returnValue
     end
 
-    switch_1 = mission:GetType()
-        if switch_1 == "T_Mission_Pion_INF_ControlerSecteur" then
-            _returnValue = 1500
-            
-        
-        else
-            _returnValue = 300
-                end
+     do
+        local switch_1 = mission:GetType()
+        local cases_switch_1 = {}
+            if switch_1 == "T_Mission_Pion_INF_ControlerSecteur" then
+                _returnValue = 1500
+                
+                        cases_switch_1[1] = true
+
+            else
+                _returnValue = 300
+                        end
+        end
 
     return _returnValue
 end

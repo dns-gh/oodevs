@@ -28,16 +28,20 @@ node "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC"
     end,
 
     activate = function( self )
-        switch_1 = --[[// Situation Mission
+         do
+            local switch_1 = --[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
 ]]F_Automat_GeteEtatPhaseMission( myself )
-            if switch_1 == eEtatPhaseMission_InstallationDispositif
-            or switch_1 == eEtatPhaseMission_EnSurveillance then
-                Activate( self.activations.BEH_Conduite_Automate_INF_AssignerMission_PC, 1, { "T_Mission_Pion_FaireMouvement", } )
-                
-            --[[//default:
+            local cases_switch_1 = {}
+                if switch_1 == eEtatPhaseMission_InstallationDispositif
+                or switch_1 == eEtatPhaseMission_EnSurveillance then
+                    Activate( self.activations.BEH_Conduite_Automate_INF_AssignerMission_PC, 1, { "T_Mission_Pion_FaireMouvement", } )
+                    
+                --[[//default:
 ]]--[[//behavior BEH_Conduite_Automate_INF_AssignerMission_PC( T_Mission_Pion_Suivre );			
-]]            end
+]]                cases_switch_1[1] = true
+                end
+            end
 
     end,
 
@@ -80,24 +84,28 @@ node "BEH_Conduite_Automate_INF_AssignerMission_PC"
                     return
                 end
 
-                switch_1 = self._namedParams.eMission
-                    if switch_1 == "T_Mission_Pion_Suivre" then
-                        Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.pAppui, } )
-                        
-                    elseif switch_1 == "T_Mission_Pion_FaireMouvement" then
-                        if( F_Pion_GeteEtatPhaseMission( self.pAppui ) ~= eEtatPhaseMission_InstallationDispositif ) then
-                            do
-                                self.pAppui = self.pFoo
-                                                                return
+                 do
+                    local switch_1 = self._namedParams.eMission
+                    local cases_switch_1 = {}
+                        if switch_1 == "T_Mission_Pion_Suivre" then
+                            Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.pAppui, } )
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "T_Mission_Pion_FaireMouvement" then
+                            if( F_Pion_GeteEtatPhaseMission( self.pAppui ) ~= eEtatPhaseMission_InstallationDispositif ) then
+                                do
+                                    self.pAppui = self.pFoo
+                                                                        return
 
+                                end
                             end
-                        end
 
-                        local mission = DEC_GetMission( myself )
-                        self.ptStatique = S_Geometrie_PtInvDirDangereuse( DEC_Automate_PionPosition( self.pAppui ), DEC_GetDirectionEnnemi( mission ), 1263 )
-                        Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.ptStatique, eEtatEchelon_Second, } )
-                        
-                                        end
+                            local mission = DEC_GetMission( myself )
+                            self.ptStatique = S_Geometrie_PtInvDirDangereuse( DEC_Automate_PionPosition( self.pAppui ), DEC_GetDirectionEnnemi( mission ), 1263 )
+                            Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.ptStatique, eEtatEchelon_Second, } )
+                            
+                                                end
+                    end
 
             end
         end

@@ -38,26 +38,31 @@ node "ACT_Tir_DirectSur"
 ]]--[[// ---------------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eTir
-            if switch_1 == eActionTirDirect_Impossible then
-                --[[// Debug
+         do
+            local switch_1 = self.eTir
+            local cases_switch_1 = {}
+                if switch_1 == eActionTirDirect_Impossible then
+                    --[[// Debug
 ]]DEC_Trace( "Impossible fire" )
-                
-            elseif switch_1 == eActionTirDirect_NoAmmo
-            or switch_1 == eActionTirDirect_NoCapacity
-            or switch_1 == eActionTirDirect_EnemyDestroyed
-            or switch_1 == eActionTirDirect_Finished then
-                self.actionTir = DEC_StopAction( self.actionTir )
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionTirDirect_NoAmmo
+                or switch_1 == eActionTirDirect_NoCapacity
+                or switch_1 == eActionTirDirect_EnemyDestroyed
+                or switch_1 == eActionTirDirect_Finished then
+                    self.actionTir = DEC_StopAction( self.actionTir )
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionTirDirect_None
-            or switch_1 == eActionTirDirect_Running then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                
-                        end
+                    
+                elseif switch_1 == eActionTirDirect_None
+                or switch_1 == eActionTirDirect_Running then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
+                    
+                                cases_switch_1[3] = true
+                end
+            end
 
     end,
 
@@ -110,28 +115,33 @@ node "ACT_Tir_DirectSur"
 
         end
 
-        switch_1 = --[[// --------------------------------------------------------------------- 
+         do
+            local switch_1 = --[[// --------------------------------------------------------------------- 
 ]]--[[// Retour tir --> debug
 ]]--[[// ---------------------------------------------------------------------
 ]]self.eTir
-            if switch_1 == eActionTirDirect_Impossible then
-                --[[// Debug
+            local cases_switch_1 = {}
+                if switch_1 == eActionTirDirect_Impossible then
+                    --[[// Debug
 ]]DEC_Trace( "Fire impossible" )
-                
-            elseif switch_1 == eActionTirDirect_NoAmmo
-            or switch_1 == eActionTirDirect_NoCapacity
-            or switch_1 == eActionTirDirect_EnemyDestroyed
-            or switch_1 == eActionTirDirect_Finished then
-                self.actionTir = DEC_StopAction( self.actionTir )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionTirDirect_NoAmmo
+                or switch_1 == eActionTirDirect_NoCapacity
+                or switch_1 == eActionTirDirect_EnemyDestroyed
+                or switch_1 == eActionTirDirect_Finished then
+                    self.actionTir = DEC_StopAction( self.actionTir )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            elseif switch_1 == eActionTirDirect_None
-            or switch_1 == eActionTirDirect_Running then
-                F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                
-                        end
+                    
+                elseif switch_1 == eActionTirDirect_None
+                or switch_1 == eActionTirDirect_Running then
+                    F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
+                    
+                                cases_switch_1[3] = true
+                end
+            end
 
     end,
 

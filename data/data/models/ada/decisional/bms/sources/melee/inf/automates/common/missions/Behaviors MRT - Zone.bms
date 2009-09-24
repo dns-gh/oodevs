@@ -53,127 +53,139 @@ node "BEH_Medo_Automate_INF_PreparerMission_Zone"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMRT_SelectionnerPions then
-                self.ePhase = eMRT_AssignerMissions
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_SelectionnerPions then
+                    self.ePhase = eMRT_AssignerMissions
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------								
 ]]DEC_Trace( "Selection des composantes pion : Infanterie" )
-                --[[// Selection les types de composantes
-]]local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie )
-                self.selPions_INF_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, GroupeInfanterie_Mortier )
-                --[[// Determine les echelons				
+                    --[[// Selection les types de composantes
+]]local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie" )
+                    self.selPions_INF_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, "GroupeInfanterie_Mortier" )
+                    --[[// Determine les echelons				
 ]]local rN_PE = 0
-                local rN_SE = 0
-                switch_2 = self._namedParams.eTypeMission
-                    if switch_2 == "T_Mission_Automate_INF_Controler"
-                    or switch_2 == "T_Mission_Automate_INF_Harceler" then
-                        --[[// Determine les echelons						
+                    local rN_SE = 0
+                     do
+                        local switch_2 = self._namedParams.eTypeMission
+                        local cases_switch_2 = {}
+                            if switch_2 == "T_Mission_Automate_INF_Controler"
+                            or switch_2 == "T_Mission_Automate_INF_Harceler" then
+                                --[[// Determine les echelons						
 ]]rN_PE = 3
-                        if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
-                            rN_PE = Min( self._namedParams.rN_Position, rN_PE )
-                        end
+                                if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
+                                    rN_PE = Min( self._namedParams.rN_Position, rN_PE )
+                                end
 
-                        rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
-                        --[[// Selection des composantes
+                                rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
+                                --[[// Selection des composantes
 ]]DEC_Trace( "Selection des composantes pion" )
-                        self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
-                        
-                                        end
+                                self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
+                                
+                                                        cases_switch_2[1] = true
+                            end
+                        end
 --[[// L'execution de la mission necessite la presence d'un 1er ech
 ]]
-                if( ( #( self.lstPionsAttaque ) == 0 or #( self.lstPionsAttaque ) == nil ) ) then
-                    do
-                        DEC_Trace( "Pas de 1er echelon" )
-                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
+                    if( ( #( self.lstPionsAttaque ) == 0 or #( self.lstPionsAttaque ) == nil ) ) then
+                        do
+                            DEC_Trace( "Pas de 1er echelon" )
+                            DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
 
+                        end
                     end
-                end
 
-                
-            elseif switch_1 == eMRT_AffecterFuseaux then
-                --[[//-----------------------------------------------------------------------------
+                    
+                elseif switch_1 == eMRT_AffecterFuseaux then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[//Le fuseau de la compagnie est coupe en DEUX
 ]]--[[//le pion en appui utilise le fuseau de la compagnie
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eActionMRT == eActionEffectuee ) then
-                    do
-                        self.eActionMRT = eActionEnCours
-                                                do
-                            self.ePhase = eMRT_AssignerMissions
-                                                        return
+                        do
+                            self.eActionMRT = eActionEnCours
+                                                        do
+                                self.ePhase = eMRT_AssignerMissions
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { self.lstPionsAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eMRT_AssignerMissions then
-                --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { self.lstPionsAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eMRT_AssignerMissions then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner les missions au pions subordonnéss
 ]]--[[//-----------------------------------------------------------------------------				
 ]]if( self.eActionMRT == eActionImpossible ) then
-                    do
-                                                do
-                        end
+                        do
+                                                        do
+                            end
 
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
-                    end
-                end
-
-                if( self.eValidationMRT == eActionImpossible ) then
-                    do
-                                                do
-                            DEC_Trace( "eValidationMRT == eActionImpossible" )
-                        end
-
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
-                    end
-                end
-
-                if( self.eValidationMRT == eActionEffectuee ) then
-                    do
-                        self.eValidationMRT = eActionEnCours
-                                                do
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.lstPionsAttaque ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
-                switch_2 = self._namedParams.eTypeMission
-                    if switch_2 == "T_Mission_Automate_INF_Controler" then
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerControler, 1, { self.selPions_PE_INF, } )
-                        Activate( self.activations.BEH_Medo_Automate_INF_Controler_AssignerMission_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                        
-                    elseif switch_2 == "T_Mission_Automate_INF_Harceler" then
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerHarceler, 1, { self.selPions_PE_INF, } )
-                        Activate( self.activations.BEH_Medo_Automate_INF_Harceler_AssignerMission_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                        
-                    
-                    else
-                        DEC_Trace( "Mission Inconnue" )
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
+                    if( self.eValidationMRT == eActionImpossible ) then
+                        do
+                                                        do
+                                DEC_Trace( "eValidationMRT == eActionImpossible" )
+                            end
 
-                                        end
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
 
-                Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
-                Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
-                
                         end
+                    end
+
+                    if( self.eValidationMRT == eActionEffectuee ) then
+                        do
+                            self.eValidationMRT = eActionEnCours
+                                                        do
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.lstPionsAttaque ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                     do
+                        local switch_2 = self._namedParams.eTypeMission
+                        local cases_switch_2 = {}
+                            if switch_2 == "T_Mission_Automate_INF_Controler" then
+                                Activate( self.activations.BEH_Medo_Automate_INF_AssignerControler, 1, { self.selPions_PE_INF, } )
+                                Activate( self.activations.BEH_Medo_Automate_INF_Controler_AssignerMission_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                                
+                                                        cases_switch_2[1] = true
+elseif switch_2 == "T_Mission_Automate_INF_Harceler" then
+                                Activate( self.activations.BEH_Medo_Automate_INF_AssignerHarceler, 1, { self.selPions_PE_INF, } )
+                                Activate( self.activations.BEH_Medo_Automate_INF_Harceler_AssignerMission_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                                
+                                                        cases_switch_2[2] = true
+
+                            else
+                                DEC_Trace( "Mission Inconnue" )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt()
+
+                                                        end
+                        end
+
+                    Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
+                    Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
+                    
+                                end
+            end
 
     end,
 
@@ -213,25 +225,30 @@ node "BEH_Medo_Automate_INF_AssignerControler"
                 self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( self.mission.zone_, #( self._namedParams.lstPions_PE ), self.eCodeLoc )
                 self.eCodeLoc = self.lstLocalisations.second
                 self.lstLocalisations = self.lstLocalisations.first
-                switch_1 = self.eCodeLoc
-                    if switch_1 == eError_PionsPasDansMemeFuseau
-                    or switch_1 == eError_LocalisationPasDansFuseau then
-                                            DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
-                                                do
-                            DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                            Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
-                                                        self.params.__returnValue = eActionImpossible
-                            return
+                 do
+                    local switch_1 = self.eCodeLoc
+                    local cases_switch_1 = {}
+                        if switch_1 == eError_PionsPasDansMemeFuseau
+                        or switch_1 == eError_LocalisationPasDansFuseau then
+                                                    DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                                                        do
+                                DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                                                self.params.__returnValue = eActionImpossible
+                                return
 
+                            end
+
+                            
+                        elseif switch_1 == eWarning_DecoupageIncomplet then
+                                                    DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                            
+                                                cases_switch_1[2] = true
+elseif switch_1 == eNoError then
+                                                    
+                                                cases_switch_1[3] = true
                         end
-
-                        
-                    elseif switch_1 == eWarning_DecoupageIncomplet then
-                                            DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
-                        
-                    elseif switch_1 == eNoError then
-                                            
-                                        end
+                    end
 
                 local rIt = 0
                 for _,x_pion in pairs( self._namedParams.lstPions_PE ) do
@@ -295,25 +312,30 @@ node "BEH_Medo_Automate_INF_AssignerHarceler"
                 self.lstLocalisations = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneSurveillance_, #( self._namedParams.lstPions_PE ), self.eCodeLoc )
                 self.eCodeLoc = self.lstLocalisations.second
                 self.lstLocalisations = self.lstLocalisations.first
-                switch_1 = self.eCodeLoc
-                    if switch_1 == eError_PionsPasDansMemeFuseau
-                    or switch_1 == eError_LocalisationPasDansFuseau then
-                                            DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
-                                                do
-                            DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                            Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
-                                                        self.params.__returnValue = eActionImpossible
-                            return
+                 do
+                    local switch_1 = self.eCodeLoc
+                    local cases_switch_1 = {}
+                        if switch_1 == eError_PionsPasDansMemeFuseau
+                        or switch_1 == eError_LocalisationPasDansFuseau then
+                                                    DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                                                        do
+                                DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
+                                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                                                self.params.__returnValue = eActionImpossible
+                                return
 
+                            end
+
+                            
+                        elseif switch_1 == eWarning_DecoupageIncomplet then
+                                                    DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
+                            
+                                                cases_switch_1[2] = true
+elseif switch_1 == eNoError then
+                                                    
+                                                cases_switch_1[3] = true
                         end
-
-                        
-                    elseif switch_1 == eWarning_DecoupageIncomplet then
-                                            DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
-                        
-                    elseif switch_1 == eNoError then
-                                            
-                                        end
+                    end
 
                 self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.pointRegroupement_, #( self._namedParams.lstPions_PE ), self.eCodeLocRgpt )
                 self.eCodeLocRgpt = self.lstLocRgpt.second

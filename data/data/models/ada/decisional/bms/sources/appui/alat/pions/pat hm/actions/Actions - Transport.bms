@@ -33,20 +33,25 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
             end
         end
 
-        switch_1 = self.eEtatTransport
-            if switch_1 == eActionTransport_Running then
-                
-            elseif switch_1 == eActionTransport_Finished then
-                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+         do
+            local switch_1 = self.eEtatTransport
+            local cases_switch_1 = {}
+                if switch_1 == eActionTransport_Running then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionTransport_Finished then
+                    self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            elseif switch_1 == eActionTransport_Impossible then
-                self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
+                    self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                        end
+                                end
+            end
 
     end,
 
@@ -94,20 +99,25 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
             end
         end
 
-        switch_1 = self.eEtatTransport
-            if switch_1 == eActionTransport_Running then
-                
-            elseif switch_1 == eActionTransport_Finished then
-                DEC_StopAction( self.actionDebarquer )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+         do
+            local switch_1 = self.eEtatTransport
+            local cases_switch_1 = {}
+                if switch_1 == eActionTransport_Running then
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionTransport_Finished then
+                    DEC_StopAction( self.actionDebarquer )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            elseif switch_1 == eActionTransport_Impossible then
-                DEC_StopAction( self.actionDebarquer )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
+                    DEC_StopAction( self.actionDebarquer )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                        end
+                                end
+            end
 
     end,
 

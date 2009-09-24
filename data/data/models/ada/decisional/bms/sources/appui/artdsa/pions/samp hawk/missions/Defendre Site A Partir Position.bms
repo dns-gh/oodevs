@@ -57,56 +57,61 @@ include "bit.lua"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                self.ePhase = eRejoindre
-                
-            --[[//Rejoindre la position donnée par le commandant d'unité
-]]elseif switch_1 == eRejoindre then
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eSurveiller
-                                                        return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    self.ePhase = eRejoindre
+                    
+                --[[//Rejoindre la position donnée par le commandant d'unité
+]]                cases_switch_1[1] = true
+elseif switch_1 == eRejoindre then
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eSurveiller
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointDeDeploiement_, } )
-                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDeDeploiement_, } )
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointDeDeploiement_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
-                Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
-                Activate( self.activations.BEH_Manoeuvre_Pion_ASA_SeDeployer, 1, { 0, } )
-                if( DEC_Agent_EstInstalle() and ( F_Pion_GeteEtatRadar( myself ) == eEtatRadar_Ouvert ) and F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then
-                    Activate( self.activations.ACT_RC, 1, { eRC_PretAuTir, } )
-                end
-
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                    do
-                        F_Pion_SetobjectifEsquive( myself, nil )
-                        DEC_FinMission()
-                                                self.params.__returnValue = eActionEffectuee
-                        Halt()
-
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointDeDeploiement_, } )
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDeDeploiement_, } )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointDeDeploiement_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
+                    Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
+                    Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_Pion_ASA_SeDeployer, 1, { 0, } )
+                    if( DEC_Agent_EstInstalle() and ( F_Pion_GeteEtatRadar( myself ) == eEtatRadar_Ouvert ) and F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then
+                        Activate( self.activations.ACT_RC, 1, { eRC_PretAuTir, } )
                     end
-                end
 
-                
+                    
+                                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            F_Pion_SetobjectifEsquive( myself, nil )
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
                         end
+                    end
+
+                    
+                                end
+            end
 
     end,
 

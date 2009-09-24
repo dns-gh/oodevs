@@ -58,24 +58,28 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvre"
         Activate( self.activations.BEH_Pion_ASS_GererOrdre_AppliquerFeux, 1, { true, } )
         --[[// Mission
 ]]Activate( self.activations.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, 1, { true, } )
-        switch_1 = --[[//---------------------------------------------------------------------
+         do
+            local switch_1 = --[[//---------------------------------------------------------------------
 ]]self.ePhase
-            if switch_1 == eMettreEnOeuvre then
-                Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_RECO_LRM(), } )
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                    do
-                        DEC_FinMission()
-                                                self.params.__returnValue = eActionEffectuee
-                        Halt()
+            local cases_switch_1 = {}
+                if switch_1 == eMettreEnOeuvre then
+                    Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_RECO_LRM(), } )
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
 
-                    end
-                end
-
-                
                         end
+                    end
+
+                    
+                                end
+            end
 
     end,
 

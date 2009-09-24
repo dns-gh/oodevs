@@ -155,7 +155,7 @@ node "BEH_Conduite_Automate_INF_GererAppui_Mortier"
     activate = function( self )
         --[[// DEC_Automate_PionsSansPC();
 ]]local selPions = S_ObtenirPionsOperationnels()
-        local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( selPions, GroupeInfanterie_Mortier )
+        local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( selPions, "GroupeInfanterie_Mortier" )
         Activate( self.activations.BEH_Conduite_Automate_INF_GererOrdre_Mortier, 1, { selAppuis_Mortier, } )
         Activate( self.activations.BEH_Conduite_Automate_INF_GererMission_Mortier, 1, { selAppuis_Mortier, } )
     end,
@@ -184,7 +184,7 @@ node "BEH_Conduite_Automate_INF_GererMission_Mortier"
             selPions_SE = S_ObtenirPionsDe_SansPC( eEtatEchelon_Premier, eEtatDestruction_None )
         end
 
-        local selPions_Appuye = S_Cherche_Automate_Filtre_NotTypePion( selPions_SE, GroupeInfanterie_Mortier )
+        local selPions_Appuye = S_Cherche_Automate_Filtre_NotTypePion( selPions_SE, "GroupeInfanterie_Mortier" )
         for _,x in pairs( self._namedParams.selAppuis_Mortier ) do
         local _continue = true
 do
@@ -272,19 +272,24 @@ node "BEH_Conduite_Automate_INF_GererMission_PC"
 do
                 local pion = x
                 local bInconnue = true
-                switch_1 = pion:GetType()
-                    if switch_1 == "Peloton_AMX"
-                    or switch_1 == "Peloton_XL" then
-                        bInconnue = false
-                        
-                    elseif switch_1 == "SectionInfanterie"
-                    or switch_1 == "SectionInfanterie_MILAN"
-                    or switch_1 == "SectionInfanterie_HOT"
-                    or switch_1 == "SectionInfanterie_Appui"
-                    or switch_1 == "GroupeInfanterie_Mortier" then
-                        bInconnue = false
-                        
-                                        end
+                 do
+                    local switch_1 = pion:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Peloton_AMX"
+                        or switch_1 == "Peloton_XL" then
+                            bInconnue = false
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "SectionInfanterie"
+                        or switch_1 == "SectionInfanterie_MILAN"
+                        or switch_1 == "SectionInfanterie_HOT"
+                        or switch_1 == "SectionInfanterie_Appui"
+                        or switch_1 == "GroupeInfanterie_Mortier" then
+                            bInconnue = false
+                            
+                                                cases_switch_1[2] = true
+                        end
+                    end
 --[[// On donne la mission suivre 
 ]]--[[//		si le pion n'est pas connu
 ]]--[[//		si le pion n'a pas de mission en cours
@@ -324,19 +329,24 @@ node "BEH_Conduite_Automate_INF_Gerer_UniteInconnues"
 do
                 local pion = x
                 local bInconnue = true
-                switch_1 = pion:GetType()
-                    if switch_1 == "Peloton_AMX"
-                    or switch_1 == "Peloton_XL" then
-                        bInconnue = false
-                        
-                    elseif switch_1 == "SectionInfanterie"
-                    or switch_1 == "SectionInfanterie_MILAN"
-                    or switch_1 == "SectionInfanterie_HOT"
-                    or switch_1 == "SectionInfanterie_Appui"
-                    or switch_1 == "GroupeInfanterie_Mortier" then
-                        bInconnue = false
-                        
-                                        end
+                 do
+                    local switch_1 = pion:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Peloton_AMX"
+                        or switch_1 == "Peloton_XL" then
+                            bInconnue = false
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "SectionInfanterie"
+                        or switch_1 == "SectionInfanterie_MILAN"
+                        or switch_1 == "SectionInfanterie_HOT"
+                        or switch_1 == "SectionInfanterie_Appui"
+                        or switch_1 == "GroupeInfanterie_Mortier" then
+                            bInconnue = false
+                            
+                                                cases_switch_1[2] = true
+                        end
+                    end
 --[[// On donne la mission suivre 
 ]]--[[//		si le pion n'est pas connu
 ]]--[[//		si le pion n'a pas de mission en cours

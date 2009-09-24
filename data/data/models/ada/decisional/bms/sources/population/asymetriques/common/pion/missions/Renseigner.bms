@@ -40,39 +40,44 @@ includedFiles["sources/population/asymetriques/common/pion/missions/Renseigner.b
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_Renseigner:debut **", } )
-                self.ePhaseMission = eTransmettreInformations
-                
-            --[[// Partager connaissance
-]]elseif switch_1 == eTransmettreInformations then
-                if( self.eEtatDelai == eActionDebut ) then
-                    do
-                        Activate( self.activations.ACT_RC, 1, { eRC_DebutLiaison, } )
-                        self.eEtatDelai = eActionEnCours
-                        Activate( self.activations.ACT_Pion_ASY_Renseigner, 1, { self._namedParams.mission.destinataire_, 2.0, } )
-                    end
-                else
-if( self.eEtatDelai == eActionEnCours ) then
-                        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { MIS_Pion_ASY_Renseigner, 2.0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_Renseigner:debut **", } )
+                    self.ePhaseMission = eTransmettreInformations
+                    
+                --[[// Partager connaissance
+]]                cases_switch_1[1] = true
+elseif switch_1 == eTransmettreInformations then
+                    if( self.eEtatDelai == eActionDebut ) then
+                        do
+                            Activate( self.activations.ACT_RC, 1, { eRC_DebutLiaison, } )
+                            self.eEtatDelai = eActionEnCours
+                            Activate( self.activations.ACT_Pion_ASY_Renseigner, 1, { self._namedParams.mission.destinataire_, 2.0, } )
+                        end
                     else
+if( self.eEtatDelai == eActionEnCours ) then
+                            Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { MIS_Pion_ASY_Renseigner, 2.0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+                        else
 do
-                            Activate( self.activations.ACT_RC, 1, { eRC_FinLiaison, } )
-                            self.ePhaseMission = eFinMission
+                                Activate( self.activations.ACT_RC, 1, { eRC_FinLiaison, } )
+                                self.ePhaseMission = eFinMission
+                            end
                         end
                     end
-                end
 
-                
-            --[[// Fin
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                Halt()
+                    
+                --[[// Fin
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                                        Halt()
 
-                        end
+                                end
+            end
 
     end,
 

@@ -67,65 +67,68 @@ include "bit.lua"
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == ePhase_Decroche then
-                DEC_Trace( "Processus de rupture de contact : en cours [Decroche]" )
-                --[[// Calcul le point de regroupement
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePhase_Decroche then
+                    DEC_Trace( "Processus de rupture de contact : en cours [Decroche]" )
+                    --[[// Calcul le point de regroupement
 ]]--[[// ------------------------------------------------------------
 ]]DEC_Trace( FloatToString( #( self.sPion_PE ) ) .. " pions pris en compte." )
-                --[[// Pas de point de regroupement trouve				
+                    --[[// Pas de point de regroupement trouve				
 ]]self.ptRgpt_Bary = S_Geometrie_BarycentreZone( self.mission.zoneRegroupement_ )
-                if( #( self.sPion_PE ) > 0 ) then
-                    self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneRegroupement_, #( self.sPion_PE ), self.eCodeLoc )
-                    self.eCodeLoc = self.lstLocRgpt.second
-                    self.lstLocRgpt = self.lstLocRgpt.first
-                end
+                    if( #( self.sPion_PE ) > 0 ) then
+                        self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.zoneRegroupement_, #( self.sPion_PE ), self.eCodeLoc )
+                        self.eCodeLoc = self.lstLocRgpt.second
+                        self.lstLocRgpt = self.lstLocRgpt.first
+                    end
 
-                if( ( eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == 0 or eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == nil ) ) then
-                    self.params.__returnValue = eActionImpossible
-                    Halt()
-                end
+                    if( ( eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == 0 or eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == nil ) ) then
+                        self.params.__returnValue = eActionImpossible
+                        Halt()
+                    end
 
-                --[[// Fait rompre les pions par etape
+                    --[[// Fait rompre les pions par etape
 ]]--[[// ------------------------------------------------------------
 ]]self.ePhase = ePhase_RompreContact
-                
-            elseif switch_1 == ePhase_Attente then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                        self.ePhase = ePhase_RompreContact
-                                                return
+                    
+                elseif switch_1 == ePhase_Attente then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                            self.ePhase = ePhase_RompreContact
+                                                        return
 
-                    end
-                end
-
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_ROMPRE_CONTACT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == ePhase_RompreContact then
-                --[[// Recupere le point de regroupement
-]]local ptRgrpt = nil
-                if( eNoError == self.eCodeLoc and #( self.lstLocRgpt ) > self.rItLoc ) then
-                    do
-                        --[[// TODO : Delete pt
-]]ptRgrpt = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.lstLocRgpt, self.rItLoc ) )
-                    end
-                else
-                    ptRgrpt = self.ptRgpt_Bary
-                end
-
-                --[[// On prend un pion a chaque phase
-]]local pionPE = DIA_GetAt( self.sPion_PE, self.rItLoc )
-                                self.rItLoc = self.rItLoc + 1
-                if( F_Pion_GeteEtatDestruction( pionPE ) == eEtatDestruction_Total ) then
-                    return
-                end
-
-                --[[// Demande aux pions qui interdisent de rompre le contact									
-]]StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pionPE, ptRgrpt, eEtatEchelon_Premier, } )
-                self.ePhase = ePhase_Attente
-                
                         end
+                    end
+
+                    Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_ROMPRE_CONTACT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == ePhase_RompreContact then
+                    --[[// Recupere le point de regroupement
+]]local ptRgrpt = nil
+                    if( eNoError == self.eCodeLoc and #( self.lstLocRgpt ) > self.rItLoc ) then
+                        do
+                            --[[// TODO : Delete pt
+]]ptRgrpt = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.lstLocRgpt, self.rItLoc ) )
+                        end
+                    else
+                        ptRgrpt = self.ptRgpt_Bary
+                    end
+
+                    --[[// On prend un pion a chaque phase
+]]local pionPE = DIA_GetAt( self.sPion_PE, self.rItLoc )
+                                        self.rItLoc = self.rItLoc + 1
+                    if( F_Pion_GeteEtatDestruction( pionPE ) == eEtatDestruction_Total ) then
+                        return
+                    end
+
+                    --[[// Demande aux pions qui interdisent de rompre le contact									
+]]StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pionPE, ptRgrpt, eEtatEchelon_Premier, } )
+                    self.ePhase = ePhase_Attente
+                    
+                                end
+            end
 
     end,
 

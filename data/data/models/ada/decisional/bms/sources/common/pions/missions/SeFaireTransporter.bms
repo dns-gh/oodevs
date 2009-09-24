@@ -49,58 +49,63 @@ includedFiles["sources/common/pions/missions/SeFaireTransporter.bms"] = true
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhase = eProgresser
-                
-            --[[// Deplacement
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eFinMission
-                                                        return
-
-                        end
-
-                    end
-                end
-
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointEmbarquement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Attendre le transport
-]]elseif switch_1 == eAttendre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            --[[// Fin mission
-]]elseif switch_1 == eFinMission then
-                if( DEC_Agent_EstTransporte() ) then
-                    do
-                        Activate( self.activations.ACT_Dep_Trans_TransportEnCours, 1, {} )
-                        self.aEteTransporte = true
-                    end
-                else
-do
-                        if( self.aEteTransporte ) then
-                            do
-                                DEC_FinMission()
-                                                                self.params.__returnValue = eActionEffectuee
-                                Halt()
+                    self.ePhase = eProgresser
+                    
+                --[[// Deplacement
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                return
 
                             end
-                        end
 
-                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                        end
                     end
-                end
 
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointEmbarquement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Attendre le transport
+]]elseif switch_1 == eAttendre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                --[[// Fin mission
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    if( DEC_Agent_EstTransporte() ) then
+                        do
+                            Activate( self.activations.ACT_Dep_Trans_TransportEnCours, 1, {} )
+                            self.aEteTransporte = true
                         end
+                    else
+do
+                            if( self.aEteTransporte ) then
+                                do
+                                    DEC_FinMission()
+                                                                        self.params.__returnValue = eActionEffectuee
+                                    Halt()
+
+                                end
+                            end
+
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                        end
+                    end
+
+                                end
+            end
 
     end,
 

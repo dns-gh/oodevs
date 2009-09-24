@@ -44,23 +44,27 @@ include "bit.lua"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMettreEnOeuvre then
-                Activate( self.activations.BEH_Pion_ASS_AcquerirLanceursEni_Mission, GetMotivation( "MOT_Mission" ), {} )
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                    do
-                        DEC_FinMission()
-                                                self.params.__returnValue = eActionEffectuee
-                        Halt()
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMettreEnOeuvre then
+                    Activate( self.activations.BEH_Pion_ASS_AcquerirLanceursEni_Mission, GetMotivation( "MOT_Mission" ), {} )
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
 
-                    end
-                end
-
-                
                         end
+                    end
+
+                    
+                                end
+            end
 
     end,
 
@@ -93,52 +97,57 @@ node "BEH_Pion_ASS_AcquerirLanceursEni_Mission"
         self.eAction = self.eAction or eActionEnCours
         self.eActionReco = self.eActionReco or eActionEnCours
         self.ptObj_Installation = self.ptObj_Installation or S_Obj_Position( self.mission.zoneImplantation_ )
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
-                Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
-                self.ePhase = eRejoindre
-                
-            --[[// Rejoindre la position du site
-]]elseif switch_1 == eRejoindre then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                        self.ePhase = eDeployer
-                                                return
-
-                    end
-                end
-
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[// On fait une reconnaissance de la position lorsque l'on arrive
-]]--[[// a proximite
-]]if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptObj_Installation, 800 ) ) then
-                    Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, setmetatable( { self.ptObj_Installation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReco = v else rawset( t, k, v ) end end } ) )
-                end
-
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObj_Installation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eDeployer then
-                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, 1, { self.ptObj_Installation, } )
-                Activate( self.activations.BEH_Obs_Pion_ASS_TirIndirect_DansZones, 1, { self.mission.zonesAObserver_, self.mission.menanceRoem_, } )
-                
-            --[[//  Fin de mission --> rejoindre plot munition
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                    do
-                        DEC_FinMission()
-                                                self.params.__returnValue = eActionEffectuee
-                        Halt()
-
-                    end
-                end
+                    Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
+                    self.ePhase = eRejoindre
+                    
+                --[[// Rejoindre la position du site
+]]                cases_switch_1[1] = true
+elseif switch_1 == eRejoindre then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                            self.ePhase = eDeployer
+                                                        return
 
                         end
+                    end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[// On fait une reconnaissance de la position lorsque l'on arrive
+]]--[[// a proximite
+]]if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptObj_Installation, 800 ) ) then
+                        Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, setmetatable( { self.ptObj_Installation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReco = v else rawset( t, k, v ) end end } ) )
+                    end
+
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObj_Installation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eDeployer then
+                    Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                    Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, 1, { self.ptObj_Installation, } )
+                    Activate( self.activations.BEH_Obs_Pion_ASS_TirIndirect_DansZones, 1, { self.mission.zonesAObserver_, self.mission.menanceRoem_, } )
+                    
+                --[[//  Fin de mission --> rejoindre plot munition
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+                    end
+
+                                end
+            end
 
     end,
 

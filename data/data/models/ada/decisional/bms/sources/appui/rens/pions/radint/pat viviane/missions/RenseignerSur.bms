@@ -65,76 +65,81 @@ do
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// Se diriger vers les ZR 
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[// Observation
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// Se diriger vers les ZR 
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[// Observation
 ]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eRejoindre
-                                                        return
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eRejoindre
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                if( DEC_Perception_PointEstVisible( self.positionObservation ) ) then
-                    do
-                        --[[// Prendre des photos pd 5 min
+                    if( DEC_Perception_PointEstVisible( self.positionObservation ) ) then
+                        do
+                            --[[// Prendre des photos pd 5 min
 ]]Activate( self.activations.BEH_Obs_Pion_Rens_Radint_RenseignerDans, 1, { self._namedParams.mission.zonesDeRecherche_, } )
-                        Activate( self.activations.ACT_Info_Trace, 1, { "Vertical take off", } )
-                        --[[// Rester sur palce dans la cas du Cougar
+                            Activate( self.activations.ACT_Info_Trace, 1, { "Vertical take off", } )
+                            --[[// Rester sur palce dans la cas du Cougar
 ]]Activate( self.activations.ACT_Dep_SePoster, 1.1, {} )
-                        --[[// données doctrine
+                            --[[// données doctrine
 ]]Activate( self.activations.BEH_Dep_Pion_RENS_MonterA, 1.1, { 3000, } )
-                        --[[// Delai mise en place
+                            --[[// Delai mise en place
 ]]Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 5, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    end
+                        end
 --[[// Progression
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObservation, eProgressionDirect, eTypeItiMouvement, } )
-                
-            --[[// Decrocher
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObservation, eProgressionDirect, eTypeItiMouvement, } )
+                    
+                --[[// Decrocher
 ]]elseif switch_1 == eRejoindre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Decroche, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
-                                                        return
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Decroche, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionInitiale, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Fin de la mission Sur ordre ou si plus d'autonomie
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionInitiale, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Fin de la mission Sur ordre ou si plus d'autonomie
 ]]elseif switch_1 == eFinMission then
-                if( self.eEtat == eActionEffectuee ) then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                end
+                    if( self.eEtat == eActionEffectuee ) then
+                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    end
 
-                Activate( self.activations.BEH_Connaissance_Rens_ExploiterRens, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )--[[// Developpement photos
+                    Activate( self.activations.BEH_Connaissance_Rens_ExploiterRens, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )--[[// Developpement photos
 ]]
-                --[[// données doctrine
+                    --[[// données doctrine
 ]]StopActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
-                
-            
-            else
-                        end
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

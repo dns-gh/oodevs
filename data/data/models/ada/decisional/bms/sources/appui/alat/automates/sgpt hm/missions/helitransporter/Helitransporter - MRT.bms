@@ -15,7 +15,7 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Hel
 
     activate = function( self )
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
-        self.listeHM = self.listeHM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, TransportHelicopterPatrol )
+        self.listeHM = self.listeHM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "TransportHelicopterPatrol" )
         self.listePionsAHeliporter = self.listePionsAHeliporter or {}
         if( ModuleBegins() ) then
             do

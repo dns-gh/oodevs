@@ -78,59 +78,63 @@ do
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eSurveiller then
-                if( self.ePhaseMission == eFinMission ) then
-                    do
-                        self.ePhase = eFinMission
-                                                return
-
-                    end
-                end
-
-                if( self.eAction == eActionImpossible ) then
-                    do
-                        self.ePhase = eSeReplier
-                        self.eAction = eActionEnCours
-                                                return
-
-                    end
-                end
-
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eSeReplier
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSurveiller then
+                    if( self.ePhaseMission == eFinMission ) then
+                        do
+                            self.ePhase = eFinMission
                                                         return
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Mission_Pion_INF_Harceler, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Rejoins la position de replis
-]]elseif switch_1 == eSeReplier then
-                self.ePhase = eSeReplier
-                
-            --[[// Fin de mission
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                    do
-                        DEC_FinMission()
-                                                self.params.__returnValue = eActionEffectuee
-                        Halt()
+                    if( self.eAction == eActionImpossible ) then
+                        do
+                            self.ePhase = eSeReplier
+                            self.eAction = eActionEnCours
+                                                        return
 
-                    end
-                end
-
-                
-            
-            else
                         end
+                    end
+
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eSeReplier
+                                                                return
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Mission_Pion_INF_Harceler, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Rejoins la position de replis
+]]elseif switch_1 == eSeReplier then
+                    self.ePhase = eSeReplier
+                    
+                --[[// Fin de mission
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt()
+
+                        end
+                    end
+
+                    
+                
+                else
+                                end
+            end
 
     end,
 

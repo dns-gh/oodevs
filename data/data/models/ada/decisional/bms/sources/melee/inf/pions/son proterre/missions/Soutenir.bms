@@ -121,70 +121,75 @@ node "BEH_Mission_Pion_INF_SoutenirUneUnite"
             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
 
-        switch_1 = --[[//=========================================================================
+         do
+            local switch_1 = --[[//=========================================================================
 ]]--[[// SQUELETTE DE LA MISSION
 ]]--[[//
 ]]--[[// strength = 1
 ]]--[[//	
 ]]--[[//=========================================================================
 ]]self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[//---------------------------------------------------------------------
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[//---------------------------------------------------------------------
 ]]--[[// 1) Preparation de la mission
 ]]--[[// On ne s'occupe pas des fuseaux, ce sont ceux de l'unité soutenue
 ]]--[[//---------------------------------------------------------------------
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "** Mission soutenir --> " .. DEC_GetSzName( self._namedParams.pionAmi ) .. " **", } )
-                self.ePhaseMission = eSuivreUnite
-                
-            --[[//---------------------------------------------------------------------
+                    Activate( self.activations.ACT_Info_Trace, 1, { "** Mission soutenir --> " .. DEC_GetSzName( self._namedParams.pionAmi ) .. " **", } )
+                    self.ePhaseMission = eSuivreUnite
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// 2) Suivre l'unité, être prêt à passer en appui 
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eSuivreUnite then
-                --[[// Modulation vitesse --> rapide
+]]                cases_switch_1[1] = true
+elseif switch_1 == eSuivreUnite then
+                    --[[// Modulation vitesse --> rapide
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
-                --[[//-----------------------------------------------------------------------------
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Deactive sauvegarde pd mission, essaye à tout prix de soutenir si l'ami, lui,
 ]]--[[// doit tenir...
 ]]--[[//-----------------------------------------------------------------------------
 ]]local mission = DEC_GetMission( self._namedParams.pionAmi )
-                if( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Barrer" ) then
-                    Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[//Modifié par LLS 28/02/2007
+                    if( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Barrer" ) then
+                        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[//Modifié par LLS 28/02/2007
 ]]--[[//behavior BEH_Eni_Pion_INF_DesactiveSauvegarde();
 ]]
-                end
+                    end
 
-                --[[//-----------------------------------------------------------------------------
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Passer en appui des que possible
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionAmi:DEC_Agent_Position() ) < M_MODELE_PION_INF_DISTANCE_DEBUT_APPUI() ) then
-                    do
-                        --[[//behavior BEH_Dep_Pion_INF_Appuyer( pionAmi );
+                        do
+                            --[[//behavior BEH_Dep_Pion_INF_Appuyer( pionAmi );
 ]]Activate( self.activations.BEH_Dep_Pion_MILAN_Appuyer, 1, { self._namedParams.pionAmi, } )
-                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
-                                                return
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
+                                                        return
 
-                    end
+                        end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Suivre unite ami en mesure de passer en appui
 ]]--[[//-----------------------------------------------------------------------------   
-]]                end
+]]                    end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
-                Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, M_MODELE_PION_INF_DISTANCE_MIN_SUIVRE(), } )
-                
-            --[[//---------------------------------------------------------------------
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
+                    Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, M_MODELE_PION_INF_DISTANCE_MIN_SUIVRE(), } )
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// 3) Fin mission sur ordre
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            --[[//M_CheckInvalidPhase( "BEH_Mission_Pion_INF_SoutenirUneUnite", ePhaseMission )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                --[[//M_CheckInvalidPhase( "BEH_Mission_Pion_INF_SoutenirUneUnite", ePhaseMission )
 ]]--[[//Modifié par LLS le 28/02/2007
-]]
-            else
-                        end
+]]                cases_switch_1[3] = true
+
+                else
+                                end
+            end
 
     end,
 

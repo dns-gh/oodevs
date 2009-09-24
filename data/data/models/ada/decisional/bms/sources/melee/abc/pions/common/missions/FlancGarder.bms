@@ -70,17 +70,20 @@ includedFiles["sources/melee/abc/pions/common/missions/FlancGarder.bms"] = true
             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Mobile flank gard mission begining", } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// 2) Progression tactique
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Mobile flank gard mission begining", } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// 2) Progression tactique
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// $$$$ : GGR humhum : Coordination (foireuse d'ailleurs)
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[//   if( ! DEC_EstEmbraye( DEC_GetAutomate(myself)) )
@@ -89,28 +92,30 @@ includedFiles["sources/melee/abc/pions/common/missions/FlancGarder.bms"] = true
 ]]--[[// Progression
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
-                                                        return
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
-                    end
 --[[// force de 1.
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// 4) Fin de la mission de reconnaissance
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// 4) Fin de la mission de reconnaissance
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                
-            
-            else
-                        end
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
 
     end,
 

@@ -67,88 +67,97 @@ include "bit.lua"
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eRealiserObstacle then
-                do
-                end
-
-                if( self.eActionAbattis == eActionImpossible ) then
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRealiserObstacle then
                     do
-                        self.ePhase = eAttendre
-                        Activate( self.activations.ACT_Info_Trace, 1, { "preparation echouee, on attend", } )
-                                                return
-
                     end
-                end
 
-                if( self.eAction == eActionEffectuee and self.eActionAbattis == eActionEffectuee ) then
-                    do
-                        self.ePhase = eAttendre
-                        self.repObj = S_Obj_ObtenirObjetProcheDe( self.locEmbuscade, self._namedParams.eTypeObjet, 800 )
-                        Activate( self.activations.ACT_Info_Trace, 1, { "preparation terminee, on attend", } )
-                                                return
+                    if( self.eActionAbattis == eActionImpossible ) then
+                        do
+                            self.ePhase = eAttendre
+                            Activate( self.activations.ACT_Info_Trace, 1, { "preparation echouee, on attend", } )
+                                                        return
 
+                        end
                     end
-                end
 
-                if( self.eActionAbattis == eActionEnCours ) then
-                    do
-                        switch_2 = --[[// Realiser abatti		
+                    if( self.eAction == eActionEffectuee and self.eActionAbattis == eActionEffectuee ) then
+                        do
+                            self.ePhase = eAttendre
+                            self.repObj = S_Obj_ObtenirObjetProcheDe( self.locEmbuscade, self._namedParams.eTypeObjet, 800 )
+                            Activate( self.activations.ACT_Info_Trace, 1, { "preparation terminee, on attend", } )
+                                                        return
+
+                        end
+                    end
+
+                    if( self.eActionAbattis == eActionEnCours ) then
+                        do
+                             do
+                                local switch_2 = --[[// Realiser abatti		
 ]]self._namedParams.eTypeObjet
-                            if switch_2 == eTypeObjectBouchonMines then
-                                                            Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, setmetatable( { self.locEmbuscade, M_NOMBRE_MINES(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
-                                
-                            elseif switch_2 == eTypeObjectAbatti then
-                                                            Activate( self.activations.ACT_Obj_Pion_INF_PreparerAbattis, 1, setmetatable( { self.locEmbuscade, M_LONGUEUR_ABATTIS(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
-                                
-                            
-                            else
-                                                            DEC_Trace( "eTypeObstacle : Object non reconnu " .. EnumToString( self._namedParams.eTypeObjet, E_TypeObject ) )
-                                self.eActionAbattis = eActionEffectuee
-                                                        end
+                                local cases_switch_2 = {}
+                                    if switch_2 == eTypeObjectBouchonMines then
+                                                                            Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, setmetatable( { self.locEmbuscade, M_NOMBRE_MINES(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
+                                        
+                                                                        cases_switch_2[1] = true
+elseif switch_2 == eTypeObjectAbatti then
+                                                                            Activate( self.activations.ACT_Obj_Pion_INF_PreparerAbattis, 1, setmetatable( { self.locEmbuscade, M_LONGUEUR_ABATTIS(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
+                                        
+                                                                        cases_switch_2[2] = true
 
+                                    else
+                                                                            DEC_Trace( "eTypeObstacle : Object non reconnu " .. EnumToString( self._namedParams.eTypeObjet, E_TypeObject ) )
+                                        self.eActionAbattis = eActionEffectuee
+                                                                        end
+                                end
+
+                        end
                     end
-                end
 
-                if( self.eAction == eActionEnCours ) then
-                    --[[// Temps de mise en place du dispositif
+                    if( self.eAction == eActionEnCours ) then
+                        --[[// Temps de mise en place du dispositif
 ]]Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                end
-
-                
-            elseif switch_1 == eActiverObstacle then
-                if( not DEC_ConnaissanceObjet_EstValide( self.repObj ) ) then
-                    do
-                        DEC_Trace( "objet cree non recupere" )
-                        self.ePhase = ePrendreContact
-                                                self.params.__returnValue = eActionEffectuee
-                        return
-
                     end
-                end
 
-                if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
-                    do
-                        Activate( self.activations.ACT_Info_Trace, 1, { "unite eni se presente bien", } )
-                        --[[// Si il est a porte de tir, on lance l'assaut    				    				
+                    
+                elseif switch_1 == eActiverObstacle then
+                    if( not DEC_ConnaissanceObjet_EstValide( self.repObj ) ) then
+                        do
+                            DEC_Trace( "objet cree non recupere" )
+                            self.ePhase = ePrendreContact
+                                                        self.params.__returnValue = eActionEffectuee
+                            return
+
+                        end
+                    end
+
+                    if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
+                        do
+                            Activate( self.activations.ACT_Info_Trace, 1, { "unite eni se presente bien", } )
+                            --[[// Si il est a porte de tir, on lance l'assaut    				    				
 ]]if( S_Geometrie_EstProcheLocalisation( DEC_ConnaissanceAgent_Position( F_Pion_GeteniEnCours( myself ) ), DEC_ConnaissanceObjet_Localisation( self.repObj ), 200 ) ) then
-                            do
-                                StartActivate( self.activations.ACT_Obj_Pion_INF_Activer, 1, { self.repObj, } )
-                                self.ePhase = ePrendreContact
-                                                                self.params.__returnValue = eActionEffectuee
-                                return
+                                do
+                                    StartActivate( self.activations.ACT_Obj_Pion_INF_Activer, 1, { self.repObj, } )
+                                    self.ePhase = ePrendreContact
+                                                                        self.params.__returnValue = eActionEffectuee
+                                    return
 
+                                end
                             end
-                        end
 
+                        end
                     end
-                end
 
-                
-            elseif switch_1 == ePrendreContact
-            or switch_1 == eAttendre then
-                
-                        end
+                    
+                elseif switch_1 == ePrendreContact
+                or switch_1 == eAttendre then
+                    
+                                cases_switch_1[3] = true
+                end
+            end
 
     end,
 

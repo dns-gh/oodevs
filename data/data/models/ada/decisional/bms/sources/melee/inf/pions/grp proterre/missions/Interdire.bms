@@ -63,39 +63,42 @@ includedFiles["sources/melee/inf/pions/grp proterre/missions/Interdire.bms"] = t
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eSeMettreEnPlace then
-                if( self.eCurrentPhase == eFinMission ) then
-                    do
-                        self.ePhase = eFinMission
-                                                return
-
-                    end
-                end
-
-                Activate( self.activations.BEH_Mission_Pion_INF_Interdire, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFinMission then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            DEC_Trace( "mission MIS_Pion_INF_Interdire: fin" )
-                            DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSeMettreEnPlace then
+                    if( self.eCurrentPhase == eFinMission ) then
+                        do
+                            self.ePhase = eFinMission
+                                                        return
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            
-            else
+                    Activate( self.activations.BEH_Mission_Pion_INF_Interdire, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eFinMission then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                DEC_Trace( "mission MIS_Pion_INF_Interdire: fin" )
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
+
                         end
+                    end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                
+                else
+                                end
+            end
 
     end,
 

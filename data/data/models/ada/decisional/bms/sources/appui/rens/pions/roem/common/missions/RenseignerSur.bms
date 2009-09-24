@@ -50,30 +50,36 @@ includedFiles["sources/appui/rens/pions/roem/common/missions/RenseignerSur.bms"]
             Activate( self.activations.ACT_Info_Trace, 1, { "Intelligence gathering mission begining", } )
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhaseMission = eSurveiller
-                
-            --[[// Surveiller
-]]elseif switch_1 == eSurveiller then
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                if( self._namedParams.bEcouteRadar ) then
-                    Activate( self.activations.BEH_Rens_EnEcouteRadarSur, 1, { self._namedParams.mission.zone_, } )
-                else
-                    Activate( self.activations.BEH_Rens_EnEcouteSur, 1, { self._namedParams.mission.zone_, } )
-                end
+                    self.ePhaseMission = eSurveiller
+                    
+                --[[// Surveiller
+]]                cases_switch_1[1] = true
+elseif switch_1 == eSurveiller then
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    if( self._namedParams.bEcouteRadar ) then
+                        Activate( self.activations.BEH_Rens_EnEcouteRadarSur, 1, { self._namedParams.mission.zone_, } )
+                    else
+                        Activate( self.activations.BEH_Rens_EnEcouteSur, 1, { self._namedParams.mission.zone_, } )
+                    end
 
-                
-            --[[// Fin de la mission --> SUR ORDRE
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    
+                --[[// Fin de la mission --> SUR ORDRE
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
 
     end,
 

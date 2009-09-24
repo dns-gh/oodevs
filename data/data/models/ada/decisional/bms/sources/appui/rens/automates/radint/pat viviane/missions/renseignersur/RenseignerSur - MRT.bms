@@ -27,7 +27,7 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
 ]]--[[// Obtention Stations et cougar
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Une seule normalement!
-]]self.listeGazelleViviane = self.listeGazelleViviane or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), Patrouille_Viviane )
+]]self.listeGazelleViviane = self.listeGazelleViviane or S_Cherche_Automate_Filtre_TypePionOperationnels( DEC_Automate_PionsAvecPC(), "Patrouille_Viviane" )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

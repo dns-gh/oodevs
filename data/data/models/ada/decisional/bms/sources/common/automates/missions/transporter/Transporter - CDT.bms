@@ -48,8 +48,8 @@ node "MIS_Automate_CDT_Transporter"
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( self.listePionsSgpt )
         --[[//liste des transporteurs $$$$GGR : moche!!! il faut pouvoir récupérer la liste des unités qui peuvent faire la mission transporter
 ]]DIA_Clear( self.listeTransporteur )
-        self.listeTransporteur = S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, PelotonAppuiMob )
-        self.listeTransporteur = S_Liste_Concatene( self.listeTransporteur, S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, LandingCraft ) )
+        self.listeTransporteur = S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "PelotonAppuiMob" )
+        self.listeTransporteur = S_Liste_Concatene( self.listeTransporteur, S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "LandingCraft" ) )
         DIA_Clear( self.listePourTransport )
         --[[//il ne doit pas y avoir plus de HM que de pions à transporter
 ]]if( #( self.listeTransporteur ) > #( self.listePionsATransporter ) ) then
@@ -88,36 +88,40 @@ do
 
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eTransporter then
-                --[[// donner les missions de transport
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eTransporter then
+                    --[[// donner les missions de transport
 ]]if( not DIA_IsListEmpty( self.listePourTransport ) and not gestionCDTMissionsTransport ) then
-                    Activate( self.activations.BEH_Medo_Automate_AssignerMissionsTransporterAListe, 1, { ePhase_CDT, self.listePourTransport, self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsATransporter, self._namedParams.mission.avecMateriel_, } )
-                end
+                        Activate( self.activations.BEH_Medo_Automate_AssignerMissionsTransporterAListe, 1, { ePhase_CDT, self.listePourTransport, self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsATransporter, self._namedParams.mission.avecMateriel_, } )
+                    end
 
-                
-            elseif switch_1 == eFinMission then
-                --[[//quand plus aucun pion n'a de mission
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
+                    --[[//quand plus aucun pion n'a de mission
 ]]local plusDeMissions = true
-                for _,x in pairs( DEC_Automate_PionsAvecPC() ) do
-                local _continue = true
+                    for _,x in pairs( DEC_Automate_PionsAvecPC() ) do
+                    local _continue = true
 do
-                        local pionBuffer = x
-                        if( DEC_GetMission( pionBuffer ) ~= nil ) then
-                            plusDeMissions = false
+                            local pionBuffer = x
+                            if( DEC_GetMission( pionBuffer ) ~= nil ) then
+                                plusDeMissions = false
+                            end
+
                         end
 
                     end
 
-                end
+                    if( plusDeMissions ) then
+                        self.params.__returnValue = eActionEffectuee
+                        Halt()
+                    end
 
-                if( plusDeMissions ) then
-                    self.params.__returnValue = eActionEffectuee
-                    Halt()
-                end
-
-                
-                        end
+                    
+                                end
+            end
 
     end,
 

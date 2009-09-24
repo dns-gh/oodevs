@@ -220,77 +220,83 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
 
         Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
         Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itineraire, self._namedParams.typeProgression, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-        switch_1 = DEC_Itineraire_Etat( self.itineraire )
-            if switch_1 == eItineraire_Valide
-            or switch_1 == eItineraire_Partiel then
-                if( DEC_Itineraire_Etat( self.itineraire ) == eItineraire_Partiel ) then
-                    Activate( self.activations.ACT_Info_Trace, 1, { "ATTENTION : Itineraire Partiel", } )
-                end
-
-                if( not self.initialisationOK ) then
-                    do
-                        self.pointEffectifARejoindre = DEC_Itineraire_DernierPoint( self.itineraire )
-                        self.initialisationOK = true
+         do
+            local switch_1 = DEC_Itineraire_Etat( self.itineraire )
+            local cases_switch_1 = {}
+                if switch_1 == eItineraire_Valide
+                or switch_1 == eItineraire_Partiel then
+                    if( DEC_Itineraire_Etat( self.itineraire ) == eItineraire_Partiel ) then
+                        Activate( self.activations.ACT_Info_Trace, 1, { "ATTENTION : Itineraire Partiel", } )
                     end
-                end
 
-                if( self.pointEffectifARejoindre ~= nil ) then
-                    do
-                        --[[//si je suis entre distanceMin et distanceMax
+                    if( not self.initialisationOK ) then
+                        do
+                            self.pointEffectifARejoindre = DEC_Itineraire_DernierPoint( self.itineraire )
+                            self.initialisationOK = true
+                        end
+                    end
+
+                    if( self.pointEffectifARejoindre ~= nil ) then
+                        do
+                            --[[//si je suis entre distanceMin et distanceMax
 ]]local distance = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointEffectifARejoindre )
-                        if( ( distance >= self._namedParams.distanceMin ) and ( distance <= self._namedParams.distanceMax ) ) then
-                            do
-                                --[[//penalite
+                            if( ( distance >= self._namedParams.distanceMin ) and ( distance <= self._namedParams.distanceMax ) ) then
+                                do
+                                    --[[//penalite
 ]]if( not DEC_Itineraire_EstEnMouvementSur( self.itineraire ) ) then
-                                    self.forceDelai = Min( 1, self.forceDelai + self._namedParams.forceDelaiPenalite )
-                                else
-                                    --[[//succes
+                                        self.forceDelai = Min( 1, self.forceDelai + self._namedParams.forceDelaiPenalite )
+                                    else
+                                        --[[//succes
 ]]self.forceDelai = Max( 0, self.forceDelai - self._namedParams.forceDelaiSucces )
-                                end
-
-                                if( self.forceDelai >= 1 ) then
-                                    do
-                                        self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
-                                                                                self.params.__returnValue = eActionEffectuee
-                                        Halt()
-
                                     end
+
+                                    if( self.forceDelai >= 1 ) then
+                                        do
+                                            self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
+                                                                                        self.params.__returnValue = eActionEffectuee
+                                            Halt()
+
+                                        end
+                                    end
+
                                 end
-
                             end
-                        end
 
+                        end
                     end
-                end
 
-                
-            elseif switch_1 == eItineraire_Invalide then
-                do
-                end
+                    
+                elseif switch_1 == eItineraire_Invalide then
+                    do
+                    end
 
-                self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-            elseif switch_1 == eItineraire_CalculEnCours then
-                do
-                end
+                                end
+                if cases_switch_1[2] or switch_1 == eItineraire_CalculEnCours then
+                    do
+                    end
 
-                
-            elseif switch_1 == eItineraire_Impossible then
-                do
-                end
+                    
+                                cases_switch_1[3] = true
+elseif switch_1 == eItineraire_Impossible then
+                    do
+                    end
 
-                self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-            elseif switch_1 == eItineraire_Annule then
-                self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                                end
+                if cases_switch_1[4] or switch_1 == eItineraire_Annule then
+                    self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-                        end
+                                end
+            end
 
     end,
 

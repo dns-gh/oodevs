@@ -35,27 +35,35 @@ node "BEH_Situation_Automate_INF_Defaut"
         local _continue = true
 do
                 local x_pion = x
-                switch_1 = --[[// Situation Mission
+                 do
+                    local switch_1 = --[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
 ]]F_Pion_GeteEtatPhaseMission( x_pion )
-                    if switch_1 == eEtatPhaseMission_FinMission then
-                        if( self._namedParams.bFinMission ) then
-                            do
-                                switch_2 = F_Pion_GetmissionPrecedente( x_pion )
-                                    if switch_2 == "T_Mission_Pion_INF_Appuyer"
-                                    or switch_2 == "T_Mission_Pion_ABC_Appuyer"
-                                    or switch_2 == "T_Mission_Pion_ABC_Soutenir" then
-                                                                            
-                                    
-                                    else
-                                        StartActivate( self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
-                                    end
+                    local cases_switch_1 = {}
+                        if switch_1 == eEtatPhaseMission_FinMission then
+                            if( self._namedParams.bFinMission ) then
+                                do
+                                     do
+                                        local switch_2 = F_Pion_GetmissionPrecedente( x_pion )
+                                        local cases_switch_2 = {}
+                                            if switch_2 == "T_Mission_Pion_INF_Appuyer"
+                                            or switch_2 == "T_Mission_Pion_ABC_Appuyer"
+                                            or switch_2 == "T_Mission_Pion_ABC_Soutenir" then
+                                                                                            
+                                                                                        cases_switch_2[1] = true
 
-                            end
-                        end
-
-                        
+                                            else
+                                                StartActivate( self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
+                                            end
                                         end
+
+                                end
+                            end
+
+                            
+                                                cases_switch_1[1] = true
+                        end
+                    end
 
             end
 
@@ -83,42 +91,54 @@ node "BEH_Situation_Automate_INF_CadreOffensif"
         local _continue = true
 do
                 local x_pion = x
-                switch_1 = --[[// Situation Mission
+                 do
+                    local switch_1 = --[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
 ]]F_Pion_GeteEtatPhaseMission( x_pion )
-                    if switch_1 == eEtatPhaseMission_FinMission then
-                        switch_2 = F_Pion_GetmissionPrecedente( x_pion )
-                            if switch_2 == "T_Mission_Pion_INF_Reduire"
-                            or switch_2 == "T_Mission_Pion_INF_ReconnaitreAxe" then
-                                StartActivate( self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
-                                
-                            elseif switch_2 == "T_Mission_Pion_INF_Fixer" then
-                                DEC_Trace( "Fin mission : Fixer." )
-                                if( S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_Semparer" ) ) then
-                                    do
-                                        local mission = DEC_GetMission( myself )
-                                        StartActivate( self.activations.BEH_Conduite_Automate_INF_AssignerSemparerA, 1, { x_pion, mission.objectif_, } )
+                    local cases_switch_1 = {}
+                        if switch_1 == eEtatPhaseMission_FinMission then
+                             do
+                                local switch_2 = F_Pion_GetmissionPrecedente( x_pion )
+                                local cases_switch_2 = {}
+                                    if switch_2 == "T_Mission_Pion_INF_Reduire"
+                                    or switch_2 == "T_Mission_Pion_INF_ReconnaitreAxe" then
+                                        StartActivate( self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
+                                        
+                                                                        cases_switch_2[1] = true
+elseif switch_2 == "T_Mission_Pion_INF_Fixer" then
+                                        DEC_Trace( "Fin mission : Fixer." )
+                                        if( S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_Semparer" ) ) then
+                                            do
+                                                local mission = DEC_GetMission( myself )
+                                                StartActivate( self.activations.BEH_Conduite_Automate_INF_AssignerSemparerA, 1, { x_pion, mission.objectif_, } )
+                                            end
+                                        end
+
+                                        
+                                                                        cases_switch_2[2] = true
+elseif switch_2 == "T_Mission_Pion_INF_PrendrePreciserContact" then
+                                        --[[// case T_Mission_Pion_INF_Reduire:				
+]]--[[// 
+]]DEC_Trace( "Fin mission : Reduire | PPContact." )
+                                        if( not S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_Semparer" ) ) then
+                                            StartActivate( self.activations.BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco, 1, { x_pion, } )
+                                        end
+
+                                                                        cases_switch_2[3] = true
+                                    end
+                                    if cases_switch_2[3] or switch_2 == "T_Mission_Pion_INF_Semparer" then
+                                    --[[// Ajout ADA MIA											
+]]                                    cases_switch_2[4] = true
+end
+                                    if not cases_switch_2[1] and not cases_switch_2[2] then
+                                        F_Pion_SeteEtatEchelon( x_pion, eEtatEchelon_Second )
                                     end
                                 end
 
-                                
-                            elseif switch_2 == "T_Mission_Pion_INF_PrendrePreciserContact" then
-                                --[[// case T_Mission_Pion_INF_Reduire:				
-]]--[[// 
-]]DEC_Trace( "Fin mission : Reduire | PPContact." )
-                                if( not S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_Semparer" ) ) then
-                                    StartActivate( self.activations.BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco, 1, { x_pion, } )
-                                end
-
-                            elseif switch_2 == "T_Mission_Pion_INF_Semparer" then
-                            --[[// Ajout ADA MIA											
-]]
-                            else
-                                F_Pion_SeteEtatEchelon( x_pion, eEtatEchelon_Second )
-                            end
-
-                        
-                                        end
+                            
+                                                cases_switch_1[1] = true
+                        end
+                    end
 
             end
 

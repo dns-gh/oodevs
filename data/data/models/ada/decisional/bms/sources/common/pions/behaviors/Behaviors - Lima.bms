@@ -39,124 +39,130 @@ do
                     do
                         --[[// cast
 ]]local pointLima = pointABC
-                        switch_1 = DEC_GetTypeLimaPoint( pointLima )
-                            if switch_1 == eTypeLima_LC then
-                                                            --[[//-------------------------------------------------------------
+                         do
+                            local switch_1 = DEC_GetTypeLimaPoint( pointLima )
+                            local cases_switch_1 = {}
+                                if switch_1 == eTypeLima_LC then
+                                                                    --[[//-------------------------------------------------------------
 ]]--[[// Passage sur la ligne de coordination fixée par le capitaine
 ]]--[[//-------------------------------------------------------------
 ]]local lima = DEC_GetLimaPoint( pointLima )
-                                if( not DEC_GetMissionLimaFlag( lima ) ) then
-                                    StartActivate( self.activations.BEH_Lima_Pion_SePosterSurLC, 1, { lima, } )
-                                end
+                                    if( not DEC_GetMissionLimaFlag( lima ) ) then
+                                        StartActivate( self.activations.BEH_Lima_Pion_SePosterSurLC, 1, { lima, } )
+                                    end
 
-                                
-                            --[[//-------------------------------------------------------------
+                                    
+                                --[[//-------------------------------------------------------------
 ]]--[[// Passage sur la ligne dechangement d'attitude fixée par 
 ]]--[[// le capitaine
 ]]--[[// Le poste sur la LCA inclus un changement de dispositif 
 ]]--[[// -->dispositif surete
 ]]--[[//-------------------------------------------------------------
-]]elseif switch_1 == eTypeLima_LCA then
-                                local lima = DEC_GetLimaPoint( pointLima )
-                                if( not DEC_GetMissionLimaFlag( lima ) ) then
-                                    do
-                                        DEC_SetMissionLimaFlag( lima, true )
-                                        DEC_SetMissionLimaFlagHoraire( lima, true )
-                                                                                do
-                                            if( airOrAlat_LCA() ) then
-                                                do
-                                                    if( myself:DEC_Agent_EstEnMouvement() ) then
-                                                        do
-                                                            DEC_Trace( "Debug : changement d'ambiance apres la LCA" )
-                                                            DEC_SetMissionLimaFlag( DEC_GetLimaPoint( pointLima ), false )
-                                                            if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
-                                                                do
-                                                                    F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                    DEC_Trace( "Debug : passage en ambiance surete" )
-                                                                end
-                                                            else
-do
-                                                                    F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                                                                    DEC_Trace( "Debug : passage en ambiance vitesse" )
-                                                                end
-                                                            end
-
-                                                        end
-                                                    end
-
-                                                end
-                                            else
-if( appuiGeniePions() ) then
+]]                                cases_switch_1[1] = true
+elseif switch_1 == eTypeLima_LCA then
+                                    local lima = DEC_GetLimaPoint( pointLima )
+                                    if( not DEC_GetMissionLimaFlag( lima ) ) then
+                                        do
+                                            DEC_SetMissionLimaFlag( lima, true )
+                                            DEC_SetMissionLimaFlagHoraire( lima, true )
+                                                                                        do
+                                                if( airOrAlat_LCA() ) then
                                                     do
-                                                        if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
+                                                        if( myself:DEC_Agent_EstEnMouvement() ) then
                                                             do
-                                                                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                StartActivate( self.activations.BEH_Lima_Pion_Gen_SePosterSurLCA, 1, {} )
+                                                                DEC_Trace( "Debug : changement d'ambiance apres la LCA" )
+                                                                DEC_SetMissionLimaFlag( DEC_GetLimaPoint( pointLima ), false )
+                                                                if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
+                                                                    do
+                                                                        F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
+                                                                        DEC_Trace( "Debug : passage en ambiance surete" )
+                                                                    end
+                                                                else
+do
+                                                                        F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                                                                        DEC_Trace( "Debug : passage en ambiance vitesse" )
+                                                                    end
+                                                                end
+
                                                             end
                                                         end
 
                                                     end
                                                 else
-if( appuiNbcPionsCommon() ) then
+if( appuiGeniePions() ) then
                                                         do
                                                             if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                 do
                                                                     F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                    StartActivate( self.activations.BEH_Lima_Pion_NBC_SePosterSurLCA, 1, {} )
+                                                                    StartActivate( self.activations.BEH_Lima_Pion_Gen_SePosterSurLCA, 1, {} )
                                                                 end
-                                                            else
-                                                                SetStateVariable( "VE_NiveauNBC", 4 )
                                                             end
 
                                                         end
                                                     else
-if( meleeAbcPionsCommon() ) then
+if( appuiNbcPionsCommon() ) then
                                                             do
                                                                 if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                     do
                                                                         F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                        StartActivate( self.activations.BEH_Lima_Pion_ABC_SePosterSurLCA, 1, {} )
+                                                                        StartActivate( self.activations.BEH_Lima_Pion_NBC_SePosterSurLCA, 1, {} )
                                                                     end
+                                                                else
+                                                                    SetStateVariable( "VE_NiveauNBC", 4 )
                                                                 end
 
                                                             end
                                                         else
-if( meleeInfPionsCommon() ) then
+if( meleeAbcPionsCommon() ) then
                                                                 do
-                                                                    StartActivate( self.activations.BEH_Lima_Pion_INF_SurLCA, 1, {} )
+                                                                    if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
+                                                                        do
+                                                                            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
+                                                                            StartActivate( self.activations.BEH_Lima_Pion_ABC_SePosterSurLCA, 1, {} )
+                                                                        end
+                                                                    end
+
+                                                                end
+                                                            else
+if( meleeInfPionsCommon() ) then
+                                                                    do
+                                                                        StartActivate( self.activations.BEH_Lima_Pion_INF_SurLCA, 1, {} )
+                                                                    end
                                                                 end
                                                             end
                                                         end
                                                     end
                                                 end
+
                                             end
 
                                         end
-
                                     end
-                                end
 
-                                
-                            --[[//-----------------------------------------------------------------------------
+                                    
+                                --[[//-----------------------------------------------------------------------------
 ]]--[[// Ligne de deboucher pour attaquer
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eTypeLima_LD then
-                                local lima = DEC_GetLimaPoint( pointLima )
-                                if( not DEC_GetMissionLimaFlag( lima ) ) then
-                                    do
-                                        if( meleeAbcPionsCommon() ) then
-                                            StartActivate( self.activations.BEH_Lima_Pion_ABC_PasserSurLD, 1, {} )
-                                        else
+]]                                cases_switch_1[2] = true
+elseif switch_1 == eTypeLima_LD then
+                                    local lima = DEC_GetLimaPoint( pointLima )
+                                    if( not DEC_GetMissionLimaFlag( lima ) ) then
+                                        do
+                                            if( meleeAbcPionsCommon() ) then
+                                                StartActivate( self.activations.BEH_Lima_Pion_ABC_PasserSurLD, 1, {} )
+                                            else
 if( meleeInfPionsCommon() ) then
-                                                StartActivate( self.activations.BEH_Lima_Pion_INF_SurLD, 1, { lima, } )
+                                                    StartActivate( self.activations.BEH_Lima_Pion_INF_SurLD, 1, { lima, } )
+                                                end
                                             end
+
                                         end
-
                                     end
-                                end
 
-                                
-                                                        end
+                                    
+                                                                cases_switch_1[3] = true
+                                end
+                            end
 
                         Activate( self.activations.ACT_Limas_Suppression, 1, { pointLima, } )
                     end

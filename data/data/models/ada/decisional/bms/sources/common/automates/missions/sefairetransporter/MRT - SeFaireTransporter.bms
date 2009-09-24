@@ -95,56 +95,59 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
         self.ePhase = self.ePhase or eMRT_SelectionnerPions
         self.eActionMRT = self.eActionMRT or eActionEnCours
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
-        switch_1 = --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// Vérif et assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
 ]]self.ePhase
-            if switch_1 == eMRT_SelectionnerPions then
-                --[[//-----------------------------------------------------------------------------
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_SelectionnerPions then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[//	Distribution des types de mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ( #( self.selPions ) == 0 or #( self.selPions ) == nil ) ) then
-                    do
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
-                    end
-                end
-
-                self.ePhase = eMRT_AssignerMissions
-                
-            --[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eMRT_AssignerMissions then
-                if( self.eActionMRT == eActionImpossible ) then
-                    do
-                                                do
-                        end
-
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
-                    end
-                end
-
-                if( self.eValidationMRT == eActionEffectuee ) then
-                    do
-                        self.eValidationMRT = eActionEnCours
-                                                do
-                                                        self.params.__returnValue = eActionEffectuee
+                        do
+                                                        self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selPions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.BEH_Medo_Automate_FaireTransporter_DansZone, 1, setmetatable( { self.selPions, self._namedParams.Zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                --[[// Assigne les missions
-]]
+                    self.ePhase = eMRT_AssignerMissions
+                    
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Assigner les missions au pions subordonnéss
+]]--[[//-----------------------------------------------------------------------------
+]]elseif switch_1 == eMRT_AssignerMissions then
+                    if( self.eActionMRT == eActionImpossible ) then
+                        do
+                                                        do
+                            end
+
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt()
+
                         end
+                    end
+
+                    if( self.eValidationMRT == eActionEffectuee ) then
+                        do
+                            self.eValidationMRT = eActionEnCours
+                                                        do
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selPions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_FaireTransporter_DansZone, 1, setmetatable( { self.selPions, self._namedParams.Zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                    --[[// Assigne les missions
+]]
+                                end
+            end
 
     end,
 

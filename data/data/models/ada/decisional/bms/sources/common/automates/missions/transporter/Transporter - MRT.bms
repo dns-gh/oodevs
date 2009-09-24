@@ -14,8 +14,8 @@ node "MIS_Automate_MRT_Transporter"
         self.selPions = self.selPions or DEC_Automate_PionsAvecPC()
         self.listeTransporteurs = self.listeTransporteurs or {}
         self.listePionsATransporter = self.listePionsATransporter or {}
-        self.listeTransporteurs = S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, PelotonAppuiMob )
-        self.listeTransporteurs = S_Liste_Concatene( self.listeTransporteurs, S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, LandingCraft ) )
+        self.listeTransporteurs = S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PelotonAppuiMob" )
+        self.listeTransporteurs = S_Liste_Concatene( self.listeTransporteurs, S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "LandingCraft" ) )
         if( ModuleBegins() ) then
             do
                 if( DIA_IsListEmpty( self.listeTransporteurs ) ) then

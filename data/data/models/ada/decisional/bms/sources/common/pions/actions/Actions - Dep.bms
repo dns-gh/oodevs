@@ -39,53 +39,61 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        switch_1 = self.eEtatDeplacement
-            if switch_1 == eEtatActionDeplacement_EnCours then
-                --[[//-----------------------------------------------------------------------------
+         do
+            local switch_1 = self.eEtatDeplacement
+            local cases_switch_1 = {}
+                if switch_1 == eEtatActionDeplacement_EnCours then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Deplacement en cours
 ]]--[[//-----------------------------------------------------------------------------
 ]]myself.eEtatDeplacement_ = eEtatDeplacement_EnCours
-                do
-                end
+                    do
+                    end
 
-                
-            --[[//-----------------------------------------------------------------------------
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Plus de carburant
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
-                DEC_PauseAction( self.actionDeplacement )
-                
-            --[[//-----------------------------------------------------------------------------
+]]                cases_switch_1[1] = true
+elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
+                    DEC_PauseAction( self.actionDeplacement )
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Fin déplacement
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eEtatActionDeplacement_Termine then
-                self.actionDeplacement = DEC_StopAction( self.actionDeplacement )
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+]]                cases_switch_1[2] = true
+elseif switch_1 == eEtatActionDeplacement_Termine then
+                    self.actionDeplacement = DEC_StopAction( self.actionDeplacement )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-                
-            --[[//-----------------------------------------------------------------------------
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// REPRISE QD PERTE DE FOCUS
 ]]--[[//-----------------------------------------------------------------------------
 ]]elseif switch_1 == eEtatActionDeplacement_Pause then
-                DEC_ReprendAction( self.actionDeplacement )
-                
-            --[[//-----------------------------------------------------------------------------
+                    DEC_ReprendAction( self.actionDeplacement )
+                    
+                --[[//-----------------------------------------------------------------------------
 ]]--[[// Autres cas
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eEtatActionDeplacement_NonAutorise then
-                do
-                end
+]]                cases_switch_1[4] = true
+elseif switch_1 == eEtatActionDeplacement_NonAutorise then
+                    do
+                    end
 --[[// Si on n'a pas la possibilité de se deplacer ( neutralisé, decollage non fait )
 ]]
-                
-            elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
-                do
-                end
+                    
+                                cases_switch_1[5] = true
+elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
+                    do
+                    end
 --[[//si on a deja un StartDeplacement en cours
 ]]
-                
-                        end
+                    
+                                cases_switch_1[6] = true
+                end
+            end
 
     end,
 

@@ -55,87 +55,92 @@ node "BEH_Mission_Pion_INF_SurveillerSecteur"
         do
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eSeMettreEnPlace then
-                --[[// On va se mettre en position en restant sur nos garde
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eSeMettreEnPlace then
+                    --[[// On va se mettre en position en restant sur nos garde
 ]]if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eAborderObjectif
-                                                        self.params.__returnValue = self.ePhase
-                            return
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eAborderObjectif
+                                                                self.params.__returnValue = self.ePhase
+                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-                --[[// Rejoins une position d'observation de la position a Barrer
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    --[[// Rejoins une position d'observation de la position a Barrer
 ]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.positionInstallation_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eAborderObjectif then
-                StartActivate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            self.ePhase = eInstallerDispositif
-                        end
+                    
+                elseif switch_1 == eAborderObjectif then
+                    StartActivate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                self.ePhase = eInstallerDispositif
+                            end
 
-                    end
-                else
+                        end
+                    else
 do
-                        Activate( self.activations.BEH_Progression_Pion_INF_AborderObjectif, 1, setmetatable( { self.ptMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                return
+                            Activate( self.activations.BEH_Progression_Pion_INF_AborderObjectif, 1, setmetatable( { self.ptMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                        return
 
+                        end
                     end
-                end
 
-            elseif switch_1 == eInstallerDispositif then
-                Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                StartActivate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, {} )
-                StartActivate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
-                StartActivate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
-                --[[// Prepare la mission de surveillance
+                                end
+                if cases_switch_1[2] or switch_1 == eInstallerDispositif then
+                    Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
+                    StartActivate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, {} )
+                    StartActivate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    StartActivate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
+                    --[[// Prepare la mission de surveillance
 ]]if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            Activate( self.activations.ACT_RC, 1, { eRC_FinInstallation, } )
-                            self.ePhase = eSurveiller
-                                                        self.params.__returnValue = self.ePhase
-                            return
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                Activate( self.activations.ACT_RC, 1, { eRC_FinInstallation, } )
+                                self.ePhase = eSurveiller
+                                                                self.params.__returnValue = self.ePhase
+                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[// On desactive la sauvegarde pendant la phase de surveillance
+                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
+                    Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[// On desactive la sauvegarde pendant la phase de surveillance
 ]]
-                --[[// Se tourne vers les ennemis
+                    --[[// Se tourne vers les ennemis
 ]]Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( self.mission ), } )
-                --[[// Reste discret
+                    --[[// Reste discret
 ]]Activate( self.activations.ACT_Dep_Pion_INF_ActiverFurtivite, 1.2, { 0.1, } )
-                Activate( self.activations.ACT_Obs_ObserverZone, 1, { DEC_Agent_Position(), M_CAPACITE_SURVEILLANCE(), } )
-                if( not S_Geometrie_EstProchePosition( self.ptMission, DEC_Agent_Position(), 1000 ) ) then
-                    do
-                        self.eAction = eActionEnCours
-                        self.ePhase = eAborderObjectif
-                    end
-                end
-
-                
-            
-            else
+                    Activate( self.activations.ACT_Obs_ObserverZone, 1, { DEC_Agent_Position(), M_CAPACITE_SURVEILLANCE(), } )
+                    if( not S_Geometrie_EstProchePosition( self.ptMission, DEC_Agent_Position(), 1000 ) ) then
+                        do
+                            self.eAction = eActionEnCours
+                            self.ePhase = eAborderObjectif
                         end
+                    end
+
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
                 self.params.__returnValue = self.ePhase
         return

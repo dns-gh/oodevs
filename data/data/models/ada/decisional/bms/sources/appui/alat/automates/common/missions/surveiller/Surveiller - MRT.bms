@@ -27,10 +27,10 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
         self.localisationsASurveiller = self.localisationsASurveiller or {}
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.listePionsReserve = self.listePionsReserve or {}
-        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, AntitankHelicopterPatrol )
-        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, EscortAndCloseSupportHelicopterPatrol )
-        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, AirDefenseHelicopterPatrol )
-        self.listeHMLog = self.listeHMLog or S_Cherche_Automate_Filtre_TypePion( self.selPions, GeneralPurposeHelicopterPatrol )
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "AntitankHelicopterPatrol" )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "AirDefenseHelicopterPatrol" )
+        self.listeHMLog = self.listeHMLog or S_Cherche_Automate_Filtre_TypePion( self.selPions, "GeneralPurposeHelicopterPatrol" )
         self.listePatrouillesPeutFaireMissionSurveiller = self.listePatrouillesPeutFaireMissionSurveiller or S_Liste_Concatene( S_Liste_Concatene( self.listeHAC, self.listeHAP ), self.listeHAM )
         self.listeSurveiller = self.listeSurveiller or {}
         if( ModuleBegins() ) then
@@ -87,54 +87,58 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMRT_AssignerMissions then
-                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
 ]]if( self.eEtatMissionsSurveiller == eActionImpossible ) then
-                    do
-                        self.ePhase = eMRT_MissionImpossible
-                                                return
-
-                    end
-                end
-
-                if( self.eEtatMissionsSurveiller == eActionEffectuee ) then
-                    do
-                        self.ePhase = eMRT_Valider
-                                                return
-
-                    end
---[[// Surveiller : controle de creation mission
-]]                end
-
-                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePatrouillesPeutFaireMissionSurveiller ) + #( self.listeHMLog ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsSurveiller = v else rawset( t, k, v ) end end } ) )
-                --[[// Surveiller : ordre de creation des missions
-]]if( not DIA_IsListEmpty( self.listeSurveiller ) ) then
-                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe, 1, { ePhase_MRT, self.listeSurveiller, self.localisationsASurveiller, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, } )
-                end
-
-                --[[// Heliporter plots de ravitaillements au point de logistique
-]]if( not DIA_IsListEmpty( self.listeHMLog ) ) then
-                    Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe, 1, { ePhase_MRT, self.listeHMLog, self._namedParams.mission.pointLogistique_, self._namedParams.mission.pointLogistique_, self._namedParams.mission.plotsRavitaillement_, } )
-                end
-
-                --[[// Les pions de reserve vont au point de log
-]]if( not DIA_IsListEmpty( self.listePionsReserve ) ) then
-                    Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_MRT, self.listePionsReserve, self._namedParams.mission.pointLogistique_, } )
-                end
-
-                
-            elseif switch_1 == eMRT_MissionImpossible then
-                DEC_RC( eRC_MissionImpossible )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eMRT_Valider then
-                DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                        do
+                            self.ePhase = eMRT_MissionImpossible
+                                                        return
 
                         end
+                    end
+
+                    if( self.eEtatMissionsSurveiller == eActionEffectuee ) then
+                        do
+                            self.ePhase = eMRT_Valider
+                                                        return
+
+                        end
+--[[// Surveiller : controle de creation mission
+]]                    end
+
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePatrouillesPeutFaireMissionSurveiller ) + #( self.listeHMLog ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsSurveiller = v else rawset( t, k, v ) end end } ) )
+                    --[[// Surveiller : ordre de creation des missions
+]]if( not DIA_IsListEmpty( self.listeSurveiller ) ) then
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe, 1, { ePhase_MRT, self.listeSurveiller, self.localisationsASurveiller, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, } )
+                    end
+
+                    --[[// Heliporter plots de ravitaillements au point de logistique
+]]if( not DIA_IsListEmpty( self.listeHMLog ) ) then
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe, 1, { ePhase_MRT, self.listeHMLog, self._namedParams.mission.pointLogistique_, self._namedParams.mission.pointLogistique_, self._namedParams.mission.plotsRavitaillement_, } )
+                    end
+
+                    --[[// Les pions de reserve vont au point de log
+]]if( not DIA_IsListEmpty( self.listePionsReserve ) ) then
+                        Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_MRT, self.listePionsReserve, self._namedParams.mission.pointLogistique_, } )
+                    end
+
+                    
+                elseif switch_1 == eMRT_MissionImpossible then
+                    DEC_RC( eRC_MissionImpossible )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[2] or switch_1 == eMRT_Valider then
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                                end
+            end
 
     end,
 

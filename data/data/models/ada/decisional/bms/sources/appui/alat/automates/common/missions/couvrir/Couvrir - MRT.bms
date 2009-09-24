@@ -31,10 +31,10 @@ includedFiles["sources/appui/alat/automates/common/missions/couvrir/Couvrir - MR
     activate = function( self )
         self.eEtatMissionsCouvrir = self.eEtatMissionsCouvrir or eActionEnCours
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
-        self.listeHM = self.listeHM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, TransportHelicopterPatrol )
-        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, AntitankHelicopterPatrol )
-        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, EscortAndCloseSupportHelicopterPatrol )
-        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, AirDefenseHelicopterPatrol )
+        self.listeHM = self.listeHM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "TransportHelicopterPatrol" )
+        self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "AntitankHelicopterPatrol" )
+        self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "AirDefenseHelicopterPatrol" )
         self.listePatrouillesPeutFaireMissionCouvrir = self.listePatrouillesPeutFaireMissionCouvrir or S_Liste_Concatene( S_Liste_Concatene( self.listeHAC, self.listeHAP ), self.listeHAM )
         self.listeUnitesACouvrir = self.listeUnitesACouvrir or S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAAppuyer_ )
         self.listeCouvrir = self.listeCouvrir or {}

@@ -49,40 +49,45 @@ includedFiles["sources/common/pions/missions/Decrocher.bms"] = true
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Disengagement mission begining", } )
-                self.ePhaseMission = eDecrocher
-                
-            --[[// 2) Decrocher
-]]elseif switch_1 == eDecrocher then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Decroche, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
-                                                        return
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Disengagement mission begining", } )
+                    self.ePhaseMission = eDecrocher
+                    
+                --[[// 2) Decrocher
+]]                cases_switch_1[1] = true
+elseif switch_1 == eDecrocher then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Decroche, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.BEH_Lima_GererLR, 1, {} )
-                
-            --[[// 4) Fin de la mission
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Lima_GererLR, 1, {} )
+                    
+                --[[// 4) Fin de la mission
 ]]elseif switch_1 == eFinMission then
-                StopActivate( self.activations.BEH_MOT_DesactiveSauvegarde, {} )
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-            
-            else
-                        end
+                    StopActivate( self.activations.BEH_MOT_DesactiveSauvegarde, {} )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
 
     end,
 

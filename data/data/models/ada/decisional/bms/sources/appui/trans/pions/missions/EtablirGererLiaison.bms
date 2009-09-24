@@ -42,63 +42,68 @@ includedFiles["sources/appui/trans/pions/missions/EtablirGererLiaison.bms"] = tr
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
-                --[[// Distance --> déploiement 'sur place'
+                    --[[// Distance --> déploiement 'sur place'
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.mission.positionDeploiement_ ) < 1000 ) then
-                    do
-                        self.ePhaseMission = eDeployer
-                                                return
-
-                    end
-                end
-
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eProgresser
-                                                        return
-
-                        end
-
-                    end
-                end
-
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_MODELE_Pion_TRANS_DELAI_MISEENPLACE(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.ACT_RC_PreparationMission, 1, { M_MODELE_Pion_TRANS_DELAI_MISEENPLACE(), } )
-                
-            --[[// Progression tactique
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
+                        do
                             self.ePhaseMission = eDeployer
                                                         return
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Deploiement
-]]elseif switch_1 == eDeployer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                Activate( self.activations.BEH_Pion_Trans_InstallerDispositif, 1, {} )
-                
-            --[[// Fin mission
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                
-            
-            else
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eProgresser
+                                                                return
+
+                            end
+
                         end
+                    end
+
+                    Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_MODELE_Pion_TRANS_DELAI_MISEENPLACE(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_RC_PreparationMission, 1, { M_MODELE_Pion_TRANS_DELAI_MISEENPLACE(), } )
+                    
+                --[[// Progression tactique
+]]elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eDeployer
+                                                                return
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Deploiement
+]]elseif switch_1 == eDeployer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                    Activate( self.activations.BEH_Pion_Trans_InstallerDispositif, 1, {} )
+                    
+                --[[// Fin mission
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    
+                                cases_switch_1[4] = true
+
+                else
+                                end
+            end
 
     end,
 

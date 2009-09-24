@@ -55,7 +55,7 @@ node "BEH_Situation_Automate_INF_Attaquer_SurLD"
     end,
 
     activate = function( self )
-        local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self._namedParams.selPions_PE, SectionInfanterie )
+        local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self._namedParams.selPions_PE, "SectionInfanterie" )
         local sUnites_ABC = S_Cherche_Automate_Filtre_TypePion_ABC( self._namedParams.selPions_PE )
         --[[// with ( x_pion in selPions_PE )
 ]]--[[//	action ACT_Ordre_Automate_Continue( x_pion );

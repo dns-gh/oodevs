@@ -55,18 +55,23 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio"
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
-                        DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
-                        StartActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, {} )
-                        StopActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, {} )
-                        
-                    elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
-                        DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
-                        StopActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, {} )
-                        StartActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, 1, {} )
-                        
-                                        end
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
+                            DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
+                            StartActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, {} )
+                            StopActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, {} )
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
+                            DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
+                            StopActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, {} )
+                            StartActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, 1, {} )
+                            
+                                                cases_switch_1[2] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end
@@ -101,18 +106,23 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar"
         local _continue = true
 do
                 local repOrdre = x
-                switch_1 = repOrdre:GetType()
-                    if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
-                        DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
-                        StartActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, 1, {} )
-                        StopActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, {} )
-                        
-                    elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
-                        DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
-                        StopActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, {} )
-                        StartActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, 1, {} )
-                        
-                                        end
+                 do
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
+                            DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
+                            StartActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, 1, {} )
+                            StopActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, {} )
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
+                            DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
+                            StopActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, {} )
+                            StartActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, 1, {} )
+                            
+                                                cases_switch_1[2] = true
+                        end
+                    end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end

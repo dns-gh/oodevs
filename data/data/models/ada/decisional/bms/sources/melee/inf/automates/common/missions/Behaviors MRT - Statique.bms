@@ -57,9 +57,10 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
         self.limaLCAR = self.limaLCAR or DEC_GetLima( eTypeLima_LCAR )
         self.limaLR = self.limaLR or DEC_GetLima( eTypeLima_LR )
         --[[//-----------------------------------------------------------------------------
-]]--[[// Init
-]]--[[//-----------------------------------------------------------------------------
-]]if( ModuleBegins() ) then
+        ]]--[[// Init
+        ]]--[[//-----------------------------------------------------------------------------
+        ]]
+        if( ModuleBegins() ) then
             do
                 if( ( self.limaLCAR == 0 or self.limaLCAR == nil ) ) then
                     self.limaLCAR = DEC_GetLima( eTypeLima_LI )
@@ -70,38 +71,46 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
             end
         end
 
-        switch_1 = self.ePhase
+        DEC_Trace( "Phase = "..tostring( self.ePhase ).." RC = "..tostring( self.params.__returnValue ) )
+        do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
             if switch_1 == eMRT_SelectionnerPions then
+                DEC_Trace( "Phase = eMRT_SelectionnerPions" )
                 self.ePhase = eMRT_AssignerMissions
                 --[[//-----------------------------------------------------------------------------
-]]--[[//	Distribution des types de mission
-]]--[[//-----------------------------------------------------------------------------								
-]]DEC_Trace( "Selection des composantes pion : Infanterie" )
+                ]]--[[//	Distribution des types de mission
+                ]]--[[//-----------------------------------------------------------------------------								
+                ]]DEC_Trace( "Selection des composantes pion : Infanterie" )
                 --[[// Selection les types de composantes
-]]local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie )
-                local sUnites_HOT = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie_HOT )
-                local sUnites_MILAN = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionInfanterie_MILAN )
+                ]]local sUnites_INF = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie" )
+                local sUnites_HOT = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie_HOT" )
+                local sUnites_MILAN = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionInfanterie_MILAN" )
                 local sUnites_ABC = S_Cherche_Automate_Filtre_TypePion_ABC( self.selPions )
-                self.selPions_INF_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, GroupeInfanterie_Mortier )
+                self.selPions_INF_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, "GroupeInfanterie_Mortier" )
                 --[[// Dans les missions retrograde, tout les pions ABC sont en appuis
-]]S_Automate_ValideEchelonPion( sUnites_ABC, self.lstPionsAttaque, 0, self.lstPionsAppui )
+                ]]S_Automate_ValideEchelonPion( sUnites_ABC, self.lstPionsAttaque, 0, self.lstPionsAppui )
                 --[[// Determine les echelons	
-]]local rN_PE_AC = 0
+                ]]local rN_PE_AC = 0
                 local rN_PE = 0
                 local rN_SE = 0
                 local rN_Appui = 0
-                switch_2 = self._namedParams.eTypeMission
+                do
+                    local switch_2 = self._namedParams.eTypeMission
+                    local cases_switch_2 = {}
                     if switch_2 == "T_Mission_Automate_INF_BarrerDirection"
-                    or switch_2 == "T_Mission_Automate_INF_DonnerCoupArret"
-                    or switch_2 == "T_Mission_Automate_INF_Surveiller"
-                    or switch_2 == "T_Mission_Automate_INF_DefendreFerme"
-                    or switch_2 == "T_Mission_Automate_INF_RecueillirUnite"
-                    or switch_2 == "T_Mission_Automate_INF_Tenir" then
+                        or switch_2 == "T_Mission_Automate_INF_DonnerCoupArret"
+                        or switch_2 == "T_Mission_Automate_INF_Surveiller"
+                        or switch_2 == "T_Mission_Automate_INF_DefendreFerme"
+                        or switch_2 == "T_Mission_Automate_INF_RecueillirUnite"
+                        or switch_2 == "T_Mission_Automate_INF_Tenir" then
                         self.ePhase = eMRT_AffecterFuseaux
-                    elseif switch_2 == "T_Mission_Automate_INF_Interdire"
-                    or switch_2 == "T_Mission_Automate_INF_Couvrir" then
+                        cases_switch_2[1] = true
+                    end
+                    if cases_switch_2[1] or switch_2 == "T_Mission_Automate_INF_Interdire"
+                        or switch_2 == "T_Mission_Automate_INF_Couvrir" then
                         --[[// Determine les echelons	
-]]rN_Appui = #( sUnites_MILAN ) + #( sUnites_ABC )
+                        ]]rN_Appui = #( sUnites_MILAN ) + #( sUnites_ABC )
                         rN_PE_AC = #( sUnites_INF ) + #( sUnites_MILAN )
                         rN_PE = Max( #( sUnites_HOT ), #( sUnites_INF ) )
                         if( ( self._namedParams.rN_Position ~= 0 and self._namedParams.rN_Position ~= nil ) ) then
@@ -113,7 +122,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
                                 rN_PE = Min( self._namedParams.rN_Position, rN_PE )
                             end
                         else
-if( rN_Appui > 0 ) then
+                            if( rN_Appui > 0 ) then
                                 rN_PE = Max( #( sUnites_HOT ), #( sUnites_INF ) )
                             else
                                 rN_PE = Max( #( sUnites_HOT ), rN_PE_AC - Floor( rN_PE_AC / 3 ) )
@@ -122,46 +131,41 @@ if( rN_Appui > 0 ) then
 
                         rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
                         --[[// Selection des composantes
-]]DEC_Trace( "Selection des composantes pion" )
+                        ]]DEC_Trace( "Selection des composantes pion" )
                         self.selPions_PE_HOT = S_Automate_ValideEchelonPion( sUnites_HOT, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
                         self.selPions_PE_INF = S_Automate_ValideEchelonPion( sUnites_INF, self.lstPionsAttaque, rN_PE, self.lstPionsAppui )
                         self.selPions_PE_MILAN = S_Automate_ValideEchelonPion( sUnites_MILAN, self.lstPionsAttaque, rN_PE_AC, self.lstPionsAppui )
-                        
-                                        end
---[[// 
-]]--[[// L'execution de la mission necessite la presence d'un 1er ech
-]]
+
+                        cases_switch_2[2] = true
+                    end
+                end
+                --[[// 
+                ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
+                ]]
                 if( ( #( self.lstPionsAttaque ) == 0 or #( self.lstPionsAttaque ) == nil ) ) then
                     do
                         DEC_Trace( "Pas de 1er echelon" )
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
+                        self.params.__returnValue = eActionImpossible
                         Halt()
 
                     end
                 end
 
-                
+
             elseif switch_1 == eMRT_AffecterFuseaux then
+                DEC_Trace( "Phase = eMRT_AffecterFuseaux" )
                 self.ePhase = eMRT_AssignerMissions
-                --[[/* MIA ADA
-			//-----------------------------------------------------------------------------
-			//Le fuseau de la compagnie est coupe en DEUX
-			//le pion en appui utilise le fuseau de la compagnie
-			//-----------------------------------------------------------------------------
-			if(  eActionMRT == eActionEffectuee )    {         eActionMRT=eActionEnCours;         { ePhase = eMRT_AssignerMissions; return; }     }
-			action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;
-			*/]]--[[//-----------------------------------------------------------------------------
-]]--[[// Assigner les missions au pions subordonnéss
-]]--[[//-----------------------------------------------------------------------------				
-]]
+                cases_switch_1[2] = true
             elseif switch_1 == eMRT_AssignerMissions then
+                DEC_Trace( "Phase = eMRT_AssignerMissions" )
                 if( self.eActionMRT == eActionImpossible ) then
                     do
-                                                do
+                        DEC_Trace( "eActionMRT IMP" )
+                        do
                         end
 
-                                                self.params.__returnValue = eActionImpossible
+                        self.params.__returnValue = eActionImpossible
                         Halt()
 
                     end
@@ -169,11 +173,11 @@ if( rN_Appui > 0 ) then
 
                 if( self.eValidationMRT == eActionImpossible ) then
                     do
-                                                do
+                        do
                             DEC_Trace( "eValidationMRT == eActionImpossible" )
                         end
 
-                                                self.params.__returnValue = eActionImpossible
+                        self.params.__returnValue = eActionImpossible
                         Halt()
 
                     end
@@ -182,9 +186,10 @@ if( rN_Appui > 0 ) then
                 if( self.eValidationMRT == eActionEffectuee ) then
                     do
                         self.eValidationMRT = eActionEnCours
-                                                do
+                        do
                             self.ePhase = eMRT_RetablirFuseau
-                                                        return
+                            DEC_Trace( "Return en plein milieu???" )
+                            return
 
                         end
 
@@ -192,25 +197,31 @@ if( rN_Appui > 0 ) then
                 end
 
                 Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.lstPionsAttaque ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
-                switch_2 = self._namedParams.eTypeMission
+                do
+                    local switch_2 = self._namedParams.eTypeMission
+                    local cases_switch_2 = {}
                     if switch_2 == "T_Mission_Automate_INF_DefendreFerme"
-                    or switch_2 == "T_Mission_Automate_INF_Tenir" then
+                        or switch_2 == "T_Mission_Automate_INF_Tenir" then
                         local mission = DEC_GetMission( myself )
+                        DEC_Trace( "Assigne defendre dans zone aux pions INF" )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_DansZone, 1, { self.selPions_PE_INF, mission.position_, mission.preparerTerrain_, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_HOT, mission.position_, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_MILAN, mission.position_, } )
-                        
+
+                        cases_switch_2[1] = true
                     elseif switch_2 == "T_Mission_Automate_INF_BarrerDirection" then
                         local mission = DEC_GetMission( myself )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_DansZone, 1, { self.selPions_PE_INF, mission.position_, mission.preparerTerrain_, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_HOT, mission.position_, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_MILAN, mission.position_, } )
-                        
+
+                        cases_switch_2[2] = true
                     elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
                         if( ( self.limaLCAR == 0 or self.limaLCAR == nil ) ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleLimaInvalide )
-                                                                self.params.__returnValue = eActionImpossible
+                                self.params.__returnValue = eActionImpossible
+                                DEC_Trace( "ERR 1" )
                                 Halt()
 
                             end
@@ -219,13 +230,14 @@ if( rN_Appui > 0 ) then
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_SurLima, 1, { self.selPions_PE_INF, self.limaLCAR, false, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_HOT, self.limaLCAR, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_MILAN, self.limaLCAR, } )
-                        
+
                     elseif switch_2 == "T_Mission_Automate_INF_RecueillirUnite" then
                         local mission = DEC_GetMission( myself )
                         if( ( self.limaLR == 0 or self.limaLR == nil ) ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleLimaInvalide )
-                                                                self.params.__returnValue = eActionImpossible
+                                self.params.__returnValue = eActionImpossible
+                                DEC_Trace( "ERR 2" )
                                 Halt()
 
                             end
@@ -234,42 +246,46 @@ if( rN_Appui > 0 ) then
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_SurLima, 1, { self.selPions_PE_INF, self.limaLR, false, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_HOT, self.limaLR, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_MILAN, self.limaLR, } )
-                        
+
                     elseif switch_2 == "T_Mission_Automate_INF_Couvrir" then
                         local mission = DEC_GetMission( myself )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints, 1, { self.selPions_PE_INF, mission.objectifs_, false, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, 1, { self.selPions_PE_HOT, mission.objectifs_, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, 1, { self.selPions_PE_MILAN, mission.objectifs_, } )
-                        
+
+                        cases_switch_2[5] = true
                     elseif switch_2 == "T_Mission_Automate_INF_Surveiller" then
                         local mission = DEC_GetMission( myself )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Zone, 1, { self.lstPionsAttaque, mission.zone_, } )
-                        
+
+                        cases_switch_2[6] = true
                     elseif switch_2 == "T_Mission_Automate_INF_Interdire" then
                         local mission = DEC_GetMission( myself )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerInterdire_SurPoints, 1, { self.lstPionsAttaque, mission.pointsAInterdire_, mission.preparerTerrain_, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerCouvrir, 1, { self.lstPionsAttaque, self.lstPionsAppui, } )
-                        
-                    
+
+                        cases_switch_2[7] = true
+
                     else
                         DEC_Trace( "Mission Inconnue" )
-                                                self.params.__returnValue = eActionImpossible
+                        self.params.__returnValue = eActionImpossible
                         Halt()
 
-                                        end
+                    end
+                end
 
+                DEC_Trace( "Assigne mission au PC" )
                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerMission_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
-                --[[// if ( eTypeMission != T_Mission_Automate_INF_DonnerCoupArret )
-]]Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
-                --[[//	eValidationMRT == eActionEffectuee;
-]]
+                Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
             elseif switch_1 == eMRT_RetablirFuseau then
+                DEC_Trace( "Phase = eMRT_RetablirFuseau" )
                 if( self.eValidationMRT == eActionEffectuee ) then
                     do
                         self.eValidationMRT = eActionEnCours
-                                                do
-                                                        self.params.__returnValue = eActionEffectuee
+                        do
+                            DEC_Trace( "Retablir Fuseau + validation MRT effectuee -> Halt" )
+                            self.params.__returnValue = eActionEffectuee
                             Halt()
 
                         end
@@ -278,60 +294,62 @@ if( rN_Appui > 0 ) then
                 end
 
                 for _,x_pion in pairs( self.lstPionsAttaque ) do
-                local _continue = true
+                    local _continue = true
                     --[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { x_pion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                    ]]Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { x_pion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
 
                 end
 
                 --[[// DEFENDRE
-]]
-            --[[//-----------------------------------------------------------------------------
-]]            end
+                ]]
+                --[[//-----------------------------------------------------------------------------
+                ]]                end
+            end
+            DEC_Trace( "EN FIN: Phase = "..tostring( self.ePhase ).." RC = "..tostring( self.params.__returnValue ) )
 
-    end,
+        end,
 
-}
+    }
 
-node "BEH_Medo_Automate_INF_AssignerDefendre_DansZone"
-{
-    activations =
+    node "BEH_Medo_Automate_INF_AssignerDefendre_DansZone"
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Defendre", {} },
-        { "ACT_Warning", {} },
-    },
+        activations =
+        {
+            { "BEH_Mission_Automate_INF_AssignerA_Defendre", {} },
+            { "ACT_Warning", {} },
+        },
 
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.selPions = self.params[1]
-        self._namedParams.zone = self.params[2]
-        self._namedParams.bPreparerTerrain = self.params[3]
-    end,
+        create = function( self )
+            self._namedParams = {}
+            self._namedParams.selPions = self.params[1]
+            self._namedParams.zone = self.params[2]
+            self._namedParams.bPreparerTerrain = self.params[3]
+        end,
 
-    activate = function( self )
-        self.listePoint = self.listePoint or {}--[[//-------------------------------------------------------------------------
-]]--[[// Init
-]]
-        --[[//-------------------------------------------------------------------------
-]]self.rIterateurPoint = self.rIterateurPoint or 0
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
-        end
+        activate = function( self )
+            self.listePoint = self.listePoint or {}--[[//-------------------------------------------------------------------------
+            ]]--[[// Init
+            ]]
+            --[[//-------------------------------------------------------------------------
+            ]]self.rIterateurPoint = self.rIterateurPoint or 0
+            if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+                return
+            end
 
-        if( ModuleBegins() ) then
-            do
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Gestion erreur
-]]local mission = DEC_GetMission( myself )
-                --[[//-----------------------------------------------------------------------------
-]]--[[//-----------------------------------------------------------------------------
-]]self.listePoint = DEC_Geometrie_PositionsParRapportALocalisation( self._namedParams.selPions, self._namedParams.zone, DEC_GetDirectionEnnemi( mission ), 1000 )
-                --[[// Assignation des mission une par une au pion (pas simultanément)
-]]--[[//-----------------------------------------------------------------------------
-]]if( ( self.listePoint ~= 0 and self.listePoint ~= nil ) ) then
+            if( ModuleBegins() ) then
+                do
+                    --[[//-----------------------------------------------------------------------------
+                    ]]--[[// Gestion erreur
+                    ]]local mission = DEC_GetMission( myself )
+                    --[[//-----------------------------------------------------------------------------
+                    ]]--[[//-----------------------------------------------------------------------------
+                    ]]self.listePoint = DEC_Geometrie_PositionsParRapportALocalisation( self._namedParams.selPions, self._namedParams.zone, DEC_GetDirectionEnnemi( mission ), 1000 )
+                    --[[// Assignation des mission une par une au pion (pas simultanément)
+                    ]]--[[//-----------------------------------------------------------------------------
+                    ]]if( ( self.listePoint ~= 0 and self.listePoint ~= nil ) ) then
                     do
                         for _,pion in pairs( self._namedParams.selPions ) do
-                        local _continue = true
+                            local _continue = true
                             do
                                 if( self.rIterateurPoint == DEC_ListePoints_Size( self.listePoint ) ) then
                                     self.rIterateurPoint = 0
@@ -339,18 +357,18 @@ node "BEH_Medo_Automate_INF_AssignerDefendre_DansZone"
 
                                 local point = DEC_ListePoints_GetAt( self.listePoint, self.rIterateurPoint )
                                 StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Defendre, 1, { ePhase_MRT, pion, point, self._namedParams.bPreparerTerrain, } )
-                                                                self.rIterateurPoint = self.rIterateurPoint + 1
+                                self.rIterateurPoint = self.rIterateurPoint + 1
                             end
 
                         end
 
                     end
                 else
-do
+                    do
                         DEC_Trace( "Pions in same fuseau or location not in fuseau" )
                         --[[// Sur Lima
-]]Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
-                                                self.params.__returnValue = eActionImpossible
+                        ]]Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
+                        self.params.__returnValue = eActionImpossible
                         return
 
                     end
@@ -379,7 +397,7 @@ node "BEH_Medo_Automate_INF_AssignerDefendre_SurLima"
     end,
 
     activate = function( self )
-                self.bValide = self.bValide or false
+        self.bValide = self.bValide or false
         self.lstPoints = self.lstPoints or nil
         self.lstNullPoint = self.lstNullPoint or nil
         if( ( #( self._namedParams.selPions_PE ) == 0 or #( self._namedParams.selPions_PE ) == nil ) ) then
@@ -410,417 +428,417 @@ node "BEH_Medo_Automate_INF_AssignerDefendre_SurLima"
             Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints, 1, { self._namedParams.selPions_PE, self.lstPoints, self._namedParams.bPreparerTerrain, } )
         end
 
---[[// Sur Points
-]]    end,
+        --[[// Sur Points
+        ]]    end,
 
-    destroy = function( self )
-            end,
+        destroy = function( self )
+        end,
 
-}
+    }
 
-node "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints"
-{
-    activations =
+    node "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints"
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Defendre", {} },
-    },
+        activations =
+        {
+            { "BEH_Mission_Automate_INF_AssignerA_Defendre", {} },
+        },
 
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.selPions_PE = self.params[1]
-        self._namedParams.lstPoints = self.params[2]
-        self._namedParams.bPreparerTerrain = self.params[3]
-    end,
+        create = function( self )
+            self._namedParams = {}
+            self._namedParams.selPions_PE = self.params[1]
+            self._namedParams.lstPoints = self.params[2]
+            self._namedParams.bPreparerTerrain = self.params[3]
+        end,
 
-    activate = function( self )
-                self.lstPoints_ = self.lstPoints_ or DEC_Geometrie_CreerListePoints()
-        if( ModuleBegins() ) then
-            do
-                DEC_Copie_ListePoints( self._namedParams.lstPoints, self.lstPoints_ )
-                for _,x_pion in pairs( self._namedParams.selPions_PE ) do
-                local _continue = true
-                    do
-                        local rIt_Point = S_Geometrie_Automate_PointPlusProchePion_DansFuseau( x_pion, self.lstPoints_ )
-                        if( rIt_Point >= DEC_ListePoints_Size( self.lstPoints_ ) ) then
-                            _continue = false
-                        end
-
-                            if _continue then
-                            local ptMissionTmp = DEC_ListePoints_GetAt( self.lstPoints_, rIt_Point )
-                            if( ( ptMissionTmp == 0 or ptMissionTmp == nil ) ) then
-                                _continue = false
-                            end
-
-                                if _continue then
-                                local ptMission = DEC_Geometrie_CreerPoint()
-                                DEC_Copie_Point( ptMissionTmp, ptMission )
-                                DEC_ListePoints_Remove( self.lstPoints_, rIt_Point )
-                                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Defendre, 1, { ePhase_MRT, x_pion, ptMission, self._namedParams.bPreparerTerrain, } )
-                            end
-                        end
-                    end
-
-                end
-
-            end
---[[//-----------------------------------------------------------------------------
-]]        end
-
---[[// INTERDIRE
-]]--[[//-----------------------------------------------------------------------------
-]]--[[// Sur Points
-]]    end,
-
-    destroy = function( self )
-            end,
-
-}
-
-node "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints"
-{
-    activations =
-    {
-        { "BEH_Mission_Automate_INF_AssignerA_Barrer", {} },
-        { "BEH_Mission_Automate_INF_AssignerA_Interdire", {} },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.selPions_PE = self.params[1]
-        self._namedParams.lstPoints = self.params[2]
-        self._namedParams.bPreparerTerrain = self.params[3]
-    end,
-
-    activate = function( self )
-                self.lstPoints_ = self.lstPoints_ or DEC_Geometrie_CreerListePoints()
-        if( ModuleBegins() ) then
-            do
-                DEC_Copie_ListePoints( self._namedParams.lstPoints, self.lstPoints_ )
-                for _,x_pion in pairs( --[[// Selection de l'objectif
-]]self._namedParams.selPions_PE ) do
-                local _continue = true
-                    do
-                        local pion = x_pion
-                        local rIt_Point = S_Geometrie_Automate_PointPlusProchePion_DansFuseau( x_pion, self.lstPoints_ )
-                        if( rIt_Point >= DEC_ListePoints_Size( self.lstPoints_ ) ) then
-                            _continue = false
-                        end
-
-                            if _continue then
-                            local ptMissionTmp = DEC_ListePoints_GetAt( self.lstPoints_, rIt_Point )
-                            --[[// Mission Principale des pions en PE
-]]if( ( ptMissionTmp == 0 or ptMissionTmp == nil ) ) then
-                                _continue = false
-                            end
-
-                                if _continue then
-                                local ptMission = DEC_Geometrie_CreerPoint()
-                                DEC_Copie_Point( ptMissionTmp, ptMission )
-                                DEC_ListePoints_Remove( self.lstPoints_, rIt_Point )
-                                if( ( pion:GetType() == "SectionInfanterie_MILAN" ) or ( pion:GetType() == "SectionInfanterie_HOT" ) ) then
-                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Barrer, 1, { ePhase_MRT, x_pion, ptMission, } )
-                                else
-                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Interdire, 1, { ePhase_MRT, x_pion, ptMission, self._namedParams.bPreparerTerrain, } )
-                                end
-
-                            end
-                        end
-                    end
-
-                end
-
-            end
-        end
-
---[[//-----------------------------------------------------------------------------
-]]--[[// BARRER
-]]--[[//-----------------------------------------------------------------------------
-]]    end,
-
-    destroy = function( self )
-            end,
-
-}
-
-node "BEH_Medo_Automate_INF_AssignerBarrer_DansZone"
-{
-    activations =
-    {
-        { "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone", {} },
-        { "ACT_Warning", {} },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.selPions = self.params[1]
-        self._namedParams.zoneInstallation = self.params[2]
-    end,
-
-    activate = function( self )
-        self.listePoint = self.listePoint or {}--[[//-------------------------------------------------------------------------
-]]--[[// Init
-]]
-        --[[//-------------------------------------------------------------------------
-]]self.rIterateurPoint = self.rIterateurPoint or 0
-        if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
-        end
-
-        --[[//-----------------------------------------------------------------------------
-]]if( ModuleBegins() ) then
-            do
-                --[[// Gestion erreur
-]]--[[//-----------------------------------------------------------------------------
-]]local mission = DEC_GetMission( myself )
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Assignation des mission une par une au pion (pas simultanément)
-]]self.listePoint = DEC_Geometrie_PositionsParRapportALocalisation( self._namedParams.selPions, self._namedParams.zoneInstallation, DEC_GetDirectionEnnemi( mission ), 1000 )
-                --[[//-----------------------------------------------------------------------------
-]]if( ( self.listePoint ~= 0 and self.listePoint ~= nil ) ) then
-                    do
-                        for _,pion in pairs( self._namedParams.selPions ) do
+        activate = function( self )
+            self.lstPoints_ = self.lstPoints_ or DEC_Geometrie_CreerListePoints()
+            if( ModuleBegins() ) then
+                do
+                    DEC_Copie_ListePoints( self._namedParams.lstPoints, self.lstPoints_ )
+                    for _,x_pion in pairs( self._namedParams.selPions_PE ) do
                         local _continue = true
-                            do
-                                if( self.rIterateurPoint == DEC_ListePoints_Size( self.listePoint ) ) then
-                                    self.rIterateurPoint = 0
-                                end
-
-                                local point = DEC_ListePoints_GetAt( self.listePoint, self.rIterateurPoint )
-                                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone, 1, { ePhase_MRT, pion, point, } )
-                                                                self.rIterateurPoint = self.rIterateurPoint + 1
-                            end
-
-                        end
-
-                    end
-                else
-do
-                        --[[/* OLD MIA // ADA
-	//-------------------------------------------------------------------------
-    // Assignement des missions aux differents pions
-    //-------------------------------------------------------------------------			
-	if ( DIA_ModuleBegins() )
-		with ( x_pion in selPions_PE )			
-			start behavior BEH_Mission_Automate_INF_AssignerA_BarrerDansZone( ePhase_MRT, x_pion, zone );
-	*/]]Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
-                        DEC_Trace( "CACA" )
-                        --[[// Sur Lima
-]]                        self.params.__returnValue = eActionImpossible
-                        return
-
-                    end
-                end
-
-            end
-        end
-
-    end,
-
-}
-
-node "BEH_Medo_Automate_INF_AssignerBarrer_SurLima"
-{
-    activations =
-    {
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", {} },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.selPions_PE = self.params[1]
-        self._namedParams.lima = self.params[2]
-    end,
-
-    activate = function( self )
-                self.bValide = self.bValide or false
-        self.lstPoints = self.lstPoints or nil
-        self.lstNullPoint = self.lstNullPoint or nil
-        if( ( #( self._namedParams.selPions_PE ) == 0 or #( self._namedParams.selPions_PE ) == nil ) ) then
-            return
-        end
-
-        if( ModuleBegins() ) then
-            do
-                self.lstPoints = DEC_Geometrie_CalculerPositionsParRapportALima( self._namedParams.lima, 0, #( self._namedParams.selPions_PE ) )
-                self.bValide = ( ( self.lstPoints ~= 0 and self.lstPoints ~= nil ) )
-                if( not self.bValide ) then
-                    do
-                        DEC_Warning( eRC_MissionImpossibleLimaInvalide )
-                        self.lstPoints = self.lstNullPoint
-                        StartActivate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
-                    end
---[[// Sur Points
-]]                end
-
-            end
-        end
-
-        if( not self.bValide ) then
-            self.params.__returnValue = eActionImpossible
-            return
-        end
-
-        if( ( self.lstPoints ~= 0 and self.lstPoints ~= nil ) ) then
-            Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, 1, { self._namedParams.selPions_PE, self.lstPoints, } )
-        end
-
-    end,
-
-    destroy = function( self )
-            end,
-
-}
-
-node "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints"
-{
-    activations =
-    {
-        { "BEH_Mission_Automate_INF_AssignerA_Barrer", {} },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.selPions_PE = self.params[1]
-        self._namedParams.lstPoints = self.params[2]
-    end,
-
-    activate = function( self )
-        --[[// Selection de l'objectif
-]]        self.lstPoints_ = self.lstPoints_ or DEC_Geometrie_CreerListePoints()
-        if( ModuleBegins() ) then
-            do
-                DEC_Copie_ListePoints( self._namedParams.lstPoints, self.lstPoints_ )
-                for _,x_inf in pairs( self._namedParams.selPions_PE ) do
-                local _continue = true
-                    do
-                        local rIt_Point = S_Geometrie_Automate_PointPlusProchePion_DansFuseau( x_inf, self.lstPoints_ )
-                        if( rIt_Point >= DEC_ListePoints_Size( self.lstPoints_ ) ) then
-                            _continue = false
-                        end
-
-                            if _continue then
-                            local ptMissionTmp = DEC_ListePoints_GetAt( self.lstPoints_, rIt_Point )
-                            if( ( ptMissionTmp == 0 or ptMissionTmp == nil ) ) then
+                        do
+                            local rIt_Point = S_Geometrie_Automate_PointPlusProchePion_DansFuseau( x_pion, self.lstPoints_ )
+                            if( rIt_Point >= DEC_ListePoints_Size( self.lstPoints_ ) ) then
                                 _continue = false
                             end
 
+                            if _continue then
+                                local ptMissionTmp = DEC_ListePoints_GetAt( self.lstPoints_, rIt_Point )
+                                if( ( ptMissionTmp == 0 or ptMissionTmp == nil ) ) then
+                                    _continue = false
+                                end
+
                                 if _continue then
-                                local ptMission = DEC_Geometrie_CreerPoint()
-                                --[[//-----------------------------------------------------------------------------
-]]DEC_Copie_Point( ptMissionTmp, ptMission )
-                                --[[// COUVRIR
-]]--[[//-----------------------------------------------------------------------------    	
-]]DEC_ListePoints_Remove( self.lstPoints_, rIt_Point )
-                                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Barrer, 1, { ePhase_MRT, x_inf, ptMission, } )
+                                    local ptMission = DEC_Geometrie_CreerPoint()
+                                    DEC_Copie_Point( ptMissionTmp, ptMission )
+                                    DEC_ListePoints_Remove( self.lstPoints_, rIt_Point )
+                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Defendre, 1, { ePhase_MRT, x_pion, ptMission, self._namedParams.bPreparerTerrain, } )
+                                end
                             end
+                        end
+
+                    end
+
+                end
+                --[[//-----------------------------------------------------------------------------
+                ]]        end
+
+                --[[// INTERDIRE
+                ]]--[[//-----------------------------------------------------------------------------
+                ]]--[[// Sur Points
+                ]]    end,
+
+                destroy = function( self )
+                end,
+
+            }
+
+            node "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints"
+            {
+                activations =
+                {
+                    { "BEH_Mission_Automate_INF_AssignerA_Barrer", {} },
+                    { "BEH_Mission_Automate_INF_AssignerA_Interdire", {} },
+                },
+
+                create = function( self )
+                    self._namedParams = {}
+                    self._namedParams.selPions_PE = self.params[1]
+                    self._namedParams.lstPoints = self.params[2]
+                    self._namedParams.bPreparerTerrain = self.params[3]
+                end,
+
+                activate = function( self )
+                    self.lstPoints_ = self.lstPoints_ or DEC_Geometrie_CreerListePoints()
+                    if( ModuleBegins() ) then
+                        do
+                            DEC_Copie_ListePoints( self._namedParams.lstPoints, self.lstPoints_ )
+                            for _,x_pion in pairs( --[[// Selection de l'objectif
+                                ]]self._namedParams.selPions_PE ) do
+                                local _continue = true
+                                do
+                                    local pion = x_pion
+                                    local rIt_Point = S_Geometrie_Automate_PointPlusProchePion_DansFuseau( x_pion, self.lstPoints_ )
+                                    if( rIt_Point >= DEC_ListePoints_Size( self.lstPoints_ ) ) then
+                                        _continue = false
+                                    end
+
+                                    if _continue then
+                                        local ptMissionTmp = DEC_ListePoints_GetAt( self.lstPoints_, rIt_Point )
+                                        --[[// Mission Principale des pions en PE
+                                        ]]if( ( ptMissionTmp == 0 or ptMissionTmp == nil ) ) then
+                                        _continue = false
+                                    end
+
+                                    if _continue then
+                                        local ptMission = DEC_Geometrie_CreerPoint()
+                                        DEC_Copie_Point( ptMissionTmp, ptMission )
+                                        DEC_ListePoints_Remove( self.lstPoints_, rIt_Point )
+                                        if( ( pion:GetType() == "SectionInfanterie_MILAN" ) or ( pion:GetType() == "SectionInfanterie_HOT" ) ) then
+                                            StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Barrer, 1, { ePhase_MRT, x_pion, ptMission, } )
+                                        else
+                                            StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Interdire, 1, { ePhase_MRT, x_pion, ptMission, self._namedParams.bPreparerTerrain, } )
+                                        end
+
+                                    end
+                                end
+                            end
+
+                        end
+
+                    end
+                end
+
+                --[[//-----------------------------------------------------------------------------
+                ]]--[[// BARRER
+                ]]--[[//-----------------------------------------------------------------------------
+                ]]    end,
+
+                destroy = function( self )
+                end,
+
+            }
+
+            node "BEH_Medo_Automate_INF_AssignerBarrer_DansZone"
+            {
+                activations =
+                {
+                    { "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone", {} },
+                    { "ACT_Warning", {} },
+                },
+
+                create = function( self )
+                    self._namedParams = {}
+                    self._namedParams.selPions = self.params[1]
+                    self._namedParams.zoneInstallation = self.params[2]
+                end,
+
+                activate = function( self )
+                    self.listePoint = self.listePoint or {}--[[//-------------------------------------------------------------------------
+                    ]]--[[// Init
+                    ]]
+                    --[[//-------------------------------------------------------------------------
+                    ]]self.rIterateurPoint = self.rIterateurPoint or 0
+                    if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
+                        return
+                    end
+
+                    --[[//-----------------------------------------------------------------------------
+                    ]]if( ModuleBegins() ) then
+                    do
+                        --[[// Gestion erreur
+                        ]]--[[//-----------------------------------------------------------------------------
+                        ]]local mission = DEC_GetMission( myself )
+                        --[[//-----------------------------------------------------------------------------
+                        ]]--[[// Assignation des mission une par une au pion (pas simultanément)
+                        ]]self.listePoint = DEC_Geometrie_PositionsParRapportALocalisation( self._namedParams.selPions, self._namedParams.zoneInstallation, DEC_GetDirectionEnnemi( mission ), 1000 )
+                        --[[//-----------------------------------------------------------------------------
+                        ]]if( ( self.listePoint ~= 0 and self.listePoint ~= nil ) ) then
+                        do
+                            for _,pion in pairs( self._namedParams.selPions ) do
+                                local _continue = true
+                                do
+                                    if( self.rIterateurPoint == DEC_ListePoints_Size( self.listePoint ) ) then
+                                        self.rIterateurPoint = 0
+                                    end
+
+                                    local point = DEC_ListePoints_GetAt( self.listePoint, self.rIterateurPoint )
+                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone, 1, { ePhase_MRT, pion, point, } )
+                                    self.rIterateurPoint = self.rIterateurPoint + 1
+                                end
+
+                            end
+
+                        end
+                    else
+                        do
+                            --[[/* OLD MIA // ADA
+                            //-------------------------------------------------------------------------
+                            // Assignement des missions aux differents pions
+                            //-------------------------------------------------------------------------			
+                            if ( DIA_ModuleBegins() )
+                                with ( x_pion in selPions_PE )			
+                                start behavior BEH_Mission_Automate_INF_AssignerA_BarrerDansZone( ePhase_MRT, x_pion, zone );
+                                */]]Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
+                                DEC_Trace( "CACA" )
+                                --[[// Sur Lima
+                                ]]                        self.params.__returnValue = eActionImpossible
+                                return
+
+                            end
+                        end
+
+                    end
+                end
+
+            end,
+
+        }
+
+        node "BEH_Medo_Automate_INF_AssignerBarrer_SurLima"
+        {
+            activations =
+            {
+                { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+                { "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", {} },
+            },
+
+            create = function( self )
+                self._namedParams = {}
+                self._namedParams.selPions_PE = self.params[1]
+                self._namedParams.lima = self.params[2]
+            end,
+
+            activate = function( self )
+                self.bValide = self.bValide or false
+                self.lstPoints = self.lstPoints or nil
+                self.lstNullPoint = self.lstNullPoint or nil
+                if( ( #( self._namedParams.selPions_PE ) == 0 or #( self._namedParams.selPions_PE ) == nil ) ) then
+                    return
+                end
+
+                if( ModuleBegins() ) then
+                    do
+                        self.lstPoints = DEC_Geometrie_CalculerPositionsParRapportALima( self._namedParams.lima, 0, #( self._namedParams.selPions_PE ) )
+                        self.bValide = ( ( self.lstPoints ~= 0 and self.lstPoints ~= nil ) )
+                        if( not self.bValide ) then
+                            do
+                                DEC_Warning( eRC_MissionImpossibleLimaInvalide )
+                                self.lstPoints = self.lstNullPoint
+                                StartActivate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                            end
+                            --[[// Sur Points
+                            ]]                end
+
+                        end
+                    end
+
+                    if( not self.bValide ) then
+                        self.params.__returnValue = eActionImpossible
+                        return
+                    end
+
+                    if( ( self.lstPoints ~= 0 and self.lstPoints ~= nil ) ) then
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, 1, { self._namedParams.selPions_PE, self.lstPoints, } )
+                    end
+
+                end,
+
+                destroy = function( self )
+                end,
+
+            }
+
+            node "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints"
+            {
+                activations =
+                {
+                    { "BEH_Mission_Automate_INF_AssignerA_Barrer", {} },
+                },
+
+                create = function( self )
+                    self._namedParams = {}
+                    self._namedParams.selPions_PE = self.params[1]
+                    self._namedParams.lstPoints = self.params[2]
+                end,
+
+                activate = function( self )
+                    --[[// Selection de l'objectif
+                    ]]        self.lstPoints_ = self.lstPoints_ or DEC_Geometrie_CreerListePoints()
+                    if( ModuleBegins() ) then
+                        do
+                            DEC_Copie_ListePoints( self._namedParams.lstPoints, self.lstPoints_ )
+                            for _,x_inf in pairs( self._namedParams.selPions_PE ) do
+                                local _continue = true
+                                do
+                                    local rIt_Point = S_Geometrie_Automate_PointPlusProchePion_DansFuseau( x_inf, self.lstPoints_ )
+                                    if( rIt_Point >= DEC_ListePoints_Size( self.lstPoints_ ) ) then
+                                        _continue = false
+                                    end
+
+                                    if _continue then
+                                        local ptMissionTmp = DEC_ListePoints_GetAt( self.lstPoints_, rIt_Point )
+                                        if( ( ptMissionTmp == 0 or ptMissionTmp == nil ) ) then
+                                            _continue = false
+                                        end
+
+                                        if _continue then
+                                            local ptMission = DEC_Geometrie_CreerPoint()
+                                            --[[//-----------------------------------------------------------------------------
+                                            ]]DEC_Copie_Point( ptMissionTmp, ptMission )
+                                            --[[// COUVRIR
+                                            ]]--[[//-----------------------------------------------------------------------------    	
+                                            ]]DEC_ListePoints_Remove( self.lstPoints_, rIt_Point )
+                                            StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Barrer, 1, { ePhase_MRT, x_inf, ptMission, } )
+                                        end
+                                    end
+                                end
+
+                            end
+
+                        end
+                    end
+
+                end,
+
+                destroy = function( self )
+                end,
+
+            }
+
+            node "BEH_Medo_Automate_INF_AssignerCouvrir"
+            {
+                activations =
+                {
+                    { "BEH_Mission_Automate_INF_AssignerA_Couvrir", {} },
+                },
+
+                create = function( self )
+                    self._namedParams = {}
+                    self._namedParams.selPion_PE = self.params[1]
+                    self._namedParams.selPion_SE = self.params[2]
+                end,
+
+                activate = function( self )
+                    self.mission = self.mission or DEC_GetMission( myself )
+                    self.selPions_INF = self.selPions_INF or S_Cherche_Automate_Filtre_TypePion( self._namedParams.selPion_SE, "SectionInfanterie" )
+                    --[[//-----------------------------------------------------------------------------
+                    ]]if( ModuleBegins() ) then
+                    do
+                        --[[// SURVEILLER
+                        ]]--[[//-----------------------------------------------------------------------------    	
+                        ]]if( #( self.selPions_INF ) > 1 and ( #( self.selPions_INF ) > Floor( #( self._namedParams.selPion_PE ) / 2 ) ) ) then
+                        do
+                            --[[//-----------------------------------------------------------------------------
+                            ]]local pCouverture = DIA_GetAt( self.selPions_INF, 0 )
+                            --[[// Init
+                            ]]local pCouvert = DIA_GetAt( self._namedParams.selPion_PE, 0 )
+                            --[[//-----------------------------------------------------------------------------
+                            ]]local ptMis = DEC_ListePoints_GetAt( self.mission.pointsAInterdire_, 0 )
+                            StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Couvrir, 1, { ePhase_MRT, pCouverture, pCouvert, ptMis, } )
                         end
                     end
 
                 end
-
             end
-        end
 
-    end,
+        end,
 
-    destroy = function( self )
-            end,
+    }
 
-}
-
-node "BEH_Medo_Automate_INF_AssignerCouvrir"
-{
-    activations =
+    node "BEH_Medo_Automate_INF_AssignerSurveiller_Zone"
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Couvrir", {} },
-    },
+        activations =
+        {
+            { "BEH_Mission_Automate_INF_AssignerA_SurveillerZone", {} },
+        },
 
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.selPion_PE = self.params[1]
-        self._namedParams.selPion_SE = self.params[2]
-    end,
+        create = function( self )
+            self._namedParams = {}
+            self._namedParams.selPions_PE = self.params[1]
+            self._namedParams.zone = self.params[2]
+        end,
 
-    activate = function( self )
-        self.mission = self.mission or DEC_GetMission( myself )
-        self.selPions_INF = self.selPions_INF or S_Cherche_Automate_Filtre_TypePion( self._namedParams.selPion_SE, SectionInfanterie )
-        --[[//-----------------------------------------------------------------------------
-]]if( ModuleBegins() ) then
-            do
-                --[[// SURVEILLER
-]]--[[//-----------------------------------------------------------------------------    	
-]]if( #( self.selPions_INF ) > 1 and ( #( self.selPions_INF ) > Floor( #( self._namedParams.selPion_PE ) / 2 ) ) ) then
-                    do
-                        --[[//-----------------------------------------------------------------------------
-]]local pCouverture = DIA_GetAt( self.selPions_INF, 0 )
-                        --[[// Init
-]]local pCouvert = DIA_GetAt( self._namedParams.selPion_PE, 0 )
-                        --[[//-----------------------------------------------------------------------------
-]]local ptMis = DEC_ListePoints_GetAt( self.mission.pointsAInterdire_, 0 )
-                        StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Couvrir, 1, { ePhase_MRT, pCouverture, pCouvert, ptMis, } )
-                    end
+        activate = function( self )
+            if( ModuleBegins() ) then
+                for _,x_inf in pairs( self._namedParams.selPions_PE ) do
+                    local _continue = true
+                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_SurveillerZone, 1, { ePhase_MRT, x_inf, self._namedParams.zone, } )
+
                 end
-
             end
-        end
 
-    end,
+        end,
 
-}
+    }
 
-node "BEH_Medo_Automate_INF_AssignerSurveiller_Zone"
-{
-    activations =
-    {
-        { "BEH_Mission_Automate_INF_AssignerA_SurveillerZone", {} },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.selPions_PE = self.params[1]
-        self._namedParams.zone = self.params[2]
-    end,
-
-    activate = function( self )
-        if( ModuleBegins() ) then
-for _,x_inf in pairs( self._namedParams.selPions_PE ) do
-            local _continue = true
-                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_SurveillerZone, 1, { ePhase_MRT, x_inf, self._namedParams.zone, } )
-
-            end
-        end
-
-    end,
-
-}
-
-connections = connections or {}
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone", nodes.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, "ACT_Warning", nodes.ACT_Warning }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, "BEH_Mission_Automate_INF_AssignerA_Barrer", nodes.BEH_Mission_Automate_INF_AssignerA_Barrer }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerCouvrir, "BEH_Mission_Automate_INF_AssignerA_Couvrir", nodes.BEH_Mission_Automate_INF_AssignerA_Couvrir }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_DansZone, "BEH_Mission_Automate_INF_AssignerA_Defendre", nodes.BEH_Mission_Automate_INF_AssignerA_Defendre }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_DansZone, "ACT_Warning", nodes.ACT_Warning }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurLima, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurLima, "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints, "BEH_Mission_Automate_INF_AssignerA_Defendre", nodes.BEH_Mission_Automate_INF_AssignerA_Defendre }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerInterdire_SurPoints, "BEH_Mission_Automate_INF_AssignerA_Barrer", nodes.BEH_Mission_Automate_INF_AssignerA_Barrer }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerInterdire_SurPoints, "BEH_Mission_Automate_INF_AssignerA_Interdire", nodes.BEH_Mission_Automate_INF_AssignerA_Interdire }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerSurveiller_Zone, "BEH_Mission_Automate_INF_AssignerA_SurveillerZone", nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerZone }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerDefendre_DansZone", nodes.BEH_Medo_Automate_INF_AssignerDefendre_DansZone }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerBarrer_DansZone", nodes.BEH_Medo_Automate_INF_AssignerBarrer_DansZone }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerDefendre_SurLima", nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurLima }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerBarrer_SurLima", nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurLima }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerSurveiller_Zone", nodes.BEH_Medo_Automate_INF_AssignerSurveiller_Zone }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerInterdire_SurPoints }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerCouvrir", nodes.BEH_Medo_Automate_INF_AssignerCouvrir }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerMission_PC", nodes.BEH_Medo_Automate_INF_AssignerMission_PC }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", nodes.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier }
-connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_InitialiseSE", nodes.BEH_Medo_Automate_INF_InitialiseSE }
+    connections = connections or {}
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone", nodes.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, "ACT_Warning", nodes.ACT_Warning }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, "BEH_Mission_Automate_INF_AssignerA_Barrer", nodes.BEH_Mission_Automate_INF_AssignerA_Barrer }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerCouvrir, "BEH_Mission_Automate_INF_AssignerA_Couvrir", nodes.BEH_Mission_Automate_INF_AssignerA_Couvrir }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_DansZone, "BEH_Mission_Automate_INF_AssignerA_Defendre", nodes.BEH_Mission_Automate_INF_AssignerA_Defendre }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_DansZone, "ACT_Warning", nodes.ACT_Warning }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurLima, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurLima, "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints, "BEH_Mission_Automate_INF_AssignerA_Defendre", nodes.BEH_Mission_Automate_INF_AssignerA_Defendre }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerInterdire_SurPoints, "BEH_Mission_Automate_INF_AssignerA_Barrer", nodes.BEH_Mission_Automate_INF_AssignerA_Barrer }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerInterdire_SurPoints, "BEH_Mission_Automate_INF_AssignerA_Interdire", nodes.BEH_Mission_Automate_INF_AssignerA_Interdire }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_AssignerSurveiller_Zone, "BEH_Mission_Automate_INF_AssignerA_SurveillerZone", nodes.BEH_Mission_Automate_INF_AssignerA_SurveillerZone }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerDefendre_DansZone", nodes.BEH_Medo_Automate_INF_AssignerDefendre_DansZone }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerBarrer_DansZone", nodes.BEH_Medo_Automate_INF_AssignerBarrer_DansZone }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerDefendre_SurLima", nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurLima }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerBarrer_SurLima", nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurLima }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerSurveiller_Zone", nodes.BEH_Medo_Automate_INF_AssignerSurveiller_Zone }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints", nodes.BEH_Medo_Automate_INF_AssignerInterdire_SurPoints }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerCouvrir", nodes.BEH_Medo_Automate_INF_AssignerCouvrir }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerMission_PC", nodes.BEH_Medo_Automate_INF_AssignerMission_PC }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", nodes.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier }
+    connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "BEH_Medo_Automate_INF_InitialiseSE", nodes.BEH_Medo_Automate_INF_InitialiseSE }
 connections[ #connections + 1 ] = { nodes.BEH_Medo_Automate_INF_PreparerMission_Statique, "ACT_Medo_Automate_AffecterFuseaux_Compagnie", nodes.ACT_Medo_Automate_AffecterFuseaux_Compagnie }

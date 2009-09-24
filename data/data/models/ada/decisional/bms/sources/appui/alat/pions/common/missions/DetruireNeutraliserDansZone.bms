@@ -60,113 +60,117 @@ include "bit.lua"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eRejoindre then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eDetruire
-                                                        return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnInfiltration, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eDetruire
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                if( self.eEtat == eActionImpossible ) then
-                    do
-                                                do
-                            DIA_Clear( myself.plotsRavitaillement_ )
-                            F_Pion_SetobjectifEsquive( myself, nil )
-                            DEC_Warning( eRC_MissionImpossible )
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt()
+
+                            end
+
                                                         self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
                     end
-                end
 
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDislocation_, } )
-                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointDislocation_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eDetruire then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAttaque, } )
-                if( self._namedParams.mission.neutraliser_ ) then
-                    do
-                        Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniDetruireDansZone, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self._namedParams.mission.pointDislocation_, self._namedParams.mission.ciblesPrioritaires_, self._namedParams.mission.zone_, 0.5, 2.5, } )
-                    end
-                else
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDislocation_, } )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointDislocation_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eDetruire then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAttaque, } )
+                    if( self._namedParams.mission.neutraliser_ ) then
+                        do
+                            Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniDetruireDansZone, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self._namedParams.mission.pointDislocation_, self._namedParams.mission.ciblesPrioritaires_, self._namedParams.mission.zone_, 0.5, 2.5, } )
+                        end
+                    else
 do
-                        Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniDetruireDansZone, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self._namedParams.mission.pointDislocation_, self._namedParams.mission.ciblesPrioritaires_, self._namedParams.mission.zone_, 1, 2.5, } )
+                            Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniDetruireDansZone, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self._namedParams.mission.pointDislocation_, self._namedParams.mission.ciblesPrioritaires_, self._namedParams.mission.zone_, 1, 2.5, } )
+                        end
                     end
-                end
 
-                
-            elseif switch_1 == eSExfiltrer then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
-                end
+                    
+                                cases_switch_1[2] = true
+elseif switch_1 == eSExfiltrer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    end
 
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eFinMission
-                                                        return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                if( self.eEtat == eActionImpossible ) then
-                    do
-                                                do
-                            DIA_Clear( myself.plotsRavitaillement_ )
-                            F_Pion_SetobjectifEsquive( myself, nil )
-                            DEC_Warning( eRC_MissionImpossible )
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt()
+
+                            end
+
                                                         self.params.__returnValue = eActionImpossible
                             Halt()
 
                         end
-
-                                                self.params.__returnValue = eActionImpossible
-                        Halt()
-
                     end
-                end
 
-                Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            DIA_Clear( myself.plotsRavitaillement_ )
-                            F_Pion_SetobjectifEsquive( myself, nil )
-                            DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-                        end
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                                end
+            end
 
     end,
 
@@ -224,53 +228,56 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone"
         local listeUnitesEnnemiesVivantesDansZone = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone )
         Activate( self.activations.ACT_Obs_Pions_ALAT_Sonnette, 1, { self._namedParams.zone, } )
         Activate( self.activations.ACT_RC, 1, { eRC_HelicoptereEnObservation, } )
-        switch_1 = self.ePhase
-            if switch_1 == eRejoindre then
-                if( DEC_Geometrie_Distance( self._namedParams.pointDislocation, self.pointDislo ) > 5000 ) then
-                    Halt()
-                end
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindre then
+                    if( DEC_Geometrie_Distance( self._namedParams.pointDislocation, self.pointDislo ) > 5000 ) then
+                        Halt()
+                    end
 
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        if( not DIA_IsListEmpty( listeUnitesEnnemiesVivantesDansZone ) ) then
-                            do
-                                self.ePhase = eDetruire
-                                self.eEtat = eActionEnCours
-                                                                return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            if( not DIA_IsListEmpty( listeUnitesEnnemiesVivantesDansZone ) ) then
+                                do
+                                    self.ePhase = eDetruire
+                                    self.eEtat = eActionEnCours
+                                                                        return
 
-                            end
-                        else
+                                end
+                            else
 do
-                                Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionCentreZone, } )
-                                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
-                                                                return
+                                    Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { self.directionCentreZone, } )
+                                    Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                                                                        return
 
+                                end
                             end
+
                         end
+                    end
+
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointDislo, } )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointDislo, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                elseif switch_1 == eDetruire then
+                    if( DIA_IsListEmpty( listeUnitesEnnemiesVivantesDansZone ) ) then
+                        do
+                            self.ePhase = eRejoindre
+                                                        return
+
+                        end
+                    end
+
+                    for _,x in pairs( listeUnitesEnnemiesVivantesDansZone ) do
+                    local _continue = true
+                        Activate( self.activations.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, S_Force_Pion_ALAT_AllerDetruire( x, self._namedParams.ciblesPrioritaires_ ), { self._namedParams.delai, x, eReconnu, self._namedParams.pourcentageComposantes, M_DOCTRINE_PION_ALAT_PH(), true, } )
 
                     end
-                end
 
-                Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointDislo, } )
-                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointDislo, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            elseif switch_1 == eDetruire then
-                if( DIA_IsListEmpty( listeUnitesEnnemiesVivantesDansZone ) ) then
-                    do
-                        self.ePhase = eRejoindre
-                                                return
-
-                    end
-                end
-
-                for _,x in pairs( listeUnitesEnnemiesVivantesDansZone ) do
-                local _continue = true
-                    Activate( self.activations.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, S_Force_Pion_ALAT_AllerDetruire( x, self._namedParams.ciblesPrioritaires_ ), { self._namedParams.delai, x, eReconnu, self._namedParams.pourcentageComposantes, M_DOCTRINE_PION_ALAT_PH(), true, } )
-
-                end
-
-                
-                        end
+                    
+                                end
+            end
 
     end,
 

@@ -32,7 +32,8 @@ include "bit.lua"
         self.sel_Drone = self.sel_Drone or {}
         self.sel_NonPrevu = self.sel_NonPrevu or {}--[[// suivre le SE
 ]]
-        switch_1 = --[[// =============================================================================
+         do
+            local switch_1 = --[[// =============================================================================
 ]]--[[// PHASE DU COMPORTEMENT
 ]]--[[// 1) Vérifier les moyens, des renforts éventuels
 ]]--[[// 2) Déterminer les échelons
@@ -41,127 +42,140 @@ include "bit.lua"
 ]]--[[// $$$$ MIA 2004-10-01: car elles sont en permance évaluées durant la mission.
 ]]--[[// =============================================================================                                  
 ]]self.ePhase
-            if switch_1 == eMRT_DeterminerEchelonsGlobals then
-                for _,x in pairs( --[[//---------------------------------------------------------------------
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_DeterminerEchelonsGlobals then
+                    for _,x in pairs( --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des grands échelons Ecl / Utile( PE + SE )/ non prevus
 ]]--[[//---------------------------------------------------------------------
 ]]selPions ) do
-                local _continue = true
+                    local _continue = true
 do
-                        local pion = x
-                        --[[// On ne traite pas les pions non opérationnels
+                            local pion = x
+                            --[[// On ne traite pas les pions non opérationnels
 ]]if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
-                            do
-                                DEC_Trace( "Attention " .. DEC_GetSzName( pion ) .. " n'est pas opérationnel" )
-                                DIA_PushFront( self.sel_NonPrevu, pion )
-                                _continue = false
+                                do
+                                    DEC_Trace( "Attention " .. DEC_GetSzName( pion ) .. " n'est pas opérationnel" )
+                                    DIA_PushFront( self.sel_NonPrevu, pion )
+                                    _continue = false
+                                end
+                            end
+
+                                if _continue then
+                                 do
+                                    local switch_2 = pion:GetType()
+                                    local cases_switch_2 = {}
+                                        if switch_2 == "Section_CL289_MiseEnOeuvre"
+                                        or switch_2 == "Section_SDTI_MiseEnOeuvre" then
+                                            DIA_PushFront( self.sel_SMO, pion )
+                                            
+                                                                                cases_switch_2[1] = true
+elseif switch_2 == "Drone_CL289"
+                                        or switch_2 == "Drone_SDTI" then
+                                            DIA_PushFront( self.sel_Drone, pion )
+                                            
+                                                                                cases_switch_2[2] = true
+
+                                        else
+                                            DIA_PushFront( self.sel_NonPrevu, pion )
+                                            
+                                                                                end
+                                    end
+
                             end
                         end
-
-                            if _continue then
-                            switch_2 = pion:GetType()
-                                if switch_2 == "Section_CL289_MiseEnOeuvre"
-                                or switch_2 == "Section_SDTI_MiseEnOeuvre" then
-                                    DIA_PushFront( self.sel_SMO, pion )
-                                    
-                                elseif switch_2 == "Drone_CL289"
-                                or switch_2 == "Drone_SDTI" then
-                                    DIA_PushFront( self.sel_Drone, pion )
-                                    
-                                
-                                else
-                                    DIA_PushFront( self.sel_NonPrevu, pion )
-                                    
-                                                                end
-
-                        end
-                    end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible si pas de premier echelon
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-                end
-
-                if( DIA_IsListEmpty( self.sel_SMO ) or DIA_IsListEmpty( self.sel_Drone ) ) then
-                    do
-                        DEC_Trace( "$$ Pas de pions permettant d'effectuer la mission $$" )
-                        self.ePhase = eMRT_MissionImpossible
-                                                return
-
                     end
-                end
 
-                self.ePhase = eMRT_AssignerMissions
-                
-            --[[//---------------------------------------------------------------------
+                    if( DIA_IsListEmpty( self.sel_SMO ) or DIA_IsListEmpty( self.sel_Drone ) ) then
+                        do
+                            DEC_Trace( "$$ Pas de pions permettant d'effectuer la mission $$" )
+                            self.ePhase = eMRT_MissionImpossible
+                                                        return
+
+                        end
+                    end
+
+                    self.ePhase = eMRT_AssignerMissions
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_AssignerMissions then
-                if( self.eEtat == eActionImpossible ) then
-                    do
-                        self.ePhase = eMRT_MissionImpossible
-                        DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
-                                                return
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                            self.ePhase = eMRT_MissionImpossible
+                            DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                                                        return
 
+                        end
                     end
-                end
 
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.ePhase = eMRT_Valider
-                                                return
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.ePhase = eMRT_Valider
+                                                        return
 
-                    end
+                        end
 --[[// Suivant le type de mission...
-]]                end
+]]                    end
 
-                switch_2 = self._namedParams.eType
-                    if switch_2 == "T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur" then
-                        --[[//-----------------------------------------------------------------------------
+                     do
+                        local switch_2 = self._namedParams.eType
+                        local cases_switch_2 = {}
+                            if switch_2 == "T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur" then
+                                --[[//-----------------------------------------------------------------------------
 ]]--[[// CL 289
 ]]--[[// Pour les besoins SCIPIO misenn oeuvre sur place
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Hack
 ]]local position = DEC_Automate_PionPosition( DIA_GetAt( self.sel_SMO, 0 ) )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_SMO ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        --[[/*mission.positionDeploiement_*/]]Activate( self.activations.BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, 1, { self.sel_SMO, position, eEtatEchelon_Premier, } )
-                        
-                    --[[//-----------------------------------------------------------------------------
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_SMO ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                --[[/*mission.positionDeploiement_*/]]Activate( self.activations.BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, 1, { self.sel_SMO, position, eEtatEchelon_Premier, } )
+                                
+                            --[[//-----------------------------------------------------------------------------
 ]]--[[// SDTI
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" then
-                        --[[// Hack
+]]                            cases_switch_2[1] = true
+elseif switch_2 == "T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" then
+                                --[[// Hack
 ]]local position = DEC_Automate_PionPosition( DIA_GetAt( self.sel_SMO, 0 ) )
-                        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_SMO ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                        --[[/*mission.positionDeploiement_*/]]Activate( self.activations.BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, 1, { self.sel_SMO, position, eEtatEchelon_Premier, } )
-                        
-                    
-                    else
-                        DEC_Trace( "Mission inconnue..." )
-                        self.ePhase = eMRT_MissionImpossible
-                        
-                                        end
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_SMO ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                --[[/*mission.positionDeploiement_*/]]Activate( self.activations.BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, 1, { self.sel_SMO, position, eEtatEchelon_Premier, } )
+                                
+                                                        cases_switch_2[2] = true
 
-                
-            --[[//---------------------------------------------------------------------
+                            else
+                                DEC_Trace( "Mission inconnue..." )
+                                self.ePhase = eMRT_MissionImpossible
+                                
+                                                        end
+                        end
+
+                    
+                --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_MissionImpossible then
-                DEC_Trace( "--Mission impossible--" )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
+                    DEC_Trace( "--Mission impossible--" )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
 
-            --[[//---------------------------------------------------------------------
+                --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_Valider then
-                DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+]]                end
+                if cases_switch_1[3] or switch_1 == eMRT_Valider then
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
 
-            
-            else
-                        end
+                end
+                if not cases_switch_1[1] and not cases_switch_1[2] then
+                                end
+            end
 
     end,
 

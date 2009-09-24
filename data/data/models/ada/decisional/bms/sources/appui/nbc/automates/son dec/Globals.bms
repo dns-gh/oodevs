@@ -23,7 +23,7 @@ include "Appui/Nbc/Automates/Son Dec/Parameters.bms"
 ]]function S_Automate_NBC_ObtenirPatrouilleDecOperationnelles( )
     local _returnValue = {}
     local selPatrouillesOperationnelles = {}
-    local selTemp = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsAvecPC(), Equipe_NBC_Dec )
+    local selTemp = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsAvecPC(), "Equipe_NBC_Dec" )
     for _,x in pairs( selTemp ) do
     local _continue = true
 do

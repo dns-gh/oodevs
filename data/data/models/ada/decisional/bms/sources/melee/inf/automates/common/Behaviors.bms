@@ -252,20 +252,25 @@ node "BEH_RC_Automate_GererConditionOperationnelle"
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePEcl = S_ObtenirTousPionsDe( eEtatEchelon_Eclairage )
         local listePE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
-        switch_1 = self._namedParams.eEtatEchelon
-            if switch_1 == eEtatEchelon_Premier then
-                if( DIA_IsListEmpty( listePE ) ) then
-                    Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                end
+         do
+            local switch_1 = self._namedParams.eEtatEchelon
+            local cases_switch_1 = {}
+                if switch_1 == eEtatEchelon_Premier then
+                    if( DIA_IsListEmpty( listePE ) ) then
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                    end
 
-                
-            elseif switch_1 == eEtatEchelon_Eclairage then
-                if( DIA_IsListEmpty( listePE ) and DIA_IsListEmpty( listePEcl ) ) then
-                    Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                end
+                    
+                                cases_switch_1[1] = true
+elseif switch_1 == eEtatEchelon_Eclairage then
+                    if( DIA_IsListEmpty( listePE ) and DIA_IsListEmpty( listePEcl ) ) then
+                        Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
+                    end
 
-                
-                        end
+                    
+                                cases_switch_1[2] = true
+                end
+            end
 
     end,
 

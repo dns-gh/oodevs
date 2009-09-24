@@ -43,41 +43,45 @@ includedFiles["sources/common/automates/missionsreactionpopulations/controlerpop
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eMRT_AssignerMissions then
-                --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
 ]]if( self.eValidationMRT == eActionImpossible ) then
-                    do
-                        DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
-                        self.ePhase = eMRT_Valider
-                                                return
-
-                    end
-                end
-
-                if( self.eValidationMRT == eActionEffectuee ) then
-                    do
-                        self.ePhase = eMRT_Valider
-                                                return
-
-                    end
---[[// Assigner interdire franchissement
-]]                end
-
-                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe, 1, { ePhase_MRT, self.listePions, self._namedParams.mission.zones_, } )
-                
-            elseif switch_1 == eMRT_MissionImpossible then
-                DEC_RC( eRC_MissionImpossible )
-                                self.params.__returnValue = eActionImpossible
-                Halt()
-
-            elseif switch_1 == eMRT_Valider then
-                DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
-                Halt()
+                        do
+                            DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
+                            self.ePhase = eMRT_Valider
+                                                        return
 
                         end
+                    end
+
+                    if( self.eValidationMRT == eActionEffectuee ) then
+                        do
+                            self.ePhase = eMRT_Valider
+                                                        return
+
+                        end
+--[[// Assigner interdire franchissement
+]]                    end
+
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe, 1, { ePhase_MRT, self.listePions, self._namedParams.mission.zones_, } )
+                    
+                elseif switch_1 == eMRT_MissionImpossible then
+                    DEC_RC( eRC_MissionImpossible )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt()
+
+                                end
+                if cases_switch_1[2] or switch_1 == eMRT_Valider then
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt()
+
+                                end
+            end
 
     end,
 

@@ -318,7 +318,7 @@ node "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre"
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Ces listes peuvent évoluer...en fonction des destructions
 ]]local listePionsOperationnels = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsAvecPC() )
-        local sel_PE = S_Cherche_Automate_Filtre_TypePionEchelon( listePionsOperationnels, SectionGenie, eEtatEchelon_Premier )
+        local sel_PE = S_Cherche_Automate_Filtre_TypePionEchelon( listePionsOperationnels, "SectionGenie", eEtatEchelon_Premier )
         local sel_SE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
         if( DIA_IsListEmpty( sel_PE ) or DIA_IsListEmpty( sel_SE ) ) then
             return

@@ -82,47 +82,52 @@ include "bit.lua"
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
-                    do
-                        Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { M_TEMPS_PREPARATION_APPUYER(), } )
-                                                return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
+                        do
+                            Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { M_TEMPS_PREPARATION_APPUYER(), } )
+                                                        return
 
+                        end
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhase = eAppuyer
-            elseif switch_1 == eAppuyer then
-                Activate( self.activations.BEH_Dep_Pion_INF_Appuyer, GetMotivation( "MOT_Mission" ), { self.repAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), } )
-                --[[// Gestion des ennemis
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhase = eAppuyer
+                                end
+                if cases_switch_1[1] or switch_1 == eAppuyer then
+                    Activate( self.activations.BEH_Dep_Pion_INF_Appuyer, GetMotivation( "MOT_Mission" ), { self.repAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), } )
+                    --[[// Gestion des ennemis
 ]]--[[//-------------------------------------------------------------------------	
 ]]local rMotivation = GetMotivation( "MOT_ManoeuvrerSurEnis" ) * S_Force_Pion_INF_DistanceAppuisEnnemis( self.repAmi, M_DISTANCE_SUIVI_MAX() )
-                --[[// Ennemi propre a la section
+                    --[[// Ennemi propre a la section
 ]]Activate( self.activations.BEH_Eni_Pion_VAB_Appuyer, rMotivation, { self.repAmi, } )
-                
-            elseif switch_1 == eFinMission then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                            DEC_Trace( "fin mission" )
-                            DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
-                            Halt()
+                    
+                                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                DEC_Trace( "fin mission" )
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt()
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
     end,
 

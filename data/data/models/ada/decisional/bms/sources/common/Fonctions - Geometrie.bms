@@ -122,26 +122,33 @@ function S_Geometrie_DecoupeLocalisation( localisationSrc, rNombreSections )
     listeLocalisationBuffer = DEC_Geometrie_DecoupeLocalisation( localisationSrc, rNombreSections, eError )
     eError = listeLocalisationBuffer.second
     listeLocalisationBuffer = listeLocalisationBuffer.first
-    switch_1 = eError
-        if switch_1 == eNoError then
-            _returnValue = listeLocalisationBuffer
-            
-        elseif switch_1 == eError_PionsPasDansMemeFuseau then
-            do
-            end
-
-            
-        elseif switch_1 == eError_LocalisationPasDansFuseau then
-            do
-            end
-
-            
-        elseif switch_1 == eWarning_DecoupageIncomplet then
-            do
-            end
-
-            
+     do
+        local switch_1 = eError
+        local cases_switch_1 = {}
+            if switch_1 == eNoError then
+                _returnValue = listeLocalisationBuffer
+                
+                        cases_switch_1[1] = true
+elseif switch_1 == eError_PionsPasDansMemeFuseau then
+                do
                 end
+
+                
+                        cases_switch_1[2] = true
+elseif switch_1 == eError_LocalisationPasDansFuseau then
+                do
+                end
+
+                
+                        cases_switch_1[3] = true
+elseif switch_1 == eWarning_DecoupageIncomplet then
+                do
+                end
+
+                
+                        cases_switch_1[4] = true
+            end
+        end
 
     return _returnValue
 end

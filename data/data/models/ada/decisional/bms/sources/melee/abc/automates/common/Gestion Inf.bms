@@ -38,7 +38,7 @@ include "bit.lua"
 
     activate = function( self )
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
-        local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, GroupeInfanterie_Mortier )
+        local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( self.selPions, "GroupeInfanterie_Mortier" )
         --[[// --> S'il ya des pions en difficulte en PE, demande de les aider
 ]]local selPions_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local rNbreDemande = 0

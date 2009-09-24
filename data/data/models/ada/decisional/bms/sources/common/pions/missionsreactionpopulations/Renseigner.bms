@@ -54,39 +54,44 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Renseigner.bms"]
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                DEC_Trace( "** MIS_Pion_Renseigner **" )
-                self.ePhase = eProgresser
-                
-            --[[// 2) Déplacement et renseignement
-]]elseif switch_1 == eProgresser then
-                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) > 20 ) then
-                    do
-                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                        Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, { self._namedParams.mission.point_, eProgressionDefaut, eTypeItiMouvement, } )
-                    end
-                else
+                    DEC_Trace( "** MIS_Pion_Renseigner **" )
+                    self.ePhase = eProgresser
+                    
+                --[[// 2) Déplacement et renseignement
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.objectif ) > 20 ) then
+                        do
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                            Activate( self.activations.BEH_Dep_Virtuel_ProgressionVers, 1, { self._namedParams.mission.point_, eProgressionDefaut, eTypeItiMouvement, } )
+                        end
+                    else
 do
-                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                        if( self.eActionPreparation == eActionEffectuee ) then
-                            Activate( self.activations.BEH_Pion_RenseignerSurPops, 1, {} )
-                        end
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
+                            if( self.eActionPreparation == eActionEffectuee ) then
+                                Activate( self.activations.BEH_Pion_RenseignerSurPops, 1, {} )
+                            end
 
-                        Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionPreparation = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionPreparation = v else rawset( t, k, v ) end end } ) )
+                        end
                     end
-                end
 
-                
-            --[[// Fin mission
-]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                                Halt()
+                    
+                --[[// Fin mission
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                                        Halt()
 
-                        end
+                                end
+            end
 
     end,
 

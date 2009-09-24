@@ -20,7 +20,7 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/degager obstac
     end,
 
     activate = function( self )
-        local listeSectionGenie = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), SectionGenie )
+        local listeSectionGenie = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionGenie" )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------

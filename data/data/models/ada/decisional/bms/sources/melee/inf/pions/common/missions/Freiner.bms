@@ -62,66 +62,71 @@ node "BEH_Mission_Pion_INF_Freiner"
         end
 
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-        switch_1 = self.ePhase
-            if switch_1 == ePreparerMission then
-                if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
-                    do
-                        Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { M_DELAI_RUPTURECONTACT(), } )
-                                                return
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
+                        do
+                            Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { M_DELAI_RUPTURECONTACT(), } )
+                                                        return
 
+                        end
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhase = eFreiner
-                
-            elseif switch_1 == eSurveiller then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_EnSurveillance, } )
-                --[[// eEtatPhaseMission_EnPosition
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhase = eFreiner
+                    
+                elseif switch_1 == eSurveiller then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_EnSurveillance, } )
+                    --[[// eEtatPhaseMission_EnPosition
 ]]--[[// Attendre de se degager ...								
 ]]if( F_Pion_GeteEtatLima( myself ) ~= eEtatLima_LCAR ) then
-                    StartActivate( self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, 1.1, {} )
-                end
+                        StartActivate( self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, 1.1, {} )
+                    end
 
-            elseif switch_1 == eFreiner then
-                if( self.eAction == eActionEffectuee ) then
-                    do
-                        self.eAction = eActionEnCours
-                                                do
-                                                        self.params.__returnValue = eFinMission
-                            return
+                                cases_switch_1[2] = true
+                end
+                if cases_switch_1[2] or switch_1 == eFreiner then
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
+                                                                self.params.__returnValue = eFinMission
+                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnFreinage, } )
-                --[[// Sur LCAR				
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnFreinage, } )
+                    --[[// Sur LCAR				
 ]]if( F_Pion_GeteEtatLima( myself ) == eEtatLima_LCAR ) then
-                    do
-                        --[[// Arrete de decrocher ( si 2 LCAR sont proches )
+                        do
+                            --[[// Arrete de decrocher ( si 2 LCAR sont proches )
 ]]if( self.ePhase == eFreiner ) then
-                            StopActivate( self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, {} )
+                                StopActivate( self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, {} )
+                            end
+
+                            self.ePhase = eSurveiller
                         end
-
-                        self.ePhase = eSurveiller
-                    end
 --[[// On se deplace
-]]                else
-                    self.ePhase = eFreiner
-                end
+]]                    else
+                        self.ePhase = eFreiner
+                    end
 
-                --[[// Rmque : Ce comportement ne se trouve pas dans Progresser, 
+                    --[[// Rmque : Ce comportement ne se trouve pas dans Progresser, 
 ]]--[[// 		   car sinon il induit une boucle dans le graphe DIA				
 ]]Activate( self.activations.BEH_Lima_GererLCAR, 2, { not DEC_Agent_AutomateEstEmbraye(), myself.bFreiner_EnTete_, } )
-                Activate( self.activations.BEH_Lima_GererLR, 2, {} )
-                Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 2, {} )
-                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.mission.itineraire_, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Lima_GererLR, 2, {} )
+                    Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 2, {} )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.mission.itineraire_, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    
                 
-            
-            else
-                        end
+                else
+                                end
+            end
 
                 self.params.__returnValue = self.ePhase
         return

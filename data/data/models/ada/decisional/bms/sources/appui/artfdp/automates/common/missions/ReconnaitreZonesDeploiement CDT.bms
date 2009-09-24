@@ -32,7 +32,7 @@ node "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement"
             S_Geometrie_Automate_ASS_CopiePointDansFuseau( self.mission.positionsAReconnaitre_, self.lstPos_Reco )
         end
 
-        local selPion_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, SectionASS_Reco )
+        local selPion_ASS_Reco = S_Cherche_Automate_Filtre_TypePion( self.selPions, "SectionASS_Reco" )
         for _,x_ass in pairs( --[[// Remets des Points dans la liste si le pion s'est fait detuire ou autre ..
 ]]--[[// TODO
 ]]--[[//

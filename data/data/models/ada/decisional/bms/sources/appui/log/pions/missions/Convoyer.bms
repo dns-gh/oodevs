@@ -57,71 +57,77 @@ if( DEC_Ravitaillement_Convoi_ChargementEffectue() ) then
             end
         end
 
-        switch_1 = self.ePhase
-            if switch_1 == eTestConvoyerStep_DeplacementVersPointChargement then
-                --[[// Déplacement
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eTestConvoyerStep_DeplacementVersPointChargement then
+                    --[[// Déplacement
 ]]Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointChargement, } )
-                Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCRavitaillant, 500, 900, } )
-                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCRavitaillant:DEC_Agent_Position() ) < 500 ) then
-                    self.ePhase = eTestConvoyerStep_Chargement
-                end
+                    Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCRavitaillant, 500, 900, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCRavitaillant:DEC_Agent_Position() ) < 500 ) then
+                        self.ePhase = eTestConvoyerStep_Chargement
+                    end
 
-                
-            --[[// Chargement
-]]elseif switch_1 == eTestConvoyerStep_Chargement then
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eTestConvoyerStep_DeplacementVersPointDechargement
-                                                        return
+                    
+                --[[// Chargement
+]]                cases_switch_1[1] = true
+elseif switch_1 == eTestConvoyerStep_Chargement then
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eTestConvoyerStep_DeplacementVersPointDechargement
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_Misc_Pion_LOG_Charger, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Aller
+                    Activate( self.activations.ACT_Misc_Pion_LOG_Charger, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Aller
 ]]elseif switch_1 == eTestConvoyerStep_DeplacementVersPointDechargement then
-                Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointDechargement, } )
-                Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCRavitaille, 500, 900, } )
-                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCRavitaille:DEC_Agent_Position() ) < 500 ) then
-                    self.ePhase = eTestConvoyerStep_Dechargement
-                end
+                    Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointDechargement, } )
+                    Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCRavitaille, 500, 900, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCRavitaille:DEC_Agent_Position() ) < 500 ) then
+                        self.ePhase = eTestConvoyerStep_Dechargement
+                    end
 
-                
-            --[[// Déchargement
-]]elseif switch_1 == eTestConvoyerStep_Dechargement then
-                Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DechargementEnCours, } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhase = eTestConvoyerStep_DeplacementRetour
-                                                        return
+                    
+                --[[// Déchargement
+]]                cases_switch_1[3] = true
+elseif switch_1 == eTestConvoyerStep_Dechargement then
+                    Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DechargementEnCours, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eTestConvoyerStep_DeplacementRetour
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.ACT_Misc_Pion_LOG_Decharger, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// Retour
+                    Activate( self.activations.ACT_Misc_Pion_LOG_Decharger, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// Retour
 ]]elseif switch_1 == eTestConvoyerStep_DeplacementRetour then
-                Activate( self.activations.ACT_RC, 1, { eRC_Convoi_Retour, } )
-                Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCConvoyant, 500, 900, } )
-                if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCConvoyant:DEC_Agent_Position() ) < 500 ) then
-                    do
-                        Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                        DEC_Ravitaillement_Convoi_FinMission()
-                    end
-                end
-
-                
+                    Activate( self.activations.ACT_RC, 1, { eRC_Convoi_Retour, } )
+                    Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCConvoyant, 500, 900, } )
+                    if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCConvoyant:DEC_Agent_Position() ) < 500 ) then
+                        do
+                            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                            DEC_Ravitaillement_Convoi_FinMission()
                         end
+                    end
+
+                    
+                                cases_switch_1[5] = true
+                end
+            end
 
     end,
 
@@ -162,66 +168,70 @@ node "BEH_Dep_LOG_Suivre"
             DEC_Trace( "The unit follows " .. DEC_GetSzName( self._namedParams.ami ) )
         end
 
-        switch_1 = --[[//---------------------------------------------------------------------
+         do
+            local switch_1 = --[[//---------------------------------------------------------------------
 ]]--[[// Rejoindre l'ami. A la fin si l'ami, n'est pas la, le rejoindre à
 ]]--[[// nouveaux etc.
 ]]--[[//---------------------------------------------------------------------
 ]]self.eComportement
-            if switch_1 == eCreerItineraire then
-                --[[//-----------------------------------------------------------------
+            local cases_switch_1 = {}
+                if switch_1 == eCreerItineraire then
+                    --[[//-----------------------------------------------------------------
 ]]--[[// 1) Creer l'itineraire et mettre à jour la position amie
 ]]--[[//-----------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) < self._namedParams.rDistanceMin - 500 ) then
-                    return
-                end
+                        return
+                    end
 
-                self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
-                self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiLogistique )
-                self.eComportement = eRejoindre
-            --[[//-----------------------------------------------------------------
+                    self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
+                    self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiLogistique )
+                    self.eComportement = eRejoindre
+                --[[//-----------------------------------------------------------------
 ]]--[[// 3) Rejoindre la position amie
 ]]--[[//-----------------------------------------------------------------
-]]elseif switch_1 == eRejoindre then
-                --[[//-----------------------------------------------------------------------------
+]]                end
+                if cases_switch_1[1] or switch_1 == eRejoindre then
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Si on a fini de parcourir l'itineraire on recalcul l'itineraire
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                        self.eComportement = eCreerItineraire
-                                                return
+                        do
+                            self.eEtat = eActionEnCours
+                            self.eComportement = eCreerItineraire
+                                                        return
 
-                    end
+                        end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Deplacement vers l'unite
 ]]--[[//-----------------------------------------------------------------------------
-]]                end
+]]                    end
 
-                Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                --[[// Aller au plus vite
+                    Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    --[[// Aller au plus vite
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
-                --[[//-----------------------------------------------------------------------------
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// L'unité se rapproche
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) < self._namedParams.rDistanceMin - 500 ) then
-                    self.eEtat = eActionEffectuee
-                end
+                        self.eEtat = eActionEffectuee
+                    end
 
-                --[[//-----------------------------------------------------------------------------
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// En parallèle, surveiller que l'on est pas près de cette unite.
 ]]--[[// Dans ce cas on est prêt pour l'intervention
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) <= self._namedParams.rDistanceMin ) then
-                    do
-                        Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
-                        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
-                    end
-                end
-
-                
-            
-            else
+                        do
+                            Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
+                            Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
                         end
+                    end
+
+                    
+                
+                else
+                                end
+            end
 
     end,
 

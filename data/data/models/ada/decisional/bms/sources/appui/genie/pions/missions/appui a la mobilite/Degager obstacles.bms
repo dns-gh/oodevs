@@ -52,35 +52,40 @@ include "bit.lua"
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                self.ePhaseMission = eProgresser
-                
-            --[[// Progression tactique
-]]elseif switch_1 == eProgresser then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                --[[// Reduction
+                    self.ePhaseMission = eProgresser
+                    
+                --[[// Progression tactique
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    --[[// Reduction
 ]]local obstacles = S_Obj_ListeObjetsValides( self._namedParams.mission.obstacles_ )
-                for _,obstacle in pairs( obstacles ) do
-                local _continue = true
+                    for _,obstacle in pairs( obstacles ) do
+                    local _continue = true
 do
-                        Activate( self.activations.BEH_Dep_GEN_AllerReduireObstacle, S_Obj_ForceDistance( obstacle ), { obstacle, } )
-                                                return
+                            Activate( self.activations.BEH_Dep_GEN_AllerReduireObstacle, S_Obj_ForceDistance( obstacle ), { obstacle, } )
+                                                        return
+
+                        end
 
                     end
 
-                end
-
-                self.ePhaseMission = eFinMission
-                
-            --[[// Fin de la mission
+                    self.ePhaseMission = eFinMission
+                    
+                --[[// Fin de la mission
 ]]elseif switch_1 == eFinMission then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    
+                                cases_switch_1[3] = true
+                end
+            end
 
     end,
 

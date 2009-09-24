@@ -66,69 +66,73 @@ include "bit.lua"
             end
         end
 
-        switch_1 = self.ePhaseMission
-            if switch_1 == ePreparerMission then
-                --[[// 1) Preparation de la mission
+         do
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                Activate( self.activations.ACT_Info_Trace, 1, { "Screen mission begining", } )
-                if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eJalonner
-                                                        return
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Screen mission begining", } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eJalonner
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, setmetatable( { eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                
-            --[[// 2) Jalonner l'eni
+                    Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, setmetatable( { eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    
+                --[[// 2) Jalonner l'eni
 ]]elseif switch_1 == eJalonner then
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnJalonnement, } )
-                --[[//-----------------------------------------------------------------------------
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnJalonnement, } )
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement par défaut: déplacement vers le second echelon
 ]]--[[// La reaction face à l'eni consiste à freiner ce deplacement en fonction des
 ]]--[[// mvts de l'eni.
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionEffectuee ) then
-                    do
-                        self.eEtat = eActionEnCours
-                                                do
-                            self.ePhaseMission = eFinMission
-                                                        return
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
 
                         end
-
                     end
-                end
 
-                Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatRecueil = v else rawset( t, k, v ) end end } ) )
-                Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                --[[//=============================================================================
+                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatRecueil = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    --[[//=============================================================================
 ]]--[[// Activer par automate
 ]]--[[//=============================================================================
 ]]--[[// MIA à remplacer par une motivation
 ]]if( F_Pion_GetbOrdreDecrocher( myself ) or self.eEtatRecueil == eActionEffectuee ) then
-                    return
-                end
+                        return
+                    end
 
-                --[[//-----------------------------------------------------------------------------
+                    --[[//-----------------------------------------------------------------------------
 ]]--[[// Jalonner les enis
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Eni_Pion_ABC_JalonnerLesGros, 1.1, {} )
-                
-            --[[// 4) Fin de la mission
+                    
+                --[[// 4) Fin de la mission
 ]]elseif switch_1 == eFinMission then
-                StopActivate( self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
+                    StopActivate( self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
 ]]
-                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                
-            
-            else
-                        end
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
 
     end,
 
@@ -256,23 +260,27 @@ do
                     do
                         --[[// cast
 ]]local pointLima = pointABC
-                        switch_1 = DEC_GetTypeLimaPoint( pointLima )
-                            if switch_1 == eTypeLima_LC then
-                                                            Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_PasserSurLC, 1, { DEC_GetLimaPoint( pointLima ), } )
-                                
-                            elseif switch_1 == eTypeLima_LR then
-                                                            Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_PasserSurLR, 1, { DEC_GetLimaPoint( pointLima ), } )
-                                                                self.params.__returnValue = eActionEffectuee
-                                return
+                         do
+                            local switch_1 = DEC_GetTypeLimaPoint( pointLima )
+                            local cases_switch_1 = {}
+                                if switch_1 == eTypeLima_LC then
+                                                                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_PasserSurLC, 1, { DEC_GetLimaPoint( pointLima ), } )
+                                    
+                                                                cases_switch_1[1] = true
+elseif switch_1 == eTypeLima_LR then
+                                                                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_PasserSurLR, 1, { DEC_GetLimaPoint( pointLima ), } )
+                                                                        self.params.__returnValue = eActionEffectuee
+                                    return
 
-                                
-                            elseif switch_1 == eTypeLima_LIA then
-                                                            Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_PasserSurLIA, 1, { DEC_GetLimaPoint( pointLima ), } )
-                                                                self.params.__returnValue = eActionEffectuee
-                                return
+                                    
+                                elseif switch_1 == eTypeLima_LIA then
+                                                                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_PasserSurLIA, 1, { DEC_GetLimaPoint( pointLima ), } )
+                                                                        self.params.__returnValue = eActionEffectuee
+                                    return
 
-                                
-                                                        end
+                                    
+                                                                end
+                            end
 
                         Activate( self.activations.ACT_Limas_Suppression, 1, { pointLima, } )
                     end

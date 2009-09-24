@@ -317,19 +317,24 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
     activate = function( self )
         if( ModuleBegins() ) then
             do
-                switch_1 = self._namedParams.pPion:GetType()
-                    if switch_1 == "Peloton_AMX"
-                    or switch_1 == "Peloton_XL" then
-                                            StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
-                        
-                    elseif switch_1 == "SectionInfanterie"
-                    or switch_1 == "SectionInfanterie_MILAN"
-                    or switch_1 == "SectionInfanterie_HOT"
-                    or switch_1 == "SectionInfanterie_Appui"
-                    or switch_1 == "GroupeInfanterie_Mortier" then
-                                            StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
-                        
-                                        end
+                 do
+                    local switch_1 = self._namedParams.pPion:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Peloton_AMX"
+                        or switch_1 == "Peloton_XL" then
+                                                    StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
+                            
+                                                cases_switch_1[1] = true
+elseif switch_1 == "SectionInfanterie"
+                        or switch_1 == "SectionInfanterie_MILAN"
+                        or switch_1 == "SectionInfanterie_HOT"
+                        or switch_1 == "SectionInfanterie_Appui"
+                        or switch_1 == "GroupeInfanterie_Mortier" then
+                                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
+                            
+                                                cases_switch_1[2] = true
+                        end
+                    end
 
             end
         end

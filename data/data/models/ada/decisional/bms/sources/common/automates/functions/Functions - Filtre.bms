@@ -274,12 +274,16 @@ function S_Cherche_Automate_Filtre_TypePion_ABC( sPions )
     local _continue = true
 do
             local pion = x
-            switch_1 = pion:GetType()
-                if switch_1 == "Peloton_XL"
-                or switch_1 == "Peloton_AMX" then
-                    DIA_PushBack( sFiltre, pion )
-                    
-                                end
+             do
+                local switch_1 = pion:GetType()
+                local cases_switch_1 = {}
+                    if switch_1 == "Peloton_XL"
+                    or switch_1 == "Peloton_AMX" then
+                        DIA_PushBack( sFiltre, pion )
+                        
+                                        cases_switch_1[1] = true
+                    end
+                end
 
         end
 
@@ -296,14 +300,18 @@ function S_Cherche_Automate_Filtre_TypePion_INF( sPions )
     local _continue = true
 do
             local pion = x
-            switch_1 = pion:GetType()
-                if switch_1 == "SectionInfanterie"
-                or switch_1 == "SectionInfanterie_MILAN"
-                or switch_1 == "SectionInfanterie_HOT"
-                or switch_1 == "SectionInfanterie_Appui" then
-                    DIA_PushBack( sFiltre, pion )
-                    
-                                end
+             do
+                local switch_1 = pion:GetType()
+                local cases_switch_1 = {}
+                    if switch_1 == "SectionInfanterie"
+                    or switch_1 == "SectionInfanterie_MILAN"
+                    or switch_1 == "SectionInfanterie_HOT"
+                    or switch_1 == "SectionInfanterie_Appui" then
+                        DIA_PushBack( sFiltre, pion )
+                        
+                                        cases_switch_1[1] = true
+                    end
+                end
 
         end
 
@@ -320,16 +328,20 @@ function S_Cherche_Automate_Filtre_TypePion_Melee( sPions )
     local _continue = true
 do
             local pion = x
-            switch_1 = pion:GetType()
-                if switch_1 == "SectionInfanterie"
-                or switch_1 == "SectionInfanterie_MILAN"
-                or switch_1 == "SectionInfanterie_HOT"
-                or switch_1 == "SectionInfanterie_Appui"
-                or switch_1 == "Peloton_XL"
-                or switch_1 == "Peloton_AMX" then
-                    DIA_PushBack( sFiltre, pion )
-                    
-                                end
+             do
+                local switch_1 = pion:GetType()
+                local cases_switch_1 = {}
+                    if switch_1 == "SectionInfanterie"
+                    or switch_1 == "SectionInfanterie_MILAN"
+                    or switch_1 == "SectionInfanterie_HOT"
+                    or switch_1 == "SectionInfanterie_Appui"
+                    or switch_1 == "Peloton_XL"
+                    or switch_1 == "Peloton_AMX" then
+                        DIA_PushBack( sFiltre, pion )
+                        
+                                        cases_switch_1[1] = true
+                    end
+                end
 
         end
 
@@ -412,32 +424,43 @@ end
 function S_Convertir_TypeLima_EtatLima( eTypeLima )
     local _returnValue = nil
     _returnValue = eEtatLima_aucune
-    switch_1 = eTypeLima
-        if switch_1 == eTypeLima_LD then
-            _returnValue = eEtatLima_LD
-            
-        elseif switch_1 == eTypeLima_LC then
-            _returnValue = eEtatLima_LC
-            
-        elseif switch_1 == eTypeLima_LI then
-            _returnValue = eEtatLima_LI
-            
-        elseif switch_1 == eTypeLima_LO then
-            _returnValue = eEtatLima_LO
-            
-        elseif switch_1 == eTypeLima_LCAR then
-            _returnValue = eEtatLima_LCAR
-            
-        elseif switch_1 == eTypeLima_LR then
-            _returnValue = eEtatLima_LR
-            
-        elseif switch_1 == eTypeLima_LIA then
-            _returnValue = eEtatLima_LIA
-            
-        elseif switch_1 == eTypeLima_LCA then
-            _returnValue = eEtatLima_LCA
-            
-                end
+     do
+        local switch_1 = eTypeLima
+        local cases_switch_1 = {}
+            if switch_1 == eTypeLima_LD then
+                _returnValue = eEtatLima_LD
+                
+                        cases_switch_1[1] = true
+elseif switch_1 == eTypeLima_LC then
+                _returnValue = eEtatLima_LC
+                
+                        cases_switch_1[2] = true
+elseif switch_1 == eTypeLima_LI then
+                _returnValue = eEtatLima_LI
+                
+                        cases_switch_1[3] = true
+elseif switch_1 == eTypeLima_LO then
+                _returnValue = eEtatLima_LO
+                
+                        cases_switch_1[4] = true
+elseif switch_1 == eTypeLima_LCAR then
+                _returnValue = eEtatLima_LCAR
+                
+                        cases_switch_1[5] = true
+elseif switch_1 == eTypeLima_LR then
+                _returnValue = eEtatLima_LR
+                
+                        cases_switch_1[6] = true
+elseif switch_1 == eTypeLima_LIA then
+                _returnValue = eEtatLima_LIA
+                
+                        cases_switch_1[7] = true
+elseif switch_1 == eTypeLima_LCA then
+                _returnValue = eEtatLima_LCA
+                
+                        cases_switch_1[8] = true
+            end
+        end
 
     return _returnValue
 end
