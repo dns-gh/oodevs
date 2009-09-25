@@ -270,3 +270,8 @@ void PHY_RolePion_Reinforcement::CancelTransport    ( const MIL_Agent_ABC& trans
 {
 
 }
+
+void PHY_RolePion_Reinforcement::DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const
+{
+
+}

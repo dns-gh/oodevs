@@ -150,8 +150,8 @@ public:
     virtual       void                 GetVisibleVolumes          ( T_ComposanteVolumeSet& volumes         ) const = 0;
     virtual       void                 BuildKnowledgeComposantes  ( T_KnowledgeComposanteVector& knowledge ) const = 0;
     virtual const PHY_Composante_ABC*  GetMajorComposante         () const = 0;
-    virtual       MT_Float             GetOperationalState        () const = 0;
-    virtual       MT_Float             GetMajorOperationalState   () const = 0;
+    virtual       double             GetOperationalState        () const = 0;
+    virtual       double             GetMajorOperationalState   () const = 0;
     //@}
 
     //! @name Fire
@@ -164,21 +164,18 @@ public:
     virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
-    virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const = 0;
-    virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const = 0;
-    virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const = 0;
-    virtual MT_Float GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const = 0;
-    virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const = 0;
-    virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const = 0;
-    virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const = 0;
-    virtual MT_Float GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const = 0;
+    virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
+    virtual double GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
+    virtual double GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
+    virtual double GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
+    virtual double GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
+    virtual double GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const = 0;
+    virtual double GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const = 0;
+    virtual double GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const = 0;
     //@}
 
 
-    //! @name Load / unload / transport
-    //@{
-    virtual void DamageTransported( MT_Float rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const = 0;
-    //@}
+
 
     //! @name Notifications (internal)
     //@{
@@ -219,10 +216,10 @@ public:
     //@}
 
 public:
-    static MT_Float rOpStateWeightNonMajorComposante_;
-    static MT_Float rOpStateWeightMajorComposante_;
-    static MT_Float rMaxDangerosityDegradationByNeutralizedState_;
-    static MT_Float rMaxDangerosityDegradationByOpState_;
+    static double rOpStateWeightNonMajorComposante_;
+    static double rOpStateWeightMajorComposante_;
+    static double rMaxDangerosityDegradationByNeutralizedState_;
+    static double rMaxDangerosityDegradationByOpState_;
 
 private:
     //! @name Serialization

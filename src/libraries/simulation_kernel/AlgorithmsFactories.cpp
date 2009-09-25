@@ -18,7 +18,6 @@
 #include "simulation_kernel/MoveComputerFactory.h"
 #include "simulation_kernel/DetectionComputerFactory.h"
 #include "simulation_kernel/TransportCapacityComputerFactory.h"
-#include "simulation_kernel/TransportWeightComputerFactory.h"
 #include "simulation_kernel/HealComputerFactory.h"
 #include "simulation_kernel/DotationComputerFactory.h"
 
@@ -34,10 +33,9 @@ AlgorithmsFactories::AlgorithmsFactories()
     , consumptionComputerFactory_( new dotation::ConsumptionComputerFactory() )
     , moveComputerFactory_( new moving::MoveComputerFactory() )
     , detectionComputerFactory_( new detection::DetectionComputerFactory() )
-    , transportCapacityComputerFactory_( new transport::TransportCapacityComputerFactory() )
+    , transportComputerFactory_( new transport::TransportComputerFactory() )
     , healComputerFactory_( new human::HealComputerFactory() )
     , dotationComputerFactory_( new dotation::DotationComputerFactory() )
-    , transportWeightComputerFactory_( new transport::TransportWeightComputerFactory() )
 {
     //NOTHING
 }

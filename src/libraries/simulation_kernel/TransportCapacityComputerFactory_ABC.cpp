@@ -11,12 +11,12 @@
 
 namespace transport {
 
-TransportCapacityComputerFactory_ABC::TransportCapacityComputerFactory_ABC() {
+TransportComputerFactory_ABC::TransportComputerFactory_ABC() {
 	// TODO Auto-generated constructor stub
 
 }
 
-TransportCapacityComputerFactory_ABC::~TransportCapacityComputerFactory_ABC() {
+TransportComputerFactory_ABC::~TransportComputerFactory_ABC() {
 	// TODO Auto-generated destructor stub
 }
 

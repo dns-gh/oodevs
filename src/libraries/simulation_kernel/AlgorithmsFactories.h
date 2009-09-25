@@ -41,8 +41,7 @@ namespace human
 }
 namespace transport
 {
-	class TransportCapacityComputerFactory_ABC;
-	class TransportWeightComputerFactory_ABC;
+	class TransportComputerFactory_ABC;
 }
 namespace dotation
 {
@@ -73,10 +72,9 @@ public:
     std::auto_ptr< dotation::ConsumptionComputerFactory_ABC > consumptionComputerFactory_;
     std::auto_ptr< moving::MoveComputerFactory_ABC > moveComputerFactory_;
     std::auto_ptr< detection::DetectionComputerFactory_ABC > detectionComputerFactory_;
-    std::auto_ptr< transport::TransportCapacityComputerFactory_ABC > transportCapacityComputerFactory_;
+    std::auto_ptr< transport::TransportComputerFactory_ABC > transportComputerFactory_;
     std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
     std::auto_ptr< dotation::DotationComputerFactory_ABC > dotationComputerFactory_;
-    std::auto_ptr< transport::TransportWeightComputerFactory_ABC > transportWeightComputerFactory_;
     //@}
 };
 

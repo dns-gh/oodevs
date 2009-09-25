@@ -14,6 +14,7 @@
 
 #include "PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
+#include "TransportNotificationHandler_ABC.h"
 
 namespace xml
 {
@@ -60,6 +61,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
 							   , public tools::AlgorithmModifier_ABC< human::HealComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< dotation::DotationComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
+                               , public transport::TransportNotificationHandler_ABC
 {
 
 
@@ -189,6 +191,9 @@ public:
 
     //! @name Load / unload / transport
     //@{
+    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+    virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+    virtual void CancelTransport    ( const MIL_Agent_ABC& transporter );
     virtual void DamageTransported( MT_Float rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
     //@}
 
@@ -207,7 +212,7 @@ public:
     //! @name Accessors
     //@{          
     virtual       MT_Float       GetOperationalState     () const;
-    virtual       MT_Float       GetMajorOperationalState() const;
+    virtual       double       GetMajorOperationalState() const;
     virtual       bool           HasChanged              () const;
     virtual       bool           IsUsable                () const;                    
     virtual const MIL_AgentPion& GetPion                 () const;    
@@ -296,8 +301,8 @@ private:
     PHY_ComposantePion::T_ComposantePionVector composantes_;
     T_ComposanteTypeMap    composanteTypes_;
     uint                   nNbrComposanteChanged_;
-    MT_Float               rMajorOperationalState_;
-    MT_Float               rOperationalState_;
+    double               rMajorOperationalState_;
+    double               rOperationalState_;
     bool                   bOperationalStateChanged_;    
     PHY_ComposantePion*    pMajorComposante_;
     uint                   nNeutralizationEndTimeStep_;

@@ -15,17 +15,20 @@
 #include "MIL.h"
 #include "PHY_RoleInterface_Transported.h"
 #include "TransportNotificationHandler_ABC.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
 
 namespace transport
 {
+	class TransportPermissionComputer_ABC;
 // =============================================================================
 // @class  PHY_RolePion_Transported
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Transported : public PHY_RoleInterface_Transported,
+	public tools::AlgorithmModifier_ABC<TransportPermissionComputer_ABC>,
 	public TransportNotificationHandler_ABC
 {
 
@@ -53,7 +56,9 @@ public:
     virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
     virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
     virtual void CancelTransport    ( const MIL_Agent_ABC& transporter );
+    void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
     virtual bool IsTransported      () const;
+    void Execute(TransportPermissionComputer_ABC& alg) const;
     //@}
 
     //! @name Human transporters ... $$$

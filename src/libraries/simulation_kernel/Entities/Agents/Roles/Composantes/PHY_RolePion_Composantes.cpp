@@ -41,7 +41,7 @@
 
 #include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
-#include "simulation_kernel/TransportWeightComputer_ABC.h""
+#include "simulation_kernel/TransportWeightComputer_ABC.h"
 #include "simulation_kernel/HealComputer_ABC.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 
@@ -1772,3 +1772,12 @@ void PHY_RolePion_Composantes::Execute( dotation::DotationComputer_ABC& algorith
         algorithm.ApplyOnComponent( **it );
 }
 
+void PHY_RolePion_Composantes::LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+{
+}
+void PHY_RolePion_Composantes::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+{
+}
+void PHY_RolePion_Composantes::CancelTransport    ( const MIL_Agent_ABC& transporter )
+{
+}

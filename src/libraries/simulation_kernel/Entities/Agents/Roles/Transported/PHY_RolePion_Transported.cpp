@@ -19,6 +19,8 @@
 #include "Network/NET_ASN_Messages.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
+#include "TransportPermissionComputer_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RolePion_Transported, "PHY_RolePion_Transported" )
 
 namespace transport
@@ -273,6 +275,16 @@ bool PHY_RolePion_Transported::IsTransported() const
 bool PHY_RolePion_Transported::HasHumanTransportersToRecover() const
 {
     return !vHumanTransporterPosition_.IsZero();
+}
+
+void PHY_RolePion_Transported::DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const
+{
+
+}
+
+void PHY_RolePion_Transported::Execute(TransportPermissionComputer_ABC& alg) const
+{
+	alg.AllowLoading(!IsTransported());
 }
 
 } // namespace transport

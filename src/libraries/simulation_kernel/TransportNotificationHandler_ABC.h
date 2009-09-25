@@ -9,6 +9,7 @@
 #define __transport_TransportNotificationHandler_ABC_H__
 
 class MIL_Agent_ABC;
+class PHY_ComposanteState;
 
 namespace transport
 {
@@ -21,6 +22,8 @@ public:
     virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) = 0;
     virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) = 0;
     virtual void CancelTransport    ( const MIL_Agent_ABC& transporter ) = 0;
+
+    virtual void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const = 0;
 };
 
 }

@@ -339,7 +339,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories&
     pion.RegisterRole< PHY_RolePion_Refugee           >( pion );
     pion.RegisterRole< PHY_RolePion_Population        >( pion );
     pion.RegisterRole< transport::PHY_RoleAction_Loading         >( pion);
-    pion.RegisterRole< transport::PHY_RoleAction_Transport       >( pion, *algorithmsFactories.transportCapacityComputerFactory_, *algorithmsFactories.transportWeightComputerFactory_ );
+    pion.RegisterRole< transport::PHY_RoleAction_Transport       >( pion, *algorithmsFactories.transportComputerFactory_);
     pion.RegisterRole< PHY_RoleAction_Moving          >( pion );
     pion.RegisterRole< PHY_RoleAction_Objects         >( pion );
     pion.RegisterRole< firing::PHY_RoleAction_DirectFiring    >( pion, *algorithmsFactories.weaponAvailabilityComputerFactory_, *algorithmsFactories.composantesAbleToBeFiredComputerFactory_ );

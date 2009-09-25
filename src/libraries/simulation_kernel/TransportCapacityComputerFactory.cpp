@@ -9,23 +9,39 @@
 
 #include "TransportCapacityComputerFactory.h"
 #include "DefaultTransportCapacityComputer.h"
+#include "DefaultTransportWeightComputer.h"
+#include "DefaultTransportPermissionComputer.h"
 
 namespace transport {
 
-TransportCapacityComputerFactory::TransportCapacityComputerFactory()
-	: pTransportCapacityComputer_(new DefaultTransportCapacityComputer())
+TransportComputerFactory::TransportComputerFactory() :
+	capacityComputer_(new DefaultTransportCapacityComputer()),
+	weightComputer_(new DefaultTransportWeightComputer()),
+	permissionComputer_(new DefaultTransportPermissionComputer())
 {
 
 }
 
-TransportCapacityComputerFactory::~TransportCapacityComputerFactory()
+TransportComputerFactory::~TransportComputerFactory()
 {
 }
 
-TransportCapacityComputer_ABC& TransportCapacityComputerFactory::Create( ) const
+TransportCapacityComputer_ABC& TransportComputerFactory::CreateCapacityComputer( ) const
 {
-	pTransportCapacityComputer_->Reset();
-	return *pTransportCapacityComputer_;
+	capacityComputer_->Reset();
+	return *capacityComputer_;
+}
+
+TransportWeightComputer_ABC& TransportComputerFactory::CreateWeightComputer(const TransportStrategy_ABC* st) const
+{
+	weightComputer_->Reset(st);
+	return *weightComputer_;
+}
+
+TransportPermissionComputer_ABC& TransportComputerFactory::CreatePermissionComputer() const
+{
+	permissionComputer_->Reset();
+	return *permissionComputer_;
 }
 
 }

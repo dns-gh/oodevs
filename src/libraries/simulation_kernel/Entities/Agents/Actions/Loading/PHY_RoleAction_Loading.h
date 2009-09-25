@@ -79,6 +79,7 @@ public:
     void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
 	void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
 	void CancelTransport    ( const MIL_Agent_ABC& transporter );
+	virtual void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
 	//@}
 
     //! @name Network

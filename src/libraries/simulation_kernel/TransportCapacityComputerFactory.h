@@ -12,22 +12,26 @@
 
 namespace transport {
 
-class TransportCapacityComputerFactory : public TransportCapacityComputerFactory_ABC
+class TransportComputerFactory : public TransportComputerFactory_ABC
 {
 public:
-	TransportCapacityComputerFactory();
-	virtual ~TransportCapacityComputerFactory();
+	TransportComputerFactory();
+	virtual ~TransportComputerFactory();
 
 	template< typename Archive > void serialize( Archive&, const uint ) {}
 
 	//! @name Operations
 	//@{
-	virtual TransportCapacityComputer_ABC& Create( ) const ;
+	TransportCapacityComputer_ABC& CreateCapacityComputer( ) const ;
+	TransportWeightComputer_ABC& CreateWeightComputer(const TransportStrategy_ABC*) const;
+	TransportPermissionComputer_ABC& CreatePermissionComputer() const;
 	//@}
 private:
 	//! @name Attribute
 	//@{
-	std::auto_ptr< TransportCapacityComputer_ABC > pTransportCapacityComputer_;
+	std::auto_ptr< TransportCapacityComputer_ABC > capacityComputer_;
+	std::auto_ptr<TransportWeightComputer_ABC> weightComputer_;
+	std::auto_ptr<TransportPermissionComputer_ABC> permissionComputer_;
 	//@}
 };
 

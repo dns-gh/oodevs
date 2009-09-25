@@ -432,9 +432,11 @@ void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& transport
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::CancelTransport    ( const MIL_Agent_ABC& transporter )
 {
-
 }
 
+void PHY_RoleAction_Loading::DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const
+{
+}
 } // namespace transport
 
 

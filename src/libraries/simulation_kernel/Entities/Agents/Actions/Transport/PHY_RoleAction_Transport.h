@@ -23,7 +23,7 @@ class MIL_ToxicEffectManipulator;
 
 namespace transport
 {
-	class TransportCapacityComputerFactory_ABC;
+	class TransportComputerFactory_ABC;
 	class TransportWeightComputerFactory_ABC;
 
 // =============================================================================
@@ -62,7 +62,7 @@ public:
     //@}
 
 public:
-    PHY_RoleAction_Transport( MIL_AgentPion& pion, const TransportCapacityComputerFactory_ABC&, const TransportWeightComputerFactory_ABC& );
+    PHY_RoleAction_Transport( MIL_AgentPion& pion, const TransportComputerFactory_ABC&);
     virtual ~PHY_RoleAction_Transport();
 
     //! @name CheckPoints
@@ -106,7 +106,6 @@ public:
     //! @name Notifications on transporter
     //@{
     void NotifyComposanteChanged     ( const PHY_ComposantePion& composante );
-    //void NotifyComposanteContaminated( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination ) ;
     virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination ) ;
     //@}
@@ -151,8 +150,7 @@ private:
 
 private:
           MIL_AgentPion&        transporter_;
-    const TransportCapacityComputerFactory_ABC& pTransportCapacityComputerFactory_;
-    const TransportWeightComputerFactory_ABC& pTransportWeightComputerFactory_;
+    const TransportComputerFactory_ABC& pTransportComputerFactory_;
           bool                  bHasChanged_;
           E_State               nState_;
           bool                  bLoadUnloadHasBeenUpdated_;
