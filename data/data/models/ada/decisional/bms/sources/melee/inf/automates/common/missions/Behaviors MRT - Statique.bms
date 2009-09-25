@@ -71,12 +71,10 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
             end
         end
 
-        DEC_Trace( "Phase = "..tostring( self.ePhase ).." RC = "..tostring( self.params.__returnValue ) )
         do
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
             if switch_1 == eMRT_SelectionnerPions then
-                DEC_Trace( "Phase = eMRT_SelectionnerPions" )
                 self.ePhase = eMRT_AssignerMissions
                 --[[//-----------------------------------------------------------------------------
                 ]]--[[//	Distribution des types de mission
@@ -154,14 +152,11 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
 
 
             elseif switch_1 == eMRT_AffecterFuseaux then
-                DEC_Trace( "Phase = eMRT_AffecterFuseaux" )
                 self.ePhase = eMRT_AssignerMissions
                 cases_switch_1[2] = true
             elseif switch_1 == eMRT_AssignerMissions then
-                DEC_Trace( "Phase = eMRT_AssignerMissions" )
                 if( self.eActionMRT == eActionImpossible ) then
                     do
-                        DEC_Trace( "eActionMRT IMP" )
                         do
                         end
 
@@ -174,7 +169,6 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
                 if( self.eValidationMRT == eActionImpossible ) then
                     do
                         do
-                            DEC_Trace( "eValidationMRT == eActionImpossible" )
                         end
 
                         self.params.__returnValue = eActionImpossible
@@ -188,7 +182,6 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
                         self.eValidationMRT = eActionEnCours
                         do
                             self.ePhase = eMRT_RetablirFuseau
-                            DEC_Trace( "Return en plein milieu???" )
                             return
 
                         end
@@ -203,7 +196,6 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
                     if switch_2 == "T_Mission_Automate_INF_DefendreFerme"
                         or switch_2 == "T_Mission_Automate_INF_Tenir" then
                         local mission = DEC_GetMission( myself )
-                        DEC_Trace( "Assigne defendre dans zone aux pions INF" )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_DansZone, 1, { self.selPions_PE_INF, mission.position_, mission.preparerTerrain_, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_HOT, mission.position_, } )
                         Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_DansZone, 1, { self.selPions_PE_MILAN, mission.position_, } )
@@ -221,7 +213,6 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
                             do
                                 DEC_Warning( eRC_MissionImpossibleLimaInvalide )
                                 self.params.__returnValue = eActionImpossible
-                                DEC_Trace( "ERR 1" )
                                 Halt()
 
                             end
@@ -237,7 +228,6 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
                             do
                                 DEC_Warning( eRC_MissionImpossibleLimaInvalide )
                                 self.params.__returnValue = eActionImpossible
-                                DEC_Trace( "ERR 2" )
                                 Halt()
 
                             end
@@ -274,17 +264,14 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
                     end
                 end
 
-                DEC_Trace( "Assigne mission au PC" )
                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerMission_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
                 Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
             elseif switch_1 == eMRT_RetablirFuseau then
-                DEC_Trace( "Phase = eMRT_RetablirFuseau" )
                 if( self.eValidationMRT == eActionEffectuee ) then
                     do
                         self.eValidationMRT = eActionEnCours
                         do
-                            DEC_Trace( "Retablir Fuseau + validation MRT effectuee -> Halt" )
                             self.params.__returnValue = eActionEffectuee
                             Halt()
 
@@ -305,7 +292,6 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
                 --[[//-----------------------------------------------------------------------------
                 ]]                end
             end
-            DEC_Trace( "EN FIN: Phase = "..tostring( self.ePhase ).." RC = "..tostring( self.params.__returnValue ) )
 
         end,
 
