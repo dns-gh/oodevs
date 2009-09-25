@@ -420,3 +420,162 @@ void MIL_MissionParameterFactory::SetPawnParameter( MIL_Mission_ABC* pMission, c
 {
     pMission->SetParameter( parameter, CreatePawn (pion ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAutomat
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAutomat( DEC_Decision_ABC* automat )
+{
+    return Create( dynamic_cast<DEC_AutomateDecision*>( automat ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetAutomatParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetAutomatParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Decision_ABC* automat )
+{
+    pMission->SetParameter( parameter, CreateAutomat( automat ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetBoolParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetBoolParameter( MIL_Mission_ABC* pMission, const std::string& parameter, bool value )
+{
+    boost::shared_ptr< MIL_BoolParameter > boolParam( new MIL_BoolParameter( value ) );
+    pMission->SetParameter( parameter, boolParam );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetObjectKnowledgeParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetObjectKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Knowledge_Object* objectKnowledge )
+{
+    pMission->SetParameter( parameter, Create( objectKnowledge ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetNatureAtlasTypeParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetNatureAtlasTypeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, int natureAtlas )
+{
+    boost::shared_ptr< MIL_AtlasNatureParameter > natureParam( new MIL_AtlasNatureParameter( natureAtlas ) );
+    pMission->SetParameter( parameter, natureParam );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetAutomatListParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetAutomatListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& automatList )
+{
+    std::vector< DEC_AutomateDecision* > typedAutomatList;
+    for( std::vector< DEC_Decision_ABC* >::const_iterator it = automatList.begin(); it != automatList.end(); ++it )
+        typedAutomatList.push_back( dynamic_cast<DEC_AutomateDecision*>( *it ) );
+    boost::shared_ptr< MIL_AutomatListParameter > listParam( new MIL_AutomatListParameter( typedAutomatList ) );
+    pMission->SetParameter( parameter, listParam );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetAgentKnowledgeParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetAgentKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Knowledge_Agent* agentKnowledge )
+{
+    pMission->SetParameter( parameter, Create( agentKnowledge ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetPathListParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetPathListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& list )
+{
+    boost::shared_ptr< MIL_PathListParameter > listParam( new MIL_PathListParameter( list ) );
+    pMission->SetParameter( parameter, listParam );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetEnumereParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetEnumereParameter( MIL_Mission_ABC* pMission, const std::string& parameter, int value )
+{
+    pMission->SetParameter( parameter, Create( value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetLocationParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetLocationParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< TER_Localisation > location )
+{
+    pMission->SetParameter( parameter, Create( location ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetObjectKnowledgeListParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetObjectKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Knowledge_Object* >& objectKnowledgeList )
+{
+    boost::shared_ptr< MIL_ObjectKnowledgeListParameter > listParam( new MIL_ObjectKnowledgeListParameter( objectKnowledgeList ) );
+    pMission->SetParameter( parameter, listParam );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetPointParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetPointParameter( MIL_Mission_ABC* pMission, const std::string& parameter, MT_Vector2D& point )
+{
+    pMission->SetParameter( parameter, Create( point ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetAgentKnowledgeListParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetAgentKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Knowledge_Agent* >& agentKnowledgeList )
+{
+    boost::shared_ptr< MIL_AgentKnowledgeListParameter > listParam( new MIL_AgentKnowledgeListParameter( agentKnowledgeList ) );
+    pMission->SetParameter( parameter, listParam );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetGenObjectListParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetGenObjectListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Gen_Object > >& list )
+{
+    boost::shared_ptr< MIL_PlannedWorkListParameter > listParam( new MIL_PlannedWorkListParameter( list ) );
+    pMission->SetParameter( parameter, listParam );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetPionListParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetPionListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& pionList )
+{
+    std::vector< DEC_RolePion_Decision* > agentList;
+    for( std::vector< DEC_Decision_ABC* >::const_iterator it = pionList.begin(); it != pionList.end(); ++it )
+        agentList.push_back( dynamic_cast<DEC_RolePion_Decision*>( *it ) );
+    boost::shared_ptr< MIL_AgentListParameter > listParam( new MIL_AgentListParameter( agentList ) );
+    pMission->SetParameter( parameter, listParam );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetLocationListParameter
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetLocationListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
+{
+    boost::shared_ptr< MIL_LocationListParameter > listParam( new MIL_LocationListParameter( locationList ) );
+    pMission->SetParameter( parameter, listParam );    
+}

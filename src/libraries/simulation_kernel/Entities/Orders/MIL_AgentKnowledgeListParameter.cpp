@@ -31,6 +31,16 @@ MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const ASN1T_Un
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentKnowledgeListParameter constructor
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const std::vector< DEC_Knowledge_Agent* >& knowledgeAgentList )
+: knowledgeAgentList_( knowledgeAgentList )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentKnowledgeListParameter destructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------

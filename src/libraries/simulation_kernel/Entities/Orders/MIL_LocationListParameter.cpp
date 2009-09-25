@@ -23,6 +23,16 @@ MIL_LocationListParameter::MIL_LocationListParameter( const ASN1T_LocationList& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_LocationListParameter constructor
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+MIL_LocationListParameter::MIL_LocationListParameter( const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
+: locationList_( locationList )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_LocationListParameter destructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------

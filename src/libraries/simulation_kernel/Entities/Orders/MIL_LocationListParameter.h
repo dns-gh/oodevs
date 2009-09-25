@@ -26,6 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_LocationListParameter( const ASN1T_LocationList& );
+    explicit MIL_LocationListParameter( const std::vector< boost::shared_ptr< TER_Localisation > >& locationList );
     virtual ~MIL_LocationListParameter();
     //@}
 

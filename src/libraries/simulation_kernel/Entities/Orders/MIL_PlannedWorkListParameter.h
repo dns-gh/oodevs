@@ -28,6 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_PlannedWorkListParameter( const ASN1T_PlannedWorkList&, const MIL_EntityManager_ABC& entityManager );
+    explicit MIL_PlannedWorkListParameter( const std::vector< boost::shared_ptr< DEC_Gen_Object > >& plannedWorkList );
     virtual ~MIL_PlannedWorkListParameter();
     //@}
 

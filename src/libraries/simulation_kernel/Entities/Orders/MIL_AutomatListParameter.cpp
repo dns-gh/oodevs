@@ -32,6 +32,16 @@ MIL_AutomatListParameter::MIL_AutomatListParameter( const ASN1T_AutomatList& asn
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomatListParameter constructor
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+MIL_AutomatListParameter::MIL_AutomatListParameter( const std::vector< DEC_AutomateDecision* >& automatList )
+: automatList_( automatList )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomatListParameter destructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------

@@ -136,8 +136,23 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "GetType", &DEC_PathPoint::GetDIAType );
 
     // Mission parameters
-    brain.RegisterFunction( "DEC_AssignMissionPionParameter", &MIL_MissionParameterFactory::SetPawnParameter );    
-    brain.RegisterFunction( "DEC_FillMissionParameters",      &DEC_MiscFunctions::FillMissionParameters );
+    brain.RegisterFunction( "DEC_AssignMissionPionParameter",                &MIL_MissionParameterFactory::SetPawnParameter );
+    brain.RegisterFunction( "DEC_AssignMissionAutomatParameter",             &MIL_MissionParameterFactory::SetAutomatParameter );
+    brain.RegisterFunction( "DEC_AssignMissionBoolParameter",                &MIL_MissionParameterFactory::SetBoolParameter );
+    brain.RegisterFunction( "DEC_AssignMissionObjectKnowledgeParameter",     &MIL_MissionParameterFactory::SetObjectKnowledgeParameter );
+    brain.RegisterFunction( "DEC_AssignMissionNatureAtlasTypeParameter",     &MIL_MissionParameterFactory::SetNatureAtlasTypeParameter );
+    brain.RegisterFunction( "DEC_AssignMissionAutomatListParameter",         &MIL_MissionParameterFactory::SetAutomatListParameter );
+    brain.RegisterFunction( "DEC_AssignMissionAgentKnowledgeParameter",      &MIL_MissionParameterFactory::SetAgentKnowledgeParameter );
+    brain.RegisterFunction( "DEC_AssignMissionPathListParameter",            &MIL_MissionParameterFactory::SetPathListParameter );
+    brain.RegisterFunction( "DEC_AssignMissionEnumereParameter",             &MIL_MissionParameterFactory::SetEnumereParameter );
+    brain.RegisterFunction( "DEC_AssignMissionLocationParameter",            &MIL_MissionParameterFactory::SetLocationParameter );
+    brain.RegisterFunction( "DEC_AssignMissionObjectKnowledgeListParameter", &MIL_MissionParameterFactory::SetObjectKnowledgeListParameter );
+    brain.RegisterFunction( "DEC_AssignMissionPointParameter",               &MIL_MissionParameterFactory::SetPointParameter );
+    brain.RegisterFunction( "DEC_AssignMissionAgentKnowledgeListParameter",  &MIL_MissionParameterFactory::SetAgentKnowledgeListParameter );
+    brain.RegisterFunction( "DEC_AssignMissionGenObjectListParameter",       &MIL_MissionParameterFactory::SetGenObjectListParameter );
+    brain.RegisterFunction( "DEC_AssignMissionPionListParameter",            &MIL_MissionParameterFactory::SetPionListParameter );
+    brain.RegisterFunction( "DEC_AssignMissionLocationListParameter",        &MIL_MissionParameterFactory::SetLocationListParameter );
+    brain.RegisterFunction( "DEC_FillMissionParameters",                     &DEC_MiscFunctions::FillMissionParameters );
     
     // Debug
     brain.RegisterFunction( "DEC_PointToString",      &DEC_DIAFunctions::PointToString );

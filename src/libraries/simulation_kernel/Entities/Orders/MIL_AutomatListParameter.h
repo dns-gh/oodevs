@@ -27,6 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AutomatListParameter( const ASN1T_AutomatList&, MIL_EntityManager_ABC& entityManager );
+    explicit MIL_AutomatListParameter( const std::vector< DEC_AutomateDecision* >& automatList );
     virtual ~MIL_AutomatListParameter();
     //@}
 

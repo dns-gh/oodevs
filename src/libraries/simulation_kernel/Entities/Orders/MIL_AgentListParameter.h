@@ -27,6 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AgentListParameter( const ASN1T_UnitList& asn, MIL_EntityManager_ABC& entityManager );
+    explicit MIL_AgentListParameter( const std::vector< DEC_RolePion_Decision* >& unitList );
     virtual ~MIL_AgentListParameter();
     //@}
 

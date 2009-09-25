@@ -29,6 +29,16 @@ MIL_PlannedWorkListParameter::MIL_PlannedWorkListParameter( const ASN1T_PlannedW
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PlannedWorkListParameter constructor
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+MIL_PlannedWorkListParameter::MIL_PlannedWorkListParameter( const std::vector< boost::shared_ptr< DEC_Gen_Object > >& plannedWorkList )
+: plannedWorkList_( plannedWorkList )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PlannedWorkListParameter destructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------

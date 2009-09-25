@@ -25,6 +25,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_AtlasNatureParameter( const ASN1T_AtlasNature& );
+    explicit MIL_AtlasNatureParameter( int nature );
     virtual ~MIL_AtlasNatureParameter();
     //@}
 

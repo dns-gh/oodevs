@@ -447,6 +447,19 @@ end
 
 DIA_PushFront = DIA_PushBack
 
+DIA_Remove = function( list, item )
+    local listEnd = #list
+    for i = 1, listEnd do
+        if list[i] == item then
+            for j = i, listEnd-1 do
+                list[j] = list[j+1]
+            end
+            list[listEnd] = nil
+            return
+        end
+    end
+end
+
 DIA_GetAt = function( list, index )
     return list[index+1]
 end

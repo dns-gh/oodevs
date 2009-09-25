@@ -31,6 +31,16 @@ MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const ASN1T_
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectKnowledgeListParameter constructor
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const std::vector< DEC_Knowledge_Object* >& knowledgeObjectList )
+: knowledgeObjectList_( knowledgeObjectList )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectKnowledgeListParameter destructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------

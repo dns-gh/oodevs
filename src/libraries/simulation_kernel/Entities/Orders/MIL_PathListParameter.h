@@ -25,6 +25,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_PathListParameter( const ASN1T_PathList& );
+    explicit MIL_PathListParameter( const std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& pathList );
     virtual ~MIL_PathListParameter();
     //@}
 

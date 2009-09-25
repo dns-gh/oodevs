@@ -33,6 +33,16 @@ MIL_AgentListParameter::MIL_AgentListParameter( const ASN1T_UnitList& asn, MIL_E
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentListParameter constructor
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+MIL_AgentListParameter::MIL_AgentListParameter( const std::vector< DEC_RolePion_Decision* >& unitList )
+: unitList_( unitList )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentListParameter destructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------

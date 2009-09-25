@@ -35,6 +35,16 @@ MIL_PathListParameter::MIL_PathListParameter( const ASN1T_PathList& asn )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PathListParameter constructor
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+MIL_PathListParameter::MIL_PathListParameter( const std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& pathList )
+: pathList_( pathList )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PathListParameter destructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------

@@ -26,7 +26,8 @@ class MIL_AgentKnowledgeListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_AgentKnowledgeListParameter( const ASN1T_UnitKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_AgentKnowledgeListParameter( const ASN1T_UnitKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    explicit MIL_AgentKnowledgeListParameter( const std::vector< DEC_Knowledge_Agent* >& knowledgeAgentList );
     virtual ~MIL_AgentKnowledgeListParameter();
     //@}
 

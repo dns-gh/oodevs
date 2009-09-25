@@ -23,6 +23,16 @@ MIL_AtlasNatureParameter::MIL_AtlasNatureParameter( const ASN1T_AtlasNature& asn
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AtlasNatureParameter constructor
+// Created: LDC 2009-09-25
+// -----------------------------------------------------------------------------
+MIL_AtlasNatureParameter::MIL_AtlasNatureParameter( int nature )
+: nature_( nature )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AtlasNatureParameter destructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
