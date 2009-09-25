@@ -26,6 +26,9 @@ class PHY_DotationGroupContainer;
 class PHY_AmmoDotationClass;
 class NET_ASN_MsgUnitAttributes;
 
+namespace dotation
+{
+
 // =============================================================================
 // @class  PHY_RoleInterface_Dotations
 // Created: JVT 2004-08-03
@@ -113,5 +116,7 @@ private:
 	}
 	//@}
 };
+
+} // namespace dotation
 
 #endif // __PHY_RoleInterface_Dotations_h_

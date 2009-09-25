@@ -505,7 +505,7 @@ bool PHY_RoleAction_Moving::HasResources()
     
     // Reservation des consommations du pion + renforts
     uint nNbrPionToRollback = 1;
-    if( !pion_.GetRole< PHY_RoleInterface_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ ) )  
+    if( !pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ ) )  
         return false;
 
     const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
@@ -514,7 +514,7 @@ bool PHY_RoleAction_Moving::HasResources()
     {
         MIL_AgentPion& reinforcement = **itReinforcement;
         ++nNbrPionToRollback;
-        if( !reinforcement.GetRole< PHY_RoleInterface_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ ) )
+        if( !reinforcement.GetRole< dotation::PHY_RoleInterface_Dotations >().SetConsumptionMode( PHY_ConsumptionType::moving_ ) )
             break;            
     }
 
@@ -522,10 +522,10 @@ bool PHY_RoleAction_Moving::HasResources()
         return true;
     
     // Rollback
-    pion_.GetRole< PHY_RoleInterface_Dotations >().RollbackConsumptionMode();
+    pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().RollbackConsumptionMode();
     itReinforcement = reinforcements.begin();
     while( --nNbrPionToRollback )
-        (**itReinforcement++).GetRole< PHY_RoleInterface_Dotations >().RollbackConsumptionMode();
+        (**itReinforcement++).GetRole< dotation::PHY_RoleInterface_Dotations >().RollbackConsumptionMode();
     return false;
 }
 

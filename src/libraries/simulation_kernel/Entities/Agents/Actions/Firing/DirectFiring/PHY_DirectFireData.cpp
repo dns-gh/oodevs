@@ -139,7 +139,7 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
     if( pAmmoDotationClass_ && ( !weapon.GetDotationCategory().GetAmmoDotationClass() || *weapon.GetDotationCategory().GetAmmoDotationClass() != *pAmmoDotationClass_ ) )
         return;
 
-    if( !firer_.GetRole< PHY_RoleInterface_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
+    if( !firer_.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;
     else
     {

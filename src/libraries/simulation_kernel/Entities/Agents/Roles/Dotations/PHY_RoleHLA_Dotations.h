@@ -13,6 +13,10 @@
 #include "PHY_RoleInterface_Dotations.h"
 class MIL_Entity_ABC;
 
+
+namespace dotation
+{
+
 // =============================================================================
 /** @class  PHY_RoleHLA_Dotations
     @brief  HLA role dotations
@@ -92,5 +96,7 @@ private:
     MIL_Entity_ABC& entity_;
     //@}
 };
+
+} // namespace dotation
 
 #endif // __PHY_RoleHLA_Dotations_h_

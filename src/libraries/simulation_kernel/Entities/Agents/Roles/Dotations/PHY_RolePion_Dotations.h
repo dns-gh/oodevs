@@ -25,12 +25,15 @@ namespace xml
 namespace dotation
 {
     class ConsumptionComputerFactory_ABC;
+    class DotationComputerFactory_ABC;
 }
 namespace moving
 {
     class MoveComputer_ABC;
 }
 
+namespace dotation
+{
 // =============================================================================
 // @class  PHY_RolePion_Dotations
 // Created: JVT 2004-08-03
@@ -40,13 +43,13 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
 {
 
 public:
-    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, const dotation::ConsumptionComputerFactory_ABC& consumptionComputerFactory );
+    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const DotationComputerFactory_ABC& dotationComputerFactory_ );
     virtual ~PHY_RolePion_Dotations();
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
@@ -124,10 +127,13 @@ private:
     const PHY_ConsumptionType*  pPreviousConsumptionMode_;
           T_DotationReservedMap reservedConsumptions_;
 
-    const dotation::ConsumptionComputerFactory_ABC& consumptionComputerFactory_;
+    const ConsumptionComputerFactory_ABC& consumptionComputerFactory_;
+    const DotationComputerFactory_ABC& dotationComputerFactory_;
 
 	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
 	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
 };
+
+} // namespace dotation
 
 #endif // __PHY_RolePion_Dotations_h_

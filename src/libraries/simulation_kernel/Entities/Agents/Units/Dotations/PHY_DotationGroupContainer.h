@@ -23,12 +23,15 @@ class PHY_DotationGroup;
 class PHY_DotationCategory;
 class PHY_DotationCapacity;
 class PHY_Dotation;
-class PHY_RoleInterface_Dotations;
 class PHY_SupplyDotationRequestContainer;
 class NET_ASN_MsgUnitAttributes;
 class MIL_AutomateLOG;
 class PHY_AmmoDotationClass;
 
+namespace dotation
+{
+    class PHY_RoleInterface_Dotations;
+}
 // =============================================================================
 // @class  PHY_DotationGroupContainer
 // Created: JVT 2004-08-03
@@ -37,7 +40,7 @@ class PHY_DotationGroupContainer : private boost::noncopyable
 {
 
 public:
-    explicit PHY_DotationGroupContainer( PHY_RoleInterface_Dotations& roleDotation );
+    explicit PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation );
              PHY_DotationGroupContainer();
             ~PHY_DotationGroupContainer();
 
@@ -118,7 +121,7 @@ public:
     //@}
 
 private:
-    PHY_RoleInterface_Dotations* pRoleDotation_;
+    dotation::PHY_RoleInterface_Dotations* pRoleDotation_;
     T_DotationGroupMap      dotationGroups_;
     T_DotationSet           dotationsChanged_;
 };

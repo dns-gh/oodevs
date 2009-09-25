@@ -278,7 +278,7 @@ MT_Float PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_A
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetDangerosity( firer, target, targetComposanteType, bUsePH );
 }
@@ -291,7 +291,7 @@ MT_Float PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_C
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetDangerosity( targetComposanteType, rDistBtwFirerAndTarget );
 }
@@ -304,7 +304,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const 
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return 0.;   
     return pDirectFireData_->GetMaxRangeToFireOn( targetComposanteType, rWantedPH );
 }
@@ -317,7 +317,7 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const 
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return std::numeric_limits< MT_Float >::max(); 
     return pDirectFireData_->GetMinRangeToFireOn( targetComposanteType, rWantedPH );
 }
@@ -330,7 +330,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_AgentPion& fi
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetMaxRangeToFireOnWithPosture( targetComposanteType, firer, target, rWantedPH );
 }
@@ -343,7 +343,7 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_AgentPion& fi
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetMinRangeToFireOnWithPosture( targetComposanteType, firer, target, rWantedPH );
 }
@@ -357,7 +357,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, 
     if ( !pIndirectFireData_ )
         return -1.;
 
-    if( bCheckDotationsAvailability && !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    if( bCheckDotationsAvailability && !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return -1.;
         
     return pIndirectFireData_->GetMaxRange();
@@ -372,7 +372,7 @@ MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, 
     if ( !pIndirectFireData_ )
       return std::numeric_limits< MT_Float >::max();
 
-    if( bCheckDotationsAvailability && !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    if( bCheckDotationsAvailability && !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return std::numeric_limits< MT_Float >::max();
         
     return pIndirectFireData_->GetMinRange();

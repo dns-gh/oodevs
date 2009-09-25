@@ -170,7 +170,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { PHY_RolePion_Reinforcement    * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Posture          * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Location         * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { dotation::PHY_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
     { human::PHY_RolePion_Humans           * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Composantes      * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Perceiver        * pRole; file >> pRole; RegisterRole( pRole ); } 
@@ -214,7 +214,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     SaveRole< PHY_RolePion_Reinforcement     >( *this, file );
     SaveRole< PHY_RolePion_Posture           >( *this, file );
     SaveRole< PHY_RolePion_Location          >( *this, file );
-    SaveRole< PHY_RolePion_Dotations         >( *this, file );
+    SaveRole< dotation::PHY_RolePion_Dotations         >( *this, file );
     SaveRole< human::PHY_RolePion_Humans            >( *this, file );
     SaveRole< PHY_RolePion_Composantes       >( *this, file );
     SaveRole< PHY_RolePion_Perceiver         >( *this, file );
@@ -258,7 +258,7 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 
     GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipements
     GetRole< human::PHY_RolePion_Humans      >().WriteODB( xos ); // Personnels
-    GetRole< PHY_RolePion_Dotations   >().WriteODB( xos ); // Dotations
+    GetRole< dotation::PHY_RolePion_Dotations   >().WriteODB( xos ); // Dotations
     
     const PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();//@TODO verify
     if( role )
@@ -274,7 +274,7 @@ void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 {
     // Dotations overloaded by ODB
     GetRole< PHY_RolePion_Composantes  >().ReadOverloading( xis ); // Composantes + humans
-    GetRole< PHY_RolePion_Dotations    >().ReadOverloading( xis );
+    GetRole< dotation::PHY_RolePion_Dotations    >().ReadOverloading( xis );
     GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis ); 
     
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
@@ -360,7 +360,7 @@ void MIL_AgentPion::UpdateDecision( float duration )
 void MIL_AgentPion::UpdatePhysicalState()
 {
     const bool bIsDead = IsDead();
-    GetRole< PHY_RolePion_Dotations         >().Update( bIsDead );
+    GetRole< dotation::PHY_RolePion_Dotations         >().Update( bIsDead );
     GetRole< human::PHY_RolePion_Humans            >().Update( bIsDead );
     GetRole< PHY_RolePion_Composantes       >().Update( bIsDead );
     GetRole< PHY_RolePion_Posture           >().Update( bIsDead );
@@ -429,7 +429,7 @@ void MIL_AgentPion::Clean()
 {
     GetRole< PHY_RolePion_Location          >().Clean();
     GetRole< PHY_RolePion_Perceiver         >().Clean();
-    GetRole< PHY_RolePion_Dotations         >().Clean();
+    GetRole< dotation::PHY_RolePion_Dotations         >().Clean();
     GetRole< human::PHY_RolePion_Humans            >().Clean();
     GetRole< PHY_RolePion_Composantes       >().Clean();
     GetRole< PHY_RolePion_Posture           >().Clean();
@@ -697,7 +697,7 @@ void MIL_AgentPion::OnReceiveMsgResupplyHumans()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMsgResupplyResources()
 {
-    GetRole< PHY_RolePion_Dotations >().ResupplyDotations();
+    GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations();
 
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
@@ -720,7 +720,7 @@ void MIL_AgentPion::OnReceiveMsgResupplyEquipement()
 void MIL_AgentPion::OnReceiveMsgResupplyAll()
 {
     GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
-    GetRole< PHY_RolePion_Dotations   >().ResupplyDotations   ();
+    GetRole< dotation::PHY_RolePion_Dotations   >().ResupplyDotations   ();
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ResupplyStocks();
@@ -760,7 +760,7 @@ void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionPartialRecover
     
     if( asn.m.dotationsPresent )
     {
-        PHY_RolePion_Dotations& roleDotations = GetRole< PHY_RolePion_Dotations >();
+        dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
         for( uint i = 0; i < asn.dotations.n; ++i )
         {
             const ASN1T_DotationRecovery& asnDotation = asn.dotations.elem[ i ];
@@ -772,7 +772,7 @@ void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionPartialRecover
 
     if( asn.m.munitionsPresent )
     {
-        PHY_RolePion_Dotations& roleDotations = GetRole< PHY_RolePion_Dotations >();
+        dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
         for( uint i = 0; i < asn.munitions.n; ++i )
         {
             const ASN1T_AmmunitionDotationRecovery& asnMunition = asn.munitions.elem[ i ];

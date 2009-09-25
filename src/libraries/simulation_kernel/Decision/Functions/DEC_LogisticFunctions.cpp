@@ -370,7 +370,7 @@ void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_AgentPion& callerA
     const PHY_AmmoDotationClass* pAmmoDotationClass = PHY_AmmoDotationClass::Find( ammoDotationClassId );
     assert( pAmmoDotationClass );
     
-    callerAgent.GetRole< PHY_RoleInterface_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
+    callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
 }
 
 // -----------------------------------------------------------------------------

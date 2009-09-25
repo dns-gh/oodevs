@@ -20,6 +20,7 @@
 #include "simulation_kernel/TransportCapacityComputerFactory.h"
 #include "simulation_kernel/TransportWeightComputerFactory.h"
 #include "simulation_kernel/HealComputerFactory.h"
+#include "simulation_kernel/DotationComputerFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: AlgorithmsFactories constructor
@@ -35,6 +36,8 @@ AlgorithmsFactories::AlgorithmsFactories()
     , detectionComputerFactory_( new detection::DetectionComputerFactory() )
     , transportCapacityComputerFactory_( new transport::TransportCapacityComputerFactory() )
     , healComputerFactory_( new human::HealComputerFactory() )
+    , dotationComputerFactory_( new dotation::DotationComputerFactory() )
+    , transportWeightComputerFactory_( new transport::TransportWeightComputerFactory() )
 {
     //NOTHING
 }

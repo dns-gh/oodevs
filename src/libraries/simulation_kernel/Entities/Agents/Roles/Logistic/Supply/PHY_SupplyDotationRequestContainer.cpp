@@ -31,7 +31,7 @@ PHY_SupplyDotationRequestContainer::PHY_SupplyDotationRequestContainer( MIL_Auto
 {
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
     for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-        (**itPion).GetRole< PHY_RoleInterface_Dotations >().FillSupplyRequest( *this );
+        (**itPion).GetRole< dotation::PHY_RoleInterface_Dotations >().FillSupplyRequest( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -31,7 +31,7 @@ class PHY_MunitionForIndirectFireData : public FireData_ABC
 {
 
 public:
-     PHY_MunitionForIndirectFireData( const MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, MT_Float rRange );
+     PHY_MunitionForIndirectFireData( const MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition );
     ~PHY_MunitionForIndirectFireData();
 
     //! @name Operations
@@ -45,7 +45,7 @@ private:
     //@{
     const MIL_AgentPion&                    firer_;
     const PHY_IndirectFireDotationClass& indirectWeaponCategory_;
-    const MT_Float                          rRange_;
+    const MT_Vector2D&                      vTargetPosition_;
     const PHY_DotationCategory*             pChoosenMunition_;
     //@}
 };

@@ -15,8 +15,6 @@
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -33,39 +31,88 @@
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
 #include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
+#include "simulation_kernel/ConsumptionOperator_ABC.h"
+#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/DotationComputerFactory_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
+BOOST_CLASS_EXPORT_GUID( dotation::PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
+
+namespace boost
+{
+    namespace serialization
+    {
+        template< typename Archive >
+        inline
+            void serialize( Archive& file, dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint nVersion )
+        {
+            split_free( file, map, nVersion );
+        }
+
+        template< typename Archive >
+        void save( Archive& file, const dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint )
+        {
+            unsigned size = map.size();
+            file << size;
+            for ( dotation::PHY_RolePion_Dotations::CIT_DotationReservedMap it = map.begin(); it != map.end(); ++it )
+            {
+                file << it->first;
+                file << it->second;
+            }
+        }
+
+        template< typename Archive >
+        void load( Archive& file, dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint )
+        {
+            uint nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                PHY_Dotation* pDotation;
+                file >> pDotation;
+                file >> map[ pDotation ];
+            }            
+        }
+    }
+}
+
+namespace dotation
+{
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    const dotation::ConsumptionComputerFactory_ABC* consumptionComputerFactory = &role->consumptionComputerFactory_;
+    const ConsumptionComputerFactory_ABC* const consumptionComputerFactory = &role->consumptionComputerFactory_;
+    const DotationComputerFactory_ABC* const dotationComputerFactory = &role->dotationComputerFactory_;
     archive << pion
-            << consumptionComputerFactory;
+            << consumptionComputerFactory
+            << dotationComputerFactory;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-    dotation::ConsumptionComputerFactory_ABC* consumptionComputerFactory;
+    ConsumptionComputerFactory_ABC* consumptionComputerFactory;
+    DotationComputerFactory_ABC* dotationComputerFactory;
 	archive >> pion
-            >> consumptionComputerFactory;
-	::new( role )PHY_RolePion_Dotations( *pion, *consumptionComputerFactory );
+            >> consumptionComputerFactory
+            >> dotationComputerFactory;
+	::new( role )PHY_RolePion_Dotations( *pion, *consumptionComputerFactory, *dotationComputerFactory );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion, const dotation::ConsumptionComputerFactory_ABC& consumptionComputerFactory )
+PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const DotationComputerFactory_ABC& dotationComputerFactory )
     : pion_                      ( pion )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
     , reservedConsumptions_      ()
     , pDotations_                ( 0 )
     , consumptionComputerFactory_( consumptionComputerFactory )
+    , dotationComputerFactory_( dotationComputerFactory )
 {
     pDotations_ = new PHY_DotationGroupContainer( *this );
     pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_ );
@@ -83,43 +130,6 @@ PHY_RolePion_Dotations::~PHY_RolePion_Dotations()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-        
-        template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint )
-        {
-            unsigned size = map.size();
-            file << size;
-            for ( PHY_RolePion_Dotations::CIT_DotationReservedMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first;
-                file << it->second;
-            }
-        }
-        
-        template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Dotations::T_DotationReservedMap& map, const uint )
-        {
-            uint nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                PHY_Dotation* pDotation;
-                file >> pDotation;
-                file >> map[ pDotation ];
-            }            
-        }
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::load
@@ -127,7 +137,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
+    file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
 		 >> pDotations_;
          
     uint nID;
@@ -148,7 +158,7 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const uint ) 
 {
     unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (uint)-1 ) ,
              previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (uint)-1 );
-    file << boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
+    file << ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
 		 << pDotations_
          << current
          << previous
@@ -220,7 +230,7 @@ void PHY_RolePion_Dotations::NotifyReleased()
 // =============================================================================
 // CONSUMPTIONS
 // =============================================================================
-struct sConsumptionReservation : private boost::noncopyable
+class sConsumptionReservation : public ConsumptionOperator_ABC
 {
 
 public:
@@ -259,7 +269,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
-    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pion_.Execute( dotationComputerFactory_.Create( func ) );
 
     if( func.bReservationOK_ )
     {
@@ -273,7 +283,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
-        pion_.GetRole< PHY_RolePion_Composantes >().Apply( funcRollback );
+        pion_.Execute( dotationComputerFactory_.Create( funcRollback ) );
         assert( funcRollback.bReservationOK_ );
     }
     return false;
@@ -297,7 +307,7 @@ void PHY_RolePion_Dotations::RollbackConsumptionMode()
 // Name: PHY_RolePion_Dotations::sConsumptionTimeExpectancy
 // Created: JVT 2005-02-07
 // -----------------------------------------------------------------------------
-struct sConsumptionTimeExpectancy : private boost::noncopyable
+class sConsumptionTimeExpectancy : public ConsumptionOperator_ABC 
 {
     
 public:
@@ -346,7 +356,7 @@ MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_Consumption
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pion_.Execute( dotationComputerFactory_.Create( func ) );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }
 
@@ -406,7 +416,7 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
 
     assert( pDotations_ );
     
-    dotation::ConsumptionComputer_ABC& consumptionComputer = consumptionComputerFactory_.Create();
+    ConsumptionComputer_ABC& consumptionComputer = consumptionComputerFactory_.Create();
     pion_.Execute( consumptionComputer );
     SetConsumptionMode( consumptionComputer.Result() );
 
@@ -566,3 +576,5 @@ void PHY_RolePion_Dotations::Execute( moving::MoveComputer_ABC& algorithm ) cons
     if( pCurrentConsumptionMode_ != &PHY_ConsumptionType::moving_ )//@TODO MGD is it really a good modifier
         algorithm.NotifyNoDotation();
 }
+
+} // namespace dotation

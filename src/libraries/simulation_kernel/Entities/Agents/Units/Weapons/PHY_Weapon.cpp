@@ -178,7 +178,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Co
 
         assert( nNbrAmmoToFire > 0 );
        
-        uint nNbrAmmoReserved = (uint)firer.GetRole< PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
+        uint nNbrAmmoReserved = (uint)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
         if( nNbrAmmoReserved )
         {
             nNbrAmmoFiredFromLoader_ += nNbrAmmoReserved;
@@ -219,7 +219,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& ta
         const MT_Float rDamageSurface = target.GetPopulation().GetType().GetDamageSurface( roe );
         const uint     nKilledHumans  = (uint)ceil( rDamageSurface * target.GetDensity() );
 
-        uint nNbrAmmoToFire = (uint)firer.GetRole< PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nKilledHumans );
+        uint nNbrAmmoToFire = (uint)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nKilledHumans );
 
         type_.DirectFire( firer, target, nNbrAmmoToFire, fireResult );
 
@@ -252,7 +252,7 @@ bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& ef
         nNbrAmmoToFire = std::min( nNbrAmmoToFire, effect.GetNbrAmmoToCompleteInterventionType() );
         assert( nNbrAmmoToFire > 0 );
                
-        uint nNbrAmmoReserved = (uint)firer.GetRole< PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
+        uint nNbrAmmoReserved = (uint)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
         if( nNbrAmmoReserved )
         {
             nNbrAmmoFiredFromLoader_ += nNbrAmmoReserved;
@@ -281,7 +281,7 @@ bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& ef
 void PHY_Weapon::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {//@TODO MGD See with AHC if we remove this GetRole kind
     const MT_Vector2D& vSourcePosition = firer.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    uint nNbrAmmoReserved = (uint)firer.GetRole< PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmo );
+    uint nNbrAmmoReserved = (uint)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmo );
     assert( nNbrAmmoReserved == nNbrAmmo );
     type_.ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
 }

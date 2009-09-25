@@ -93,7 +93,7 @@ void PHY_IndirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY
     if( !compFirer.CanFire() || !effect_.CanWeaponBeUsed( weapon ) ) 
         return;
 
-    if( !firer_.GetRole< PHY_RoleInterface_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
+    if( !firer_.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;
     else
     {

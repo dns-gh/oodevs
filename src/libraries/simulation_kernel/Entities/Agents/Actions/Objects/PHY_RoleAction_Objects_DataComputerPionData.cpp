@@ -101,7 +101,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::ReserveConsumptions()
         if( !pConsumptionMode || *pConsumptionMode < composanteConsumptionMode  )
             pConsumptionMode = &composanteConsumptionMode;
     }
-    bConsumptionReserved_ = pPion_->GetRole< PHY_RoleInterface_Dotations >().SetConsumptionMode( *pConsumptionMode );
+    bConsumptionReserved_ = pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().SetConsumptionMode( *pConsumptionMode );
 }
 
 
@@ -115,7 +115,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::RollbackConsumptionsReservatio
     {
         assert( pPion_ );
         bConsumptionReserved_ = false;
-        pPion_->GetRole< PHY_RoleInterface_Dotations >().RollbackConsumptionMode();
+        pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().RollbackConsumptionMode();
     }
 }
 
@@ -126,7 +126,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::RollbackConsumptionsReservatio
 uint PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_DotationCategory& category ) const
 {
     assert( pPion_ );
-    return ( uint ) pPion_->GetRole< PHY_RoleInterface_Dotations >().GetDotationValue( category ); 
+    return ( uint ) pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationValue( category ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ uint PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_Do
 // -----------------------------------------------------------------------------
 uint PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_DotationCategory& category, uint nNbr )
 {
-    return (uint)pPion_->GetRole< PHY_RoleInterface_Dotations >().ConsumeDotation( category, nNbr );    
+    return (uint)pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().ConsumeDotation( category, nNbr );    
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ uint PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_Do
 // -----------------------------------------------------------------------------
 uint PHY_RoleAction_Objects_DataComputerPionData::RecoverDotations( const PHY_DotationCategory& category, uint nNbr )
 {
-    return (uint)pPion_->GetRole< PHY_RoleInterface_Dotations >().SupplyDotation( category, nNbr );    
+    return (uint)pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().SupplyDotation( category, nNbr );    
 }
 
 // -----------------------------------------------------------------------------

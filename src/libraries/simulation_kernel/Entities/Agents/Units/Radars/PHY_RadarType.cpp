@@ -305,7 +305,7 @@ bool PHY_RadarType::CanAcquire( const MIL_AgentPion& perceiver, const MIL_Agent_
     if( roleLocationPerceiver.GetPosition().Distance( roleLocationTarget.GetPosition() ) > rRadius_ )
         return false;
 
-    if ( !detectableActivities_[ target.GetRole< PHY_RoleInterface_Dotations >().GetConsumptionMode().GetID() ] )
+    if ( !detectableActivities_[ target.GetRole< dotation::PHY_RoleInterface_Dotations >().GetConsumptionMode().GetID() ] )
         return false;
 
     const MT_Float rTargetHeight = target.GetRole< PHY_RoleInterface_Location >().GetHeight();

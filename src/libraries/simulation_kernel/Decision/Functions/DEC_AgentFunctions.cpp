@@ -534,7 +534,7 @@ int DEC_AgentFunctions::GetPosture( const MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 float DEC_AgentFunctions::TimeLeftForMoving( const MIL_AgentPion& callerAgent )
 {
-    const MT_Float rTime = callerAgent.GetRole< PHY_RoleInterface_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
+    const MT_Float rTime = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
     return float( MIL_Tools::ConvertSimToMinutes( rTime ) );
 }
 

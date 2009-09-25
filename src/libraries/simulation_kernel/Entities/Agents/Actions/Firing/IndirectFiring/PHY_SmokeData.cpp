@@ -53,7 +53,7 @@ void PHY_SmokeData::operator()( const PHY_ComposantePion& compFirer, PHY_Weapon&
     const PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData = weapon.GetDotationCategory().GetIndirectFireData();
     if( !pIndirectFireData || pIndirectFireData->GetIndirectFireDotationCategory() != indirectWeaponCategory_ )
         return;
-    if( firer_.GetRole< PHY_RoleInterface_Dotations >().GetDotationValue( weapon.GetDotationCategory() ) < nNbrAmmo_ )
+    if( firer_.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationValue( weapon.GetDotationCategory() ) < nNbrAmmo_ )
         return;
     pWeapon_ = &weapon;
 }

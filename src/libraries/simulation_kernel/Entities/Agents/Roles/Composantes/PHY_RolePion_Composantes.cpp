@@ -43,12 +43,11 @@
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
 #include "simulation_kernel/TransportWeightComputer_ABC.h""
 #include "simulation_kernel/HealComputer_ABC.h"
-
-using namespace human;
-
+#include "simulation_kernel/DotationComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
+using namespace human;
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::T_ComposanteTypeProperties constructor
 // Created: NLD 2004-08-16
@@ -624,7 +623,7 @@ void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& compos
     UpdateDataWhenComposanteAdded( composante.GetState(), composanteTypes_[ &composante.GetType() ] );
 
     if( composante.GetState().IsUsable() )
-        pion_.GetRole< PHY_RoleInterface_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
 }
 
 // -----------------------------------------------------------------------------
@@ -641,7 +640,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& comp
     composantes_.erase( it );
 
     if( composante.GetState().IsUsable() )
-        pion_.GetRole< PHY_RoleInterface_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
 
     pion_.GetRole< transport::PHY_RoleAction_Loading   >().CheckConsistency();
     pion_.GetRole< transport::PHY_RoleAction_Transport >().CheckConsistency();
@@ -662,9 +661,9 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     UpdateDataWhenComposanteAdded  ( newState, properties );
 
     if( !newState.IsUsable() && oldState.IsUsable() )
-        pion_.GetRole< PHY_RoleInterface_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
     else if( newState.IsUsable() && !oldState.IsUsable() )
-        pion_.GetRole< PHY_RoleInterface_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
 
     pion_.GetRole< transport::PHY_RoleAction_Transport >().NotifyComposanteChanged( composante );
 
@@ -1712,7 +1711,7 @@ void PHY_RolePion_Composantes::DestroyAllComposantes()
 
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Name: PHY_RolePion_Composantes::Execute
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const
@@ -1722,7 +1721,7 @@ void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Name: PHY_RolePion_Composantes::Execute
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( firing::ComposantesAbleToBeFiredComputer_ABC& algorithm ) const
@@ -1732,7 +1731,7 @@ void PHY_RolePion_Composantes::Execute( firing::ComposantesAbleToBeFiredComputer
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Name: PHY_RolePion_Composantes::Execute
 // Created: AHC 2009-09-23
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC& algorithm ) const
@@ -1754,12 +1753,22 @@ void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Name: PHY_RolePion_Composantes::Execute
 // Created: AHC 2009-09-23
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( human::HealComputer_ABC& algorithm ) const
 {
   for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     algorithm.ApplyOnComposante( **it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute @TODO MGD ADD interface for all algorithms with the virtual void ApplyOnComponent
+// Created: AHC 2009-09-24
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Execute( dotation::DotationComputer_ABC& algorithm ) const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        algorithm.ApplyOnComponent( **it );
 }
 

@@ -125,7 +125,7 @@ bool PHY_RolePion_Surrender::Capture( const MIL_AgentPion& pionTakingPrisoner )
     pPrison_     = 0;
     bPrisoner_   = true;
     bHasChanged_ = true;
-    pion_.GetRole< PHY_RoleInterface_Dotations   >().NotifyCaptured();
+    pion_.GetRole< dotation::PHY_RoleInterface_Dotations   >().NotifyCaptured();
     pion_.GetRole< PHY_RoleInterface_Composantes >().NotifyCaptured();
     return pion_.GetAutomate().NotifyCaptured( pionTakingPrisoner );
 }
@@ -142,7 +142,7 @@ bool PHY_RolePion_Surrender::Release()
     pPrison_     = 0;
     bPrisoner_   = false;
     bHasChanged_ = true;
-    pion_.GetRole< PHY_RoleInterface_Dotations   >().NotifyReleased();
+    pion_.GetRole< dotation::PHY_RoleInterface_Dotations   >().NotifyReleased();
     pion_.GetRole< PHY_RoleInterface_Composantes >().NotifyReleased();
     return pion_.GetAutomate().NotifyReleased();
 }

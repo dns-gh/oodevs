@@ -38,6 +38,11 @@ namespace human
   class HealComputer_ABC;
 }
 
+namespace dotation
+{
+    class DotationComputer_ABC;
+}
+
 namespace human
 {
   class HealComputer_ABC;
@@ -50,9 +55,10 @@ namespace human
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< firing::ComposantesAbleToBeFiredComputer_ABC >
-							                 , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
+							   , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
 							   , public tools::AlgorithmModifier_ABC< transport::TransportWeightComputer_ABC>
 							   , public tools::AlgorithmModifier_ABC< human::HealComputer_ABC >
+                               , public tools::AlgorithmModifier_ABC< dotation::DotationComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
 {
 
@@ -84,6 +90,7 @@ public:
     virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportWeightComputer_ABC& algorithm ) const;
     virtual void Execute( human::HealComputer_ABC& algorithm ) const;
+    virtual void Execute( dotation::DotationComputer_ABC& algorithm ) const;
 
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 

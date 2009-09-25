@@ -3,54 +3,53 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2009 MASA Group
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "PHY_RoleHLA_Dotations.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "Entities/MIL_Entity_ABC.h"
+
+#include "simulation_kernel/DefaultDotationComputer.h"
+#include "simulation_kernel/ConsumptionComputer_ABC.h"
+#include "simulation_kernel/ConsumptionOperator_ABC.h"
 
 namespace dotation
 {
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Dotations constructor
-// Created: AGE 2004-11-09
+// Name: DefaultDotationComputer::DefaultDotationComputer
+// Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Dotations::PHY_RoleHLA_Dotations( MIL_Entity_ABC& entity )
-: entity_( entity )
+DefaultDotationComputer::DefaultDotationComputer()
 {
-    //NOTHING
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Dotations destructor
-// Created: AGE 2004-11-09
+// Name: DefaultDotationComputer::~DefaultDotationComputer
+// Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-PHY_RoleHLA_Dotations::~PHY_RoleHLA_Dotations()
+DefaultDotationComputer::~DefaultDotationComputer()
 {
-    //NOTHING
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Dotations::GetConsumptionMode
-// Created: AGE 2004-11-09
+// Name: DefaultDotationComputer::ApplyOnConpenent
+// Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-const PHY_ConsumptionType& PHY_RoleHLA_Dotations::GetConsumptionMode() const
+void DefaultDotationComputer::Reset( ConsumptionOperator_ABC& consumptionOperator )
 {
-    return entity_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetConsumptionMode();
+    pConsumptionOperator_ = &consumptionOperator;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Dotations::HasDotation
-// Created: NLD 2005-04-18
+// Name: DefaultDotationComputer::ApplyOnConpenent
+// Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Dotations::HasDotation( const PHY_DotationCategory& /*category*/ ) const
+void DefaultDotationComputer::ApplyOnComponent( const PHY_ComposantePion& component )
 {
-    return true;
+    (*pConsumptionOperator_)( component );
 }
 
-} // namespace dotation
+} // namespace

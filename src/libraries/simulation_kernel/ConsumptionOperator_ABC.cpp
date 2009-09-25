@@ -1,34 +1,32 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.cpp $
-// $Author: Jvt $
-// $Modtime: 1/04/05 12:10 $
-// $Revision: 2 $
-// $Workfile: PHY_RoleInterface_Dotations.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "PHY_RoleInterface_Dotations.h"
+#include "simulation_kernel/ConsumptionOperator_ABC.h"
 
 namespace dotation
 {
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Dotations constructor
-// Created: JVT 2005-03-31
+// Name:  ConsumptionOperator_ABC constructor
+// Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Dotations::PHY_RoleInterface_Dotations()
+ConsumptionOperator_ABC::ConsumptionOperator_ABC()
 {
-    // NOTHING
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Dotations destructor
-// Created: NLD 2004-08-16
+// Name:  ConsumptionOperator_ABC destructor
+// Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Dotations::~PHY_RoleInterface_Dotations()
+ ConsumptionOperator_ABC::~ConsumptionOperator_ABC()
 {
     // NOTHING
 }

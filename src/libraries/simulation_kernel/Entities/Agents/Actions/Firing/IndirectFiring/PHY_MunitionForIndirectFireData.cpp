@@ -16,6 +16,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
@@ -24,10 +25,10 @@ using namespace firing;
 // Name: PHY_MunitionForIndirectFireData constructor
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( const MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, MT_Float rRange )
+PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( const MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition  )
     : firer_                 ( firer )
     , indirectWeaponCategory_( indirectWeaponCategory )
-    , rRange_                ( rRange )
+    , vTargetPosition_       ( vTargetPosition )
     , pChoosenMunition_      ( 0 )
 {
     // NOTHING
@@ -55,13 +56,15 @@ void PHY_MunitionForIndirectFireData::operator()( const PHY_ComposantePion& comp
     if( !pIndirectFireData || pIndirectFireData->GetIndirectFireDotationCategory() != indirectWeaponCategory_ )
         return;
 
-    if( rRange_ < weapon.GetMinRangeToIndirectFire() || rRange_ > weapon.GetMaxRangeToIndirectFire() )
+    const MT_Float rRange = firer_.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( vTargetPosition_ );
+
+    if( rRange < weapon.GetMinRangeToIndirectFire() || rRange > weapon.GetMaxRangeToIndirectFire() )
         return;
 
     if( pChoosenMunition_ && weapon.GetDotationCategory() == *pChoosenMunition_ )
         return;
 
-    const PHY_RoleInterface_Dotations& roleDotations = firer_.GetRole< PHY_RoleInterface_Dotations >();
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = firer_.GetRole< dotation::PHY_RoleInterface_Dotations >();
 
     if( !pChoosenMunition_ || roleDotations.GetDotationValue( *pChoosenMunition_ ) < roleDotations.GetDotationValue( weapon.GetDotationCategory() ) )
         pChoosenMunition_ = &weapon.GetDotationCategory();

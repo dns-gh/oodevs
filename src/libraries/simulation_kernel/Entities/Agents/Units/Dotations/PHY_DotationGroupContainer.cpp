@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_DotationGroupContainer, "PHY_DotationGroupContainer
 // Name: PHY_DotationGroupContainer constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_DotationGroupContainer::PHY_DotationGroupContainer( PHY_RoleInterface_Dotations& roleDotation )
+PHY_DotationGroupContainer::PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation )
     : pRoleDotation_( &roleDotation )
 {
     // NOTHING

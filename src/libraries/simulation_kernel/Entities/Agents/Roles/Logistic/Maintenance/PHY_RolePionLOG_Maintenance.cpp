@@ -345,7 +345,7 @@ bool PHY_RolePionLOG_Maintenance::HasUsableRepairer( const PHY_Breakdown& breakd
 bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown& breakdown )
 {
 
-    PHY_RoleInterface_Dotations& roleDotations = pion_.GetRole< PHY_RoleInterface_Dotations >();
+    dotation::PHY_RoleInterface_Dotations& roleDotations = pion_.GetRole< dotation::PHY_RoleInterface_Dotations >();
     const PHY_BreakdownType::T_PartMap& parts = breakdown.GetNeededParts();
     for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
     {
@@ -571,7 +571,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
     MT_Float rRatioPartsAvailable = 0.;
 
 
-    const PHY_RoleInterface_Dotations& roleDotations = pion_.GetRole< PHY_RoleInterface_Dotations >();
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = pion_.GetRole< dotation::PHY_RoleInterface_Dotations >();
 
     const PHY_BreakdownType::T_PartMap& parts = composanteState.GetComposanteBreakdown().GetNeededParts();
     for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
