@@ -22,6 +22,8 @@ namespace xml
     class xistream;
 }
 
+class ComponentFunctorComputerFactory_ABC;
+
 namespace dotation
 {
     class ConsumptionComputerFactory_ABC;

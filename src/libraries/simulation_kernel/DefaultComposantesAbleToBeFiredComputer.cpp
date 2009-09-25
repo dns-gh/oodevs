@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 
 #include "simulation_kernel/DefaultComposantesAbleToBeFiredComputer.h"
+#include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
 using namespace firing;
 
@@ -17,8 +18,7 @@ using namespace firing;
 // Name: DefaultComposantesAbleToBeFiredComputer::DefaultComposantesAbleToBeFiredComputer
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
-DefaultComposantesAbleToBeFiredComputer::DefaultComposantesAbleToBeFiredComputer( bool bFireOnlyOnMajorComposantes )
-    : bFireOnlyOnMajorComposantes_( bFireOnlyOnMajorComposantes )
+DefaultComposantesAbleToBeFiredComputer::DefaultComposantesAbleToBeFiredComputer()
 {
 
 }
@@ -33,12 +33,21 @@ DefaultComposantesAbleToBeFiredComputer::~DefaultComposantesAbleToBeFiredCompute
 }
 
 // -----------------------------------------------------------------------------
+// Name: DefaultComposantesAbleToBeFiredComputer::~DefaultComposantesAbleToBeFiredComputer
+// Created: MGD 2009-09-15
+// -----------------------------------------------------------------------------
+void DefaultComposantesAbleToBeFiredComputer::Reset( bool bFireOnlyOnMajorComposantes )
+{
+    bFireOnlyOnMajorComposantes_ = bFireOnlyOnMajorComposantes;
+    availableTargets_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DefaultComposantesAbleToBeFiredComputer::Execute
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
-void DefaultComposantesAbleToBeFiredComputer::ApplyOnComposante( PHY_ComposantePion& fired )
+void DefaultComposantesAbleToBeFiredComputer::ApplyOnComponent( PHY_ComposantePion& fired )
 {
-    availableTargets_.clear();//@TODO move to reset BUG
     if( fired.CanBeFired() )
     {
         if( !bFireOnlyOnMajorComposantes_ || fired.IsMajor() )

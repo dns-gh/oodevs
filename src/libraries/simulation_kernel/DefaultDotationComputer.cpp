@@ -47,7 +47,7 @@ void DefaultDotationComputer::Reset( ConsumptionOperator_ABC& consumptionOperato
 // Name: DefaultDotationComputer::ApplyOnConpenent
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-void DefaultDotationComputer::ApplyOnComponent( const PHY_ComposantePion& component )
+void DefaultDotationComputer::ApplyOnComponent( PHY_ComposantePion& component )
 {
     (*pConsumptionOperator_)( component );
 }

@@ -34,7 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void Reset( ConsumptionOperator_ABC& consumptionOperator );
-    virtual void ApplyOnComponent( const PHY_ComposantePion& component );
+    virtual void ApplyOnComponent( PHY_ComposantePion& component );
     //@}
 
 private:

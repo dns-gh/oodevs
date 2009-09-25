@@ -12,8 +12,6 @@
 
 #include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
 
-class firing::PHY_DirectFireData;
-
 namespace firing
 {
 
@@ -29,13 +27,14 @@ class DefaultComposantesAbleToBeFiredComputer : public ComposantesAbleToBeFiredC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultComposantesAbleToBeFiredComputer( bool bFireOnlyOnMajorComposantes );
+             DefaultComposantesAbleToBeFiredComputer();
     virtual ~DefaultComposantesAbleToBeFiredComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void ApplyOnComposante( PHY_ComposantePion& fired );
+    virtual void Reset( bool bFireOnlyOnMajorComposantes );
+    virtual void ApplyOnComponent( PHY_ComposantePion& fired );
     virtual PHY_Composante_ABC::T_ComposanteVector& ResultAll();
     virtual PHY_Composante_ABC::T_ComposanteVector& ResultLimited( unsigned int nNbrWeaponsUsable );
     //@}

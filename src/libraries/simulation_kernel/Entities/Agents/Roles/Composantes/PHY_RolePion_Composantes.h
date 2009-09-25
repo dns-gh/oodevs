@@ -25,7 +25,6 @@ namespace xml
 namespace firing
 {
     class WeaponAvailabilityComputer_ABC;
-    class ComposantesAbleToBeFiredComputer_ABC;
 }
 
 namespace transport
@@ -34,20 +33,7 @@ namespace transport
 	class TransportWeightComputer_ABC;
 }
 
-namespace human
-{
-  class HealComputer_ABC;
-}
-
-namespace dotation
-{
-    class DotationComputer_ABC;
-}
-
-namespace human
-{
-  class HealComputer_ABC;
-}
+class ComponentFunctorComputer_ABC;
 
 // =============================================================================
 // @class  PHY_RolePion_Composantes
@@ -55,11 +41,9 @@ namespace human
 // =============================================================================
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
-                               , public tools::AlgorithmModifier_ABC< firing::ComposantesAbleToBeFiredComputer_ABC >
 							   , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
 							   , public tools::AlgorithmModifier_ABC< transport::TransportWeightComputer_ABC>
-							   , public tools::AlgorithmModifier_ABC< human::HealComputer_ABC >
-                               , public tools::AlgorithmModifier_ABC< dotation::DotationComputer_ABC >
+                               , public tools::AlgorithmModifier_ABC< ComponentFunctorComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
 {
@@ -88,11 +72,9 @@ public:
     template< typename T > bool                HasUsableComposante( T& t ) const;
 
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
-    virtual void Execute( firing::ComposantesAbleToBeFiredComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportWeightComputer_ABC& algorithm ) const;
-    virtual void Execute( human::HealComputer_ABC& algorithm ) const;
-    virtual void Execute( dotation::DotationComputer_ABC& algorithm ) const;
+    virtual void Execute( ComponentFunctorComputer_ABC& algorithm ) const;
 
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 

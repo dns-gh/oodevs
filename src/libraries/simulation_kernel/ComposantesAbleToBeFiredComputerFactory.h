@@ -14,6 +14,7 @@
 
 namespace firing
 {
+
 // =============================================================================
 /** @class  ComposantesAbleToBeFiredComputerFactory
     @brief  ComposantesAbleToBeFiredComputerFactory
@@ -32,8 +33,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > Create( bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual ComposantesAbleToBeFiredComputer_ABC& Create( bool bFireOnlyOnMajorComposantes = false ) const;
     //@}
+private:
+    std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > pComputer_;
 };
 
 }

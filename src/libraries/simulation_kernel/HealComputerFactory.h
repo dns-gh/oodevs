@@ -11,7 +11,6 @@
 #define __HealableComputerFactory_h_
 
 #include "simulation_kernel/HealComputerFactory_ABC.h"
-#include "simulation_kernel/PostureComputer_ABC.h"
 
 namespace human
 {

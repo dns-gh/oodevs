@@ -32,6 +32,7 @@
 #include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
 #include "simulation_kernel/ConsumptionOperator_ABC.h"
+
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
 
@@ -269,7 +270,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
-    pion_.Execute( dotationComputerFactory_.Create( func ) );
+    ComponentFunctorComputer_ABC& dotationComputer = dotationComputerFactory_.Create( func );
+    pion_.Execute( dotationComputer );
 
     if( func.bReservationOK_ )
     {
@@ -283,7 +285,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
-        pion_.Execute( dotationComputerFactory_.Create( funcRollback ) );
+        ComponentFunctorComputer_ABC& dotationComputer = dotationComputerFactory_.Create( funcRollback );
+        pion_.Execute( dotationComputer );
         assert( funcRollback.bReservationOK_ );
     }
     return false;
@@ -356,7 +359,8 @@ MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_Consumption
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    pion_.Execute( dotationComputerFactory_.Create( func ) );
+    ComponentFunctorComputer_ABC& dotationComputer = dotationComputerFactory_.Create( func );
+    pion_.Execute( dotationComputer );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }
 

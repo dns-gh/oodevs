@@ -11,7 +11,8 @@
 #define __ComposantesAbleToBeFiredComputer_ABC_h_
 
 
-#include "simulation_kernel/Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "simulation_kernel/ComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 
 class PHY_ComposantePion;
 
@@ -24,7 +25,7 @@ namespace firing
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class ComposantesAbleToBeFiredComputer_ABC
+    class ComposantesAbleToBeFiredComputer_ABC : public ComponentFunctorComputer_ABC
 {
 
 public:
@@ -36,7 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ApplyOnComposante( PHY_ComposantePion& fired ) = 0;
+    virtual void Reset( bool bFireOnlyOnMajorComposantes ) = 0;
+    virtual void ApplyOnComponent( PHY_ComposantePion& fired ) = 0;
     virtual PHY_Composante_ABC::T_ComposanteVector& ResultAll() = 0;
     virtual PHY_Composante_ABC::T_ComposanteVector& ResultLimited( unsigned int nNbrWeaponsUsable ) = 0;
     //@}

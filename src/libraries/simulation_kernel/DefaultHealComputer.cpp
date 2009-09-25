@@ -46,7 +46,7 @@ void DefaultHealComputer::Reset()
 // Name: DefaultHealableComputer::ApplyOnComposante( PHY_ComposantePion& component ) = 0;
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-void DefaultHealComputer::ApplyOnComposante( PHY_ComposantePion& component )
+void DefaultHealComputer::ApplyOnComponent( PHY_ComposantePion& component )
 {
   components_.push_back( &component );
 }

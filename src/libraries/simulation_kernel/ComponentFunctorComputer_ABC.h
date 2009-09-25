@@ -7,37 +7,31 @@
 //
 // *****************************************************************************
 
-#ifndef __DotationComputer_ABC_h_
-#define __DotationComputer_ABC_h_
+#ifndef __ComponentFunctorComputer_ABC_h_
+#define __ComponentFunctorComputer_ABC_h_
 
-#include "simulation_kernel/ComponentFunctorComputer_ABC.h"
+class PHY_ComposantePion;
 
-namespace dotation
-{
-    class ConsumptionOperator_ABC;
 // =============================================================================
-/** @class  Dotationcomputer_ABC
-    @brief  Dotationcomputer_ABC
+/** @class  ComponentFunctorcomputer_ABC
+    @brief  ComponentFunctorcomputer_ABC
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class DotationComputer_ABC : public ComponentFunctorComputer_ABC
+class ComponentFunctorComputer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationComputer_ABC();
-    virtual ~DotationComputer_ABC();
+             ComponentFunctorComputer_ABC();
+    virtual ~ComponentFunctorComputer_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( ConsumptionOperator_ABC& consumptionOperator ) = 0;
     virtual void ApplyOnComponent( PHY_ComposantePion& component ) = 0;
     //@}
 };
 
-} // namespace dotation
-
-#endif // __DotationComputer_ABC_h_
+#endif // __ComponentFunctorComputer_ABC_h_

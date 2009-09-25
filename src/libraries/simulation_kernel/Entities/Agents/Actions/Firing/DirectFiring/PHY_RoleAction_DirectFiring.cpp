@@ -197,9 +197,9 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
     // Targets
     const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == PHY_DirectFireData::eFireOnlyOnMajorComposantes );
 
-    std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > composantesAbleToBeFiredComputer( composantesAbleToBeFiredComputerFactory_.Create( bFireOnlyOnMajorComposantes ) );
-    pTarget->Execute( *composantesAbleToBeFiredComputer );
-    PHY_Composante_ABC::T_ComposanteVector& targets = composantesAbleToBeFiredComputer->ResultLimited( nNbrWeaponsUsable );
+    ComposantesAbleToBeFiredComputer_ABC& componentAbleToBeFiredComputer = composantesAbleToBeFiredComputerFactory_.Create( bFireOnlyOnMajorComposantes );
+    pTarget->Execute( static_cast< ComponentFunctorComputer_ABC& >( componentAbleToBeFiredComputer ) );
+    PHY_Composante_ABC::T_ComposanteVector& targets = componentAbleToBeFiredComputer.ResultLimited( nNbrWeaponsUsable );
 
     if( targets.empty() )
         return eEnemyDestroyed;

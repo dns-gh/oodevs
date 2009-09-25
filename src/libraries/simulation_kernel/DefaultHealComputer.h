@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual void Reset();
-    virtual void ApplyOnComposante( PHY_ComposantePion& component );
+    virtual void ApplyOnComponent( PHY_ComposantePion& component );
     virtual void Heal( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const;
     virtual void Wound( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const;
     virtual void HealAll() const;

@@ -10,9 +10,10 @@
 #ifndef __HealableComputer_ABC_h_
 #define __HealableComputer_ABC_h_
 
-#include "simulation_kernel/Entities/Agents/Units/Humans/PHY_Human.h"
+#include "simulation_kernel/ComponentFunctorComputer_ABC.h"
 
 class PHY_ComposantePion;
+class PHY_HumanRank;
 class MIL_AutomateLOG;
 namespace human
 {
@@ -23,7 +24,7 @@ namespace human
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class HealComputer_ABC
+class HealComputer_ABC : public ComponentFunctorComputer_ABC
 {
 
 public:
@@ -36,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void Reset() = 0;
-    virtual void ApplyOnComposante( PHY_ComposantePion& component ) = 0;
+    virtual void ApplyOnComponent( PHY_ComposantePion& component ) = 0;
     virtual void Heal( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const = 0;
     virtual void Wound( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const = 0;
     virtual void HealAll() const = 0;

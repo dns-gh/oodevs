@@ -18,6 +18,7 @@ using namespace firing;
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
 ComposantesAbleToBeFiredComputerFactory::ComposantesAbleToBeFiredComputerFactory()
+: pComputer_( new DefaultComposantesAbleToBeFiredComputer() )
 {
     //NOTHING
 }
@@ -35,7 +36,8 @@ ComposantesAbleToBeFiredComputerFactory::~ComposantesAbleToBeFiredComputerFactor
 // Name: ComposantesAbleToBeFiredComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > ComposantesAbleToBeFiredComputerFactory::Create( bool bFireOnlyOnMajorComposantes /*=false*/ ) const
+ComposantesAbleToBeFiredComputer_ABC& ComposantesAbleToBeFiredComputerFactory::Create( bool bFireOnlyOnMajorComposantes /*=false*/ ) const
 {
-    return std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC >( new DefaultComposantesAbleToBeFiredComputer( bFireOnlyOnMajorComposantes ) );
+    pComputer_->Reset( bFireOnlyOnMajorComposantes );
+    return *pComputer_;
 }
