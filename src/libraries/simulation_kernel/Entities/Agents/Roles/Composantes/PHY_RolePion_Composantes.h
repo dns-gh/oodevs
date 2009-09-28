@@ -67,9 +67,7 @@ public:
     //! @name Operations 
     //@{
     template< typename T > void                Apply              ( T& t ) const;
-    template< typename T > PHY_ComposantePion* GetComposante      ( T& t ) const;
     template< typename T > void                GetComposantesUse  ( T_ComposanteUseMap& composanteUse, T& t ) const;
-    template< typename T > bool                HasUsableComposante( T& t ) const;
 
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;

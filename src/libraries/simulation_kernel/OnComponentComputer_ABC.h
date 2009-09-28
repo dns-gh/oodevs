@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ComponentFunctorComputer_ABC_h_
-#define __ComponentFunctorComputer_ABC_h_
+#ifndef __OnComponentComputer_ABC_h_
+#define __OnComponentComputer_ABC_h_
 
 class OnComponentFunctor_ABC;
 class PHY_ComposantePion;
@@ -35,4 +35,4 @@ public:
     //@}
 };
 
-#endif // __ComponentFunctorComputer_ABC_h_
+#endif // __OnComponentComputer_ABC_h_

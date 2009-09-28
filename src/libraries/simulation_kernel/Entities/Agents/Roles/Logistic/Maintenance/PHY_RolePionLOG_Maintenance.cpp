@@ -326,9 +326,10 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_C
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Maintenance::HasUsableHauler( const PHY_ComposanteTypePion& composanteType ) const
 {
-
     PHY_ComposanteTypePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposanteTypePion::CanHaul, composanteType );
-    return pion_.GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    HasUsableComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    return functor.result_;
 }
 
 // -----------------------------------------------------------------------------
@@ -362,7 +363,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY
 {
 
     PHY_ComposantePredicate1< PHY_Breakdown > predicate( &PHY_ComposantePion::CanRepair, breakdown );
-    PHY_ComposantePion* pRepairer = pion_.GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    GetComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    PHY_ComposantePion* pRepairer = functor.result_;
     if( pRepairer && GetNbrAvailableRepairersAllowedToWork( breakdown ) > 0 )
         return pRepairer;
     return 0;
@@ -374,9 +377,10 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Maintenance::HasUsableRepairer( const PHY_Breakdown& breakdown ) const
 {
-
     PHY_ComposanteTypePredicate1< PHY_Breakdown > predicate( &PHY_ComposanteTypePion::CanRepair, breakdown );
-    return pion_.GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    HasUsableComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    return functor.result_;
 }
 
 // -----------------------------------------------------------------------------

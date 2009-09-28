@@ -49,37 +49,6 @@ inline void PHY_RolePion_Composantes::Apply( T& functor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void PHY_RolePion_Composantes::GetComposante
-// Created: NLD 2006-08-02
-// -----------------------------------------------------------------------------
-template< typename T > 
-inline PHY_ComposantePion* PHY_RolePion_Composantes::GetComposante( T& functor ) const
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( functor( **it ) )
-            return *it;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T > bool PHY_RolePion_Composantes::HasUsableComposante
-// Created: NLD 2006-08-02
-// -----------------------------------------------------------------------------
-template< typename T > 
-inline bool PHY_RolePion_Composantes::HasUsableComposante( T& functor ) const
-{
-    // ne teste pas l'état logistique (= potentiellement utilisable)
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( functor( ( **it).GetType() ) && (**it).GetState().IsUsable() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: template< typename T > void PHY_RolePion_Composantes::GetComposantesUse
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------

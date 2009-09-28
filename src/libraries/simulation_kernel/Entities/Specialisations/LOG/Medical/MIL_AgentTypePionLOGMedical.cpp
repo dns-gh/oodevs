@@ -14,6 +14,7 @@
 #include "MIL_AgentPionLOGMedical.h"
 
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "simulation_kernel/AlgorithmsFactories.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMedical constructor
@@ -60,7 +61,7 @@ MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Autom
 void MIL_AgentTypePionLOGMedical::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories& algorithmsFactories ) const
 {
     MIL_AgentTypePion::RegisterRoles( pion, algorithmsFactories  );
-    pion.RegisterRole< PHY_RolePionLOG_Medical >( static_cast< MIL_AgentPionLOG_ABC& >( pion ) );//@TODO remove cast when AgentPionLOG will be deleted   
+    pion.RegisterRole< PHY_RolePionLOG_Medical >( static_cast< MIL_AgentPionLOG_ABC& >( pion ), *algorithmsFactories.onComponentFunctorComputerFactory_ );//@TODO remove cast when AgentPionLOG will be deleted   
 }
 
 

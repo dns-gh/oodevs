@@ -14,14 +14,27 @@
 
 #include "MIL.h"
 
+#include "OnComponentFunctor_ABC.h"
+
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
+
+// =============================================================================
+// @class  ComponentPredicate_ABC
+// Created: MGD 2009-09-28
+// =============================================================================
+class ComponentPredicate_ABC
+{
+public:
+    virtual bool operator() ( const PHY_ComposantePion& composante ) = 0;
+};
+
 
 // =============================================================================
 // @class  PHY_ComposantePredicate
 // Created: NLD 2006-08-02
 // =============================================================================
-class PHY_ComposantePredicate
+class PHY_ComposantePredicate : public ComponentPredicate_ABC
 {
 public:
     //! @name Types
@@ -49,7 +62,7 @@ private:
 // Created: NLD 2006-08-02
 // =============================================================================
 template< typename T >
-class PHY_ComposantePredicate1
+class PHY_ComposantePredicate1 : public ComponentPredicate_ABC
 {
 public:
     //! @name Types
@@ -76,10 +89,45 @@ private:
 };
 
 // =============================================================================
+// @class  GetComponentFunctor //@TODO MGD Try to find a better design
+// Created: MGD 2009-09-28
+// =============================================================================
+class GetComponentFunctor : public OnComponentFunctor_ABC
+{
+
+public:
+    GetComponentFunctor( ComponentPredicate_ABC& functor )
+        : functor_( functor )
+        , result_( 0 )
+    {
+    }
+
+    void operator() ( PHY_ComposantePion& composante )
+    {
+        if( functor_( composante ) )
+            result_ = &composante;//@TODO MGD ADD optimisation
+    }
+
+    ComponentPredicate_ABC& functor_;
+    PHY_ComposantePion* result_;
+};
+
+
+// =============================================================================
+// @class  ComponentTypePredicate_ABC
+// Created: MGD 2009-09-28
+// =============================================================================
+class ComponentTypePredicate_ABC
+{
+public:
+    virtual bool operator() ( const PHY_ComposanteTypePion& composanteType ) = 0;
+};
+
+// =============================================================================
 // @class  PHY_ComposanteTypePredicate
 // Created: NLD 2006-08-02
 // =============================================================================
-class PHY_ComposanteTypePredicate
+class PHY_ComposanteTypePredicate : public ComponentTypePredicate_ABC
 {
 public:
     //! @name Types
@@ -107,7 +155,7 @@ private:
 // Created: NLD 2006-08-02
 // =============================================================================
 template< typename T >
-class PHY_ComposanteTypePredicate1
+class PHY_ComposanteTypePredicate1 : public ComponentTypePredicate_ABC
 {
 public:
     //! @name Types
@@ -130,6 +178,30 @@ public:
 private:
     const T&                        param_;
     const T_ComposanteTypePredicate compTypePredicate_;
+};
+
+// =============================================================================
+// @class  HasUsableComponentFunctor
+// Created: MGD 2009-09-28
+// =============================================================================
+class HasUsableComponentFunctor : public OnComponentFunctor_ABC
+{
+
+public:
+    HasUsableComponentFunctor( ComponentTypePredicate_ABC& functor )
+        : functor_( functor )
+        , result_( false )
+    {
+    }
+
+    void operator() ( PHY_ComposantePion& composante )
+    {
+        if( functor_( composante.GetType() ) && composante.GetState().IsUsable() )
+            result_ = true;//@TODO MGD ADD optimisation
+    }
+
+    ComponentTypePredicate_ABC& functor_;
+    bool result_;
 };
 
 // =============================================================================

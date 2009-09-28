@@ -30,29 +30,38 @@
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Medical, "PHY_RolePionLOG_Medical" )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ )
 {
     MIL_AgentPionLOG_ABC* const pion = &role->pion_;
-    archive << pion;
+    const OnComponentFunctorComputerFactory_ABC* const onComponentFunctorComputerFactory = &role->onComponentFunctorComputerFactory_;
+    archive << pion
+            << onComponentFunctorComputerFactory;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPionLOG_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePionLOG_Medical( *pion );
+    OnComponentFunctorComputerFactory_ABC* onComponentFunctorComputerFactory;
+    archive >> pion
+        >> onComponentFunctorComputerFactory;
+    ::new( role )PHY_RolePionLOG_Medical( *pion, *onComponentFunctorComputerFactory );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
+PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory )
     : pion_                  ( pion )
+    , onComponentFunctorComputerFactory_( onComponentFunctorComputerFactory )
     , bHasChanged_            ( true )
     , bSystemEnabled_         ( false )
     , bSortingFunctionEnabled_( false )
@@ -321,7 +330,9 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
     }
 
     PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanEvacuateCasualty, consign.GetHumanState().GetHuman() );
-    PHY_ComposantePion* pCompAmbulance = pion_.GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    GetComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    PHY_ComposantePion* pCompAmbulance = functor.result_;
     if( !pCompAmbulance )
         return 0;
 
@@ -347,7 +358,9 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
 
 
     PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
-    PHY_ComposantePion* pCompAmbulance = pion_.GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    GetComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    PHY_ComposantePion* pCompAmbulance = functor.result_;
     if( !pCompAmbulance )
         return 0;
 
@@ -366,7 +379,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing() c
 {
 
     PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanDiagnoseHumans );
-    return pion_.GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    GetComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    return functor.result_;
 }
 
 // -----------------------------------------------------------------------------
@@ -375,9 +390,10 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing() c
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForSorting() const
 {
-
     PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanSortHumans );
-    return pion_.GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    GetComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    return functor.result_;
 }
 
 // -----------------------------------------------------------------------------
@@ -388,7 +404,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const
 {
 
     PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanHealHuman, human );
-    return pion_.GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
+    GetComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    return functor.result_;
 }
 
 // -----------------------------------------------------------------------------
@@ -397,9 +415,10 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const PHY_Human& human ) const
 {
-
     PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
-    return pion_.GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    HasUsableComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    return functor.result_;
 }
 
 // -----------------------------------------------------------------------------
@@ -410,7 +429,9 @@ bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const PHY_Human& hum
 {
 
     PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanCollectCasualty, human );
-    return pion_.GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    HasUsableComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    return functor.result_;
 }
 
 // -----------------------------------------------------------------------------
@@ -420,8 +441,10 @@ bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const PHY_Human& hum
 bool PHY_RolePionLOG_Medical::HasUsableDoctorForSorting() const
 {
 
-    PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanSortHumans );        
-    return pion_.GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanSortHumans );
+    HasUsableComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    return functor.result_;
 }
 
 // -----------------------------------------------------------------------------
@@ -435,7 +458,9 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const PHY_Human& human,
 
 
     PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );        
-    return pion_.GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
+    HasUsableComponentFunctor functor( predicate );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functor ) );
+    return functor.result_;
 }
 
 // -----------------------------------------------------------------------------

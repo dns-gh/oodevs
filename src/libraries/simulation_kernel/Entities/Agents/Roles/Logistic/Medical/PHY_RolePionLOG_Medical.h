@@ -28,6 +28,8 @@ class PHY_MedicalEvacuationAmbulance;
 class PHY_MedicalCollectionAmbulance;
 class PHY_ComposanteUsePredicate;
 
+class OnComponentFunctorComputerFactory_ABC;
+
 // =============================================================================
 // @class  PHY_RolePionLOG_Medical
 // Created: JVT 2004-08-03
@@ -36,7 +38,7 @@ class PHY_RolePionLOG_Medical : public PHY_RoleInterface_Medical
 {
 
 public:
-    explicit PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion );
+    explicit PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory );
     virtual ~PHY_RolePionLOG_Medical();
 
     //! @name CheckPoints
@@ -158,6 +160,8 @@ private:
     T_CollectionAmbulancesList collectionAmbulances_;
 
     T_CollectionAmbulancesSet  reservations_;
+
+    const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ );
   	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ );
