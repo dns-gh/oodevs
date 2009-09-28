@@ -52,10 +52,10 @@ end
 ]]    end,
 
     deselect = function( self )
-    end,
+            end,
 
     destroy = function( self )
-        DEC_ConnaissanceAgent_Deverrouiller( self._namedParams.connaissance )
+                DEC_ConnaissanceAgent_Deverrouiller( self._namedParams.connaissance )
     end,
 
 }
@@ -82,7 +82,7 @@ end
     deselect = function( self )
         DEC_Perception_DesactiverCoupsDeSonde()
         self.selected = false
-    end,
+            end,
 
     destroy = function( self )
     end,
@@ -142,35 +142,21 @@ end
     end,
 
     deselect = function( self )
-        self.bSuspendu = true
+                self.bSuspendu = true
         myself.eEtatDeplacement_ = eEtatDeplacement_aucun
         RemovePerception_ReconnaissancePoint_Callback ( self.pPt )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         DEC_Perception_DesactiverReconnaissancePoint( self.pPt )
         DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-        self.bRecoMax = nil
-        self.bRecoMaxObj = nil
-        self.bSuspendu = nil
-        self.loc = nil
-        self.pPt = nil
-        self.pPtObj = nil
-        self.ptRecoCopie = nil
     end,
 
     destroy = function( self )
-        myself.eEtatDeplacement_ = eEtatDeplacement_aucun
+                myself.eEtatDeplacement_ = eEtatDeplacement_aucun
         DEC_Trace( "<< fin reconnaissance" )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPt )
         DEC_Perception_DesactiverReconnaissancePoint( self.pPt )
         DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-        self.bRecoMax = nil
-        self.bRecoMaxObj = nil
-        self.bSuspendu = nil
-        self.loc = nil
-        self.pPt = nil
-        self.pPtObj = nil
-        self.ptRecoCopie = nil
     end,
 
 }
@@ -230,7 +216,7 @@ end
 ]]    end,
 
     deselect = function( self )
-        DEC_Trace( " << fin surveillance" )
+                DEC_Trace( " << fin surveillance" )
         RemovePerception_ReconnaissancePoint_Callback ( self.perceptionPoint )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
@@ -244,18 +230,13 @@ end
 
         end
 
-                Halt()
+                self.deselect = function() end
+        Halt()
 
-        self.bRecoMax = nil
-        self.bRecoMaxObj = nil
-        self.loc = nil
-        self.pPtObj = nil
-        self.perceptionPoint = nil
-        self.ptRecoCopie = nil
     end,
 
     destroy = function( self )
-        DEC_Trace( " << fin surveillance" )
+                DEC_Trace( " << fin surveillance" )
         RemovePerception_ReconnaissancePoint_Callback ( self.perceptionPoint )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
@@ -269,12 +250,6 @@ end
 
         end
 
-        self.bRecoMax = nil
-        self.bRecoMaxObj = nil
-        self.loc = nil
-        self.pPtObj = nil
-        self.perceptionPoint = nil
-        self.ptRecoCopie = nil
     end,
 
 }
@@ -334,7 +309,7 @@ end
 ]]--[[// CR
 ]]
     deselect = function( self )
-        do
+                do
             if( not DEC_Agent_AutomateEstEmbraye() ) then
                 DEC_RC( eRC_FinSurveillance )
             else
@@ -347,18 +322,13 @@ end
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
         DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-                Halt()
+                self.deselect = function() end
+        Halt()
 
-        self.bRecoMax = nil
-        self.bRecoMaxObj = nil
-        self.loc = nil
-        self.pPtObj = nil
-        self.perceptionPoint = nil
-        self.ptRecoCopie = nil
     end,
 
     destroy = function( self )
-        do
+                do
             if( not DEC_Agent_AutomateEstEmbraye() ) then
                 DEC_RC( eRC_FinSurveillance )
             else
@@ -371,12 +341,6 @@ end
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
         DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-        self.bRecoMax = nil
-        self.bRecoMaxObj = nil
-        self.loc = nil
-        self.pPtObj = nil
-        self.perceptionPoint = nil
-        self.ptRecoCopie = nil
     end,
 
 }
@@ -407,7 +371,7 @@ end
     deselect = function( self )
         DEC_Perception_DesactiverReconnaissanceLocalisation( self.point )
         self.selected = true
-    end,
+            end,
 
     destroy = function( self )
     end,
@@ -440,7 +404,7 @@ end
     end,
 
     deselect = function( self )
-        self.bVisionCur = false
+                self.bVisionCur = false
     end,
 
 }
@@ -473,7 +437,7 @@ end
     end,
 
     deselect = function( self )
-        self.bVisionDir = false
+                self.bVisionDir = false
     end,
 
 }
@@ -506,7 +470,7 @@ end
     end,
 
     deselect = function( self )
-        self.bVisionPt = false
+                self.bVisionPt = false
     end,
 
 }

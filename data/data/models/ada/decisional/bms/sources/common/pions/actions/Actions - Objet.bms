@@ -72,7 +72,8 @@ includedFiles["sources/common/pions/actions/Actions - Objet.bms"] = true
     deselect = function( self )
                 DEC_Trace( "Site non anime" )
         self.actionAnimer = DEC_StopAction( self.actionAnimer )
-                Halt()
+                self.deselect = function() end
+        Halt()
 
     end,
 

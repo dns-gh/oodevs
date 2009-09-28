@@ -71,6 +71,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
         self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
                 self.params.__returnValue = eActionHalt
+        self.deselect = function() end
         Halt()
 
     end,
@@ -149,6 +150,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
                 self.params.__returnValue = eActionHalt
+        self.deselect = function() end
         Halt()
 
     end,
@@ -197,6 +199,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
                 self.params.__returnValue = eActionHalt
+        self.deselect = function() end
         Halt()
 
     end,
@@ -245,6 +248,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
                 self.params.__returnValue = eActionHalt
+        self.deselect = function() end
         Halt()
 
     end,

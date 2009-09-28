@@ -171,7 +171,8 @@ node "ACT_Pion_ABC_AnimerSite"
     deselect = function( self )
                 DEC_Trace( "Site non anime" )
         self.actionAnimer = DEC_StopAction( self.actionAnimer )
-                Halt()
+                self.deselect = function() end
+        Halt()
 
     end,
 
