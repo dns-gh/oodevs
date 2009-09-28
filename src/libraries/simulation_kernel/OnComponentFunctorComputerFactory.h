@@ -14,8 +14,6 @@
 
 class OnComponentFunctor_ABC;
 
-namespace dotation
-{
 // =============================================================================
 /** @class  DotationComputerFactory
     @brief  DotationComputerFactory
@@ -40,7 +38,5 @@ public:
 private:
     std::auto_ptr< OnComponentFunctorComputer_ABC > pDotationComputer_;
 };
-
-} // namespace dotation
 
 #endif // __DotationComputerFactory_h_

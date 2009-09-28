@@ -1447,32 +1447,6 @@ void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_Maintena
     assert( nOut == 1 );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableHauler  $$$ a deplacer (functor)
-// Created: NLD 2004-12-23
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableHauler( const PHY_ComposanteTypePion& composanteType ) const
-{
-    MT_Float            rScore          = std::numeric_limits< MT_Float >::max();
-    PHY_ComposantePion* pSelectedHauler = 0;
-
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& hauler = **it;
-        if( !hauler.CanHaul( composanteType ) )
-            continue;
-
-        MT_Float rNewScore = hauler.GetType().GetHaulerWeightCapacity() - composanteType.GetWeight();
-        assert( rNewScore >= 0. );
-        if( rNewScore < rScore )
-        {
-            rScore          = rNewScore;
-            pSelectedHauler = &hauler;
-        }
-    }
-    return pSelectedHauler;
-}
-
 // =============================================================================
 // LOGISTIC - MEDICAL
 // =============================================================================
@@ -1710,7 +1684,7 @@ void PHY_RolePion_Composantes::DestroyAllComposantes()
 
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute
+// Name: PHY_RolePion_Composantes::Execute //@TODO MGD use OnComponentComputer hierarchie
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const
@@ -1720,7 +1694,7 @@ void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute
+// Name: PHY_RolePion_Composantes::Execute //@TODO MGD use OnComponentComputer hierarchie
 // Created: AHC 2009-09-23
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC& algorithm ) const
@@ -1729,7 +1703,7 @@ void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC
         algorithm.ApplyOnComposante( **it );
 }
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute //@TODO MGD maybe do a template for all algorithm
+// Name: PHY_RolePion_Composantes::Execute //@TODO MGD use OnComponentComputer hierarchie
 // Created: AHC 2009-09-23
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& algorithm ) const

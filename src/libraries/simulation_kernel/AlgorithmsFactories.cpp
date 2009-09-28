@@ -35,7 +35,7 @@ AlgorithmsFactories::AlgorithmsFactories()
     , detectionComputerFactory_( new detection::DetectionComputerFactory() )
     , transportComputerFactory_( new transport::TransportComputerFactory() )
     , healComputerFactory_( new human::HealComputerFactory() )
-    , dotationComputerFactory_( new dotation::OnComponentFunctorComputerFactory() )
+    , onComponentFunctorComputerFactory_( new OnComponentFunctorComputerFactory() )
 {
     //NOTHING
 }

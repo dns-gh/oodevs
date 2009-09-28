@@ -16,18 +16,18 @@
 #include "PHY_RoleInterface_Dotations.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
+
 namespace xml
 {
     class xostream;
     class xistream;
 }
 
-class ComponentFunctorComputerFactory_ABC;
+class OnComponentFunctorComputerFactory_ABC;
 
 namespace dotation
 {
     class ConsumptionComputerFactory_ABC;
-    class OnComponentFunctorComputerFactory_ABC;
 }
 namespace moving
 {
@@ -45,7 +45,7 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
 {
 
 public:
-    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const OnComponentFunctorComputerFactory_ABC& dotationComputerFactory_ );
+    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory );
     virtual ~PHY_RolePion_Dotations();
 
     //! @name CheckPoints
@@ -130,7 +130,7 @@ private:
           T_DotationReservedMap reservedConsumptions_;
 
     const ConsumptionComputerFactory_ABC& consumptionComputerFactory_;
-    const OnComponentFunctorComputerFactory_ABC& dotationComputerFactory_;
+    const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory_;
 
 	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
 	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );

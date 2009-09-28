@@ -12,9 +12,6 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include "simulation_kernel/DefaultComponentFunctorComputer.h"
 
-namespace dotation
-{
-
 // -----------------------------------------------------------------------------
 // Name: DotationComputerFactory constructor
 // Created: MGD 2009-08-24
@@ -45,5 +42,3 @@ OnComponentFunctorComputer_ABC& OnComponentFunctorComputerFactory::Create( OnCom
 }
 
 //@TODO MGD Replace create by an Apply( Container& container ) to correctly execute
-
-} //namespace dotation

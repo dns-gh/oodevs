@@ -12,9 +12,6 @@
 
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 
-namespace dotation
-{
-
 // =============================================================================
 /** @class  DefaultDotationcomputer
     @brief  DefaultDotationcomputer
@@ -43,7 +40,5 @@ private:
     OnComponentFunctor_ABC* pConsumptionOperator_;
     //@}
 };
-
-} // namespace firing
 
 #endif // __DefaultDotationComputer_h_

@@ -11,10 +11,7 @@
 #define __DotationComputerFactory_ABC_h_
 
 class OnComponentFunctor_ABC;
-
-namespace dotation
-{
-    class OnComponentFunctorComputer_ABC;
+class OnComponentFunctorComputer_ABC;
 // =============================================================================
 /** @class  DotationComputerFactory_ABC
     @brief  DotationComputerFactory_ABC
@@ -36,7 +33,5 @@ public:
     virtual OnComponentFunctorComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const = 0;
     //@}
 };
-
-} // namespace dotation
 
 #endif // __DotationComputerFactory_ABC_h_

@@ -17,6 +17,8 @@
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGTC2 constructor
 // Created: NLD 2004-09-14
@@ -62,7 +64,7 @@ MIL_AgentPion* MIL_AgentTypePionLOGTC2::InstanciatePion( uint nID, MIL_Automate&
 void MIL_AgentTypePionLOGTC2::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories& algorithmsFactories ) const
 {
     MIL_AgentTypePion::RegisterRoles( pion, algorithmsFactories );
-    pion.RegisterRole< PHY_RolePionLOG_Maintenance >( static_cast< MIL_AgentPionLOG_ABC& >( pion ) ); //@TODO remove cast when AgentPionLOG will be deleted 
+    pion.RegisterRole< PHY_RolePionLOG_Maintenance >( static_cast< MIL_AgentPionLOG_ABC& >( pion ), *algorithmsFactories.onComponentFunctorComputerFactory_ ); //@TODO remove cast when AgentPionLOG will be deleted 
     pion.RegisterRole< PHY_RolePionLOG_Medical     >( static_cast< MIL_AgentPionLOG_ABC& >( pion ) );  
     pion.RegisterRole< PHY_RolePionLOG_Supply      >( static_cast< MIL_AgentPionLOG_ABC& >( pion ) );  
 }

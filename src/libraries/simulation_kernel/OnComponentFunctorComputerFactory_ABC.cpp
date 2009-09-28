@@ -11,9 +11,6 @@
 
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
-namespace dotation
-{
-
 // -----------------------------------------------------------------------------
 // Name: DotationComputerFactory_ABC constructor
 // Created: MGD 2009-08-13
@@ -31,5 +28,3 @@ OnComponentFunctorComputerFactory_ABC::~OnComponentFunctorComputerFactory_ABC()
 {
     // NOTHING
 }
-
-} // namespace

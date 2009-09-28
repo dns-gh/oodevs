@@ -84,7 +84,7 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, 
 {
     MIL_AgentPion* const pion = &role->pion_;
     const ConsumptionComputerFactory_ABC* const consumptionComputerFactory = &role->consumptionComputerFactory_;
-    const OnComponentFunctorComputerFactory_ABC* const dotationComputerFactory = &role->dotationComputerFactory_;
+    const OnComponentFunctorComputerFactory_ABC* const dotationComputerFactory = &role->onComponentFunctorComputerFactory_;
     archive << pion
             << consumptionComputerFactory
             << dotationComputerFactory;
@@ -106,14 +106,14 @@ void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const 
 // Name: PHY_RolePion_Dotations constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const OnComponentFunctorComputerFactory_ABC& dotationComputerFactory )
+PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory )
     : pion_                      ( pion )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
     , reservedConsumptions_      ()
     , pDotations_                ( 0 )
     , consumptionComputerFactory_( consumptionComputerFactory )
-    , dotationComputerFactory_( dotationComputerFactory )
+    , onComponentFunctorComputerFactory_( onComponentFunctorComputerFactory )
 {
     pDotations_ = new PHY_DotationGroupContainer( *this );
     pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_ );
@@ -242,7 +242,7 @@ public:
     {
     }
 
-    void operator() ( const PHY_ComposantePion& composante )
+    void operator() ( PHY_ComposantePion& composante )
     {
         if( !bReservationOK_ )
             return;
@@ -270,7 +270,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
-    OnComponentComputer_ABC& dotationComputer = dotationComputerFactory_.Create( func );
+    OnComponentComputer_ABC& dotationComputer = onComponentFunctorComputerFactory_.Create( func );
     pion_.Execute( dotationComputer );
 
     if( func.bReservationOK_ )
@@ -285,7 +285,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
-        OnComponentComputer_ABC& dotationComputer = dotationComputerFactory_.Create( funcRollback );
+        OnComponentComputer_ABC& dotationComputer = onComponentFunctorComputerFactory_.Create( funcRollback );
         pion_.Execute( dotationComputer );
         assert( funcRollback.bReservationOK_ );
     }
@@ -320,7 +320,7 @@ public:
     {
     }
     
-    void operator() ( const PHY_ComposantePion& composante )
+    void operator() ( PHY_ComposantePion& composante )
     {
         const PHY_DotationConsumptions* pConsumptions = composante.GetDotationConsumptions( consumptionMode_ );
         
@@ -359,7 +359,7 @@ MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_Consumption
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    OnComponentComputer_ABC& dotationComputer = dotationComputerFactory_.Create( func );
+    OnComponentComputer_ABC& dotationComputer = onComponentFunctorComputerFactory_.Create( func );
     pion_.Execute( dotationComputer );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }

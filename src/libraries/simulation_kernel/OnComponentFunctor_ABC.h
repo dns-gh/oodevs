@@ -30,7 +30,7 @@ public:
 
     //! @name Operation
     //@{
-    virtual void operator()( const PHY_ComposantePion& component ) = 0;
+    virtual void operator()( PHY_ComposantePion& component ) = 0;
     //@}
 };
 

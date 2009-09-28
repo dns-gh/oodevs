@@ -12,9 +12,6 @@
 #include "simulation_kernel/DefaultComponentFunctorComputer.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 
-namespace dotation
-{
-
 // -----------------------------------------------------------------------------
 // Name: DefaultDotationComputer::DefaultDotationComputer
 // Created: MGD 2009-09-24
@@ -50,5 +47,3 @@ void DefaultComponentFunctorComputer::ApplyOnComponent( PHY_ComposantePion& comp
 {
     (*pConsumptionOperator_)( component );
 }
-
-} // namespace

@@ -43,10 +43,9 @@ namespace transport
 {
 	class TransportComputerFactory_ABC;
 }
-namespace dotation
-{
-    class OnComponentFunctorComputerFactory_ABC;
-}
+
+class OnComponentFunctorComputerFactory_ABC;
+
 // =============================================================================
 /** @class  AlgorithmsFactories
     @brief  AlgorithmsFactories
@@ -74,7 +73,7 @@ public:
     std::auto_ptr< detection::DetectionComputerFactory_ABC > detectionComputerFactory_;
     std::auto_ptr< transport::TransportComputerFactory_ABC > transportComputerFactory_;
     std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
-    std::auto_ptr< dotation::OnComponentFunctorComputerFactory_ABC > dotationComputerFactory_;
+    std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
     //@}
 };
 

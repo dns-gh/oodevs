@@ -28,21 +28,29 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Network/NET_ASN_Messages.h"
 
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Maintenance, "PHY_RolePionLOG_Maintenance" )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
+    const OnComponentFunctorComputerFactory_ABC* const onComponentFunctorComputerFactory = &role->onComponentFunctorComputerFactory_;
+    archive << pion
+            << onComponentFunctorComputerFactory;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPionLOG_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePionLOG_Maintenance( *pion );
+    OnComponentFunctorComputerFactory_ABC* onComponentFunctorComputerFactory;
+    archive >> pion
+            >> onComponentFunctorComputerFactory;
+    ::new( role )PHY_RolePionLOG_Maintenance( *pion, *onComponentFunctorComputerFactory );
 }
 
 
@@ -51,8 +59,9 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, c
 // Name: PHY_RolePionLOG_Maintenance constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion )
+PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory )
     : pion_                   ( pion )
+    , onComponentFunctorComputerFactory_( onComponentFunctorComputerFactory )
     , bHasChanged_            ( true )
     , bSystemEnabled_         ( false )
     , priorities_             ()
@@ -269,14 +278,47 @@ void PHY_RolePionLOG_Maintenance::StopUsingForLogistic( PHY_ComposantePion& comp
     composante.StopUsingForLogistic();
 }
 
+// =============================================================================
+// Available Hauler //@TODO MGD MERGE all Logictic OnComponentFunctor in one file
+// =============================================================================
+class AvailableHaulerComputer : public OnComponentFunctor_ABC
+{
+
+public:
+    AvailableHaulerComputer( const PHY_ComposanteTypePion& composanteType )
+        : rScore_( std::numeric_limits< MT_Float >::max() )
+        , composanteType_( composanteType )
+        , pSelectedHauler_( 0 )
+    {
+    }
+
+    void operator() ( PHY_ComposantePion& composante )
+    {
+        if( !composante.CanHaul( composanteType_ ) )
+            return;
+
+        double rNewScore = composante.GetType().GetHaulerWeightCapacity() - composanteType_.GetWeight();
+        assert( rNewScore >= 0. );
+        if( rNewScore < rScore_ )
+        {
+            rScore_          = rNewScore;
+            pSelectedHauler_ = &composante;
+        }
+    }
+
+    double rScore_;
+    const PHY_ComposanteTypePion& composanteType_;
+    PHY_ComposantePion* pSelectedHauler_;
+};
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailableHauler
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_ComposanteTypePion& composanteType ) const
 {
-
-    return pion_.GetRole< PHY_RoleInterface_Composantes >().GetAvailableHauler( composanteType );
+    AvailableHaulerComputer computer( composanteType );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( computer ) );
+    return computer.pSelectedHauler_;
 }
 
 // -----------------------------------------------------------------------------

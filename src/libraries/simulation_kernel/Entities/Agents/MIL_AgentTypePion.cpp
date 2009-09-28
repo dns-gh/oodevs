@@ -327,7 +327,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories&
     pion.RegisterRole< PHY_RolePion_Reinforcement     >( pion );
     pion.RegisterRole< PHY_RolePion_Posture           >( pion, *algorithmsFactories.postureComputerFactory_ );
     pion.RegisterRole< PHY_RolePion_Location          >( pion, *algorithmsFactories.locationComputerFactory_ );
-    pion.RegisterRole< dotation::PHY_RolePion_Dotations         >( pion, *algorithmsFactories.consumptionComputerFactory_, *algorithmsFactories.dotationComputerFactory_ );
+    pion.RegisterRole< dotation::PHY_RolePion_Dotations         >( pion, *algorithmsFactories.consumptionComputerFactory_, *algorithmsFactories.onComponentFunctorComputerFactory_ );
     pion.RegisterRole< human::PHY_RolePion_Humans     >( pion, *algorithmsFactories.healComputerFactory_ );
     pion.RegisterRole< PHY_RolePion_Composantes       >( pion );
     pion.RegisterRole< PHY_RolePion_Perceiver         >( pion, *algorithmsFactories.detectionComputerFactory_ );
