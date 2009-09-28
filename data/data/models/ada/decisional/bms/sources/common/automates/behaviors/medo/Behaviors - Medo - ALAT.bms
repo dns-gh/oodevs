@@ -446,6 +446,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end

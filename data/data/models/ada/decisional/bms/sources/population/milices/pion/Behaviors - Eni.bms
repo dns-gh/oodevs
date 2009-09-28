@@ -66,6 +66,8 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eAction_Tir == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -75,6 +77,8 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -145,6 +149,8 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -154,6 +160,8 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
             do
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

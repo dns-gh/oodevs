@@ -23,6 +23,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - NBC.bms"] 
 ]]if( not ( ( self.dest ~= 0 and self.dest ~= nil ) ) ) then
             do
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

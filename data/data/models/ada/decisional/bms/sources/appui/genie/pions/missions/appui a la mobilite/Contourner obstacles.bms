@@ -118,12 +118,16 @@ node "BEH_Dep_GEN_AllerContournerObstacle"
 ]]local loc = DEC_ConnaissanceObjet_Localisation( self._namedParams.obstacle )
                 if( loc == nil ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
                 self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
                 if( self.ptObst == nil ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 

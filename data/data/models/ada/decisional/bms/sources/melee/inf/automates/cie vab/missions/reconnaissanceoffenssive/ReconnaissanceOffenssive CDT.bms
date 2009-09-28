@@ -51,6 +51,8 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/reconnaissanceoffens
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

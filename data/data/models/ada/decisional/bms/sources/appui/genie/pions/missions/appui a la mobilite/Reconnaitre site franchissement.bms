@@ -31,7 +31,9 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Reconnaitr
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.siteFranchissement_ ) ) then
             do
                 DEC_Warning( eRC_MissionImpossible )
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
         end
@@ -46,6 +48,8 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Reconnaitr
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -171,6 +175,8 @@ node "ACT_Obs_ReconnaitreSiteFranchissement"
                     do
                         DEC_ConnaissanceObjet_Reconnaitre( self._namedParams.obj )
                                                 self.params.__returnValue = eActionEffectuee
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end

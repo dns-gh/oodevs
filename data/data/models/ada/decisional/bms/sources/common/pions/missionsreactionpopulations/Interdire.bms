@@ -29,6 +29,8 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Interdire.bms"] 
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -42,7 +44,9 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Interdire.bms"] 
                 if( not DEC_Geometrie_EstPointDansFuseau( self.objectif ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Halt()
+                                                self.deselect = function() end
+                        self.destroy = function() end
+                        Halt()
 
                     end
                 end
@@ -52,7 +56,9 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Interdire.bms"] 
 
         if( self.eEtatAction == eActionHalt ) then
             do
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
         end

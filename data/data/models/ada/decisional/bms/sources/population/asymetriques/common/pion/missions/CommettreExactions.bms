@@ -33,7 +33,9 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreExa
                 if( not DEC_Geometrie_EstPointDansFuseau( self.objectif ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Halt()
+                                                self.deselect = function() end
+                        self.destroy = function() end
+                        Halt()
 
                     end
                 end
@@ -82,7 +84,9 @@ elseif switch_1 == eNettoyer then
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                        Halt()
+                                        self.deselect = function() end
+                    self.destroy = function() end
+                    Halt()
 
                                 end
             end

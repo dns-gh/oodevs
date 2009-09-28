@@ -84,11 +84,15 @@ include "bit.lua"
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -137,11 +141,15 @@ elseif switch_1 == eSExfiltrer then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -160,6 +168,8 @@ elseif switch_1 == eSExfiltrer then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -214,6 +224,8 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone"
         self.pointDislo = self.pointDislo or DEC_Geometrie_CreerPoint()
         self.directionCentreZone = self.directionCentreZone or DEC_Geometrie_CreerDirection( self._namedParams.pointDislocation, S_Geometrie_BarycentreZone( self._namedParams.zone ) )
         if( ( self.directionCentreZone == 0 or self.directionCentreZone == nil ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -233,6 +245,8 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone"
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     if( DEC_Geometrie_Distance( self._namedParams.pointDislocation, self.pointDislo ) > 5000 ) then
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
                     end
 

@@ -35,7 +35,9 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
                 if( not DEC_Geometrie_EstPointDansFuseau( self.lieuAttentat ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Halt()
+                                                self.deselect = function() end
+                        self.destroy = function() end
+                        Halt()
 
                     end
                 end
@@ -168,7 +170,9 @@ if( DEC_Geometrie_Distance( self.lieuAttentat, DEC_Agent_Position() ) > 10 ) the
                 --[[// Fin
 ]]elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                        Halt()
+                                        self.deselect = function() end
+                    self.destroy = function() end
+                    Halt()
 
                                 end
             end

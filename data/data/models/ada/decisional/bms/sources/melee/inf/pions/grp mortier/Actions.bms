@@ -59,6 +59,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -66,6 +68,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Debarquement : fin" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -105,6 +109,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
     select = function( self )
                 self.params.__returnValue = eActionEffectuee
+        self.deselect = function() end
+        self.destroy = function() end
         Halt()
 
     end,
@@ -162,6 +168,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -180,6 +188,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -207,6 +217,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -225,6 +237,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -320,6 +334,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -338,6 +354,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -357,6 +375,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -375,6 +395,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end

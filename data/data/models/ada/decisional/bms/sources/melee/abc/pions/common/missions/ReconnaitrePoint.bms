@@ -61,6 +61,8 @@ includedFiles["sources/melee/abc/pions/common/missions/ReconnaitrePoint.bms"] = 
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -188,6 +190,8 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePointMission"
                                 do
                     DEC_Trace( "Fin reconnaissance point" )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

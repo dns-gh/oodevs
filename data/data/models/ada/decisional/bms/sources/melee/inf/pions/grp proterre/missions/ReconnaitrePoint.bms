@@ -110,6 +110,8 @@ include "bit.lua"
                                 DEC_Trace( "Fin reconnaissance du point " .. DEC_PointToString( self.pt ) )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -217,6 +219,8 @@ elseif switch_1 == eFouiller then
                         do
                             self.eAction = eActionEnCours
                                                         self.params.__returnValue = eFinMission
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end

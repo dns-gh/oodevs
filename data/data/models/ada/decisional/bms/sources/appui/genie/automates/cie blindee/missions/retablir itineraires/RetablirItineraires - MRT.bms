@@ -31,7 +31,9 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/retablir itine
 ]]if( ( #( listeSectionGenie ) == 0 or #( listeSectionGenie ) == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                                Halt()
+                                                self.deselect = function() end
+                        self.destroy = function() end
+                        Halt()
 
                     end
                 end
@@ -80,6 +82,8 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -90,7 +94,9 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire"
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        Halt()
+                                        self.deselect = function() end
+                    self.destroy = function() end
+                    Halt()
 
                 end
 

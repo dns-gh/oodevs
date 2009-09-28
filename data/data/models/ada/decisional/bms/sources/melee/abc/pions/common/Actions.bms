@@ -54,6 +54,7 @@ include "bit.lua"
         DEC_Trace( "Fin ouverture du feu" )
                 self.params.__returnValue = eActionHalt
         self.deselect = function() end
+        self.destroy = function() end
         Halt()
 
     end,

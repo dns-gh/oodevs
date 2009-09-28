@@ -54,6 +54,8 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -65,6 +67,8 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -118,6 +122,8 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
                         do
                             DEC_Trace( "First echelon is empty" )
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -138,6 +144,8 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -148,6 +156,8 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end

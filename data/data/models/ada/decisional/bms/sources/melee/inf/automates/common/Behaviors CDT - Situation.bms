@@ -165,10 +165,14 @@ node "BEH_Conduite_Automate_INF_AssignerSemparerA"
                 self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
         if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
         if( not ModuleBegins() ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

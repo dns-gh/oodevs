@@ -49,6 +49,8 @@ node "BEH_Manoeuvre_RompreContact"
 ]]--[[// behavior BEH_Decrocher(); //  ? Stimulus, Esquive		
 ]]if( F_Pion_GetobjectifEsquive( myself ) == nil and myself.ptRegroupement_ == nil ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -115,6 +117,8 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -125,6 +129,8 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

@@ -298,6 +298,8 @@ elseif switch_2 == "T_Mission_Automate_ABC_EscorterUnites" then
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

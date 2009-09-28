@@ -68,6 +68,8 @@ include "bit.lua"
                     do
                         DEC_Trace( "assert: rDelaiPoste == 0, arret court." )
                                                 self.params.__returnValue = eActionEffectuee
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -89,6 +91,8 @@ include "bit.lua"
                                 do
                     DEC_Trace( "fin arret court" )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -132,6 +136,8 @@ node "BEH_Obs_Pion_INF_RecoPoint_Copie"
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -186,6 +192,8 @@ node "BEH_Obs_Pion_INF_RecoPoint"
 
         if( self.eActionArret == eActionEffectuee or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -311,6 +319,8 @@ node "BEH_Obs_Pion_INF_EnReconnaissance"
                 self.eActionReco = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -381,6 +391,8 @@ node "BEH_Delai_Pion_INF_PreparerMission"
                                 do
                     SetStateVariable( "VE_PreparationMission", 0 )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

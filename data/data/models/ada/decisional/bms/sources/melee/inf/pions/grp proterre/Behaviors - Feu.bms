@@ -46,6 +46,8 @@ include "bit.lua"
             do
                 if( DEC_ConnaissanceAgent_EstMort( self._namedParams.ksEni ) or ( self._namedParams.bDestructionTactique and DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) ) ) then
                     self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -60,6 +62,8 @@ include "bit.lua"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -71,6 +75,8 @@ include "bit.lua"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -91,6 +97,8 @@ include "bit.lua"
                 --[[// Eni detruit, arret les tirs de couverture		
 ]]DEC_RC( eRC_EnnemiDetruit, self._namedParams.ksEni )
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

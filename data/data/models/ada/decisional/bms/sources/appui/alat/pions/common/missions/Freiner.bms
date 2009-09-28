@@ -112,11 +112,15 @@ elseif switch_1 == eSExfiltrer then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -135,6 +139,8 @@ elseif switch_1 == eSExfiltrer then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -196,6 +202,8 @@ node "BEH_Eni_Pion_ALAT_GererEniFreiner"
 ]]--[[// dans le fuseau
 ]]--[[// -------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( listeUnitesEnnemiesVivantesDansFuseau ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -213,16 +221,22 @@ node "BEH_Eni_Pion_ALAT_GererEniFreiner"
                                 DEC_Copie_Point( pointBuffer, self.barycentreZone )
                                 self.orientationZone = DEC_Geometrie_CreerDirection( self.barycentreZone, self._namedParams.pointFinFuseau )
                                 if( ( self.orientationZone == 0 or self.orientationZone == nil ) ) then
+                                    self.deselect = function() end
+                                    self.destroy = function() end
                                     Halt()
                                 end
 
                             end
                         else
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
                         end
 
                     end
                 else
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 

@@ -36,11 +36,15 @@ include "bit.lua"
         self.positionSurete = self.positionSurete or nil
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
         if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -57,6 +61,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 end
 
                 if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -68,6 +74,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -120,6 +128,8 @@ node "BEH_Eni_Pion_ASA_DetruireEnnemiDirect"
                 self.eEtatTir = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -131,11 +141,15 @@ node "BEH_Eni_Pion_ASA_DetruireEnnemiDirect"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -143,6 +157,8 @@ node "BEH_Eni_Pion_ASA_DetruireEnnemiDirect"
 ]]        end
 
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -202,6 +218,8 @@ node "BEH_Eni_Pion_ASA_AttendreDetruireDirect"
         --[[//si la connaissance est invalide, halter le comportement
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.bufferConnaissanceAgent ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -250,6 +268,8 @@ node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
         self.distancePointInterception = self.distancePointInterception or 0
         self.tempsInterception = self.tempsInterception or 0
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -262,7 +282,9 @@ node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
 ]]--[[//d'interception, alors, on arrete le comportement 
 ]]if( ( self.pointInterception == 0 or self.pointInterception == nil ) ) then
             do
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
         end
@@ -280,7 +302,9 @@ node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
             end
         else
 do
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
         end

@@ -54,6 +54,8 @@ node "MIS_Pion_INF_Fixer"
 
                         Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -82,6 +84,8 @@ node "MIS_Pion_INF_Fixer"
             do
                 Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -116,7 +120,9 @@ node "MIS_Pion_INF_Fixer"
                                                         do
                                 DEC_Trace( "fin mission fixer" )
                                 DEC_FinMission()
-                                                                Halt()
+                                                                self.deselect = function() end
+                                self.destroy = function() end
+                                Halt()
 
                             end
 
@@ -169,6 +175,8 @@ node "BEH_Mission_Pion_VAB_Fixer"
                 end
 
                                 self.params.__returnValue = eFinMission
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -182,6 +190,8 @@ node "BEH_Mission_Pion_VAB_Fixer"
                     end
 
                                         self.params.__returnValue = eFinMission
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

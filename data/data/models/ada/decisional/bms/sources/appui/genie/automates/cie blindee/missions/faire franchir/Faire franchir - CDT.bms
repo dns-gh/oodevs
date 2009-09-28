@@ -46,7 +46,9 @@ include "bit.lua"
                         if( ( localisationObjet == 0 or localisationObjet == nil ) ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                                Halt()
+                                                                self.deselect = function() end
+                                self.destroy = function() end
+                                Halt()
 
                             end
 --[[// Erreur si position site suite...
@@ -56,7 +58,9 @@ include "bit.lua"
                         if( ( ptObjet == 0 or ptObjet == nil ) ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                                Halt()
+                                                                self.deselect = function() end
+                                self.destroy = function() end
+                                Halt()
 
                             end
                         end
@@ -72,7 +76,9 @@ include "bit.lua"
                 if( ( self.positionRegroupement == 0 or self.positionRegroupement == nil ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Halt()
+                                                self.deselect = function() end
+                        self.destroy = function() end
+                        Halt()
 
                     end
 --[[// ----> Sinon OK on fait la mission
@@ -721,6 +727,8 @@ node "BEH_Ordre_Automate_GEN_CDT_Varianter"
 ]]--[[// Validité
 ]]--[[//-----------------------------------------------------------------
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteFranchissementOriginal ) or not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteFranchissementVariante ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

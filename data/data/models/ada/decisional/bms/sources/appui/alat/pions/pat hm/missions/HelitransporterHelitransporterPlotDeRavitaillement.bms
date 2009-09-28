@@ -44,6 +44,8 @@ include "bit.lua"
 do
                 DEC_Warning( eRC_MissionImpossible )
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -90,11 +92,15 @@ do
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -120,11 +126,15 @@ do
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -148,11 +158,15 @@ do
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -203,11 +217,15 @@ do
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -226,6 +244,8 @@ do
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end

@@ -51,6 +51,8 @@ includedFiles["sources/melee/inf/pions/son vab/missions/Reduire.bms"] = true
                         DEC_Trace( "N'arrive pas a prendre connaissance de l'unite" )
                         DEC_Warning( eRC_MissionImpossible )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -100,6 +102,8 @@ includedFiles["sources/melee/inf/pions/son vab/missions/Reduire.bms"] = true
                                 DEC_Trace( "Fin mission de mission 'Reduire'" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -153,6 +157,8 @@ node "BEH_Mission_Pion_VAB_Reduire"
             do
                 DEC_Trace( "Action impossible sur Eni" )
                                 self.params.__returnValue = eFinMission
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

@@ -57,6 +57,8 @@ includedFiles["sources/melee/inf/pions/grp proterre/Behaviors - Obj.bms"] = true
             do
                 if( ( self._namedParams.locMine == 0 or self._namedParams.locMine == nil ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -64,6 +66,8 @@ includedFiles["sources/melee/inf/pions/grp proterre/Behaviors - Obj.bms"] = true
                 self.ptMission = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locMine )
                 if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -71,6 +75,8 @@ includedFiles["sources/melee/inf/pions/grp proterre/Behaviors - Obj.bms"] = true
                 if( ( self.locPtMine == 0 or self.locPtMine == nil ) ) then
 --[[// Pour le moment, on fait un bouchon de mines
 ]]                    self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -79,6 +85,8 @@ includedFiles["sources/melee/inf/pions/grp proterre/Behaviors - Obj.bms"] = true
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -128,6 +136,8 @@ node "BEH_Obj_Pion_VAB_InstallerCheckPoint"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -191,6 +201,8 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
 ]]self.repObj = DEC_Connaissances_ObjetLePlusProche( S_TypeObject_ToString( eTypeObjectBouchonMines ) )
                 if( ( self.repObj == 0 or self.repObj == nil ) ) then
                     self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -201,11 +213,15 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
             do
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -216,6 +232,8 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

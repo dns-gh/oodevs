@@ -52,11 +52,15 @@ include "bit.lua"
                                 do
                     DEC_Warning( eRC_MissionImpossible )
                                         self.params.__returnValue = eFinMission
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -138,6 +142,8 @@ do
                         do
                             self.eActionDeplacement = eActionEnCours
                                                         self.params.__returnValue = eFinMission
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -264,6 +270,8 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
                 self.ptMission = S_Geometrie_BarycentreZone( self._namedParams.locZone )
                 if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -289,6 +297,8 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
 
         if( self.bReturnHalt or self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -470,6 +480,8 @@ node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
                             self.eAction = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -510,6 +522,8 @@ node "BEH_Obj_Pion_INF_DetruireObjet"
 
     activate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.ksObj ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

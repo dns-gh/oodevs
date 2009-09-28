@@ -246,15 +246,21 @@ node "BEH_Dep_Pion_ALAT_RejoindrePoint"
 
         if( DEC_Geometrie_PositionsEgales( myself:DEC_Agent_Position(), self._namedParams.point ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
         if( DEC_Geometrie_Distance( self._namedParams.point, self.pointARejoindre ) >= 4000 ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
         if( self.eEtat ~= eActionEnCours ) then
             self.params.__returnValue = self.eEtat
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         else
             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindreParItineraire, 1, setmetatable( { self.listePoints, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
@@ -294,10 +300,14 @@ node "BEH_Dep_Pion_ALAT_RejoindrePion"
 
         if( DEC_Geometrie_PositionsEgales( myself:DEC_Agent_Position(), self.positionPion ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
         if( DEC_Geometrie_Distance( self._namedParams.pion:DEC_Agent_Position(), self.positionPion ) > self._namedParams.distanceAvantRelance ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -376,13 +386,17 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
         local forceEnvieRejoindre = 0
         local envieArret = 0
         if( S_Misc_EstDetruitPhysique() ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
         if( g_bRecalculItineraire ) then
             do
                 g_bRecalculItineraire = false
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
 --[[//condition d'arret
@@ -392,6 +406,8 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
             do
                 self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -424,6 +440,8 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
                                 do
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -451,6 +469,8 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
 elseif switch_1 == eItineraire_Invalide then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -460,12 +480,16 @@ elseif switch_1 == eItineraire_Invalide then
 elseif switch_1 == eItineraire_Impossible then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
                 if cases_switch_1[4] or switch_1 == eItineraire_Annule then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -512,6 +536,8 @@ node "BEH_Dep_Pion_ALAT_SEloignerPositionVers"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -561,6 +587,8 @@ node "BEH_Dep_Pion_ALAT_Suivre"
         end
 
         if( DEC_Geometrie_Distance( self.pointARejoindre, self.positionDebut ) >= 2000 ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -569,6 +597,8 @@ node "BEH_Dep_Pion_ALAT_Suivre"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -580,11 +610,15 @@ node "BEH_Dep_Pion_ALAT_Suivre"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -630,6 +664,8 @@ node "BEH_Dep_Pion_ALAT_SuivreSurFlanc"
 
         --[[//$$$$ GGR : 6000 = distance avant relance du pathfind
 ]]if( DEC_Geometrie_Distance( self.pointARejoindre, self.pointDebut ) >= 6000 ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -640,6 +676,8 @@ node "BEH_Dep_Pion_ALAT_SuivreSurFlanc"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -651,11 +689,15 @@ node "BEH_Dep_Pion_ALAT_SuivreSurFlanc"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -706,6 +748,8 @@ do
                     DEC_Copie_Point( pointBuffer, self.pointInterception )
                 else
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -714,6 +758,8 @@ do
 
         if( self.eEtat ~= eActionEnCours ) then
             self.params.__returnValue = self.eEtat
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         else
             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointInterception, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
@@ -754,6 +800,8 @@ node "BEH_Dep_Pion_ALAT_EclairerItinerairePion"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

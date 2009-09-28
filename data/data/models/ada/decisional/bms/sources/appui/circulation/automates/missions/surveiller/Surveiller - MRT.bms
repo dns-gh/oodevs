@@ -38,6 +38,8 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
                 self.listeLocalisations = self.listeLocalisations.first
                 if( nErrorCode ~= eNoError ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -85,6 +87,8 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_MissionImpossible then
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -94,6 +98,8 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
 ]]elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     

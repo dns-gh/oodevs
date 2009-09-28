@@ -29,6 +29,8 @@ includedFiles["sources/common/automates/missionsreactionpopulations/controlerpop
             do
                 if( DIA_IsListEmpty( self._namedParams.mission.zones_ ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -72,12 +74,16 @@ includedFiles["sources/common/automates/missionsreactionpopulations/controlerpop
                 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
                 if cases_switch_1[2] or switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end

@@ -45,6 +45,8 @@ node "MIS_Pion_INF_Couvrir"
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -73,6 +75,8 @@ node "MIS_Pion_INF_Couvrir"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -93,6 +97,8 @@ elseif switch_1 == eFinMission then
                                 DEC_Trace( "fin mission" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -142,6 +148,8 @@ node "BEH_Mission_Pion_VAB_Couvrir"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -217,11 +225,15 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -233,10 +245,14 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
                                 do
                     if( not S_Geometrie_EstProchePosition( self._namedParams.ptObjectif, DEC_Agent_Position(), 1000 ) ) then
                         self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
                     end
 
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

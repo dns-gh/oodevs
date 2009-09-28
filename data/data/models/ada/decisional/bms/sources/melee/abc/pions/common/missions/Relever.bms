@@ -59,6 +59,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -68,6 +70,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
                     do
                         DEC_Trace( "==> L'unité n'a pas les moyens d'effectuer la relever" )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -75,6 +79,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
 
                 if( ( DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == 0 or DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == nil ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 

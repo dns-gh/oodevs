@@ -36,6 +36,8 @@ include "bit.lua"
 ]]        self.eEtatAttaque = self.eEtatAttaque or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

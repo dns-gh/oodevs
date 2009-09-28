@@ -71,6 +71,8 @@ node "MIS_Pion_INF_EscorterUnite"
 ]]DEC_Trace( "Mission 'Escorter un convoi' : fin" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -165,6 +167,8 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
                         do
                             self.eAction = eActionEnCours
                                                         self.params.__returnValue = eFinMission
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -225,6 +229,8 @@ node "BEH_Dep_Pion_INF_Escorter"
         self.ptEnAvance = self.ptEnAvance or self._namedParams.pionAmi:DEC_Itineraire_ExtrapolerPosition( 2, true )
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = eActionHalt
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

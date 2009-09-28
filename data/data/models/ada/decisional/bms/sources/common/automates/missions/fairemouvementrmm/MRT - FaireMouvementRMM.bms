@@ -72,6 +72,8 @@ elseif switch_1 == eTerminerMission then
                     --[[//Fin MRT
 ]]DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

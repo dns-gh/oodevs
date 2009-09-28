@@ -53,6 +53,8 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/reconnaissanceo
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -65,6 +67,8 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/reconnaissanceo
                     DEC_Trace( "T_Mission_Automate_INF_ReconnaissanceOffensive : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

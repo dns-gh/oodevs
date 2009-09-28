@@ -47,6 +47,8 @@ node "MIS_Automate_CDT_INF_Relever"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -92,6 +94,8 @@ node "BEH_Conduite_Automate_INF_Relever"
             do
                 DEC_RC( eRC_MissionImpossible )
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -253,6 +257,8 @@ node "BEH_Conduite_Automate_INF_Relever_AssignerReleve"
 
                 if( ( self.rN_PionOK == 0 or self.rN_PionOK == nil ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 

@@ -45,6 +45,8 @@ include "bit.lua"
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible or self.eEtat == eActionEffectuee ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

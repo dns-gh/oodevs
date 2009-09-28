@@ -37,6 +37,8 @@ node "ACT_Pion_Emergency_BlockRoad"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -110,6 +112,8 @@ node "ACT_Pion_Emergency_Influence"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -177,6 +181,8 @@ elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                     DEC_Trace( "influence impossible." )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -250,6 +256,8 @@ node "ACT_Pion_Emergency_TriggerActivity"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -315,6 +323,8 @@ node "ACT_Pion_Emergency_TriggerActivityInArea"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -388,6 +398,8 @@ node "ACT_Pion_Emergency_UnloadActivity"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -447,11 +459,15 @@ node "ACT_Obj_Pion_Emergency_RealiserObjet"
             do
                 if( ( self._namedParams.locObjet == 0 or self._namedParams.locObjet == nil ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( self._namedParams.eTypeObjet ) ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -492,6 +508,8 @@ elseif switch_1 == eActionObjetTerminee then
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -499,6 +517,8 @@ elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "object construction: no capability" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -510,6 +530,8 @@ elseif switch_1 == eActionObjetTerminee then
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     

@@ -553,6 +553,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -563,6 +565,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -606,6 +610,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -651,11 +657,15 @@ node "BEH_Feu_Pion_INF_TirAppui"
         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
         if( self.eAction == eActionImpossible and not self.bSpontanee ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
         if( DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = self.eAction
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

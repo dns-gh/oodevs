@@ -45,6 +45,8 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/semparer/SEmparer MR
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -57,6 +59,8 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/semparer/SEmparer MR
                     DEC_Trace( "T_Mission_Automate_INF_Semparer : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

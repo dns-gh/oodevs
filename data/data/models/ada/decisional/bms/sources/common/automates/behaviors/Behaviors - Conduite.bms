@@ -79,6 +79,8 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
 
                 if( rPions_DansFuseau == #( sUnites_PE ) ) then
                     self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -96,6 +98,8 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
         local rPion_SurFuseau = S_Conduite_Pions_EtatLima( sUnites_PE, eEtatLima_Fuseau )
         if( self.bOrdre_Donne or ( #( sUnites_PE ) < self.rN_PE_Init ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -173,6 +177,8 @@ node "BEH_Conduite_Automate_GererFinMission"
 ]]--[[// DEC_RC( eRC_MissionTerminee );
 ]]DEC_Trace( "$$ Mission terminee $$" )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

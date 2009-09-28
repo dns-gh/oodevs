@@ -74,7 +74,9 @@ do
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                        Halt()
+                                        self.deselect = function() end
+                    self.destroy = function() end
+                    Halt()
 
                                 end
             end

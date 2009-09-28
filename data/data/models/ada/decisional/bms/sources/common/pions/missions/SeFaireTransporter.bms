@@ -94,6 +94,8 @@ do
                                 do
                                     DEC_FinMission()
                                                                         self.params.__returnValue = eActionEffectuee
+                                    self.deselect = function() end
+                                    self.destroy = function() end
                                     Halt()
 
                                 end

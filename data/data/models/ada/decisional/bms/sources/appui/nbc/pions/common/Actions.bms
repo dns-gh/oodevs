@@ -89,6 +89,7 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
         end
 
                 self.deselect = function() end
+        self.destroy = function() end
         Halt()
 
     end,

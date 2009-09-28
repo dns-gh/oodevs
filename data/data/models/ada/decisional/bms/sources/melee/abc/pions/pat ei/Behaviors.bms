@@ -254,6 +254,8 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
 ]]--[[//----------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -263,6 +265,8 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
 ]]--[[//----------------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -275,11 +279,15 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
 ]]if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
                     self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, F_Pion_GetobjectifEsquive( myself ) )
                 else
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
                 --[[// Vérification
 ]]if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -294,6 +302,8 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

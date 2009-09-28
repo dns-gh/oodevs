@@ -152,7 +152,9 @@ node "BEH_Objet_Pion_GEN_ReduireObstacle"
             do
                 --[[// hum hum
 ]]myself.objMisEnCours_ = 0
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
         end

@@ -25,12 +25,16 @@ includedFiles["sources/population/milices/pion/Behaviors - Dep.bms"] = true
         if( ModuleBegins() ) then
 if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
             end
         end
 
         if( self.eOrdre == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -99,11 +103,15 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -115,10 +123,14 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                                 do
                     if( not S_Geometrie_EstProchePosition( self._namedParams.ptObjectif, DEC_Agent_Position(), 1000 ) ) then
                         self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
                     end
 
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -185,6 +197,8 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                                     self.ePhase = eRejoindre
                                 else
                                     self.params.__returnValue = eActionEffectuee
+                                    self.deselect = function() end
+                                    self.destroy = function() end
                                     Halt()
                                 end
 
@@ -235,11 +249,15 @@ node "BEH_Dep_Pion_Milice_MiseEnPlace_Embuscade"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -250,6 +268,8 @@ node "BEH_Dep_Pion_Milice_MiseEnPlace_Embuscade"
                 self.eActionRejoindre = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

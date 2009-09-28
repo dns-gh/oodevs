@@ -50,6 +50,8 @@ node "MIS_Automate_MRT_INF_ReleverEnRecueillant"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -62,6 +64,8 @@ node "MIS_Automate_MRT_INF_ReleverEnRecueillant"
                     DEC_Trace( "T_Mission_Automate_INF_ReleverEnRecueillant : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -168,6 +172,8 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                         do
                             DEC_Trace( "Pas de 1er echelon" )
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -204,6 +210,8 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -216,6 +224,8 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -226,6 +236,8 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end

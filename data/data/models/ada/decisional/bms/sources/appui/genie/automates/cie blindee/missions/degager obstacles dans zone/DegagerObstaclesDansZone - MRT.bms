@@ -36,7 +36,9 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/degager obstac
                 if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                                Halt()
+                                                self.deselect = function() end
+                        self.destroy = function() end
+                        Halt()
 
                     end
 --[[// Fin MRT

@@ -37,7 +37,9 @@ includedFiles["sources/common/pions/missions/SeFaireDecontaminer.bms"] = true
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.siteDecontamination_ ) ) then
             do
                 DEC_RC( eRC_MissionImpossible )
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
         end

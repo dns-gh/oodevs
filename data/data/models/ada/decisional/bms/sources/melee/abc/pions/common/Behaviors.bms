@@ -198,6 +198,8 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Agent_NiveauInstallation() == eNiveauInstallation_PosteReflexe ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -249,6 +251,8 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
 ]]        end
 
         if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -303,6 +307,8 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePoint"
                                 do
                     DEC_Trace( "Fin reconnaissance point" )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -359,6 +365,8 @@ node "BEH_Obs_Pion_ABC_SePosterSurBond"
             do
                 if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Arret ) then
                     self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -368,6 +376,8 @@ node "BEH_Obs_Pion_ABC_SePosterSurBond"
 do
                 if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_PosteReflexe ) then
                     self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -413,6 +423,8 @@ node "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -765,7 +777,9 @@ node "BEH_Ordre_SePosterPourDeboucher"
             do
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.LimaLD, true )
                 DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
         end
@@ -872,7 +886,9 @@ node "BEH_Ordre_LivrerLigneDeboucher"
         if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
             do
                 DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
         end

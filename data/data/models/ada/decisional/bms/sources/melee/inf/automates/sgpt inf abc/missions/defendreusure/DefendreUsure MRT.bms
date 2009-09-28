@@ -47,6 +47,8 @@ node "MIS_Automate_MRT_INF_MenerDefenseUsure"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -59,6 +61,8 @@ node "MIS_Automate_MRT_INF_MenerDefenseUsure"
                     DEC_Trace( "MIS_Automate_MRT_INF_DefendreUsure : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

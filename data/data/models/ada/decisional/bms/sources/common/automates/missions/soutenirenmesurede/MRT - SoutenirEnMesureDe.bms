@@ -43,6 +43,8 @@ includedFiles["sources/common/automates/missions/soutenirenmesurede/MRT - Souten
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -54,6 +56,8 @@ includedFiles["sources/common/automates/missions/soutenirenmesurede/MRT - Souten
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -141,6 +145,8 @@ node "MIS_Automate_MRT_SoutenirSurPositionEnMesureDe"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -152,6 +158,8 @@ node "MIS_Automate_MRT_SoutenirSurPositionEnMesureDe"
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

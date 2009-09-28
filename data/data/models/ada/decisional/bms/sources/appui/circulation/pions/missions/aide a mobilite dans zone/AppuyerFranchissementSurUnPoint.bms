@@ -25,6 +25,8 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
         --[[// Validité de la connaissance
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.pontFlottant_ ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

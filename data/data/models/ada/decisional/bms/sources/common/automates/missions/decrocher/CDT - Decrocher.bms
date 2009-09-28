@@ -28,6 +28,8 @@ includedFiles["sources/common/automates/missions/decrocher/CDT - Decrocher.bms"]
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
                 self.eEtatODC = eActionEnCours

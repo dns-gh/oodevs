@@ -54,6 +54,8 @@ include "bit.lua"
 
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -192,6 +194,8 @@ node "BEH_Feu_Pion_INF_TirFixer"
 
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -203,6 +207,8 @@ node "BEH_Feu_Pion_INF_TirFixer"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -210,6 +216,8 @@ node "BEH_Feu_Pion_INF_TirFixer"
 
         if( self.eAction == eActionHalt or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -274,6 +282,8 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
 
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -285,6 +295,8 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -292,6 +304,8 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
 
         if( self.eAction == eActionHalt or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -355,6 +369,8 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eAction_Tir == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -364,6 +380,8 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -451,6 +469,8 @@ node "BEH_Tir_Pion_INF_FaireFeu_Embarque"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -460,6 +480,8 @@ node "BEH_Tir_Pion_INF_FaireFeu_Embarque"
             do
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -508,6 +530,8 @@ node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -517,6 +541,8 @@ node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
             do
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -565,6 +591,8 @@ node "BEH_Tir_Pion_INF_FaireFeu"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -574,6 +602,8 @@ node "BEH_Tir_Pion_INF_FaireFeu"
             do
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

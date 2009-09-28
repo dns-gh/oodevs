@@ -181,7 +181,9 @@ node "BEH_Objet_Pion_GEN_Brecher"
             do
                 --[[// hum hum
 ]]myself.objMisEnCours_ = nil
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
 --[[//-----------------------------------------------------------------

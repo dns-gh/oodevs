@@ -89,11 +89,15 @@ elseif switch_1 == eProgresser then
                                 end
 
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end

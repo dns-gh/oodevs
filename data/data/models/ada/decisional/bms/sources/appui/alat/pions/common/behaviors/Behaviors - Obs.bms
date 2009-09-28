@@ -55,6 +55,8 @@ for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedP
                         local _continue = true
 if( x == y ) then
                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
                             end
 
@@ -67,6 +69,8 @@ if( x == y ) then
                 elseif switch_1 == eSePoster then
                     if( DEC_ALAT_ReconnaissanceNonVuTerminee() ) then
                         self.params.__returnValue = eActionEffectuee
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
                     end
 
@@ -113,6 +117,8 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
         self.eEtatDeplacement = self.eEtatDeplacement or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.eni ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -130,11 +136,15 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -145,6 +155,8 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
                 self.eEtatDeplacement = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -156,11 +168,15 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -211,11 +227,15 @@ node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
         self.eEtat = self.eEtat or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.eni ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.eni ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

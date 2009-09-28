@@ -38,7 +38,9 @@ includedFiles["sources/appui/genie/pions/missions/Construire camps.bms"] = true
                     do
                         DEC_Trace( "One of the camps does not have any command trains" )
                         DEC_Warning( eRC_MissionImpossible )
-                                                Halt()
+                                                self.deselect = function() end
+                        self.destroy = function() end
+                        Halt()
 
                     end
                 end

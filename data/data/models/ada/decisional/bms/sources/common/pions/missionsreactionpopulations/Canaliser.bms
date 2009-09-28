@@ -47,6 +47,8 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Canaliser.bms"] 
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -57,6 +59,8 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Canaliser.bms"] 
                 self.objectif = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
                 if( ( self.objectif == 0 or self.objectif == nil ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -105,7 +109,9 @@ elseif switch_1 == eAnimer then
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                                        Halt()
+                                        self.deselect = function() end
+                    self.destroy = function() end
+                    Halt()
 
                 end
                 if not cases_switch_1[1] and not cases_switch_1[2] and not cases_switch_1[3] then

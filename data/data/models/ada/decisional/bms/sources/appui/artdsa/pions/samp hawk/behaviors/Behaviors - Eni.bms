@@ -29,6 +29,8 @@ includedFiles["sources/appui/artdsa/pions/samp hawk/behaviors/Behaviors - Eni.bm
     activate = function( self )
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.ennemi ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

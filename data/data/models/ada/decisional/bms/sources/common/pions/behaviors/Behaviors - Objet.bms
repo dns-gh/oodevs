@@ -78,6 +78,8 @@ node "BEH_Obj_RejoindreEmbossementLibre"
 ]]--[[// Conditions de terminaisons
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.embossement ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

@@ -105,11 +105,15 @@ elseif switch_1 == eSExfiltrer then
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -131,6 +135,8 @@ elseif switch_1 == eSExfiltrer then
                                                         do
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -212,6 +218,8 @@ node "BEH_Eni_Pion_ALAT_JalonnerGererFeu"
     activate = function( self )
         if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

@@ -111,6 +111,8 @@ do
 ]]DEC_Trace( "mission MIS_Pion_INF_Defendre: fin" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end

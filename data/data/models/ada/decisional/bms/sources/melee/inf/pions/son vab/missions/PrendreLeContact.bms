@@ -56,6 +56,8 @@ node "MIS_Pion_INF_PrendrePreciserContact"
                         DEC_Trace( "N'arrive pas a prendre connaissance de l'unite" )
                         DEC_Warning( eRC_MissionImpossible )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -84,6 +86,8 @@ node "MIS_Pion_INF_PrendrePreciserContact"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -115,6 +119,8 @@ elseif switch_1 == eFinMission then
                                 DEC_Trace( "Fin mission de mission 'Prendre Preciser Contact'" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -160,6 +166,8 @@ node "BEH_Mission_Pion_VAB_PrendrePreciserContact"
                 end
 
                                 self.params.__returnValue = eFinMission
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

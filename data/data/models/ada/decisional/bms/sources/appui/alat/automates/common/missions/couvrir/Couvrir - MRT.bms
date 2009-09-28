@@ -45,6 +45,8 @@ includedFiles["sources/appui/alat/automates/common/missions/couvrir/Couvrir - MR
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -57,6 +59,8 @@ includedFiles["sources/appui/alat/automates/common/missions/couvrir/Couvrir - MR
 
         DEC_MRT_Valide()
                 self.params.__returnValue = eActionEffectuee
+        self.deselect = function() end
+        self.destroy = function() end
         Halt()
 
     end,

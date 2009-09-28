@@ -57,6 +57,8 @@ include "bit.lua"
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -88,6 +90,8 @@ include "bit.lua"
             do
                 DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

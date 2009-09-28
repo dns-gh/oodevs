@@ -39,6 +39,8 @@ include "bit.lua"
         self.ptDest = self.ptDest or DEC_Geometrie_CalculerPointArrivee()
         if( not ModuleBegins() ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -99,6 +101,8 @@ node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
             do
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -225,6 +229,8 @@ node "BEH_Conduite_Automate_INF_Assaut_Manoeuvre"
 ]]--[[// --------------------------------------------------------------------------------
 ]]if( ( #( selAppui ) == 0 or #( selAppui ) == nil ) or ( not DEC_ConnaissanceAgent_EstValide( self.ksEni ) and not DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -236,6 +242,8 @@ node "BEH_Conduite_Automate_INF_Assaut_Manoeuvre"
 --[[// L'appui (MILAN ou HOT) devrait l'avoir detruit
 ]]--[[// On reste dans la meme configuration
 ]]            self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -255,6 +263,8 @@ if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) then
 ]]local pionCouv = S_Cherche_Automate_TypePion( selAppui, "SectionInfanterie" )
         if( ( pionCouv == 0 or pionCouv == nil ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -330,6 +340,8 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction"
 ]]--[[// --------------------------------------------------------------------------------
 ]]if( ( #( selAppui ) == 0 or #( selAppui ) == nil ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -340,6 +352,8 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction"
         --[[// Pas d'ennemi trouve a proximite
 ]]if( not DEC_ConnaissanceAgent_EstValide( self.ksEni ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -352,6 +366,8 @@ do
                 --[[// L'appui (MILAN ou HOT) devrait l'avoir detruit
 ]]--[[// On reste dans la meme configuration
 ]]                self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

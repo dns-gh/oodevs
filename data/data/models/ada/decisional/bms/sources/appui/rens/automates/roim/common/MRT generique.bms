@@ -161,6 +161,8 @@ elseif switch_2 == "T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" then
 ]]elseif switch_1 == eMRT_MissionImpossible then
                     DEC_Trace( "--Mission impossible--" )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 --[[//---------------------------------------------------------------------
@@ -170,6 +172,8 @@ elseif switch_2 == "T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" then
                 if cases_switch_1[3] or switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

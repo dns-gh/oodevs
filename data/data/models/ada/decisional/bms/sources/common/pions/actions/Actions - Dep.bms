@@ -65,6 +65,8 @@ elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
 elseif switch_1 == eEtatActionDeplacement_Termine then
                     self.actionDeplacement = DEC_StopAction( self.actionDeplacement )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -246,6 +248,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
     select = function( self )
                 self.bInit = self.bInit or false
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -352,6 +356,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// Conditions de terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]        if( DEC_ConnaissanceObjet_EstContourne( self._namedParams.repObj ) == eTristate_True ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

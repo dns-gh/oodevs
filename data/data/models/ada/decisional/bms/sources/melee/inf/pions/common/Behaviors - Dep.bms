@@ -41,12 +41,16 @@ include "bit.lua"
         if( ModuleBegins() ) then
 if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
             end
         end
 
         if( self.eOrdre == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -106,6 +110,8 @@ node "BEH_Objet_Pion_INF_ReagirFaceAObstacle"
 
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.repObj ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -113,6 +119,8 @@ node "BEH_Objet_Pion_INF_ReagirFaceAObstacle"
             do
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -162,6 +170,8 @@ node "BEH_Dep_Pion_INF_RejoindreObjectif"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -173,6 +183,8 @@ node "BEH_Dep_Pion_INF_RejoindreObjectif"
                                 do
                     DEC_Trace( "Arrivee sur objectif" )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -254,6 +266,8 @@ node "BEH_Dep_Pion_INF_PreciserContact"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -354,6 +368,8 @@ elseif switch_1 == eRetrouver then
                         do
                             DEC_Trace( "impossible de retrouver l'ennemi" )
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -366,6 +382,8 @@ elseif switch_1 == eRetrouver then
                                 --[[// On n'a pas repri connaissance de l'ennemi
 ]]DEC_Trace( "perte complete de contact sur ennemi" )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -428,11 +446,15 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -444,10 +466,14 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                                 do
                     if( not S_Geometrie_EstProchePosition( self._namedParams.ptObjectif, DEC_Agent_Position(), 1000 ) ) then
                         self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
                     end
 
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -492,6 +518,8 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                                                         do
                                 if( not self._namedParams.bRejoindreObj ) then
                                     self.params.__returnValue = eActionEffectuee
+                                    self.deselect = function() end
+                                    self.destroy = function() end
                                     Halt()
                                 end
 
@@ -564,6 +592,8 @@ node "BEH_Progression_Pion_INF_AborderObjectif"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -599,6 +629,8 @@ do
                             self.eAction = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -653,6 +685,8 @@ node "BEH_Progression_Pion_INF_Aborder"
             do
                 DEC_Trace( "fin abordement point particulier" )
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

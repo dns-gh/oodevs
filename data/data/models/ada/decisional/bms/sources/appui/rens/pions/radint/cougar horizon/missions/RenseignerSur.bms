@@ -34,7 +34,9 @@ includedFiles["sources/appui/rens/pions/radint/cougar horizon/missions/Renseigne
         else
 do
                 DEC_RC( eRC_MissionImpossible )
-                                Halt()
+                                self.deselect = function() end
+                self.destroy = function() end
+                Halt()
 
             end
         end

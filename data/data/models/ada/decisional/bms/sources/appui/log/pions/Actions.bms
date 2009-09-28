@@ -207,6 +207,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -248,6 +250,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
     select = function( self )
         DEC_RecupererVSRAM( self._namedParams.pionDe, self._namedParams.fAmb )
                 self.params.__returnValue = eActionEffectuee
+        self.deselect = function() end
+        self.destroy = function() end
         Halt()
 
     end,
@@ -273,6 +277,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -314,6 +320,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
     select = function( self )
         DEC_RecupererRemorqueurs( self._namedParams.pionDe, self._namedParams.fAmb )
                 self.params.__returnValue = eActionEffectuee
+        self.deselect = function() end
+        self.destroy = function() end
         Halt()
 
     end,

@@ -59,6 +59,8 @@ include "bit.lua"
             do
                 DEC_Trace( "Processus de rupture de contact : termine" )
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -85,6 +87,8 @@ include "bit.lua"
 
                     if( ( eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == 0 or eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == nil ) ) then
                         self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
                     end
 
@@ -219,6 +223,8 @@ node "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre"
             do
                 self.eActionDelai = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -263,6 +269,8 @@ node "BEH_CoordDep_Automate_INF_RompreContact_SurDelai"
                                 do
                     DEC_Trace( "Declenchement rupture de contact : termine" )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -307,6 +315,8 @@ node "BEH_Conduite_Automate_INF_DesactiveSauvegarde"
         self.selPions = self.selPions or S_ObtenirPionsOperationnels()
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction ~= eActionEnCours ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -346,6 +356,8 @@ node "BEH_Ordre_Automate_ArretSauvegardeSur"
                 self.eEtat = self.eEtat or eActionEnCours
         if( ( self._namedParams.rTime == 0 or self._namedParams.rTime == nil ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -364,6 +376,8 @@ node "BEH_Ordre_Automate_ArretSauvegardeSur"
                 self.eEtat = eActionEnCours
                 self._namedParams.pion:S_Mot_EtatDesactiveSauvegarde( false )
                                 self.params.__returnValue = eActionEffectuee
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

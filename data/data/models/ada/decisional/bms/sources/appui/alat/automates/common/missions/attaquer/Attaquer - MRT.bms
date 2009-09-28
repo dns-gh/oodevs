@@ -26,6 +26,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -36,6 +38,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
 
         DEC_MRT_Valide()
                 self.params.__returnValue = eActionEffectuee
+        self.deselect = function() end
+        self.destroy = function() end
         Halt()
 
     end,

@@ -80,6 +80,8 @@ includedFiles["sources/melee/inf/pions/common/Actions.bms"] = true
                         --[[// bloc fin
 ]]DEC_Trace( "fin " )
                                                 self.params.__returnValue = eActionEffectuee
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end

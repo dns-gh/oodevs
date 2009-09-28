@@ -30,6 +30,8 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

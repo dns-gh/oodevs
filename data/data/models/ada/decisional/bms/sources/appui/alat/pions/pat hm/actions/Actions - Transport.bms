@@ -42,12 +42,16 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
 elseif switch_1 == eActionTransport_Finished then
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -108,12 +112,16 @@ elseif switch_1 == eActionTransport_Finished then
 elseif switch_1 == eActionTransport_Finished then
                     DEC_StopAction( self.actionDebarquer )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
                     DEC_StopAction( self.actionDebarquer )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end

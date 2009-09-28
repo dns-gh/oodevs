@@ -55,6 +55,8 @@ includedFiles["sources/appui/artfdp/automates/bat tir auf1/missions/se deployer/
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -66,6 +68,8 @@ includedFiles["sources/appui/artfdp/automates/bat tir auf1/missions/se deployer/
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

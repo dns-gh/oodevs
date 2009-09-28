@@ -89,6 +89,8 @@ node "BEH_Eni_Pion_VAB_Fixer"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -99,6 +101,8 @@ node "BEH_Eni_Pion_VAB_Fixer"
                 self.eActionFixer = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -284,6 +288,8 @@ node "BEH_Dep_Pion_INF_GererDispositif_Offensif"
         --[[// On passe son chemin
 ]]if( DEC_ConnaissanceAgent_EstUnEnnemi( self._namedParams.ksEni ) == eTristate_False ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -298,6 +304,8 @@ node "BEH_Dep_Pion_INF_GererDispositif_Offensif"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -305,6 +313,8 @@ node "BEH_Dep_Pion_INF_GererDispositif_Offensif"
 
         if( self.eActionPreciser ~= eActionEnCours or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -317,6 +327,8 @@ node "BEH_Dep_Pion_INF_GererDispositif_Offensif"
 
         if( not DEC_Geometrie_EstPointDansFuseau( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ) ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

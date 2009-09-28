@@ -58,6 +58,8 @@ include "bit.lua"
 
         if( ( self.eAction_OK == eActionEffectuee ) or ( ( self._namedParams.rN_Pion == 0 or self._namedParams.rN_Pion == nil ) ) ) then
             self.params.__returnValue = eActionEffectuee
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -766,6 +768,8 @@ node "BEH_Mission_Automate_AssignerSeFaireDecontaminerA"
 
     activate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteDecontamination ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

@@ -26,6 +26,8 @@ includedFiles["sources/appui/genie/pions/missions/Reprendre travaux.bms"] = true
 
     activate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.travail_ ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -43,6 +45,8 @@ includedFiles["sources/appui/genie/pions/missions/Reprendre travaux.bms"] = true
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -100,6 +104,8 @@ elseif switch_1 == eRealiserObstacle then
                         do
                             DEC_RC( eRC_MissionImpossible )
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -151,6 +157,8 @@ node "BEH_Objet_Pion_GEN_ReprendreTravaux"
 ]]--[[// Validité de l'objet
 ]]--[[//-----------------------------------------------------------------
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.obj ) ) then
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 

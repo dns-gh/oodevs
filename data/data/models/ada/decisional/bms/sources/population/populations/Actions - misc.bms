@@ -72,6 +72,8 @@ includedFiles["sources/population/populations/Actions - misc.bms"] = true
                 if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
                                                 self.params.__returnValue = eActionEffectuee
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end

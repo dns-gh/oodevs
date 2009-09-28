@@ -65,6 +65,8 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -76,6 +78,8 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

@@ -177,6 +177,8 @@ node "BEH_Dep_Pion_INF_RejoindreFuseau"
             do
                 if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
                     self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -191,6 +193,8 @@ node "BEH_Dep_Pion_INF_RejoindreFuseau"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

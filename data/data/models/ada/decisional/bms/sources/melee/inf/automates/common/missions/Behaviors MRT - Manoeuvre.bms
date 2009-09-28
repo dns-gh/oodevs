@@ -153,6 +153,8 @@ elseif switch_2 == "T_Mission_Automate_INF_Soutenir"
                             DEC_Trace( "Pas de 1er echelon" )
                             DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -188,6 +190,8 @@ elseif switch_2 == "T_Mission_Automate_INF_Soutenir"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -200,6 +204,8 @@ elseif switch_2 == "T_Mission_Automate_INF_Soutenir"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -210,6 +216,8 @@ elseif switch_2 == "T_Mission_Automate_INF_Soutenir"
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -278,6 +286,8 @@ elseif switch_2 == "T_Mission_Automate_INF_Relever" then
                             else
                                 DEC_Trace( "Mission Inconnue" )
                                                                 self.params.__returnValue = eActionImpossible
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                                                         end

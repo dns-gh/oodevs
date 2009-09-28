@@ -66,6 +66,8 @@ includedFiles["sources/melee/abc/automates/pel pir/missions/protegerpc/ProtegerP
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -77,6 +79,8 @@ includedFiles["sources/melee/abc/automates/pel pir/missions/protegerpc/ProtegerP
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end

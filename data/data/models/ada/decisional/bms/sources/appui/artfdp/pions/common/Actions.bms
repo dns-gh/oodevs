@@ -39,6 +39,8 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
                     do
                         --[[// RC_ TravauxImpossible
 ]]                        self.params.__returnValue = eActionImpossible
+                        self.deselect = function() end
+                        self.destroy = function() end
                         Halt()
 
                     end
@@ -47,6 +49,8 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
                 local xType = S_TypeObject_ToString( self._namedParams.eTypeObjet )
                 if( not DEC_Agent_PeutConstruireObjet( xType ) ) then
                     self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
                 end
 
@@ -86,6 +90,8 @@ elseif switch_1 == eActionObjetTerminee then
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -93,6 +99,8 @@ elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "object construction: no capability" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -104,6 +112,8 @@ elseif switch_1 == eActionObjetTerminee then
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                     
@@ -212,6 +222,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     DEC_Trace( "fire on: disabled knowledge" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -228,6 +240,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -255,6 +269,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end
@@ -263,6 +279,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     DEC_RC( eRC_TirAnnule )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                                 end

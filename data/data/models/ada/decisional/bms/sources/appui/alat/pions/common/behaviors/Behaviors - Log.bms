@@ -69,6 +69,8 @@ include "bit.lua"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -130,6 +132,8 @@ do
                                                         do
                                 myself.bEnPhaseRavitaillement_ = false
                                                                 self.params.__returnValue = eActionEffectuee
+                                self.deselect = function() end
+                                self.destroy = function() end
                                 Halt()
 
                             end
@@ -144,6 +148,8 @@ do
                             end
 
                                                         self.params.__returnValue = eActionImpossible
+                            self.deselect = function() end
+                            self.destroy = function() end
                             Halt()
 
                         end
@@ -258,6 +264,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
         self.eEtat = self.eEtat or eActionEnCours
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.plotRavitaillement ) ) then
             self.params.__returnValue = eActionImpossible
+            self.deselect = function() end
+            self.destroy = function() end
             Halt()
         end
 
@@ -269,6 +277,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
                     F_POLY_PION_ALAT_RECOMPLETEMENT( myself.porteeAction_, myself.ambianceMission_ )
                     Activate( self.activations.ACT_RC, 1, { eRC_RavitaillementTermine, } )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -283,6 +293,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -321,6 +333,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
                     F_POLY_PION_ALAT_RECOMPLETEMENT( myself.porteeAction_, myself.ambianceMission_ )
                     Activate( self.activations.ACT_RC, 1, { eRC_RavitaillementTermine, } )
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
@@ -335,6 +349,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end

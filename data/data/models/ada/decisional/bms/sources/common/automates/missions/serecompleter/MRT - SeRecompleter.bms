@@ -54,6 +54,8 @@ includedFiles["sources/common/automates/missions/serecompleter/MRT - SeRecomplet
                 end
 
                                 self.params.__returnValue = eActionImpossible
+                self.deselect = function() end
+                self.destroy = function() end
                 Halt()
 
             end
@@ -65,6 +67,8 @@ includedFiles["sources/common/automates/missions/serecompleter/MRT - SeRecomplet
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
+                    self.deselect = function() end
+                    self.destroy = function() end
                     Halt()
 
                 end
