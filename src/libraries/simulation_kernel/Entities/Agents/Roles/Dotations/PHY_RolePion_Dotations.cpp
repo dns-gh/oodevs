@@ -31,10 +31,10 @@
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
 #include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
-#include "simulation_kernel/ConsumptionOperator_ABC.h"
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
 
-#include "simulation_kernel/DotationComputer_ABC.h"
-#include "simulation_kernel/DotationComputerFactory_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( dotation::PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
 
@@ -84,7 +84,7 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, 
 {
     MIL_AgentPion* const pion = &role->pion_;
     const ConsumptionComputerFactory_ABC* const consumptionComputerFactory = &role->consumptionComputerFactory_;
-    const DotationComputerFactory_ABC* const dotationComputerFactory = &role->dotationComputerFactory_;
+    const OnComponentFunctorComputerFactory_ABC* const dotationComputerFactory = &role->dotationComputerFactory_;
     archive << pion
             << consumptionComputerFactory
             << dotationComputerFactory;
@@ -95,7 +95,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const 
 {
 	MIL_AgentPion* pion;
     ConsumptionComputerFactory_ABC* consumptionComputerFactory;
-    DotationComputerFactory_ABC* dotationComputerFactory;
+    OnComponentFunctorComputerFactory_ABC* dotationComputerFactory;
 	archive >> pion
             >> consumptionComputerFactory
             >> dotationComputerFactory;
@@ -106,7 +106,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const 
 // Name: PHY_RolePion_Dotations constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const DotationComputerFactory_ABC& dotationComputerFactory )
+PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const OnComponentFunctorComputerFactory_ABC& dotationComputerFactory )
     : pion_                      ( pion )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
@@ -231,7 +231,7 @@ void PHY_RolePion_Dotations::NotifyReleased()
 // =============================================================================
 // CONSUMPTIONS
 // =============================================================================
-class sConsumptionReservation : public ConsumptionOperator_ABC
+class sConsumptionReservation : public ::OnComponentFunctor_ABC
 {
 
 public:
@@ -270,7 +270,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
-    ComponentFunctorComputer_ABC& dotationComputer = dotationComputerFactory_.Create( func );
+    OnComponentComputer_ABC& dotationComputer = dotationComputerFactory_.Create( func );
     pion_.Execute( dotationComputer );
 
     if( func.bReservationOK_ )
@@ -285,7 +285,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
-        ComponentFunctorComputer_ABC& dotationComputer = dotationComputerFactory_.Create( funcRollback );
+        OnComponentComputer_ABC& dotationComputer = dotationComputerFactory_.Create( funcRollback );
         pion_.Execute( dotationComputer );
         assert( funcRollback.bReservationOK_ );
     }
@@ -310,7 +310,7 @@ void PHY_RolePion_Dotations::RollbackConsumptionMode()
 // Name: PHY_RolePion_Dotations::sConsumptionTimeExpectancy
 // Created: JVT 2005-02-07
 // -----------------------------------------------------------------------------
-class sConsumptionTimeExpectancy : public ConsumptionOperator_ABC 
+class sConsumptionTimeExpectancy : public ::OnComponentFunctor_ABC 
 {
     
 public:
@@ -359,7 +359,7 @@ MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_Consumption
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    ComponentFunctorComputer_ABC& dotationComputer = dotationComputerFactory_.Create( func );
+    OnComponentComputer_ABC& dotationComputer = dotationComputerFactory_.Create( func );
     pion_.Execute( dotationComputer );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }

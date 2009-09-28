@@ -9,8 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 
-#include "simulation_kernel/DotationComputerFactory.h"
-#include "simulation_kernel/DefaultDotationComputer.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory.h"
+#include "simulation_kernel/DefaultComponentFunctorComputer.h"
 
 namespace dotation
 {
@@ -19,8 +19,8 @@ namespace dotation
 // Name: DotationComputerFactory constructor
 // Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-DotationComputerFactory::DotationComputerFactory()
-: pDotationComputer_( new DefaultDotationComputer() )
+OnComponentFunctorComputerFactory::OnComponentFunctorComputerFactory()
+: pDotationComputer_( new DefaultComponentFunctorComputer() )
 {
     //NOTHING
 }
@@ -29,7 +29,7 @@ DotationComputerFactory::DotationComputerFactory()
 // Name: DotationComputerFactory destructor
 // Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-DotationComputerFactory::~DotationComputerFactory()
+OnComponentFunctorComputerFactory::~OnComponentFunctorComputerFactory()
 {
     // NOTHING
 }
@@ -38,9 +38,9 @@ DotationComputerFactory::~DotationComputerFactory()
 // Name: DotationComputerFactory Create
 // Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-DotationComputer_ABC& DotationComputerFactory::Create( ConsumptionOperator_ABC& consumptionOperator ) const
+OnComponentFunctorComputer_ABC& OnComponentFunctorComputerFactory::Create( OnComponentFunctor_ABC& componentOperator ) const
 {
-    pDotationComputer_->Reset( consumptionOperator );
+    pDotationComputer_->Reset( componentOperator );
     return *pDotationComputer_;
 }
 

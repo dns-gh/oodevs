@@ -9,27 +9,27 @@
 
 #include "simulation_kernel_pch.h"
 
-#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
 namespace dotation
 {
 
 // -----------------------------------------------------------------------------
-// Name: DotationComputer_ABC::DotationComputer_ABC
-// Created: MGD 2009-09-16
+// Name: DotationComputerFactory_ABC constructor
+// Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-DotationComputer_ABC::DotationComputer_ABC()
+OnComponentFunctorComputerFactory_ABC::OnComponentFunctorComputerFactory_ABC()
 {
-
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationComputer_ABC::~DotationComputer_ABC
-// Created: MGD 2009-09-16
+// Name: DotationComputerFactory_ABC destructor
+// Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-DotationComputer_ABC::~DotationComputer_ABC()
+OnComponentFunctorComputerFactory_ABC::~OnComponentFunctorComputerFactory_ABC()
 {
-
+    // NOTHING
 }
 
-} // namespace dotation
+} // namespace

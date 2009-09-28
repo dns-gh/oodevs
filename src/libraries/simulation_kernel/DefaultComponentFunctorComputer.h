@@ -10,7 +10,7 @@
 #ifndef __DefaultDotationComputer_h_
 #define __DefaultDotationComputer_h_
 
-#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 
 namespace dotation
 {
@@ -21,26 +21,26 @@ namespace dotation
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class DefaultDotationComputer : public DotationComputer_ABC
+class DefaultComponentFunctorComputer : public OnComponentFunctorComputer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultDotationComputer();
-    virtual ~DefaultDotationComputer();
+             DefaultComponentFunctorComputer();
+    virtual ~DefaultComponentFunctorComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( ConsumptionOperator_ABC& consumptionOperator );
+    virtual void Reset( OnComponentFunctor_ABC& componentOperator );
     virtual void ApplyOnComponent( PHY_ComposantePion& component );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ConsumptionOperator_ABC* pConsumptionOperator_; //TODO MGD Fusionner DotationComputer et ConsumptionOperator
+    OnComponentFunctor_ABC* pConsumptionOperator_;
     //@}
 };
 

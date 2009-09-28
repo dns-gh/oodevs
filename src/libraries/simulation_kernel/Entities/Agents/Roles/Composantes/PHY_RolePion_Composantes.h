@@ -33,7 +33,7 @@ namespace transport
 	class TransportWeightComputer_ABC;
 }
 
-class ComponentFunctorComputer_ABC;
+class OnComponentComputer_ABC;
 
 // =============================================================================
 // @class  PHY_RolePion_Composantes
@@ -43,7 +43,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
 							   , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
 							   , public tools::AlgorithmModifier_ABC< transport::TransportWeightComputer_ABC>
-                               , public tools::AlgorithmModifier_ABC< ComponentFunctorComputer_ABC >
+                               , public tools::AlgorithmModifier_ABC< OnComponentComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
 {
@@ -74,7 +74,7 @@ public:
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportWeightComputer_ABC& algorithm ) const;
-    virtual void Execute( ComponentFunctorComputer_ABC& algorithm ) const;
+    virtual void Execute( OnComponentComputer_ABC& algorithm ) const;
 
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 

@@ -42,7 +42,7 @@
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
 #include "simulation_kernel/TransportWeightComputer_ABC.h"
 
-#include "simulation_kernel/ComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
@@ -1745,7 +1745,7 @@ void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& 
 // Name: PHY_RolePion_Composantes::Execute
 // Created: MGD 2009-09-25
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::Execute( ComponentFunctorComputer_ABC& algorithm ) const
+void PHY_RolePion_Composantes::Execute( OnComponentComputer_ABC& algorithm ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         algorithm.ApplyOnComponent( **it );

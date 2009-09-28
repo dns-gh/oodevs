@@ -18,25 +18,21 @@
 // =============================================================================
 class PHY_ComposantePion;
 
-namespace dotation
+class OnComponentFunctor_ABC : private boost::noncopyable
 {
 
-    class ConsumptionOperator_ABC : private boost::noncopyable
-    {
+public:
+    //! @name Constructors/Destructor
+    //@{
+             OnComponentFunctor_ABC();
+    virtual ~OnComponentFunctor_ABC();
+    //@}
 
-    public:
-        //! @name Constructors/Destructor
-        //@{
-                 ConsumptionOperator_ABC();
-        virtual ~ConsumptionOperator_ABC();
-        //@}
+    //! @name Operation
+    //@{
+    virtual void operator()( const PHY_ComposantePion& component ) = 0;
+    //@}
+};
 
-        //! @name Operation
-        //@{
-        virtual void operator()( const PHY_ComposantePion& component ) = 0;
-        //@}
-    };
-
-} // namespace dotation
 
 #endif // __ConsumptionOperator_ABC_h_

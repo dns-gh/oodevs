@@ -7,37 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __DotationComputer_ABC_h_
-#define __DotationComputer_ABC_h_
+#ifndef __DotationComputerFactory_ABC_h_
+#define __DotationComputerFactory_ABC_h_
 
-#include "simulation_kernel/ComponentFunctorComputer_ABC.h"
+class OnComponentFunctor_ABC;
 
 namespace dotation
 {
-    class ConsumptionOperator_ABC;
+    class OnComponentFunctorComputer_ABC;
 // =============================================================================
-/** @class  Dotationcomputer_ABC
-    @brief  Dotationcomputer_ABC
+/** @class  DotationComputerFactory_ABC
+    @brief  DotationComputerFactory_ABC
 */
-// Created: MGD 2009-09-15
+// Created: MGD 2009-08-13
 // =============================================================================
-class DotationComputer_ABC : public ComponentFunctorComputer_ABC
+class OnComponentFunctorComputerFactory_ABC : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationComputer_ABC();
-    virtual ~DotationComputer_ABC();
+             OnComponentFunctorComputerFactory_ABC();
+    virtual ~OnComponentFunctorComputerFactory_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( ConsumptionOperator_ABC& consumptionOperator ) = 0;
-    virtual void ApplyOnComponent( PHY_ComposantePion& component ) = 0;
+    virtual OnComponentFunctorComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const = 0;
     //@}
 };
 
 } // namespace dotation
 
-#endif // __DotationComputer_ABC_h_
+#endif // __DotationComputerFactory_ABC_h_

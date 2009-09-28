@@ -10,7 +10,7 @@
 #ifndef __HealableComputer_ABC_h_
 #define __HealableComputer_ABC_h_
 
-#include "simulation_kernel/ComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentComputer_ABC.h"
 
 class PHY_ComposantePion;
 class PHY_HumanRank;
@@ -24,7 +24,7 @@ namespace human
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class HealComputer_ABC : public ComponentFunctorComputer_ABC
+class HealComputer_ABC : public OnComponentComputer_ABC
 {
 
 public:

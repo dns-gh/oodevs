@@ -198,7 +198,7 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
     const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == PHY_DirectFireData::eFireOnlyOnMajorComposantes );
 
     ComposantesAbleToBeFiredComputer_ABC& componentAbleToBeFiredComputer = composantesAbleToBeFiredComputerFactory_.Create( bFireOnlyOnMajorComposantes );
-    pTarget->Execute( static_cast< ComponentFunctorComputer_ABC& >( componentAbleToBeFiredComputer ) );
+    pTarget->Execute( static_cast< OnComponentComputer_ABC& >( componentAbleToBeFiredComputer ) );
     PHY_Composante_ABC::T_ComposanteVector& targets = componentAbleToBeFiredComputer.ResultLimited( nNbrWeaponsUsable );
 
     if( targets.empty() )

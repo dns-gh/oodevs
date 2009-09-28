@@ -11,7 +11,7 @@
 #define __ComposantesAbleToBeFiredComputer_ABC_h_
 
 
-#include "simulation_kernel/ComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentComputer_ABC.h"
 #include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 
 class PHY_ComposantePion;
@@ -25,7 +25,7 @@ namespace firing
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-    class ComposantesAbleToBeFiredComputer_ABC : public ComponentFunctorComputer_ABC
+class ComposantesAbleToBeFiredComputer_ABC : public OnComponentComputer_ABC
 {
 
 public:

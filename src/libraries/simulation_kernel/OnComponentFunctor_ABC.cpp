@@ -8,28 +8,22 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
-#include "simulation_kernel/DotationComputerFactory_ABC.h"
-
-namespace dotation
-{
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
 
 // -----------------------------------------------------------------------------
-// Name: DotationComputerFactory_ABC constructor
-// Created: MGD 2009-08-13
+// Name:  ConsumptionOperator_ABC constructor
+// Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-DotationComputerFactory_ABC::DotationComputerFactory_ABC()
+OnComponentFunctor_ABC::OnComponentFunctor_ABC()
 {
     //NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationComputerFactory_ABC destructor
-// Created: MGD 2009-08-13
+// Name:  ConsumptionOperator_ABC destructor
+// Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-DotationComputerFactory_ABC::~DotationComputerFactory_ABC()
+ OnComponentFunctor_ABC::~OnComponentFunctor_ABC()
 {
     // NOTHING
 }
-
-} // namespace

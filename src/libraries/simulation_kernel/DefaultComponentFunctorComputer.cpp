@@ -9,9 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 
-#include "simulation_kernel/DefaultDotationComputer.h"
-#include "simulation_kernel/ConsumptionComputer_ABC.h"
-#include "simulation_kernel/ConsumptionOperator_ABC.h"
+#include "simulation_kernel/DefaultComponentFunctorComputer.h"
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
 
 namespace dotation
 {
@@ -20,7 +19,7 @@ namespace dotation
 // Name: DefaultDotationComputer::DefaultDotationComputer
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-DefaultDotationComputer::DefaultDotationComputer()
+DefaultComponentFunctorComputer::DefaultComponentFunctorComputer()
 {
 
 }
@@ -29,7 +28,7 @@ DefaultDotationComputer::DefaultDotationComputer()
 // Name: DefaultDotationComputer::~DefaultDotationComputer
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-DefaultDotationComputer::~DefaultDotationComputer()
+DefaultComponentFunctorComputer::~DefaultComponentFunctorComputer()
 {
 
 }
@@ -38,16 +37,16 @@ DefaultDotationComputer::~DefaultDotationComputer()
 // Name: DefaultDotationComputer::ApplyOnConpenent
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-void DefaultDotationComputer::Reset( ConsumptionOperator_ABC& consumptionOperator )
+void DefaultComponentFunctorComputer::Reset( OnComponentFunctor_ABC& componentOperator )
 {
-    pConsumptionOperator_ = &consumptionOperator;
+    pConsumptionOperator_ = &componentOperator;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DefaultDotationComputer::ApplyOnConpenent
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-void DefaultDotationComputer::ApplyOnComponent( PHY_ComposantePion& component )
+void DefaultComponentFunctorComputer::ApplyOnComponent( PHY_ComposantePion& component )
 {
     (*pConsumptionOperator_)( component );
 }

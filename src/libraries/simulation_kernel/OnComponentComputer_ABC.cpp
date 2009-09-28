@@ -9,13 +9,13 @@
 
 #include "simulation_kernel_pch.h"
 
-#include "simulation_kernel/ComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentComputer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ComponentFunctorComputer_ABC::ComponentFunctorComputer_ABC
 // Created: MGD 2009-09-25
 // -----------------------------------------------------------------------------
-ComponentFunctorComputer_ABC::ComponentFunctorComputer_ABC()
+OnComponentComputer_ABC::OnComponentComputer_ABC()
 {
 
 }
@@ -24,7 +24,7 @@ ComponentFunctorComputer_ABC::ComponentFunctorComputer_ABC()
 // Name: ComponentFunctorComputer_ABC::~ComponentFunctorComputer_ABC
 // Created: MGD 2009-09-25
 // -----------------------------------------------------------------------------
-ComponentFunctorComputer_ABC::~ComponentFunctorComputer_ABC()
+OnComponentComputer_ABC::~OnComponentComputer_ABC()
 {
 
 }

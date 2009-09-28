@@ -10,6 +10,7 @@
 #ifndef __ComponentFunctorComputer_ABC_h_
 #define __ComponentFunctorComputer_ABC_h_
 
+class OnComponentFunctor_ABC;
 class PHY_ComposantePion;
 
 // =============================================================================
@@ -18,14 +19,14 @@ class PHY_ComposantePion;
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class ComponentFunctorComputer_ABC
+class OnComponentComputer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ComponentFunctorComputer_ABC();
-    virtual ~ComponentFunctorComputer_ABC();
+             OnComponentComputer_ABC();
+    virtual ~OnComponentComputer_ABC();
     //@}
 
     //! @name Operations
