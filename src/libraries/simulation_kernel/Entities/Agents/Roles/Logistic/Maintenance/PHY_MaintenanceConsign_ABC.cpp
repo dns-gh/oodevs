@@ -22,8 +22,8 @@
 // Name: PHY_MaintenanceConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC( PHY_RoleInterface_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState )
-    : pMaintenance_    ( &maintenance )
+PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
+    : pMaintenance_    ( &maintenanceAgent )
     , pComposanteState_( &composanteState )
     , nTimer_          ( 0 )
     , bHasChanged_     ( true )
@@ -107,7 +107,7 @@ void PHY_MaintenanceConsign_ABC::SendFullState( NET_ASN_MsgLogMaintenanceHandlin
     assert( pComposanteState_ );
     assert( pMaintenance_ );
     
-    asn().oid_pion_log_traitant = pMaintenance_->GetPion().GetID();
+    asn().oid_pion_log_traitant = pMaintenance_->GetID();
     asn().m.etatPresent         = 1;
     asn().etat                  = (ASN1T_EnumLogMaintenanceHandlingStatus)nState_;
 }
@@ -186,5 +186,5 @@ const PHY_MaintenanceComposanteState& PHY_MaintenanceConsign_ABC::GetComposanteS
 PHY_RoleInterface_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() const
 {
     assert( pMaintenance_ );
-    return *pMaintenance_;
+    return pMaintenance_->GetRole< PHY_RoleInterface_Maintenance >();
 }

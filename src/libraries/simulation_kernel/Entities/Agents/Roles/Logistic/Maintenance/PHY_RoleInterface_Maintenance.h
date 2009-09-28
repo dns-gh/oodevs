@@ -75,7 +75,6 @@ public:
 
     //! @name Tools
     //@{
-    virtual const MT_Vector2D&  GetPosition             () const = 0;
     virtual PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const = 0;          
     virtual PHY_ComposantePion* GetAvailableRepairer    ( const PHY_Breakdown& breakdown ) const = 0;
     virtual bool                HasUsableRepairer       ( const PHY_Breakdown& breakdown ) const = 0;

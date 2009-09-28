@@ -20,7 +20,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -362,16 +361,6 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Maintenance::GetPosition
-// Created: NLD 2004-12-24
-// -----------------------------------------------------------------------------
-const MT_Vector2D& PHY_RolePionLOG_Maintenance::GetPosition() const
-{
-
-    return pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAutomate
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
@@ -504,7 +493,7 @@ PHY_MaintenanceComposanteState* PHY_RolePionLOG_Maintenance::HandleComposanteFor
         return 0;
 
     PHY_MaintenanceComposanteState* pComposanteState = new PHY_MaintenanceComposanteState( pion, composante );
-    PHY_MaintenanceTransportConsign* pConsign = new PHY_MaintenanceTransportConsign( *this, *pComposanteState );
+    PHY_MaintenanceTransportConsign* pConsign = new PHY_MaintenanceTransportConsign( pion_, *pComposanteState );
     InsertConsign( *pConsign );
     return pComposanteState;
 }
@@ -518,7 +507,7 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( PHY_MaintenanceC
     if ( !bSystemEnabled_ || ( composanteState.GetComposanteBreakdown().AffectMobility() && !HasUsableHauler( composanteState.GetComposante().GetType() ) ) )
         return false;
 
-    PHY_MaintenanceTransportConsign* pConsign = new PHY_MaintenanceTransportConsign( *this, composanteState );
+    PHY_MaintenanceTransportConsign* pConsign = new PHY_MaintenanceTransportConsign( pion_, composanteState );
     InsertConsign( *pConsign );
     return true;
 }
@@ -553,7 +542,7 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComp
     if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
         return false;
 
-    PHY_MaintenanceRepairConsign* pConsign = new PHY_MaintenanceRepairConsign( *this, composanteState );
+    PHY_MaintenanceRepairConsign* pConsign = new PHY_MaintenanceRepairConsign( pion_, composanteState );
     InsertConsign( *pConsign );
     return true;
 }

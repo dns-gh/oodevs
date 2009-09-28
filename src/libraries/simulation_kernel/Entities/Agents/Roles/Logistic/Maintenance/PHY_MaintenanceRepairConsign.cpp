@@ -10,8 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "PHY_MaintenanceRepairConsign.h"
 #include "PHY_RoleInterface_Maintenance.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
@@ -24,8 +26,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceRepairConsign, "PHY_MaintenanceRepairCon
 // Name: PHY_MaintenanceRepairConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign( PHY_RoleInterface_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState )
-    : PHY_MaintenanceConsign_ABC( maintenance, composanteState )
+PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
+    : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
     , pRepairer_                ( 0 )
 {
     EnterStateWaitingForParts();
@@ -199,7 +201,7 @@ void PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar()
     
     GetPionMaintenance().StopUsingForLogistic( *pRepairer_ );
     pRepairer_ = 0;
-    nTimer_    = pComposanteState_->ApproximateTravelTime( GetPionMaintenance().GetPosition(), pComposanteState_->GetPionPosition() );
+    nTimer_    = pComposanteState_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetPionPosition() );
     SetState( eGoingBackToWar );
 }
 

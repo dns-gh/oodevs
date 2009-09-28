@@ -24,7 +24,7 @@ class PHY_MaintenanceTransportConsign : public PHY_MaintenanceConsign_ABC
 {
 
 public:
-             PHY_MaintenanceTransportConsign( PHY_RoleInterface_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState );
+             PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState );
              PHY_MaintenanceTransportConsign();
     virtual ~PHY_MaintenanceTransportConsign();
 

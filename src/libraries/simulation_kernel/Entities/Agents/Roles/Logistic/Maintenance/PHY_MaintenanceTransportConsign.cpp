@@ -10,12 +10,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "PHY_MaintenanceTransportConsign.h"
 #include "PHY_RoleInterface_Maintenance.h"
 #include "PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceTransportConsign, "PHY_MaintenanceTransportConsign" )
@@ -24,8 +26,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceTransportConsign, "PHY_MaintenanceTransp
 // Name: PHY_MaintenanceTransportConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( PHY_RoleInterface_Maintenance& maintenance, PHY_MaintenanceComposanteState& composanteState )
-    : PHY_MaintenanceConsign_ABC( maintenance, composanteState )
+PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
+    : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
     , pCarrier_                 ( 0 )
 {
     const PHY_Breakdown& breakdown = composanteState.GetComposanteBreakdown();
@@ -142,7 +144,7 @@ void PHY_MaintenanceTransportConsign::EnterStateGoingFrom()
     assert( !pCarrier_ );
     
     SetState( eGoingFrom );
-    nTimer_ = pComposanteState_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), GetPionMaintenance().GetPosition() );
+    nTimer_ = pComposanteState_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     pComposanteState_->NotifyHandledByMaintenance();
 }
 
@@ -156,7 +158,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
     assert( pCarrier_ );
     
     SetState( eCarrierGoingTo );
-    nTimer_ = pCarrier_->ApproximateTravelTime( GetPionMaintenance().GetPosition(), pComposanteState_->GetComposantePosition() );
+    nTimer_ = pCarrier_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetComposantePosition() );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +185,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
     assert( pCarrier_ );
     
     SetState( eCarrierGoingFrom );
-    nTimer_ = pCarrier_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), GetPionMaintenance().GetPosition() );
+    nTimer_ = pCarrier_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +233,7 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
     assert( pComposanteState_ );    
     
     pComposanteState_->NotifyDiagnosed();
-    pComposanteState_->SetComposantePosition( GetPionMaintenance().GetPosition() );
+    pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     nTimer_ = 0;
 
     if( GetPionMaintenance().GetAutomate().MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
