@@ -19,6 +19,9 @@ class MIL_Object_ABC;
 class MIL_Army;
 class NET_ASN_MsgUnitAttributes;
 
+namespace surrender
+{
+
 // =============================================================================
 // @class  PHY_RoleInterface_Surrender
 // Created: JVT 2004-08-03
@@ -69,6 +72,8 @@ private:
 	}
 	//@}
 };
+
+} // namespace surrender
 
 #endif // __PHY_RoleInterface_Surrender_h_
 

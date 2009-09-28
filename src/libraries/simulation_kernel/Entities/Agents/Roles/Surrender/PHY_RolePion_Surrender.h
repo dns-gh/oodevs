@@ -18,6 +18,8 @@ class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
 class MIL_Army;
 
+namespace surrender
+{
 // =============================================================================
 // @class  PHY_RolePion_Surrender
 // Created: JVT 2004-08-03
@@ -74,5 +76,7 @@ private:
       	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
 
 };
+
+} // namespace surrender
 
 #endif // __PHY_RolePion_Surrender_h_

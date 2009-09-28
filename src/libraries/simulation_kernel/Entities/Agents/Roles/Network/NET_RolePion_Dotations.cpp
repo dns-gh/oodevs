@@ -104,7 +104,7 @@ bool NET_RolePion_Dotations::DataUpdated() const
         || pPion_->GetRole< transport::PHY_RoleAction_Transport  >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_HumanFactors      >().HasChanged()
         || pPion_->GetRole< transport::PHY_RoleAction_Loading              >().HasChanged()
-        || pPion_->GetRole< PHY_RoleInterface_Surrender         >().HasChanged()
+        || pPion_->GetRole< surrender::PHY_RoleInterface_Surrender         >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_Refugee           >().HasChanged()
         || pPion_->GetRole< PHY_RoleInterface_Perceiver         >().HasRadarStateChanged() 
         || pPion_->GetRole< DEC_RolePion_Decision               >().HasStateChanged()
@@ -166,7 +166,7 @@ void NET_RolePion_Dotations::SendChangedState() const
             || pPion_->GetRole< PHY_RoleInterface_Perceiver     >().HasChanged()
             || pPion_->GetRole< transport::PHY_RoleAction_Loading          >().HasChanged()
             || pPion_->GetRole< transport::PHY_RoleInterface_Transported   >().HasChanged()
-            || pPion_->GetRole< PHY_RoleInterface_Surrender     >().HasChanged()
+            || pPion_->GetRole< surrender::PHY_RoleInterface_Surrender     >().HasChanged()
             || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
             pPion_->GetRole< PHY_RoleInterface_Perceiver        >().SendDebugState(); //$$ BOF
     }
@@ -191,7 +191,7 @@ void NET_RolePion_Dotations::SendChangedState() const
     pPion_->GetRole< transport::PHY_RoleInterface_Transported      >().SendChangedState( msg );
     pPion_->GetRole< transport::PHY_RoleAction_Transport           >().SendChangedState( msg );
     pPion_->GetRole< PHY_RoleInterface_Perceiver        >().SendChangedState( msg );
-    pPion_->GetRole< PHY_RoleInterface_Surrender        >().SendChangedState( msg );
+    pPion_->GetRole< surrender::PHY_RoleInterface_Surrender        >().SendChangedState( msg );
     pPion_->GetRole< PHY_RoleInterface_Refugee          >().SendChangedState( msg );
     pPion_->GetRole< DEC_RolePion_Decision              >().SendChangedState( msg ); // Dec states
 
@@ -258,7 +258,7 @@ void NET_RolePion_Dotations::SendFullState() const
     pPion_->GetRole< transport::PHY_RoleInterface_Transported      >().SendFullState( msg );
     pPion_->GetRole< transport::PHY_RoleAction_Transport           >().SendFullState( msg );
     pPion_->GetRole< PHY_RoleInterface_Perceiver        >().SendFullState( msg );
-    pPion_->GetRole< PHY_RoleInterface_Surrender        >().SendFullState( msg );
+    pPion_->GetRole< surrender::PHY_RoleInterface_Surrender        >().SendFullState( msg );
     pPion_->GetRole< PHY_RoleInterface_Refugee          >().SendFullState( msg );
     SendMsg( msg );
 

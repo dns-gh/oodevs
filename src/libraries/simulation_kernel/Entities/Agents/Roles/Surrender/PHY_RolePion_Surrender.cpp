@@ -13,14 +13,16 @@
 #include "PHY_RolePion_Surrender.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
+#include "SurrenderNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
+BOOST_CLASS_EXPORT_GUID( surrender::PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
+
+namespace surrender
+{
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ )
@@ -125,8 +127,7 @@ bool PHY_RolePion_Surrender::Capture( const MIL_AgentPion& pionTakingPrisoner )
     pPrison_     = 0;
     bPrisoner_   = true;
     bHasChanged_ = true;
-    pion_.GetRole< dotation::PHY_RoleInterface_Dotations   >().NotifyCaptured();
-    pion_.GetRole< PHY_RoleInterface_Composantes >().NotifyCaptured();
+    pion_.Apply(&SurrenderNotificationHandler_ABC::NotifyCaptured);
     return pion_.GetAutomate().NotifyCaptured( pionTakingPrisoner );
 }
 
@@ -142,8 +143,7 @@ bool PHY_RolePion_Surrender::Release()
     pPrison_     = 0;
     bPrisoner_   = false;
     bHasChanged_ = true;
-    pion_.GetRole< dotation::PHY_RoleInterface_Dotations   >().NotifyReleased();
-    pion_.GetRole< PHY_RoleInterface_Composantes >().NotifyReleased();
+    pion_.Apply(&SurrenderNotificationHandler_ABC::NotifyReleased);
     return pion_.GetAutomate().NotifyReleased();
 }
     
@@ -242,3 +242,5 @@ bool PHY_RolePion_Surrender::IsPrisoner() const
 {
     return bPrisoner_;
 }
+
+} // namespace surrender

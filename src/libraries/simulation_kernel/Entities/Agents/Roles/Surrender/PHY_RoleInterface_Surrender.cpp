@@ -12,6 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleInterface_Surrender.h"
 
+namespace surrender
+{
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Surrender constructor
 // Created: JVT 2005-03-31
@@ -29,3 +32,5 @@ PHY_RoleInterface_Surrender::~PHY_RoleInterface_Surrender()
 {
     // NOTHING
 }
+
+} //namespace surrender

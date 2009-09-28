@@ -476,7 +476,7 @@ void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 bool PHY_RoleAction_Moving::CanMove() const
 {
 
-    if( pion_.GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
+    if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         return true;
 
     return      pion_.GetRole< PHY_RoleAction_InterfaceFlying >().CanMove() 
@@ -500,7 +500,7 @@ bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object 
 bool PHY_RoleAction_Moving::HasResources()
 {
 
-    if( pion_.GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
+    if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         return true;
     
     // Reservation des consommations du pion + renforts

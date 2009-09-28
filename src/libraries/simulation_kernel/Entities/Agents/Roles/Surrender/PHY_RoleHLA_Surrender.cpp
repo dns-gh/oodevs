@@ -13,7 +13,10 @@
 #include "PHY_RoleHLA_Surrender.h"
 #include "Network/NET_ASN_Messages.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleHLA_Surrender, "PHY_RoleHLA_Surrender" )
+BOOST_CLASS_EXPORT_GUID( surrender::PHY_RoleHLA_Surrender, "PHY_RoleHLA_Surrender" )
+
+namespace surrender
+{
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Surrender constructor
@@ -110,3 +113,5 @@ const MIL_Army* PHY_RoleHLA_Surrender::GetArmySurrenderedTo() const
 {
     return 0;
 }
+
+} //namespace surrender

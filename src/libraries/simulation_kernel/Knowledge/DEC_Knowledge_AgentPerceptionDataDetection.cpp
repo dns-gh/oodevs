@@ -160,7 +160,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Update( const MIL_Agent_ABC& ag
     vDirection_ = roleLocation.GetDirection   ();
     rSpeed_     = roleLocation.GetCurrentSpeed();
 
-    const PHY_RoleInterface_Surrender& roleSurrender = agentPerceived.GetRole< PHY_RoleInterface_Surrender >();
+    const surrender::PHY_RoleInterface_Surrender& roleSurrender = agentPerceived.GetRole< surrender::PHY_RoleInterface_Surrender >();
     pArmySurrenderedTo_ = roleSurrender.GetArmySurrenderedTo();
     bPrisoner_          = roleSurrender.IsPrisoner          ();
 

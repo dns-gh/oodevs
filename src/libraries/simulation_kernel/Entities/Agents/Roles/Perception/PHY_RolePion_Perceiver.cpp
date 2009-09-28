@@ -601,7 +601,7 @@ bool PHY_RolePion_Perceiver::CanPerceive() const
 
     return !pion_.IsDead() 
         && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported()
-        && !pion_.GetRole< PHY_RoleInterface_Surrender >().IsSurrendered();
+        && !pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered();
 }
 
 // =============================================================================
@@ -791,7 +791,7 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
         && !roleComposantes.HasChanged()
         && !pion_.GetRole< transport::PHY_RoleAction_Loading   >().HasChanged()
         && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
-        && !pion_.GetRole< PHY_RoleInterface_Surrender   >().HasChanged()
+        && !pion_.GetRole< surrender::PHY_RoleInterface_Surrender   >().HasChanged()
         && !HasChanged() )
         return;
 
@@ -821,7 +821,7 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
     if(    !roleComposantes.HasChanged()
         && !pion_.GetRole< transport::PHY_RoleAction_Loading   >().HasChanged()
         && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
-        && !pion_.GetRole< PHY_RoleInterface_Surrender   >().HasChanged() )
+        && !pion_.GetRole< surrender::PHY_RoleInterface_Surrender   >().HasChanged() )
         return;
 
     radars_.clear();

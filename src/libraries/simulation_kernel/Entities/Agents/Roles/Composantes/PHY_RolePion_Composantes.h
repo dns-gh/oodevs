@@ -15,6 +15,7 @@
 #include "PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
+#include "SurrenderNotificationHandler_ABC.h"
 
 namespace xml
 {
@@ -46,6 +47,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< OnComponentComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
+                               , public surrender::SurrenderNotificationHandler_ABC
 {
 
 

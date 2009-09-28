@@ -134,12 +134,6 @@ public:
     virtual void                GetConvoyTransportersUse     ( T_ComposanteUseMap& composanteUse ) const = 0;
     //@}
 
-    //! @name Prisoners
-    //@{
-    virtual void NotifyCaptured() = 0;
-    virtual void NotifyReleased() = 0;
-    //@}
-
     //! @name Operations
     //@{
     virtual const PHY_Volume*          GetSignificantVolume       ( const PHY_SensorTypeAgent& sensorType ) const = 0;

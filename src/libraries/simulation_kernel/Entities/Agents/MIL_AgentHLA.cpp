@@ -51,7 +51,7 @@ MIL_AgentHLA::MIL_AgentHLA( uint nID, const ObjectIdentifier& objectId, HLA_Inte
     RegisterRole< PHY_RoleHLA_NBC            >();
     RegisterRole< PHY_RoleHLA_Communications >();
     RegisterRole< PHY_RoleHLA_Perceiver      >();
-    RegisterRole< PHY_RoleHLA_Surrender      >();
+    RegisterRole< surrender::PHY_RoleHLA_Surrender      >();
     RegisterRole< PHY_RoleHLA_Refugee        >();
     RegisterRole< PHY_RoleHLA_Population     >();
 }
@@ -188,7 +188,7 @@ void MIL_AgentHLA::Deserialize( const AttributeIdentifier& attributeID, Deserial
         GetRole< PHY_RoleHLA_NBC >           ().ChangeStatus( statuses );
         GetRole< PHY_RoleHLA_Posture >       ().ChangeStatus( statuses );
         GetRole< PHY_RoleHLA_Perceiver >     ().ChangeStatus( statuses );
-        GetRole< PHY_RoleHLA_Surrender >     ().ChangeStatus( statuses );
+        GetRole< surrender::PHY_RoleHLA_Surrender >     ().ChangeStatus( statuses );
         GetRole< PHY_RoleHLA_Refugee >       ().ChangeStatus( statuses );
         GetRole< PHY_RoleHLA_Population >    ().ChangeStatus( statuses );
     }

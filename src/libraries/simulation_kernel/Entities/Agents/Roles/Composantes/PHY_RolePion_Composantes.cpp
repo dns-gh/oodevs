@@ -1307,7 +1307,7 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
 
 
     if( target.IsAFriend( pion_.GetArmy() ) == eTristate_True
-        ||  pion_.GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
+        ||  pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         return 0.;
 
     // Target is dead

@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "PHY_RoleInterface_Dotations.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "SurrenderNotificationHandler_ABC.h"
 
 
 namespace xml
@@ -42,6 +43,7 @@ namespace dotation
 // =============================================================================
 class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
+							 , public surrender::SurrenderNotificationHandler_ABC
 {
 
 public:

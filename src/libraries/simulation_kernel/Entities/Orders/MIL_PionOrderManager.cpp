@@ -52,7 +52,7 @@ void MIL_PionOrderManager::OnReceiveMission( const ASN1T_MsgUnitOrder& asnMsg )
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_cannot_receive_order );
 
-    if( pion_.GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
+    if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_surrendered );
 
     // Instanciate and check the new mission
@@ -80,7 +80,7 @@ void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 // -----------------------------------------------------------------------------
 void MIL_PionOrderManager::OnReceiveFragOrder( const ASN1T_MsgFragOrder& asn )
 {
-    if( pion_.GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
+    if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_surrendered );
 
     if( pion_.GetAutomate().IsEngaged() )
@@ -131,7 +131,7 @@ bool MIL_PionOrderManager::IsMissionAvailable( const MIL_MissionType_ABC& missio
 // -----------------------------------------------------------------------------
 bool MIL_PionOrderManager::CanRelievePion( const MIL_AgentPion& pion ) const
 {
-    if( pion_.GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
+    if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         return false;
 
     const MIL_MissionType_ABC* pRelievedMissionType = pion.GetOrderManager().GetCurrentMissionType();

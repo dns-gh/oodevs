@@ -41,7 +41,7 @@ namespace
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Prisoners_CaptureAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
-    if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Capture( callerAgent ) )
+    if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Capture( callerAgent ) )
         callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
 }
    
@@ -53,7 +53,7 @@ void DEC_ActionFunctions::Prisoners_Unload( MIL_AgentPion& callerAgent, DEC_Know
 {
     if( pKnowledge )
     {
-        pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Release();
+        pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Release();
         callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
     }
 }
@@ -69,7 +69,7 @@ void DEC_ActionFunctions::Prisoners_UnloadInCamp( MIL_AgentPion& callerAgent, DE
         return;
 
     callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
-    pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().Imprison( *pCampKnowledge->GetObjectKnown() );
+    pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Imprison( *pCampKnowledge->GetObjectKnown() );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return false;
     else
-        return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() ) ;
+        return pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().IsImprisoned( *pCampKnowledge->GetObjectKnown() ) ;
 }
 
 // -----------------------------------------------------------------------------

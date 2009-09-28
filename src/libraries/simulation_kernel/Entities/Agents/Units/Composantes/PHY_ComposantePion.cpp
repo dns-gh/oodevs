@@ -683,7 +683,7 @@ bool PHY_ComposantePion::CanBeUsed() const
     assert( pRole_ );
 
     const transport::PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >();
-    if( roleTransported.IsTransported() || pRole_->GetPion().GetRole< PHY_RoleInterface_Surrender >().IsSurrendered() )
+    if( roleTransported.IsTransported() || pRole_->GetPion().GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         return false;
 
     if( bLoadable_ )
@@ -740,7 +740,7 @@ bool PHY_ComposantePion::CanFireWhenUnloaded() const
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::Repair()
 {
-    if( pRole_->GetPion().GetRole< PHY_RoleInterface_Surrender >().IsPrisoner() )
+    if( pRole_->GetPion().GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner() )
         ReinitializeState( PHY_ComposanteState::prisoner_ );
     else
         ReinitializeState( PHY_ComposanteState::undamaged_ );

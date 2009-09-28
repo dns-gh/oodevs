@@ -18,6 +18,10 @@
 // @class  PHY_RoleHLA_Surrender
 // Created: JVT 2004-08-03
 // =============================================================================
+
+namespace surrender
+{
+
 class PHY_RoleHLA_Surrender : public PHY_RoleInterface_Surrender
 {
 
@@ -67,4 +71,5 @@ private:
     bool bPrisoner_;
 };
 
+} // namespace surrender
 #endif // __PHY_RoleHLA_Surrender_h_
