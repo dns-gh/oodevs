@@ -40,6 +40,7 @@ void DefaultComposantesAbleToBeFiredComputer::Reset( bool bFireOnlyOnMajorCompos
 {
     bFireOnlyOnMajorComposantes_ = bFireOnlyOnMajorComposantes;
     availableTargets_.clear();
+    targets_.clear();
 }
 
 // -----------------------------------------------------------------------------
