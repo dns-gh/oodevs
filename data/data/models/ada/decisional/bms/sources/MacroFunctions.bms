@@ -660,3 +660,9 @@ do
         doHalt()
     end )
 end
+
+behavior_model = 
+{
+    StartTask = StartEvent,
+    StopTasks = StopEvents
+}
