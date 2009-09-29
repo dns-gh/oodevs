@@ -43,6 +43,7 @@
 #include "simulation_kernel/TransportWeightComputer_ABC.h"
 
 #include "simulation_kernel/OnComponentComputer_ABC.h"
+#include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
@@ -1723,6 +1724,22 @@ void PHY_RolePion_Composantes::Execute( OnComponentComputer_ABC& algorithm ) con
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         algorithm.ApplyOnComponent( **it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: MGD 2009-09-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Execute( OnComponentLendedFunctorComputer_ABC& algorithm ) const
+{
+    for( CIT_LoanMap itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
+    {
+        const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
+        {
+            algorithm.ApplyOnLendedComponent( **it );
+        }
+    }
 }
 
 void PHY_RolePion_Composantes::LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )

@@ -48,47 +48,6 @@ inline void PHY_RolePion_Composantes::Apply( T& functor ) const
         functor( **it );
 }
 
-// -----------------------------------------------------------------------------
-// Name: template< typename T > void PHY_RolePion_Composantes::GetComposantesUse
-// Created: NLD 2006-08-02
-// -----------------------------------------------------------------------------
-template< typename T > 
-inline void PHY_RolePion_Composantes::GetComposantesUse( T_ComposanteUseMap& composanteUse, T& functor ) const
-{
-    composanteUse.clear();
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        const PHY_ComposantePion& comp = **it;
-        if( functor( comp.GetType() ) )
-        {
-            T_ComposanteUse& data = composanteUse[ &comp.GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( comp.GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !functor( comp ) )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-
-    for( CIT_LoanMap itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
-    {
-        const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;
-        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
-        {
-            const PHY_ComposantePion& comp = **it;
-            if( functor( comp.GetType() ) )
-            {
-                T_ComposanteUse& data = composanteUse[ &comp.GetType() ];
-                ++ data.nNbrTotal_;
-                ++ data.nNbrLent_;
-            }
-        }
-    }
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::LendComposantes

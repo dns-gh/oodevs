@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __DefaultDotationComputer_h_
-#define __DefaultDotationComputer_h_
+#ifndef __DefaultComponentLendedFunctorComputer_h_
+#define __DefaultComponentLendedFunctorComputer_h_
 
-#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 
 // =============================================================================
 /** @class  DefaultDotationcomputer
@@ -18,20 +18,20 @@
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class DefaultComponentFunctorComputer : public OnComponentFunctorComputer_ABC
+class DefaultComponentLendedFunctorComputer : public OnComponentLendedFunctorComputer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultComponentFunctorComputer();
-    virtual ~DefaultComponentFunctorComputer();
+             DefaultComponentLendedFunctorComputer();
+    virtual ~DefaultComponentLendedFunctorComputer();
     //@}
 
     //! @name Operations
     //@{
     virtual void Reset( OnComponentFunctor_ABC& componentOperator );
-    virtual void ApplyOnComponent( PHY_ComposantePion& component );
+    virtual void ApplyOnLendedComponent( PHY_ComposantePion& component );
     //@}
 
 private:
@@ -41,4 +41,4 @@ private:
     //@}
 };
 
-#endif // __DefaultDotationComputer_h_
+#endif // __DefaultComponentLendedFunctorComputer_h_

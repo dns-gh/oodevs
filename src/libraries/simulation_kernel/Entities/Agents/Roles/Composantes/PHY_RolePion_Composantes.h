@@ -35,6 +35,7 @@ namespace transport
 }
 
 class OnComponentComputer_ABC;
+class OnComponentLendedFunctorComputer_ABC;
 
 // =============================================================================
 // @class  PHY_RolePion_Composantes
@@ -45,6 +46,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
 							   , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
 							   , public tools::AlgorithmModifier_ABC< transport::TransportWeightComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< OnComponentComputer_ABC >
+                               , public tools::AlgorithmModifier_ABC< OnComponentLendedFunctorComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , public surrender::SurrenderNotificationHandler_ABC
@@ -69,12 +71,12 @@ public:
     //! @name Operations 
     //@{
     template< typename T > void                Apply              ( T& t ) const;
-    template< typename T > void                GetComposantesUse  ( T_ComposanteUseMap& composanteUse, T& t ) const;
 
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportWeightComputer_ABC& algorithm ) const;
     virtual void Execute( OnComponentComputer_ABC& algorithm ) const;
+    virtual void Execute( OnComponentLendedFunctorComputer_ABC& algorithm ) const;
 
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 

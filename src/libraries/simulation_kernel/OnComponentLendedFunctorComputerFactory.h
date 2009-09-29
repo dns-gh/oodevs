@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __OnComponentFunctorComputerFactory_h_
-#define __OnComponentFunctorComputerFactory_h_
+#ifndef __OnComponentLendedFunctorComputerFactory_h_
+#define __OnComponentLendedFunctorComputerFactory_h_
 
-#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
 
 class OnComponentFunctor_ABC;
 
@@ -20,23 +20,23 @@ class OnComponentFunctor_ABC;
 */
 // Created: MGD 2009-08-13
 // =============================================================================
-class OnComponentFunctorComputerFactory : public OnComponentFunctorComputerFactory_ABC
+class OnComponentLendedFunctorComputerFactory : public OnComponentLendedFunctorComputerFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OnComponentFunctorComputerFactory();
-    virtual ~OnComponentFunctorComputerFactory();
+             OnComponentLendedFunctorComputerFactory();
+    virtual ~OnComponentLendedFunctorComputerFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual OnComponentFunctorComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const;
+    virtual OnComponentLendedFunctorComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const;
     //@}
 
 private:
-    std::auto_ptr< OnComponentFunctorComputer_ABC > pDotationComputer_;
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > pDotationComputer_;
 };
 
-#endif // __OnComponentFunctorComputerFactory_h_
+#endif // __DotationComputerFactory_h_

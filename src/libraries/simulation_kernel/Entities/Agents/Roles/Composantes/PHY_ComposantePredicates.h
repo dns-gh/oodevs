@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 #include "OnComponentFunctor_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
@@ -205,10 +206,21 @@ public:
 };
 
 // =============================================================================
+// @class  ComposanteUsePredicate_ABC
+// Created: MGD 2009-09-28
+// =============================================================================
+class ComposanteUsePredicate_ABC
+{
+public:
+    virtual bool operator() ( const PHY_ComposantePion& composante ) = 0;
+    virtual bool operator() ( const PHY_ComposanteTypePion& composanteType ) = 0;
+};
+
+// =============================================================================
 // @class  PHY_ComposanteUsePredicate
 // Created: NLD 2006-08-02
 // =============================================================================
-class PHY_ComposanteUsePredicate
+class PHY_ComposanteUsePredicate : public ComposanteUsePredicate_ABC
 {
 public:
     //! @name Types
@@ -244,7 +256,7 @@ private:
 // Created: NLD 2006-08-02
 // =============================================================================
 template< typename T >
-class PHY_ComposanteUsePredicate1
+class PHY_ComposanteUsePredicate1 : public ComposanteUsePredicate_ABC
 {
 public:
     //! @name Types
@@ -275,6 +287,68 @@ private:
     const T&                        param_;
     const T_ComposantePredicate     compPredicate_;
     const T_ComposanteTypePredicate compTypePredicate_;
+};
+
+// =============================================================================
+// @class  GetComponentUseFunctor
+// Created: MGD 2009-09-28
+// =============================================================================
+class GetComponentUseFunctor : public OnComponentFunctor_ABC
+{
+
+public:
+    GetComponentUseFunctor( ComposanteUsePredicate_ABC& functor, PHY_RolePion_Composantes::T_ComposanteUseMap& result )
+        : functor_( functor )
+        , result_( result )
+    {
+    }
+
+    void operator() ( PHY_ComposantePion& composante )
+    {
+        if( functor_( composante.GetType() ) )
+        {
+            PHY_RolePion_Composantes::T_ComposanteUse& data = result_[ &composante.GetType() ];
+            ++ data.nNbrTotal_;
+
+            if( composante.GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !functor_( composante ) )
+                    ++ data.nNbrUsed_;
+            }
+        }
+    }
+
+    ComposanteUsePredicate_ABC& functor_;
+    PHY_RolePion_Composantes::T_ComposanteUseMap& result_;
+};
+
+// =============================================================================
+// @class  HasUsableComponentFunctor
+// Created: MGD 2009-09-28
+// =============================================================================
+class GetComponentLendedUseFunctor : public OnComponentFunctor_ABC
+{
+
+public:
+    GetComponentLendedUseFunctor( ComposanteUsePredicate_ABC& functor, PHY_RolePion_Composantes::T_ComposanteUseMap& result )
+        : functor_( functor )
+        , result_( result )
+    {
+    }
+
+    void operator() ( PHY_ComposantePion& composante )
+    {
+        if( functor_( composante.GetType() ) )
+        {
+            PHY_RolePion_Composantes::T_ComposanteUse& data = result_[ &composante.GetType() ];
+            ++ data.nNbrTotal_;
+            ++ data.nNbrLent_;
+        }
+    }
+
+    ComposanteUsePredicate_ABC& functor_;
+    PHY_RolePion_Composantes::T_ComposanteUseMap& result_;
 };
 
 #endif // __PHY_ComposantePredicates_h_

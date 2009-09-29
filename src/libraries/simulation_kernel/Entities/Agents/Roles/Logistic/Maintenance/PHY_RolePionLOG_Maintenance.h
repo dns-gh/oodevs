@@ -26,6 +26,7 @@ class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
 
 class OnComponentFunctorComputerFactory_ABC;
+class OnComponentLendedFunctorComputerFactory_ABC;
 
 // =============================================================================
 // @class  PHY_RolePionLOG_Maintenance
@@ -35,7 +36,7 @@ class PHY_RolePionLOG_Maintenance : public PHY_RoleInterface_Maintenance
 {
 
 public:
-    explicit PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory );
+    explicit PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory, const OnComponentLendedFunctorComputerFactory_ABC& onComponentLendedFunctorComputerFactory );
     virtual ~PHY_RolePionLOG_Maintenance();
 
     //! @name CheckPoints
@@ -125,6 +126,7 @@ private:
           T_MaintenanceConsigns       consigns_;
 
     const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory_;
+    const OnComponentLendedFunctorComputerFactory_ABC& onComponentLendedFunctorComputerFactory_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ );

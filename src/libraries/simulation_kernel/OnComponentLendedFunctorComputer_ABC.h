@@ -7,31 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __OnComponentFunctorComputerFactory_ABC_h_
-#define __OnComponentFunctorComputerFactory_ABC_h_
+#ifndef __OnComponentLendFunctorComputer_ABC_h_
+#define __OnComponentLendFunctorComputer_ABC_h_
 
 class OnComponentFunctor_ABC;
-class OnComponentFunctorComputer_ABC;
+class PHY_ComposantePion;
 // =============================================================================
-/** @class  DotationComputerFactory_ABC
-    @brief  DotationComputerFactory_ABC
+/** @class  Dotationcomputer_ABC
+@brief  Dotationcomputer_ABC
 */
-// Created: MGD 2009-08-13
+// Created: MGD 2009-09-15
 // =============================================================================
-class OnComponentFunctorComputerFactory_ABC : private boost::noncopyable
+class OnComponentLendedFunctorComputer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OnComponentFunctorComputerFactory_ABC();
-    virtual ~OnComponentFunctorComputerFactory_ABC();
+    OnComponentLendedFunctorComputer_ABC();
+    virtual ~OnComponentLendedFunctorComputer_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual OnComponentFunctorComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const = 0;
+    virtual void Reset( OnComponentFunctor_ABC& componentOperator ) = 0;
+    virtual void ApplyOnLendedComponent( PHY_ComposantePion& component ) = 0;
     //@}
 };
 
-#endif // __OnComponentFunctorComputerFactory_ABC_h_
+#endif // __DotationComputer_ABC_h_

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DotationComputer_ABC_h_
-#define __DotationComputer_ABC_h_
+#ifndef __OnComponentFunctorComputer_ABC_h_
+#define __OnComponentFunctorComputer_ABC_h_
 
 #include "simulation_kernel/OnComponentComputer_ABC.h"
 
@@ -36,4 +36,4 @@ public:
     //@}
 };
 
-#endif // __DotationComputer_ABC_h_
+#endif // __OnComponentFunctorComputer_ABC_h_

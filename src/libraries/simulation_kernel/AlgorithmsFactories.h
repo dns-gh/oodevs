@@ -45,6 +45,7 @@ namespace transport
 }
 
 class OnComponentFunctorComputerFactory_ABC;
+class OnComponentLendedFunctorComputerFactory_ABC;
 
 // =============================================================================
 /** @class  AlgorithmsFactories
@@ -74,6 +75,7 @@ public:
     std::auto_ptr< transport::TransportComputerFactory_ABC > transportComputerFactory_;
     std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
     std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
+    std::auto_ptr< OnComponentLendedFunctorComputerFactory_ABC > onComponentLendedFunctorComputerFactory_;
     //@}
 };
 

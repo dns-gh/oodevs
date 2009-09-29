@@ -9,14 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 
-#include "simulation_kernel/DefaultComponentFunctorComputer.h"
+#include "simulation_kernel/DefaultComponentLendedFunctorComputer.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DefaultDotationComputer::DefaultDotationComputer
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-DefaultComponentFunctorComputer::DefaultComponentFunctorComputer()
+DefaultComponentLendedFunctorComputer::DefaultComponentLendedFunctorComputer()
 {
 
 }
@@ -25,7 +25,7 @@ DefaultComponentFunctorComputer::DefaultComponentFunctorComputer()
 // Name: DefaultDotationComputer::~DefaultDotationComputer
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-DefaultComponentFunctorComputer::~DefaultComponentFunctorComputer()
+DefaultComponentLendedFunctorComputer::~DefaultComponentLendedFunctorComputer()
 {
 
 }
@@ -34,7 +34,7 @@ DefaultComponentFunctorComputer::~DefaultComponentFunctorComputer()
 // Name: DefaultDotationComputer::ApplyOnConpenent
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-void DefaultComponentFunctorComputer::Reset( OnComponentFunctor_ABC& componentOperator )
+void DefaultComponentLendedFunctorComputer::Reset( OnComponentFunctor_ABC& componentOperator )
 {
     pComponentOperator = &componentOperator;
 }
@@ -43,7 +43,7 @@ void DefaultComponentFunctorComputer::Reset( OnComponentFunctor_ABC& componentOp
 // Name: DefaultDotationComputer::ApplyOnConpenent
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-void DefaultComponentFunctorComputer::ApplyOnComponent( PHY_ComposantePion& component )
+void DefaultComponentLendedFunctorComputer::ApplyOnLendedComponent( PHY_ComposantePion& component )
 {
     (*pComponentOperator)( component );
 }

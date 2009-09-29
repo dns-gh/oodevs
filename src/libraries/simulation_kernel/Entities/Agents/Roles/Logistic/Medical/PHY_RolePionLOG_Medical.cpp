@@ -33,6 +33,8 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Medical, "PHY_RolePionLOG_Medical" )
 
@@ -41,8 +43,10 @@ void save_construct_data( Archive& archive, const PHY_RolePionLOG_Medical* role,
 {
     MIL_AgentPionLOG_ABC* const pion = &role->pion_;
     const OnComponentFunctorComputerFactory_ABC* const onComponentFunctorComputerFactory = &role->onComponentFunctorComputerFactory_;
+    const OnComponentLendedFunctorComputerFactory_ABC* const onComponentLendedFunctorComputerFactory = &role->onComponentLendedFunctorComputerFactory_;
     archive << pion
-            << onComponentFunctorComputerFactory;
+        << onComponentFunctorComputerFactory
+        << onComponentLendedFunctorComputerFactory;
 }
 
 template< typename Archive >
@@ -50,18 +54,21 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const
 {
 	MIL_AgentPionLOG_ABC* pion;
     OnComponentFunctorComputerFactory_ABC* onComponentFunctorComputerFactory;
+    OnComponentLendedFunctorComputerFactory_ABC* onComponentLendedFunctorComputerFactory;
     archive >> pion
-        >> onComponentFunctorComputerFactory;
-    ::new( role )PHY_RolePionLOG_Medical( *pion, *onComponentFunctorComputerFactory );
+        >> onComponentFunctorComputerFactory
+        >> onComponentLendedFunctorComputerFactory;
+    ::new( role )PHY_RolePionLOG_Medical( *pion, *onComponentFunctorComputerFactory, *onComponentLendedFunctorComputerFactory );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory )
+PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory, const OnComponentLendedFunctorComputerFactory_ABC& onComponentLendedFunctorComputerFactory )
     : pion_                  ( pion )
     , onComponentFunctorComputerFactory_( onComponentFunctorComputerFactory )
+    , onComponentLendedFunctorComputerFactory_( onComponentLendedFunctorComputerFactory )
     , bHasChanged_            ( true )
     , bSystemEnabled_         ( false )
     , bSortingFunctionEnabled_( false )
@@ -613,7 +620,10 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const PHY_Human&
 
     PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanEvacuateCasualty, &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );
 
     uint nNbrAvailableAllowedToWork = 0;
     for( PHY_RoleInterface_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -648,7 +658,10 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
 
     PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, &PHY_ComposanteTypePion::CanCollectCasualty, humanState.GetHuman() );
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );   
+    GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) ); 
 
     uint nNbrAvailableAllowedToWork = 0;
     for( PHY_RoleInterface_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -681,7 +694,10 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCo
 
 
     PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanSortHumans, &PHY_ComposanteTypePion::CanSortHumans );
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );
 
     uint nNbrDoctorsAvailable = 0;
     for( PHY_RoleInterface_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -720,7 +736,10 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
 
     PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanHealHuman, &PHY_ComposanteTypePion::CanHealHuman, humanState.GetHuman() );
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );
 
     uint nNbrAllowedToWork = 0;
     for( PHY_RoleInterface_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -803,7 +822,10 @@ MT_Float PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredica
 {
 
     PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );
 
     uint nNbrTotal                  = 0;
     uint nNbrAvailableAllowedToWork = 0;
@@ -925,17 +947,29 @@ void PHY_RolePionLOG_Medical::SendFullState() const
 
     PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate1 );
+    GetComponentUseFunctor functorOnComponent( predicate1, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate1, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );
+
     SendComposanteUse( composanteUse, asn().disponibilites_ambulances_releve );
 
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanCollectCasualties, &PHY_ComposanteTypePion::CanCollectCasualties );
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate2 );
+    GetComponentUseFunctor functorOnComponent2( predicate2, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent2 ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent2( predicate2, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent2 ) );
+
     SendComposanteUse( composanteUse, asn().disponibilites_ambulances_ramassage );
 
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate3( &PHY_ComposantePion::CanDiagnoseHumans, &PHY_ComposanteTypePion::CanDiagnoseHumans );
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate3 );
+    GetComponentUseFunctor functorOnComponent3( predicate3, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent3 ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent3( predicate3, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent3 ) );
+
     SendComposanteUse( composanteUse, asn().disponibilites_medecins );
 
     asn.Send();

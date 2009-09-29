@@ -62,7 +62,7 @@ MIL_AgentPion* MIL_AgentTypePionLOGMaintenance::InstanciatePion( uint nID, MIL_A
 void MIL_AgentTypePionLOGMaintenance::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories& algorithmsFactories ) const
 {
     MIL_AgentTypePion::RegisterRoles( pion, algorithmsFactories  );
-    pion.RegisterRole< PHY_RolePionLOG_Maintenance >( static_cast< MIL_AgentPionLOG_ABC& >( pion ), *algorithmsFactories.onComponentFunctorComputerFactory_ );//@TODO remove cast when AgentPionLOG will be deleted
+    pion.RegisterRole< PHY_RolePionLOG_Maintenance >( static_cast< MIL_AgentPionLOG_ABC& >( pion ), *algorithmsFactories.onComponentFunctorComputerFactory_, *algorithmsFactories.onComponentLendedFunctorComputerFactory_ );//@TODO remove cast when AgentPionLOG will be deleted
 }
 
 // -----------------------------------------------------------------------------

@@ -31,6 +31,8 @@
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Maintenance, "PHY_RolePionLOG_Maintenance" )
 
@@ -39,8 +41,10 @@ void save_construct_data( Archive& archive, const PHY_RolePionLOG_Maintenance* r
 {
     MIL_AgentPion* const pion = &role->pion_;
     const OnComponentFunctorComputerFactory_ABC* const onComponentFunctorComputerFactory = &role->onComponentFunctorComputerFactory_;
+    const OnComponentLendedFunctorComputerFactory_ABC* const onComponentLendedFunctorComputerFactory = &role->onComponentLendedFunctorComputerFactory_;
     archive << pion
-            << onComponentFunctorComputerFactory;
+            << onComponentFunctorComputerFactory
+            << onComponentLendedFunctorComputerFactory;
 }
 
 template< typename Archive >
@@ -48,9 +52,11 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, c
 {
 	MIL_AgentPionLOG_ABC* pion;
     OnComponentFunctorComputerFactory_ABC* onComponentFunctorComputerFactory;
+    OnComponentLendedFunctorComputerFactory_ABC* onComponentLendedFunctorComputerFactory;
     archive >> pion
-            >> onComponentFunctorComputerFactory;
-    ::new( role )PHY_RolePionLOG_Maintenance( *pion, *onComponentFunctorComputerFactory );
+            >> onComponentFunctorComputerFactory
+            >> onComponentLendedFunctorComputerFactory;
+    ::new( role )PHY_RolePionLOG_Maintenance( *pion, *onComponentFunctorComputerFactory, *onComponentLendedFunctorComputerFactory );
 }
 
 
@@ -59,9 +65,10 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, c
 // Name: PHY_RolePionLOG_Maintenance constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory )
+PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory, const OnComponentLendedFunctorComputerFactory_ABC& onComponentLendedFunctorComputerFactory )
     : pion_                   ( pion )
     , onComponentFunctorComputerFactory_( onComponentFunctorComputerFactory )
+    , onComponentLendedFunctorComputerFactory_( onComponentLendedFunctorComputerFactory )
     , bHasChanged_            ( true )
     , bSystemEnabled_         ( false )
     , priorities_             ()
@@ -225,7 +232,10 @@ MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePre
 {
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );
 
     uint nNbrTotal                  = 0;
     uint nNbrAvailableAllowedToWork = 0;
@@ -341,7 +351,10 @@ uint PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork( const P
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Breakdown > predicate( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair, breakdown );
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );   
+    GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );   
 
     uint nNbrAvailableAllowedToWork = 0;
     assert( pWorkRate_ );
@@ -570,7 +583,10 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
 
     PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul, composante.GetType() );
-    pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+    GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+    pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+    GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );
 
     uint nNbrHaulersAvailable = 0;
     for( PHY_RoleInterface_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -754,14 +770,22 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
     {
         PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
         PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
-        pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+        GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+        pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+        GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+        pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );
+
         SendComposanteUse( composanteUse, asn().disponibilites_remorqueurs, 0 );
     }
 
     {
         PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
         PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
-        pion_.GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+        GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
+        pion_.Execute( onComponentFunctorComputerFactory_.Create( functorOnComponent ) );
+        GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+        pion_.Execute( onComponentLendedFunctorComputerFactory_.Create( functorOnLendedComponent ) );
+
         SendComposanteUse( composanteUse, asn().disponibilites_reparateurs, pWorkRate_ );
     }
 
