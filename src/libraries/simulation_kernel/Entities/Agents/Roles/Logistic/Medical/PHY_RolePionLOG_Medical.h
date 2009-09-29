@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 #include "PHY_RoleInterface_Medical.h"
+#include "ComponentsChangedNotificationHandler_ABC.h"
 
 class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
@@ -36,6 +37,7 @@ class OnComponentLendedFunctorComputerFactory_ABC;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePionLOG_Medical : public PHY_RoleInterface_Medical
+                              , public component::ComponentsChangedNotificationHandler_ABC
 {
 
 public:
@@ -55,6 +57,8 @@ public:
     virtual void Update        ( bool bIsDead );
     virtual void UpdateLogistic( bool bIsDead );
     virtual void Clean         ();
+
+    virtual void NotifyHasChanged();
 
     virtual void EnableSystem          ();
     virtual void DisableSystem         ();
@@ -149,6 +153,7 @@ private:
 private:
     MIL_AgentPionLOG_ABC&   pion_;
     bool                    bHasChanged_;
+    bool                    bExternalMustChangeState_;
     bool                    bSystemEnabled_;
     bool                    bSortingFunctionEnabled_;
     bool                    bHealingFunctionEnabled_;

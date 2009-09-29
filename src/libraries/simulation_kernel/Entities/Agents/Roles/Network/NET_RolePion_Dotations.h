@@ -14,6 +14,7 @@
 
 #include "NET_RoleInterface_Dotations.h"
 #include "game_asn/Simulation.h"
+#include "ComponentsChangedNotificationHandler_ABC.h"
 
 class PHY_ComposanteTypePion;
 class PHY_Dotation;
@@ -27,6 +28,7 @@ class NET_ASN_MsgUnitAttributes;
 // Created: JVT 2004-08-03
 // =============================================================================
 class NET_RolePion_Dotations : public NET_RoleInterface_Dotations
+                             , public component::ComponentsChangedNotificationHandler_ABC
 {
 
 public:
@@ -42,6 +44,12 @@ public:
     //@{
     void SendChangedState() const;
     void SendFullState   () const;
+    void Clean();
+    //@}
+
+    //! @name Notification
+    //@{
+    virtual void NotifyHasChanged();
     //@}
 
 private:
@@ -55,6 +63,8 @@ private:
     MIL_AgentPion* pPion_;
     mutable bool   bLastStateDead_;
     mutable bool   bLastStateNeutralized_;
+    bool bExternalMustUpdateData_;
+    bool bExternalMustUpdateVisionCones_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const NET_RolePion_Dotations* role, const unsigned int /*version*/ );
   	template< typename Archive > friend  void load_construct_data( Archive& archive, NET_RolePion_Dotations* role, const unsigned int /*version*/ );

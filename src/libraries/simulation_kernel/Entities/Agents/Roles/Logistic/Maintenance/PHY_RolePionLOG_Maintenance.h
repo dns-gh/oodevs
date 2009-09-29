@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 #include "PHY_RoleInterface_Maintenance.h"
+#include "ComponentsChangedNotificationHandler_ABC.h"
 
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
@@ -33,6 +34,7 @@ class OnComponentLendedFunctorComputerFactory_ABC;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePionLOG_Maintenance : public PHY_RoleInterface_Maintenance
+                                  , public component::ComponentsChangedNotificationHandler_ABC
 {
 
 public:
@@ -67,6 +69,8 @@ public:
 
     virtual bool                            HandleComposanteForRepair    ( PHY_MaintenanceComposanteState& composanteState );
     virtual int                             GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState );
+
+    virtual void NotifyHasChanged();
     //@}
 
     //! @name Tools
@@ -118,6 +122,7 @@ private:
 private:
           MIL_AgentPionLOG_ABC&       pion_;
           bool                        bHasChanged_;
+          bool                        bExternalMustChangeState_;
           bool                        bSystemEnabled_;
     const PHY_MaintenanceWorkRate*    pWorkRate_;
           uint                        nWorkRateWarningRCTick_;

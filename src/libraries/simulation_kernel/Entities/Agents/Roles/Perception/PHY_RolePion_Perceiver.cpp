@@ -94,6 +94,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion, const detec
     , vSensorInfo_                 ( )
     , nSensorMode_                 ( eNormal )
     , bHasChanged_                 ( true )
+    , bExternalMustChangeState_    ( false )
     , bRadarStateHasChanged_       ( true )
     , pPerceptionCoupDeSonde_      ( 0 )
     , pPerceptionRecoPoint_        ( 0 )
@@ -788,7 +789,7 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     PHY_RoleInterface_Location&             roleLocation    = pion_.GetRole< PHY_RoleInterface_Location       >();
     PHY_RolePion_Composantes&          roleComposantes = pion_.GetRole< PHY_RolePion_Composantes    >();
     if(    !roleLocation.HasLocationChanged() 
-        && !roleComposantes.HasChanged()
+        && !bExternalMustChangeState_
         && !pion_.GetRole< transport::PHY_RoleAction_Loading   >().HasChanged()
         && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
         && !pion_.GetRole< surrender::PHY_RoleInterface_Surrender   >().HasChanged()
@@ -1321,6 +1322,7 @@ bool PHY_RolePion_Perceiver::HasRadarStateChanged() const
 void PHY_RolePion_Perceiver::Clean()
 {
     bHasChanged_           = false;
+    bExternalMustChangeState_ = false;
     bRadarStateHasChanged_ = false;
 }
 
@@ -1359,4 +1361,13 @@ void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorith
 {
     if( algorithm.GetTarget() != pion_ && pion_.GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
         algorithm.AlreadyPerceived();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyHasChanged
+// Created: MGD 2009-09-29
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyHasChanged()
+{
+    bExternalMustChangeState_ = true;
 }

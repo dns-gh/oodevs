@@ -13,6 +13,7 @@
 #define __PHY_RolePionLOG_Supply_h_
 
 #include "PHY_RoleInterface_Supply.h"
+#include "ComponentsChangedNotificationHandler_ABC.h"
 
 namespace xml
 {
@@ -29,6 +30,7 @@ class PHY_ComposantePion;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePionLOG_Supply : public PHY_RoleInterface_Supply
+                             , public component::ComponentsChangedNotificationHandler_ABC
 {
 
 public:
@@ -70,6 +72,9 @@ public:
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
     virtual void StopUsingForLogistic ( PHY_ComposantePion& composante );
+
+
+    virtual void NotifyHasChanged();
     //@}
 
     //! @name Stock supply
@@ -97,6 +102,7 @@ private:
     MIL_AgentPionLOG_ABC&       pion_;
     bool                        bSystemEnabled_;
     bool                        bHasChanged_;
+    bool                        bExternalMustChangeState_;
     PHY_DotationStockContainer* pStocks_; 
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ );

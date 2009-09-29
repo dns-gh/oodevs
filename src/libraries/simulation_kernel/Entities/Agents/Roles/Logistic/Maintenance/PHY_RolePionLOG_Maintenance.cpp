@@ -21,8 +21,6 @@
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Composantes/PHY_ComposantePredicates.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
@@ -70,6 +68,7 @@ PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& 
     , onComponentFunctorComputerFactory_( onComponentFunctorComputerFactory )
     , onComponentLendedFunctorComputerFactory_( onComponentLendedFunctorComputerFactory )
     , bHasChanged_            ( true )
+    , bExternalMustChangeState_( false )
     , bSystemEnabled_         ( false )
     , priorities_             ()
     , tacticalPriorities_     ()
@@ -684,6 +683,7 @@ void PHY_RolePionLOG_Maintenance::UpdateLogistic( bool /*bIsDead*/ )
 void PHY_RolePionLOG_Maintenance::Clean()
 {
     bHasChanged_ = false;
+    bExternalMustChangeState_ = false;
 }
 
 // =============================================================================
@@ -808,7 +808,7 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
 void PHY_RolePionLOG_Maintenance::SendChangedState() const
 {
 
-    if( bHasChanged_ || pion_.GetRole< PHY_RoleInterface_Composantes >().HasChanged() )
+    if( bHasChanged_ || bExternalMustChangeState_ )
         SendFullState();
 }
 
@@ -840,4 +840,13 @@ void PHY_RolePionLOG_Maintenance::DisableSystem()
 {
     bSystemEnabled_ = false;
     bHasChanged_    = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::NotifyHasChanged
+// Created: MGD 2009-09-29
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Maintenance::NotifyHasChanged()
+{
+    bExternalMustChangeState_ = true;
 }

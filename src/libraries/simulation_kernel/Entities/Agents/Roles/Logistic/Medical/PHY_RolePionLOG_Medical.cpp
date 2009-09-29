@@ -25,7 +25,6 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Composantes/PHY_ComposantePredicates.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
@@ -70,6 +69,7 @@ PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion, co
     , onComponentFunctorComputerFactory_( onComponentFunctorComputerFactory )
     , onComponentLendedFunctorComputerFactory_( onComponentLendedFunctorComputerFactory )
     , bHasChanged_            ( true )
+    , bExternalMustChangeState_ ( false )
     , bSystemEnabled_         ( false )
     , bSortingFunctionEnabled_( false )
     , bHealingFunctionEnabled_( false )
@@ -808,6 +808,7 @@ void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
 void PHY_RolePionLOG_Medical::Clean()
 {
     bHasChanged_ = false;
+    bExternalMustChangeState_ = false;
 }
 
 // =============================================================================
@@ -993,8 +994,17 @@ void PHY_RolePionLOG_Medical::SendFullState() const
 void PHY_RolePionLOG_Medical::SendChangedState() const
 {
 
-    if( bHasChanged_ || pion_.GetRole< PHY_RoleInterface_Composantes >().HasChanged() )
+    if( bHasChanged_ || bExternalMustChangeState_ )
         SendFullState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::NotifyHasChanged
+// Created: MGD 2009-09-29
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Medical::NotifyHasChanged()
+{
+    bExternalMustChangeState_ = true;
 }
 
 // -----------------------------------------------------------------------------

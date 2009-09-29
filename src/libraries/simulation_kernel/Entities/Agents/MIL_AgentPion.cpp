@@ -410,6 +410,7 @@ void MIL_AgentPion::UpdateState()
 void MIL_AgentPion::UpdateNetwork()
 {
     GetRole< NET_RolePion_Dotations >().SendChangedState();
+    GetRole< NET_RolePion_Dotations >().Clean();
 }
 
 // -----------------------------------------------------------------------------

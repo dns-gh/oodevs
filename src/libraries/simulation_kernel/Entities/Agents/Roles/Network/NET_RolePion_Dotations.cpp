@@ -60,6 +60,8 @@ NET_RolePion_Dotations::NET_RolePion_Dotations( MIL_AgentPion& pion )
     : pPion_                     ( &pion )
     , bLastStateDead_            ( false )
     , bLastStateNeutralized_     ( false )
+    , bExternalMustUpdateData_    ( false )
+    , bExternalMustUpdateVisionCones_( false )
 {
     // NOTHING
 }
@@ -94,7 +96,7 @@ bool NET_RolePion_Dotations::DataUpdated() const
     assert( pPion_ );
 
     if(    pPion_->GetRole< PHY_RoleInterface_Posture           >().HasChanged()
-        || pPion_->GetRole< PHY_RoleInterface_Composantes       >().HasChanged()
+        || bExternalMustUpdateData_
         || pPion_->GetRole< PHY_RoleInterface_Location          >().HasLocationChanged()
         || pPion_->GetRole< PHY_RoleInterface_Location          >().HasSpeedChanged()
         || pPion_->GetRole< PHY_RoleInterface_Reinforcement     >().HasChanged()
@@ -162,7 +164,7 @@ void NET_RolePion_Dotations::SendChangedState() const
     if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
     {
         if(    pPion_->GetRole< PHY_RoleInterface_Location      >().HasLocationChanged()
-            || pPion_->GetRole< PHY_RoleInterface_Composantes   >().HasChanged()
+            || bExternalMustUpdateVisionCones_
             || pPion_->GetRole< PHY_RoleInterface_Perceiver     >().HasChanged()
             || pPion_->GetRole< transport::PHY_RoleAction_Loading          >().HasChanged()
             || pPion_->GetRole< transport::PHY_RoleInterface_Transported   >().HasChanged()
@@ -275,4 +277,24 @@ void NET_RolePion_Dotations::SendFullState() const
     PHY_RoleInterface_Supply* roleSupply = pPion_->Retrieve< PHY_RoleInterface_Supply >();
     if( roleSupply )
         roleSupply->SendFullState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_RolePion_Dotations::Clean
+// Created: MGD 2009-09-29
+// -----------------------------------------------------------------------------
+void NET_RolePion_Dotations::Clean()
+{
+    bExternalMustUpdateData_ = false;// Reinitialize for next step
+    bExternalMustUpdateVisionCones_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_RolePion_Dotations::NotifyHasChanged
+// Created: MGD 2009-09-29
+// -----------------------------------------------------------------------------
+void NET_RolePion_Dotations::NotifyHasChanged()
+{
+    bExternalMustUpdateData_ = true;
+    bExternalMustUpdateVisionCones_ = true;
 }

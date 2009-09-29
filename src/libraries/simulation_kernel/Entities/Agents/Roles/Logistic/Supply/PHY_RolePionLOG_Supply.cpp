@@ -49,6 +49,7 @@ PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion )
     : pion_             ( pion )
     , bSystemEnabled_    ( false )
     , bHasChanged_       ( true )
+    , bExternalMustChangeState_ ( false )
     , pStocks_           ( 0 )
 {
     pStocks_ = new PHY_DotationStockContainer( *this );
@@ -325,6 +326,7 @@ void PHY_RolePionLOG_Supply::UpdateLogistic( bool /*bIsDead*/ )
 void PHY_RolePionLOG_Supply::Clean()
 {
     bHasChanged_ = false;
+    bExternalMustChangeState_ = false;
     assert( pStocks_ );
     pStocks_->Clean();
 }
@@ -399,14 +401,14 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
 {
 
     assert( pStocks_ );    
-    if( !( bHasChanged_ || pion_.GetRole< PHY_RoleInterface_Composantes >().HasChanged() || pStocks_->HasChanged() ) )
+    if( !( bHasChanged_ || bExternalMustChangeState_ || pStocks_->HasChanged() ) )
         return;
 
     NET_ASN_MsgLogSupplyState asn;
 
     asn().oid_pion = pion_.GetID();
 
-    if( bHasChanged_ || pion_.GetRole< PHY_RoleInterface_Composantes >().HasChanged() )
+    if( bHasChanged_ || bExternalMustChangeState_ )
     {
         asn().m.chaine_activeePresent                       = 1;
         asn().m.disponibilites_transporteurs_convoisPresent = 1;
@@ -456,4 +458,13 @@ const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Supply::GetPion() const
 {
 
     return pion_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::NotifyHasChanged
+// Created: MGD 2009-09-29
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Supply::NotifyHasChanged()
+{
+    bExternalMustChangeState_ = true;
 }

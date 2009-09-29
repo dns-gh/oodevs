@@ -44,6 +44,7 @@
 
 #include "simulation_kernel/OnComponentComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
+#include "simulation_kernel/ComponentsChangedNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
@@ -545,6 +546,9 @@ void PHY_RolePion_Composantes::Update( bool /*bIsDead*/ )
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         (**it).Update();
+
+    if( HasChanged() )
+        pion_.Apply( &component::ComponentsChangedNotificationHandler_ABC::NotifyHasChanged );
 
     UpdateOperationalStates();
     UpdateMajorComposante  ();

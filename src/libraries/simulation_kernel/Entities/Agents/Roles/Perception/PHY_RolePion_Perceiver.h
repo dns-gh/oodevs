@@ -15,6 +15,7 @@
 #include "PHY_RoleInterface_Perceiver.h"
 
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "ComponentsChangedNotificationHandler_ABC.h"
 
 namespace detection
 {
@@ -28,6 +29,7 @@ namespace detection
 // =============================================================================
 class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                              , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
+                             , public component::ComponentsChangedNotificationHandler_ABC
 {
 
 public:
@@ -85,6 +87,7 @@ public:
     virtual bool IsUsingActiveRadar  () const;
 
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
+    virtual void NotifyHasChanged();
     //@}
 
     //! @name Perceptions
@@ -208,6 +211,7 @@ private:
     MT_Vector2D  vSensorInfo_;
 
     bool bHasChanged_;
+    bool bExternalMustChangeState_;
     bool bRadarStateHasChanged_;
 
     const detection::DetectionComputerFactory_ABC& detectionComputerFactory_;
