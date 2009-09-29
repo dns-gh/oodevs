@@ -26,8 +26,7 @@
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
 ScriptRefs::ScriptRefs( directia::Brain& brain )
-: sendEvent_       ( brain.GetScriptFunction( "SendEvent" ) )
-, startEvent_      ( brain.GetScriptFunction( "StartEvent" ) )
+: startEvent_      ( brain.GetScriptFunction( "StartEvent" ) )
 , stopEvents_      ( brain.GetScriptFunction( "StopEvents" ) )
 , setStateVariable_( brain.GetScriptFunction( "SetStateVariable" ) )
 , collectgarbage_  ( brain.GetScriptFunction( "collectgarbage" ) )

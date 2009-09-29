@@ -217,24 +217,6 @@ void DEC_Decision<T>::StartDefaultBehavior()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Decision::StopDefaultBehavior
-// Created: LDC 2009-03-02
-// -----------------------------------------------------------------------------
-template <class T>
-void DEC_Decision<T>::StopDefaultBehavior()
-{
-    try
-    {
-        if( pRefs_.get() )
-            pRefs_->stopEvents_( std::string( "BEH_Defaut" ) );
-    }
-    catch( std::runtime_error& )
-    {
-        // Ignore error if BEH_Defaut doesn't exist
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Decision::ActivateOrder
 // Created: LDC 2009-04-07
 // -----------------------------------------------------------------------------

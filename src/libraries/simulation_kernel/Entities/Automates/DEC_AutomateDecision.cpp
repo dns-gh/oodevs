@@ -107,7 +107,6 @@ DEC_AutomateDecision::DEC_AutomateDecision()
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::~DEC_AutomateDecision()
 {
-    StopDefaultBehavior();
 }
 
 // =============================================================================

@@ -77,8 +77,6 @@ DEC_PopulationDecision::DEC_PopulationDecision()
 // -----------------------------------------------------------------------------
 DEC_PopulationDecision::~DEC_PopulationDecision()
 {
-    StopDefaultBehavior();
-
     MT_DELETEOWNED( missionBehaviorParameters_.GetParameters() );
     missionBehaviorParameters_.GetParameters().clear();
 }

@@ -192,7 +192,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision()
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::~DEC_RolePion_Decision()
 {
-    StopDefaultBehavior();
 }
 
 

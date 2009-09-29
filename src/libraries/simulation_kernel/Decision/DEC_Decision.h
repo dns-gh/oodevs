@@ -129,7 +129,6 @@ protected:
     void CleanStateAfterCrash     ();
 
     void StartDefaultBehavior     ();
-    void StopDefaultBehavior      ();
     void LogCrash                 ();
     
     void ActivateOrder( const std::string& strBehavior, MIL_Mission_ABC& mission );
@@ -173,7 +172,6 @@ struct ScriptRefs
 public:
     explicit ScriptRefs( directia::Brain& brain );
     
-    directia::ScriptRef sendEvent_;
     directia::ScriptRef startEvent_;
     directia::ScriptRef stopEvents_;
     directia::ScriptRef setStateVariable_;
