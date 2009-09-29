@@ -118,16 +118,6 @@ void DefaultPostureComputer::Update()
         return;
     }
 
-    if( bForceStop_ )
-    {
-        if ( &params_->posture_ == &PHY_Posture::mouvement_ 
-            || &params_->posture_ == &PHY_Posture::mouvementDiscret_ )
-        {
-            results_.newPosture_ = &PHY_Posture::arret_;
-        }
-        bForceStop_ = false;
-        return;
-    }
     if( bForceMovement_ )
     {
         if( !bIsLoaded_ )
@@ -136,9 +126,12 @@ void DefaultPostureComputer::Update()
             results_.newPosture_ = &PHY_Posture::mouvementDiscret_;
         else
             results_.newPosture_ = &PHY_Posture::mouvement_;
-        bForceMovement_ = false;
         return;
     }
+
+    if( bForceStop_ && ( &params_->posture_ == &PHY_Posture::mouvement_ 
+                      || &params_->posture_ == &PHY_Posture::mouvementDiscret_ ) )
+            results_.newPosture_ = &PHY_Posture::arret_;
 
     // Mode furtif
     results_.bIsStealth_ = !( random_.rand_oi( 0., 1. ) <= params_->rStealthFactor_ );
