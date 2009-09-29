@@ -57,9 +57,8 @@ include "bit.lua"
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
                 end
@@ -90,9 +89,8 @@ include "bit.lua"
             do
                 DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
 --[[// liste des pions en cours de ravitaillement

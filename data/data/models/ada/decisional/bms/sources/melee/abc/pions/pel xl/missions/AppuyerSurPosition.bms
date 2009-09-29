@@ -26,16 +26,14 @@ includedFiles["sources/melee/abc/pions/pel xl/missions/AppuyerSurPosition.bms"] 
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------

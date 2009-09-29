@@ -136,9 +136,8 @@ node "BEH_Eni_Pion_VAB_RecoAxe"
     activate = function( self )
         --[[// On traite l'unite si elle est dans le fuseau de la section    								
 ]]        if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[// On traite l'unite si elle est dans le fuseau de la section

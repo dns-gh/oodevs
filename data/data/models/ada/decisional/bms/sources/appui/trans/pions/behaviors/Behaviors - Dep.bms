@@ -37,9 +37,8 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Dep.bms"] = true
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionVers" )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -85,9 +84,8 @@ node "BEH_Dep_SeDeplacer"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

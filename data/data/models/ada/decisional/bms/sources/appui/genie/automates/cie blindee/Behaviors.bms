@@ -315,9 +315,8 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner"
 
     activate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.objet ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         local eValidite = nil

@@ -162,9 +162,8 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -215,9 +214,8 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur" )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

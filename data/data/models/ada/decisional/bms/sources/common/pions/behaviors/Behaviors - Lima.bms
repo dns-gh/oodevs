@@ -438,9 +438,8 @@ node "BEH_Lima_Pion_SePosterSurLC"
 ]]DEC_SetMissionLimaFlag( self._namedParams.limaLC, true )
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.limaLC, true )
                                 self.params.__returnValue = eActionEffectuee
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
 --[[// On se poster

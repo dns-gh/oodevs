@@ -57,27 +57,24 @@ includedFiles["sources/population/milices/pion/Behaviors - Obj.bms"] = true
             do
                 if( ( self._namedParams.locMine == 0 or self._namedParams.locMine == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
                 DEC_Trace( "  installation plan d'obstacle" )
                 self.ptMission = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locMine )
                 if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
                 self.locPtMine = DEC_Geometrie_CalculerPositionObstacle( self.ptMission, S_TypeObject_ToString( eTypeObjectBouchonMines ), 800 )
                 if( ( self.locPtMine == 0 or self.locPtMine == nil ) ) then
 --[[// Pour le moment, on fait un bouchon de mines
 ]]                    self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
             end
@@ -85,9 +82,8 @@ includedFiles["sources/population/milices/pion/Behaviors - Obj.bms"] = true
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, setmetatable( { self.locPtMine, 10, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )

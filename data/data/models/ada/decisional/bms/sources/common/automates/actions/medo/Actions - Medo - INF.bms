@@ -194,9 +194,8 @@ elseif switch_1 == ePhase_CDT then
                         self.ptZone = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locZone )
                         if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
                             self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
                         end
 
                     end
@@ -485,9 +484,8 @@ elseif switch_1 == ePhase_CDT then
 ]]if( not ( ( self.ptRegroupement ~= 0 and self.ptRegroupement ~= nil ) ) ) then
             do
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
 --[[// Inscription du secteur
@@ -647,9 +645,8 @@ elseif switch_1 == ePhase_CDT then
 ]]if( not ( ( self.dest ~= 0 and self.dest ~= nil ) ) ) then
             do
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -1046,9 +1043,8 @@ elseif switch_1 == ePhase_CDT then
 ]]if( not ( ( self._namedParams.ptInterdire ~= 0 and self._namedParams.ptInterdire ~= nil ) ) ) then
             do
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -1134,9 +1130,8 @@ elseif switch_1 == ePhase_CDT then
 ]]if( not ( ( self._namedParams.ptDefendre ~= 0 and self._namedParams.ptDefendre ~= nil ) ) ) then
             do
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -1315,9 +1310,8 @@ elseif switch_1 == ePhase_CDT then
 ]]if( not ( self._namedParams.pAppui ~= nil ) ) then
             do
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -1337,9 +1331,8 @@ elseif switch_1 == ePhase_CDT then
 ]]if( not ( ( self.ptCouv ~= 0 and self.ptCouv ~= nil ) ) ) then
             do
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -1438,9 +1431,8 @@ elseif switch_1 == ePhase_CDT then
 ]]if( not ( ( self._namedParams.ptBarrer ~= 0 and self._namedParams.ptBarrer ~= nil ) ) ) then
                         do
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
 --[[// if ( !(  missionPion.positionABarrer_ != 0 ) )	{		halt( eActionImpossible );	}//DEC_Debug( "assert halt failed : " +  "ACT_Mission_Automate_INF_AssignerA_Barrer : missionPion.positionABarrer_ != 0"  );

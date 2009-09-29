@@ -58,9 +58,8 @@ include "bit.lua"
 
         if( ( self.eAction_OK == eActionEffectuee ) or ( ( self._namedParams.rN_Pion == 0 or self._namedParams.rN_Pion == nil ) ) ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_EnCours = v else rawset( t, k, v ) end end } ) )
@@ -768,9 +767,8 @@ node "BEH_Mission_Automate_AssignerSeFaireDecontaminerA"
 
     activate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteDecontamination ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         self.eActionCreation = self.eActionCreation or eActionEnCours

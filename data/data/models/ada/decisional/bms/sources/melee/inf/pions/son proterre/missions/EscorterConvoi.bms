@@ -71,9 +71,8 @@ node "MIS_Pion_INF_EscorterUnite"
 ]]DEC_Trace( "Mission 'Escorter un convoi' : fin" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
@@ -167,9 +166,8 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
                         do
                             self.eAction = eActionEnCours
                                                         self.params.__returnValue = eFinMission
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -229,9 +227,8 @@ node "BEH_Dep_Pion_INF_Escorter"
         self.ptEnAvance = self.ptEnAvance or self._namedParams.pionAmi:DEC_Itineraire_ExtrapolerPosition( 2, true )
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = eActionHalt
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         Activate( self.activations.BEH_Dep_ProgressionVers, S_Force_INF_DistancePt_PourPion( self._namedParams.pionAmi, self.ptEnAvance ), setmetatable( { self.ptEnAvance, eProgressionReco, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )

@@ -71,9 +71,8 @@ do
 
         if( not bUnitesEnAttenteSurPtEmbarquement and DEC_Transport_EstTermine() ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         DIA_Clear( self.listeUnitesPretesPrecedantes )
@@ -161,16 +160,14 @@ do
                                                         do
                                 DEC_Transport_Annuler()
                                                                 self.params.__returnValue = eActionImpossible
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -238,16 +235,14 @@ do
                                                         do
                                 DEC_Transport_Annuler()
                                                                 self.params.__returnValue = eActionImpossible
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -277,16 +272,14 @@ do
                                                         do
                                 DEC_Transport_Annuler()
                                                                 self.params.__returnValue = eActionImpossible
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -316,16 +309,14 @@ do
                                                         do
                                 DEC_Transport_Annuler()
                                                                 self.params.__returnValue = eActionImpossible
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -390,9 +381,8 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
                         do
                             myself.bEnCoursExtractionPersonnel_ = false
                                                         self.params.__returnValue = eActionEffectuee
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -422,9 +412,8 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
                                 myself.bEnPhaseRavitaillement_ = true
                                 myself.bEnCoursExtractionPersonnel_ = false
                                                                 self.params.__returnValue = eActionEffectuee
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 

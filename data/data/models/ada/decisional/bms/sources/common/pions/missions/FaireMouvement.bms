@@ -178,9 +178,8 @@ elseif switch_1 == eProgresser then
                                 F_Pion_SetitMvt( myself, nil )
                                 self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionAvecEscortePossibleSur" )
                                                                 self.params.__returnValue = eActionEffectuee
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 

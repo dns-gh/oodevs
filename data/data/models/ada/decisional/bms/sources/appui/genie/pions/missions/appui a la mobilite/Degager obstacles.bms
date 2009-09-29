@@ -121,17 +121,15 @@ node "BEH_Dep_GEN_AllerReduireObstacle"
 ]]local loc = DEC_ConnaissanceObjet_Localisation( self._namedParams.obstacle )
                 if( ( loc == 0 or loc == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
                 self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
                 if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
             end

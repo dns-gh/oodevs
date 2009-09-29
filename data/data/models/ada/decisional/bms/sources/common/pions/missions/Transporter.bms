@@ -52,9 +52,8 @@ include "bit.lua"
                 DEC_Trace( "Il n'y a pas de pion transportable dans la liste passée en argument" )
                 DEC_Warning( eRC_TransportImpossiblePasDeMoyens )
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -115,16 +114,14 @@ do
                                 DEC_Trace( "transport Impossible" )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -139,9 +136,8 @@ do
                             DEC_Transport_Annuler()
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end

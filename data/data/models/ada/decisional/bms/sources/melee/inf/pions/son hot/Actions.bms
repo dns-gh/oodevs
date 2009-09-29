@@ -20,9 +20,8 @@ node "ACT_Transport_Pion_INF_Debarquer"
 
     select = function( self )
                 self.params.__returnValue = eActionEffectuee
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 
@@ -37,9 +36,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
     select = function( self )
                 self.params.__returnValue = eActionEffectuee
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 

@@ -44,33 +44,29 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
                 if switch_1 == eActionObjetTerminee then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionObjetImpossible then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[3] or switch_1 == eActionObjetPasDeCapacite then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
             end

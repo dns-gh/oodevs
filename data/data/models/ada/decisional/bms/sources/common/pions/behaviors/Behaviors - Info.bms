@@ -542,9 +542,8 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiDe"
 ]]--[[// Validité
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------

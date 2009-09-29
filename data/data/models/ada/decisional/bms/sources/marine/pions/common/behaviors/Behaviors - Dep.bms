@@ -35,9 +35,8 @@ include "bit.lua"
         self.eEtat = self.eEtat or eActionEnCours
         if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == nil ) ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( ModuleBegins() ) then
@@ -46,9 +45,8 @@ include "bit.lua"
 
         if( self.eEtat ~= eActionEnCours ) then
             self.params.__returnValue = self.eEtat
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         else
             Activate( self.activations.BEH_Dep_Pion_MARINE_RejoindreParItineraire, 1, setmetatable( { self.listePoints, self._namedParams.typeProgression, self._namedParams.ePathType, self._namedParams.distanceMin, self._namedParams.distanceMax, self._namedParams.forceDelaiSucces, self._namedParams.forceDelaiPenalite, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
         end
@@ -93,15 +91,13 @@ node "BEH_Dep_Pion_MARINE_RejoindrePion"
 
         if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == nil ) ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( DEC_Geometrie_Distance( self._namedParams.pion:DEC_Agent_Position(), self.positionPion ) >= self._namedParams.distanceAvantRelance ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( self.eEtat ~= eActionEnCours ) then
@@ -194,9 +190,8 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
             do
                 self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire" )
                                 self.params.__returnValue = eActionEffectuee
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -221,9 +216,8 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
                                 do
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -266,9 +260,8 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
                                         do
                                             self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
                                                                                         self.params.__returnValue = eActionEffectuee
-                                            self.deselect = function() end
-                                            self.destroy = function() end
-                                            Halt()
+                                            Halt( self )
+                                            do return end
 
                                         end
                                     end
@@ -286,9 +279,8 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
 
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eItineraire_CalculEnCours then
@@ -303,17 +295,15 @@ elseif switch_1 == eItineraire_Impossible then
 
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eItineraire_Annule then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
             end
@@ -378,9 +368,8 @@ do
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -391,16 +380,14 @@ do
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end

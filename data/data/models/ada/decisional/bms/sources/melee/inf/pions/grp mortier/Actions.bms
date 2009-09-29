@@ -59,18 +59,16 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
                     DEC_Trace( "Debarquement : fin" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
             end
@@ -109,9 +107,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
     select = function( self )
                 self.params.__returnValue = eActionEffectuee
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 
@@ -168,9 +165,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionTirIndirect_Termine then
@@ -188,9 +184,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTirIndirect_NoAmmo then
@@ -217,9 +212,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[3] or switch_1 == eActionTirIndirect_PasDeCapacite then
@@ -237,9 +231,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eActionTirIndirect_EnCours then
@@ -334,9 +327,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionTirIndirect_Termine then
@@ -354,9 +346,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTirIndirect_NoAmmo then
@@ -375,9 +366,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[3] or switch_1 == eActionTirIndirect_PasDeCapacite then
@@ -395,9 +385,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eActionTirIndirect_EnCours then

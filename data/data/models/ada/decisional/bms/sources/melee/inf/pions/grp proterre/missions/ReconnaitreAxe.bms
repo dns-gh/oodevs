@@ -85,9 +85,8 @@ include "bit.lua"
                                 DEC_Trace( "Fin mission de mission reconnaitre un axe" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
@@ -133,9 +132,8 @@ node "BEH_Eni_Pion_VAB_RecoAxe"
         --[[// Si on quitte notre fuseau, on reinitialise toute les manoeuvres sur 
 ]]--[[// les ennemis
 ]]if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[// Precise le contact sur les unites detectees

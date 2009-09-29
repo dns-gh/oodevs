@@ -89,9 +89,8 @@ node "BEH_Eni_Pion_VAB_Fixer"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -101,9 +100,8 @@ node "BEH_Eni_Pion_VAB_Fixer"
                 self.eActionFixer = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -288,9 +286,8 @@ node "BEH_Dep_Pion_INF_GererDispositif_Offensif"
         --[[// On passe son chemin
 ]]if( DEC_ConnaissanceAgent_EstUnEnnemi( self._namedParams.ksEni ) == eTristate_False ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEni ) and F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse and DEC_ConnaissanceAgent_EstUnEnnemi( self._namedParams.ksEni ) == eTristate_DontKnow ) then
@@ -304,18 +301,16 @@ node "BEH_Dep_Pion_INF_GererDispositif_Offensif"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
 
         if( self.eActionPreciser ~= eActionEnCours or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[// Si l'ennemie sort du fuseau, on abandonne les poursuites.
@@ -327,9 +322,8 @@ node "BEH_Dep_Pion_INF_GererDispositif_Offensif"
 
         if( not DEC_Geometrie_EstPointDansFuseau( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ) ) ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( ( DEC_ConnaissanceAgent_EstMort( self._namedParams.ksEni ) or ( self._namedParams.bDestructionTactique and DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) ) ) ) then

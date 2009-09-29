@@ -86,9 +86,8 @@ includedFiles["sources/emergency/pions/common/missions/Riot.bms"] = true
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -121,9 +120,8 @@ node "BEH_Pion_Emergency_GartherPeople"
             Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 0, self._namedParams.delay, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
         else
             self.params.__returnValue = self.eAction
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
                 return

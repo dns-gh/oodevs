@@ -54,9 +54,8 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
                     do
                         Activate( self.activations.ACT_Info_Trace, 1, { "Unadapted units for the mission", } )
                                                 self.params.__returnValue = eActionImpossible
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
                 end
@@ -75,9 +74,8 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -88,9 +86,8 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

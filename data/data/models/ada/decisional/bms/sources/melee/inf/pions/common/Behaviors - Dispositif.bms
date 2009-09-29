@@ -68,9 +68,8 @@ include "bit.lua"
                     do
                         DEC_Trace( "assert: rDelaiPoste == 0, arret court." )
                                                 self.params.__returnValue = eActionEffectuee
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
 --[[// pas necessaire de debarquer !!
@@ -91,9 +90,8 @@ include "bit.lua"
                                 do
                     DEC_Trace( "fin arret court" )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -136,9 +134,8 @@ node "BEH_Obs_Pion_INF_RecoPoint_Copie"
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, setmetatable( { self.ptCopie, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
@@ -192,9 +189,8 @@ node "BEH_Obs_Pion_INF_RecoPoint"
 
         if( self.eActionArret == eActionEffectuee or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( self._namedParams.rDelai > 0 ) then
@@ -319,9 +315,8 @@ node "BEH_Obs_Pion_INF_EnReconnaissance"
                 self.eActionReco = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -391,9 +386,8 @@ node "BEH_Delai_Pion_INF_PreparerMission"
                                 do
                     SetStateVariable( "VE_PreparationMission", 0 )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

@@ -38,18 +38,16 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Eni.bms"] = true
 ]]--[[//----------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//si je suis a une distance supérieure a rDistance, alors, ce n'est pas
 ]]--[[//la peine de decrocher
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//----------------------------------------------------------------------
@@ -71,9 +69,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
 
                 --[[// Vérification
 ]]if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
             end
@@ -87,9 +84,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

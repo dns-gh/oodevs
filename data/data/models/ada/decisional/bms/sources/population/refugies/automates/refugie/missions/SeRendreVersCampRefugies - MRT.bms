@@ -33,9 +33,8 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "----- Pas de camps de refugies ----- ", } )
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
 --[[//---------------------------------------------------------------------
@@ -62,9 +61,8 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -75,9 +73,8 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

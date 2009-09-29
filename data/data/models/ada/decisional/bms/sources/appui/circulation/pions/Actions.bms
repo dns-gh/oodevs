@@ -195,9 +195,8 @@ elseif switch_1 == eActionObjetTerminee then
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//------------------------------------------------------------------------
@@ -238,9 +237,8 @@ elseif switch_1 == eActionObjetTerminee then
     select = function( self )
         DEC_RecupererRemorqueurs( self._namedParams.pionDe, self._namedParams.fAmb )
                 self.params.__returnValue = eActionEffectuee
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 

@@ -32,9 +32,8 @@ includedFiles["sources/population/asymetriques/common/pion/missions/SInfiltrer.b
                 if( not DEC_Geometrie_EstPointDansFuseau( self.lieuInfiltre ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                                                Halt( self )
+                        do return end
 
                     end
                 end
@@ -81,9 +80,8 @@ elseif switch_1 == eAborderObjectif then
                 --[[// Fin
 ]]elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                        self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                                        Halt( self )
+                    do return end
 
                                 end
             end

@@ -23,9 +23,8 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Hel
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
 --[[//liste des pions que l'on va pouvoir transporter
@@ -38,9 +37,8 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Hel
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
                 end
@@ -51,9 +49,8 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Hel
 
         DEC_MRT_Valide()
                 self.params.__returnValue = eActionEffectuee
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 

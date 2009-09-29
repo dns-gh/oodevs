@@ -48,9 +48,8 @@ includedFiles["sources/appui/artfdp/automates/bat reco sam/missions/reconnaitrez
                 DEC_MRT_Valide()
                 DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -60,9 +59,8 @@ includedFiles["sources/appui/artfdp/automates/bat reco sam/missions/reconnaitrez
                 self.eValidationMRT = eActionEnCours
                 DEC_MRT_Valide()
                                 self.params.__returnValue = eActionEffectuee
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end

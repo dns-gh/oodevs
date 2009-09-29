@@ -54,9 +54,8 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -257,9 +256,8 @@ node "BEH_Ordre_SePosterPourDeboucher"
             do
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.LimaLD, true )
                 DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
-                                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                                Halt( self )
+                do return end
 
             end
         end
@@ -340,9 +338,8 @@ node "BEH_Mission_Pion_VAB_Semparer"
                             --[[// Normalement, on est sur la position
 ]]DEC_Trace( "Patrouille accrochee" )
                                                         self.params.__returnValue = eActionHalt
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -432,9 +429,8 @@ elseif switch_1 == eRejoindre then
                             self.eAction = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eFinMission
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
@@ -540,9 +536,8 @@ node "BEH_Ordre_Pion_VAB_Semparer_Demande"
                 self.eOrdre = self.eOrdre or eActionEnCours
         if( self.eOrdre == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdrePoursuivre, } )

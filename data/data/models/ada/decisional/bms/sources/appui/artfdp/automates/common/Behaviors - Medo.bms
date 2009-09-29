@@ -54,9 +54,8 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
                         do
                             DEC_Trace( "First echelon units is empty" )
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -117,9 +116,8 @@ do
 ]]--[[// On verifie juste que la batterie peut effectuer la mission
 ]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
 ]]                    self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     if( self.eValidationMRT == eActionImpossible ) then
                         do
@@ -128,9 +126,8 @@ do
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -140,9 +137,8 @@ do
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 

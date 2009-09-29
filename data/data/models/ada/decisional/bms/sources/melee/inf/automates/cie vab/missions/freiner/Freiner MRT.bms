@@ -42,9 +42,8 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner MRT.
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -56,9 +55,8 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner MRT.
                     DEC_Trace( "MIS_Automate_MRT_INF_Freiner : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -205,9 +203,8 @@ elseif switch_1 == eMRT_AssignerMissions then
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
                 if not cases_switch_1[1] and not cases_switch_1[2] and not cases_switch_1[3] then

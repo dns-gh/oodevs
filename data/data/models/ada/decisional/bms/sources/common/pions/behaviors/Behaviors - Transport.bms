@@ -52,9 +52,8 @@ include "Common/Pions/Actions/Actions - Transport.bms"
 
         if( ( #( self.sUnitesATransporter ) == 0 or #( self.sUnitesATransporter ) == nil ) ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//on commence le transport quand toutes les unites sont pretes
@@ -84,9 +83,8 @@ include "Common/Pions/Actions/Actions - Transport.bms"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -115,9 +113,8 @@ include "Common/Pions/Actions/Actions - Transport.bms"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
 --[[// RC sur les unités qui ont la mission se faire transporter mais qui sont encore trop
@@ -188,16 +185,14 @@ do
                         do
                                                         do
                                                                 self.params.__returnValue = eActionImpossible
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -224,16 +219,14 @@ do
                         do
                                                         do
                                                                 self.params.__returnValue = eActionImpossible
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end

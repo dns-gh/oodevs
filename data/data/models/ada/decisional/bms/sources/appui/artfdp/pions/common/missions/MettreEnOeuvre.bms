@@ -191,9 +191,8 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         self.params.__returnValue = eActionEffectuee
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
                     end
 
                     
@@ -355,9 +354,8 @@ node "BEH_Dep_Pion_ASS_SePosterPourTirer"
 ]]--[[// Il faut avoir la meme condition d'arret que 
 ]]--[[// ACT_Tir_Pion_ASS_SurPosition s'arrete sur 
 ]]if( ( myself.eEtatTir_Indirect_ ~= eActionTirIndirect_EnCours ) and ( myself.eEtatTir_Indirect_ ~= eActionTirIndirect_None ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         Activate( self.activations.ACT_Dep_SePoster, 1, {} )
@@ -427,9 +425,8 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 
                         end
 
-                                                self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                                                Halt( self )
+                        do return end
 
                     end
                 end
@@ -446,9 +443,8 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 
                         end
 
-                                                self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                                                Halt( self )
+                        do return end
 
                     end
                 end
@@ -461,9 +457,8 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
         Activate( self.activations.BEH_Tir_Pion_ASS_PreparerTirSur, 1.1, { self._namedParams.ptCible, M_DELAI_PREPARATION_TIR(), } )
         Activate( self.activations.ACT_Dep_SePoster, 0.5, {} )
         if( self.eAction ~= eActionEnCours ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         local eNiveauInstallation = DEC_Agent_NiveauInstallation()

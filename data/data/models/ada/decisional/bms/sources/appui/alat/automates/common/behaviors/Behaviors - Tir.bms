@@ -17,9 +17,8 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Tir.bms
         local pourcentageEffectif = 0
         local compteur = 0
         if( DIA_IsListEmpty( self._namedParams.listePionsACoordonner ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         for _,x in pairs( self._namedParams.listePionsACoordonner ) do

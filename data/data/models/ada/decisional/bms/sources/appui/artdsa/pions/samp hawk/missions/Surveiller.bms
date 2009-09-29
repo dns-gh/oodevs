@@ -101,9 +101,8 @@ elseif switch_1 == eFinMission then
                             F_Pion_SetobjectifEsquive( myself, nil )
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end

@@ -45,9 +45,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Fixer.bms"] = true
         self.positionEni = self.positionEni or DEC_ConnaissanceAgent_Position( self._namedParams.mission.uniteAFixer_ )
         --[[// si la position de la connaissance n'est pas valide
 ]]if( ( self.positionEni == 0 or self.positionEni == nil ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
@@ -65,9 +64,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Fixer.bms"] = true
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------

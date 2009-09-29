@@ -165,15 +165,13 @@ node "BEH_Conduite_Automate_INF_AssignerSemparerA"
                 self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
         if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
             self.params.__returnValue = eActionImpossible
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( not ModuleBegins() ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         Activate( self.activations.BEH_Mission_Automate_INF_AssignerA_Semparer, 1, { ePhase_CDT, self._namedParams.pion, self.ptZone, } )

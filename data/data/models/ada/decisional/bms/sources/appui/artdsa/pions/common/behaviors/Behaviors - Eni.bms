@@ -36,16 +36,14 @@ include "bit.lua"
         self.positionSurete = self.positionSurete or nil
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( ModuleBegins() ) then
@@ -61,9 +59,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 end
 
                 if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
             end
@@ -74,9 +71,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -128,9 +124,8 @@ node "BEH_Eni_Pion_ASA_DetruireEnnemiDirect"
                 self.eEtatTir = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -141,25 +136,22 @@ node "BEH_Eni_Pion_ASA_DetruireEnnemiDirect"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
 --[[//si la connaissance n'est plus valide, on arrete le comportement
 ]]        end
 
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//MAJ de l'ennemi en cours de traitement
@@ -218,9 +210,8 @@ node "BEH_Eni_Pion_ASA_AttendreDetruireDirect"
         --[[//si la connaissance est invalide, halter le comportement
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.bufferConnaissanceAgent ) ) then
             self.params.__returnValue = eActionImpossible
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//attendre le temps "delai"
@@ -268,9 +259,8 @@ node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
         self.distancePointInterception = self.distancePointInterception or 0
         self.tempsInterception = self.tempsInterception or 0
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//determination de la position d'interception
@@ -282,9 +272,8 @@ node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
 ]]--[[//d'interception, alors, on arrete le comportement 
 ]]if( ( self.pointInterception == 0 or self.pointInterception == nil ) ) then
             do
-                                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                                Halt( self )
+                do return end
 
             end
         end
@@ -302,9 +291,8 @@ node "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct"
             end
         else
 do
-                                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                                Halt( self )
+                do return end
 
             end
         end

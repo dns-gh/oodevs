@@ -47,9 +47,8 @@ node "MIS_Automate_MRT_INF_FlancGarder"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -61,9 +60,8 @@ node "MIS_Automate_MRT_INF_FlancGarder"
                     DEC_Trace( "T_Mission_Automate_INF_FlancGarder : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

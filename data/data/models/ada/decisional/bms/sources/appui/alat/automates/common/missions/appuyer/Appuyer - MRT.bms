@@ -31,9 +31,8 @@ includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - MR
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
                 end
@@ -43,9 +42,8 @@ includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - MR
 
         DEC_MRT_Valide()
                 self.params.__returnValue = eActionEffectuee
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 

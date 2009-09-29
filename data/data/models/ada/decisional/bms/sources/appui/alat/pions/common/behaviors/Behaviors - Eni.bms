@@ -37,25 +37,22 @@ include "bit.lua"
 ]]--[[//----------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//si je suis a une distance supérieure a rDistance, alors, ce n'est pas
 ]]--[[//la peine de decrocher
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//----------------------------------------------------------------------
@@ -74,9 +71,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 end
 
                 if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
             end
@@ -87,9 +83,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -163,21 +158,18 @@ node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
         self.eEtat = self.eEtat or eActionEnCours
         --[[//si la connaissance est invalide, halter le comportement
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.bufferConnaissanceAgent ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( not S_Eni_Pion_ALAT_PeutDetruire( myself, self._namedParams.bufferConnaissanceAgent ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.bufferConnaissanceAgent ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//attendre le temps "delai"
@@ -265,15 +257,13 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
         --[[//si la connaissance n'est plus valide, on arrete le comportement
 ]]--[[//ou si on n'a plus de quoi tirer dessus
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( not S_Eni_Pion_ALAT_PeutDetruire( myself, self._namedParams.ennemi ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//verouillez la direction des capteurs vers la cible
@@ -319,9 +309,8 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
                         self.eEtatAttaque = eActionEnCours
                                                 do
                                                         self.params.__returnValue = eActionEffectuee
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
 
@@ -395,15 +384,13 @@ node "BEH_Eni_Pion_ALAT_Jalonner"
         self.rDistanceEsquive = self.rDistanceEsquive or self.rDistanceEfficace + self._namedParams.distanceSecu
         --[[//Fin du comportement si la connaissance n'est plus valide    
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repEni ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//RC pour signaler que le pion est en cours de jalonnement

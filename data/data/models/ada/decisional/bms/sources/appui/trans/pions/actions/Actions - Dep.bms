@@ -61,9 +61,8 @@ elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
 elseif switch_1 == eEtatActionDeplacement_Termine then
                     self.actionDeplacement = DEC_StopAction( self.actionDeplacement )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 --[[//-----------------------------------------------------------------------------

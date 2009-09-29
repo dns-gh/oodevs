@@ -19,9 +19,8 @@ includedFiles["sources/common/pions/actions/Actions - Misc.bms"] = true
     select = function( self )
         if( DEC_Agent_NiveauInstallation() >= self._namedParams.eNiveau ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
     end,

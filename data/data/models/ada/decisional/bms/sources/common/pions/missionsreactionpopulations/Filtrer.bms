@@ -29,9 +29,8 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Filtrer.bms"] = 
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -44,9 +43,8 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Filtrer.bms"] = 
                 if( not DEC_Geometrie_EstPointDansFuseau( self.objectif ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                                                Halt( self )
+                        do return end
 
                     end
                 end
@@ -59,9 +57,8 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Filtrer.bms"] = 
 
         if( self.eEtatAction == eActionHalt ) then
             do
-                                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                                Halt( self )
+                do return end
 
             end
         end

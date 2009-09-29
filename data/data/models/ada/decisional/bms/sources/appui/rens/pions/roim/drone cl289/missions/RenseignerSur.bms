@@ -45,8 +45,8 @@ include "bit.lua"
                 DEC_RC( eRC_MissionImpossible )
                 self.deselect = function() end
                 self.destroy = function() end
-                Halt()
-
+                Halt( self )
+                return
             end
         end
 
@@ -57,8 +57,8 @@ include "bit.lua"
                 DEC_RC( eRC_MissionImpossible )
                 self.deselect = function() end
                 self.destroy = function() end
-                Halt()
-
+                Halt( self )
+                return
             end
             --[[// pour être sur de revenir au point de départ
             ]]                end

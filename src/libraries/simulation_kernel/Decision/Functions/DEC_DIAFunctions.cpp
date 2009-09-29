@@ -209,5 +209,6 @@ boost::shared_ptr< MT_Vector2D > DEC_DIAFunctions::ListPoint_GetAt( std::vector<
 // -----------------------------------------------------------------------------
 void DEC_DIAFunctions::BreakForDebug( uint id, const std::string& message )
 {
-    std::cerr << id << ": " << message << std::endl;
+    static int count = 0;
+    std::cerr << "[" << ++count << "]: " << id << ": " << message << std::endl;
 }

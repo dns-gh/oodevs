@@ -137,9 +137,8 @@ include "bit.lua"
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
@@ -181,9 +180,8 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireAeromobile"
     activate = function( self )
         if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         for _,x in pairs( self._namedParams.listeEnis ) do

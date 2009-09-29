@@ -52,9 +52,8 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/reconnaissanceo
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

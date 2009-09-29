@@ -29,9 +29,8 @@ include "bit.lua"
         --[[//on checke les changements de ROE, on reinitialise dans ce cas
 ]]local eRoe = DEC_Agent_RoePopulation()
         if( eRoe ~= self.eROEPopulation ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( DEC_UserTypeList_Contient( DEC_Connaissances_PopulationsPrenantAPartie(), self._namedParams.pop ) ) then
@@ -105,9 +104,8 @@ node "BEH_EsquiverLaPopulationIncontrolable"
                 self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
                 eValiditeRequete = self.prevDomination.second
                 self.prevDomination = self.prevDomination.first
-                                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                                Halt( self )
+                do return end
 --[[//pour forcer à tuer l'instance de ACT_Misc_Delai
 ]]
             end
@@ -228,9 +226,8 @@ node "BEH_Pop_Pion_EsquiveFaceA"
                     end
                 else
 do
-                                                self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                                                Halt( self )
+                        do return end
 --[[//destruction des points et itineraires
 ]]
                     end
@@ -240,9 +237,8 @@ do
         end
 
         if( self.eEtat == eActionEffectuee and DEC_UserTypeList_Contient( DEC_Connaissances_CollisionsPopulations(), self._namedParams.pop ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[// Aller au plus vite

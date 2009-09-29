@@ -35,9 +35,8 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Executer v
 ]]        end
 
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.siteFranchissement_ ) ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//-----------------------------------------------------------------

@@ -86,9 +86,8 @@ elseif switch_1 == eSecuriser then
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                                        self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                                        Halt( self )
+                    do return end
 
                                 end
             end

@@ -48,9 +48,8 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -61,9 +60,8 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
@@ -112,9 +110,8 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
 ]]if( ( #( self.selPions ) == 0 or #( self.selPions ) == nil ) ) then
                         do
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -131,9 +128,8 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -143,9 +139,8 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 

@@ -51,18 +51,16 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
                     DEC_Trace( "Debarquement : fin" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
             end
@@ -145,9 +143,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionTirDirect_Impossible then
@@ -157,9 +154,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTirDirect_Finished then
@@ -170,9 +166,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     self.actionID = DEC_StopAction( self.actionID )
                     --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
 ]]                    self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[3] or switch_1 == eActionTirDirect_NoAmmo then
@@ -182,9 +177,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eActionTirDirect_NoCapacity then
@@ -194,9 +188,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[5] or switch_1 == eActionTirDirect_Running then
@@ -285,9 +278,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionTirDirect_Impossible then
@@ -297,9 +289,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTirDirect_Finished then
@@ -310,9 +301,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     self.actionID = DEC_StopAction( self.actionID )
                     --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
 ]]                    self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[3] or switch_1 == eActionTirDirect_NoAmmo then
@@ -322,9 +312,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eActionTirDirect_NoCapacity then
@@ -334,9 +323,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[5] or switch_1 == eActionTirDirect_Running then
@@ -467,9 +455,8 @@ node "ACT_Pion_VAB_ControleZone"
             do
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectBouchonMines ) ) ) then
                     self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
                 DEC_Trace( "realisation bouchon mines : nbre = " .. FloatToString( self._namedParams.rQte ) )
@@ -509,9 +496,8 @@ elseif switch_1 == eActionObjetTerminee then
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionObjetManqueDotation then
@@ -520,9 +506,8 @@ elseif switch_1 == eActionObjetTerminee then
                 if cases_switch_1[3] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 --[[// Pas de delais de reorganisation du chantier
@@ -587,9 +572,8 @@ elseif switch_1 == eActionObjetTerminee then
                     do
                         DEC_Trace( "realisation objet : impossible" )
                                                 self.params.__returnValue = eActionImpossible
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
                 end
@@ -630,9 +614,8 @@ elseif switch_1 == eActionObjetTerminee then
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionObjetPasDeCapacite then
@@ -640,9 +623,8 @@ elseif switch_1 == eActionObjetTerminee then
                     self.actionID = DEC_StopAction( self.actionID )
                     --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
 ]]                    self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionObjetManqueDotation then
@@ -652,9 +634,8 @@ elseif switch_1 == eActionObjetTerminee then
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 --[[// Pas de delais de reorganisation du chantier
@@ -720,9 +701,8 @@ elseif switch_1 == eActionObjetTerminee then
                 DEC_Trace( "preparation abatti ( l = " .. FloatToString( self._namedParams.rLongueur ) .. " ) : debut" )
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectAbatti ) ) ) then
                     self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
                 self.actionID = DEC_StartPreparerObjet( self.repObj, S_TypeObject_ToString( eTypeObjectAbatti ), self._namedParams.locObjet, self._namedParams.rLongueur )
@@ -760,9 +740,8 @@ elseif switch_1 == eActionObjetTerminee then
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionObjetManqueDotation then
@@ -772,9 +751,8 @@ elseif switch_1 == eActionObjetTerminee then
                 if cases_switch_1[3] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 --[[// Pas de delais de reorganisation du chantier
@@ -871,18 +849,16 @@ elseif switch_1 == eActionObjetTerminee then
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 --[[// Pas de delais de reorganisation du chantier
@@ -943,18 +919,16 @@ node "ACT_Obj_Pion_INF_Activer"
             do
                 DEC_Trace( "activation : fin" )
                                 self.params.__returnValue = eActionEffectuee
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         else
 do
                 DEC_Trace( "activation : impossible" )
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -1011,18 +985,16 @@ elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "destruction : fin" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 --[[// Pas de delais de reorganisation du chantier

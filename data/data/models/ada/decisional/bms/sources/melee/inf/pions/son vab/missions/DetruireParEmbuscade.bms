@@ -148,9 +148,8 @@ do
                                 DEC_Trace( "fin de mission" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
@@ -215,16 +214,14 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
                                 do
                     DEC_Warning( eRC_MissionImpossible )
                                         self.params.__returnValue = eFinMission
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -327,9 +324,8 @@ node "BEH_Eni_Pion_VAB_DetruireEmbuscade"
                     do
                         DEC_RC( eRC_PointTenuParEni, ksEni_Percu )
                                                 self.params.__returnValue = eActionHalt
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
                 end

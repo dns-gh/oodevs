@@ -59,9 +59,8 @@ includedFiles["sources/melee/abc/pions/common/missions/ArmerPointControle.bms"] 
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -173,9 +172,8 @@ node "ACT_Pion_ABC_AnimerSite"
     deselect = function( self )
                 DEC_Trace( "Site non anime" )
         self.actionAnimer = DEC_StopAction( self.actionAnimer )
-                self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+                Halt( self )
+        do return end
 
     end,
 

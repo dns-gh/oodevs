@@ -92,9 +92,8 @@ elseif switch_1 == eSeReplier then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -198,9 +197,8 @@ node "BEH_Dep_Pion_EOP_PreparerDebarquement"
             do
                 self.eActionDelai = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -237,9 +235,8 @@ node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -250,9 +247,8 @@ node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Pion_INF_ApprocherObjectifMission" )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

@@ -43,9 +43,8 @@ includedFiles["sources/appui/rens/pions/roem/common/missions/RenseignerSur.bms"]
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         if( ModuleBegins() ) then

@@ -53,9 +53,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                     self.actionTir = DEC_StopAction( self.actionTir )
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionTirDirect_None
@@ -73,9 +72,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
         self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
                 self.params.__returnValue = eActionHalt
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 
@@ -136,9 +134,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 or switch_1 == eActionTirDirect_Finished then
                     self.actionTir = DEC_StopAction( self.actionTir )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionTirDirect_None
@@ -155,9 +152,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
                 self.params.__returnValue = eActionHalt
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 
@@ -205,9 +201,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
                 self.params.__returnValue = eActionHalt
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 
@@ -255,9 +250,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
                 self.params.__returnValue = eActionHalt
-        self.deselect = function() end
-        self.destroy = function() end
-        Halt()
+        Halt( self )
+        do return end
 
     end,
 

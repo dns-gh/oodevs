@@ -68,9 +68,8 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -154,16 +153,14 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -173,9 +170,8 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
                 self.eActionRejoindre = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

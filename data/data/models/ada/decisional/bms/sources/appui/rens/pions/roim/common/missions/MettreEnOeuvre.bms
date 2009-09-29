@@ -60,9 +60,8 @@ do
 ]]        end
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
          do
@@ -218,9 +217,8 @@ node "ACT_Misc_ProgrammerDrone"
                         end
 
                                                 self.params.__returnValue = eActionEffectuee
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
                 end

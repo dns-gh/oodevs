@@ -29,9 +29,8 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = tru
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
                 self.eEtatODC = eActionEnCours
             end

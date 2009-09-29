@@ -48,16 +48,14 @@ node "BEH_Mission_Pion_INF_Freiner"
                                 do
                     DEC_Warning( eRC_MissionImpossible )
                                         self.params.__returnValue = eFinMission
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -186,9 +184,8 @@ node "BEH_Dep_Pion_INF_Freiner_Decrocher"
 
         if( DEC_Agent_EstEmbarque() ) then
             self.params.__returnValue = eActionEffectuee
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         --[[// Reste debarque a proximite

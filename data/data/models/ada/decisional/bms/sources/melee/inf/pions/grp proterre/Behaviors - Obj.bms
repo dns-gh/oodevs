@@ -57,27 +57,24 @@ includedFiles["sources/melee/inf/pions/grp proterre/Behaviors - Obj.bms"] = true
             do
                 if( ( self._namedParams.locMine == 0 or self._namedParams.locMine == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
                 DEC_Trace( "  installation plan d'obstacle" )
                 self.ptMission = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locMine )
                 if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
                 self.locPtMine = S_Geometrie_INF_ChercherPositionObstacle( self.ptMission, eTypeObjectBouchonMines, S_DistanceInstallationObstacle() )
                 if( ( self.locPtMine == 0 or self.locPtMine == nil ) ) then
 --[[// Pour le moment, on fait un bouchon de mines
 ]]                    self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
             end
@@ -85,9 +82,8 @@ includedFiles["sources/melee/inf/pions/grp proterre/Behaviors - Obj.bms"] = true
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
-            self.deselect = function() end
-            self.destroy = function() end
-            Halt()
+            Halt( self )
+            do return end
         end
 
         Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, setmetatable( { self.locPtMine, 10, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
@@ -136,9 +132,8 @@ node "BEH_Obj_Pion_VAB_InstallerCheckPoint"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -201,9 +196,8 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
 ]]self.repObj = DEC_Connaissances_ObjetLePlusProche( S_TypeObject_ToString( eTypeObjectBouchonMines ) )
                 if( ( self.repObj == 0 or self.repObj == nil ) ) then
                     self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
             end
@@ -213,16 +207,14 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
             do
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
         end
@@ -232,9 +224,8 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

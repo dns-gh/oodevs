@@ -650,3 +650,13 @@ function DEC_CreerDIAThing( thingType )
     local mt = { __index = wrapGetOrSet }
     return setmetatable( result, mt )
 end
+
+do
+    local nop = function() end
+    local doHalt = Halt
+    rawset( _G, "Halt", function( self ) 
+        self.deselect = nop
+        self.destroy = nop        
+        doHalt()
+    end )
+end

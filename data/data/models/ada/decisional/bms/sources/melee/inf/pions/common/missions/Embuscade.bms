@@ -200,9 +200,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt()
+                Halt( self )
+                do return end
 
             end
 --[[// Puis on la rejoint								
@@ -213,9 +212,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                 end
 

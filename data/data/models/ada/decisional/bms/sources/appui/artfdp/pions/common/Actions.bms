@@ -39,9 +39,8 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
                     do
                         --[[// RC_ TravauxImpossible
 ]]                        self.params.__returnValue = eActionImpossible
-                        self.deselect = function() end
-                        self.destroy = function() end
-                        Halt()
+                        Halt( self )
+                        do return end
 
                     end
                 end
@@ -49,9 +48,8 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
                 local xType = S_TypeObject_ToString( self._namedParams.eTypeObjet )
                 if( not DEC_Agent_PeutConstruireObjet( xType ) ) then
                     self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
                 end
 
                 DEC_Trace( "object construction: begin" )
@@ -90,18 +88,16 @@ elseif switch_1 == eActionObjetTerminee then
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionObjetPasDeCapacite then
                     DEC_Trace( "object construction: no capability" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                 elseif switch_1 == eActionObjetManqueDotation then
@@ -112,9 +108,8 @@ elseif switch_1 == eActionObjetTerminee then
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                     
                                 end
@@ -222,9 +217,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     DEC_Trace( "fire on: disabled knowledge" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionTirIndirect_Termine then
@@ -240,9 +234,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTirIndirect_NoAmmo then
@@ -269,9 +262,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[3] or switch_1 == eActionTirIndirect_PasDeCapacite then
@@ -279,9 +271,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     DEC_RC( eRC_TirAnnule )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eActionTirIndirect_EnCours then

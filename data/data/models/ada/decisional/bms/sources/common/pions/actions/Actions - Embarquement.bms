@@ -44,18 +44,16 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Loading of troops : ignore carrier" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
                     DEC_Trace( "Loading of troops : end" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    self.deselect = function() end
-                    self.destroy = function() end
-                    Halt()
+                    Halt( self )
+                    do return end
 
                                 end
             end

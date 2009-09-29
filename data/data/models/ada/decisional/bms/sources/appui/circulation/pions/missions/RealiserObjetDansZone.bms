@@ -89,16 +89,14 @@ elseif switch_1 == eProgresser then
                                 end
 
                                                                 self.params.__returnValue = eActionImpossible
-                                self.deselect = function() end
-                                self.destroy = function() end
-                                Halt()
+                                Halt( self )
+                                do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            self.deselect = function() end
-                            self.destroy = function() end
-                            Halt()
+                            Halt( self )
+                            do return end
 
                         end
 --[[// using actuator deplacement
