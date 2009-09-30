@@ -184,7 +184,8 @@ do
                 --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_AssignerMissions then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eMRT_AssignerMissions then
                     --[[/* ------------------------------------------------------------- */]]--[[/* -------------  Gestion erreur/ bon deroulement -------------- */]]--[[/* ------------------------------------------------------------- */]]if( self.eEtat == eActionImpossible ) then
                         do
                             --[[// ePhase = eMRT_MissionImpossible;
@@ -233,7 +234,8 @@ elseif switch_2 == "T_Mission_Automate_ABC_Jalonner" then
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eMRT_MissionImpossible then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eMRT_MissionImpossible then
                     Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                     
                 --[[//---------------------------------------------------------------------

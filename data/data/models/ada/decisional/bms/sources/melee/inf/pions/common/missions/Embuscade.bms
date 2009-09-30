@@ -123,7 +123,8 @@ elseif switch_2 == eTypeObjectAbatti then
                     end
 
                     
-                elseif switch_1 == eActiverObstacle then
+                                cases_switch_1[1] = true
+elseif switch_1 == eActiverObstacle then
                     if( not DEC_ConnaissanceObjet_EstValide( self.repObj ) ) then
                         do
                             DEC_Trace( "objet cree non recupere" )
@@ -152,7 +153,8 @@ elseif switch_2 == eTypeObjectAbatti then
                     end
 
                     
-                elseif switch_1 == ePrendreContact
+                                cases_switch_1[2] = true
+elseif switch_1 == ePrendreContact
                 or switch_1 == eAttendre then
                     
                                 cases_switch_1[3] = true

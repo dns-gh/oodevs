@@ -109,7 +109,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObservation, eProgressionDirect, eTypeItiMouvement, } )
                     
                 --[[// Decrocher
-]]elseif switch_1 == eRejoindre then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Decroche, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -126,7 +127,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionInitiale, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Fin de la mission Sur ordre ou si plus d'autonomie
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
                     if( self.eEtat == eActionEffectuee ) then
                         Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     end

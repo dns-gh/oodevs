@@ -93,7 +93,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pointARenseigner, eProgressionReco, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Surveiller
-]]elseif switch_1 == eSurveiller then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     --[[//----------------------------------------------------------------------
 ]]--[[// RC + Surveiller (seulement qd installé)

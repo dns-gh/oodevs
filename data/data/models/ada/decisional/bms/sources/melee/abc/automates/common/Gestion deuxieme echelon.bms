@@ -252,7 +252,8 @@ elseif switch_1 == eGererSecondEchelon then
 
                     Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSE_, 1, {} )
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,
@@ -441,7 +442,8 @@ elseif switch_1 == eGererSecondEchelon then
 
                     Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSEStatique_, 1, { self._namedParams.positionInstallation, } )
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,
@@ -570,7 +572,8 @@ elseif switch_1 == eGererSecondEchelon then
 
                     Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_, 1, { self._namedParams.lima, } )
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,

@@ -144,7 +144,8 @@ elseif switch_1 == eProgresser then
                 --[[//---------------------------------------------------------------------
 ]]--[[// 4) Puis on observe la zone souhaitée.
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eSurveiller then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, {} )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )

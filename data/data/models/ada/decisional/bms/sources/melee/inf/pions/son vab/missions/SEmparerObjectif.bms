@@ -96,7 +96,8 @@ elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointObjectif_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     
@@ -320,7 +321,8 @@ node "BEH_Mission_Pion_VAB_Semparer"
                     end
 
                     
-                elseif switch_1 == eObserver then
+                                cases_switch_1[1] = true
+elseif switch_1 == eObserver then
                     --[[// L'objectif est libre, on peut le rejoindre ..
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
@@ -360,7 +362,8 @@ node "BEH_Mission_Pion_VAB_Semparer"
 
                     Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 1, setmetatable( { self.mission.pointObjectif_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eRejoindreAssaut then
+                                cases_switch_1[2] = true
+elseif switch_1 == eRejoindreAssaut then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( F_Pion_GeteniEnCours( myself ) == nil ) then
                         do
@@ -412,7 +415,8 @@ elseif switch_1 == eRejoindre then
                     
                 --[[//-----------------------------------------------------------------------------
 ]]--[[//  Rencontre d'un eni lorsque l'on est pas dans la phase d'assaut
-]]elseif switch_1 == eFouiller then
+]]                cases_switch_1[4] = true
+elseif switch_1 == eFouiller then
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )--[[//-----------------------------------------------------------------------------		
 ]]
                     if( ( F_Pion_GeteniEnCours( myself ) ~= 0 and F_Pion_GeteniEnCours( myself ) ~= nil ) ) then
@@ -439,7 +443,8 @@ elseif switch_1 == eRejoindre then
 
                     Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_TEMPS_FOUILLE(), "fouille des lieux ... ", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                
+                                cases_switch_1[5] = true
+
                 else
                                 end
             end

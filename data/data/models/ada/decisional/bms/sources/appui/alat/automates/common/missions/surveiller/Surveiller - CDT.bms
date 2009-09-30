@@ -145,7 +145,8 @@ do
 
                     self.fNbPeutSurveillerPrec = #( self.listePeutFaireSurveiller )
                     
-                elseif switch_1 == eSExfiltrer then
+                                cases_switch_1[1] = true
+elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     

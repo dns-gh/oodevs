@@ -74,7 +74,8 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eFinMission then
+                                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     
                                 cases_switch_1[3] = true

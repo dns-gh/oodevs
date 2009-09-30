@@ -77,7 +77,8 @@ node "BEH_Mission_Pion_INF_SurveillerSecteur"
                     --[[// Rejoins une position d'observation de la position a Barrer
 ]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.positionInstallation_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eAborderObjectif then
+                                cases_switch_1[1] = true
+elseif switch_1 == eAborderObjectif then
                     StartActivate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -95,7 +96,8 @@ do
                         end
                     end
 
-                                end
+                                cases_switch_1[2] = true
+                end
                 if cases_switch_1[2] or switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
@@ -119,7 +121,8 @@ do
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eSurveiller then
+                                cases_switch_1[3] = true
+elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[// On desactive la sauvegarde pendant la phase de surveillance
 ]]

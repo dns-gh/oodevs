@@ -113,7 +113,8 @@ elseif switch_1 == eProgresser then
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
                     
                 --[[// Releve
-]]elseif switch_1 == eRelever then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eRelever then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Reliefing unit", } )
                     Activate( self.activations.ACT_Misc_ReleverUnite, 1, { self._namedParams.mission.uniteARelever_, } )

@@ -111,7 +111,8 @@ do
                     Activate( self.activations.BEH_Mission_Pion_INF_DetruireParCoupDeMain, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Rejoins la position de replis
-]]elseif switch_1 == eSeReplier then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eSeReplier then
                     --[[/*
 		if(  							eAction == eActionEffectuee)    {         							eAction=eActionEnCours;         { ePhase = eFinMission; }     }    else    {         behavior BEH_Manoeuvre_RompreContact() return in  							eAction;        return;
     }
@@ -132,7 +133,8 @@ elseif switch_1 == eFinMission then
                     end
 
                     
-                
+                                cases_switch_1[3] = true
+
                 else
                                 end
             end

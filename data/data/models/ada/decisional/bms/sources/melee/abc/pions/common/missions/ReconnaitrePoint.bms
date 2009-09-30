@@ -117,7 +117,8 @@ elseif switch_1 == eProgresser then
 
                     
                 --[[// Abordage et reconnaissance du point
-]]elseif switch_1 == eReconnaitre then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do

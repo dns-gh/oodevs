@@ -50,7 +50,8 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
                     end
 
                     self.ePhase = eAttendre
-                                end
+                                cases_switch_1[1] = true
+                end
                 if cases_switch_1[1] or switch_1 == eAttendre then
                     Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eOrdre = v else rawset( t, k, v ) end end } ) )
                     
@@ -173,7 +174,8 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                         return
                     end
 
-                                end
+                                cases_switch_1[2] = true
+                end
                 if cases_switch_1[2] or switch_1 == eSurveiller then
                     --[[// Observe la direction dangereuse		
 ]]local mission = DEC_GetMission( myself )
@@ -202,7 +204,8 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eRejoindre then
+                                cases_switch_1[3] = true
+elseif switch_1 == eRejoindre then
                     
                                 cases_switch_1[4] = true
 
@@ -312,7 +315,8 @@ do
                     end
 
                     
-                
+                                cases_switch_1[2] = true
+
                 else
                                 end
             end

@@ -73,7 +73,8 @@ includedFiles["sources/melee/inf/pions/common/missions/Interdire.bms"] = true
 ]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointAInterdire_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
                 --[[//  On verifie les alentours, et on attend de debusquer un ennemi
-]]elseif switch_1 == eInstallerDispositif then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eInstallerDispositif then
                     --[[// Si on est dans cette phase et que la fin de mission arrive : pas d'ennemis
 ]]Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
@@ -99,7 +100,8 @@ includedFiles["sources/melee/inf/pions/common/missions/Interdire.bms"] = true
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
                 --[[//  On se met en position de tir
-]]elseif switch_1 == eSurveiller then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 1.5, } )
                     

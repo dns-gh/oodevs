@@ -72,7 +72,8 @@ includedFiles["sources/air/pions/common/missions/Effectuer Raid.bms"] = true
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Eni_Pion_AIR_EffectuerRaid, GetMotivation( "MOT_ManoeuvrerSurEnis" ), { self._namedParams.mission.zone_, } )
                     
-                elseif switch_1 == eFinMission then
+                                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -91,7 +92,8 @@ includedFiles["sources/air/pions/common/missions/Effectuer Raid.bms"] = true
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,

@@ -82,7 +82,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer une formati
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// 3. Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eMRT_MissionImpossible then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
                     Halt( self )

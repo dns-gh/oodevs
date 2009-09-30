@@ -496,7 +496,8 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
                     end
 
                     
-                elseif switch_1 == eItineraire_Invalide then
+                                cases_switch_1[1] = true
+elseif switch_1 == eItineraire_Invalide then
                     do
                     end
 

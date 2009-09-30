@@ -91,7 +91,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.positionDeploiement, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Mettre en oeuvre
-]]elseif switch_1 == eSurveiller then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -108,7 +109,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, 1, setmetatable( { self.pionDrone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Fin de la mission de reconnaissance
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     

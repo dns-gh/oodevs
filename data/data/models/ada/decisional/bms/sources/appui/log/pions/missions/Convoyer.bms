@@ -87,7 +87,8 @@ elseif switch_1 == eTestConvoyerStep_Chargement then
                     Activate( self.activations.ACT_Misc_Pion_LOG_Charger, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Aller
-]]elseif switch_1 == eTestConvoyerStep_DeplacementVersPointDechargement then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eTestConvoyerStep_DeplacementVersPointDechargement then
                     Activate( self.activations.ACT_RC, 1, { eRC_Convoi_DeplacementVersPointDechargement, } )
                     Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCRavitaille, 500, 900, } )
                     if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCRavitaille:DEC_Agent_Position() ) < 500 ) then
@@ -114,7 +115,8 @@ elseif switch_1 == eTestConvoyerStep_Dechargement then
                     Activate( self.activations.ACT_Misc_Pion_LOG_Decharger, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Retour
-]]elseif switch_1 == eTestConvoyerStep_DeplacementRetour then
+]]                cases_switch_1[4] = true
+elseif switch_1 == eTestConvoyerStep_DeplacementRetour then
                     Activate( self.activations.ACT_RC, 1, { eRC_Convoi_Retour, } )
                     Activate( self.activations.BEH_Dep_LOG_Suivre, 1, { self.pionPCConvoyant, 500, 900, } )
                     if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pionPCConvoyant:DEC_Agent_Position() ) < 500 ) then
@@ -189,7 +191,8 @@ node "BEH_Dep_LOG_Suivre"
                 --[[//-----------------------------------------------------------------
 ]]--[[// 3) Rejoindre la position amie
 ]]--[[//-----------------------------------------------------------------
-]]                end
+]]                cases_switch_1[1] = true
+                end
                 if cases_switch_1[1] or switch_1 == eRejoindre then
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Si on a fini de parcourir l'itineraire on recalcul l'itineraire
@@ -228,7 +231,8 @@ node "BEH_Dep_LOG_Suivre"
                     end
 
                     
-                
+                                cases_switch_1[2] = true
+
                 else
                                 end
             end

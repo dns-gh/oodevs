@@ -225,7 +225,8 @@ elseif switch_1 == eMRT_RetablirFuseau then
 
                     Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eMRT_Valider then
+                                cases_switch_1[2] = true
+elseif switch_1 == eMRT_Valider then
                     if( self._namedParams.ePhase == ePhase_CDT ) then
                         DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
                     end
@@ -324,7 +325,8 @@ elseif switch_1 == eMRT_RetablirFuseau then
 
                     Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eMRT_Valider then
+                                cases_switch_1[2] = true
+elseif switch_1 == eMRT_Valider then
                     if( self._namedParams.ePhase == ePhase_CDT ) then
                         DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
                     end
@@ -1458,7 +1460,8 @@ elseif switch_1 == ePhase_CDT then
                     end
 
                     
-                elseif switch_1 == eMRT_RetablirFuseau then
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_RetablirFuseau then
                     if( self.eActionFuseau == eActionEffectuee ) then
                         do
                             self.eActionFuseau = eActionEnCours
@@ -1470,7 +1473,8 @@ elseif switch_1 == ePhase_CDT then
 
                     Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eMRT_Valider then
+                                cases_switch_1[2] = true
+elseif switch_1 == eMRT_Valider then
                     self.ePhaseMRT = eMRT_Effectuee
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Envoie la mission si l'on se trouve dans la conduite

@@ -121,7 +121,8 @@ elseif switch_1 == eProgresser then
 ]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionAmie, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Passer en appui
-]]elseif switch_1 == ePasserEnAppui then
+]]                cases_switch_1[2] = true
+elseif switch_1 == ePasserEnAppui then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -137,7 +138,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour, 1, setmetatable( { self._namedParams.mission.uniteAAppuyer_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// On se poste sur la position d'appui
-]]elseif switch_1 == eSePoster then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, {} )

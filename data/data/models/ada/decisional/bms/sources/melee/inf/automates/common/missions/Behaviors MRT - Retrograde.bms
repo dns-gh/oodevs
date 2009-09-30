@@ -160,7 +160,8 @@ elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
                     end
 
                     
-                elseif switch_1 == eMRT_AffecterFuseaux then
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_AffecterFuseaux then
                     --[[//-----------------------------------------------------------------------------
 ]]--[[//Le fuseau de la compagnie est coupe en DEUX
 ]]--[[//le pion en appui utilise le fuseau de la compagnie
@@ -180,7 +181,8 @@ elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
                     Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { self.lstPionsAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, { self.lstPionsSurveillance, } )
                     
-                elseif switch_1 == eMRT_AssignerMissions then
+                                cases_switch_1[2] = true
+elseif switch_1 == eMRT_AssignerMissions then
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner les missions au pions subordonnéss
 ]]--[[//-----------------------------------------------------------------------------				
@@ -269,7 +271,8 @@ elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
                     Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
                     Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
                     
-                                end
+                                cases_switch_1[3] = true
+                end
             end
 
     end,

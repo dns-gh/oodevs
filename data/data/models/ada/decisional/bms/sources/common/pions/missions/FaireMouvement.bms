@@ -76,7 +76,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionAvecEscortePossibleSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Fin mission
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     
@@ -189,7 +190,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,

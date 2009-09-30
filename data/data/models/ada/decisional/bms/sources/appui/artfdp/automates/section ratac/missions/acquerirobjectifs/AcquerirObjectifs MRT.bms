@@ -128,7 +128,8 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
 
                     self.ePhase = eMRT_AssignerMissions
                     
-                elseif switch_1 == eMRT_AssignerMissions then
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_AssignerMissions then
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner les missions au pions subordonnéss
 ]]--[[//-----------------------------------------------------------------------------
@@ -165,7 +166,8 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
                     --[[// Assigne la mission au pc
 ]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_RATAC, } )
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,

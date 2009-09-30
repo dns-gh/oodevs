@@ -103,7 +103,8 @@ elseif switch_2 == "Drone_CL289"
                 --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_AssignerMissions then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eEtat == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
@@ -158,7 +159,8 @@ elseif switch_2 == "T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" then
                 --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_MissionImpossible then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eMRT_MissionImpossible then
                     DEC_Trace( "--Mission impossible--" )
                                         self.params.__returnValue = eActionImpossible
                     Halt( self )

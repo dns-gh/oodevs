@@ -128,7 +128,8 @@ do
 
                     Activate( self.activations.BEH_Transport_Pion_ALAT_HM_Helitransporter, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsAHeliporter, self._namedParams.mission.avecMateriel_, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eSExfiltrer then
+                                cases_switch_1[1] = true
+elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
@@ -165,7 +166,8 @@ do
 
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eFinMission then
+                                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -186,7 +188,8 @@ do
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                                end
+                                cases_switch_1[3] = true
+                end
             end
 
     end,

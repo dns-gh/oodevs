@@ -703,7 +703,8 @@ do
                     end
 
                     
-                
+                                cases_switch_1[2] = true
+
                 else
                                 end
             end
@@ -834,7 +835,8 @@ node "BEH_Dep_Suivre_Elastique"
                     self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
                     self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
                     self.eComportement = eRejoindre
-                                end
+                                cases_switch_1[1] = true
+                end
                 if cases_switch_1[1] or switch_1 == eRejoindre then
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -873,7 +875,8 @@ node "BEH_Dep_Suivre_Elastique"
 
                     StartActivate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatObstacle = v else rawset( t, k, v ) end end } ) )
                     
-                
+                                cases_switch_1[2] = true
+
                 else
                                 end
             end

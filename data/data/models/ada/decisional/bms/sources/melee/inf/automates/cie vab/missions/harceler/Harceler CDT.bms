@@ -157,12 +157,14 @@ elseif switch_3 == "SectionInfanterie"
                                             end
 
                                         
-                                                                        end
+                                                                        cases_switch_2[2] = true
+                                    end
                                 end
 
                             F_Pion_SeteEtatEchelon( x_pion, eEtatEchelon_Second )
                             
-                        elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
+                                                cases_switch_1[1] = true
+elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
                             if( S_Misc_EstMissionAffectee_Pion( x_pion, "T_Mission_Pion_INF_Harceler" ) ) then
                                 StartActivate( self.activations.BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement, 1, {} )
                             end

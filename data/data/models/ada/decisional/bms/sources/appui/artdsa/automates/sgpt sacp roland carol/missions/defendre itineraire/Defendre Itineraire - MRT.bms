@@ -97,7 +97,8 @@ do
                     --[[//Le pc va toujours stationner au milieu de l'itineraire
 ]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_MRT, self.listePC, DEC_ListePoints_GetAt( self.listePointsPourPC, 0 ), } )
                     
-                elseif switch_1 == eMRT_MissionImpossible then
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
                     Halt( self )

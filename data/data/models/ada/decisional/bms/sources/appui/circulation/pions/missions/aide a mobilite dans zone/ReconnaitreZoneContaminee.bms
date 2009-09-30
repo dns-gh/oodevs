@@ -87,7 +87,8 @@ elseif switch_1 == eRejoindrePosition then
 ]]Activate( self.activations.BEH_LOG_Pion_FaireDesMesures, 1.1, {} )
                     
                 --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     

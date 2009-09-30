@@ -42,7 +42,6 @@ end
             local eEtatRequete = DEC_ConnaissanceAgent_Verrouiller( self._namedParams.connaissance )
             if( eEtatRequete == eRequeteInvalide ) then
                 self.params.__returnValue = eActionImpossible
-                self.destroy = function() end
                 Halt( self )
                 return
             end
@@ -232,8 +231,6 @@ end
 
             end
 
-            self.deselect = function() end
-            self.destroy = function() end
             Halt( self )
             return
         end,
@@ -325,8 +322,6 @@ end
             RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
             DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
             DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-            self.deselect = function() end
-            self.destroy = function() end
             Halt( self )
             return
         end,

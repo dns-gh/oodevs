@@ -106,7 +106,8 @@ elseif switch_2 == "Patrouille_RBRR_RASIT" then
                 --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_AssignerMissions then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eEtat == eActionImpossible ) then
                         do
                             --[[// ePhase = eMRT_MissionImpossible;
@@ -165,7 +166,8 @@ elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_OrienterGuider" then
                     
                 --[[// Validation
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_Valider then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
                     Halt( self )

@@ -181,7 +181,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                         end
 
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,

@@ -151,7 +151,8 @@ if( rN_Appui > 0 ) then
                     end
 
                     
-                elseif switch_1 == eMRT_AffecterFuseaux then
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_AffecterFuseaux then
                     self.ePhase = eMRT_AssignerMissions
                     --[[/* MIA ADA
 			//-----------------------------------------------------------------------------
@@ -237,7 +238,8 @@ elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_HOT, self.limaLCAR, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_MILAN, self.limaLCAR, } )
                                 
-                            elseif switch_2 == "T_Mission_Automate_INF_RecueillirUnite" then
+                                                        cases_switch_2[3] = true
+elseif switch_2 == "T_Mission_Automate_INF_RecueillirUnite" then
                                 local mission = DEC_GetMission( myself )
                                 if( ( self.limaLR == 0 or self.limaLR == nil ) ) then
                                     do
@@ -253,7 +255,8 @@ elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_HOT, self.limaLR, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurLima, 1, { self.selPions_PE_MILAN, self.limaLR, } )
                                 
-                            elseif switch_2 == "T_Mission_Automate_INF_Couvrir" then
+                                                        cases_switch_2[4] = true
+elseif switch_2 == "T_Mission_Automate_INF_Couvrir" then
                                 local mission = DEC_GetMission( myself )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerDefendre_SurPoints, 1, { self.selPions_PE_INF, mission.objectifs_, false, } )
                                 Activate( self.activations.BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, 1, { self.selPions_PE_HOT, mission.objectifs_, } )
@@ -287,7 +290,8 @@ elseif switch_2 == "T_Mission_Automate_INF_Interdire" then
 ]]Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
                     --[[//	eValidationMRT == eActionEffectuee;
 ]]
-                elseif switch_1 == eMRT_RetablirFuseau then
+                                cases_switch_1[3] = true
+elseif switch_1 == eMRT_RetablirFuseau then
                     if( self.eValidationMRT == eActionEffectuee ) then
                         do
                             self.eValidationMRT = eActionEnCours
@@ -311,7 +315,8 @@ elseif switch_2 == "T_Mission_Automate_INF_Interdire" then
                     --[[// DEFENDRE
 ]]
                 --[[//-----------------------------------------------------------------------------
-]]                end
+]]                cases_switch_1[4] = true
+                end
             end
 
     end,

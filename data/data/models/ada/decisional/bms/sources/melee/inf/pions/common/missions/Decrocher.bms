@@ -78,7 +78,8 @@ elseif switch_1 == eDecrocher then
                     Activate( self.activations.BEH_Lima_GererLR, 1, {} )
                     
                 --[[// 4) Fin de la mission
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     StopActivate( self.activations.BEH_MOT_DesactiveSauvegarde, {} )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )

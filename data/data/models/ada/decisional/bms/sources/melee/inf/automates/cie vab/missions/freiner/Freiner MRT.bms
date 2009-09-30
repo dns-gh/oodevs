@@ -193,7 +193,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eMRT_MissionImpossible then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eMRT_MissionImpossible then
                     Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                     
                 --[[//---------------------------------------------------------------------

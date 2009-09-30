@@ -75,7 +75,8 @@ elseif switch_1 == eFinMission then
                     end
 
                     
-                
+                                cases_switch_1[2] = true
+
                 else
                 --[[// On cherche une position d'observation
 ]]                end
@@ -119,7 +120,8 @@ node "BEH_Mission_Pion_Milice_PrendreEtTenir"
 
                     Activate( self.activations.BEH_Dep_Pion_Milice_PrendreEtTenir, 1, setmetatable( { self.mission.pointAPrendre_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eSurveiller then
+                                cases_switch_1[1] = true
+elseif switch_1 == eSurveiller then
                     
                                 cases_switch_1[2] = true
                 end

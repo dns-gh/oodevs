@@ -83,7 +83,8 @@ include "bit.lua"
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eAppuyer
-                                end
+                                cases_switch_1[1] = true
+                end
                 if cases_switch_1[1] or switch_1 == eAppuyer then
                     Activate( self.activations.BEH_Dep_Pion_INF_Appuyer, GetMotivation( "MOT_Mission" ), { self.tAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), } )
                     Activate( self.activations.BEH_Eni_Pion_SAppui_Appuyer, GetMotivation( "MOT_ManoeuvrerSurEnis" ), { self._namedParams.mission.uniteAAppuyer_, } )
@@ -108,7 +109,8 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                
+                                cases_switch_1[3] = true
+
                 else
                                 end
             end

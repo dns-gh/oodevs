@@ -93,7 +93,8 @@ include "Common/Pions/Actions/Actions - Transport.bms"
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.posEmbarquement, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eTransporterEmbarquer then
+                                cases_switch_1[1] = true
+elseif switch_1 == eTransporterEmbarquer then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -167,7 +168,8 @@ do
                     end
 
                     
-                elseif switch_1 == eTransporterAllerDebarquer then
+                                cases_switch_1[2] = true
+elseif switch_1 == eTransporterAllerDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -201,7 +203,8 @@ do
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.posDebarquement, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eTransporterDebarquer then
+                                cases_switch_1[3] = true
+elseif switch_1 == eTransporterDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -233,7 +236,8 @@ do
 
                     Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                                end
+                                cases_switch_1[4] = true
+                end
             end
 
     end,

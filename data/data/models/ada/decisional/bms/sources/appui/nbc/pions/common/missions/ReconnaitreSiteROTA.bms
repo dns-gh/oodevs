@@ -106,7 +106,8 @@ elseif switch_1 == eRejoindrePosition then
 ]]--[[//behavior BEH_Nbc_Pion_FaireDesMesures() : strength = 1.1; // Poste pour mesure donc en comptète avec deplacement
 ]]
                 --[[// Se poster
-]]elseif switch_1 == eSePoster then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     --[[//---------------------------------------------------------------------
 ]]--[[// Si site reconnu fin de mission
@@ -138,7 +139,8 @@ elseif switch_1 == eRejoindrePosition then
                     Activate( self.activations.BEH_Pion_Nbc_ReconnaitreSiteROTA, 1, setmetatable( { self._namedParams.mission.siteROTA_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     

@@ -144,7 +144,8 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                 --[[// -----------------------------------------------------------------------------
 ]]--[[// Rejoindre la position du site
 ]]--[[// -----------------------------------------------------------------------------
-]]elseif switch_1 == eRejoindre then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eRejoindre then
                     if( self.eAction == eActionEnCours ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "Rejoins position d'installation", } )
@@ -157,7 +158,8 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
 
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     self.ePhase = eDeployer
-                                end
+                                cases_switch_1[2] = true
+                end
                 if cases_switch_1[2] or switch_1 == eDeployer then
                     if( DEC_ConnaissanceObjet_EstValide( self.repObjImplantation ) ) then
                         do
@@ -187,7 +189,8 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                 --[[// -----------------------------------------------------------------------------
 ]]--[[//  Fin de mission --> rejoindre plot munition
 ]]--[[// -----------------------------------------------------------------------------
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         self.params.__returnValue = eActionEffectuee
@@ -196,7 +199,8 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                     end
 
                     
-                
+                                cases_switch_1[4] = true
+
                 else
                                 end
             end

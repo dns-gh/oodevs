@@ -106,7 +106,8 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                
+                                cases_switch_1[2] = true
+
                 else
                                 end
             end
@@ -174,7 +175,8 @@ do
                         end
                     end
 
-                                end
+                                cases_switch_1[1] = true
+                end
                 if cases_switch_1[1] or switch_1 == eCouvrir then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnCouverture, } )
                     Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 2.5, } )
@@ -271,7 +273,8 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
                     StartActivate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptObjectif, eProgressionDefaut, eTypeItiAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
                     self.ePhase = eReconnaitre
                 --[[// On cherche une position d'observation
-]]                end
+]]                cases_switch_1[1] = true
+                end
                 if cases_switch_1[1] or switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     --[[// Calcul de position d'observation ?
@@ -291,7 +294,8 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
                     end
 
                     
-                elseif switch_1 == eRejoindre then
+                                cases_switch_1[2] = true
+elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     
                                 cases_switch_1[3] = true

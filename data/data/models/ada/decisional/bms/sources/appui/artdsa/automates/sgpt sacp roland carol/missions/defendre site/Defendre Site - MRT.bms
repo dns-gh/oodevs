@@ -81,7 +81,8 @@ node "MIS_Automate_MRT_ASA_DefendreSite"
                     --[[//Le pc va toujours stationner au centre de la zone défendue
 ]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreZone, } )
                     
-                elseif switch_1 == eMRT_MissionImpossible then
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
                     Halt( self )

@@ -65,7 +65,8 @@ if( x == y ) then
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionARejoindre, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eSePoster then
+                                cases_switch_1[1] = true
+elseif switch_1 == eSePoster then
                     if( DEC_ALAT_ReconnaissanceNonVuTerminee() ) then
                         self.params.__returnValue = eActionEffectuee
                         Halt( self )
@@ -73,7 +74,8 @@ if( x == y ) then
                     end
 
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,

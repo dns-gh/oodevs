@@ -85,7 +85,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/defendre s
                     --[[//Le pc va toujours stationner au centre de la site défendue
 ]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreSite, } )
                     
-                elseif switch_1 == eMRT_MissionImpossible then
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
                     Halt( self )

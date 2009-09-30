@@ -116,7 +116,8 @@ elseif switch_1 == eAnimer then
 ]]Activate( self.activations.BEH_Pion_NBC_AnimerSite, 1, { self.siteDecontamination, } )
                     
                 --[[// 4) Fin de la mission de reconnaissance SUR ORDRE
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     

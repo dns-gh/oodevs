@@ -77,7 +77,8 @@ includedFiles["sources/melee/inf/pions/son proterre/missions/Interdire.bms"] = t
 
                     Activate( self.activations.BEH_Mission_Pion_INF_Interdire, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eFinMission then
+                                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -96,7 +97,8 @@ includedFiles["sources/melee/inf/pions/son proterre/missions/Interdire.bms"] = t
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                
+                                cases_switch_1[2] = true
+
                 else
                                 end
             end

@@ -182,7 +182,8 @@ elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" then
 ]]--[[// ArmerUnSiteDeDecontamination 
 ]]--[[// Missions données dans la conduite
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" then
+]]                            cases_switch_2[2] = true
+elseif switch_2 == "T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" then
                                 if( DIA_IsListEmpty( self.selABC_NBC_Dec ) ) then
                                     do
                                         DEC_Trace( "--- Pas de pions de decontamination ---" )
@@ -203,7 +204,8 @@ elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" then
                             --[[//-----------------------------------------------------------------------------
 ]]--[[// DecontaminerUneZone
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_2 == "T_Mission_Automate_NBC_DecontaminerUneZone" then
+]]                            cases_switch_2[3] = true
+elseif switch_2 == "T_Mission_Automate_NBC_DecontaminerUneZone" then
                                 if( DIA_IsListEmpty( self.selABC_NBC_Dec ) ) then
                                     do
                                         DEC_Trace( "--- Pas de pions de reconnaissance ---" )
@@ -237,7 +239,8 @@ elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreUneZone" then
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eMRT_MissionImpossible then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
                     Halt( self )

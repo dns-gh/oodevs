@@ -69,7 +69,8 @@ elseif switch_1 == eFinMission then
                     end
 
                     
-                                end
+                                cases_switch_1[3] = true
+                end
             end
 
     end,

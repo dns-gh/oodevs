@@ -117,7 +117,8 @@ node "BEH_Conduite_Automate_INF_Relever"
                     Activate( self.activations.BEH_Situation_Automate_INF_Relever, 1, { self.rN_PE, self.mission.compagnie_, } )
                     Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, setmetatable( { self.rN_PE, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eRelever then
+                                cases_switch_1[1] = true
+elseif switch_1 == eRelever then
                     if( self.eActionReleve == eActionEffectuee ) then
                         do
                             self.eActionReleve = eActionEnCours
@@ -129,7 +130,8 @@ node "BEH_Conduite_Automate_INF_Relever"
 
                     Activate( self.activations.BEH_Conduite_Automate_INF_Relever_AssignerReleve, 1, setmetatable( { self.mission.compagnie_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eFinMission then
+                                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Conduite_Automate_INF_Relever_ApresReleve, 1, {} )--[[// Freiner ? 
 ]]
                     

@@ -89,7 +89,8 @@ do
                     Activate( self.activations.BEH_Dep_Pion_GEN_RenforcerSurPosition, 1, { self._namedParams.mission.unite_, self.bRenforceAutomate, } )
                     
                 --[[// Fin de la mission --> sur ordre
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     

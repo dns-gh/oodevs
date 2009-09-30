@@ -95,7 +95,8 @@ elseif switch_1 == eRejoindre then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointARenseigner_, eProgressionReco, eTypeItiReconnaissance, } )
                     
                 --[[// Renseigner sur le point
-]]elseif switch_1 == eSurveiller then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Obs_Pion_ABC_RenseignerSurPoint, 1, { self._namedParams.mission.pointARenseigner_, } )
                     

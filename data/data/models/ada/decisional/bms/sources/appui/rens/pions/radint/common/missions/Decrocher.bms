@@ -76,7 +76,8 @@ elseif switch_1 == eDecrocher then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// 4) Fin de la mission
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     StopActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
                     StopActivate( self.activations.BEH_MOT_DesactiveSauvegarde, {} )

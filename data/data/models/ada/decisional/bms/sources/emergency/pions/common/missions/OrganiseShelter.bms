@@ -65,7 +65,8 @@ includedFiles["sources/emergency/pions/common/missions/OrganiseShelter.bms"] = t
 
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     self.ePhase = eDeployer
-                                end
+                                cases_switch_1[1] = true
+                end
                 if cases_switch_1[1] or switch_1 == eDeployer then
                     Activate( self.activations.BEH_Pion_Emergency_OrganiseShelter, 1, { self._namedParams.mission.area_, } )
                     
@@ -83,7 +84,8 @@ elseif switch_1 == eFinMission then
                     end
 
                     
-                                end
+                                cases_switch_1[3] = true
+                end
             end
 
     end,

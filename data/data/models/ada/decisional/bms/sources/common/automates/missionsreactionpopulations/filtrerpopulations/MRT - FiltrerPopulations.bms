@@ -83,7 +83,8 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.m
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.BEH_Mission_Automate_AssignerFiltrerPopulationsAListe, 1, { ePhase_MRT, self.listePions, self.points, } )
                     
-                elseif switch_1 == eMRT_MissionImpossible then
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
                     Halt( self )

@@ -68,7 +68,8 @@ includedFiles["sources/emergency/pions/common/missions/EvacuateArea.bms"] = true
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     self.ePhase = eDeployer
                     
-                elseif switch_1 == eDeployer then
+                                cases_switch_1[1] = true
+elseif switch_1 == eDeployer then
                     Activate( self.activations.BEH_Pion_Emergency_EvacuateArea, 1, { self._namedParams.mission.area_, } )
                     
                                 cases_switch_1[2] = true
@@ -85,7 +86,8 @@ elseif switch_1 == eFinMission then
                     end
 
                     
-                                end
+                                cases_switch_1[3] = true
+                end
             end
 
     end,

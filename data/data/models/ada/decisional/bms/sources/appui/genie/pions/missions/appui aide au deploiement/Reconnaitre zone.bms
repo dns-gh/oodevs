@@ -76,7 +76,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptZone, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Reconnaisance
-]]elseif switch_1 == eReconnaitre then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     --[[// On a arrive dans la zone
 ]]if( DEC_Geometrie_EstPointDansLocalisation( myself:DEC_Agent_Position(), self._namedParams.mission.zone_ ) ) then
@@ -101,7 +102,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, setmetatable( { self.ptZone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Fin de la mission
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     

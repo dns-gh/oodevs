@@ -94,7 +94,8 @@ elseif switch_1 == eAppuyer then
                     end
 
                     
-                elseif switch_1 == eFinMission then
+                                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -108,7 +109,8 @@ elseif switch_1 == eAppuyer then
                     end
 
                     
-                                end
+                                cases_switch_1[3] = true
+                end
             end
 
     end,

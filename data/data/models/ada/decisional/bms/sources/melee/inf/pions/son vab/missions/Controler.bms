@@ -97,7 +97,8 @@ node "MIS_Pion_INF_ControlerSecteur"
                     Activate( self.activations.BEH_Mission_Pion_VAB_ControlerSecteur, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Rejoins la position de replis
-]]elseif switch_1 == eSeReplier then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eSeReplier then
                     if( F_Pion_GeteniEnCours( myself ) == nil ) then
                         StartActivate( self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.2 * GetMotivation( "MOT_Mission" ), {} )
                     end
@@ -118,7 +119,8 @@ do
                         end
                     end
 
-                                end
+                                cases_switch_1[2] = true
+                end
                 if cases_switch_1[2] or switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -137,7 +139,8 @@ do
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                
+                                cases_switch_1[3] = true
+
                 else
                                 end
             end
@@ -224,7 +227,8 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.ptMission, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eInstallerDispositif then
+                                cases_switch_1[1] = true
+elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                     StartActivate( self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.secteur_, } )
@@ -246,7 +250,8 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// L'ensemble du dispositif est installe, on surveiller la zone
-]]elseif switch_1 == eSurveiller then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eSurveiller then
                     --[[// Surveille secteur			
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
                     Activate( self.activations.ACT_Pion_VAB_ControleZone, 1, { self.mission.secteur_, M_CAPACITE_SURVEILLANCE(), F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre, } )

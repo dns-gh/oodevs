@@ -80,7 +80,8 @@ include "bit.lua"
                         self.ePhase = eFinMission
                     end
 
-                                end
+                                cases_switch_1[1] = true
+                end
                 if cases_switch_1[1] or switch_1 == eFinMission then
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
                     --[[// Ajout MIA ADA    

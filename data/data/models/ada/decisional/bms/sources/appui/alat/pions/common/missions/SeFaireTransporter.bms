@@ -79,7 +79,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointEmbarquement_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eFinMission then
+                                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     if( DEC_Agent_EstTransporte() ) then
                         do
                             Activate( self.activations.ACT_Dep_ALAT_TransportEnCours, 1, {} )
@@ -102,7 +103,8 @@ do
                         end
                     end
 
-                                end
+                                cases_switch_1[3] = true
+                end
             end
 
     end,

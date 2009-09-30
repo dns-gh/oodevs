@@ -137,7 +137,8 @@ elseif switch_1 == eActiverObstacle then
                     Activate( self.activations.ACT_Obj_Pion_GEN_ActiverObstacle, 1, setmetatable( { self._namedParams.mission.obstacle_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Valorisation de l'obstacle --> SI POSSIBLE
-]]elseif switch_1 == eValoriserObstacle then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eValoriserObstacle then
                     --[[// Test si valorisation possible
 ]]if( not DEC_Agent_PeutValoriserObjet( self._namedParams.mission.obstacle_ ) ) then
                         do
@@ -163,7 +164,8 @@ elseif switch_1 == eActiverObstacle then
                     Activate( self.activations.ACT_Obj_Pion_GEN_ValoriserObstacle, 1, setmetatable( { self._namedParams.mission.obstacle_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Fin de la mission
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[4] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     

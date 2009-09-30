@@ -216,7 +216,8 @@ node "BEH_Eni_Pion_VAB_ManoeuvreDetruire"
 ]]                    end
 
                 --[[// stop behavior BEH_Pion_INF_TirCouverture_Fixe( ksEni );
-]]                end
+]]                cases_switch_1[1] = true
+                end
                 if cases_switch_1[1] or switch_1 == eRejoindreAssaut then
                     if( S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, rPH ) ) then
                         do

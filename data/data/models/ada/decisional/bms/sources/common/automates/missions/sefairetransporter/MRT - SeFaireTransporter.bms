@@ -121,7 +121,8 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner les missions au pions subordonnéss
 ]]--[[//-----------------------------------------------------------------------------
-]]elseif switch_1 == eMRT_AssignerMissions then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eActionMRT == eActionImpossible ) then
                         do
                                                         do
@@ -151,7 +152,8 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
                     Activate( self.activations.BEH_Medo_Automate_FaireTransporter_DansZone, 1, setmetatable( { self.selPions, self._namedParams.Zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
                     --[[// Assigne les missions
 ]]
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,

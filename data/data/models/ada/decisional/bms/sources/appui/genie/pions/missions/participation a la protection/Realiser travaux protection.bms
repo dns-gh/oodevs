@@ -73,7 +73,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_GEN_AllerFaireTravauxSur, 1, setmetatable( { self._namedParams.mission.travaux_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Fin de la mission
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     
@@ -305,7 +306,8 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
                 --[[//-----------------------------------------------------------------
 ]]--[[// Valorisation si obsqtacle
 ]]--[[//-----------------------------------------------------------------
-]]elseif switch_1 == eValoriserObstacle then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eValoriserObstacle then
                     if( not DEC_Agent_PeutValoriserObjet( myself.objMisEnCours_ ) ) then
                         self.params.__returnValue = eActionEffectuee
                         Halt( self )
@@ -328,7 +330,8 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
 
                     Activate( self.activations.ACT_Obj_Pion_GEN_ValoriserObstacle, 1, setmetatable( { myself.objMisEnCours_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,

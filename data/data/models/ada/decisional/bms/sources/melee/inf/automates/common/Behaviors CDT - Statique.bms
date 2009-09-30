@@ -104,7 +104,8 @@ elseif switch_1 == "T_Mission_Pion_FaireMouvement" then
                             self.ptStatique = S_Geometrie_PtInvDirDangereuse( DEC_Automate_PionPosition( self.pAppui ), DEC_GetDirectionEnnemi( mission ), 1263 )
                             Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.ptStatique, eEtatEchelon_Second, } )
                             
-                                                end
+                                                cases_switch_1[2] = true
+                        end
                     end
 
             end

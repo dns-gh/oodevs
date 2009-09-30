@@ -73,7 +73,8 @@ includedFiles["sources/appui/trans/pions/missions/EtablirGererLiaison.bms"] = tr
                     Activate( self.activations.ACT_RC_PreparationMission, 1, { M_MODELE_Pion_TRANS_DELAI_MISEENPLACE(), } )
                     
                 --[[// Progression tactique
-]]elseif switch_1 == eProgresser then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -90,7 +91,8 @@ includedFiles["sources/appui/trans/pions/missions/EtablirGererLiaison.bms"] = tr
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Deploiement
-]]elseif switch_1 == eDeployer then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eDeployer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Pion_Trans_InstallerDispositif, 1, {} )
                     

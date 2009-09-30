@@ -68,7 +68,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionInstallation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDefaut = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Realisation des travaux
-]]elseif switch_1 == eRealiserTravaux then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eRealiserTravaux then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     --[[// si l'agent est à plus de 500m de la zone
 ]]if( not S_Geometrie_EstProchePosition( myself:DEC_Agent_Position(), self.positionInstallation, 500 ) ) then
@@ -105,7 +106,8 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_Obj_Pion_LOG_RealiserTravaux, 1, setmetatable( { self._namedParams.zone, self._namedParams.eTypeObjet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Fin mission sur ordre
-]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[3] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     if( DEC_ConnaissanceObjet_EstValide( myself.objMisEnCours_ ) ) then

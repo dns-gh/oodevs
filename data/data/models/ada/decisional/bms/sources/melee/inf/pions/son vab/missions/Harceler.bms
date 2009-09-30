@@ -80,7 +80,8 @@ node "MIS_Pion_INF_Harceler"
                     Activate( self.activations.BEH_Mission_Pion_INF_Harceler, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
                     
                 --[[// Rejoins la position de replis
-]]elseif switch_1 == eSeReplier then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eSeReplier then
                     if( F_Pion_GeteniEnCours( myself ) == nil ) then
                         StartActivate( self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.2, {} )
                     end
@@ -101,7 +102,8 @@ do
                         end
                     end
 
-                                end
+                                cases_switch_1[2] = true
+                end
                 if cases_switch_1[2] or switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -120,7 +122,8 @@ do
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                
+                                cases_switch_1[3] = true
+
                 else
                                 end
             end

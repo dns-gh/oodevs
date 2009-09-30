@@ -128,7 +128,8 @@ do
 
                     Activate( self.activations.BEH_Transport_Pion_Transporter, 1, setmetatable( { self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsATransporter, self._namedParams.mission.avecMateriel_, 2000, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eFinMission then
+                                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
@@ -143,7 +144,8 @@ do
                     end
 
                     
-                                end
+                                cases_switch_1[2] = true
+                end
             end
 
     end,

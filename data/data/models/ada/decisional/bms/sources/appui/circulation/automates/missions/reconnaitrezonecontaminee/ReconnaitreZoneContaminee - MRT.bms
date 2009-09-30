@@ -83,7 +83,8 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezoneconta
                 --[[//---------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//---------------------------------------------------------------------
-]]elseif switch_1 == eMRT_MissionImpossible then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eMRT_MissionImpossible then
                                         self.params.__returnValue = eActionImpossible
                     Halt( self )
                     do return end

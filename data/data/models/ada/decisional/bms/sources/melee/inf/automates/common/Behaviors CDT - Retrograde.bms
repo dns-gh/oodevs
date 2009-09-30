@@ -94,7 +94,8 @@ include "bit.lua"
 ]]--[[// ------------------------------------------------------------
 ]]self.ePhase = ePhase_RompreContact
                     
-                elseif switch_1 == ePhase_Attente then
+                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_Attente then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -106,7 +107,8 @@ include "bit.lua"
 
                     Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_ROMPRE_CONTACT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == ePhase_RompreContact then
+                                cases_switch_1[2] = true
+elseif switch_1 == ePhase_RompreContact then
                     --[[// Recupere le point de regroupement
 ]]local ptRgrpt = nil
                     if( eNoError == self.eCodeLoc and #( self.lstLocRgpt ) > self.rItLoc ) then
@@ -129,7 +131,8 @@ include "bit.lua"
 ]]StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pionPE, ptRgrpt, eEtatEchelon_Premier, } )
                     self.ePhase = ePhase_Attente
                     
-                                end
+                                cases_switch_1[3] = true
+                end
             end
 
     end,

@@ -84,7 +84,8 @@ elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.barycentreZone, } )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.barycentreZone, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     
-                elseif switch_1 == eSurveiller then
+                                cases_switch_1[2] = true
+elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
                     Activate( self.activations.BEH_Eni_Pion_ASA_GererEniDefendreSite, 1, { self._namedParams.mission.site_, } )
@@ -120,7 +121,8 @@ elseif switch_1 == eFinMission then
                     end
 
                     
-                                end
+                                cases_switch_1[4] = true
+                end
             end
 
     end,
